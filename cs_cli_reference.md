@@ -118,8 +118,8 @@ To create a cluster in your organization.
 
     <p><strong>Note:</strong> If you provide the same option in the command as parameter in the YAML file, the value in the command takes precedence over the value in the YAML. For example, you define a location in your YAML file and use the <code>--location</code> option in the command, the value that you entered in the command option overrides the value in the YAML file.
 
-    <pre class="codeblock"><code>
-    name: <em>&lt;cluster_name&gt;</em>
+    <pre class="codeblock">
+    <code>name: <em>&lt;cluster_name&gt;</em>
     location: <em>&lt;location&gt;</em>
     machine-type: <em>&lt;machine_type&gt;</em>
     private-vlan: <em>&lt;private_vlan&gt;</em>
@@ -238,9 +238,7 @@ To create a cluster in your organization.
   Example for a {{site.data.keyword.Bluemix_notm}} Dedicated environment:
 
   ```
-
   bx cs cluster-create --machine-type machine-type --workers number --name cluster_name
-
   ```
   {: pre}
 
@@ -643,8 +641,8 @@ Add worker nodes to your standard cluster.
 
         <p><strong>Note:</strong> If you provide the same option in the command as parameter in the YAML file, the value in the command takes precedence over the value in the YAML. For example, you define a machine type in your YAML file and use the --machine-type option in the command, the value that you entered in the command option overrides the value in the YAML file.
 
-      <pre class="codeblock"><code>
-      name: <em>&lt;cluster_name_or_id&gt;</em>
+      <pre class="codeblock">
+      <code>name: <em>&lt;cluster_name_or_id&gt;</em>
       location: <em>&lt;location&gt;</em>
       machine-type: <em>&lt;machine_type&gt;</em>
       private-vlan: <em>&lt;private_vlan&gt;</em>
