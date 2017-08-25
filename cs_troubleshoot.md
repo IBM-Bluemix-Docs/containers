@@ -22,7 +22,7 @@ lastupdated: "2017-08-15"
 # Troubleshooting clusters
 {: #cs_troubleshoot}
 
-If you have problems or questions when you are using {{site.data.keyword.containershort_notm}}, consider these techniques for troubleshooting and getting help.
+As you are using {{site.data.keyword.containershort_notm}}, consider these techniques for troubleshooting and getting help.
 
 {: shortdesc}
 
@@ -70,7 +70,7 @@ Review the options that you have to debug your clusters and find the root causes
     </tbody>
   </table>
 
-3.  If your cluster is in a **Warning** or **Critical** state, or is stuck in the **Pending** state for a long time, review the state of your worker nodes.
+3.  If your cluster is in a **Warning** or **Critical** state, or is stuck in the **Pending** state for a long time, review the state of your worker nodes. If your cluster is in a **Deploying** state, wait until your cluster is fully deployed to review the health of your cluster. Clusters is a **Normal** state are considered healthy and do not require an action at the moment. 
 
   ```
   bx cs workers <cluster_name_or_id>
@@ -491,7 +491,8 @@ TCP port 443 FROM '<each_worker_node_publicIP>' TO registry.ng.bluemix.net, apt.
       </tr>
     </table>
 </ul>
-
+    
+    
 
 ## Connecting to an app via Ingress fails
 {: #cs_ingress_fails}

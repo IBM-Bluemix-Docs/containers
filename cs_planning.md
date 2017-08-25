@@ -132,7 +132,7 @@ Review these potential app set ups that are ordered with increasing degrees of a
 3.  A deployment with n+2 pods that are managed by a replica set and spread across multiple nodes (anti-affinity) in different locations.
 4.  A deployment with n+2 pods that are managed by a replica set and spread across multiple nodes (anti-affinity) in different regions.
 
-Learn more about how you can use these techniques to increase the availability of your app:
+Learn more about the techniques to increase the availability of your app:
 
 <dl>
 <dt>Use deployments and replica sets to deploy your app and its dependencies</dt>
@@ -208,7 +208,7 @@ spec:
 
 </dd>
 <dt>Distribute pods across multiple locations or regions</dt>
-<dd>To protect your app from a location or region failure, you can create a second cluster in another location or region and use your deployment YAML to deploy a duplicate replica set for your app. By adding a shared route and load balancer in front of your clusters, you can spread your work load across locations and regions. For more information about sharing a route between clusters, see <a href="https://console.bluemix.net/docs/containers/cs_cluster.html#cs_cluster" target="_blank">High availability of clusters</a>.
+<dd>To protect your app from a location or region failure, you can create a second cluster in another location or region and use a deployment YAML to deploy a duplicate replica set for your app. By adding a shared route and load balancer in front of your clusters, you can spread your work load across locations and regions. For more information about sharing a route between clusters, see <a href="https://console.bluemix.net/docs/containers/cs_cluster.html#cs_cluster" target="_blank">High availability of clusters</a>.
 
 For more detail, review the options for <a href="https://console.bluemix.net/docs/containers/cs_planning.html#cs_planning_cluster_config" target="_blank">highly available deployments</a>.</dd>
 </dl>
@@ -216,7 +216,7 @@ For more detail, review the options for <a href="https://console.bluemix.net/doc
 ### Minimal app deployment
 {: #minimal_app_deployment}
 
-The most basic app deployment in a lite or standard cluster might include the following components.
+A basic app deployment in a lite or standard cluster might include the following components.
 {:shortdesc}
 
 <a href="../api/content/containers/images/cs_app_tutorial_components1.png">![Deployment setup](images/cs_app_tutorial_components1.png)</a>
