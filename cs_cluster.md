@@ -30,7 +30,7 @@ Before you begin, review the options for [highly available cluster configuration
 ## Creating clusters with the GUI
 {: #cs_cluster_ui}
 
-A cluster is a set of worker nodes that are organized into a network. The purpose of the cluster is to define a set of resources, nodes, networks, and storage devices that keep applications highly available. Before you can deploy an app, you must create a cluster and set the definitions for the worker nodes in that cluster.
+A Kubernetes cluster is a set of worker nodes that are organized into a network. The purpose of the cluster is to define a set of resources, nodes, networks, and storage devices that keep applications highly available. Before you can deploy an app, you must create a cluster and set the definitions for the worker nodes in that cluster.
 {:shortdesc}
 
 For {{site.data.keyword.Bluemix_notm}} Dedicated users, see [Creating Kubernetes clusters from the GUI in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)](#creating_cli_dedicated) instead.
@@ -362,6 +362,7 @@ To create a cluster:
         ```
         echo $KUBECONFIG
         ```
+        {: pre}
 
         Output:
 
@@ -377,7 +378,7 @@ To create a cluster:
         ```
         kubectl proxy
         ```
-         {: pre}
+        {: pre}
 
         ```
         Starting to serve on 127.0.0.1:8001
@@ -389,7 +390,7 @@ To create a cluster:
         ```
         http://localhost:8001/ui
         ```
-        {: pre}
+        {: codeblock}
 
 
 **What's next?**
@@ -453,7 +454,7 @@ To create a cluster:
     ```
     bx cs clusters
     ```
-     {: pre}
+    {: pre}
 
     **Note:** It can take up to 15 minutes for the worker node machines to be ordered, and for the cluster to be set up and provisioned in your account.
 
@@ -470,7 +471,7 @@ To create a cluster:
     ```
     bx cs workers <cluster>
     ```
-     {: pre}
+    {: pre}
 
     When the worker nodes are ready, the state changes to **normal** and the status is **Ready**. When the node status is **Ready**, you can then access the cluster.
 
@@ -487,7 +488,7 @@ To create a cluster:
         ```
         bx cs cluster-config <cluster_name_or_id>
         ```
-         {: pre}
+        {: pre}
 
         When the download of the configuration files is finished, a command is displayed that you can use to set the path to the local Kubernetes configuration file as an environment variable.
 
@@ -506,6 +507,7 @@ To create a cluster:
         ```
         echo $KUBECONFIG
         ```
+        {: pre}
 
         Output:
 
@@ -931,7 +933,7 @@ To add a service:
     ```
     bx service list
     ```
-     {: pre}
+    {: pre}
 
     Example CLI output:
 
@@ -1573,7 +1575,7 @@ To use Weave Scope with a cluster:
 
 5.  Open your web browser to `http://localhost:4040`. Choose to view topology diagrams or tables of the Kubernetes resources in the cluster.
 
-    ![Example topology from Weave Scope](images/weave_scope.png)
+     <img src="images/weave_scope.png" alt="Example topology from Weave Scope" style="width:357px;" /> 
 
 
 [Learn more about the Weave Scope features ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.weave.works/docs/scope/latest/features/).

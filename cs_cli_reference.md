@@ -83,7 +83,7 @@ bx plugin list
 ### bx cs cluster-config CLUSTER [--admin]
 {: #cs_cluster_config}
 
-After logging in, download Kubernetes configuration data and certificates to connect to your cluster and run `kubectl` commands. The files are downloaded to `user_home_directory/.bluemix/plugins/container-service/clusters/<cluster_name>`.
+After logging in, download Kubernetes configuration data and certificates to connect to your cluster and to run `kubectl` commands. The files are downloaded to `user_home_directory/.bluemix/plugins/container-service/clusters/<cluster_name>`.
 
 **Command options**:
 
@@ -111,24 +111,24 @@ To create a cluster in your organization.
 
 <strong>Command options</strong>
 
-   <dl>
-   <dt><code>--file <em>FILE_LOCATION</em></code></dt>
+<dl>
+<dt><code>--file <em>FILE_LOCATION</em></code></dt>
 
-   <dd>(Optional for standard clusters. Not available for lite clusters.) The path to the YAML file to create your standard cluster. Instead of defining the characteristics of your cluster by using the options provided in this command, you can use a YAML file.
+<dd>(Optional for standard clusters. Not available for lite clusters.) The path to the YAML file to create your standard cluster. Instead of defining the characteristics of your cluster by using the options provided in this command, you can use a YAML file.
 
-    <p><strong>Note:</strong> If you provide the same option in the command as parameter in the YAML file, the value in the command takes precedence over the value in the YAML. For example, you define a location in your YAML file and use the <code>--location</code> option in the command, the value that you entered in the command option overrides the value in the YAML file.
+<p><strong>Note:</strong> If you provide the same option in the command as parameter in the YAML file, the value in the command takes precedence over the value in the YAML. For example, you define a location in your YAML file and use the <code>--location</code> option in the command, the value that you entered in the command option overrides the value in the YAML file.
 
-    <pre class="codeblock"><code>
-    name: <em>&lt;cluster_name&gt;</em>
-    location: <em>&lt;location&gt;</em>
-    machine-type: <em>&lt;machine_type&gt;</em>
-    private-vlan: <em>&lt;private_vlan&gt;</em>
-    public-vlan: <em>&lt;public_vlan&gt;</em>
-    hardware: <em>&lt;shared_or_dedicated&gt;</em>
-    workerNum: <em>&lt;number_workers&gt;</em></code></pre>
+<pre class="codeblock">
+<code>name: <em>&lt;cluster_name&gt;</em>
+location: <em>&lt;location&gt;</em>
+machine-type: <em>&lt;machine_type&gt;</em>
+private-vlan: <em>&lt;private_vlan&gt;</em>
+public-vlan: <em>&lt;public_vlan&gt;</em>
+hardware: <em>&lt;shared_or_dedicated&gt;</em>
+workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 
 
-    <table>
+<table>
     <caption>Table 1.Understanding the YAML file components</caption>
     <thead>
     <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
@@ -165,56 +165,56 @@ To create a cluster in your organization.
      </tbody></table>
     </p></dd>
     
-    <dt><code>--hardware <em>HARDWARE</em></code></dt>
-    <dd>(Optional for standard clusters. Not available for lite clusters.) The level of hardware isolation for your worker node. Use dedicated if you want to have available physical resources dedicated to you only, or shared to allow physical resources to be shared with other IBM customers. The default is shared.</dd>
+<dt><code>--hardware <em>HARDWARE</em></code></dt>
+<dd>(Optional for standard clusters. Not available for lite clusters.) The level of hardware isolation for your worker node. Use dedicated if you want to have available physical resources dedicated to you only, or shared to allow physical resources to be shared with other IBM customers. The default is shared.</dd>
 
-    <dt><code>--location <em>LOCATION</em></code></dt>
-    <dd>(Required for standard clusters. Optional for lite clusters.) The location where you want to create the cluster. The locations that are available to you depend on the {{site.data.keyword.Bluemix_notm}} region you are logged in to. Select the region that is physically closest to you for best performance.
+<dt><code>--location <em>LOCATION</em></code></dt>
+<dd>(Required for standard clusters. Optional for lite clusters.) The location where you want to create the cluster. The locations that are available to you depend on the {{site.data.keyword.Bluemix_notm}} region you are logged in to. Select the region that is physically closest to you for best performance.
 
-        <p>Available locations are:<ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>ra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul>
-        </p>
+<p>Available locations are:<ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>ra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul>
+</p>
 
-        <p><strong>Note:</strong> When you select a location that is located outside your country, keep in mind that you might require legal authorization before data can be physically stored in a foreign country.</p>
-        </dd>
+<p><strong>Note:</strong> When you select a location that is located outside your country, keep in mind that you might require legal authorization before data can be physically stored in a foreign country.</p>
+</dd>
 
-    <dt><code>--machine-type <em>MACHINE_TYPE</em></code></dt>
-    <dd>(Required for standard clusters. Not available for lite clusters.) The machine type that you choose impacts the amount of memory and disk space that is available to the containers that are deployed to your worker node. To list available machine types, see [bx cs machine-types <em>LOCATION</em>](cs_cli_reference.html#cs_machine_types).</dd>
+<dt><code>--machine-type <em>MACHINE_TYPE</em></code></dt>
+<dd>(Required for standard clusters. Not available for lite clusters.) The machine type that you choose impacts the amount of memory and disk space that is available to the containers that are deployed to your worker node. To list available machine types, see [bx cs machine-types <em>LOCATION</em>](cs_cli_reference.html#cs_machine_types).</dd>
 
-    <dt><code>--name <em>NAME</em></code></dt>
-    <dd>(Required) The name for the cluster.</dd>
+<dt><code>--name <em>NAME</em></code></dt>
+<dd>(Required) The name for the cluster.</dd>
 
-    <dt><code>--no-subnet</code></dt>
-    <dd>Include the flag to create a cluster without a portable subnet. The default is to not use the flag and to create a subnet in your {{site.data.keyword.BluSoftlayer_full}} portfolio.</dd>
+<dt><code>--no-subnet</code></dt>
+<dd>Include the flag to create a cluster without a portable subnet. The default is to not use the flag and to create a subnet in your {{site.data.keyword.BluSoftlayer_full}} portfolio.</dd>
 
-    <dt><code>--private-vlan <em>PRIVATE_VLAN</em></code></dt>
-    <dd>(Not available for lite clusters.)
+<dt><code>--private-vlan <em>PRIVATE_VLAN</em></code></dt>
+<dd>(Not available for lite clusters.)
 
-        <ul>
-        <li>If this cluster is the first cluster that you create in this location, do not include this flag. A private VLAN is created for you when the clusters is created.</li>
-        <li>If you created a cluster before in this location or created a private VLAN in {{site.data.keyword.BluSoftlayer_notm}} before, you must specify that private VLAN.
+<ul>
+<li>If this cluster is the first cluster that you create in this location, do not include this flag. A private VLAN is created for you when the clusters is created.</li>
+<li>If you created a cluster before in this location or created a private VLAN in {{site.data.keyword.BluSoftlayer_notm}} before, you must specify that private VLAN.
 
-            <p><strong>Note:</strong> The public and private VLANs that you specify with the create command must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></li>
-        </ul>
+<p><strong>Note:</strong> The public and private VLANs that you specify with the create command must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></li>
+</ul>
 
-    <p>To find out if you already have a private VLAN for a specific location or to find the name of an existing private VLAN, run <code>bx cs vlans <em>&lt;location&gt;</em></code>.</p></dd>
+<p>To find out if you already have a private VLAN for a specific location or to find the name of an existing private VLAN, run <code>bx cs vlans <em>&lt;location&gt;</em></code>.</p></dd>
 
-    <dt><code>--public-vlan <em>PUBLIC_VLAN</em></code></dt>
-    <dd>(Not available for lite clusters.)
+<dt><code>--public-vlan <em>PUBLIC_VLAN</em></code></dt>
+<dd>(Not available for lite clusters.)
 
-        <ul>
-        <li>If this cluster is the first cluster that you create in this location, do not use this flag. A public VLAN is created for you when the cluster is created.</li>
-        <li>If you created a cluster before in this location or created a public VLAN in {{site.data.keyword.BluSoftlayer_notm}} before, you must specify that public VLAN.
+<ul>
+<li>If this cluster is the first cluster that you create in this location, do not use this flag. A public VLAN is created for you when the cluster is created.</li>
+<li>If you created a cluster before in this location or created a public VLAN in {{site.data.keyword.BluSoftlayer_notm}} before, you must specify that public VLAN.
 
-            <p><strong>Note:</strong> The public and private VLANs that you specify with the create command must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></li>
-        </ul>
+<p><strong>Note:</strong> The public and private VLANs that you specify with the create command must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></li>
+</ul>
 
-    <p>To find out if you already have a public VLAN for a specific location or to find the name of an existing public VLAN, run <code>bx cs vlans <em>&lt;location&gt;</em></code>.</p></dd>
+<p>To find out if you already have a public VLAN for a specific location or to find the name of an existing public VLAN, run <code>bx cs vlans <em>&lt;location&gt;</em></code>.</p></dd>
 
-    <dt><code>--workers WORKER</code></dt>
-    <dd>(Optional for standard clusters. Not available for lite clusters.) The number of worker nodes that you want to deploy in your cluster. If you do not specify this option, a cluster with 1 worker node is created.
+<dt><code>--workers WORKER</code></dt>
+<dd>(Optional for standard clusters. Not available for lite clusters.) The number of worker nodes that you want to deploy in your cluster. If you do not specify this option, a cluster with 1 worker node is created.
 
-    <p><strong>Note:</strong> Every worker node is assigned a unique worker node ID and domain name that must not be manually changed after the cluster is created. Changing the ID or domain name prevents the Kubernetes master from managing your cluster.</p></dd>
-    </dl>
+<p><strong>Note:</strong> Every worker node is assigned a unique worker node ID and domain name that must not be manually changed after the cluster is created. Changing the ID or domain name prevents the Kubernetes master from managing your cluster.</p></dd>
+</dl>
 
 **Examples**:
 
@@ -238,9 +238,7 @@ To create a cluster in your organization.
   Example for a {{site.data.keyword.Bluemix_notm}} Dedicated environment:
 
   ```
-
   bx cs cluster-create --machine-type machine-type --workers number --name cluster_name
-
   ```
   {: pre}
 
@@ -634,79 +632,79 @@ Add worker nodes to your standard cluster.
 
 <strong>Command options</strong>:
 
-   <dl>
-   <dt><code>--cluster <em>CLUSTER</em></code></dt>
-   <dd>(Required) The name or ID of the cluster.</dd>
+<dl>
+<dt><code>--cluster <em>CLUSTER</em></code></dt>
+<dd>(Required) The name or ID of the cluster.</dd>
 
-    <dt><code>--file <em>FILE_LOCATION</em></dt>
-    <dd>The path to the YAML file to add worker nodes to your cluster. Instead of defining your additional worker nodes by using the options provided in this command, you can use a YAML file.
+<dt><code>--file <em>FILE_LOCATION</em></code></dt>
+<dd>The path to the YAML file to add worker nodes to your cluster. Instead of defining your additional worker nodes by using the options provided in this command, you can use a YAML file.
 
-        <p><strong>Note:</strong> If you provide the same option in the command as parameter in the YAML file, the value in the command takes precedence over the value in the YAML. For example, you define a machine type in your YAML file and use the --machine-type option in the command, the value that you entered in the command option overrides the value in the YAML file.
+<p><strong>Note:</strong> If you provide the same option in the command as parameter in the YAML file, the value in the command takes precedence over the value in the YAML. For example, you define a machine type in your YAML file and use the --machine-type option in the command, the value that you entered in the command option overrides the value in the YAML file.
 
-      <pre class="codeblock"><code>
-      name: <em>&lt;cluster_name_or_id&gt;</em>
-      location: <em>&lt;location&gt;</em>
-      machine-type: <em>&lt;machine_type&gt;</em>
-      private-vlan: <em>&lt;private_vlan&gt;</em>
-      public-vlan: <em>&lt;public_vlan&gt;</em>
-      hardware: <em>&lt;shared_or_dedicated&gt;</em>
-      workerNum: <em>&lt;number_workers&gt;</em></code></pre>
+<pre class="codeblock">
+<code>name: <em>&lt;cluster_name_or_id&gt;</em>
+location: <em>&lt;location&gt;</em>
+machine-type: <em>&lt;machine_type&gt;</em>
+private-vlan: <em>&lt;private_vlan&gt;</em>
+public-vlan: <em>&lt;public_vlan&gt;</em>
+hardware: <em>&lt;shared_or_dedicated&gt;</em>
+workerNum: <em>&lt;number_workers&gt;</em></code></pre>
         
-        <table>
-        <caption>Table 2. Understanding the YAML file components</caption>
-        <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
-        </thead>
-        <tbody>
-        <tr>
-        <td><code><em>name</em></code></td>
-        <td>Replace <code><em>&lt;cluster_name_or_id&gt;</em></code> with the name or ID of the cluster where you want to add worker nodes.</td> 
-        </tr>
-        <tr>
-        <td><code><em>location</em></code></td>
-        <td>Replace <code><em>&lt;location&gt;</em></code> with the location where you want to deploy your worker nodes. The available locations are dependent on the region that you are logged in. To list available locations, run <code>bx cs locations</code>.</td> 
-        </tr>
-        <tr>
-        <td><code><em>machine-type</em></code></td>
-        <td>Replace <code><em>&lt;machine_type&gt;</em></code> with the machine type that you want for your worker nodes. To list available machine types for your location, run <code>bx cs machine-types <em>&lt;location&gt;</em></code>.</td> 
-        </tr>
-        <tr>
-        <td><code><em>private-vlan</em></code></td>
-        <td>Replace <code><em>&lt;private_vlan&gt;</em></code> with the ID of the private VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans <em>&lt;location&gt;</em></code> and look for VLAN routers that start with <code>bcr</code> (back-end router).</td> 
-        </tr>
-        <tr>
-        <td><code>public-vlan</code></td>
-        <td>Replace <code>&lt;public_vlan&gt;</code> with the ID of the public VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans &lt;location&gt;</code> and look for VLAN routers that start with <code>fcr</code> (front-end router).</td> 
-        </tr>
-        <tr>
-        <td><code>hardware</code></td>
-        <td>The level of hardware isolation for your worker node. Use dedicated if you want to have available physical resources dedicated to you only, or shared to allow physical resources to be shared with other IBM customers. The default is shared.</td> 
-        </tr>
-        <tr>
-        <td><code>workerNum</code></td>
-        <td>Replace <code><em>&lt;number_workers&gt;</em></code> with the number of worker nodes that you want to deploy.</td> 
-        </tr>
-        </tbody></table></p></dd>
+<table>
+<caption>Table 2. Understanding the YAML file components</caption>
+<thead>
+<th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+</thead>
+<tbody>
+<tr>
+<td><code><em>name</em></code></td>
+<td>Replace <code><em>&lt;cluster_name_or_id&gt;</em></code> with the name or ID of the cluster where you want to add worker nodes.</td> 
+</tr>
+<tr>
+<td><code><em>location</em></code></td>
+<td>Replace <code><em>&lt;location&gt;</em></code> with the location where you want to deploy your worker nodes. The available locations are dependent on the region that you are logged in. To list available locations, run <code>bx cs locations</code>.</td> 
+</tr>
+<tr>
+<td><code><em>machine-type</em></code></td>
+<td>Replace <code><em>&lt;machine_type&gt;</em></code> with the machine type that you want for your worker nodes. To list available machine types for your location, run <code>bx cs machine-types <em>&lt;location&gt;</em></code>.</td> 
+</tr>
+<tr>
+<td><code><em>private-vlan</em></code></td>
+<td>Replace <code><em>&lt;private_vlan&gt;</em></code> with the ID of the private VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans <em>&lt;location&gt;</em></code> and look for VLAN routers that start with <code>bcr</code> (back-end router).</td> 
+</tr>
+<tr>
+<td><code>public-vlan</code></td>
+<td>Replace <code>&lt;public_vlan&gt;</code> with the ID of the public VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans &lt;location&gt;</code> and look for VLAN routers that start with <code>fcr</code> (front-end router).</td> 
+</tr>
+<tr>
+<td><code>hardware</code></td>
+<td>The level of hardware isolation for your worker node. Use dedicated if you want to have available physical resources dedicated to you only, or shared to allow physical resources to be shared with other IBM customers. The default is shared.</td> 
+</tr>
+<tr>
+<td><code>workerNum</code></td>
+<td>Replace <code><em>&lt;number_workers&gt;</em></code> with the number of worker nodes that you want to deploy.</td> 
+</tr>
+</tbody></table></p></dd>
 
-    <dt><code>--hardware <em>HARDWARE</em></dt>
-    <dd>Optional) The level of hardware isolation for your worker node. Use dedicated if you want to have available physical resources dedicated to you only, or shared to allow physical resources to be shared with other IBM customers. The default is shared.</dd>
+<dt><code>--hardware <em>HARDWARE</em></code></dt>
+<dd>(Optional) The level of hardware isolation for your worker node. Use dedicated if you want to have available physical resources dedicated to you only, or shared to allow physical resources to be shared with other IBM customers. The default is shared.</dd>
 
-    <dt><code>--machine-type <em>MACHINE_TYPE</em></dt>
-    <dd>(Required) The machine type that you choose impacts the amount of memory and disk space that is available to the containers that are deployed to your worker node. To list available machine types, see [bx cs machine-types LOCATION](cs_cli_reference.html#cs_machine_types).</dd>
+<dt><code>--machine-type <em>MACHINE_TYPE</em></code></dt>
+<dd>(Required) The machine type that you choose impacts the amount of memory and disk space that is available to the containers that are deployed to your worker node. To list available machine types, see [bx cs machine-types LOCATION](cs_cli_reference.html#cs_machine_types).</dd>
 
-    <dt><code>--number <em>NUMBER</em></dt>
-    <dd>(Required) An integer that represents the number of worker nodes to create in the cluster.</dd>
+<dt><code>--number <em>NUMBER</em></code></dt>
+<dd>(Required) An integer that represents the number of worker nodes to create in the cluster.</dd>
 
-    <dt><code>--private-vlan <em>PRIVATE_VLAN</em></dt>
-    <dd>(Required) If you have a private VLAN available to use in the location, you must specify the VLAN. If this is the first cluster that you create in this location, do not use this flag. A private VLAN is created for you.
+<dt><code>--private-vlan <em>PRIVATE_VLAN</em></code></dt>
+<dd>(Required) If you have a private VLAN available to use in the location, you must specify the VLAN. If this is the first cluster that you create in this location, do not use this flag. A private VLAN is created for you.
 
-        <p><strong>Note:</strong> The public and private VLANs that you specify with the create command must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></dd>
+<p><strong>Note:</strong> The public and private VLANs that you specify with the create command must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></dd>
 
-    <dt><code>--public-vlan <em>PUBLIC_VLAN</em></dt>
-    <dd>(Required) If you have a public VLAN available to use in the location, you must specify the VLAN. If this is the first cluster that you create in this location, do not use this flag. A public VLAN is created for you.
+<dt><code>--public-vlan <em>PUBLIC_VLAN</em></code></dt>
+<dd>(Required) If you have a public VLAN available to use in the location, you must specify the VLAN. If this is the first cluster that you create in this location, do not use this flag. A public VLAN is created for you.
 
-        <p><strong>Note:</strong> The public and private VLANs that you specify with the create command must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></dd>
-        </dl>
+<p><strong>Note:</strong> The public and private VLANs that you specify with the create command must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></dd>
+</dl>
 
 **Examples**:
 
