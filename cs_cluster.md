@@ -362,6 +362,7 @@ To create a cluster:
         ```
         echo $KUBECONFIG
         ```
+        {: pre}
 
         Output:
 
@@ -377,7 +378,7 @@ To create a cluster:
         ```
         kubectl proxy
         ```
-         {: pre}
+        {: pre}
 
         ```
         Starting to serve on 127.0.0.1:8001
@@ -389,7 +390,7 @@ To create a cluster:
         ```
         http://localhost:8001/ui
         ```
-        {: pre}
+        {: codeblock}
 
 
 **What's next?**
@@ -453,7 +454,7 @@ To create a cluster:
     ```
     bx cs clusters
     ```
-     {: pre}
+    {: pre}
 
     **Note:** It can take up to 15 minutes for the worker node machines to be ordered, and for the cluster to be set up and provisioned in your account.
 
@@ -470,7 +471,7 @@ To create a cluster:
     ```
     bx cs workers <cluster>
     ```
-     {: pre}
+    {: pre}
 
     When the worker nodes are ready, the state changes to **normal** and the status is **Ready**. When the node status is **Ready**, you can then access the cluster.
 
@@ -487,7 +488,7 @@ To create a cluster:
         ```
         bx cs cluster-config <cluster_name_or_id>
         ```
-         {: pre}
+        {: pre}
 
         When the download of the configuration files is finished, a command is displayed that you can use to set the path to the local Kubernetes configuration file as an environment variable.
 
@@ -506,6 +507,7 @@ To create a cluster:
         ```
         echo $KUBECONFIG
         ```
+        {: pre}
 
         Output:
 
@@ -931,7 +933,7 @@ To add a service:
     ```
     bx service list
     ```
-     {: pre}
+    {: pre}
 
     Example CLI output:
 
