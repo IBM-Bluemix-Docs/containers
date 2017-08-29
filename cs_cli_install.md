@@ -491,36 +491,38 @@ You can use the {{site.data.keyword.containershort_notm}} API to automate the cr
 
 The {{site.data.keyword.containershort_notm}} API requires header information that you must provide in your API request and that can vary depending on the API that you want to use. To determine what header information is needed for your API, see the [{{site.data.keyword.containershort_notm}} API documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://us-south.containers.bluemix.net/swagger-api).
 
-The following steps provide instructions for how to retrieve this header information, so that you can include it in your API request.
 
-1.  Retrieve your IAM (Identity and Access Management) access token. The IAM access token is required to log in to {{site.data.keyword.containershort_notm}}. Replace _&lt;my_bluemix_username&gt;_ and _&lt;my_bluemix_password&gt;_ with your {{site.data.keyword.Bluemix_notm}} credentials.
+
+1.  Create your IAM (Identity and Access Management) access token. The IAM access token is required to work with {{site.data.keyword.containershort_notm}}. Replace _&lt;my_bluemix_username&gt;_ and _&lt;my_bluemix_password&gt;_ with your {{site.data.keyword.Bluemix_notm}} credentials.
 
     ```
     POST https://iam.<region>.bluemix.net/oidc/token
     ```
-     {: pre}
+    {: pre}
 
     <table summary-"Input parameters to get tokens">
-      <tr>
+    <thead>
         <th>Input Parameters</th>
         <th>Values</th>
-      </tr>
-      <tr>
-        <td>Header</td>
-        <td>
-          <ul><li>Content-Type:application/x-www-form-urlencoded</li> <li>Authorization: Basic Yng6Yng=</li></ul>
-        </td>
-      </tr>
-      <tr>
-        <td>Body</td>
-        <td><ul><li>grant_type: password</li>
-        <li>response_type: cloud_iam, uaa</li>
-        <li>username: <em>&lt;my_bluemix_username&gt;</em></li>
-        <li>password: <em>&lt;my_bluemix_password&gt;</em></li>
-        <li>uaa_client_id: cf</li>
-        <li>uaa_client_secret:</li></ul>
-        <p>**Note:** Add the uaa_client_secret key with no value specified.</p></td>
-      </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td>Header</td>
+    <td><ul><li>Content-Type:application/x-www-form-urlencoded</li> <li>Authorization: Basic Yng6Yng=</li></ul>
+    </td>
+    </tr>
+    <tr>
+    <td>Body </td>
+    <td><ul><li>grant_type: password</li>
+    <li>response_type: cloud_iam, uaa</li>
+    <li>username: <em>&lt;my_bluemix_username&gt;</em></li>
+    <li>password: <em>&lt;my_bluemix_password&gt;</em></li>
+    <li>uaa_client_id: cf</li>
+    <li>uaa_client_secret:</li></ul>
+    <p>**Note:** Add the uaa_client_secret key with no value specified.</p></td>
+    </tr>
+    
+    </tbody>
     </table>
 
     Example API output:
@@ -541,7 +543,7 @@ The following steps provide instructions for how to retrieve this header informa
 
     You can find the IAM token in the **access_token**, and a UAA token in the **uaa_token** field of your API ouput. Note the IAM and the UAA token to retrieve additional header information in the next steps.
 
-2.  Retrieve the ID of your {{site.data.keyword.Bluemix_notm}} account where you want to create and manage your clusters. Replace _&lt;iam_token&gt;_ with the IAM token that you retrieved in the previous step.
+2.  Retrieve the ID of the {{site.data.keyword.Bluemix_notm}} account where the cluster was created. Replace _&lt;iam_token&gt;_ with the IAM token that you retrieved in the previous step.
 
     ```
     GET https://accountmanagement.<region>.bluemix.net/v1/accounts
@@ -549,16 +551,18 @@ The following steps provide instructions for how to retrieve this header informa
     {: pre}
 
     <table summary="Input parameters to get Bluemix account ID">
-   <tr>
-    <th>Input parameters</th>
-    <th>Values</th>
-   </tr>
+    <thead>
+   <th>Input parameters</th>
+   <th>Values</th>
+    </thead>
+    <tbody>
    <tr>
     <td>Headers</td>
     <td><ul><li>Content-Type: application/json</li>
       <li>Authorization: bearer &lt;iam_token&gt;</li>
       <li>Accept: application/json</li></ul></td>
    </tr>
+    </tbody>
     </table>
 
     Example API output:
@@ -583,34 +587,63 @@ The following steps provide instructions for how to retrieve this header informa
 
     You can find the ID of your {{site.data.keyword.Bluemix_notm}} account in the **resources/metadata/guid** field of your API output.
 
-3.  Retrieve a new IAM token that includes your {{site.data.keyword.Bluemix_notm}} account information. Replace _&lt;my_bluemix_account_id&gt;_ with the ID of your {{site.data.keyword.Bluemix_notm}} account that you retrieved in the previous step.
+3.  Retrieve a new IAM token that includes your {{site.data.keyword.Bluemix_notm}} credentials and the account ID where the cluster was created. Replace _&lt;my_bluemix_account_id&gt;_ with the ID of your {{site.data.keyword.Bluemix_notm}} account that you retrieved in the previous step. 
 
-    **Note:** IAM access tokens expire after 1 hour. Review [Refreshing your IAM access token with the API](#cs_api_refresh) to find instructions about how to refresh your access token.
+    **Note:** IAM access tokens expire after 1 hour. Review [Refreshing your IAM access token with the API](#cs_api_refresh) to find instructions about how to refresh your access token. 
 
     ```
     POST https://iam.<region>.bluemix.net/oidc/token
     ```
     {: pre}
 
+    <table summary-"Input parameters to get tokens">
+    <thead>
+        <th>Input Parameters</th>
+        <th>Values</th>
+    </thead>
+    <tbody>
+    <tr>
+    <td>Header</td>
+    <td><ul><li>Content-Type:application/x-www-form-urlencoded</li> <li>Authorization: Basic Yng6Yng=</li></ul>
+    </td>
+    </tr>
+    <tr>
+    <td>Body </td>
+    <td><ul><li>grant_type: password</li>
+    <li>response_type: cloud_iam, uaa</li>
+    <li>username: <em>&lt;my_bluemix_username&gt;</em></li>
+    <li>password: <em>&lt;my_bluemix_password&gt;</em></li>
+    <li>uaa_client_id: cf</li>
+    <li>uaa_client_secret:</li></ul>
+    <li>bss_account: <em>&lt;my_bluemix_account_id&gt;</em></li>
+    <p>**Note:** Add the uaa_client_secret key with no value specified.</p></td>
+    </tr>
+    
+    </tbody>
+    </table>
+
+
     <table summary="Input parameters to get access tokens">
-     <tr>
-      <th>Input parameters</th>
-      <th>Values</th>
-     </tr>
-     <tr>
-      <td>Headers</td>
-      <td><ul><li>Content-Type: application/x-www-form-urlencoded</li>
-        <li>Authorization: Basic Yng6Yng=</li></ul></td>
-     </tr>
-     <tr>
-      <td>Body</td>
-      <td><ul><li>grant_type: password</li><li>response_type: cloud_iam, uaa</li>
-        <li>username: <em>&lt;my_bluemix_username&gt;</em></li>
-        <li>password: <em>&lt;my_bluemix_password&gt;</em></li>
-        <li>uaa_client_id: cf</li>
-        <li>uaa_client_secret:<p>**Note:** Add the uaa_client_secret key with no value specified.</p>
-        <li>bss_account: <em>&lt;my_bluemix_account_id&gt;</em></li></ul></td>
-     </tr>
+    <thead>
+    <th>Input parameters</th>
+    <th>Values</th>
+    </thead>
+    <tbody>
+    <tr>
+    <td>Headers</td>
+    <td><ul><li>Content-Type: application/x-www-form-urlencoded</li>
+    <li>Authorization: Basic Yng6Yng=</li></ul></td>
+    </tr>
+    <tr>
+    <td>Body</td>
+    <td><ul><li>grant_type: password</li><li>response_type: cloud_iam, uaa</li>
+    <li>username: <em>&lt;my_bluemix_username&gt;</em></li>
+    <li>password: <em>&lt;my_bluemix_password&gt;</em></li>
+    <li>uaa_client_id: cf</li>
+    <li>uaa_client_secret:<p>**Note:** Add the uaa_client_secret key with no value specified.</p>
+    <li>bss_account: <em>&lt;my_bluemix_account_id&gt;</em></li></ul></td>
+    </tr>
+    </tbody>
     </table>
 
     Example API output:
@@ -640,16 +673,18 @@ The following steps provide instructions for how to retrieve this header informa
         {: pre}
 
         <table summary="Input parametersto retrive space ID">
-         <tr>
-          <th>Input parameters</th>
-          <th>Values</th>
-         </tr>
-         <tr>
-          <td>Header</td>
-          <td><ul><li>Content-Type: application/x-www-form-urlencoded;charset=utf</li>
-            <li>Authorization: bearer &lt;uaa_token&gt;</li>
-            <li>Accept: application/json;charset=utf-8</li></ul></td>
-         </tr>
+        <thead>
+        <th>Input parameters</th>
+        <th>Values</th>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Header</td>
+        <td><ul><li>Content-Type: application/x-www-form-urlencoded;charset=utf</li>
+        <li>Authorization: bearer &lt;uaa_token&gt;</li>
+        <li>Accept: application/json;charset=utf-8</li></ul></td>
+        </tr>
+        </tbody>
         </table>
 
       Example API output:
@@ -734,16 +769,16 @@ The following steps provide instructions for how to retrieve this header informa
         {: pre}
 
         <table summary="Input parameters to work with API">
-         <thead>
-          <th>Input parameters</th>
-          <th>Values</th>
-         </thead>
-          <tbody>
-         <tr>
-          <td>Header</td>
-            <td><ul><li>Authorization: bearer <em>&lt;iam_token&gt;</em></li></ul>
-         </tr>
-          </tbody>
+        <thead>
+        <th>Input parameters</th>
+        <th>Values</th>
+        </thead>
+        <tbody>
+        <tr>
+        <td>Header</td>
+        <td><ul><li>Authorization: bearer <em>&lt;iam_token&gt;</em></li></ul>
+        </tr>
+        </tbody>
         </table>
 
 8.  Review the [{{site.data.keyword.containershort_notm}} API documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://us-south.containers.bluemix.net/swagger-api) to find a list of supported APIs.
@@ -766,23 +801,25 @@ Use the following steps if you want to refresh your IAM token.
     {: pre}
 
     <table summary="Input parameters for new IAM token">
-     <tr>
-      <th>Input parameters</th>
-      <th>Values</th>
-     </tr>
-     <tr>
-      <td>Header</td>
-      <td><ul><li>Content-Type: application/x-www-form-urlencoded</li>
-        <li>Authorization: Basic Yng6Yng=</li><ul></td>
-     </tr>
-     <tr>
-      <td>Body</td>
-      <td><ul><li>grant_type: refresh_token</li>
-        <li>response_type: cloud_iam, uaa</li>
-        <li>refresh_token: <em>&lt;iam_refresh_token&gt;</em></li>
-        <li>uaa_client_id: cf</li>
-        <li>uaa_client_secret:<p>**Note:** Add the uaa_client_secret key with no value specified.</p></li><ul></td>
-     </tr>
+    <thead>
+    <th>Input parameters</th>
+    <th>Values</th>
+    </thead>
+    <tbody>
+    <tr>
+    <td>Header</td>
+    <td><ul><li>Content-Type: application/x-www-form-urlencoded</li>
+    <li>Authorization: Basic Yng6Yng=</li></ul></td>
+    </tr>
+    <tr>
+    <td>Body</td>
+    <td><ul><li>grant_type: refresh_token</li>
+    <li>response_type: cloud_iam, uaa</li>
+    <li>refresh_token: <em>&lt;iam_refresh_token&gt;</em></li>
+    <li>uaa_client_id: cf</li>
+    <li>uaa_client_secret:<p>**Note:** Add the uaa_client_secret key with no value specified.</p></li></ul></td>
+    </tr>
+    </tbody>
     </table>
 
     Example API output:
