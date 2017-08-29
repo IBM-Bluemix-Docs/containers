@@ -407,8 +407,7 @@ TCP port 443 FROM '<each_worker_node_publicIP>' TO registry.ng.bluemix.net, apt.
 
     <ul><li>For INBOUND connectivity to your worker nodes, allow incoming network traffic from the following source network groups and IP addresses to the destination TCP/UDP port 10250 and `<public_IP_of _each_worker_node>`:</br>
     
-  <table>
-    <table summary=\xe2\x80\x9cThe first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.\xe2\x80\x9d>
+  <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
       <thead>
       <th colspan=2><img src="images/idea.png"/> Inbound IP addresses</th>
       </thead>
