@@ -113,7 +113,7 @@ To create a cluster in your organization.
 
 <strong>Command options</strong>
 
-   <dl>
+ <dl>
    <dt><code>--file <em>FILE_LOCATION</em></code></dt>
 
    <dd>(Optional for standard clusters. Not available for lite clusters.) The path to the YAML file to create your standard cluster. Instead of defining the characteristics of your cluster by using the options provided in this command, you can use a YAML file.
@@ -216,7 +216,7 @@ To create a cluster in your organization.
     <dd>(Optional for standard clusters. Not available for lite clusters.) The number of worker nodes that you want to deploy in your cluster. If you do not specify this option, a cluster with 1 worker node is created.
 
     <p><strong>Note:</strong> Every worker node is assigned a unique worker node ID and domain name that must not be manually changed after the cluster is created. Changing the ID or domain name prevents the Kubernetes master from managing your cluster.</p></dd>
-    </dl>
+  </dl>
 
 **Examples**:
 
