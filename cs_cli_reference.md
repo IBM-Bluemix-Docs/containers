@@ -65,7 +65,7 @@ Refer to these commands to create and manage clusters.
    <td>[bx cs worker-reload](cs_cli_reference.html#cs_worker_reload)</td> 
    <td>[bx cs worker-rm](cs_cli_reference.html#cs_worker_rm)</td>
    <td>[bx cs workers](cs_cli_reference.html#cs_workers)</td>
-   <td></td>
+   
   </tr>
  </tbody>
  </table> 
@@ -391,6 +391,8 @@ Make a subnet in a {{site.data.keyword.BluSoftlayer_notm}} account available to 
   bx cs cluster-subnet-add my_cluster subnet
   ```
   {: pre}
+
+
 
 ### bx cs clusters
 {: #cs_clusters}
