@@ -491,20 +491,23 @@ You can use the {{site.data.keyword.containershort_notm}} API to automate the cr
 
 The {{site.data.keyword.containershort_notm}} API requires header information that you must provide in your API request and that can vary depending on the API that you want to use. To determine what header information is needed for your API, see the [{{site.data.keyword.containershort_notm}} API documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://us-south.containers.bluemix.net/swagger-api).
 
-The following steps provide instructions for how to retrieve this header information, so that you can include it in your API request.
 
-1.  Retrieve your IAM (Identity and Access Management) access token. The IAM access token is required to log in to {{site.data.keyword.containershort_notm}}. Replace _&lt;my_bluemix_username&gt;_ and _&lt;my_bluemix_password&gt;_ with your {{site.data.keyword.Bluemix_notm}} credentials.
+
+
+
+1.  Create your IAM (Identity and Access Management) access token. The IAM access token is required to work with {{site.data.keyword.containershort_notm}}. Replace _&lt;my_bluemix_username&gt;_ and _&lt;my_bluemix_password&gt;_ with your {{site.data.keyword.Bluemix_notm}} credentials.
 
     ```
     POST https://iam.<region>.bluemix.net/oidc/token
     ```
-     {: pre}
+    {: pre}
 
     <table summary-"Input parameters to get tokens">
-      <tr>
+    <thead>
         <th>Input Parameters</th>
         <th>Values</th>
-      </tr>
+    </thead>
+    <tbody>
       <tr>
         <td>Header</td>
         <td>
@@ -512,7 +515,7 @@ The following steps provide instructions for how to retrieve this header informa
         </td>
       </tr>
       <tr>
-        <td>Body</td>
+      <td>Body </td>
         <td><ul><li>grant_type: password</li>
         <li>response_type: cloud_iam, uaa</li>
         <li>username: <em>&lt;my_bluemix_username&gt;</em></li>
@@ -521,6 +524,8 @@ The following steps provide instructions for how to retrieve this header informa
         <li>uaa_client_secret:</li></ul>
         <p>**Note:** Add the uaa_client_secret key with no value specified.</p></td>
       </tr>
+      
+      </tbody>
     </table>
 
     Example API output:
