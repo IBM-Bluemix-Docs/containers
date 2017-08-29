@@ -24,8 +24,8 @@ You can use built-in security features for risk analysis and security protection
 
 <a href="https://console.bluemix.net/docs/api/content/containers/images/cs_security.png"><img src="images/cs_security.png" width="400" alt="{{site.data.keyword.containershort_notm}} cluster security" style="width:400px;" /></a>
 
-<table>
-  <table summary=\xe2\x80\x9cThe first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.\xe2\x80\x9d>
+
+  <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
   <thead>
   <th colspan=2><img src="images/idea.png"/> Built-in cluster security settings in {{site.data.keyword.containershort_notm}}</th>
   </thead>
@@ -113,8 +113,7 @@ When you set up a firewall for your worker nodes or customize the firewall setti
 
     <ul><li>For OUTBOUND connectivity from your worker nodes, allow outgoing network traffic from the source worker node to the destination TCP/UDP port range 20000-32767 for `<each_worker_node_publicIP>`, and the following IP addresses and network groups:</br>
     
-  <table>
-    <table summary=\xe2\x80\x9cThe first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.\xe2\x80\x9d>
+  <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
       <thead>
       <th colspan=2><img src="images/idea.png"/> Outbound IP addresses</th>
       </thead>
@@ -182,8 +181,7 @@ Note that a policy to allow SSH does not exist, so SSH access by way of the publ
 **Important:** Do not remove policies that are applied to a host endpoint unless you fully understand the policy and know that you do not need the traffic that is being allowed by the policy.
 
 
-<table>
-  <table summary=\xe2\x80\x9cThe first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.\xe2\x80\x9d>
+ <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
   <thead>
   <th colspan=2><img src="images/idea.png"/> Default policies for each cluster</th>
   </thead>
