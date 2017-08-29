@@ -65,7 +65,7 @@ Refer to these commands to create and manage clusters.
    <td>[bx cs worker-reload](cs_cli_reference.html#cs_worker_reload)</td> 
    <td>[bx cs worker-rm](cs_cli_reference.html#cs_worker_rm)</td>
    <td>[bx cs workers](cs_cli_reference.html#cs_workers)</td>
-   <td></td>
+   
   </tr>
  </tbody>
  </table> 
@@ -392,6 +392,8 @@ Make a subnet in a {{site.data.keyword.BluSoftlayer_notm}} account available to 
   ```
   {: pre}
 
+
+
 ### bx cs clusters
 {: #cs_clusters}
 
@@ -538,6 +540,7 @@ Initialize the {{site.data.keyword.containershort_notm}} plug-in or specify the 
     </pre></li></ul>
 </dd>
 </dl>
+
 
 
 ### bx cs machine-types LOCATION
@@ -819,6 +822,8 @@ Remove one or more worker nodes from a cluster.
   bx cs worker-rm my_cluster my_node1 my_node2
   ```
   {: pre}
+  
+
 
 ### bx cs workers CLUSTER
 {: #cs_workers}
