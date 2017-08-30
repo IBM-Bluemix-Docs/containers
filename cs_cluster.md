@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-08-21"
+lastupdated: "2017-08-30"
 
 ---
 
@@ -40,18 +40,17 @@ To create a cluster:
 
 2.  For the **Cluster type**, select **Standard**. With a standard cluster, you get features like multiple worker nodes for a highly available environment.
 3.  Enter a **Cluster Name**.
-4.  Select a **Kubernetes version** to use in the worker nodes. 
-5.  Select a {{site.data.keyword.Bluemix_notm}} **Location** in which to deploy your cluster. The locations that are available to you depend on the {{site.data.keyword.Bluemix_notm}} region that you are logged in to. Select the region that is physically closest to you for best performance. When you select a location that is located outside your country, keep in mind that you might require legal authorization before data can be physically stored in a foreign country. The {{site.data.keyword.Bluemix_notm}} region determines the container registry that you can use and the {{site.data.keyword.Bluemix_notm}} services that are available to you.
-6.  Select a **Machine type**. The machine type defines the amount of virtual CPU and memory that is set up in each worker node and that is available for all the containers that you deploy in your nodes.
+4.  Select a {{site.data.keyword.Bluemix_notm}} **Location** in which to deploy your cluster. The locations that are available to you depend on the {{site.data.keyword.Bluemix_notm}} region that you are logged in to. Select the region that is physically closest to you for best performance. When you select a location that is located outside your country, keep in mind that you might require legal authorization before data can be physically stored in a foreign country. The {{site.data.keyword.Bluemix_notm}} region determines the container registry that you can use and the {{site.data.keyword.Bluemix_notm}} services that are available to you.
+5.  Select a **Machine type**. The machine type defines the amount of virtual CPU and memory that is set up in each worker node and that is available for all the containers that you deploy in your nodes.
     -   The micro machine type indicates the smallest option.
     -   A balanced machine type has an equal amount of memory that is assigned to each CPU, which optimizes performance.
-7.  Choose the **Number of worker nodes** that you need. Select 3 for higher availability of your cluster.
-8.  Select a **Private VLAN** from your {{site.data.keyword.BluSoftlayer_full}} account. A private VLAN is used to communicate between worker nodes. You can use the same private VLAN for multiple clusters.
-9. Select a **Public VLAN** from your {{site.data.keyword.BluSoftlayer_notm}} account. A public VLAN is used to communicate between worker nodes and the IBM-managed Kubernetes master. You can use the same public VLAN for multiple clusters. If you choose not to select a Public VLAN, you must configure an alternative solution.
-10. For **Hardware**, choose **Dedicated** or **Shared**. **Shared** is a sufficient option for most situations.
+6.  Choose the **Number of worker nodes** that you need. Select 3 for higher availability of your cluster.
+7.  Select a **Private VLAN** from your {{site.data.keyword.BluSoftlayer_full}} account. A private VLAN is used to communicate between worker nodes. You can use the same private VLAN for multiple clusters.
+8. Select a **Public VLAN** from your {{site.data.keyword.BluSoftlayer_notm}} account. A public VLAN is used to communicate between worker nodes and the IBM-managed Kubernetes master. You can use the same public VLAN for multiple clusters. If you choose not to select a Public VLAN, you must configure an alternative solution.
+9. For **Hardware**, choose **Dedicated** or **Shared**. **Shared** is a sufficient option for most situations.
     -   **Dedicated**: Ensure complete isolation of your physical resources from other IBM customers.
     -   **Shared**: Allow IBM to store your physical resources on the same hardware as other IBM customers.
-11. Click **Create Cluster**. The details for the cluster open, but the worker nodes in the cluster take a few minutes to provision. In the **Worker nodes** tab, you can see the progress of the worker node deployment. When the worker nodes are ready, the state changes to **Ready**.
+10. Click **Create Cluster**. The details for the cluster open, but the worker nodes in the cluster take a few minutes to provision. In the **Worker nodes** tab, you can see the progress of the worker node deployment. When the worker nodes are ready, the state changes to **Ready**.
 
     **Note:** Every worker node is assigned a unique worker node ID and domain name that must not be manually changed after the cluster is created. Changing the ID or domain name prevents the Kubernetes master from managing your cluster.
 
@@ -1172,6 +1171,8 @@ Before you begin, verify that you have been assigned the Manager Cloud Foundry r
 14. Optional: From the **Organization Roles** drop-down list, select **Manager**.
 15. Optional: Click **Save Role**.
 
+
+
 ## Adding subnets to clusters
 {: #cs_cluster_subnet}
 
@@ -1612,4 +1613,3 @@ When you delete a cluster, you are also deleting resources on the cluster, inclu
     3.  Follow the prompts and choose whether to delete cluster resources.
 
 When you remove a cluster, the portable public and private subnets are not removed automatically. Subnets are used to assign portable public IP addresses to load balancer services or your Ingress controller. You can choose to manually delete subnets or reuse them in a new cluster.
-
