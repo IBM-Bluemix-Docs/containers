@@ -1172,6 +1172,8 @@ Before you begin, verify that you have been assigned the Manager Cloud Foundry r
 14. Optional: From the **Organization Roles** drop-down list, select **Manager**.
 15. Optional: Click **Save Role**.
 
+
+
 ## Adding subnets to clusters
 {: #cs_cluster_subnet}
 
