@@ -491,16 +491,30 @@ You can use the {{site.data.keyword.containershort_notm}} API to automate the cr
 
 The {{site.data.keyword.containershort_notm}} API requires header information that you must provide in your API request and that can vary depending on the API that you want to use. To determine what header information is needed for your API, see the [{{site.data.keyword.containershort_notm}} API documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://us-south.containers.bluemix.net/swagger-api).
 
-. {{site.data.keyword.Bluemix_notm}} API keys are dependent on the {{site.data.keyword.Bluemix_notm}} account they are generated for. You cannot combine your {{site.data.keyword.Bluemix_notm}} API key with a different account ID in the same IAM token. To access clusters that were created with an account other than the one your {{site.data.keyword.Bluemix_notm}} API key is based on, you must log in to the account to generate a new API key. </li></ul></tr>
+**Note:** To authenticate with {{site.data.keyword.containershort_notm}}, you must provide an Identity and Access Management (IAM) token that is generated with your {{site.data.keyword.Bluemix_notm}} credentials and that includes the {{site.data.keyword.Bluemix_notm}} account ID where the cluster was created. Depending on the way you authenticate with {{site.data.keyword.Bluemix_notm}}, you can choose between the following options to automate the creation of your IAM token. 
+
+<table>
+<thead>
+<th>{{site.data.keyword.Bluemix_notm}} ID</th>
+<th>My options</th>
+</thead>
+<tbody>
+<tr>
+<td>Unfederated ID</td>
+<td><ul><li><strong>{{site.data.keyword.Bluemix_notm}} user name and password:</strong> You can follow the steps in this topic to fully automate the creation of your IAM access token.</li>
+<li><strong>Generate a {{site.data.keyword.Bluemix_notm}} API key:</strong> As an alternative to using the {{site.data.keyword.Bluemix_notm}} user name and password, you can <a href="../iam/apikeys.html#creating-an-api-key" target="_blank">use {{site.data.keyword.Bluemix_notm}} API keys</a> {{site.data.keyword.Bluemix_notm}} API keys are dependent on the {{site.data.keyword.Bluemix_notm}} account they are generated for. You cannot combine your {{site.data.keyword.Bluemix_notm}} API key with a different account ID in the same IAM token. To access clusters that were created with an account other than the one your {{site.data.keyword.Bluemix_notm}} API key is based on, you must log in to the account to generate a new API key. </li></ul></tr>
 <tr>
 <td>Federated ID</td>
 <td><ul><li><strong>Generate a {{site.data.keyword.Bluemix_notm}} API key:</strong> <a href="../iam/apikeys.html#creating-an-api-key" target="_blank">{{site.data.keyword.Bluemix_notm}} API keys</a> are dependent on the {{site.data.keyword.Bluemix_notm}} account they are generated for. You cannot combine your {{site.data.keyword.Bluemix_notm}} API key with a different account ID in the same IAM token. To access clusters that were created with an account other than the one your {{site.data.keyword.Bluemix_notm}} API key is based on, you must log in to the account to generate a new API key. </li><li><strong>Use a one-time passcode: </strong> If you authenticate with {{site.data.keyword.Bluemix_notm}} by using a one-time passcode, you cannot fully automate the creation of your IAM token because the retrieval of your one-time passcode requires a manual interaction with your web browser. To fully automate the creation of your IAM token, you must create a {{site.data.keyword.Bluemix_notm}} API key instead. </ul></td>
 </tr>
 </tbody>
 </table>
-</staging>
 
-1.  Create your IAM (Identity and Access Management) access token. The IAM access token is required to work with {{site.data.keyword.containershort_notm}}. Replace _&lt;my_bluemix_username&gt;_ and _&lt;my_bluemix_password&gt;_ with your {{site.data.keyword.Bluemix_notm}} credentials.
+1.  Create your IAM (Identity and Access Management) access token. The body information that is included in your request varies based on the {{site.data.keyword.Bluemix_notm}} authentication method that you use. Replace the following values:
+  - _&lt;my_bluemix_username&gt;_: Your {{site.data.keyword.Bluemix_notm}} user name.
+  - _&lt;my_bluemix_password&gt;_: Your {{site.data.keyword.Bluemix_notm}} password.
+  - _&lt;my_api_key&gt;_: Your {{site.data.keyword.Bluemix_notm}} API key.
+  - _&lt;my_passcode&gt;_: Your {{site.data.keyword.Bluemix_notm}} one-time passcode. Run `bx login --sso` and follow the instructions in your CLI output to retrieve your one-time passcode by using your web browser.
 
     ```
     POST https://iam.<region>.bluemix.net/oidc/token
@@ -519,7 +533,7 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     </td>
     </tr>
     <tr>
-    <td>Body </td>
+    <td>Body for {{site.data.keyword.Bluemix_notm}} user name and password</td>
     <td><ul><li>grant_type: password</li>
     <li>response_type: cloud_iam, uaa</li>
     <li>username: <em>&lt;my_bluemix_username&gt;</em></li>
@@ -528,7 +542,24 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     <li>uaa_client_secret:</li></ul>
     <p>**Note:** Add the uaa_client_secret key with no value specified.</p></td>
     </tr>
-    
+    <tr>
+    <td>Body for {{site.data.keyword.Bluemix_notm}} API keys</td>
+    <td><ul><li>grant_type: urn:ibm:params:oauth:grant-type:apikey</li>
+    <li>response_type: cloud_iam, uaa</li>
+    <li>apikey: <em>&lt;my_api_key&gt;</em></li>
+    <li>uaa_client_id: cf</li>
+    <li>uaa_client_secret:</li></ul>
+    <p>**Note:** Add the uaa_client_secret key with no value specified.</p></td>
+    </tr>
+    <tr>
+    <td>Body for {{site.data.keyword.Bluemix_notm}} one-time passcode</td>
+    <td><ul><li>grant_type: urn:ibm:params:oauth:grant-type:passcode</li>
+    <li>response_type: cloud_iam, uaa</li>
+    <li>passcode: <em>&lt;my_passcode&gt;</em></li>
+    <li>uaa_client_id: cf</li>
+    <li>uaa_client_secret:</li></ul>
+    <p>**Note:** Add the uaa_client_secret key with no value specified.</p></td>
+    </tr>
     </tbody>
     </table>
 
@@ -615,7 +646,7 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     </td>
     </tr>
     <tr>
-    <td>Body </td>
+    <td>Body for {{site.data.keyword.Bluemix_notm}} user name and password</td>
     <td><ul><li>grant_type: password</li>
     <li>response_type: cloud_iam, uaa</li>
     <li>username: <em>&lt;my_bluemix_username&gt;</em></li>
@@ -625,7 +656,26 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     <li>bss_account: <em>&lt;my_bluemix_account_id&gt;</em></li></ul>
     <p>**Note:** Add the uaa_client_secret key with no value specified.</p></td>
     </tr>
-    
+    <tr>
+    <td>Body for {{site.data.keyword.Bluemix_notm}} API keys</td>
+    <td><ul><li>grant_type: urn:ibm:params:oauth:grant-type:apikey</li>
+    <li>response_type: cloud_iam, uaa</li>
+    <li>apikey: <em>&lt;my_api_key&gt;</em></li>
+    <li>uaa_client_id: cf</li>
+    <li>uaa_client_secret:</li>
+    <li>bss_account: <em>&lt;my_bluemix_account_id&gt;</em></li></ul>
+    <p>**Note:** Add the uaa_client_secret key with no value specified.</p></td>
+    </tr>
+    <tr>
+    <td>Body for {{site.data.keyword.Bluemix_notm}} one-time passcode</td>
+    <td><ul><li>grant_type: urn:ibm:params:oauth:grant-type:passcode</li>
+    <li>response_type: cloud_iam, uaa</li>
+    <li>passcode: <em>&lt;my_passcode&gt;</em></li>
+    <li>uaa_client_id: cf</li>
+    <li>uaa_client_secret:</li>
+    <li>bss_account: <em>&lt;my_bluemix_account_id&gt;</em></li></ul>
+    <p>**Note:** Add the uaa_client_secret key with no value specified.</p></td>
+    </tr>
     </tbody>
     </table>
 
