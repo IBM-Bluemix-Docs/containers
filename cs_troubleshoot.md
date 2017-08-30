@@ -255,31 +255,6 @@ If this cluster is an existing one, check your cluster capacity.
 
 5.  If your pods still stay in a **pending** state after the worker node is fully deployed, review the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-pod-replication-controller/#my-pod-stays-pending) to further troubleshoot the pending state of your pod.
 
-## Worker node creation fails with provision_failed message
-{: #cs_pod_space}
-
-{: tsSymptoms}
-When you create a Kubernetes cluster or add worker nodes, you see a provision_failed state. Run the following command.
-
-```
-bx cs worker-get <WORKER_NODE_ID>
-```
-{: pre}
-
-The following message is displayed.
-
-```
-SoftLayer_Exception_Virtual_Host_Pool_InsufficientResources: Could not place order. There are insufficient resources behind router bcr<router_ID> to fulfill the request for the following guests: kube-<location>-<worker_node_ID>-w1 (HTTP 500)
-```
-{: screen}
-
-{: tsCauses}
-{{site.data.keyword.BluSoftlayer_notm}} might not have sufficient capacity at this time to provision the worker node.
-
-{: tsResolve}
-Option 1: Create the cluster in another location.
-
-Option 2: Open a support issue with {{site.data.keyword.BluSoftlayer_notm}} and ask about capacity availability in the location.
 
 ## Accessing a pod on a new worker node fails with a timeout
 {: #cs_nodes_duplicate_ip}
