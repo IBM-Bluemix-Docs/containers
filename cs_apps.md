@@ -1179,6 +1179,7 @@ You can specify metadata for your Ingress resource to add capabilities to your I
 |[Custom connect-timeouts and read-timeouts](#timeout)|Adjust the time the Ingress controller waits to connect to and read from the back-end app before the back-end app is considered to be not available.|
 |[Custom maximum client request body size](#client_max_body_size)|Adjust the size of the client request body that is allowed to be sent to the Ingress controller.|
 
+
 ##### **Route incoming network traffic to a different path by using rewrites**
 {: #rewrite}
 
@@ -1611,6 +1612,7 @@ spec:
   </tbody></table>
 
   </dd></dl>
+  
 
 
 ## Managing IP addresses and subnets
