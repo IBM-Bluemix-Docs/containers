@@ -28,7 +28,7 @@ Try out these tutorials and other resources to get started with the service.
 Deploy and manage your own Kubernetes cluster in the cloud that lets you automate the deployment, operation, scaling, and monitoring of containerized apps over a cluster of independent compute hosts called worker nodes.
 {:shortdesc}
 
-This tutorial series demonstrates how a fictional public relations firm can use Kubernetes to deploy a containerized app in {{site.data.keyword.Bluemix_short}} that leverages Watson Tone Analyzer. The PR firm uses Watson Tone Analyzer to analyze their press releases and receive feedback on the tone in their messages. In this first tutorial, the PR firm's networking administrator sets up a custom Kubernetes cluster that is the compute infrastructure for the firm's Watson Tone Analyzer app. This cluster is used to deploy and test a Hello World version of the PR firm's app.
+This tutorial series demonstrates how a fictional public relations firm can use Kubernetes to deploy a containerized app in {{site.data.keyword.Bluemix_short}} that leverages {{site.data.keyword.Watson}} Tone Analyzer. The PR firm uses {{site.data.keyword.Watson}} Tone Analyzer to analyze their press releases and receive feedback on the tone in their messages. In this first tutorial, the PR firm's networking administrator sets up a custom Kubernetes cluster that is the compute infrastructure for the firm's {{site.data.keyword.Watson}} Tone Analyzer app. This cluster is used to deploy and test a Hello World version of the PR firm's app.
 
 ### Objectives
 
