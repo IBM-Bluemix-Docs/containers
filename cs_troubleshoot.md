@@ -70,7 +70,7 @@ Review the options that you have to debug your clusters and find the root causes
     </tbody>
   </table>
 
-3.  If your cluster is in a **Warning** or **Critical** state, or is stuck in the **Pending** state for a long time, review the state of your worker nodes. If your cluster is in a **Deploying** state, wait until your cluster is fully deployed to review the health of your cluster. Clusters is a **Normal** state are considered healthy and do not require an action at the moment. 
+3.  If your cluster is in a **Warning** or **Critical** state, or is stuck in the **Pending** state for a long time, review the state of your worker nodes. If your cluster is in a **Deploying** state, wait until your cluster is fully deployed to review the health of your cluster. Clusters in a **Normal** state are considered healthy and do not require an action at the moment. 
 
   ```
   bx cs workers <cluster_name_or_id>
