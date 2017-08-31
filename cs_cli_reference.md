@@ -48,9 +48,9 @@ Refer to these commands to create and manage clusters.
  </tr>
  <tr>
    <td>[bx cs credentials-unset](cs_cli_reference.html#cs_credentials_unset)</td>
-   <td>[bx cs locations](cs_cli_reference.html#cs_datacenters)</td> 
    <td>[bx cs help](cs_cli_reference.html#cs_help)</td>
    <td>[bx cs init](cs_cli_reference.html#cs_init)</td>
+   <td>[bx cs locations](cs_cli_reference.html#cs_datacenters)</td> 
    <td>[bx cs machine-types](cs_cli_reference.html#cs_machine_types)</td>
    </tr>
  <tr>
@@ -469,22 +469,6 @@ Remove {{site.data.keyword.BluSoftlayer_notm}} account credentials from your {{s
   {: pre}
 
 
-### bx cs locations
-{: #cs_datacenters}
-
-View a list of available locations for you to create a cluster in.
-
-<strong>Command options</strong>:
-
-   None
-
-**Examples**:
-
-  ```
-  bx cs locations
-  ```
-  {: pre}
-
 
 ### bx cs help
 {: #cs_help}
@@ -543,6 +527,24 @@ Initialize the {{site.data.keyword.containershort_notm}} plug-in or specify the 
 
 
 
+
+### bx cs locations
+{: #cs_datacenters}
+
+View a list of available locations for you to create a cluster in.
+
+<strong>Command options</strong>:
+
+   None
+
+**Examples**:
+
+  ```
+  bx cs locations
+  ```
+  {: pre}
+  
+  
 ### bx cs machine-types LOCATION
 {: #cs_machine_types}
 
