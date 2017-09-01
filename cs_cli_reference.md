@@ -701,12 +701,12 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 <dd>(Optional) An integer that represents the number of worker nodes to create in the cluster. The default value is 1. </dd>
 
 <dt><code>--private-vlan <em>PRIVATE_VLAN</em></code></dt>
-<dd>(Required) If you have a private VLAN available to use in the location, you must specify the VLAN. 
+<dd>(Required) The private VLAN that was specified when the cluster was created. 
 
 <p><strong>Note:</strong> The public and private VLANs that you specify must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></dd>
 
 <dt><code>--public-vlan <em>PUBLIC_VLAN</em></code></dt>
-<dd>(Optional) If you have a public VLAN available to use in the location, you must specify the VLAN. 
+<dd>(Optional) The public VLAN that was specified when the cluster was created. 
 
 <p><strong>Note:</strong> The public and private VLANs that you specify must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></dd>
 </dl>
