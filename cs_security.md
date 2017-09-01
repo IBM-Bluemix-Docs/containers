@@ -67,7 +67,7 @@ Review the built-in Kubernetes master security features to protect the Kubernete
     <dd>Every Kubernetes master is continuously monitored by IBM to control and remediate process level Denial-Of-Service (DOS) attacks.</dd>
   <dt>Kubernetes master node security compliance</dt>
     <dd>{{site.data.keyword.containershort_notm}} automatically scans every node where the Kubernetes master is deployed for vulnerabilities found in Kubernetes and OS-sepcific security fixes that need to be applied to assure master node protection. If vulnerabilities are found, {{site.data.keyword.containershort_notm}} automatically applies fixes and resolves vulnerabilities on behalf of the user.</dd>
-</dl>  
+</dl>
 
 ## Worker nodes
 {: #cs_security_worker}
@@ -460,6 +460,6 @@ When you use {{site.data.keyword.registryshort_notm}}, you can leverage the buil
 
 To view the vulnerability assessment for your image:
 
-1.  From the **catalog**, select **Containers**.
-2.  Select the image where you want to see the vulnerability assessment.
-3.  In the **Vulnerability Assessment** section, click **View report**.
+1.  From the **catalog**, in the Containers section, select **Container Registry**.
+2.  On the **Private Repositories** page from the **Repositories** table, find the image where you want to see the vulnerability assessment.
+3.  In the **Security Report** column, select the status of the image to retrieve its vulnerability assessment.
