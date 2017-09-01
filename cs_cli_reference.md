@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-08-14"
+lastupdated: "2017-09-1"
 
 ---
 
@@ -698,17 +698,17 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 <dd>(Required) The machine type that you choose impacts the amount of memory and disk space that is available to the containers that are deployed to your worker node. To list available machine types, see [bx cs machine-types LOCATION](cs_cli_reference.html#cs_machine_types).</dd>
 
 <dt><code>--number <em>NUMBER</em></code></dt>
-<dd>(Required) An integer that represents the number of worker nodes to create in the cluster.</dd>
+<dd>(Optional) An integer that represents the number of worker nodes to create in the cluster. The default value is 1. </dd>
 
 <dt><code>--private-vlan <em>PRIVATE_VLAN</em></code></dt>
-<dd>(Required) If you have a private VLAN available to use in the location, you must specify the VLAN. If this is the first cluster that you create in this location, do not use this flag. A private VLAN is created for you.
+<dd>(Required) If you have a private VLAN available to use in the location, you must specify the VLAN. 
 
-<p><strong>Note:</strong> The public and private VLANs that you specify with the create command must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></dd>
+<p><strong>Note:</strong> The public and private VLANs that you specify must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></dd>
 
 <dt><code>--public-vlan <em>PUBLIC_VLAN</em></code></dt>
-<dd>(Required) If you have a public VLAN available to use in the location, you must specify the VLAN. If this is the first cluster that you create in this location, do not use this flag. A public VLAN is created for you.
+<dd>(Optional) If you have a public VLAN available to use in the location, you must specify the VLAN. 
 
-<p><strong>Note:</strong> The public and private VLANs that you specify with the create command must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></dd>
+<p><strong>Note:</strong> The public and private VLANs that you specify must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></dd>
 </dl>
 
 **Examples**:
