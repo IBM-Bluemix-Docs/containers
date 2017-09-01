@@ -33,7 +33,7 @@ Before you begin, review the options for [highly available cluster configuration
 A Kubernetes cluster is a set of worker nodes that are organized into a network. The purpose of the cluster is to define a set of resources, nodes, networks, and storage devices that keep applications highly available. Before you can deploy an app, you must create a cluster and set the definitions for the worker nodes in that cluster.
 {:shortdesc}
 
-For {{site.data.keyword.Bluemix_notm}} Dedicated users, see [Creating Kubernetes clusters from the GUI in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)](#creating_cli_dedicated) instead.
+For {{site.data.keyword.Bluemix_notm}} Dedicated users, see [Creating Kubernetes clusters from the GUI in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)](#creating_ui_dedicated) instead.
 
 To create a cluster:
 1.  From the catalog, select **Containers** and click **Kubernetes cluster**.
@@ -70,12 +70,11 @@ When the cluster is up and running, you can check out the following tasks:
 2.  From the account menu, select your {{site.data.keyword.Bluemix_notm}} Dedicated account. The console is updated with the services and information for your {{site.data.keyword.Bluemix_notm}} Dedicated instance.
 3.  From the catalog, select **Containers** and click **Kubernetes cluster**.
 4.  Enter a **Cluster Name**.
-5.  Select a **Kubernetes version** to use in the worker nodes. 
-6.  Select a **Machine type**. The machine type defines the amount of virtual CPU and memory that is set up in each worker node and that is available for all the containers that you deploy in your nodes.
+5.  Select a **Machine type**. The machine type defines the amount of virtual CPU and memory that is set up in each worker node and that is available for all the containers that you deploy in your nodes.
     -   The micro machine type indicates the smallest option.
     -   A balanced machine type has an equal amount of memory assigned to each CPU, which optimizes performance.
-7.  Choose the **Number of worker nodes** that you need. Select 3 to ensure high availability of your cluster.
-8.  Click **Create Cluster**. The details for the cluster open, but the worker nodes in the cluster take a few minutes to provision. In the **Worker nodes** tab, you can see the progress of the worker node deployment. When the worker nodes are ready, the state changes to **Ready**.
+6.  Choose the **Number of worker nodes** that you need. Select 3 to ensure high availability of your cluster.
+7.  Click **Create Cluster**. The details for the cluster open, but the worker nodes in the cluster take a few minutes to provision. In the **Worker nodes** tab, you can see the progress of the worker node deployment. When the worker nodes are ready, the state changes to **Ready**.
 
 **What's next?**
 
@@ -255,7 +254,7 @@ To create a cluster:
     4.  Run the `cluster-create` command. You can choose between a lite cluster, which includes one worker node set up with 2vCPU and 4GB memory, or a standard cluster, which can include as many worker nodes as you choose in your {{site.data.keyword.BluSoftlayer_notm}} account. When you create a standard cluster, by default, the hardware of the worker node is shared by multiple IBM customers and billed by hours of usage. </b>Example for a standard cluster:
 
         ```
-        bx cs cluster-create --location dal10; --public-vlan <public_vlan_id> --private-vlan <private_vlan_id> --machine-type u1c.2x4 --workers 3 --name <cluster_name>
+        bx cs cluster-create --location dal10 --public-vlan <public_vlan_id> --private-vlan <private_vlan_id> --machine-type u1c.2x4 --workers 3 --name <cluster_name>
         ```
         {: pre}
 
