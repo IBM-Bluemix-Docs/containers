@@ -33,7 +33,7 @@ Before you begin, review the options for [highly available cluster configuration
 A Kubernetes cluster is a set of worker nodes that are organized into a network. The purpose of the cluster is to define a set of resources, nodes, networks, and storage devices that keep applications highly available. Before you can deploy an app, you must create a cluster and set the definitions for the worker nodes in that cluster.
 {:shortdesc}
 
-For {{site.data.keyword.Bluemix_notm}} Dedicated users, see [Creating Kubernetes clusters from the GUI in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)](#creating_cli_dedicated) instead.
+For {{site.data.keyword.Bluemix_notm}} Dedicated users, see [Creating Kubernetes clusters from the GUI in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)](#creating_ui_dedicated) instead.
 
 To create a cluster:
 1.  From the catalog, select **Containers** and click **Kubernetes cluster**.
@@ -70,12 +70,11 @@ When the cluster is up and running, you can check out the following tasks:
 2.  From the account menu, select your {{site.data.keyword.Bluemix_notm}} Dedicated account. The console is updated with the services and information for your {{site.data.keyword.Bluemix_notm}} Dedicated instance.
 3.  From the catalog, select **Containers** and click **Kubernetes cluster**.
 4.  Enter a **Cluster Name**.
-5.  Select a **Kubernetes version** to use in the worker nodes. 
-6.  Select a **Machine type**. The machine type defines the amount of virtual CPU and memory that is set up in each worker node and that is available for all the containers that you deploy in your nodes.
+5.  Select a **Machine type**. The machine type defines the amount of virtual CPU and memory that is set up in each worker node and that is available for all the containers that you deploy in your nodes.
     -   The micro machine type indicates the smallest option.
     -   A balanced machine type has an equal amount of memory assigned to each CPU, which optimizes performance.
-7.  Choose the **Number of worker nodes** that you need. Select 3 to ensure high availability of your cluster.
-8.  Click **Create Cluster**. The details for the cluster open, but the worker nodes in the cluster take a few minutes to provision. In the **Worker nodes** tab, you can see the progress of the worker node deployment. When the worker nodes are ready, the state changes to **Ready**.
+6.  Choose the **Number of worker nodes** that you need. Select 3 to ensure high availability of your cluster.
+7.  Click **Create Cluster**. The details for the cluster open, but the worker nodes in the cluster take a few minutes to provision. In the **Worker nodes** tab, you can see the progress of the worker node deployment. When the worker nodes are ready, the state changes to **Ready**.
 
 **What's next?**
 

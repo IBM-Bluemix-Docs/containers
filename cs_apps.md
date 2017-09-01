@@ -1748,6 +1748,78 @@ To deploy your app:
 
 
 
+## Scaling apps
+{: #cs_apps_scaling}
+
+<!--Horizontal auto-scaling is not working at the moment due to a port issue with heapster. The dev team is working on a fix. We pulled out this content from the public docs. It is only visible in staging right now.-->
+
+Deploy cloud applications that respond to changes in demand for your applications and that use resources only when needed. Autoscaling automatically increases or decreases instances in your apps based on CPU.
+{:shortdesc}
+
+Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
+
+**Note:** Are you looking for information about scaling Cloud Foundry applications? Check out [IBM Auto-Scaling for {{site.data.keyword.Bluemix_notm}}](/docs/services/Auto-Scaling/index.html).
+
+With Kubernetes, you can enable [Horizontal Pod Autoscaling ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) to scale your apps based on CPU.
+
+1.  Deploy your app to your cluster from the CLI. When you deploy your app, you must request CPU.
+
+    ```
+    kubectl run <name> --image=<image> --requests=cpu=<cpu> --expose --port=<port_number>
+    ```
+    {: pre}
+
+    <table>
+    <thead>
+    <th colspan=2><img src="images/idea.png"/> Understanding this command&apos;s components</th>
+    </thead>
+    <tbody>
+    <tr>
+    <td><code>--image</code></td>
+    <td>The application that you want to deploy.</td>
+    </tr>
+    <tr>
+    <td><code>--request=cpu</code></td>
+    <td>The required CPU for the container, which is specified in milli-cores. As an example, <code>--requests=200m</code>.</td>
+    </tr>
+    <tr>
+    <td><code>--expose</code></td>
+    <td>When true, creates an external service.</td>
+    </tr>
+    <tr>
+    <td><code>--port</code></td>
+    <td>The port where your app is available externally.</td>
+    </tr></tbody></table>
+
+    **Note:** For more complex deployments, you might need to create a [configuration script](#cs_apps_cli).
+2.  Create a Horizontal Pod Autoscaler and define your policy. For more information about working with the `kubetcl autoscale` command, see [the Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/user-guide/kubectl/v1.5/#autoscale).
+
+    ```
+    kubectl autoscale deployment <deployment_name> --cpu-percent=<percentage> --min=<min_value> --max=<max_value>
+    ```
+    {: pre}
+
+    <table>
+    <thead>
+    <th colspan=2><img src="images/idea.png"/> Understanding this command&apos;s components</th>
+    </thead>
+    <tbody>
+    <tr>
+    <td><code>--cpu-percent</code></td>
+    <td>The average CPU utilization that is maintained by the Horizontal Pod Autoscaler, which is specified as a percentage.</td>
+    </tr>
+    <tr>
+    <td><code>--min</code></td>
+    <td>The minimum number of deployed pods that are used to maintain the specified CPU utilization percentage.</td>
+    </tr>
+    <tr>
+    <td><code>--max</code></td>
+    <td>The maximum number of deployed pods that are used to maintain the specified CPU utilization percentage.</td>
+    </tr>
+    </tbody></table>
+
+
+
 ## Managing rolling deployments
 {: #cs_apps_rolling}
 
