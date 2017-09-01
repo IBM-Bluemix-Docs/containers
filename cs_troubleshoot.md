@@ -665,8 +665,8 @@ Learn about the known issues.
     <dd>For security reasons, the Kubernetes dashboard NodePort service is disabled. To access your Kubernetes dashboard, run the following command.</br><pre class="codeblock"><code>kubectl proxy</code></pre></br>Then, you can access the Kubernetes dashboard at `http://localhost:8001/ui`.</dd>
   <dt>Limitations with the service type of load balancer</dt>
     <dd><ul><li>You cannot use load balancing on private VLANs.<li>You cannot use service.beta.kubernetes.io/external-traffic and service.beta.kubernetes.io/healthcheck-nodeport service annotations. For more information about these annotations, see the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tutorials/services/source-ip/).</ul></dd>
-  <dt>Horizontal autoscaling does not work</dt>
-    <dd>For security reasons, the standard port that is used by Heapster (10255) is closed in all worker nodes. Because this port is closed, Heapster is unable to report metrics for worker nodes and horizontal autoscaling cannot work as documented in [Horizontal Pod Autoscaling ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) in the Kubernetes documentation.</dd>
+  <dt>Horizontal autoscaling does not work in some clusters</dt>
+    <dd>For security reasons, the standard port that is used by Heapster (10255) is closed in all worker nodes in old clusters. Because this port is closed, Heapster is unable to report metrics for worker nodes and horizontal autoscaling cannot work as documented in [Horizontal Pod Autoscaling ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) in the Kubernetes documentation. Create another cluster to avoid this issue.</dd>
 </dl>
 
 ### Persistent Storage
