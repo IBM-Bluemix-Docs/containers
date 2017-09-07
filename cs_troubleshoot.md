@@ -318,7 +318,7 @@ The deleted node is no longer listed in Calico.
 {: #cs_firewall}
 
 {: tsSymptoms}
-When kubectl proxy fails or you try to access a service in your cluster and your connection fails with one of the following error messages:
+When the worker nodes are not able to connect, you might see a variety of different symptoms. You might see one of the following messages when kubectl proxy fails or you try to access a service in your cluster and the connection fails.
 
   ```
   Connection refused
@@ -335,24 +335,24 @@ When kubectl proxy fails or you try to access a service in your cluster and your
   ```
   {: screen}
 
-Or when you use kubectl exec, attach, or logs and you receive this error:
+If you run kubectl exec, attach, or logs, you might see the following message.
 
   ```
   Error from server: error dialing backend: dial tcp XXX.XXX.XXX:10250: getsockopt: connection timed out
   ```
   {: screen}
 
-Or when kubectl proxy succeeds, but the dashboard is not available and you receive this error:
+If kubectl proxy succeeds, but the dashboard is not available, you might see the following message.
 
   ```
   timeout on 172.xxx.xxx.xxx
   ```
   {: screen}
 
-Or when your worker nodes are stuck in a reloading loop.
+
 
 {: tsCauses}
-You might have an additional firewall set up or customized your existing firewall settings in your {{site.data.keyword.BluSoftlayer_notm}} account. {{site.data.keyword.containershort_notm}} requires certain IP addresses and ports to be opened to allow communication from the worker node to the Kubernetes master and vice versa.
+You might have an additional firewall set up or customized your existing firewall settings in your {{site.data.keyword.BluSoftlayer_notm}} account. {{site.data.keyword.containershort_notm}} requires certain IP addresses and ports to be opened to allow communication from the worker node to the Kubernetes master and vice versa. Another reason might be that the worker nodes are stuck in a reloading loop.
 
 {: tsResolve}
 This task requires an [Administrator access policy](cs_cluster.html#access_ov). Verify your current [access policy](cs_cluster.html#view_access).
