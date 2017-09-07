@@ -1753,7 +1753,7 @@ To deploy your app:
 
 <!--Horizontal auto-scaling is not working at the moment due to a port issue with heapster. The dev team is working on a fix. We pulled out this content from the public docs. It is only visible in staging right now.-->
 
-Deploy cloud applications that respond to changes in demand for your applications and that use resources only when needed. Autoscaling automatically increases or decreases instances in your apps based on CPU.
+Deploy cloud applications that respond to changes in demand for your applications and that use resources only when needed. Autoscaling automatically increases or decreases the number of instances of your apps based on CPU.
 {:shortdesc}
 
 Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
