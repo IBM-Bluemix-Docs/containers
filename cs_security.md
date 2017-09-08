@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-08-15"
+lastupdated: "2017-09-08"
 
 ---
 
@@ -22,7 +22,7 @@ lastupdated: "2017-08-15"
 You can use built-in security features for risk analysis and security protection. These features help you to protect your cluster infrastructure and network communication, isolate your compute resources, and ensure security compliance across your infrastructure components and container deployments.
 {: shortdesc}
 
-<a href="https://console.bluemix.net/docs/api/content/containers/images/cs_security.png"><img src="images/cs_security.png" width="400" alt="{{site.data.keyword.containershort_notm}} cluster security" style="width:400px;" /></a>
+<a href="https://console.bluemix.net/docs/api/content/containers/images/cs_security.png"><img src="images/cs_security.png" width="400" alt="{{site.data.keyword.containershort_notm}} cluster security" style="width:400px;border: 0;"/></a>
 
 
   <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
@@ -54,11 +54,11 @@ Review the built-in Kubernetes master security features to protect the Kubernete
 <dl>
   <dt>Fully managed and dedicated Kubernetes master</dt>
     <dd>Every Kubernetes cluster in {{site.data.keyword.containershort_notm}} is controlled by a dedicated Kubernetes master that is managed by IBM in an IBM-owned {{site.data.keyword.BluSoftlayer_full}} account. The Kubernetes master is set up with the following dedicated components that are not shared with other IBM customers.
-    <ul><ul><li>etcd data store: Stores all Kubernetes resources of a cluster, such as Services, Deployments, and Pods. Kubernetes ConfigMaps and Secrets are app data that are stored as key value pairs so that they can be used by an app that runs in a pod. Data in etcd is stored on an encrypted disk that is managed by IBM and is encrypted via TLS when sent to a pod to assure data protection and integrity.
-    <li>kube-apiserver: Serves as the main entry point for all requests from the worker node to the Kubernetes master. The kube-apiserver validates and processes requests and can read from and write to the etcd data store.
-    <li><kube-scheduler: Decides where to deploy pods, taking into account capacity and performance needs, hardware and software policy constraints, anti-affinity specifications, and workload requirements. If no worker node can be found that matches the requirements, the pod is not deployed in the cluster.
-    <li>kube-controller-manager: Responsible for monitoring replica sets, and creating corresponding pods to achieve the desired state.
-    <li>OpenVPN: {{site.data.keyword.containershort_notm}} specific component to provide secured network connectivity for all Kubernetes master to worker node communication.</ul></ul></dd>
+    <ul><li>etcd data store: Stores all Kubernetes resources of a cluster, such as Services, Deployments, and Pods. Kubernetes ConfigMaps and Secrets are app data that are stored as key value pairs so that they can be used by an app that runs in a pod. Data in etcd is stored on an encrypted disk that is managed by IBM and is encrypted via TLS when sent to a pod to assure data protection and integrity.</li>
+    <li>kube-apiserver: Serves as the main entry point for all requests from the worker node to the Kubernetes master. The kube-apiserver validates and processes requests and can read from and write to the etcd data store.</li>
+    <li>kube-scheduler: Decides where to deploy pods, taking into account capacity and performance needs, hardware and software policy constraints, anti-affinity specifications, and workload requirements. If no worker node can be found that matches the requirements, the pod is not deployed in the cluster.</li>
+    <li>kube-controller-manager: Responsible for monitoring replica sets, and creating corresponding pods to achieve the desired state.</li>
+    <li>OpenVPN: {{site.data.keyword.containershort_notm}} specific component to provide secured network connectivity for all Kubernetes master to worker node communication.</li></ul></dd>
   <dt>TLS secured network connectivity for all worker node to Kubernetes master communication</dt>
     <dd>To secure the network communication to the Kubernetes master, {{site.data.keyword.containershort_notm}} generates TLS certificates that encrypts the communication to and from the kube-apiserver and etcd data store components for every cluster. These certificates are never shared across clusters or across Kubernetes master components.</dd>
   <dt>OpenVPN secured network connectivity for all Kubernetes master to worker node communication</dt>
@@ -95,7 +95,7 @@ Review the built-in worker node security features to protect the worker node env
 ### Opening required ports and IP addresses in your firewall
 {: #opening_ports}
 
-When you set up a firewall for your worker nodes or customize the firewall settings in your {{site.data.keyword.BluSoftlayer_notm}} account, you must open certain ports and IP addresses so that the worker node and the Kubernetes master can communicate.
+When you set up a firewall for your worker nodes or customize the firewall settings in your {{site.data.keyword.BluSoftlayer_notm}} account, you must open certain ports and IP addresses so that the worker node and the Kubernetes master can communicate. To access the load balancer or Ingress controller from outside of the cluster, you must also open ports in your firewall.
 
 1.  Note the public IP address for all your worker nodes in the cluster.
 
@@ -111,7 +111,51 @@ When you set up a firewall for your worker nodes or customize the firewall setti
   ```
   {: codeblock}
 
-    <ul><li>For OUTBOUND connectivity from your worker nodes, allow outgoing network traffic from the source worker node to the destination TCP/UDP port range 20000-32767 for `<each_worker_node_publicIP>`, and the following IP addresses and network groups:</br>
+    <ul>
+    <li>For INBOUND connectivity to your worker nodes, allow incoming network traffic from the following source network groups and IP addresses to the destination TCP/UDP port 10250 and `<public_IP_of _each_worker_node>`:</br>
+    
+  <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
+      <thead>
+      <th colspan=2><img src="images/idea.png"/> Inbound IP addresses</th>
+      </thead>
+    <tbody>
+      <tr>
+        <td>ams03</td>
+        <td><code>169.50.144.128/28</code></br><code>169.50.169.104/29</code></br><code>169.50.185.32/27</code></td>
+      </tr>
+      <tr>
+        <td>dal10</td>
+        <td><code>169.46.7.232/29</code></br><code>169.48.138.64/26</code></br><code>169.48.180.128/25</code></td>
+       </tr>
+       <tr>
+        <td>dal12</td>
+        <td><code>169.47.70.8/29</code></br><code>169.47.79.192/26</code></br><code>169.47.126.192/27</code></td>
+       </tr>
+       <tr>
+        <td>fra02</td>
+        <td><code>169.50.48.160/28</code></br><code>169.50.56.168/29</code></br><code>169.50.58.160/27</code></td>
+       </tr>
+      </tbody>
+      <tr>
+       <td>lon02</td>
+       <td><code>159.122.242.78</code></td>
+      </tr>
+      <tr>
+       <td>lon04</td>
+       <td><code>158.175.68.192/26</code></td>
+      </tr>
+      <tr>
+       <td>syd01</td>
+       <td><code>168.1.209.192/26</code></td>
+      </tr>
+      <tr>
+       <td>syd04</td>
+       <td><code>130.198.67.0/26</code></td>
+      </tr>
+    </table>
+
+    </li>
+    <li>For OUTBOUND connectivity from your worker nodes, allow outgoing network traffic from the source worker node to the destination TCP/UDP port range 20000-32767 for `<each_worker_node_publicIP>`, and the following IP addresses and network groups:</br>
     
   <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
       <thead>
@@ -152,7 +196,13 @@ When you set up a firewall for your worker nodes or customize the firewall setti
        <td><code>130.198.64.19</code></td>
       </tr>
     </table>
-</ul>
+
+    </li>
+    </ul>
+
+3. Optional: To access the load balancer from outside of the cluster or VLAN, open the port for incoming network traffic on the specific IP address of that load balancer.
+ 
+4. Optional: To access the Ingress controller from outside of the cluster or VLAN, open either port 80 or 443 for incoming network traffic on the specific IP address of that Ingress controller, depending on which port you have configured.
 
 
 ## Network policies
