@@ -47,7 +47,7 @@ You can use a deployment to define update strategies for your app, which include
 <dd>A Kubernetes service groups a set of pods and provides network connection to these pods for other services in the cluster without exposing the actual private IP address of each pod. You can use a service to make your app available within your cluster or to the public internet.
 
 </br></br>
-To learn more about Kubernetes terminology, try the <a href="https://kubernetes.io/docs/tutorials/kubernetes-basics/" target="_blank">Kubernetes Basics tutorial</a>.</dd>
+To learn more about Kubernetes terminology, try the <a href="cs_tutorials.html#cs_tutorials" target="_blank">tutorial</a>.</dd>
 </dl>
 
 ## Benefits of using clusters
@@ -148,7 +148,7 @@ To set up your Dedicated environment to use clusters:
     8.  Click **Invite users**.
 2.  [Create IBMIDs for the end users of your {{site.data.keyword.Bluemix_notm}} account. ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/account/us-en/signup/register.html)
 3.  [Add the users from the previous step to your {{site.data.keyword.Bluemix_notm}} account.](cs_cluster.html#add_users)
-4.  Access your {{site.data.keyword.Bluemix_notm}} Dedicated account through the Public console and start creating clusters.
+5.  Access your {{site.data.keyword.Bluemix_notm}} Dedicated account through the Public console and start creating clusters.
 
     1.  Log in to {{site.data.keyword.Bluemix_notm}} Public console ([https://console.bluemix.net ![External link icon](../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net)) with your IBMID.
     2.  From the account menu, select your {{site.data.keyword.Bluemix_notm}} Dedicated account. The console is updated with the services and information for your {{site.data.keyword.Bluemix_notm}} Dedicated instance.

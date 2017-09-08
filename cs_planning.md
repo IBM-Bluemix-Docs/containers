@@ -283,7 +283,7 @@ For more information about how to create a service of type cluster IP, see [Kube
 When you create a cluster, every cluster must be connected to a public VLAN. The public VLAN determines the public IP address that is assigned to a worker node during cluster creation.
 {:shortdesc}
 
-A public VLAN is protected by a {{site.data.keyword.BluSoftlayer_notm}} firewall that does not allow inbound or outbound connectivity to the internet by default. Although the Kubernetes master and the worker nodes communicate over the public VLAN by using their assigned public IP addresses, they cannot be reached from the internet.
+The public network interface for the worker nodes in both lite and standard clusters is protected by Calico network policies. These policies block most inbound traffic by default, including SSH. However, inbound traffic that is necessary for Kubernetes to function is allowed, as are connections to NodePort, Loadbalancer, and Ingress services. For more information about these policies, inlcuding how to modify them, see [Network policies](cs_security.html#cs_security_network_policies).
 
 |Cluster type|Manager of the public VLAN for the cluster|
 |------------|------------------------------------------|
@@ -428,8 +428,6 @@ You can configure other tools for additional logging and monitoring capabilities
 <dt>Prometheus</dt>
 <dd>Prometheus is an open source monitoring, logging, and alerting tool that was specifically designed for Kubernetes to retrieve detailed information about the cluster, worker nodes, and deployment health based on the Kubernetes logging information. For setup information, see [Integrating services with {{site.data.keyword.containershort_notm}}](#cs_planning_integrations).</dd>
 </dl>
-
-
 
 ## Integrations
 {: #cs_planning_integrations}
