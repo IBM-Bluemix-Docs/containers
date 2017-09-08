@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-09-1"
+lastupdated: "2017-09-08"
 
 ---
 
@@ -89,13 +89,13 @@ After logging in, download Kubernetes configuration data and certificates to con
 
    <dl>
    <dt><code><em>CLUSTER</em></code></dt>
-   <dd>(Required) The name or ID of the cluster.</dd>
+   <dd>The name or ID of the cluster. This value is required.</dd>
 
    <dt><code>--admin</code></dt>
-   <dd>(Optional) Download the certificates and permission files for the Administrator rbac role. Users with these files can perform admin actions on the cluster, such as removing the cluster.</dd>
+   <dd>Download the certificates and permission files for the Administrator rbac role. Users with these files can perform admin actions on the cluster, such as removing the cluster. This value is optional.</dd>
    </dl>
 
-**Examples**:
+**Example**:
 
 ```
 bx cs cluster-config my_cluster
@@ -114,7 +114,7 @@ To create a cluster in your organization.
 <dl>
 <dt><code>--file <em>FILE_LOCATION</em></code></dt>
 
-<dd>(Optional for standard clusters. Not available for lite clusters.) The path to the YAML file to create your standard cluster. Instead of defining the characteristics of your cluster by using the options provided in this command, you can use a YAML file.
+<dd>The path to the YAML file to create your standard cluster. Instead of defining the characteristics of your cluster by using the options provided in this command, you can use a YAML file.  This value is optional for standard clusters and is not available for lite clusters.
 
 <p><strong>Note:</strong> If you provide the same option in the command as parameter in the YAML file, the value in the command takes precedence over the value in the YAML. For example, you define a location in your YAML file and use the <code>--location</code> option in the command, the value that you entered in the command option overrides the value in the YAML file.
 
@@ -166,10 +166,10 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
     </p></dd>
     
 <dt><code>--hardware <em>HARDWARE</em></code></dt>
-<dd>(Optional for standard clusters. Not available for lite clusters.) The level of hardware isolation for your worker node. Use dedicated if you want to have available physical resources dedicated to you only, or shared to allow physical resources to be shared with other IBM customers. The default is shared.</dd>
+<dd>The level of hardware isolation for your worker node. Use dedicated if you want to have available physical resources dedicated to you only, or shared to allow physical resources to be shared with other IBM customers. The default is shared.  This value is optional for standard clusters and is not available for lite clusters.</dd>
 
 <dt><code>--location <em>LOCATION</em></code></dt>
-<dd>(Required for standard clusters. Optional for lite clusters.) The location where you want to create the cluster. The locations that are available to you depend on the {{site.data.keyword.Bluemix_notm}} region you are logged in to. Select the region that is physically closest to you for best performance.
+<dd>The location where you want to create the cluster. The locations that are available to you depend on the {{site.data.keyword.Bluemix_notm}} region you are logged in to. Select the region that is physically closest to you for best performance.  This value is required for standard clusters and is optional for lite clusters.
 
 <p>Available locations are:<ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>ra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul>
 </p>
@@ -178,20 +178,21 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 </dd>
 
 <dt><code>--machine-type <em>MACHINE_TYPE</em></code></dt>
-<dd>(Required for standard clusters. Not available for lite clusters.) The machine type that you choose impacts the amount of memory and disk space that is available to the containers that are deployed to your worker node. To list available machine types, see [bx cs machine-types <em>LOCATION</em>](cs_cli_reference.html#cs_machine_types).</dd>
+<dd>The machine type that you choose impacts the amount of memory and disk space that is available to the containers that are deployed to your worker node. To list available machine types, see [bx cs machine-types <em>LOCATION</em>](cs_cli_reference.html#cs_machine_types).  This value is required for standard clusters and is not available for lite clusters.</dd>
 
 <dt><code>--name <em>NAME</em></code></dt>
-<dd>(Required) The name for the cluster.</dd>
+<dd>The name for the cluster.  This value is required.</dd>
 
 <dt><code>--no-subnet</code></dt>
-<dd>Include the flag to create a cluster without a portable subnet. The default is to not use the flag and to create a subnet in your {{site.data.keyword.BluSoftlayer_full}} portfolio.</dd>
+<dd>Include the flag to create a cluster without a portable subnet. The default is to not use the flag and to create a subnet in your {{site.data.keyword.BluSoftlayer_full}} portfolio. This value is optional.</dd>
 
 <dt><code>--private-vlan <em>PRIVATE_VLAN</em></code></dt>
-<dd>(Not available for lite clusters.)
+<dd> 
 
 <ul>
-<li>If this cluster is the first cluster that you create in this location, do not include this flag. A private VLAN is created for you when the clusters is created.</li>
-<li>If you created a cluster before in this location or created a private VLAN in {{site.data.keyword.BluSoftlayer_notm}} before, you must specify that private VLAN.
+<li>This parameter is not available for lite clusters.</li>
+<li>If this standard cluster is the first standard cluster that you create in this location, do not include this flag. A private VLAN is created for you when the clusters is created.</li>
+<li>If you created a standard cluster before in this location or created a private VLAN in {{site.data.keyword.BluSoftlayer_notm}} before, you must specify that private VLAN.
 
 <p><strong>Note:</strong> The public and private VLANs that you specify with the create command must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></li>
 </ul>
@@ -199,11 +200,11 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 <p>To find out if you already have a private VLAN for a specific location or to find the name of an existing private VLAN, run <code>bx cs vlans <em>&lt;location&gt;</em></code>.</p></dd>
 
 <dt><code>--public-vlan <em>PUBLIC_VLAN</em></code></dt>
-<dd>(Not available for lite clusters.)
-
+<dd> 
 <ul>
-<li>If this cluster is the first cluster that you create in this location, do not use this flag. A public VLAN is created for you when the cluster is created.</li>
-<li>If you created a cluster before in this location or created a public VLAN in {{site.data.keyword.BluSoftlayer_notm}} before, you must specify that public VLAN.
+<li>This parameter is not available for lite clusters.</li>
+<li>If this standard cluster is the first standard cluster that you create in this location, do not use this flag. A public VLAN is created for you when the cluster is created.</li>
+<li>If you created a standard cluster before in this location or created a public VLAN in {{site.data.keyword.BluSoftlayer_notm}} before, you must specify that public VLAN.
 
 <p><strong>Note:</strong> The public and private VLANs that you specify with the create command must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></li>
 </ul>
@@ -211,7 +212,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 <p>To find out if you already have a public VLAN for a specific location or to find the name of an existing public VLAN, run <code>bx cs vlans <em>&lt;location&gt;</em></code>.</p></dd>
 
 <dt><code>--workers WORKER</code></dt>
-<dd>(Optional for standard clusters. Not available for lite clusters.) The number of worker nodes that you want to deploy in your cluster. If you do not specify this option, a cluster with 1 worker node is created.
+<dd>The number of worker nodes that you want to deploy in your cluster. If you do not specify this option, a cluster with 1 worker node is created. This value is optional for standard clusters and is not available for lite clusters.
 
 <p><strong>Note:</strong> Every worker node is assigned a unique worker node ID and domain name that must not be manually changed after the cluster is created. Changing the ID or domain name prevents the Kubernetes master from managing your cluster.</p></dd>
 </dl>
@@ -252,10 +253,10 @@ View information about a cluster in your organization.
 
    <dl>
    <dt><code><em>CLUSTER</em></code></dt>
-   <dd>(Required) The name or ID of the cluster.</dd>
+   <dd>The name or ID of the cluster. This value is required.</dd>
    </dl>
 
-**Examples**:
+**Example**:
 
   ```
   bx cs cluster-get my_cluster
@@ -272,13 +273,13 @@ Remove a cluster from your organization.
 
    <dl>
    <dt><code><em>CLUSTER</em></code></dt>
-   <dd>(Required) The name or ID of the cluster.</dd>
+   <dd>The name or ID of the cluster. This value is required.</dd>
 
    <dt><code>-f</code></dt>
-   <dd>(Optional) Use this option to force the removal of a cluster with no user prompts.</dd>
+   <dd>Use this option to force the removal of a cluster with no user prompts. This value is optional.</dd>
    </dl>
 
-**Examples**:
+**Example**:
 
   ```
   bx cs cluster-rm my_cluster
@@ -297,16 +298,16 @@ Add a {{site.data.keyword.Bluemix_notm}} service to a cluster.
 
    <dl>
    <dt><code><em>CLUSTER</em></code></dt>
-   <dd>(Required) The name or ID of the cluster.</dd>
+   <dd>The name or ID of the cluster. This value is required.</dd>
 
    <dt><code><em>KUBERNETES_NAMESPACE</em></code></dt>
-   <dd>(Required) The name of the Kubernetes namespace.</dd>
+   <dd>The name of the Kubernetes namespace. This value is required.</dd>
 
    <dt><code><em>SERVICE_INSTANCE_GUID</em></code></dt>
-   <dd>(Required) The ID of the {{site.data.keyword.Bluemix_notm}} service instance that you want to bind.</dd>
+   <dd>The ID of the {{site.data.keyword.Bluemix_notm}} service instance that you want to bind. This value is required.</dd>
    </dl>
 
-**Examples**:
+**Example**:
 
   ```
   bx cs cluster-service-bind my_cluster my_namespace my_service_instance_GUID
@@ -325,16 +326,16 @@ Remove a {{site.data.keyword.Bluemix_notm}} service from a cluster.
 
    <dl>
    <dt><code><em>CLUSTER</em></code></dt>
-   <dd>(Required) The name or ID of the cluster.</dd>
+   <dd>The name or ID of the cluster. This value is required.</dd>
 
    <dt><code><em>KUBERNETES_NAMESPACE</em></code></dt>
-   <dd>(Required) The name of the Kubernetes namespace.</dd>
+   <dd>The name of the Kubernetes namespace. This value is required.</dd>
 
    <dt><code><em>SERVICE_INSTANCE_GUID</em></code></dt>
-   <dd>(Required) The ID of the {{site.data.keyword.Bluemix_notm}} service instance that you want to remove.</dd>
+   <dd>The ID of the {{site.data.keyword.Bluemix_notm}} service instance that you want to remove. This value is required.</dd>
    </dl>
 
-**Examples**:
+**Example**:
 
   ```
   bx cs cluster-service-unbind my_cluster my_namespace my_service_instance_GUID
@@ -351,16 +352,16 @@ List the services that are bound to one or all of the Kubernetes namespace in a 
 
    <dl>
    <dt><code><em>CLUSTER</em></code></dt>
-   <dd>(Required) The name or ID of the cluster.</dd>
+   <dd>The name or ID of the cluster. This value is required.</dd>
 
    <dt><code>--namespace <em>KUBERNETES_NAMESPACE</em></code>, <code>-n <em>KUBERNETES_NAMESPACE</em></code></dt>
-   <dd>(Optional) Include the services that are bound to a specific namespace in a cluster.</dd>
+   <dd>Include the services that are bound to a specific namespace in a cluster. This value is optional.</dd>
 
    <dt><code>--all-namespaces</code></dt>
-    <dd>(Optional) Include the services that are bound to all of the namespaces in a cluster.</dd>
+    <dd>Include the services that are bound to all of the namespaces in a cluster. This value is optional.</dd>
     </dl>
 
-**Examples**:
+**Example**:
 
   ```
   bx cs cluster-services my_cluster --namespace my_namespace
@@ -379,13 +380,13 @@ Make a subnet in a {{site.data.keyword.BluSoftlayer_notm}} account available to 
 
    <dl>
    <dt><code><em>CLUSTER</em></code></dt>
-   <dd>(Required) The name or ID of the cluster.</dd>
+   <dd>The name or ID of the cluster. This value is required.</dd>
 
    <dt><code><em>SUBNET</em></code></dt>
-   <dd>(Required) The ID of the subnet.</dd>
+   <dd>The ID of the subnet. This value is required.</dd>
    </dl>
 
-**Examples**:
+**Example**:
 
   ```
   bx cs cluster-subnet-add my_cluster subnet
@@ -403,7 +404,7 @@ View a list of clusters in your organization.
 
   None
 
-**Examples**:
+**Example**:
 
   ```
   bx cs clusters
@@ -420,11 +421,11 @@ Set {{site.data.keyword.BluSoftlayer_notm}} account credentials for your {{site.
 
    <dl>
    <dt><code>--infrastructure-username <em>USERNAME</em></code></dt>
-   <dd>(Required) A {{site.data.keyword.BluSoftlayer_notm}} account username.</dd>
+   <dd>A {{site.data.keyword.BluSoftlayer_notm}} account username. This value is required.</dd>
    </dl>
 
    <dt><code>--infrastructure-api-key <em>API_KEY</em></code></dt>
-   <dd>(Required) A {{site.data.keyword.BluSoftlayer_notm}} account API key.
+   <dd>A {{site.data.keyword.BluSoftlayer_notm}} account API key. This value is required.
    
  <p>
   To generate an API key:
@@ -444,7 +445,7 @@ Set {{site.data.keyword.BluSoftlayer_notm}} account credentials for your {{site.
   <li>Copy the API key to use in this command.</li>
   </ol></p></dd>
     
-**Examples**:
+**Example**:
 
   ```
   bx cs credentials-set --infrastructure-api-key API_KEY --infrastructure-username USERNAME
@@ -461,7 +462,7 @@ Remove {{site.data.keyword.BluSoftlayer_notm}} account credentials from your {{s
 
    None
 
-**Examples**:
+**Example**:
 
   ```
   bx cs credentials-unset
@@ -479,7 +480,7 @@ View a list of supported commands and parameters.
 
    None
 
-**Examples**:
+**Example**:
 
   ```
   bx cs help
@@ -496,7 +497,7 @@ Initialize the {{site.data.keyword.containershort_notm}} plug-in or specify the 
 
    <dl>
    <dt><code>--host <em>HOST</em></code></dt>
-   <dd>(Optional) The {{site.data.keyword.containershort_notm}} API endpoint that you want to use. Examples:
+   <dd>The {{site.data.keyword.containershort_notm}} API endpoint that you want to use.  This value is optional. Examples:
 
     <ul>
     <li>US-South:
@@ -537,7 +538,7 @@ View a list of available locations for you to create a cluster in.
 
    None
 
-**Examples**:
+**Example**:
 
   ```
   bx cs locations
@@ -554,9 +555,9 @@ View a list of available machine types for your worker nodes. Each machine type 
 
    <dl>
    <dt><em>LOCATION</em></dt>
-   <dd>(Required) Enter the location where you want to list available machine types. Available locations are: <ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>ra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul></dd></dl>
+   <dd>Enter the location where you want to list available machine types.  This value is required. Available locations are: <ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>ra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul></dd></dl>
    
-**Examples**:
+**Example**:
 
   ```
   bx cs machine-types LOCATION
@@ -573,7 +574,7 @@ View a list of subnets that are available in a {{site.data.keyword.BluSoftlayer_
 
    None
 
-**Examples**:
+**Example**:
 
   ```
   bx cs subnets
@@ -590,10 +591,10 @@ List the public and private VLANs that are available for a location in your {{si
 
    <dl>
    <dt>LOCATION</dt>
-   <dd>(Required) Enter the location where you want to list your private and public VLANs. Available locations are: <ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>ra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul></dd>
+   <dd>Enter the location where you want to list your private and public VLANs. This value is required. Available locations are: <ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>ra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul></dd>
    </dl>
    
-**Examples**:
+**Example**:
 
   ```
   bx cs vlans dal10
@@ -610,19 +611,19 @@ Create webhooks.
 
    <dl>
    <dt><code>--cluster <em>CLUSTER</em></code></dt>
-   <dd>(Required) The name or ID of the cluster.</dd>
+   <dd>The name or ID of the cluster. This value is required.</dd>
 
    <dt><code>--level <em>LEVEL</em></code></dt>
-   <dd>(Optional) The notification level, such as <code>Normal</code> or <code>Warning</code>. <code>Warning</code> is the default value.</dd>
+   <dd>The notification level, such as <code>Normal</code> or <code>Warning</code>. <code>Warning</code> is the default value. This value is optional.</dd>
 
    <dt><code>--type <em>slack</em></code></dt>
-   <dd>(Required) The webhook type, such as slack. Only slack is supported.</dd>
+   <dd>The webhook type, such as slack. Only slack is supported. This value is required.</dd>
 
    <dt><code>--URL <em>URL</em></code></dt>
-   <dd>(Required) The URL for the webhook.</dd>
+   <dd>The URL for the webhook. This value is required.</dd>
    </dl>
 
-**Examples**:
+**Example**:
 
   ```
   bx cs webhook-create --cluster my_cluster --level Normal --type slack --URL http://github.com/<mywebhook>
@@ -639,10 +640,10 @@ Add worker nodes to your standard cluster.
 
 <dl>
 <dt><code>--cluster <em>CLUSTER</em></code></dt>
-<dd>(Required) The name or ID of the cluster.</dd>
+<dd>The name or ID of the cluster. This value is required.</dd>
 
 <dt><code>--file <em>FILE_LOCATION</em></code></dt>
-<dd>The path to the YAML file to add worker nodes to your cluster. Instead of defining your additional worker nodes by using the options provided in this command, you can use a YAML file.
+<dd>The path to the YAML file to add worker nodes to your cluster. Instead of defining your additional worker nodes by using the options provided in this command, you can use a YAML file. This value is optional.
 
 <p><strong>Note:</strong> If you provide the same option in the command as parameter in the YAML file, the value in the command takes precedence over the value in the YAML. For example, you define a machine type in your YAML file and use the --machine-type option in the command, the value that you entered in the command option overrides the value in the YAML file.
 
@@ -692,21 +693,21 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 </tbody></table></p></dd>
 
 <dt><code>--hardware <em>HARDWARE</em></code></dt>
-<dd>(Optional) The level of hardware isolation for your worker node. Use dedicated if you want to have available physical resources dedicated to you only, or shared to allow physical resources to be shared with other IBM customers. The default is shared.</dd>
+<dd>The level of hardware isolation for your worker node. Use dedicated if you want to have available physical resources dedicated to you only, or shared to allow physical resources to be shared with other IBM customers. The default is shared. This value is optional.</dd>
 
 <dt><code>--machine-type <em>MACHINE_TYPE</em></code></dt>
-<dd>(Required) The machine type that you choose impacts the amount of memory and disk space that is available to the containers that are deployed to your worker node. To list available machine types, see [bx cs machine-types LOCATION](cs_cli_reference.html#cs_machine_types).</dd>
+<dd>The machine type that you choose impacts the amount of memory and disk space that is available to the containers that are deployed to your worker node. This value is required. To list available machine types, see [bx cs machine-types LOCATION](cs_cli_reference.html#cs_machine_types).</dd>
 
 <dt><code>--number <em>NUMBER</em></code></dt>
-<dd>(Optional) An integer that represents the number of worker nodes to create in the cluster. The default value is 1. </dd>
+<dd>An integer that represents the number of worker nodes to create in the cluster. The default value is 1. This value is optional.</dd>
 
 <dt><code>--private-vlan <em>PRIVATE_VLAN</em></code></dt>
-<dd>(Required) The private VLAN that was specified when the cluster was created. 
+<dd>The private VLAN that was specified when the cluster was created. This value is required. 
 
 <p><strong>Note:</strong> The public and private VLANs that you specify must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></dd>
 
 <dt><code>--public-vlan <em>PUBLIC_VLAN</em></code></dt>
-<dd>(Optional) The public VLAN that was specified when the cluster was created. 
+<dd>The public VLAN that was specified when the cluster was created. This value is optional. 
 
 <p><strong>Note:</strong> The public and private VLANs that you specify must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></dd>
 </dl>
@@ -735,10 +736,10 @@ View details of a worker node.
 
    <dl>
    <dt><em>WORKER_NODE_ID</em></dt>
-   <dd>The ID for a worker node. Run <code>bx cs workers <em>CLUSTER</em></code> to view the IDs for the worker nodes in a cluster.</dd>
+   <dd>The ID for a worker node. Run <code>bx cs workers <em>CLUSTER</em></code> to view the IDs for the worker nodes in a cluster. This value is required.</dd>
    </dl>
 
-**Examples**:
+**Example**:
 
   ```
   bx cs worker-get WORKER_NODE_ID
@@ -755,19 +756,19 @@ Reboot the worker nodes in a cluster. If a problem exists with a worker node, fi
 
    <dl>
    <dt><code><em>CLUSTER</em></code></dt>
-   <dd>(Required) The name or ID of the cluster.</dd>
+   <dd>The name or ID of the cluster. This value is required.</dd>
 
    <dt><code>-f</code></dt>
-   <dd>(Optional) Use this option to force the restart of the worker node with no user prompts.</dd>
+   <dd>Use this option to force the restart of the worker node with no user prompts. This value is optional.</dd>
 
    <dt><code>--hard</code></dt>
-   <dd>(Optional) Use this option to force a hard restart of a worker node by cutting off power to the worker node. Use this option if the worker node is unresponsive or the worker node has a Docker hang.</dd>
+   <dd>Use this option to force a hard restart of a worker node by cutting off power to the worker node. Use this option if the worker node is unresponsive or the worker node has a Docker hang. This value is optional.</dd>
 
    <dt><code><em>WORKER</em></code></dt>
-   <dd>(Required) The name or ID of one or more worker nodes. Use a space to list multiple worker nodes.</dd>
+   <dd>The name or ID of one or more worker nodes. Use a space to list multiple worker nodes. This value is required.</dd>
    </dl>
 
-**Examples**:
+**Example**:
 
   ```
   bx cs worker-reboot my_cluster my_node1 my_node2
@@ -784,16 +785,16 @@ Reload the worker nodes in a cluster. If a problem exists with a worker node, fi
 
    <dl>
    <dt><code><em>CLUSTER</em></code></dt>
-   <dd>(Required) The name or ID of the cluster.</dd>
+   <dd>The name or ID of the cluster. This value is required.</dd>
 
    <dt><code>-f</code></dt>
-   <dd>(Optional) Use this option to force the reload of a worker node with no user prompts.</dd>
+   <dd>Use this option to force the reload of a worker node with no user prompts. This value is optional.</dd>
 
    <dt><code><em>WORKER</em></code></dt>
-   <dd>(Required) The name or ID of one or more worker nodes. Use a space to list multiple worker nodes.</dd>
+   <dd>The name or ID of one or more worker nodes. Use a space to list multiple worker nodes. This value is required.</dd>
    </dl>
 
-**Examples**:
+**Example**:
 
   ```
   bx cs worker-reload my_cluster my_node1 my_node2
@@ -809,16 +810,16 @@ Remove one or more worker nodes from a cluster.
 
    <dl>
    <dt><code><em>CLUSTER</em></code></dt>
-   <dd>(Required) The name or ID of the cluster.</dd>
+   <dd>The name or ID of the cluster. This value is required.</dd>
 
    <dt><code>-f</code></dt>
-   <dd>(Optional) Use this option to force the removal of a worker node with no user prompts.</dd>
+   <dd>Use this option to force the removal of a worker node with no user prompts. This value is optional.</dd>
 
    <dt><code><em>WORKER</em></code></dt>
-   <dd>(Required) The name or ID of one or more worker nodes. Use a space to list multiple worker nodes.</dd>
+   <dd>The name or ID of one or more worker nodes. Use a space to list multiple worker nodes. This value is required.</dd>
    </dl>
 
-**Examples**:
+**Example**:
 
   ```
   bx cs worker-rm my_cluster my_node1 my_node2
@@ -836,10 +837,10 @@ View a list of worker nodes and the status for each in a cluster.
 
    <dl>
    <dt><em>CLUSTER</em></dt>
-   <dd>(Required) The name or ID of the cluster where you list available worker nodes.</dd>
+   <dd>The name or ID of the cluster where you list available worker nodes. This value is required.</dd>
    </dl>
 
-**Examples**:
+**Example**:
 
   ```
   bx cs workers mycluster
