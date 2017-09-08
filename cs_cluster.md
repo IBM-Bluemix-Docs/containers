@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-08-30"
+lastupdated: "2017-09-08"
 
 ---
 
@@ -561,9 +561,9 @@ You can deploy containers to your cluster from an IBM-provided public image or a
 
 Before you begin:
 
--   [Set up a namespace in {{site.data.keyword.registryshort_notm}} on {{site.data.keyword.Bluemix_notm}} Public or {{site.data.keyword.Bluemix_notm}} Dedicated and push images to this namespace](/docs/services/Registry/registry_setup_cli_namespace.html#registry_namespace_add).
--   [Create a cluster](#cs_cluster_cli).
--   [Target your CLI to your cluster](cs_cli_install.html#cs_cli_configure).
+1. [Set up a namespace in {{site.data.keyword.registryshort_notm}} on {{site.data.keyword.Bluemix_notm}} Public or {{site.data.keyword.Bluemix_notm}} Dedicated and push images to this namespace](/docs/services/Registry/registry_setup_cli_namespace.html#registry_namespace_add).
+2. [Create a cluster](#cs_cluster_cli).
+3. [Target your CLI to your cluster](cs_cli_install.html#cs_cli_configure).
 
 When you create a cluster, a non-expiring registry token is automatically created for the cluster. This token is used to authorize read-only access to any of your namespaces that you set up in {{site.data.keyword.registryshort_notm}} so that you can work with IBM-provided public and your own private Docker images. Tokens must be stored in a Kubernetes `imagePullSecret` so that they are accessible to a Kubernetes cluster when you deploy a containerized app. When your cluster is created, {{site.data.keyword.containershort_notm}} automatically stores this token in a Kubernetes `imagePullSecret`. The `imagePullSecret` is added to the default Kubernetes namespace, the default list of secrets in the ServiceAccount for that namespace, and the kube-system namespace.
 
@@ -617,7 +617,7 @@ You can deploy containers to other Kubernetes namespaces, use images that are st
 
 Before you begin:
 
-1.  [Set up a namespace in {{site.data.keyword.registryshort_notm}} on {{site.data.keyword.Bluemix_notm}} Public or {{site.data.keyword.Bluemix_notm}} Dedicated and push images to this namespace.](/docs/services/Registry/registry_setup_cli_namespace.html#registry_namespace_add).
+1.  [Set up a namespace in {{site.data.keyword.registryshort_notm}} on {{site.data.keyword.Bluemix_notm}} Public or {{site.data.keyword.Bluemix_notm}} Dedicated and push images to this namespace](/docs/services/Registry/registry_setup_cli_namespace.html#registry_namespace_add).
 2.  [Create a cluster](#cs_cluster_cli).
 3.  [Target your CLI to your cluster](cs_cli_install.html#cs_cli_configure).
 
@@ -1171,6 +1171,37 @@ Before you begin, verify that you have been assigned the Manager Cloud Foundry r
 15. Optional: Click **Save Role**.
 
 
+2. Update your cluster by using the GUI or running the [CLI command](cs_cli_reference.html#cs_cluster_update). When updating the Kubernetes master, the master will be down for about 5-10 minutes. During the update, you cannot access or change the cluster. However, worker nodes, apps, and resources that have been deployed by the cluster users are not modified and will continue to run.
+3. Confirm the update is complete. Your cluster will show the latest version.
+
+When the cluster update is complete, you can update your worker nodes to the latest version.
+
+## Updating worker nodes
+{: #cs_cluster_worker_update}
+
+Worker nodes can be updated to the Kubernetes version of the Kubernetes master. While the Kubernetes master has patches applied by IBM automatically, workers require a user command for both updates and patches. 
+
+**Attention**: Updating the worker node version can cause downtime for your apps and services. Data is deleted if not stored outside the pod. Use [replica sets ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/) in your deployments to allow pods to reschedule to available nodes.
+
+1. Back up all data prior to updating worker nodes.
+3. View resource usage of the worker nodes. During an update, worker nodes are removed sequentially, and pods might be rescheduled. If you need more space for your apps, add worker nodes to your cluster.
+
+    ```
+    kubectl top nodes
+    ```
+    {: pre}
+
+4. Install the version of the [`kubectl cli` ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/tools/install-kubectl/) that matches the Kubernetes version that you are updating the nodes to.
+5. From the {{site.data.keyword.Bluemix_notm}} Dashboard, navigate to the `Worker Nodes` section of your cluster, select one worker node, and click `Update Worker`. Or run [`bx cs worker update`](cs_cli_reference.html#cs_worker_update).
+6. Review the [Kubernetes changes](cs_versions.html) and make any required changes to your deployment scripts.
+7. Deploy your updated app to the updated worker node.
+8. Monitor your app to confirm that it is working on the updated worker node.
+9. If the app does not work, delete the app and adjust your deployment script before trying again.
+10. When the deployment works as expected, update your remaining worker nodes.
+
+When you have completed the update, inform developers who work in the cluster to update their `kubectl` CLI.
+
+</staging>
 
 ## Adding subnets to clusters
 {: #cs_cluster_subnet}
