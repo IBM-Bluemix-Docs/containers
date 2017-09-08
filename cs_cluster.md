@@ -561,9 +561,9 @@ You can deploy containers to your cluster from an IBM-provided public image or a
 
 Before you begin:
 
--   [Set up a namespace in {{site.data.keyword.registryshort_notm}} on {{site.data.keyword.Bluemix_notm}} Public or {{site.data.keyword.Bluemix_notm}} Dedicated and push images to this namespace](/docs/services/Registry/registry_setup_cli_namespace.html#registry_namespace_add).
--   [Create a cluster](#cs_cluster_cli).
--   [Target your CLI to your cluster](cs_cli_install.html#cs_cli_configure).
+1. [Set up a namespace in {{site.data.keyword.registryshort_notm}} on {{site.data.keyword.Bluemix_notm}} Public or {{site.data.keyword.Bluemix_notm}} Dedicated and push images to this namespace](/docs/services/Registry/registry_setup_cli_namespace.html#registry_namespace_add).
+2. [Create a cluster](#cs_cluster_cli).
+3. [Target your CLI to your cluster](cs_cli_install.html#cs_cli_configure).
 
 When you create a cluster, a non-expiring registry token is automatically created for the cluster. This token is used to authorize read-only access to any of your namespaces that you set up in {{site.data.keyword.registryshort_notm}} so that you can work with IBM-provided public and your own private Docker images. Tokens must be stored in a Kubernetes `imagePullSecret` so that they are accessible to a Kubernetes cluster when you deploy a containerized app. When your cluster is created, {{site.data.keyword.containershort_notm}} automatically stores this token in a Kubernetes `imagePullSecret`. The `imagePullSecret` is added to the default Kubernetes namespace, the default list of secrets in the ServiceAccount for that namespace, and the kube-system namespace.
 
