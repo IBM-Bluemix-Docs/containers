@@ -464,24 +464,10 @@ To uninstall the CLIs:
 
 6.  Uninstall Docker. Instructions to uninstall Docker vary based on the operating system that you use.
 
-    <table summary="OS specific instructions to uninstall Docker">
-     <tr>
-      <th>Operating system</th>
-      <th>Link</th>
-     </tr>
-     <tr>
-      <td>OSX</td>
-      <td>Choose to uninstall Docker from the [GUI or command line ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.docker.com/docker-for-mac/#uninstall-or-reset)</td>
-     </tr>
-     <tr>
-      <td>Linux</td>
-      <td>Instructions to uninstall Docker vary based on the Linux distribution that you use. To uninstall Docker for Ubuntu, see [Uninstall Docker ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#uninstall-docker-ce). Use this link to find instructions about how to uninstall Docker for other Linux distributions by selecting your distribution from the navigation.</td>
-     </tr>
-      <tr>
-        <td>Windows</td>
-        <td>Uninstall the [Docker toolbox ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.docker.com/toolbox/toolbox_install_mac/#how-to-uninstall-toolbox).</td>
-      </tr>
-    </table>
+- [OSX ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.docker.com/docker-for-mac/#uninstall-or-reset)
+- [Linux ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#uninstall-docker-ce)
+- [Windows ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.docker.com/toolbox/toolbox_install_mac/#how-to-uninstall-toolbox)
+
 
 ## Automating cluster deployments with the API
 {: #cs_api}

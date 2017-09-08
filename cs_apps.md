@@ -1714,7 +1714,7 @@ To deploy your app:
 2.  From the Kubernetes dashboard, click **+ Create**.
 3.  Select **Specify app details below** to enter the app details on the GUI or **Upload a YAML or JSON file** to upload your app [configuration file ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/). Use [this example YAML file ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/IBM-{{site.data.keyword.Bluemix_notm}}/kube-samples/blob/master/deploy-apps-clusters/deploy-ibmliberty.yaml) to deploy a container from the **ibmliberty** image in the US-South region.
 4.  In the Kubernetes dashboard, click **Deployments** to verify that the deployment was created.
-5.  If you made your app publicly available by using a node port service, a load balancer service, or Ingress, [verify that you can access the app](#cs_apps_public).
+5.  If you made your app publicly available by using a node port service, a load balancer service, or Ingress, verify that you can access the app.
 
 ## Deploying apps with the CLI
 {: #cs_apps_cli}
@@ -1744,7 +1744,7 @@ To deploy your app:
     ```
     {: pre}
 
-3.  If you made your app publicly available by using a node port service, a load balancer service, or Ingress, [verify that you can access the app](#cs_apps_public).
+3.  If you made your app publicly available by using a node port service, a load balancer service, or Ingress, verify that you can access the app.
 
 
 
@@ -1753,7 +1753,7 @@ To deploy your app:
 
 <!--Horizontal auto-scaling is not working at the moment due to a port issue with heapster. The dev team is working on a fix. We pulled out this content from the public docs. It is only visible in staging right now.-->
 
-Deploy cloud applications that respond to changes in demand for your applications and that use resources only when needed. Autoscaling automatically increases or decreases instances in your apps based on CPU.
+Deploy cloud applications that respond to changes in demand for your applications and that use resources only when needed. Autoscaling automatically increases or decreases the number of instances of your apps based on CPU.
 {:shortdesc}
 
 Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
