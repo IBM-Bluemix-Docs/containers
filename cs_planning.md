@@ -12,7 +12,7 @@ lastupdated: "2017-08-14"
 {:pre: .pre}
 {:table: .aria-labeledby="caption"}
 {:codeblock: .codeblock}
-{:tip: .tip} 
+{:tip: .tip}
 {:download: .download}
 
 
@@ -404,10 +404,10 @@ A container is, by design, short-lived. However, you can choose between several 
 {: caption="Table 5. Persistent data storage options for deployments in Kubernetes clusters" caption-side="top"}
 
 
-## Health monitoring
+## Monitoring and logging tools
 {: #cs_planning_health}
 
-You can use the standard Kubernetes and Docker features to monitor the health of your cluster and the apps that are deployed to it.
+You can use the standard Kubernetes and Docker features to monitor the health of your clusters and apps. You can also find logs for troubleshooting issues with your clusters and apps.
 {:shortdesc}
 <dl>
 <dt>Cluster details page in {{site.data.keyword.Bluemix_notm}}</dt>
@@ -416,8 +416,10 @@ You can use the standard Kubernetes and Docker features to monitor the health of
 <dd>The Kubernetes dashboard is an administrative web interface that you can use to review the health of your worker nodes, find Kubernetes resources, deploy containerized apps, and to troubleshoot apps based on logging and monitoring information. For more information about how to access your Kubernetes dashboard, see [Launching the Kubernetes dashboard for {{site.data.keyword.containershort_notm}}](cs_apps.html#cs_cli_dashboard).</dd>
 <dt>Docker logs</dt>
 <dd>You can leverage the built-in Docker logging capabilities to review activities on the standard STDOUT and STDERR output streams. For more information, see [Viewing container logs for a container that runs in a Kubernetes cluster](/docs/services/CloudLogAnalysis/containers/logging_containers_other_logs.html#logging_containers_collect_data).</dd>
-<dt>Logging and monitoring</dt>
-<dd>{{site.data.keyword.containershort_notm}} supports additional monitoring and logging capabilities for standard clusters. Logs and metrics are located in the {{site.data.keyword.Bluemix_notm}} space that was logged in to when the Kubernetes cluster was created.<ul><li>Container metrics are collected automatically for all containers that are deployed in a cluster. These metrics are sent and are made available through Grafana. For more information on metrics, see [Monitoring for the {{site.data.keyword.containershort_notm}}](/docs/services/cloud-monitoring/containers/analyzing_metrics_bmx_ui.html#analyzing_metrics_bmx_ui).<p>To access the Grafana dashboard, go to one of the following URLs and select the {{site.data.keyword.Bluemix_notm}} organization and space where you created the cluster.<ul><li>US-South: https://metrics.ng.bluemix.net</li><li>UK-South: https://metrics.eu-gb.bluemix.net</li><li>EU-Central: https://metrics.eu-de.bluemix.net</li></ul></p></li><li>Container logs are monitored and forwarded outside of the container. You can access logs for a container by using the Kibana dashboard. For more information on logging, see [Logging for the {{site.data.keyword.containershort_notm}}](/docs/services/CloudLogAnalysis/index.html#getting-started-with-cla).<p>To access the Kibana dashboard, go to one of the following URLs and select the {{site.data.keyword.Bluemix_notm}} organization and space where you created the cluster.<ul><li>US-South: https://logging.ng.bluemix.net</li><li>UK-South: https://logging.eu-gb.bluemix.net</li><li>EU-Central: https://logging.eu-de.bluemix.net</li></ul></p></li></ul></dd>
+<dt>{{site.data.keyword.monitoringlong_notm}}</dt>
+<dd>For standard clusters, metrics are located in the {{site.data.keyword.Bluemix_notm}} space that was logged in to when the Kubernetes cluster was created. Container metrics are collected automatically for all containers that are deployed in a cluster. These metrics are sent and are made available through Grafana. For more information on metrics, see [Monitoring for the {{site.data.keyword.containershort_notm}}](/docs/services/cloud-monitoring/containers/analyzing_metrics_bmx_ui.html#analyzing_metrics_bmx_ui).<p>To access the Grafana dashboard, go to one of the following URLs and select the {{site.data.keyword.Bluemix_notm}} organization and space where you created the cluster.<ul><li>US-South: https://metrics.ng.bluemix.net</li><li>UK-South: https://metrics.eu-gb.bluemix.net</li><li>EU-Central: https://metrics.eu-de.bluemix.net</li></ul></p></dd>
+<dt>{{site.data.keyword.loganalysislong_notm}}</dt>
+<dd>For standard clusters, logs are located in the {{site.data.keyword.Bluemix_notm}} space that was logged in to when the Kubernetes cluster was created. Container logs are monitored and forwarded outside of the container. You can access logs for a container by using the Kibana dashboard. For more information on logging, see [Logging for the {{site.data.keyword.containershort_notm}}](/docs/services/CloudLogAnalysis/containers/logging_containers_ov.html#logging_containers_ov).<p>To access the Kibana dashboard, go to one of the following URLs and select the {{site.data.keyword.Bluemix_notm}} organization and space where you created the cluster.<ul><li>US-South: https://logging.ng.bluemix.net</li><li>UK-South: https://logging.eu-gb.bluemix.net</li><li>EU-Central: https://logging.eu-de.bluemix.net</li></ul></p></dd>
 </dl>
 
 ### Other health monitoring tools

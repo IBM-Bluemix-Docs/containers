@@ -1178,6 +1178,7 @@ You can specify metadata for your Ingress resource to add capabilities to your I
 |[Client response data buffering](#response_buffer)|Disable the buffering of a client response on the Ingress controller while sending the response to the client.|
 |[Custom connect-timeouts and read-timeouts](#timeout)|Adjust the time the Ingress controller waits to connect to and read from the back-end app before the back-end app is considered to be not available.|
 |[Custom maximum client request body size](#client_max_body_size)|Adjust the size of the client request body that is allowed to be sent to the Ingress controller.|
+|[Custom HTTP and HTTPs ports](#custom_http_https_ports)|Change the default ports for HTTP and HTTPs network traffic.|
 
 
 ##### **Route incoming network traffic to a different path by using rewrites**
@@ -1613,6 +1614,99 @@ spec:
 
   </dd></dl>
   
+
+##### **Changing the default ports for HTTP and HTTPs network traffic**
+{: #custom_http_https_ports}
+
+Use this annotation to change the default ports for HTTP (port 80) and HTTPs (port 443) network traffic.
+{:shortdesc}
+
+<dl>
+<dt>Description</dt>
+<dd>By default, the Ingress controller is configured to listen for incoming HTTP network traffic on port 80 and for incoming HTTPS network traffic on port 443. You can change the default ports to add security to your Ingress controller domain, or to enable an HTTPS port only. 
+</dd>
+
+
+<dt>Sample Ingress resource YAML</dt>
+<dd>
+
+<pre class="codeblock">
+<code>apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: myingress
+  annotations:
+    ingress.bluemix.net/custom-port: "protocol=&lt;protocol1&gt; port=&lt;port1&gt;;protocol=&lt;protocol2&gt;port=&lt;port2&gt;"
+spec:
+  tls:
+  - hosts:
+    - mydomain
+    secretName: mytlssecret
+  rules:
+  - host: mydomain
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: myservice
+          servicePort: 8080</code></pre>
+
+<table>
+  <thead>
+  <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+  </thead>
+  <tbody>
+  <tr>
+  <td><code>annotations</code></td>
+  <td>Replace the following values:<ul><li><code><em>&lt;protocol&gt;</em></code>: Enter <strong>http</strong> or <strong>https</strong> to change the default port for incoming HTTP or HTTPS network traffic.</li>
+  <li><code><em>&lt;port&gt;</em></code>: Enter the port number that you want to use for incoming HTTP or HTTPS network traffic.</li></ul>
+  <p><strong>Note:</strong> When a custom port is specified for either HTTP or HTTPS, the default ports are no longer valid for both HTTP and HTTPS. For example, to change the default port for HTTPS to 8443, but use the default port for HTTP, you must set custom ports for both: <code>custom-port: "protocol=http port=80; protocol=https port=8443"</code>.</p>
+  </td>
+  </tr>
+  </tbody></table>
+
+  </dd>
+  <dt>Usage</dt>
+  <dd><ol><li>Review open ports for your Ingress controller.
+<pre class="pre">
+<code>kubectl get service -n kube-system</code></pre>
+Your CLI output looks similar to the following: 
+<pre class="screen">
+<code>NAME                     CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
+public-ingress-ctl-svc   10.10.10.149   169.60.16.246   80:30776/TCP,443:30412/TCP   8d</code></pre></li>
+<li>Open the Ingress controller config map. 
+<pre class="pre">
+<code>kubectl edit configmap ibm-cloud-provider-ingress-cm -n kube-system</code></pre></li>
+<li>Add the non-default HTTP and HTTPS ports to the config map. Replace &lt;port&gt; with the HTTP or HTTPS port that you want to open. 
+<pre class="codeblock">
+<code>apiVersion: v1
+kind: ConfigMap
+data:
+  public-ports: &lt;port1&gt;;&lt;port2&gt;
+metadata:
+  creationTimestamp: 2017-08-22T19:06:51Z
+  name: ibm-cloud-provider-ingress-cm
+  namespace: kube-system
+  resourceVersion: "1320"
+  selfLink: /api/v1/namespaces/kube-system/configmaps/ibm-cloud-provider-ingress-cm
+  uid: &lt;uid&gt;</code></pre></li>
+  <li>Verify that your Ingress controller is re-configured with the non-default ports.
+<pre class="pre">
+<code>kubectl get service -n kube-system</code></pre>
+Your CLI output looks similar to the following: 
+<pre class="screen">
+<code>NAME                     CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
+public-ingress-ctl-svc   10.10.10.149   169.60.16.246   &lt;port1&gt;:30776/TCP,&lt;port2&gt;:30412/TCP   8d</code></pre></li>
+<li>Configure your Ingress to use the non-default ports when routing incoming network traffic to your services. Use the sample YAML file in this reference. </li>
+<li>Update your Ingress controller configuration.
+<pre class="pre">
+<code>kubectl apply -f &lt;yaml_file&gt;</code></pre>
+</li>
+<li>Open your preferred web browser to access your app. Example: <code>https://&lt;ibmdomain&gt;:&lt;port&gt;/&lt;service_path&gt;/</code></li></ol></dd></dl>
+
+
+
+
 
 
 ## Managing IP addresses and subnets
