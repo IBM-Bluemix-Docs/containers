@@ -634,7 +634,7 @@ To create your own imagePullSecret:
     {: pre}
 
 3.  Note down the token ID that you want to use.
-4.  Retrieve the value for your token. Replace <token_id> with the ID of the token that you retrieved in the previous step.
+4.  Retrieve the value for your token. Replace <em>&lt;token_id&gt;</em> with the ID of the token that you retrieved in the previous step.
 
     ```
     bx cr token-get <token_id>
