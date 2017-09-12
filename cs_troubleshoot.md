@@ -159,6 +159,10 @@ Review the options to debug your clusters and find the root causes for failures.
     </tbody>
   </table>
 
+
+
+
+  
 ## Identifying local client and server versions of kubectl
 
 To check which version of the Kubernetes CLI that you are running locally or that your cluster is running, run the following command and check the version.
@@ -273,6 +277,11 @@ If this cluster is an existing one, check your cluster capacity.
   {: pre}
 
 5.  If your pods still stay in a **pending** state after the worker node is fully deployed, review the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-pod-replication-controller/#my-pod-stays-pending) to further troubleshoot the pending state of your pod.
+
+
+
+
+
 
 
 ## Accessing a pod on a new worker node fails with a timeout
