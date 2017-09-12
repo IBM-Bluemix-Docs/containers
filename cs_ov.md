@@ -148,13 +148,12 @@ To set up your Dedicated environment to use clusters:
     8.  Click **Invite users**.
 2.  [Create IBMIDs for the end users of your {{site.data.keyword.Bluemix_notm}} account. ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/account/us-en/signup/register.html)
 3.  [Add the users from the previous step to your {{site.data.keyword.Bluemix_notm}} account.](cs_cluster.html#add_users)
-5.  Access your {{site.data.keyword.Bluemix_notm}} Dedicated account through the Public console and start creating clusters.
-
+4.  Access your {{site.data.keyword.Bluemix_notm}} Dedicated account through the Public console and start creating clusters.
     1.  Log in to {{site.data.keyword.Bluemix_notm}} Public console ([https://console.bluemix.net ![External link icon](../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net)) with your IBMID.
     2.  From the account menu, select your {{site.data.keyword.Bluemix_notm}} Dedicated account. The console is updated with the services and information for your {{site.data.keyword.Bluemix_notm}} Dedicated instance.
     3.  From the catalog for your {{site.data.keyword.Bluemix_notm}} Dedicated instance, select **Containers** and click **Kubernetes cluster**.
+    For more information about creating a cluster, see [Creating Kubernetes clusters from the GUI in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)](cs_cluster.html#creating_ui_dedicated).
 
-Next, for more information about creating a cluster, see [Creating Kubernetes clusters from the GUI in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)](cs_cluster.html#creating_ui_dedicated).
 
 
 ## How Kubernetes clusters work 
