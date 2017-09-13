@@ -634,7 +634,7 @@ To create your own imagePullSecret:
     {: pre}
 
 3.  Note down the token ID that you want to use.
-4.  Retrieve the value for your token. Replace <token_id> with the ID of the token that you retrieved in the previous step.
+4.  Retrieve the value for your token. Replace <em>&lt;token_id&gt;</em> with the ID of the token that you retrieved in the previous step.
 
     ```
     bx cr token-get <token_id>
@@ -919,11 +919,13 @@ Add an existing {{site.data.keyword.Bluemix_notm}} service instance to your clus
 
 Before you begin:
 
--   [Target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
--   [Request an instance of the {{site.data.keyword.Bluemix_notm}} service](/docs/services/reqnsi.html#req_instance) in your space to add to your cluster.
--   For {{site.data.keyword.Bluemix_notm}} Dedicated users, see [Adding {{site.data.keyword.Bluemix_notm}} services to clusters in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)](#binding_dedicated) instead.
+1. [Target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
+2. [Request an instance of the {{site.data.keyword.Bluemix_notm}} service](/docs/services/reqnsi.html#req_instance) in your space.
+3. For {{site.data.keyword.Bluemix_notm}} Dedicated users, see [Adding {{site.data.keyword.Bluemix_notm}} services to clusters in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)](#binding_dedicated) instead.
 
-**Note:** You can only add {{site.data.keyword.Bluemix_notm}} services that support service keys (scroll to section [Enabling external apps to use {{site.data.keyword.Bluemix_notm}} services](/docs/services/reqnsi.html#req_instance)).
+**Note:** 
+  - You can only add {{site.data.keyword.Bluemix_notm}} services that support service keys. If the service does not support service keys, see [Enabling external apps to use {{site.data.keyword.Bluemix_notm}} services](/docs/services/reqnsi.html#req_instance).
+  - The cluster and the worker nodes must be deployed fully before you can add a service.
 
 To add a service:
 2.  List all existing services in your {{site.data.keyword.Bluemix_notm}} space.
@@ -989,6 +991,8 @@ To use the service in a pod that is deployed in the cluster, cluster users can a
 {: #binding_dedicated}
 
 Before you begin, [request an instance of the {{site.data.keyword.Bluemix_notm}} service](/docs/services/reqnsi.html#req_instance) in your space to add to your cluster.
+
+**Note**: The cluster and the worker nodes must be deployed fully before you can add a service.
 
 1.  Log in to the {{site.data.keyword.Bluemix_notm}} Dedicated environment where the service instance was created.
 
