@@ -924,8 +924,8 @@ Before you begin:
 3. For {{site.data.keyword.Bluemix_notm}} Dedicated users, see [Adding {{site.data.keyword.Bluemix_notm}} services to clusters in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)](#binding_dedicated) instead.
 
 **Note:** 
-  - You can only add {{site.data.keyword.Bluemix_notm}} services that support service keys. If the service does not support service keys, see [Enabling external apps to use {{site.data.keyword.Bluemix_notm}} services](/docs/services/reqnsi.html#req_instance).
-  - The cluster and the worker nodes must be deployed fully before you can add a service.
+   - You can only add {{site.data.keyword.Bluemix_notm}} services that support service keys. If the service does not support service keys, see [Enabling external apps to use {{site.data.keyword.Bluemix_notm}} services](/docs/services/reqnsi.html#req_instance).
+   - The cluster and the worker nodes must be deployed fully before you can add a service.
 
 To add a service:
 2.  List all existing services in your {{site.data.keyword.Bluemix_notm}} space.
