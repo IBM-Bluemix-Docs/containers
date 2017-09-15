@@ -6,9 +6,11 @@ IBM Bluemix Container Service
 
     {: .navgroup id="learn"}
     container_index.md
+    
     cs_ov.md
     cs_planning.md
-    cs_tutorials.md
+    cs.tutorials.md
+    
     cs_security.md
     {: .navgroup-end}
 
