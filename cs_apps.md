@@ -1554,7 +1554,7 @@ spec:
   <td>Replace the following values:<ul><li><code><em>&lt;connect_timeout&gt;</em></code>: Enter the number of seconds to wait to connect to the back-end app, for example <strong>65s</strong>.
 
   </br></br>
-  <strong>Note:</strong> A connect-timeout cannot exceed 75 seconds.</li><li><code><em>&lt;read_timeout&gt;</em></code>: Enter the number of seconds to wait to read from the back-end app, for example <strong>65s</strong>.</li></ul></td>
+  <strong>Note:</strong> A connect-timeout cannot exceed 75 seconds.</li><li><code><em>&lt;read_timeout&gt;</em></code>: Enter the number of seconds to wait before the back-end app is read, for example <strong>65s</strong>.</li></ul></td>
   </tr>
   </tbody></table>
 
