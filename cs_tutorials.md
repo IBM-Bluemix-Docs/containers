@@ -2,11 +2,11 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-08-17"
+lastupdated: "2017-09-14"
 
 ---
 
-{:new_window: target="_blank"}
+{:new_window: target="blank"}
 {:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
@@ -16,13 +16,7 @@ lastupdated: "2017-08-17"
 {:download: .download}
 
 
-# Tutorials for clusters
-{: #cs_tutorials}
-
-Try out these tutorials and other resources to get started with the service.
-{:shortdesc}
-
-## Tutorial: Creating clusters
+# Tutorial: Creating clusters
 {: #cs_cluster_tutorial}
 
 Deploy and manage your own Kubernetes cluster in the cloud that lets you automate the deployment, operation, scaling, and monitoring of containerized apps over a cluster of independent compute hosts called worker nodes.
@@ -30,22 +24,22 @@ Deploy and manage your own Kubernetes cluster in the cloud that lets you automat
 
 This tutorial series demonstrates how a fictional public relations firm can use Kubernetes to deploy a containerized app in {{site.data.keyword.Bluemix_short}} that leverages {{site.data.keyword.watson}} Tone Analyzer. The PR firm uses {{site.data.keyword.watson}} Tone Analyzer to analyze their press releases and receive feedback on the tone in their messages. In this first tutorial, the PR firm's networking administrator sets up a custom Kubernetes cluster that is the compute infrastructure for the firm's {{site.data.keyword.watson}} Tone Analyzer app. This cluster is used to deploy and test a Hello World version of the PR firm's app.
 
-### Objectives
+## Objectives
 
 -   Create a Kubernetes cluster with one worker node
 -   Install the CLIs for using the Kubernetes API and managing Docker images
 -   Create a private image repository in IBM {{site.data.keyword.Bluemix_notm}} Container Registry to store your images
 -   Add the Watson Tone Analyzer {{site.data.keyword.Bluemix_notm}} service to the cluster so that any app in the cluster can use the service
 
-### Time required
+## Time required
 
 25 minutes
 
-### Audience
+## Audience
 
 This tutorial is intended for software developers and network administrators who have never created a Kubernetes cluster before.
 
-### Lesson 1: Setting up the CLI
+## Lesson 1: Setting up the CLI
 {: #cs_cluster_tutorial_lesson1}
 
 Install the {{site.data.keyword.containershort_notm}} CLI, the {{site.data.keyword.registryshort_notm}} CLI, and their prerequisites. These CLIs are used in later lessons and are required to manage your Kubernetes cluster from your local machine, create images to deploy as containers, and in a later tutorial, deploy apps into the cluster.
@@ -87,7 +81,7 @@ To install the CLIs:
            bx login -a api.ng.bluemix.net
            ```
            {: pre}
-     
+
        -  Sydney
 
            ```
@@ -201,7 +195,7 @@ To install the CLIs:
 
 Congratulations! You successfully created your {{site.data.keyword.Bluemix_notm}} account and installed the CLIs for the following lessons and tutorials. Next, access your cluster by using the CLI and start adding {{site.data.keyword.Bluemix_notm}} services.
 
-### Lesson 2: Setting up your cluster environment
+## Lesson 2: Setting up your cluster environment
 {: #cs_cluster_tutorial_lesson2}
 
 Create your Kubernetes cluster, set up a private image repository in {{site.data.keyword.registryshort_notm}}, and add secrets to your cluster so that the app can access the {{site.data.keyword.watson}} {{site.data.keyword.toneanalyzerfull}} service.
@@ -340,12 +334,31 @@ Create your Kubernetes cluster, set up a private image repository in {{site.data
 
 Great work! The cluster is created, configured, and your local environment is ready for you to start deploying apps into the cluster.
 
-**What's next?**
+## What's next?
 
 * [Test your knowledge and take a quiz! ![External link icon](../icons/launch-glyph.svg "External link icon")](https://bluemix-quizzes.mybluemix.net/containers/cluster_tutorial/quiz.php)
 * Try the [Tutorial: Deploying apps into Kubernetes clusters in {{site.data.keyword.containershort_notm}}](#cs_apps_tutorial) to deploy the PR firm's app into the cluster that you created.
 
-## Tutorial: Deploying apps into clusters
+
+---
+
+copyright:
+  years: 2014, 2017
+lastupdated: "2017-09-14"
+
+---
+
+{:new_window: target="blank"}
+{:shortdesc: .shortdesc}
+{:screen: .screen}
+{:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
+
+
+# Tutorial: Deploying apps into clusters
 {: #cs_apps_tutorial}
 
 This second tutorial continues how you can use Kubernetes to deploy a containerized app that leverages the {{site.data.keyword.watson}} {{site.data.keyword.toneanalyzershort}} {{site.data.keyword.Bluemix_notm}} service. A fictional PR firm uses {{site.data.keyword.watson}} to analyze their press releases and receive feedback on the tone in their messages.
@@ -365,7 +378,7 @@ To make your app even more highly available, in standard clusters, you can creat
 
 Only one of the lessons includes the integration of a {{site.data.keyword.Bluemix_notm}} service into an app, but you can use them with as simple or complex of an app as you can imagine.
 
-### Objectives
+## Objectives
 
 * Understand basic Kubernetes terminology
 * Push an image to your registry namespace in {{site.data.keyword.registryshort_notm}}
@@ -374,19 +387,19 @@ Only one of the lessons includes the integration of a {{site.data.keyword.Bluemi
 * Deploy multiple instances of an app in containers that are re-created during health checks
 * Deploy an app that uses functionality from a {{site.data.keyword.Bluemix_notm}} service
 
-### Time required
+## Time required
 
 40 minutes
 
-### Audiences
+## Audiences
 
 Software developers and network administrators who have never deployed an app in a Kubernetes cluster before.
 
-### Prerequisites
+## Prerequisites
 
 [Tutorial: Creating Kubernetes clusters in {{site.data.keyword.containershort_notm}}](#cs_cluster_tutorial).
 
-### Lesson 1: Deploying single instance apps to Kubernetes clusters
+## Lesson 1: Deploying single instance apps to Kubernetes clusters
 {: #cs_apps_tutorial_lesson1}
 
 In this lesson, you deploy a single instance of the Hello World app into a cluster.
@@ -411,7 +424,7 @@ In this lesson, you deploy a single instance of the Hello World app into a clust
         bx login -a api.ng.bluemix.net
         ```
         {: pre}
-  
+
     -  Sydney
 
         ```
@@ -742,7 +755,7 @@ Congratulations! You deployed your first version of the app.
 
 Too many commands in this lesson? Agreed. How about using a configuration script to do some of the work for you? To use a configuration script for the second version of the app, and to create higher availability by deploying multiple instances of that app, continue to the next lesson.
 
-### Lesson 2: Deploying and updating apps with higher availability
+## Lesson 2: Deploying and updating apps with higher availability
 {: #cs_apps_tutorial_lesson2}
 
 In this lesson, you deploy three instances of the Hello World app into a cluster for higher availability than the first version of the app. Higher availability means that user access is divided between the three instances. When too many users are trying to access the same app instance, they might notice slow response times. Multiple instances can mean faster response times for your users. In this lesson, you will also learn how health checks and deployment updates can work with Kubernetes.
@@ -942,7 +955,7 @@ service "hw-demo-service" deleted
 ```
 {: screen}
 
-### Lesson 3: Deploying and updating the Watson Tone Analyzer app
+## Lesson 3: Deploying and updating the Watson Tone Analyzer app
 {: #cs_apps_tutorial_lesson3}
 
 In the previous lessons, the apps were deployed as single components in one worker node. In this lesson, you deploy two components of an app into a cluster that use the Watson Tone Analyzer service that you added to your cluster in the previous tutorial. Separating components into different containers ensures that you can update one without affecting the others. Then, you will update the app to scale it up with more replicas to make it more highly available.
@@ -950,7 +963,7 @@ In the previous lessons, the apps were deployed as single components in one work
 <a href="https://console.bluemix.net/docs/api/content/containers/images/cs_app_tutorial_components3.png">[![Deployment setup](images/cs_app_tutorial_components3.png)</a>
 
 
-#### **Lesson 3a: Deploying the Watson Tone Analyzer app**
+### Lesson 3a: Deploying the Watson Tone Analyzer app
 {: #lesson3a}
 
 1.  In a CLI, navigate to the third app directory, `Stage3`. If you are using Docker Toolbox for Windows or OS X, use Docker Quickstart Terminal.
@@ -1157,7 +1170,7 @@ In the previous lessons, the apps were deployed as single components in one work
 
 11. In the **Workloads** tab, you can see the resources that you created. When you are done exploring the Kubernetes dashboard, use CTRL+C to exit the `proxy` command.
 
-#### Lesson 3b. Updating the running Watson Tone Analyzer deployment
+### Lesson 3b. Updating the running Watson Tone Analyzer deployment
 {: #lesson3b}
 
 While a deployment is running, you can edit the deployment to change values in the pod template. This lesson includes updating the image that is used.
@@ -1293,6 +1306,3 @@ bx cs cluster-rm <pr_firm_cluster>
 ```
 {: pre}
 
-**What's next?**
-
-Try exploring the container orchestration journeys on [developerWorks ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/code/journey/category/container-orchestration/).
