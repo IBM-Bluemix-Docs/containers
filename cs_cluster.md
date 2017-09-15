@@ -806,7 +806,7 @@ Before you begin:
 1.  [Create a cluster](#cs_cluster_cli).
 2.  [Target your CLI to your cluster](cs_cli_install.html#cs_cli_configure).
 
-To create an imagePullSecret, follow these steps.
+To create an imagePullSecret:
 
 **Note:** ImagePullSecrets are valid for the Kubernetes namespaces they were created for. Repeat these steps for every namespace where you want to deploy containers from an image in a private {{site.data.keyword.Bluemix_notm}} registry.
 
@@ -924,8 +924,11 @@ Before you begin:
 3. For {{site.data.keyword.Bluemix_notm}} Dedicated users, see [Adding {{site.data.keyword.Bluemix_notm}} services to clusters in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)](#binding_dedicated) instead.
 
 **Note:** 
-  - You can only add {{site.data.keyword.Bluemix_notm}} services that support service keys. If the service does not support service keys, see [Enabling external apps to use {{site.data.keyword.Bluemix_notm}} services](/docs/services/reqnsi.html#req_instance).
-  - The cluster and the worker nodes must be deployed fully before you can add a service.
+<ul><ul>
+<li>You can only add {{site.data.keyword.Bluemix_notm}} services that support service keys. If the service does not support service keys, see [Enabling external apps to use {{site.data.keyword.Bluemix_notm}} services](/docs/services/reqnsi.html#req_instance).</li>
+<li>The cluster and the worker nodes must be deployed fully before you can add a service.</li>
+</ul></ul>
+
 
 To add a service:
 2.  List all existing services in your {{site.data.keyword.Bluemix_notm}} space.
