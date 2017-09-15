@@ -350,14 +350,16 @@ To add network policies:
       ```
       {: pre}
 
-        1.  Retrieve the `<ETCD_URL>`.
+        1.  Retrieve the `<ETCD_URL>`. 
 
           -   Linux and OS X:
-
+              
               ```
               kubectl describe pod -n kube-system `kubectl get pod -n kube-system | grep calico-policy-controller | awk '{print $1}'` | grep ETCD_ENDPOINTS | awk '{print $2}'
               ```
               {: pre}
+              
+              
 
           -   Output example:
 
@@ -367,11 +369,15 @@ To add network policies:
               {: screen}
 
           -   Windows:
+            
             <ol>
             <li>Get a list of the pods in the kube-system namespace and locate the Calico controller pod. </br><pre class="codeblock"><code>kubectl get pod -n kube-system</code></pre></br>Example:</br><pre class="screen"><code>calico-policy-controller-1674857634-k2ckm</code></pre>
             <li>View the details of the Calico controller pod.</br> <pre class="codeblock"><code>kubectl describe pod -n kube-system calico-policy-controller-&lt;ID&gt;</code></pre>
             <li>Locate the ETCD endpoints value. Example: <code>https://169.1.1.1:30001</code>
             </ol>
+            
+            
+            
 
         2.  Retrieve the `<CERTS_DIR>`, the directory that the Kubernetes certificates are downloaded in.
 
