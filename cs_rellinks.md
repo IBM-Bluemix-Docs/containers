@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-08-14"
+lastupdated: "2017-09-15"
 
 ---
 
@@ -48,7 +48,6 @@ lastupdated: "2017-08-14"
 
 
 
-[Blog Vulnerability Advisor ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/bluemix/2015/07/02/vulnerability-advisor/)
 
 **Links related to single and scalable containers**  
 
