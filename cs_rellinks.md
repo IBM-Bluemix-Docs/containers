@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-08-14"
+lastupdated: "2017-09-15"
 
 ---
 
@@ -30,8 +30,12 @@ lastupdated: "2017-08-14"
 
 [Microservices.TV ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/tv/microservices/)
 
-**Links related to clusters**  
+<br />
+<br />
 
+
+
+**Links related to clusters**  
 
 [developerWorks container orchestration journeys ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/code/journey/category/container-orchestration/)
 
@@ -41,17 +45,23 @@ lastupdated: "2017-08-14"
 
 [Weave Scope ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.weave.works/oss/scope/)
 
-**Links related to the container registry**  
+<br />
+<br />
 
+
+
+**Links related to the container registry**  
 
 [{{site.data.keyword.registryshort_notm}} documentation](/docs/services/Registry/index.html)
 
 
 
-[Blog Vulnerability Advisor ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/bluemix/2015/07/02/vulnerability-advisor/)
+<br />
+<br />
+
+
 
 **Links related to single and scalable containers**  
-
 
 [REST API for single and scalable containers ![External link icon](../icons/launch-glyph.svg "External link icon")](http://ccsapi-doc.mybluemix.net/)
 
