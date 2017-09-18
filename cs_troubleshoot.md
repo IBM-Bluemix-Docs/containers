@@ -154,13 +154,18 @@ Review the options to debug your clusters and find the root causes for failures.
         
         </br></br>
         {{site.data.keyword.Bluemix_notm}} Infrastructure Exception: 'Item' must be ordered with permission.</td>
-        <td>You might not have the required permissions to provision a worker node from the {{site.data.keyword.BluSoftlayer_notm}} portfolio. To find the required permissions, see [Configure access to the {{site.data.keyword.BluSoftlayer_notm}} portfolio to create standard Kubernetes clusters](cs_planning.html#cs_planning_unify_accounts).</td>
+        <td>You might not have the required permissions to provision a worker node from the {{site.data.keyword.BluSoftlayer_notm}} portfolio. See [Configure access to the {{site.data.keyword.BluSoftlayer_notm}} portfolio to create standard Kubernetes clusters](cs_planning.html#cs_planning_unify_accounts).</td>
       </tr>
     </tbody>
   </table>
 
 
 
+     <pre class="pre"><code>curl &#60;host_name&#62;.&#60;domain&#62;</code></pre>
+
+
+
+</staging>
 
   
 ## Identifying local client and server versions of kubectl
@@ -660,7 +665,7 @@ To troubleshoot your load balancer service:
   ```
   {: pre}
 
-    1.  Check that you defined **LoadBlanacer** as the type for your service.
+    1.  Check that you defined **LoadBalancer** as the type for your service.
     2.  Make sure that you used the same **<selectorkey>** and **<selectorvalue>** that you used in the **label/metadata** section when you deployed your app.
     3.  Check that you used the **port** that your app listens on.
 
@@ -689,6 +694,8 @@ To troubleshoot your load balancer service:
       {: pre}
 
     2.  Check that your custom domain is mapped to the portable public IP address of your load balancer service in the Pointer record (PTR).
+
+
 
 ## Known issues
 {: #cs_known_issues}
