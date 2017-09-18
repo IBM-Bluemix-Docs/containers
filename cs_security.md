@@ -58,7 +58,7 @@ Review the built-in Kubernetes master security features to protect the Kubernete
     <li>kube-apiserver: Serves as the main entry point for all requests from the worker node to the Kubernetes master. The kube-apiserver validates and processes requests and can read from and write to the etcd data store.</li>
     <li>kube-scheduler: Decides where to deploy pods, taking into account capacity and performance needs, hardware and software policy constraints, anti-affinity specifications, and workload requirements. If no worker node can be found that matches the requirements, the pod is not deployed in the cluster.</li>
     <li>kube-controller-manager: Responsible for monitoring replica sets, and creating corresponding pods to achieve the desired state.</li>
-    <li>OpenVPN: {{site.data.keyword.containershort_notm}} specific component to provide secured network connectivity for all Kubernetes master to worker node communication.</li></ul></dd>
+    <li>OpenVPN: {{site.data.keyword.containershort_notm}}-specific component to provide secured network connectivity for all Kubernetes master to worker node communication.</li></ul></dd>
   <dt>TLS secured network connectivity for all worker node to Kubernetes master communication</dt>
     <dd>To secure the network communication to the Kubernetes master, {{site.data.keyword.containershort_notm}} generates TLS certificates that encrypts the communication to and from the kube-apiserver and etcd data store components for every cluster. These certificates are never shared across clusters or across Kubernetes master components.</dd>
   <dt>OpenVPN secured network connectivity for all Kubernetes master to worker node communication</dt>
@@ -350,14 +350,16 @@ To add network policies:
       ```
       {: pre}
 
-        1.  Retrieve the `<ETCD_URL>`.
+        1.  Retrieve the `<ETCD_URL>`. 
 
           -   Linux and OS X:
-
+              
               ```
               kubectl describe pod -n kube-system `kubectl get pod -n kube-system | grep calico-policy-controller | awk '{print $1}'` | grep ETCD_ENDPOINTS | awk '{print $2}'
               ```
               {: pre}
+              
+              
 
           -   Output example:
 
@@ -367,11 +369,15 @@ To add network policies:
               {: screen}
 
           -   Windows:
+            
             <ol>
             <li>Get a list of the pods in the kube-system namespace and locate the Calico controller pod. </br><pre class="codeblock"><code>kubectl get pod -n kube-system</code></pre></br>Example:</br><pre class="screen"><code>calico-policy-controller-1674857634-k2ckm</code></pre>
             <li>View the details of the Calico controller pod.</br> <pre class="codeblock"><code>kubectl describe pod -n kube-system calico-policy-controller-&lt;ID&gt;</code></pre>
             <li>Locate the ETCD endpoints value. Example: <code>https://169.1.1.1:30001</code>
             </ol>
+            
+            
+            
 
         2.  Retrieve the `<CERTS_DIR>`, the directory that the Kubernetes certificates are downloaded in.
 
@@ -410,7 +416,7 @@ To add network policies:
             -   Linux and OS X:
 
               ```
-              ls `dirname $KUBECONFIG` | grep ca-.*pem
+              ls `dirname $KUBECONFIG` | grep ca-*.pem
               ```
               {: pre}
 
