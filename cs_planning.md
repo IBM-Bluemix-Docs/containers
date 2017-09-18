@@ -22,6 +22,9 @@ lastupdated: "2017-08-14"
 {{site.data.keyword.containershort_notm}} offers several options to configure and customize your Kubernetes cluster to meet the functional and non-functional requirements of your organization. Some of these configurations cannot be changed after a cluster is created. Knowing these configurations in advance can help to ensure that all the resources, such as memory, disk space, and IP addresses are available to the development team.
 {:shortdesc}
 
+<br />
+
+
 ## Comparison of lite and standard clusters
 {: #cs_planning_cluster_type}
 
@@ -42,6 +45,9 @@ You can create a lite cluster to get familiar and test Kubernetes capabilities o
 |[Portable public IP addresses](cs_apps.html#cs_cluster_ip_subnet)||<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 |[Available in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)](cs_ov.html#dedicated_environment)||<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 {: caption="Table 1. Differences between lite and standard clusters" caption-side="top"}
+
+<br />
+
 
 ## Cluster configuration
 {: #cs_planning_cluster_config}
@@ -91,6 +97,8 @@ Learn more about how you can use these techniques to increase the availability o
 </dd>
 </dl>
 
+<br />
+
 
 ## Worker node configuration
 {: #cs_planning_worker_nodes}
@@ -116,6 +124,9 @@ Shared nodes are usually cheaper than dedicated nodes because the costs for the 
 When you create a lite cluster, your worker node is automatically provisioned as a shared node in the {{site.data.keyword.IBM_notm}} {{site.data.keyword.BluSoftlayer_notm}} account.
 
 When you create a cluster in {{site.data.keyword.Bluemix_notm}} Dedicated, a single-tenant set up only is used and all physical resources are dedicated to you only. You deploy multiple worker nodes as virtual machines on the same physical host.
+
+<br />
+
 
 ## Deployments
 {: #highly_available_apps}
@@ -212,6 +223,7 @@ spec:
 For more detail, review the options for <a href="https://console.bluemix.net/docs/containers/cs_planning.html#cs_planning_cluster_config" target="_blank">highly available deployments</a>.</dd>
 </dl>
 
+
 ### Minimal app deployment
 {: #minimal_app_deployment}
 
@@ -253,6 +265,9 @@ spec:
 ```
 {: codeblock}
 
+<br />
+
+
 ## Private networking
 {: #cs_planning_private_network}
 
@@ -275,6 +290,8 @@ Because it is difficult to track changing private IP addresses for apps that mus
 If an app in the cluster needs to access a pod that lies behind a cluster IP service, it can either use the private cluster IP address that was assigned to the service or send a request by using the name of the service. When you use the name of the service, the name is looked up in the kube-dns component and routed to the private cluster IP address of the service. When a request reaches the service, the service ensures that all requests are equally forwarded to the pods, independent of their private IP addresses and the worker node they are deployed to.
 
 For more information about how to create a service of type cluster IP, see [Kubernetes services ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services---service-types).
+
+<br />
 
 
 ## Public networking
@@ -332,7 +349,6 @@ When a public request arrives at the LoadBalancer service, it is automatically f
 For more information about how to create a service of type LoadBalancer with {{site.data.keyword.containershort_notm}}, see [Configuring public access to an app by using the load balancer service type](cs_apps.html#cs_apps_public_load_balancer).
 
 
-
 ### Expose an app to the internet with Ingress
 {: #cs_ingress}
 
@@ -356,6 +372,8 @@ You can configure the Ingress controller to manage incoming network traffic for 
 
 For more information about how to use Ingress with {{site.data.keyword.containershort_notm}}, see [Configuring public access to an app by using the Ingress controller](cs_apps.html#cs_apps_public_ingress).
 
+<br />
+
 
 ## User access management
 {: #cs_planning_cluster_user}
@@ -364,6 +382,8 @@ You can grant access to a cluster for other users in your organization to ensure
 {:shortdesc}
 
 For more information, see [Managing users and access to a cluster in {{site.data.keyword.containershort_notm}}](cs_cluster.html#cs_cluster_user).
+
+<br />
 
 
 ## Image registries
@@ -387,6 +407,8 @@ After you set up an image registry, cluster users can use the images for their a
 
 For more information about how to access a public or private registry and use an image to create your container, see [Using private and public image registries with {{site.data.keyword.containershort_notm}}](cs_cluster.html#cs_apps_images).
 
+<br />
+
 
 ## Persistent data storage
 {: #cs_planning_apps_storage}
@@ -402,6 +424,8 @@ A container is, by design, short-lived. However, you can choose between several 
 |Option 2: Create a persistent volume claim to provision NFS based persistent storage for your deployment<p>This feature is available for standard clusters only.</p>|With this option, you can have persistent storage of app and container data through an unlimited number of NFS file shares and persistent volumes. You create a [persistent volume claim](cs_apps.html) to initiate a request for NFS based file storage. {{site.data.keyword.containershort_notm}} provides predefined storage classes that define the range of sizes of the storage, IOPS, and the read and write permissions for the volume. You can choose between these storage classes when you create your persistent volume claim. After you submit a persistent volume claim, {{site.data.keyword.containershort_notm}} dynamically provisions a persistent volume that is hosted on NFS based file storage. [You can mount the persistent volume claim](cs_apps.html#cs_apps_volume_claim) as a volume to your pod to allow the container in your pod to read from and write to the volume. Persistent volumes can be shared across pods in the same replica set or with other pods in the same cluster.<p>When a container crashes or a pod is removed from a worker node, the data is not removed and can still be accessed by other pods that mount the volume. Persistent volume claims are hosted on persistent storage but do not have backups. If you require a backup of your data, create a manual backup.</p><p>**Note:** Persistent NFS file share storage is charged on a monthly basis. If you provision persistent storage for your cluster and remove it immediately, you still have to pay the monthly charge for the persistent storage, even if you used it only for a short amount of time.</p>|
 |Option 3: Bind a {{site.data.keyword.Bluemix_notm}} database service to your pod<p>This feature is available for lite and standard clusters.</p>|With this option, you can persist and access data by using a {{site.data.keyword.Bluemix_notm}} database cloud service. When you bind the {{site.data.keyword.Bluemix_notm}} service to a namespace in your cluster, a Kubernetes secret is created. The Kubernetes secret holds confidential information about the service, such as the URL to the service, your user name, password. You can mount the secret as a secret volume to your pod and access the service by using the credentials in the secret. By mounting the secret volume to other pods, you can also share data between pods.<p>When a container crashes or a pod is removed from a worker node, the data is not removed and can still be accessed by other pods that mount the secret volume.</p><p>Most {{site.data.keyword.Bluemix_notm}} database services provide disk space for a small amount of data at no cost, so you can test its features.</p><p>For more information about how to bind a {{site.data.keyword.Bluemix_notm}} service to a pod, see [Adding {{site.data.keyword.Bluemix_notm}} services for apps in {{site.data.keyword.containershort_notm}}](cs_apps.html#cs_apps_service).</p>|
 {: caption="Table 5. Persistent data storage options for deployments in Kubernetes clusters" caption-side="top"}
+
+<br />
 
 
 ## Monitoring and logging tools
@@ -422,6 +446,7 @@ You can use the standard Kubernetes and Docker features to monitor the health of
 <dd>For standard clusters, logs are located in the {{site.data.keyword.Bluemix_notm}} space that was logged in to when the Kubernetes cluster was created. Container logs are monitored and forwarded outside of the container. You can access logs for a container by using the Kibana dashboard. For more information on logging, see [Logging for the {{site.data.keyword.containershort_notm}}](/docs/services/CloudLogAnalysis/containers/logging_containers_ov.html#logging_containers_ov).<p>To access the Kibana dashboard, go to one of the following URLs and select the {{site.data.keyword.Bluemix_notm}} organization and space where you created the cluster.<ul><li>US-South: https://logging.ng.bluemix.net</li><li>UK-South: https://logging.eu-gb.bluemix.net</li><li>EU-Central: https://logging.eu-de.bluemix.net</li></ul></p></dd>
 </dl>
 
+
 ### Other health monitoring tools
 {: #concept_xrh_dhj_wz}
 
@@ -430,6 +455,9 @@ You can configure other tools for additional logging and monitoring capabilities
 <dt>Prometheus</dt>
 <dd>Prometheus is an open source monitoring, logging, and alerting tool that was specifically designed for Kubernetes to retrieve detailed information about the cluster, worker nodes, and deployment health based on the Kubernetes logging information. For setup information, see [Integrating services with {{site.data.keyword.containershort_notm}}](#cs_planning_integrations).</dd>
 </dl>
+
+<br />
+
 
 ## Integrations
 {: #cs_planning_integrations}
@@ -476,6 +504,8 @@ IBM Blockchain Platform <img src="../icons/launch-glyph.svg" alt="External link 
 </tr>
 </tbody>
 </table>
+
+<br />
 
 
 ## Access the {{site.data.keyword.BluSoftlayer_notm}} portfolio
