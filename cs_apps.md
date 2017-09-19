@@ -34,6 +34,8 @@ Deploying an app generally includes the following steps.
         1.  [Start the Kubernetes dashboard.](#cs_cli_dashboard)
         2.  [Run the configuration script.](#cs_apps_ui)
 
+<br />
+
 
 ## Launching the Kubernetes dashboard
 {: #cs_cli_dashboard}
@@ -83,6 +85,9 @@ You can use the default port or set your own port to launch the Kubernetes dashb
 
 
 When you are done with the Kubernetes dashboard, use `CTRL+C` to exit the `proxy` command. After you exit, the Kubernetes dashboard is no longer available. Run the `proxy` command again to restart the Kubernetes dashboard.
+
+<br />
+
 
 ## Allowing public access to apps
 {: #cs_apps_public}
@@ -1554,7 +1559,7 @@ spec:
   <td>Replace the following values:<ul><li><code><em>&lt;connect_timeout&gt;</em></code>: Enter the number of seconds to wait to connect to the back-end app, for example <strong>65s</strong>.
 
   </br></br>
-  <strong>Note:</strong> A connect-timeout cannot exceed 75 seconds.</li><li><code><em>&lt;read_timeout&gt;</em></code>: Enter the number of seconds to wait to read from the back-end app, for example <strong>65s</strong>.</li></ul></td>
+  <strong>Note:</strong> A connect-timeout cannot exceed 75 seconds.</li><li><code><em>&lt;read_timeout&gt;</em></code>: Enter the number of seconds to wait before the back-end app is read, for example <strong>65s</strong>.</li></ul></td>
   </tr>
   </tbody></table>
 
@@ -1709,6 +1714,9 @@ public-ingress-ctl-svc   10.10.10.149   169.60.16.246   &lt;port1&gt;:30776/TCP,
 
 
 
+<br />
+
+
 ## Managing IP addresses and subnets
 {: #cs_cluster_ip_subnet}
 
@@ -1790,6 +1798,8 @@ You can free up a used portable public IP address by deleting the load balancer 
     ```
     {: pre}
 
+<br />
+
 
 ## Deploying apps with the GUI
 {: #cs_apps_ui}
@@ -1809,6 +1819,9 @@ To deploy your app:
 3.  Select **Specify app details below** to enter the app details on the GUI or **Upload a YAML or JSON file** to upload your app [configuration file ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/). Use [this example YAML file ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/IBM-{{site.data.keyword.Bluemix_notm}}/kube-samples/blob/master/deploy-apps-clusters/deploy-ibmliberty.yaml) to deploy a container from the **ibmliberty** image in the US-South region.
 4.  In the Kubernetes dashboard, click **Deployments** to verify that the deployment was created.
 5.  If you made your app publicly available by using a node port service, a load balancer service, or Ingress, verify that you can access the app.
+
+<br />
+
 
 ## Deploying apps with the CLI
 {: #cs_apps_cli}
@@ -1840,6 +1853,7 @@ To deploy your app:
 
 3.  If you made your app publicly available by using a node port service, a load balancer service, or Ingress, verify that you can access the app.
 
+<br />
 
 
 ## Scaling apps
@@ -1912,6 +1926,7 @@ With Kubernetes, you can enable [Horizontal Pod Autoscaling ![External link icon
     </tr>
     </tbody></table>
 
+<br />
 
 
 ## Managing rolling deployments
@@ -1982,6 +1997,9 @@ Before you begin, create a [deployment](#cs_apps_cli).
         kubectl rollout undo deployment/<depoyment_name> --to-revision=<number>
         ```
         {: pre}
+
+<br />
+
 
 ## Adding {{site.data.keyword.Bluemix_notm}} services
 {: #cs_apps_service}
@@ -2118,6 +2136,9 @@ When you mount a secret volume to your pod, a file named binding is stored in th
 9.  When implementing your app, configure it to find the secret file named **binding** in the mount directory, parse the JSON content and determine the URL and service credentials to access your {{site.data.keyword.Bluemix_notm}} service.
 
 You can now access the {{site.data.keyword.Bluemix_notm}} service details and credentials. To work with your {{site.data.keyword.Bluemix_notm}} service, make sure your app is configured to find the service secret file in the mount directory, parse the JSON content and determine the service details.
+
+<br />
+
 
 ## Creating persistent storage
 {: #cs_apps_volume_claim}
@@ -2309,6 +2330,9 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
 
     ```
     {: screen}
+
+<br />
+
 
 ## Adding non-root user access to persistent storage
 {: #cs_apps_volumes_nonroot}
