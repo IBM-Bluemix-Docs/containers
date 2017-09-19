@@ -12,7 +12,7 @@ lastupdated: "2017-08-14"
 {:pre: .pre}
 {:table: .aria-labeledby="caption"}
 {:codeblock: .codeblock}
-{:tip: .tip} 
+{:tip: .tip}
 {:download: .download}
 
 
@@ -50,7 +50,7 @@ To create a lite cluster:
     Available locations are:
 
     <ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>ra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul>
-        
+
 3.  Click **Create Cluster**. The details for the cluster open, but the worker node in the cluster takes a few minutes to provision. You can see the status of the worker node in the **Worker nodes** tab. When the status reaches `Ready`, your worker node is ready to be used.
 
 Good work! You created your first cluster!
@@ -77,13 +77,13 @@ When the cluster is up and running, you can check out the following tasks.
 Kubernetes is an orchestration tool for scheduling app containers onto a cluster of compute machines. With Kubernetes, developers can rapidly develop highly available applications by using the power and flexibility of containers in their {{site.data.keyword.Bluemix_notm}} Dedicated instance.
 {:shortdesc}
 
-Before you begin, [set up your {{site.data.keyword.Bluemix_notm}} Dedicated environment](cs_ov.html#setup_dedicated). Then, you can create a cluster. A cluster is a set of worker nodes that are organized into a network. The purpose of the cluster is to define a set of resources, nodes, networks, and storage devices that keep applications highly available. After you have a cluster, then you can deploy your app into the cluster.
+Before you begin, [set up your {{site.data.keyword.Bluemix_notm}} Dedicated environment to use clusters](cs_ov.html#setup_dedicated). Then, you can create a cluster. A cluster is a set of worker nodes that are organized into a network. The purpose of the cluster is to define a set of resources, nodes, networks, and storage devices that keep applications highly available. After you have a cluster, then you can deploy your app into the cluster.
 
 **Tip:** If your organization does not have a {{site.data.keyword.Bluemix_notm}} Dedicated environment already, you might not need one. [Try a dedicated, standard cluster in the {{site.data.keyword.Bluemix_notm}} Public environment first.](cs_cluster.html#cs_cluster_ui)
 
 To deploy a cluster in {{site.data.keyword.Bluemix_notm}} Dedicated:
 
-1.  Log in to the {{site.data.keyword.Bluemix_notm}} Public console ([https://console.bluemix.net ![External link icon](../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net/catalog/?category=containers)) with your IBMID. Though you must request a cluster from {{site.data.keyword.Bluemix_notm}} Public, you are deploying it into your {{site.data.keyword.Bluemix_notm}} Dedicated account.
+1.  Log in to the {{site.data.keyword.Bluemix_notm}} Public console ([https://console.bluemix.net ![External link icon](../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net/catalog/?category=containers)) with your IBMid. Though you must request a cluster from {{site.data.keyword.Bluemix_notm}} Public, you are deploying it into your {{site.data.keyword.Bluemix_notm}} Dedicated account.
 2.  If you have multiple accounts, from the account menu, select a {{site.data.keyword.Bluemix_notm}} account.
 3.  From the catalog, in the **Containers** category, click **Kubernetes cluster**.
 4.  Enter the cluster details.
@@ -91,7 +91,7 @@ To deploy a cluster in {{site.data.keyword.Bluemix_notm}} Dedicated:
     2.  Select a **Kubernetes version** to use in the worker nodes. 
     3.  Select a **Machine type**. The machine type defines the amount of virtual CPU and memory that is set up in each worker node and that is available for all the containers that you deploy in your nodes.
     4.  Choose the **Number of worker nodes** that you need. Select 3 for higher availability of your cluster.
-    
+
     The cluster type, location, public VLAN, private VLAN, and hardware fields are defined during the creation process of the {{site.data.keyword.Bluemix_notm}} Dedicated account, so you cannot adjust those values.
 5.  Click **Create Cluster**. The details for the cluster open, but the worker nodes in the cluster take a few minutes to provision. You can see the status of the worker nodes in the **Worker nodes** tab. When the status reaches `Ready`, your worker nodes are ready to be used.
 
@@ -108,4 +108,3 @@ When the cluster is up and running, you can check out the following tasks.
 * [Deploy an app to your cluster.](cs_apps.html#cs_apps_cli)
 * [Add {{site.data.keyword.Bluemix_notm}} services to your cluster.](cs_cluster.html#binding_dedicated)
 * [Learn about the differences between clusters in {{site.data.keyword.Bluemix_notm}} Dedicated and Public.](cs_ov.html#env_differences)
-
