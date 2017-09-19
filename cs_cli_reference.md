@@ -12,7 +12,7 @@ lastupdated: "2017-09-08"
 {:pre: .pre}
 {:table: .aria-labeledby="caption"}
 {:codeblock: .codeblock}
-{:tip: .tip} 
+{:tip: .tip}
 {:download: .download}
 
 
@@ -22,9 +22,9 @@ lastupdated: "2017-09-08"
 Refer to these commands to create and manage clusters.
 {:shortdesc}
 
-**Tip:** Looking for `bx cr` commands? See the [{{site.data.keyword.registryshort_notm}} CLI reference](/docs/cli/plugins/registry/index.html#containerregcli). Looking for `kubectl` commands? See the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/user-guide/kubectl/v1.5/).
+**Tip:** Looking for `bx cr` commands? See the [{{site.data.keyword.registryshort_notm}} CLI reference](/docs/cli/plugins/registry/index.html). Looking for `kubectl` commands? See the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/user-guide/kubectl/v1.5/).
 
- 
+
 <!--[https://github.ibm.com/alchemy-containers/armada-cli ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.ibm.com/alchemy-containers/armada-cli)-->
 
 <table summary="Commands for creating clusters on {{site.data.keyword.Bluemix_notm}}">
@@ -34,14 +34,14 @@ Refer to these commands to create and manage clusters.
  <tbody>
  <tr>
     <td>[bx cs cluster-config](cs_cli_reference.html#cs_cluster_config)</td>
-    <td>[bx cs cluster-create](cs_cli_reference.html#cs_cluster_create)</td> 
+    <td>[bx cs cluster-create](cs_cli_reference.html#cs_cluster_create)</td>
     <td>[bx cs cluster-get](cs_cli_reference.html#cs_cluster_get)</td>
     <td>[bx cs cluster-rm](cs_cli_reference.html#cs_cluster_rm)</td>
     <td>[bx cs cluster-service-bind](cs_cli_reference.html#cs_cluster_service_bind)</td>
  </tr>
  <tr>
     <td>[bx cs cluster-service-unbind](cs_cli_reference.html#cs_cluster_service_unbind)</td>
-    <td>[bx cs cluster-services](cs_cli_reference.html#cs_cluster_services)</td> 
+    <td>[bx cs cluster-services](cs_cli_reference.html#cs_cluster_services)</td>
     <td>[bx cs cluster-subnet-add](cs_cli_reference.html#cs_cluster_subnet_add)</td>
     <td>[bx cs clusters](cs_cli_reference.html#cs_clusters)</td>
     <td>[bx cs credentials-set](cs_cli_reference.html#cs_credentials_set)</td>
@@ -50,26 +50,26 @@ Refer to these commands to create and manage clusters.
    <td>[bx cs credentials-unset](cs_cli_reference.html#cs_credentials_unset)</td>
    <td>[bx cs help](cs_cli_reference.html#cs_help)</td>
    <td>[bx cs init](cs_cli_reference.html#cs_init)</td>
-   <td>[bx cs locations](cs_cli_reference.html#cs_datacenters)</td> 
+   <td>[bx cs locations](cs_cli_reference.html#cs_datacenters)</td>
    <td>[bx cs machine-types](cs_cli_reference.html#cs_machine_types)</td>
    </tr>
  <tr>
     <td>[bx cs subnets](cs_cli_reference.html#cs_subnets)</td>
-    <td>[bx cs vlans](cs_cli_reference.html#cs_vlans)</td> 
+    <td>[bx cs vlans](cs_cli_reference.html#cs_vlans)</td>
     <td>[bx cs webhook-create](cs_cli_reference.html#cs_webhook_create)</td>
     <td>[bx cs worker-add](cs_cli_reference.html#cs_worker_add)</td>
     <td>[bx cs worker-get](cs_cli_reference.html#cs_worker_get)</td>
     </tr>
  <tr>
    <td>[bx cs worker-reboot](cs_cli_reference.html#cs_worker_reboot)</td>
-   <td>[bx cs worker-reload](cs_cli_reference.html#cs_worker_reload)</td> 
+   <td>[bx cs worker-reload](cs_cli_reference.html#cs_worker_reload)</td>
    <td>[bx cs worker-rm](cs_cli_reference.html#cs_worker_rm)</td>
    <td>[bx cs workers](cs_cli_reference.html#cs_workers)</td>
    
   </tr>
  </tbody>
- </table> 
-    
+ </table>
+
 **Tip:** To see the version of the {{site.data.keyword.containershort_notm}} plug-in, run the following command.
 
 ```
@@ -136,35 +136,35 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
     <tbody>
     <tr>
     <td><code><em>name</em></code></td>
-    <td>Replace <code><em>&lt;cluster_name&gt;</em></code> with a name for your cluster.</td> 
+    <td>Replace <code><em>&lt;cluster_name&gt;</em></code> with a name for your cluster.</td>
     </tr>
     <tr>
     <td><code><em>location</em></code></td>
-    <td>Replace <code><em>&lt;location&gt;</em></code> with the location where you want to create your cluster. The available locations are dependent on the region that you are logged in. To list available locations, run <code>bx cs locations</code>. </td> 
+    <td>Replace <code><em>&lt;location&gt;</em></code> with the location where you want to create your cluster. The available locations are dependent on the region that you are logged in. To list available locations, run <code>bx cs locations</code>. </td>
      </tr>
      <tr>
      <td><code><em>machine-type</em></code></td>
-     <td>Replace <code><em>&lt;machine_type&gt;</em></code> with the machine type that you want for your worker nodes. To list available machine types for your location, run <code>bx cs machine-types <em>&lt;location&gt;</em></code>.</td> 
+     <td>Replace <code><em>&lt;machine_type&gt;</em></code> with the machine type that you want for your worker nodes. To list available machine types for your location, run <code>bx cs machine-types <em>&lt;location&gt;</em></code>.</td>
      </tr>
      <tr>
      <td><code><em>private-vlan</em></code></td>
-     <td>Replace <code><em>&lt;private_vlan&gt;</em></code> with the ID of the private VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans <em>&lt;location&gt;</em></code> and look for VLAN routers that start with <code>bcr</code> (back-end router).</td> 
+     <td>Replace <code><em>&lt;private_vlan&gt;</em></code> with the ID of the private VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans <em>&lt;location&gt;</em></code> and look for VLAN routers that start with <code>bcr</code> (back-end router).</td>
      </tr>
      <tr>
      <td><code><em>public-vlan</em></code></td>
-     <td>Replace <code><em>&lt;public_vlan&gt;</em></code> with the ID of the public VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans <em>&lt;location&gt;</em></code> and look for VLAN routers that start with <code>fcr</code> (front-end router).</td> 
+     <td>Replace <code><em>&lt;public_vlan&gt;</em></code> with the ID of the public VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans <em>&lt;location&gt;</em></code> and look for VLAN routers that start with <code>fcr</code> (front-end router).</td>
      </tr>
      <tr>
      <td><code><em>hardware</em></code></td>
-     <td>The level of hardware isolation for your worker node. Use dedicated if you want to have available physical resources dedicated to you only, or shared to allow physical resources to be shared with other IBM customers. The default is <code>shared</code>.</td> 
+     <td>The level of hardware isolation for your worker node. Use dedicated if you want to have available physical resources dedicated to you only, or shared to allow physical resources to be shared with other IBM customers. The default is <code>shared</code>.</td>
      </tr>
      <tr>
      <td><code><em>workerNum</em></code></td>
-     <td>Replace <code><em>&lt;number_workers&gt;</em></code> with the number of worker nodes that you want to deploy.</td> 
+     <td>Replace <code><em>&lt;number_workers&gt;</em></code> with the number of worker nodes that you want to deploy.</td>
      </tr>
      </tbody></table>
     </p></dd>
-    
+
 <dt><code>--hardware <em>HARDWARE</em></code></dt>
 <dd>The level of hardware isolation for your worker node. Use dedicated if you want to have available physical resources dedicated to you only, or shared to allow physical resources to be shared with other IBM customers. The default is shared.  This value is optional for standard clusters and is not available for lite clusters.</dd>
 
@@ -187,7 +187,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 <dd>Include the flag to create a cluster without a portable subnet. The default is to not use the flag and to create a subnet in your {{site.data.keyword.BluSoftlayer_full}} portfolio. This value is optional.</dd>
 
 <dt><code>--private-vlan <em>PRIVATE_VLAN</em></code></dt>
-<dd> 
+<dd>
 
 <ul>
 <li>This parameter is not available for lite clusters.</li>
@@ -200,7 +200,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 <p>To find out if you already have a private VLAN for a specific location or to find the name of an existing private VLAN, run <code>bx cs vlans <em>&lt;location&gt;</em></code>.</p></dd>
 
 <dt><code>--public-vlan <em>PUBLIC_VLAN</em></code></dt>
-<dd> 
+<dd>
 <ul>
 <li>This parameter is not available for lite clusters.</li>
 <li>If this standard cluster is the first standard cluster that you create in this location, do not use this flag. A public VLAN is created for you when the cluster is created.</li>
@@ -220,7 +220,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 **Examples**:
 
   
-  
+
   Example for a standard cluster:
   {: #example_cluster_create}
 
@@ -426,10 +426,10 @@ Set {{site.data.keyword.BluSoftlayer_notm}} account credentials for your {{site.
 
    <dt><code>--infrastructure-api-key <em>API_KEY</em></code></dt>
    <dd>A {{site.data.keyword.BluSoftlayer_notm}} account API key. This value is required.
-   
+
  <p>
   To generate an API key:
-    
+
   <ol>
   <li>Log in to the [{{site.data.keyword.BluSoftlayer_notm}} portal ![External link icon](../icons/launch-glyph.svg "External link icon")](https://control.softlayer.com/).</li>
   <li>Select <strong>Account</strong>, and then <strong>Users</strong>.</li>
@@ -444,7 +444,7 @@ Set {{site.data.keyword.BluSoftlayer_notm}} account credentials for your {{site.
   <li>Click <strong>View</strong> to see your existing API key.</li>
   <li>Copy the API key to use in this command.</li>
   </ol></p></dd>
-    
+
 **Example**:
 
   ```
@@ -544,8 +544,8 @@ View a list of available locations for you to create a cluster in.
   bx cs locations
   ```
   {: pre}
-  
-  
+
+
 ### bx cs machine-types LOCATION
 {: #cs_machine_types}
 
@@ -556,7 +556,7 @@ View a list of available machine types for your worker nodes. Each machine type 
    <dl>
    <dt><em>LOCATION</em></dt>
    <dd>Enter the location where you want to list available machine types.  This value is required. Available locations are: <ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>ra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul></dd></dl>
-   
+
 **Example**:
 
   ```
@@ -593,7 +593,7 @@ List the public and private VLANs that are available for a location in your {{si
    <dt>LOCATION</dt>
    <dd>Enter the location where you want to list your private and public VLANs. This value is required. Available locations are: <ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>ra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul></dd>
    </dl>
-   
+
 **Example**:
 
   ```
@@ -655,7 +655,7 @@ private-vlan: <em>&lt;private_vlan&gt;</em>
 public-vlan: <em>&lt;public_vlan&gt;</em>
 hardware: <em>&lt;shared_or_dedicated&gt;</em>
 workerNum: <em>&lt;number_workers&gt;</em></code></pre>
-        
+
 <table>
 <caption>Table 2. Understanding the YAML file components</caption>
 <thead>
@@ -664,31 +664,31 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 <tbody>
 <tr>
 <td><code><em>name</em></code></td>
-<td>Replace <code><em>&lt;cluster_name_or_id&gt;</em></code> with the name or ID of the cluster where you want to add worker nodes.</td> 
+<td>Replace <code><em>&lt;cluster_name_or_id&gt;</em></code> with the name or ID of the cluster where you want to add worker nodes.</td>
 </tr>
 <tr>
 <td><code><em>location</em></code></td>
-<td>Replace <code><em>&lt;location&gt;</em></code> with the location where you want to deploy your worker nodes. The available locations are dependent on the region that you are logged in. To list available locations, run <code>bx cs locations</code>.</td> 
+<td>Replace <code><em>&lt;location&gt;</em></code> with the location where you want to deploy your worker nodes. The available locations are dependent on the region that you are logged in. To list available locations, run <code>bx cs locations</code>.</td>
 </tr>
 <tr>
 <td><code><em>machine-type</em></code></td>
-<td>Replace <code><em>&lt;machine_type&gt;</em></code> with the machine type that you want for your worker nodes. To list available machine types for your location, run <code>bx cs machine-types <em>&lt;location&gt;</em></code>.</td> 
+<td>Replace <code><em>&lt;machine_type&gt;</em></code> with the machine type that you want for your worker nodes. To list available machine types for your location, run <code>bx cs machine-types <em>&lt;location&gt;</em></code>.</td>
 </tr>
 <tr>
 <td><code><em>private-vlan</em></code></td>
-<td>Replace <code><em>&lt;private_vlan&gt;</em></code> with the ID of the private VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans <em>&lt;location&gt;</em></code> and look for VLAN routers that start with <code>bcr</code> (back-end router).</td> 
+<td>Replace <code><em>&lt;private_vlan&gt;</em></code> with the ID of the private VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans <em>&lt;location&gt;</em></code> and look for VLAN routers that start with <code>bcr</code> (back-end router).</td>
 </tr>
 <tr>
 <td><code>public-vlan</code></td>
-<td>Replace <code>&lt;public_vlan&gt;</code> with the ID of the public VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans &lt;location&gt;</code> and look for VLAN routers that start with <code>fcr</code> (front-end router).</td> 
+<td>Replace <code>&lt;public_vlan&gt;</code> with the ID of the public VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans &lt;location&gt;</code> and look for VLAN routers that start with <code>fcr</code> (front-end router).</td>
 </tr>
 <tr>
 <td><code>hardware</code></td>
-<td>The level of hardware isolation for your worker node. Use dedicated if you want to have available physical resources dedicated to you only, or shared to allow physical resources to be shared with other IBM customers. The default is shared.</td> 
+<td>The level of hardware isolation for your worker node. Use dedicated if you want to have available physical resources dedicated to you only, or shared to allow physical resources to be shared with other IBM customers. The default is shared.</td>
 </tr>
 <tr>
 <td><code>workerNum</code></td>
-<td>Replace <code><em>&lt;number_workers&gt;</em></code> with the number of worker nodes that you want to deploy.</td> 
+<td>Replace <code><em>&lt;number_workers&gt;</em></code> with the number of worker nodes that you want to deploy.</td>
 </tr>
 </tbody></table></p></dd>
 
@@ -702,12 +702,12 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 <dd>An integer that represents the number of worker nodes to create in the cluster. The default value is 1. This value is optional.</dd>
 
 <dt><code>--private-vlan <em>PRIVATE_VLAN</em></code></dt>
-<dd>The private VLAN that was specified when the cluster was created. This value is required. 
+<dd>The private VLAN that was specified when the cluster was created. This value is required.
 
 <p><strong>Note:</strong> The public and private VLANs that you specify must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></dd>
 
 <dt><code>--public-vlan <em>PUBLIC_VLAN</em></code></dt>
-<dd>The public VLAN that was specified when the cluster was created. This value is optional. 
+<dd>The public VLAN that was specified when the cluster was created. This value is optional.
 
 <p><strong>Note:</strong> The public and private VLANs that you specify must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></dd>
 </dl>
@@ -825,7 +825,7 @@ Remove one or more worker nodes from a cluster.
   bx cs worker-rm my_cluster my_node1 my_node2
   ```
   {: pre}
-  
+
 
 
 ### bx cs workers CLUSTER
@@ -846,6 +846,9 @@ View a list of worker nodes and the status for each in a cluster.
   bx cs workers mycluster
   ```
   {: pre}
+
+<br />
+
 
 ## Cluster states
 {: #cs_cluster_states}
