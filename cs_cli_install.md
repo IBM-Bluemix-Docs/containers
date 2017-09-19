@@ -22,6 +22,9 @@ lastupdated: "2017-09-08"
 You can use the {{site.data.keyword.containershort_notm}} CLI or API to create and manage your Kubernetes clusters.
 {:shortdesc}
 
+<br />
+
+
 ## Installing the CLI
 {: #cs_cli_install_steps}
 
@@ -134,7 +137,10 @@ For reference information about these CLIs, see the documentation for those tool
 -   [`bx` commands](/docs/cli/reference/bluemix_cli/bx_cli.html)
 -   [`bx cs` commands](cs_cli_reference.html#cs_cli_reference)
 -   [`kubectl` commands ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/user-guide/kubectl/v1.5/)
--   [`bx cr` commands](/docs/cli/plugins/registry/index.html#containerregcli)
+-   [`bx cr` commands](/docs/cli/plugins/registry/index.html)
+
+<br />
+
 
 ## Configuring the CLI to run `kubectl`
 {: #cs_cli_configure}
@@ -273,6 +279,9 @@ Before you can run `kubectl` commands, [install the required CLIs](#cs_cli_insta
 Now, you can run `kubectl` commands to manage your clusters in {{site.data.keyword.Bluemix_notm}}. For a full list of commands, see the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/user-guide/kubectl/v1.5/).
 
 **Tip:** If you are using Windows and the Kubernetes CLI is not installed in the same directory as the {{site.data.keyword.Bluemix_notm}} CLI, you must change directories to the path where the Kubernetes CLI is installed to run `kubectl` commands successfully.
+
+<br />
+
 
 ## Updating the CLI
 {: #cs_cli_upgrade}
@@ -418,6 +427,9 @@ To update the CLIs:
     -   If you are using Docker Community Edition, start Docker, click the **Docker** icon, and click **Check for updates**.
     -   If you are using Docker Toolbox, download the [latest version ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.docker.com/products/docker-toolbox) and run the installer.
 
+<br />
+
+
 ## Uninstalling the CLI
 {: #cs_cli_uninstall}
 
@@ -468,6 +480,8 @@ To uninstall the CLIs:
 - [Linux ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#uninstall-docker-ce)
 - [Windows ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.docker.com/toolbox/toolbox_install_mac/#how-to-uninstall-toolbox)
 
+<br />
+
 
 ## Automating cluster deployments with the API
 {: #cs_api}
@@ -477,7 +491,7 @@ You can use the {{site.data.keyword.containershort_notm}} API to automate the cr
 
 The {{site.data.keyword.containershort_notm}} API requires header information that you must provide in your API request and that can vary depending on the API that you want to use. To determine what header information is needed for your API, see the [{{site.data.keyword.containershort_notm}} API documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://us-south.containers.bluemix.net/swagger-api).
 
-**Note:** To authenticate with {{site.data.keyword.containershort_notm}}, you must provide an Identity and Access Management (IAM) token that is generated with your {{site.data.keyword.Bluemix_notm}} credentials and that includes the {{site.data.keyword.Bluemix_notm}} account ID where the cluster was created. Depending on the way you authenticate with {{site.data.keyword.Bluemix_notm}}, you can choose between the following options to automate the creation of your IAM token. 
+**Note:** To authenticate with {{site.data.keyword.containershort_notm}}, you must provide an Identity and Access Management (IAM) token that is generated with your {{site.data.keyword.Bluemix_notm}} credentials and that includes the {{site.data.keyword.Bluemix_notm}} account ID where the cluster was created. Depending on the way you authenticate with {{site.data.keyword.Bluemix_notm}}, you can choose between the following options to automate the creation of your IAM token.
 
 <table>
 <thead>
@@ -611,9 +625,9 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
 
     You can find the ID of your {{site.data.keyword.Bluemix_notm}} account in the **resources/metadata/guid** field of your API output.
 
-3.  Generate a new IAM token that includes your {{site.data.keyword.Bluemix_notm}} credentials and the account ID where the cluster was created. Replace _&lt;my_bluemix_account_id&gt;_ with the ID of the {{site.data.keyword.Bluemix_notm}} account that you retrieved in the previous step. 
+3.  Generate a new IAM token that includes your {{site.data.keyword.Bluemix_notm}} credentials and the account ID where the cluster was created. Replace _&lt;my_bluemix_account_id&gt;_ with the ID of the {{site.data.keyword.Bluemix_notm}} account that you retrieved in the previous step.
 
-    **Note:** If you are using a {{site.data.keyword.Bluemix_notm}} API key, you must use the {{site.data.keyword.Bluemix_notm}} account ID the API key was created for. To access clusters in other accounts, log into this account and create a {{site.data.keyword.Bluemix_notm}} API key that is based on this account.  
+    **Note:** If you are using a {{site.data.keyword.Bluemix_notm}} API key, you must use the {{site.data.keyword.Bluemix_notm}} account ID the API key was created for. To access clusters in other accounts, log into this account and create a {{site.data.keyword.Bluemix_notm}} API key that is based on this account.
 
     ```
     POST https://iam.<region>.bluemix.net/oidc/token
@@ -802,6 +816,9 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
         </table>
 
 8.  Review the [{{site.data.keyword.containershort_notm}} API documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://us-south.containers.bluemix.net/swagger-api) to find a list of supported APIs.
+
+<br />
+
 
 ## Refreshing IAM access tokens
 {: #cs_api_refresh}
