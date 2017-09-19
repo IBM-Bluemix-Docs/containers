@@ -45,6 +45,9 @@ You can use built-in security features for risk analysis and security protection
   </tbody>
 </table>
 
+<br />
+
+
 ## Kubernetes master
 {: #cs_security_master}
 
@@ -58,7 +61,7 @@ Review the built-in Kubernetes master security features to protect the Kubernete
     <li>kube-apiserver: Serves as the main entry point for all requests from the worker node to the Kubernetes master. The kube-apiserver validates and processes requests and can read from and write to the etcd data store.</li>
     <li>kube-scheduler: Decides where to deploy pods, taking into account capacity and performance needs, hardware and software policy constraints, anti-affinity specifications, and workload requirements. If no worker node can be found that matches the requirements, the pod is not deployed in the cluster.</li>
     <li>kube-controller-manager: Responsible for monitoring replica sets, and creating corresponding pods to achieve the desired state.</li>
-    <li>OpenVPN: {{site.data.keyword.containershort_notm}} specific component to provide secured network connectivity for all Kubernetes master to worker node communication.</li></ul></dd>
+    <li>OpenVPN: {{site.data.keyword.containershort_notm}}-specific component to provide secured network connectivity for all Kubernetes master to worker node communication.</li></ul></dd>
   <dt>TLS secured network connectivity for all worker node to Kubernetes master communication</dt>
     <dd>To secure the network communication to the Kubernetes master, {{site.data.keyword.containershort_notm}} generates TLS certificates that encrypts the communication to and from the kube-apiserver and etcd data store components for every cluster. These certificates are never shared across clusters or across Kubernetes master components.</dd>
   <dt>OpenVPN secured network connectivity for all Kubernetes master to worker node communication</dt>
@@ -68,6 +71,9 @@ Review the built-in Kubernetes master security features to protect the Kubernete
   <dt>Kubernetes master node security compliance</dt>
     <dd>{{site.data.keyword.containershort_notm}} automatically scans every node where the Kubernetes master is deployed for vulnerabilities found in Kubernetes and OS-sepcific security fixes that need to be applied to assure master node protection. If vulnerabilities are found, {{site.data.keyword.containershort_notm}} automatically applies fixes and resolves vulnerabilities on behalf of the user.</dd>
 </dl>
+
+<br />
+
 
 ## Worker nodes
 {: #cs_security_worker}
@@ -95,7 +101,9 @@ Review the built-in worker node security features to protect the worker node env
 ### Opening required ports and IP addresses in your firewall
 {: #opening_ports}
 
-When you set up a firewall for your worker nodes or customize the firewall settings in your {{site.data.keyword.BluSoftlayer_notm}} account, you must open certain ports and IP addresses so that the worker node and the Kubernetes master can communicate. To access the load balancer or Ingress controller from outside of the cluster, you must also open ports in your firewall.
+When you set up a firewall for your worker nodes or customize the firewall settings in your Bluemix Infrastructure (SoftLayer) account, you must open certain ports and IP addresses so that the worker node and the Kubernetes master can communicate. To access the load balancer or Ingress controller from outside of the cluster, you must also open ports in your firewall.
+
+
 
 1.  Note the public IP address for all your worker nodes in the cluster.
 
@@ -201,8 +209,10 @@ When you set up a firewall for your worker nodes or customize the firewall setti
     </ul>
 
 3. Optional: To access the load balancer from outside of the VLAN, open the port for incoming network traffic on the specific IP address of that load balancer.
- 
+
 4. Optional: To access the Ingress controller from outside of the VLAN, open either port 80 or 443 for incoming network traffic on the specific IP address of that Ingress controller, depending on which port you have configured.
+
+<br />
 
 
 ## Network policies
@@ -280,10 +290,11 @@ Before you begin, complete the following steps.
   ```
   {: pre}
 
+Note: Calico CLI version 1.4.0 is supported.
 
 To add network policies:
 1.  Install the Calico CLI.
-    1.  [Download the Calico CLI ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/projectcalico/calicoctl/releases/).
+    1.  [Download the Calico CLI ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/projectcalico/calicoctl/releases/tag/v1.4.0).
 
         **Tip:** If you are using Windows, install the Calico CLI in the same directory as the {{site.data.keyword.Bluemix_notm}} CLI. This setup saves you some filepath changes when you run commands later.
 
@@ -350,14 +361,16 @@ To add network policies:
       ```
       {: pre}
 
-        1.  Retrieve the `<ETCD_URL>`.
+        1.  Retrieve the `<ETCD_URL>`. 
 
           -   Linux and OS X:
-
+              
               ```
               kubectl describe pod -n kube-system `kubectl get pod -n kube-system | grep calico-policy-controller | awk '{print $1}'` | grep ETCD_ENDPOINTS | awk '{print $2}'
               ```
               {: pre}
+              
+              
 
           -   Output example:
 
@@ -367,11 +380,15 @@ To add network policies:
               {: screen}
 
           -   Windows:
+            
             <ol>
             <li>Get a list of the pods in the kube-system namespace and locate the Calico controller pod. </br><pre class="codeblock"><code>kubectl get pod -n kube-system</code></pre></br>Example:</br><pre class="screen"><code>calico-policy-controller-1674857634-k2ckm</code></pre>
             <li>View the details of the Calico controller pod.</br> <pre class="codeblock"><code>kubectl describe pod -n kube-system calico-policy-controller-&lt;ID&gt;</code></pre>
             <li>Locate the ETCD endpoints value. Example: <code>https://169.1.1.1:30001</code>
             </ol>
+            
+
+            
 
         2.  Retrieve the `<CERTS_DIR>`, the directory that the Kubernetes certificates are downloaded in.
 
@@ -410,7 +427,7 @@ To add network policies:
             -   Linux and OS X:
 
               ```
-              ls `dirname $KUBECONFIG` | grep ca-.*pem
+              ls `dirname $KUBECONFIG` | grep ca-*.pem
               ```
               {: pre}
 
@@ -492,6 +509,8 @@ To add network policies:
           calicoctl apply -f <path_to_>/<policy_file_name.yaml> --config=<path_to_>/calicoctl.cfg
           ```
           {: pre}
+
+<br />
 
 
 ## Images
