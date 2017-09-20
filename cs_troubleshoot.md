@@ -579,7 +579,7 @@ Open the following ports and IP addresses in your customized firewall.
          </tr>
          <tr>
           <td>registry.eu-gb.bluemix.net</td>
-          <td><<code>159.8.188.160/27</code></br><code>169.50.153.64/27</code></td>
+          <td><code>159.8.188.160/27</code></br><code>169.50.153.64/27</code></td>
          </tr>
          <tr>
           <td>registry.ng.bluemix.net</td>
