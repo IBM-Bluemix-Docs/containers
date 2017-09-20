@@ -12,7 +12,7 @@ lastupdated: "2017-09-12"
 {:pre: .pre}
 {:table: .aria-labeledby="caption"}
 {:codeblock: .codeblock}
-{:tip: .tip} 
+{:tip: .tip}
 {:download: .download}
 
 
@@ -23,13 +23,52 @@ lastupdated: "2017-09-12"
 {:shortdesc}
 
 
+<br />
+
+
+## Docker containers
+{: #cs_ov_docker}
+
+Docker is an open source project that was released by dotCloud in 2013. Built on features of the existing Linux container technology (LXC), Docker became a software platform that you can use to build, test, deploy, and scale apps quickly. Docker packages software into standardized units that are called containers that include all of the elements that an app needs to run.
+{:shortdesc}
+
+Review these concepts to learn about basic Docker concepts.
+
+<dl>
+<dt>Container</dt>
+<dd>A container is a standard way to package an app and all its dependencies so that the app can be moved between environments and run without changes. Unlike virtual machines, containers do not virtualize a device, its operating system, and the underlying hardware. Only the app code, run time, system tools, libraries, and settings are packaged inside the container. Containers run as isolated processes on the compute host where they are deployed to and share the host operating system and its hardware resources. This approach makes a container more lightweight, portable, and efficient than a virtual machine.</dd>
+<dt>Image</dt>
+<dd>Every container is based on a Docker image and is considered to be an instance of an image. An image is built from a Dockerfile, which is a file that contains instructions how to build the image, and any build artifacts, such as an app, the app's configuration, and its dependencies.</dd>
+<dt>Registry</dt>
+<dd>An image registry is a place where you store, retrieve, and share Docker images. Images that are stored in a registry can either be publicly available (public registry) or accessible by a small group of users only (private registry). {{site.data.keyword.containershort_notm}} offers public images, such as ibmliberty that you can use to get started with Docker and Kubernetes to create your first containerized app in a cluster. When it comes to enterprise applications, use a private registry like the one provided in {{site.data.keyword.Bluemix_notm}} to protect your images from being used and changed by unauthorized users.
+
+</br></br>
+When you want to deploy a container from an image, you must make sure that the image is stored in either a public or private image registry.</dd>
+</dl>
+
+### Key benefits of using containers
+{: #container_benefits}
+
+<dl>
+<dt>Containers are agile</dt>
+<dd>Containers simplify system administration by providing standardized environments for development and production teams. The engine's lightweight run time enables rapid scale-up and scale-down in response to changes in demand. They help remove the complexity of managing different operating system platforms and underlying infrastructure. Containers help you deploy and run any app on any infrastructure, quickly and reliably.</dd>
+<dt>Containers are small</dt>
+<dd>You can fit more containers in the amount of space that a single virtual machine would require.</dd>
+<dt>Containers are portable</dt>
+<dd>Build an image for another container by using another image as the base. Let someone else do the bulk of the work on an image and tweak it for your use. You can also migrate app code from a staging environment to a production environment quickly. The migration process can be automated with tools such as the Delivery Pipeline or UrbanCode Deploy.</dd>
+</dl>
+
+
+<br />
+
+
 ## Kubernetes basics
 {: #kubernetes_basics}
 
 Kubernetes was developed by Google as part of the Borg project and handed off to the open source community in 2014. Kubernetes combines more than 15 years of Google research in running a containerized infrastructure with production work loads, open source contributions, and Docker container management tools to provide an isolated and secure app platform that is portable, extensible, and self-healing in case of failovers.
 {:shortdesc}
 
-Learn about the basics of how Kubernetes works with a little terminology. 
+Learn about the basics of how Kubernetes works with a little terminology.
 
 <a href="https://console.bluemix.net/docs/api/content/containers/images/cs_app_tutorial_components1.png">![Deployment setup](images/cs_app_tutorial_components1.png)</a>
 
@@ -47,8 +86,11 @@ You can use a deployment to define update strategies for your app, which include
 <dd>A Kubernetes service groups a set of pods and provides network connection to these pods for other services in the cluster without exposing the actual private IP address of each pod. You can use a service to make your app available within your cluster or to the public internet.
 
 </br></br>
-To learn more about Kubernetes terminology, try the <a href="cs_tutorials.html#cs_tutorials" target="_blank">tutorial</a>.</dd>
+To learn more about Kubernetes terminology, try the <a href="cs_tutorials.html#cs_cluster_tutorial" target="_blank">tutorial</a>.</dd>
 </dl>
+
+<br />
+
 
 ## Benefits of using clusters
 {: #cs_ov_benefits}
@@ -68,6 +110,8 @@ Each cluster is deployed on shared or dedicated virtual machines that provide na
 |{{site.data.keyword.Bluemix_notm}} service integration|<ul><li>Add extra capabilities to your app through the integration of {{site.data.keyword.Bluemix_notm}} services, such as Watson APIs, Blockchain, data services, or Internet of Things, and help cluster users to simplify the app development and container management process.</li></ul>|
 {: caption="Table 1. Benefits of using clusters with {{site.data.keyword.containerlong_notm}}" caption-side="top"}
 
+<br />
+
 
 ## Cloud environments
 {: #cs_ov_environments}
@@ -75,7 +119,7 @@ Each cluster is deployed on shared or dedicated virtual machines that provide na
 You can choose the {{site.data.keyword.Bluemix_notm}} cloud environment on which to deploy clusters and containers.
 {:shortdesc}
 
-###{{site.data.keyword.Bluemix_notm}} Public
+### {{site.data.keyword.Bluemix_notm}} Public
 {: #public_environment}
 
 Deploy clusters into the public cloud environment ([https://console.bluemix.net ![External link icon](../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net)) and connect to any service in the {{site.data.keyword.Bluemix_notm}} catalog.
@@ -119,7 +163,7 @@ Click one of the following options to get started:
 |--|--------------|--------------------------------|
 |Cluster creation|Create a lite cluster or specify the following details for a standard cluster:<ul><li>Cluster type</li><li>Name</li><li>Location</li><li>Machine type</li><li>Number of worker nodes</li><li>Public VLAN</li><li>Private VLAN</li><li>Hardware</li></ul>|Specify the following details for a standard cluster:<ul><li>Name</li><li>Kubernetes version</li><li>Machine type</li><li>Number of worker nodes</li></ul><p>**Note:** The VLANs and Hardware settings are pre-defined during the creation of the {{site.data.keyword.Bluemix_notm}} environment.</p>|
 |Cluster hardware and ownership|In standard clusters, the hardware can be shared by other {{site.data.keyword.IBM_notm}} customers or dedicated to you only. The public and private VLANs are owned and managed by you in your {{site.data.keyword.BluSoftlayer_notm}} account.|In clusters on {{site.data.keyword.Bluemix_notm}} Dedicated, the hardware is always dedicated. The public and private VLANs are owned and managed by IBM for you. Location is pre-defined for the {{site.data.keyword.Bluemix_notm}} environment.|
-|Service binding with a cluster|Use the [bx cs cluster-service-bind](cs_cluster.html#cs_cluster_service) command to bind a Kubernetes secret to the cluster.|Create a [JSON key file](cs_cluster.html#binding_dedicated) for the service credentials, and then create Kubernetes secret from that file to bind to the cluster.|
+|Service binding with a cluster|Use the [bx cs cluster-service-bind](cs_cluster.html#cs_cluster_service) command to bind a Kubernetes secret to the cluster.|Create a [JSON key file](cs_cluster.html#binding_dedicated) for the service credentials, and then create a Kubernetes secret from that file to bind to the cluster.|
 |Load balancer and Ingress networking|During the provisioning of standard clusters, the following actions occur automatically.<ul><li>A public portable subnet is bound to your cluster and assigned to your {{site.data.keyword.BluSoftlayer_notm}} account.</li><li>One portable public IP address is used for a highly available Ingress controller and a unique public route is assigned in the format &lt;cluster_name&gt;.containers.mybluemix.net. You can use this route to expose multiple apps to the public.</li><li>Four portable public IP addresses are assigned to the cluster that can be used to expose apps to the public via load balancer services. Additional subnets can be requested through your {{site.data.keyword.BluSoftlayer_notm}} account.</li></ul>|When you create your Dedicated account, you make the following decisions:<ul><li>How many subnets you want</li><li>The type of subnets you want, either load balancer or Ingress. {{site.data.keyword.IBM_notm}} creates the subnets and performs the network management tasks for you. Depending on your selections, an Ingress controller might be created and a public route might be assigned. Additional subnets can be requested by [opening a support ticket](/docs/support/index.html#contacting-support) to create the subnet, and then use the [`bx cs cluster-subnet-add`](cs_cli_reference.html#cs_cluster_subnet_add) command to add the subnet to the cluster.|
 |NodePort networking|Expose a public port on your worker node and use the public IP address of the worker node to publicly access your service in the cluster.|All public IP addresses of the workers nodes are blocked by a firewall. However, for {{site.data.keyword.Bluemix_notm}} services that are added to the cluster, the node port can be accessed via a public IP address or a private IP address.|
 |Persistent storage|Use [dynamic provisioning](cs_apps.html#cs_apps_volume_claim) or [static provisioning](cs_cluster.html#cs_cluster_volume_create) of volumes.|Use [dynamic provisioning](cs_apps.html) of volumes.</li></ul>|
@@ -146,10 +190,10 @@ To set up your Dedicated environment to use clusters:
     6.  From the **Services** drop-down list, select **{{site.data.keyword.containershort_notm}}**.
     7.  From the **Roles** drop-down list, select **Administrator**.
     8.  Click **Invite users**.
-2.  [Create IBMIDs for the end users of your {{site.data.keyword.Bluemix_notm}} account. ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/account/us-en/signup/register.html)
+2.  [Create IBMids for the end users of your {{site.data.keyword.Bluemix_notm}} account. ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/account/us-en/signup/register.html)
 3.  [Add the users from the previous step to your {{site.data.keyword.Bluemix_notm}} account.](cs_cluster.html#add_users)
 4.  Access your {{site.data.keyword.Bluemix_notm}} Dedicated account through the Public console and start creating clusters.
-    1.  Log in to {{site.data.keyword.Bluemix_notm}} Public console ([https://console.bluemix.net ![External link icon](../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net)) with your IBMID.
+    1.  Log in to {{site.data.keyword.Bluemix_notm}} Public console ([https://console.bluemix.net ![External link icon](../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net)) with your IBMid.
     2.  From the account menu, select your {{site.data.keyword.Bluemix_notm}} Dedicated account. The console is updated with the services and information for your {{site.data.keyword.Bluemix_notm}} Dedicated instance.
     3.  From the catalog for your {{site.data.keyword.Bluemix_notm}} Dedicated instance, select **Containers** and click **Kubernetes cluster**.
     For more information about creating a cluster, see [Creating Kubernetes clusters from the GUI in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)](cs_cluster.html#creating_ui_dedicated).
@@ -167,22 +211,21 @@ To set up your Dedicated environment to use clusters:
   <li>In the server field, identify the port that was assigned to access your cluster. In the following example, the &#60;cluster-master-port&#62; is 21264. Example: <pre class="screen"><code>server: https://192.168.10.38:21264</code></pre>
   </ol></li>
   </ul>
-  
+
   **Tip**: For the <em>&#60;region&#62;</em> variables, you can enter one of the following regions.
   -   US South: `ng`
   -   Sydney: `au-syd`
   -   Germany: `eu-de`
   -   United Kingdom: `eu-gb`
 
+<br />
 
 
-## How Kubernetes clusters work 
+## Service architecture
 {: #cs_ov_architecture}
 
-A Kubernetes cluster consists of one or more physical or virtual machines, also known as worker nodes, that are loosely coupled, extensible, and centrally monitored and managed by the Kubernetes master. For each customer account, the Kubernetes master is managed by IBM and is highly resilient and highly available.
-{:shortdesc}
-
 Each worker node is set up with an {{site.data.keyword.IBM_notm}} managed Docker Engine, separate compute resources, networking, and volume service, as well as built-in security features that provide isolation, resource management capabilities, and worker node security compliance. The worker node communicates with the master by using secure TLS certificates and openVPN connection.
+{:shortdesc}
 
 *Figure 1. Kubernetes architecture and networking in the IBM Bluemix Container Service*
 
@@ -190,37 +233,8 @@ Each worker node is set up with an {{site.data.keyword.IBM_notm}} managed Docker
 
 
 
-## Docker containers
-{: #cs_ov_docker}
+<br />
 
-Docker is an open source project that was released by dotCloud in 2013. Built on features of the existing Linux container technology (LXC), Docker became a software platform that you can use to build, test, deploy, and scale apps quickly. Docker packages software into standardized units that are called containers that include all of the elements that an app needs to run.
-{:shortdesc}
-
-Review these concepts to learn about basic Docker concepts.
-
-<dl>
-<dt>Container</dt>
-<dd>A container is a standard way to package an app and all its dependencies so that the app can be moved between environments and run without changes. Unlike virtual machines, containers do not virtualize a device, its operating system, and the underlying hardware. Only the app code, run time, system tools, libraries, and settings are packaged inside the container. Containers run as isolated processes on the compute host where they are deployed to and share the host operating system and its hardware resources. This approach makes a container more lightweight, portable, and efficient than a virtual machine.</dd>
-<dt>Image</dt>
-<dd>Every container is based on a Docker image and is considered to be an instance of an image. An image is built from a Dockerfile, which is a file that contains instructions how to build the image, and any build artifacts, such as an app, the app's configuration, and its dependencies.</dd>
-<dt>Registry</dt>
-<dd>An image registry is a place where you store, retrieve, and share Docker images. Images that are stored in a registry can either be publicly available (public registry) or accessible by a small group of users only (private registry). {{site.data.keyword.containershort_notm}} offers public images, such as ibmliberty that you can use to get started with Docker and Kubernetes to create your first containerized app in a cluster. When it comes to enterprise applications, use a private registry like the one provided in {{site.data.keyword.Bluemix_notm}} to protect your images from being used and changed by unauthorized users.
-
-</br></br>
-When you want to deploy a container from an image, you must make sure that the image is stored in either a public or private image registry.</dd>
-</dl>
-
-### Key benefits of using containers
-{: #container_benefits}
-
-<dl>
-<dt>Containers are agile</dt>
-<dd>Containers simplify system administration by providing standardized environments for development and production teams. The engine's lightweight run time enables rapid scale-up and scale-down in response to changes in demand. They help remove the complexity of managing different operating system platforms and underlying infrastructure. Containers help you deploy and run any app on any infrastructure, quickly and reliably.</dd>
-<dt>Containers are small</dt>
-<dd>You can fit more containers in the amount of space that a single virtual machine would require.</dd>
-<dt>Containers are portable</dt>
-<dd>Build an image for another container by using another image as the base. Let someone else do the bulk of the work on an image and tweak it for your use. You can also migrate app code from a staging environment to a production environment quickly. The migration process can be automated with tools such as the Delivery Pipeline or UrbanCode Deploy.</dd>
-</dl>
 
 ## Abuse of containers
 {: #cs_terms}
