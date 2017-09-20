@@ -867,14 +867,11 @@ You might need to change your YAML files for deployments before updating. Review
 <strong>Command options</strong>:
 
    <dl>
-   <dt><code><em>CLUSTER</em></code></dt>
-   <dd>The name or ID of the cluster. This value is required.</dd>
-
    <dt><code>-f</code></dt>
    <dd>Use this option to force the update of the master with no user prompts. This value is optional.</dd>
 
    <dt><code><em>WORKER</em></code></dt>
-   <dd>The name or ID of one or more worker nodes. Use a space to list multiple worker nodes. This value is required.</dd>
+   <dd>The ID of one or more worker nodes. Use a space to list multiple worker nodes. This value is required.</dd>
    </dl>
 
 **Example**:
