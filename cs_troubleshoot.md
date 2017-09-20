@@ -564,7 +564,8 @@ Open the following ports and IP addresses in your customized firewall.
 </ul>
 
 3.  Get all [the public IP addresses for each registry region](/docs/services/Registry/troubleshoot/ts_index.html#ts_firewall) to which you want to allow outgoing network traffic.
-      <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
+            
+<table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
         <thead>
         <th colspan=2><img src="images/idea.png"/> Registry IP addresses</th>
         </thead>
@@ -579,7 +580,7 @@ Open the following ports and IP addresses in your customized firewall.
          </tr>
          <tr>
           <td>registry.eu-gb.bluemix.net</td>
-          <td><<code>159.8.188.160/27</code></br><code>169.50.153.64/27</code></td>
+          <td><code>159.8.188.160/27</code></br><code>169.50.153.64/27</code></td>
          </tr>
          <tr>
           <td>registry.ng.bluemix.net</td>
@@ -587,6 +588,7 @@ Open the following ports and IP addresses in your customized firewall.
          </tr>
         </tbody>
       </table>
+
 
 4.  Allow the connections to and from your worker nodes. Replace `<each_worker_node_publicIP>` and `<registry_publicIP>` with the IP addresses you retrieved previously.
       ```
@@ -789,7 +791,7 @@ To troubleshoot your load balancer service:
 {: #cs_calico_fails}
 
 {: tsSymptoms}
-When you retrieve the `<ETCD_URL>` to (add network policies)[cs_security.html#adding_network_policies], you get a `calico-config not found` error message.
+When you retrieve the `<ETCD_URL>` to [add network policies](cs_security.html#adding_network_policies), you get a `calico-config not found` error message.   
 
 {: tsCauses}
 Your cluster is not at (Kubernetes version 1.7)[cs_versions.html] or later.

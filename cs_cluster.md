@@ -1231,7 +1231,7 @@ Worker nodes can be updated to the Kubernetes version of the Kubernetes master. 
 **Attention**: Updating the worker node version can cause downtime for your apps and services. Data is deleted if not stored outside the pod. Use [replicas ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#replicas) in your deployments to allow pods to reschedule to available nodes.
 
 1. Review the [Kubernetes changes](cs_versions.html) and make any required changes marked _Update after master_ to your deployment scripts.
-2. Back up all data before updating worker nodes.
+2. Back up all data before you update worker nodes.
 3. View resource usage of the worker nodes. During an update, worker nodes are removed sequentially, and pods might be rescheduled. If you need more space for your apps, add worker nodes to your cluster.
 
     ```
@@ -1247,7 +1247,7 @@ Worker nodes can be updated to the Kubernetes version of the Kubernetes master. 
     ```
     {: pre}
 
-7. Drain the worker node to remove any pods that are running and prevent other pods from deploying to the worker node. or `DaemonSets` are ignored.
+7. Drain the worker node to remove any pods that are running and prevent other pods from deploying to the worker node. `DaemonSets` are ignored.
 
     ```
     kubectl drain <node_name> --force --timeout 60s --ignore-daemonsets --delete-local-data
@@ -1275,7 +1275,7 @@ Worker nodes can be updated to the Kubernetes version of the Kubernetes master. 
 11. If the app does not work, delete the app and adjust your deployment script before you try again.
 12. When the deployment works as expected, update your remaining worker nodes.
 
-When you have completed the update, repeat the update process with other clusters. In addition, inform developers who work in the cluster to update their `kubectl` CLI to the version of the Kubernetes master.
+When you complete the update, repeat the update process with other clusters. In addition, inform developers who work in the cluster to update their `kubectl` CLI to the version of the Kubernetes master.
 
 <br />
 
