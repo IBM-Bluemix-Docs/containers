@@ -1231,38 +1231,43 @@ Worker nodes can be updated to the Kubernetes version of the Kubernetes master. 
 **Attention**: Updating the worker node version can cause downtime for your apps and services. Data is deleted if not stored outside the pod. Use [replicas ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#replicas) in your deployments to allow pods to reschedule to available nodes.
 
 1. Review the [Kubernetes changes](cs_versions.html) and make any required changes marked _Update after master_ to your deployment scripts.
-2. Back up all data before updating worker nodes.
-3. View resource usage of the worker nodes. During an update, worker nodes are removed sequentially, and pods might be rescheduled. If you need more space for your apps, add worker nodes to your cluster.
+2. View resource usage of the worker nodes. During an update, worker nodes are removed sequentially, and pods might be rescheduled. If you need more space for your apps, add worker nodes to your cluster.
 
     ```
     kubectl top nodes
     ```
     {: pre}
 
-5. Install the version of the [`kubectl cli` ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/tools/install-kubectl/) that matches the Kubernetes version of the Kubernetes master.
-6. Before you update all worker nodes, identify a worker node to test the update on. Note the `NAME` of the node.
+3. Install the version of the [`kubectl cli` ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/tools/install-kubectl/) that matches the Kubernetes version of the Kubernetes master.
+4. Before you update all worker nodes, identify a worker node to test the update on. Note the `NAME` of the node.
 
     ```
     kubectl get nodes
     ```
     {: pre}
 
-7. Drain the worker node to remove any pods that are running and prevent other pods from deploying to the worker node. or `DaemonSets` are ignored.
+5. Drain the worker node to remove any pods that are running and prevent other pods from deploying to the worker node. `DaemonSets` are ignored.
 
     ```
     kubectl drain <node_name> --force --timeout 60s --ignore-daemonsets --delete-local-data
     ```
     {: pre}
-    
-8. From the {{site.data.keyword.Bluemix_notm}} Dashboard, navigate to the `Worker Nodes` section of your cluster, select the worker node that you drained, and click `Update Worker`. Or you can run [`bx cs worker-update`](cs_cli_reference.html#cs_worker_update).
-9. After you update, run uncordon to allow pods to be deployed on the worker node.
+
+6. Update your worker node. To update from the {{site.data.keyword.Bluemix_notm}} Dashboard, navigate to the `Worker Nodes` section of your cluster, select the worker node that you drained, and click `Update Worker`. To get your worker node id, run `bx workers <cluster_name_or_id>`.
+
+    ```
+    bx worker-update <cluster_name_or_id> <worker_node_id>
+    ```
+    {: pre}
+
+7. After you update, run uncordon to allow pods to be deployed on the worker node.
 
     ```
     kubectl uncordon <node_name>
     ```
     {: pre}
 
-9. To target your deployment to the node that you updated, add this text to your deployment script's _PodSpec_. Replace <em>&lt;node_name&gt;</em> with the node's `NAME`.  
+8. To target your deployment to the node that you updated, add this text to your deployment script's _PodSpec_. Replace <em>&lt;node_name&gt;</em> with the node's `NAME`.  
 
     ```
     nodeSelector:
@@ -1274,8 +1279,15 @@ Worker nodes can be updated to the Kubernetes version of the Kubernetes master. 
 10. Monitor your app to confirm that it is working on the updated worker node.
 11. If the app does not work, delete the app and adjust your deployment script before you try again.
 12. When the deployment works as expected, update your remaining worker nodes.
+13. Run `kubectl get nodes` to verify the version of the worker nodes. In some cases, older clusters might list duplicate worker nodes with a **NotReady** status after an update. To remove duplicates, see [troubleshooting](cs_troubleshoot.html#cs_duplicate_nodes).
+14. After the update, if utilization graphs are not displaying in the Kubernetes dashboard, delete the `kube-dashboard` pod to force a restart. The pod will be re-created with RBAC policies to access heapster for utilization information.
 
-When you have completed the update, repeat the update process with other clusters. In addition, inform developers who work in the cluster to update their `kubectl` CLI to the version of the Kubernetes master.
+    ```
+    kubectl delete pod $(kubectl get pod -n kube-system -l k8s-app=kubernetes-dashboard -o jsonpath='{.items..metadata.name}') -n kube-system
+    ```
+    {: pre}
+
+When you complete the update, repeat the update process with other clusters. In addition, inform developers who work in the cluster to update their `kubectl` CLI to the version of the Kubernetes master.
 
 <br />
 
