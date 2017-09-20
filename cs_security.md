@@ -114,14 +114,9 @@ When you set up a firewall for your worker nodes or customize the firewall setti
 
 2.  In your firewall, allow the following connections to and from your worker nodes.
 
-  ```
-  TCP port 443 FROM <each_worker_node_publicIP> TO registry.<region>.bluemix.net, apt.dockerproject.org
-  ```
-  {: codeblock}
-
-    <ul>
-    <li>For INBOUND connectivity to your worker nodes, allow incoming network traffic from the following source network groups and IP addresses to the destination TCP/UDP port 10250 and `<public_IP_of _each_worker_node>`:</br>
-    
+      <ul>
+          <li>For INBOUND connectivity to your worker nodes, allow incoming network traffic from the following source network groups and IP addresses to the destination TCP/UDP port 10250 and `<public_IP_of _each_worker_node>`:</br>
+            <p>
   <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
       <thead>
       <th colspan=2><img src="images/idea.png"/> Inbound IP addresses</th>
@@ -161,10 +156,10 @@ When you set up a firewall for your worker nodes or customize the firewall setti
        <td><code>130.198.67.0/26</code></td>
       </tr>
     </table>
-
-    </li>
-    <li>For OUTBOUND connectivity from your worker nodes, allow outgoing network traffic from the source worker node to the destination TCP/UDP port range 20000-32767 for `<each_worker_node_publicIP>`, and the following IP addresses and network groups:</br>
-    
+</p>
+          </li>
+          <li>For OUTBOUND connectivity from your worker nodes, allow outgoing network traffic from the source worker node to the destination TCP/UDP port range 20000-32767 for `<each_worker_node_publicIP>`, and the following IP addresses and network groups:</br>
+            <p>
   <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
       <thead>
       <th colspan=2><img src="images/idea.png"/> Outbound IP addresses</th>
@@ -204,9 +199,38 @@ When you set up a firewall for your worker nodes or customize the firewall setti
        <td><code>130.198.64.19</code></td>
       </tr>
     </table>
-
-    </li>
-    </ul>
+</p>
+          </li>
+          <li>For connectivity to your {{site.data.keyword.registryshort_notm}}, allow outgoing network traffic from the source worker node to each registry region that you want to use:</br>
+          <codeblock>TCP port 443 FROM <each_worker_node_publicIP> TO <registry_publicIP>, apt.dockerproject.org</codeblock></br>
+          Replace <em><registry_publicIP></em> with all the addresses for the registry regions:</br>
+            <p>      
+<table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
+        <thead>
+        <th colspan=2><img src="images/idea.png"/> Registry IP addresses</th>
+        </thead>
+      <tbody>
+        <tr>
+          <td>registry.au-syd.bluemix.net</td>
+          <td><code>168.1.45.160/27</code></br><code>168.1.139.32/27</code></td>
+        </tr>
+        <tr>
+          <td>registry.eu-de.bluemix.net</td>
+          <td><code>169.50.56.144/28</code></br><code>159.8.73.80/28</code></td>
+         </tr>
+         <tr>
+          <td>registry.eu-gb.bluemix.net</td>
+          <td><code>159.8.188.160/27</code></br><code>169.50.153.64/27</code></td>
+         </tr>
+         <tr>
+          <td>registry.ng.bluemix.net</td>
+          <td><code>169.55.39.112/28</code></br><code>169.46.9.0/27</code></br><code>169.55.211.0/27</code></td>
+         </tr>
+        </tbody>
+      </table>
+</p>
+          </li>
+      </ul>
 
 3. Optional: To access the load balancer from outside of the VLAN, open the port for incoming network traffic on the specific IP address of that load balancer.
 
