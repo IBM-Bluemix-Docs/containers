@@ -8,12 +8,18 @@ IBM Bluemix Container Service
     container_index.md
     cs_ov.md
     cs_planning.md
-    cs_tutorials.md
+    
+    {: .topicgroup}
+    Tutorials
+        cs_tutorials.md
+        cs_tutorials_apps.md
+        
     cs_security.md
     {: .navgroup-end}
 
     {: .navgroup id="reference"}
     cs_cli_reference.md
+    cs_versions.md
     cs_rellinks.md
     {: .navgroup-end}
 

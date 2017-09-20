@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-09-08"
+lastupdated: "2017-09-20"
 
 ---
 
@@ -13,7 +13,7 @@ lastupdated: "2017-09-08"
 {:codeblock: .codeblock}
 {:table: .aria-labeledby="caption"}
 {:codeblock: .codeblock}
-{:tip: .tip} 
+{:tip: .tip}
 {:download: .download}
 
 
@@ -26,6 +26,9 @@ Design your cluster setup for maximum availability and capacity.
 Before you begin, review the options for [highly available cluster configurations](cs_planning.html#cs_planning_cluster_config).
 
 ![Stages of high availability for a cluster](images/cs_cluster_ha_roadmap.png)](https://console.bluemix.net/docs/api/content/containers/images/cs_cluster_ha_roadmap.png)
+
+<br />
+
 
 ## Creating clusters with the GUI
 {: #cs_cluster_ui}
@@ -66,7 +69,7 @@ When the cluster is up and running, you can check out the following tasks:
 ### Creating clusters with the GUI in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)
 {: #creating_ui_dedicated}
 
-1.  Log in to {{site.data.keyword.Bluemix_notm}} Public console ([https://console.bluemix.net ![External link icon](../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net)) with your IBMID.
+1.  Log in to {{site.data.keyword.Bluemix_notm}} Public console ([https://console.bluemix.net ![External link icon](../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net)) with your IBMid.
 2.  From the account menu, select your {{site.data.keyword.Bluemix_notm}} Dedicated account. The console is updated with the services and information for your {{site.data.keyword.Bluemix_notm}} Dedicated instance.
 3.  From the catalog, select **Containers** and click **Kubernetes cluster**.
 4.  Enter a **Cluster Name**.
@@ -83,6 +86,9 @@ When the cluster is up and running, you can check out the following tasks:
 -   [Install the CLIs to start working with your cluster.](cs_cli_install.html#cs_cli_install)
 -   [Deploy an app in your cluster.](cs_apps.html#cs_apps_cli)
 -   [Set up your own private registry in {{site.data.keyword.Bluemix_notm}} to store and share Docker images with other users.](/docs/services/Registry/index.html)
+
+<br />
+
 
 ## Creating clusters with the CLI
 {: #cs_cluster_cli}
@@ -111,7 +117,7 @@ To create a cluster:
            bx login -a api.ng.bluemix.net
            ```
            {: pre}
-     
+
        -  Sydney
 
            ```
@@ -140,7 +146,7 @@ To create a cluster:
 
     -   You created {{site.data.keyword.Bluemix_notm}} services or private Docker images in one region and want to use them with {{site.data.keyword.containershort_notm}} in another region.
     -   You want to access a cluster in a region that is different from the default {{site.data.keyword.Bluemix_notm}} region you are logged in to.
-    
+
     Choose between the following API endpoints:
 
     -   US-South:
@@ -170,7 +176,7 @@ To create a cluster:
         bx cs init --host https://ap-south.containers.bluemix.net
         ```
         {: pre}
-    
+
 6.  Create a cluster.
     1.  Review the locations that are available. The locations that are shown depend on the {{site.data.keyword.containershort_notm}} region that you are logged in.
 
@@ -229,7 +235,7 @@ To create a cluster:
         b1c.4x16     4       16GB     1000Mbps        UBUNTU_16_64   100GB     virtual   
         b1c.16x64    16      64GB     1000Mbps        UBUNTU_16_64   100GB     virtual   
         b1c.32x128   32      128GB    1000Mbps        UBUNTU_16_64   100GB     virtual   
-        b1c.56x242   56      242GB    1000Mbps        UBUNTU_16_64   100GB     virtual 
+        b1c.56x242   56      242GB    1000Mbps        UBUNTU_16_64   100GB     virtual
         ```
         {: screen}
 
@@ -243,9 +249,9 @@ To create a cluster:
         ```
         ID        Name                Number   Type      Router  
         1519999   vlan   1355     private   bcr02a.dal10  
-        1519898   vlan   1357     private   bcr02a.dal10 
-        1518787   vlan   1252     public   fcr02a.dal10 
-        1518888   vlan   1254     public    fcr02a.dal10 
+        1519898   vlan   1357     private   bcr02a.dal10
+        1518787   vlan   1252     public   fcr02a.dal10
+        1518888   vlan   1254     public    fcr02a.dal10
         ```
         {: screen}
 
@@ -273,31 +279,35 @@ To create a cluster:
         <tbody>
         <tr>
         <td><code>cluster-create</code></td>
-        <td>The command to create a cluster in your {{site.data.keyword.Bluemix_notm}} organization.</td> 
+        <td>The command to create a cluster in your {{site.data.keyword.Bluemix_notm}} organization.</td>
         </tr>
         <tr>
         <td><code>--location <em>&lt;location&gt;</em></code></td>
-        <td>Replace <em>&lt;location&gt;</em> with the {{site.data.keyword.Bluemix_notm}} location ID where you want to create your cluster. The locations that are available to you depend on the {{site.data.keyword.containershort_notm}} region you are logged in to. Available locations are:<ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>ra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul></td> 
+        <td>Replace <em>&lt;location&gt;</em> with the {{site.data.keyword.Bluemix_notm}} location ID where you want to create your cluster. The locations that are available to you depend on the {{site.data.keyword.containershort_notm}} region you are logged in to. Available locations are:<ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>ra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul></td>
         </tr>
         <tr>
         <td><code>--machine-type <em>&lt;machine_type&gt;</em></code></td>
-        <td>If you are creating a standard cluster, choose a machine type. The machine type specifies the virtual compute resources that are available to each worker node. Review [Comparison of lite and standard clusters for {{site.data.keyword.containershort_notm}}](cs_planning.html#cs_planning_cluster_type) for more information. For lite clusters, you do not have to define the machine type.</td> 
+        <td>If you are creating a standard cluster, choose a machine type. The machine type specifies the virtual compute resources that are available to each worker node. Review [Comparison of lite and standard clusters for {{site.data.keyword.containershort_notm}}](cs_planning.html#cs_planning_cluster_type) for more information. For lite clusters, you do not have to define the machine type.</td>
         </tr>
         <tr>
         <td><code>--public-vlan <em>&lt;public_vlan_id&gt;</em></code></td>
-        <td><ul><li>For lite clusters, you do not have to define a public VLAN. Your lite cluster is automatically connected to a public VLAN that is owned by IBM.</li><li>For a standard cluster, if you already have a public VLAN set up in your {{site.data.keyword.BluSoftlayer_notm}} account for that location, enter the ID of the public VLAN. Otherwise, you do not have to specify this option because {{site.data.keyword.containershort_notm}} automatically creates a public VLAN for you. <br/><br/><strong>Note</strong>: The public and private VLANs that you specify with the create command must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</li></ul></td> 
+        <td><ul>
+          <li>For lite clusters, you do not have to define a public VLAN. Your lite cluster is automatically connected to a public VLAN that is owned by IBM.</li>
+          <li>For a standard cluster, if you already have a public VLAN set up in your {{site.data.keyword.BluSoftlayer_notm}} account for that location, enter the ID of the public VLAN. If you do not have both a public and a private VLAN in your account, do not specify this option. {{site.data.keyword.containershort_notm}} automatically creates a public VLAN for you.<br/><br/>
+          <strong>Note</strong>: Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster.</li>
+        </ul></td> 
         </tr>
         <tr>
         <td><code>--private-vlan <em>&lt;private_vlan_id&gt;</em></code></td>
-        <td><ul><li>For lite clusters, you do not have to define a private VLAN. Your lite cluster is automatically connected to a private VLAN that is owned by IBM.</li><li>For a standard cluster, if you already have a private VLAN set up in your {{site.data.keyword.BluSoftlayer_notm}} account for that location, enter the ID of the private VLAN. Otherwise, you do not have to specify this option because {{site.data.keyword.containershort_notm}} automatically creates a private VLAN for you. <br/><br/><strong>Note</strong>: The public and private VLANs that you specify with the create command must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</li></ul></td> 
+        <td><ul><li>For lite clusters, you do not have to define a private VLAN. Your lite cluster is automatically connected to a private VLAN that is owned by IBM.</li><li>For a standard cluster, if you already have a private VLAN set up in your {{site.data.keyword.BluSoftlayer_notm}} account for that location, enter the ID of the private VLAN. If you do not have both a public and a private VLAN in your account, do not specify this option. {{site.data.keyword.containershort_notm}} automatically creates a public VLAN for you.<br/><br/><strong>Note</strong>: Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster.</li></ul></td> 
         </tr>
         <tr>
         <td><code>--name <em>&lt;name&gt;</em></code></td>
-        <td>Replace <em>&lt;name&gt;</em> with a name for your cluster.</td> 
+        <td>Replace <em>&lt;name&gt;</em> with a name for your cluster.</td>
         </tr>
         <tr>
         <td><code>--workers <em>&lt;number&gt;</em></code></td>
-        <td>The number of worker nodes to include in the cluster. If the <code>--workers</code> option is not specified, 1 worker node is created.</td> 
+        <td>The number of worker nodes to include in the cluster. If the <code>--workers</code> option is not specified, 1 worker node is created.</td>
         </tr>
         </tbody></table>
 
@@ -366,7 +376,7 @@ To create a cluster:
 
         ```
         /Users/<user_name>/.bluemix/plugins/container-service/clusters/<cluster_name>/kube-config-prod-dal10-<cluster_name>.yml
-        
+
         ```
         {: screen}
 
@@ -412,13 +422,13 @@ To create a cluster:
 
 3.  Create a cluster with the `cluster-create` command. When you create a standard cluster, the hardware of the worker node is billed by hours of usage.
 
-    Example
+    Example:
 
     ```
-    bx cs cluster-create --machine-type <machine-type> --workers <number> --name <cluster_name>
+    bx cs cluster-create --location <location> --machine-type <machine-type> --name <cluster_name> --workers <number>
     ```
     {: pre}
-    
+
     <table>
     <caption>Table 2. Understanding this command's components</caption>
     <thead>
@@ -427,23 +437,23 @@ To create a cluster:
     <tbody>
     <tr>
     <td><code>cluster-create</code></td>
-    <td>The command to create a cluster in your {{site.data.keyword.Bluemix_notm}} organization.</td> 
+    <td>The command to create a cluster in your {{site.data.keyword.Bluemix_notm}} organization.</td>
     </tr>
     <tr>
     <td><code>--location <em>&lt;location&gt;</em></code></td>
-    <td>Replace &lt;location&gt; with the {{site.data.keyword.Bluemix_notm}} location ID where you want to create your cluster. The locations that are available to you depend on the {{site.data.keyword.containershort_notm}} region you are logged in to. Available locations are:<ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>ra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul></td> 
+    <td>Replace &lt;location&gt; with the {{site.data.keyword.Bluemix_notm}} location ID where you want to create your cluster. The locations that are available to you depend on the {{site.data.keyword.containershort_notm}} region you are logged in to. Available locations are:<ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>ra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul></td>
     </tr>
     <tr>
     <td><code>--machine-type <em>&lt;machine_type&gt;</em></code></td>
-    <td>If you are creating a standard cluster, choose a machine type. The machine type specifies the virtual compute resources that are available to each worker node. Review [Comparison of lite and standard clusters for {{site.data.keyword.containershort_notm}}](cs_planning.html#cs_planning_cluster_type) for more information. For lite clusters, you do not have to define the machine type.</td> 
+    <td>If you are creating a standard cluster, choose a machine type. The machine type specifies the virtual compute resources that are available to each worker node. Review [Comparison of lite and standard clusters for {{site.data.keyword.containershort_notm}}](cs_planning.html#cs_planning_cluster_type) for more information. For lite clusters, you do not have to define the machine type.</td>
     </tr>
     <tr>
     <td><code>--name <em>&lt;name&gt;</em></code></td>
-    <td>Replace <em>&lt;name&gt;</em> with a name for your cluster.</td> 
+    <td>Replace <em>&lt;name&gt;</em> with a name for your cluster.</td>
     </tr>
     <tr>
     <td><code>--workers <em>&lt;number&gt;</em></code></td>
-    <td>The number of worker nodes to include in the cluster. If the <code>--workers</code> option is not specified, 1 worker node is created.</td> 
+    <td>The number of worker nodes to include in the cluster. If the <code>--workers</code> option is not specified, 1 worker node is created.</td>
     </tr>
     </tbody></table>
 
@@ -456,7 +466,7 @@ To create a cluster:
 
     **Note:** It can take up to 15 minutes for the worker node machines to be ordered, and for the cluster to be set up and provisioned in your account.
 
-    When the provisioning of your cluster is completed, the status of your cluster changes to **deployed**.
+    When the provisioning of your cluster is completed, the state of your cluster changes to **deployed**.
 
     ```
     Name         ID                                   State      Created          Workers   
@@ -511,7 +521,7 @@ To create a cluster:
 
         ```
         /Users/<user_name>/.bluemix/plugins/container-service/clusters/<cluster_name>/kube-config-prod-dal10-<cluster_name>.yml
-        
+
         ```
         {: screen}
 
@@ -541,6 +551,9 @@ To create a cluster:
 -   [Deploy an app in your cluster.](cs_apps.html#cs_apps_cli)
 -   [Manage your cluster with the `kubectl` command line. ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/user-guide/kubectl/)
 -   [Set up your own private registry in {{site.data.keyword.Bluemix_notm}} to store and share Docker images with other users.](/docs/services/Registry/index.html)
+
+<br />
+
 
 ## Using private and public image registries
 {: #cs_apps_images}
@@ -649,7 +662,7 @@ To create your own imagePullSecret:
     kubectl --namespace <kubernetes_namespace> create secret docker-registry <secret_name>  --docker-server=<registry_url> --docker-username=token --docker-password=<token_value> --docker-email=<docker_email>
     ```
     {: pre}
-    
+
     <table>
     <caption>Table 3. Understanding this command's components</caption>
     <thead>
@@ -658,27 +671,27 @@ To create your own imagePullSecret:
     <tbody>
     <tr>
     <td><code>--namespace <em>&lt;kubernetes_namespace&gt;</em></code></td>
-    <td>Required. The Kubernetes namespace of your cluster where you want to use the secret and deploy containers to. Run <code>kubectl get namespaces</code> to list all namespaces in your cluster.</td> 
+    <td>Required. The Kubernetes namespace of your cluster where you want to use the secret and deploy containers to. Run <code>kubectl get namespaces</code> to list all namespaces in your cluster.</td>
     </tr>
     <tr>
     <td><code><em>&lt;secret_name&gt;</em></code></td>
-    <td>Required. The name that you want to use for your imagePullSecret.</td> 
+    <td>Required. The name that you want to use for your imagePullSecret.</td>
     </tr>
     <tr>
     <td><code>--docker-server <em>&lt;registry_url&gt;</em></code></td>
-    <td>Required. The URL to the image registry where your namespace is set up.<ul><li>For namespaces that are set up in US-South registry.ng.bluemix.net</li><li>For namespaces that are set up in UK-South registry.eu-gb.bluemix.net</li><li>For namespaces that are set up in EU-Central (Frankfurt) registry.eu-de.bluemix.net</li><li>For namespaces that are set up in Australia (Sydney) registry.au-syd.bluemix.net</li><li>For namespaces that are set up in {{site.data.keyword.Bluemix_notm}} Dedicated registry.<em>&lt;dedicated_domain&gt;</em></li></ul></td> 
+    <td>Required. The URL to the image registry where your namespace is set up.<ul><li>For namespaces that are set up in US-South registry.ng.bluemix.net</li><li>For namespaces that are set up in UK-South registry.eu-gb.bluemix.net</li><li>For namespaces that are set up in EU-Central (Frankfurt) registry.eu-de.bluemix.net</li><li>For namespaces that are set up in Australia (Sydney) registry.au-syd.bluemix.net</li><li>For namespaces that are set up in {{site.data.keyword.Bluemix_notm}} Dedicated registry.<em>&lt;dedicated_domain&gt;</em></li></ul></td>
     </tr>
     <tr>
     <td><code>--docker-username <em>&lt;docker_username&gt;</em></code></td>
-    <td>Required. The user name to log in to your private registry.</td> 
+    <td>Required. The user name to log in to your private registry. For {{site.data.keyword.registryshort_notm}}, the user name is set to <code>token</code>.</td>
     </tr>
     <tr>
     <td><code>--docker-password <em>&lt;token_value&gt;</em></code></td>
-    <td>Required. The value of your registry token that you retrieved earlier.</td> 
+    <td>Required. The value of your registry token that you retrieved earlier.</td>
     </tr>
     <tr>
     <td><code>--docker-email <em>&lt;docker-email&gt;</em></code></td>
-    <td>Required. If you have one, enter your Docker email address. If you do not have one, enter a fictional email address, as for example a@b.c. This email is mandatory to create a Kubernetes secret, but is not used after creation.</td> 
+    <td>Required. If you have one, enter your Docker email address. If you do not have one, enter a fictional email address, as for example a@b.c. This email is mandatory to create a Kubernetes secret, but is not used after creation.</td>
     </tr>
     </tbody></table>
 
@@ -715,27 +728,27 @@ To create your own imagePullSecret:
         <tbody>
         <tr>
         <td><code><em>&lt;container_name&gt;</em></code></td>
-        <td>The name of the container that you want to deploy to your cluster.</td> 
+        <td>The name of the container that you want to deploy to your cluster.</td>
         </tr>
         <tr>
         <td><code><em>&lt;secret_name&gt;</em></code></td>
-        <td>The namespace where your image is stored. To list available namespaces, run `bx cr namespace-list`.</td> 
+        <td>The namespace where your image is stored. To list available namespaces, run `bx cr namespace-list`.</td>
         </tr>
         <tr>
         <td><code><em>&lt;my_namespace&gt;</em></code></td>
-        <td>The namespace where your image is stored. To list available namespaces, run `bx cr namespace-list`.</td> 
+        <td>The namespace where your image is stored. To list available namespaces, run `bx cr namespace-list`.</td>
         </tr>
         <tr>
         <td><code><em>&lt;my_image&gt;</em></code></td>
-        <td>The name of the image that you want to use. To list available images in a {{site.data.keyword.Bluemix_notm}} account, run `bx cr image-list`.</td> 
+        <td>The name of the image that you want to use. To list available images in a {{site.data.keyword.Bluemix_notm}} account, run `bx cr image-list`.</td>
         </tr>
         <tr>
         <td><code><em>&lt;tag&gt;</em></code></td>
-        <td>The version of the image that you want to use. If no tag is specified, the image that is tagged <strong>latest</strong> is used by default.</td> 
+        <td>The version of the image that you want to use. If no tag is specified, the image that is tagged <strong>latest</strong> is used by default.</td>
         </tr>
         <tr>
         <td><code><em>&lt;secret_name&gt;</em></code></td>
-        <td>The name of the imagePullSecret that you created earlier.</td> 
+        <td>The name of the imagePullSecret that you created earlier.</td>
         </tr>
         </tbody></table>
 
@@ -806,7 +819,7 @@ Before you begin:
 1.  [Create a cluster](#cs_cluster_cli).
 2.  [Target your CLI to your cluster](cs_cli_install.html#cs_cli_configure).
 
-To create an imagePullSecret, follow these steps.
+To create an imagePullSecret:
 
 **Note:** ImagePullSecrets are valid for the Kubernetes namespaces they were created for. Repeat these steps for every namespace where you want to deploy containers from an image in a private {{site.data.keyword.Bluemix_notm}} registry.
 
@@ -816,7 +829,7 @@ To create an imagePullSecret, follow these steps.
     kubectl --namespace <kubernetes_namespace> create secret docker-registry <secret_name>  --docker-server=<registry_url> --docker-username=<docker_username> --docker-password=<docker_password> --docker-email=<docker_email>
     ```
     {: pre}
-    
+
     <table>
     <caption>Table 5. Understanding this command's components</caption>
     <thead>
@@ -825,27 +838,27 @@ To create an imagePullSecret, follow these steps.
     <tbody>
     <tr>
     <td><code>--namespace <em>&lt;kubernetes_namespace&gt;</em></code></td>
-    <td>Required. The Kubernetes namespace of your cluster where you want to use the secret and deploy containers to. Run <code>kubectl get namespaces</code> to list all namespaces in your cluster.</td> 
+    <td>Required. The Kubernetes namespace of your cluster where you want to use the secret and deploy containers to. Run <code>kubectl get namespaces</code> to list all namespaces in your cluster.</td>
     </tr>
     <tr>
     <td><code><em>&lt;secret_name&gt;</em></code></td>
-    <td>Required. The name that you want to use for your imagePullSecret.</td> 
+    <td>Required. The name that you want to use for your imagePullSecret.</td>
     </tr>
     <tr>
     <td><code>--docker-server <em>&lt;registry_url&gt;</em></code></td>
-    <td>Required. The URL to the registry where your private images are stored.</td> 
+    <td>Required. The URL to the registry where your private images are stored.</td>
     </tr>
     <tr>
     <td><code>--docker-username <em>&lt;docker_username&gt;</em></code></td>
-    <td>Required. The user name to log in to your private registry.</td> 
+    <td>Required. The user name to log in to your private registry.</td>
     </tr>
     <tr>
     <td><code>--docker-password <em>&lt;token_value&gt;</em></code></td>
-    <td>Required. The value of your registry token that you retrieved earlier.</td> 
+    <td>Required. The value of your registry token that you retrieved earlier.</td>
     </tr>
     <tr>
     <td><code>--docker-email <em>&lt;docker-email&gt;</em></code></td>
-    <td>Required. If you have one, enter your Docker email address. If you do not have one, enter a fictional email address, as for example a@b.c. This email is mandatory to create a Kubernetes secret, but is not used after creation.</td> 
+    <td>Required. If you have one, enter your Docker email address. If you do not have one, enter a fictional email address, as for example a@b.c. This email is mandatory to create a Kubernetes secret, but is not used after creation.</td>
     </tr>
     </tbody></table>
 
@@ -882,23 +895,23 @@ To create an imagePullSecret, follow these steps.
         <tbody>
         <tr>
         <td><code><em>&lt;pod_name&gt;</em></code></td>
-        <td>The name of the pod that you want to create.</td> 
+        <td>The name of the pod that you want to create.</td>
         </tr>
         <tr>
         <td><code><em>&lt;container_name&gt;</em></code></td>
-        <td>The name of the container that you want to deploy to your cluster.</td> 
+        <td>The name of the container that you want to deploy to your cluster.</td>
         </tr>
         <tr>
         <td><code><em>&lt;my_image&gt;</em></code></td>
-        <td>The full path to the image in your private registry that you want to use.</td> 
+        <td>The full path to the image in your private registry that you want to use.</td>
         </tr>
         <tr>
         <td><code><em>&lt;tag&gt;</em></code></td>
-        <td>The version of the image that you want to use. If no tag is specified, the image that is tagged <strong>latest</strong> is used by default.</td> 
+        <td>The version of the image that you want to use. If no tag is specified, the image that is tagged <strong>latest</strong> is used by default.</td>
         </tr>
         <tr>
         <td><code><em>&lt;secret_name&gt;</em></code></td>
-        <td>The name of the imagePullSecret that you created earlier.</td> 
+        <td>The name of the imagePullSecret that you created earlier.</td>
         </tr>
         </tbody></table>
 
@@ -909,6 +922,8 @@ To create an imagePullSecret, follow these steps.
         kubectl apply -f mypod.yaml
         ```
         {: pre}
+
+<br />
 
 
 ## Adding {{site.data.keyword.Bluemix_notm}} services to clusters
@@ -923,9 +938,12 @@ Before you begin:
 2. [Request an instance of the {{site.data.keyword.Bluemix_notm}} service](/docs/services/reqnsi.html#req_instance) in your space.
 3. For {{site.data.keyword.Bluemix_notm}} Dedicated users, see [Adding {{site.data.keyword.Bluemix_notm}} services to clusters in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)](#binding_dedicated) instead.
 
-**Note:** 
-  - You can only add {{site.data.keyword.Bluemix_notm}} services that support service keys. If the service does not support service keys, see [Enabling external apps to use {{site.data.keyword.Bluemix_notm}} services](/docs/services/reqnsi.html#req_instance).
-  - The cluster and the worker nodes must be deployed fully before you can add a service.
+**Note:**
+<ul><ul>
+<li>You can only add {{site.data.keyword.Bluemix_notm}} services that support service keys. If the service does not support service keys, see [Enabling external apps to use {{site.data.keyword.Bluemix_notm}} services](/docs/services/reqnsi.html#req_instance).</li>
+<li>The cluster and the worker nodes must be deployed fully before you can add a service.</li>
+</ul></ul>
+
 
 To add a service:
 2.  List all existing services in your {{site.data.keyword.Bluemix_notm}} space.
@@ -969,7 +987,7 @@ To add a service:
     When the service is successfully added to your cluster, a cluster secret is created that holds the credentials of your service instance. Example CLI output:
 
     ```
-    bx cs cluster-service-bind mycluster mynamespace cleardb 
+    bx cs cluster-service-bind mycluster mynamespace cleardb
     Binding service instance to namespace...
     OK
     Namespace: mynamespace
@@ -1072,8 +1090,11 @@ Before you begin, [request an instance of the {{site.data.keyword.Bluemix_notm}}
     {: pre}
 
 7.  Repeat these steps for each {{site.data.keyword.Bluemix_notm}} service you want to use.
+To use the service in a pod deployed in the cluster, cluster users can access the service credentials of the {{site.data.keyword.Bluemix_notm}} service by [mounting the Kubernetes secret as a secret volume to a pod](cs_apps.html#cs_apps_service).
 
-The {{site.data.keyword.Bluemix_notm}} service is bound to the cluster and can be used by any pods that are deployed in that cluster. To use the service in a pod, cluster users can [mount the Kubernetes secret as a secret volume to the pod](cs_apps.html#cs_apps_service) to access the service credentials for the {{site.data.keyword.Bluemix_notm}} service.
+
+
+<br />
 
 
 ## Managing cluster access
@@ -1174,6 +1195,89 @@ Before you begin, verify that you have been assigned the Manager Cloud Foundry r
 14. Optional: From the **Organization Roles** drop-down list, select **Manager**.
 15. Optional: Click **Save Role**.
 
+<br />
+
+
+## Updating the Kubernetes master
+{: #cs_cluster_update}
+
+Updating a cluster is a two-step process. First, you must update the Kubernetes master, and then you can update each of the worker nodes.
+
+**Attention**: Updates _might_ cause outages and interruptions for your apps unless you plan accordingly.
+
+Kubernetes provides these updates:
+- Major update
+- Minor update
+- Patch
+
+_Major and minor_ updates might involve changes to the operation of a cluster, while a _patch_ is a small fix that is non-disruptive. IBM applies patches to the master automatically with no user input needed. Major and minor updates require user action and might require changes to scripts or deployments.
+
+To test the version, use a test cluster or create a cluster that is not running apps in production. You cannot roll back a cluster to a previous version.
+
+1. Review the [Kubernetes changes](cs_versions.html) and make any updates marked _Update before master_.
+2. Update your cluster by using the GUI or running the [CLI command](cs_cli_reference.html#cs_cluster_update). When you update the Kubernetes master, the master is down for about 5 - 10 minutes. During the update, you cannot access or change the cluster. However, worker nodes, apps, and resources that cluster users have deployed are not modified and continue to run.
+3. Confirm that the update is complete. Your cluster will show the latest version.
+
+When the cluster update is complete, you can update your worker nodes to the latest version.
+
+<br />
+
+
+## Updating worker nodes
+{: #cs_cluster_worker_update}
+
+Worker nodes can be updated to the Kubernetes version of the Kubernetes master. While IBM automatically applies patches to the Kubernetes master, worker nodes require a user command for both updates and patches.
+
+**Attention**: Updating the worker node version can cause downtime for your apps and services. Data is deleted if not stored outside the pod. Use [replicas ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#replicas) in your deployments to allow pods to reschedule to available nodes.
+
+1. Review the [Kubernetes changes](cs_versions.html) and make any required changes marked _Update after master_ to your deployment scripts.
+2. Back up all data before updating worker nodes.
+3. View resource usage of the worker nodes. During an update, worker nodes are removed sequentially, and pods might be rescheduled. If you need more space for your apps, add worker nodes to your cluster.
+
+    ```
+    kubectl top nodes
+    ```
+    {: pre}
+
+5. Install the version of the [`kubectl cli` ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/tools/install-kubectl/) that matches the Kubernetes version of the Kubernetes master.
+6. Before you update all worker nodes, identify a worker node to test the update on. Note the `NAME` of the node.
+
+    ```
+    kubectl get nodes
+    ```
+    {: pre}
+
+7. Drain the worker node to remove any pods that are running and prevent other pods from deploying to the worker node. or `DaemonSets` are ignored.
+
+    ```
+    kubectl drain <node_name> --force --timeout 60s --ignore-daemonsets --delete-local-data
+    ```
+    {: pre}
+    
+8. From the {{site.data.keyword.Bluemix_notm}} Dashboard, navigate to the `Worker Nodes` section of your cluster, select the worker node that you drained, and click `Update Worker`. Or you can run [`bx cs worker-update`](cs_cli_reference.html#cs_worker_update).
+9. After you update, run uncordon to allow pods to be deployed on the worker node.
+
+    ```
+    kubectl uncordon <node_name>
+    ```
+    {: pre}
+
+9. To target your deployment to the node that you updated, add this text to your deployment script's _PodSpec_. Replace <em>&lt;node_name&gt;</em> with the node's `NAME`.  
+
+    ```
+    nodeSelector:
+      kubernetes.io/hostname: <node_name>
+    ```
+    {: codeblock}
+
+9. When the worker node has updated and is in the `normal` state, deploy your updated app to the updated worker node.
+10. Monitor your app to confirm that it is working on the updated worker node.
+11. If the app does not work, delete the app and adjust your deployment script before you try again.
+12. When the deployment works as expected, update your remaining worker nodes.
+
+When you have completed the update, repeat the update process with other clusters. In addition, inform developers who work in the cluster to update their `kubectl` CLI to the version of the Kubernetes master.
+
+<br />
 
 
 ## Adding subnets to clusters
@@ -1232,7 +1336,7 @@ Before you begin, make sure that you can access the {{site.data.keyword.BluSoftl
            bx login -a api.ng.bluemix.net
            ```
            {: pre}
-     
+
        -  Sydney
 
            ```
@@ -1297,7 +1401,7 @@ If you have an existing subnet in your {{site.data.keyword.BluSoftlayer_notm}} p
     ID        Network                                      Gateway                                   VLAN ID   Type      Bound Cluster   
     553242    203.0.113.0/24                               10.87.15.00                               1565280   private      
     807861    192.0.2.0/24                                 10.121.167.180                            1901230   public      
-    
+
     ```
     {: screen}
 
@@ -1313,14 +1417,14 @@ If you have an existing subnet in your {{site.data.keyword.BluSoftlayer_notm}} p
     OK
     ID        Name                  Number   Type      Router   
     1900403   vlan                    1391     private   bcr01a.dal10   
-    1901230   vlan                    1180     public   fcr02a.dal10 
+    1901230   vlan                    1180     public   fcr02a.dal10
     ```
     {: screen}
 
 3.  Create a cluster by using the location and VLAN ID that you identified. Include the `--no-subnet` flag to prevent a new portable public IP subnet from being created automatically.
 
     ```
-    bx cs cluster-create --location dal10 --machine-type u1c.2x4 --no-subnet --public-vlan 1901230 --private-vlan 1900403 --workers 3 --name my_cluster 
+    bx cs cluster-create --location dal10 --machine-type u1c.2x4 --no-subnet --public-vlan 1901230 --private-vlan 1900403 --workers 3 --name my_cluster
     ```
     {: pre}
 
@@ -1362,6 +1466,8 @@ If you have an existing subnet in your {{site.data.keyword.BluSoftlayer_notm}} p
     bx cs cluster-subnet-add mycluster 807861
     ```
     {: pre}
+
+<br />
 
 
 ## Using existing NFS file shares in clusters
@@ -1411,23 +1517,23 @@ To create a persistent volume and matching persistent volume claim, follow these
     <tbody>
     <tr>
     <td><code>name</code></td>
-    <td>Enter the name of the persistent volume object that you want to create.</td> 
+    <td>Enter the name of the persistent volume object that you want to create.</td>
     </tr>
     <tr>
     <td><code>storage</code></td>
-    <td>Enter the storage size of the existing NFS file share. The storage size must be written in gigabytes, for example, 20Gi (20 GB) or 1000Gi (1 TB), and the size must match the size of the existing file share.</td> 
+    <td>Enter the storage size of the existing NFS file share. The storage size must be written in gigabytes, for example, 20Gi (20 GB) or 1000Gi (1 TB), and the size must match the size of the existing file share.</td>
     </tr>
     <tr>
     <td><code>accessMode</code></td>
-    <td>Access modes define the way that the persistent volume claim can be mounted to a worker node.<ul><li>ReadWriteOnce (RWO): The persistent volume can be mounted to pods in a single worker node only. Pods that are mounted to this persistent volume can read from and write to the volume.</li><li>ReadOnlyMany (ROX): The persistent volume can be mounted to pods that are hosted on multiple worker nodes. Pods that are mounted to this persistent volume can only read from the volume.</li><li>ReadWriteMany (RWX): This persistent volume can be mounted to pods that are hosted on multiple worker nodes. Pods that are mounted to this persistent volume can read from and write to the volume.</li></ul></td> 
+    <td>Access modes define the way that the persistent volume claim can be mounted to a worker node.<ul><li>ReadWriteOnce (RWO): The persistent volume can be mounted to pods in a single worker node only. Pods that are mounted to this persistent volume can read from and write to the volume.</li><li>ReadOnlyMany (ROX): The persistent volume can be mounted to pods that are hosted on multiple worker nodes. Pods that are mounted to this persistent volume can only read from the volume.</li><li>ReadWriteMany (RWX): This persistent volume can be mounted to pods that are hosted on multiple worker nodes. Pods that are mounted to this persistent volume can read from and write to the volume.</li></ul></td>
     </tr>
     <tr>
     <td><code>server</code></td>
-    <td>Enter the NFS file share server ID.</td> 
+    <td>Enter the NFS file share server ID.</td>
     </tr>
     <tr>
     <td><code>path</code></td>
-    <td>Enter the path to the NFS file share where you want to create the persistent volume object.</td> 
+    <td>Enter the path to the NFS file share where you want to create the persistent volume object.</td>
     </tr>
     </tbody></table>
 
@@ -1507,6 +1613,9 @@ To create a persistent volume and matching persistent volume claim, follow these
 
 You successfully created a persistent volume object and bound it to a persistent volume claim. Cluster users can now [mount the persistent volume claim](cs_apps.html#cs_apps_volume_mount) to their pod and start reading from and writing to the persistent volume object.
 
+<br />
+
+
 ## Visualizing Kubernetes cluster resources
 {: #cs_weavescope}
 
@@ -1579,10 +1688,13 @@ To use Weave Scope with a cluster:
 
 5.  Open your web browser to `http://localhost:4040`. Choose to view topology diagrams or tables of the Kubernetes resources in the cluster.
 
-     <img src="images/weave_scope.png" alt="Example topology from Weave Scope" style="width:357px;" /> 
+     <img src="images/weave_scope.png" alt="Example topology from Weave Scope" style="width:357px;" />
 
 
 [Learn more about the Weave Scope features ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.weave.works/docs/scope/latest/features/).
+
+<br />
+
 
 ## Removing clusters
 {: #cs_cluster_remove}
