@@ -143,7 +143,7 @@ For {{site.data.keyword.Bluemix_notm}} Dedicated environments, public IP address
     ```
     {: codeblock}
 
-    If you want to specify a NodePort and want to see which NodePorts are already in use, you can run the following command.
+    To specify a NodePort, but see which NodePorts are already in use, run the following command.
 
     ```
     kubectl get svc
@@ -249,7 +249,7 @@ Before you begin:
 To create a load balancer service:
 
 1.  [Deploy your app to the cluster](#cs_apps_cli). When you deploy your app to the cluster, one or more pods are created for you that run your app in a container. Ensure that you add a label to your deployment in the metadata section of your configuration script. This label is needed to identify all pods where your app is running, so that they can be included in the load balancing.
-2.  Create a load balancer service for the app that you want to expose. To make your app available on the public internet, you must create a Kubernetes service for your app and configure your service to include all the pods that make up your app into the load balancing.
+2.  Create a load balancer service for the app that you want to expose. To make your app available on the public internet, create a Kubernetes service for your app and configure your service to include all the pods that make up your app into the load balancing.
     1.  Open your preferred editor and create a service configuration script that is named, for example, `myloadbalancer.yaml`.
     2.  Define a load balancer service for the app that you want to expose to the public.
 
@@ -1509,7 +1509,7 @@ spec:
 ##### **Setting a custom connect-timeout and read-timeout for the Ingress controller**
 {: #timeout}
 
-Adjust the time for the Ingress controller to wait while connecting and reading from the back-end app before the back-end app is considered to be not available.
+Adjust the time for the Ingress controller to wait while connecting and reading from the back-end app before the back-end app is considered not to be available.
 {:shortdesc}
 
 <dl>
