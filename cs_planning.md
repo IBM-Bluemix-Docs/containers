@@ -200,7 +200,7 @@ spec:
                         {
                           "key": "app",
                           "operator": "In",
-                          "values": ["wasliberty"]
+                          "values": ["wasliberty
                         }
                       ]
                     },

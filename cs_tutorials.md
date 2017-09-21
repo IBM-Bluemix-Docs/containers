@@ -28,7 +28,7 @@ This tutorial series demonstrates how a fictional public relations firm can use 
 
 -   Create a Kubernetes cluster with one worker node
 -   Install the CLIs for using the Kubernetes API and managing Docker images
--   Create a private image repository in IBM {{site.data.keyword.Bluemix_notm}} Container Registry to store your images
+-   Create a private image repository in {{site.data.keyword.registrylong}} to store your images
 -   Add the Watson Tone Analyzer {{site.data.keyword.Bluemix_notm}} service to the cluster so that any app in the cluster can use the service
 
 ## Time required
@@ -338,4 +338,4 @@ Great work! The cluster is created, configured, and your local environment is re
 
 * [Test your knowledge and take a quiz! ![External link icon](../icons/launch-glyph.svg "External link icon")](https://bluemix-quizzes.mybluemix.net/containers/cluster_tutorial/quiz.php)
 
-* Try the [Tutorial: Deploying apps into Kubernetes clusters in {{site.data.keyword.containershort_notm}}](cs_tutorials_apps.html#cs_apps_tutorial) to deploy the PR firm's app into the cluster that you created."]
+* Try the [Tutorial: Deploying apps into Kubernetes clusters in {{site.data.keyword.containershort_notm}}](cs_tutorials_apps.html#cs_apps_tutorial) to deploy the PR firm's app into the cluster that you created.
