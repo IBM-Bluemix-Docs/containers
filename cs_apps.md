@@ -2368,7 +2368,7 @@ For {{site.data.keyword.containershort_notm}}, the default owner of the volume m
     RUN chmod 755 /sbin/entrypoint.sh
 
     EXPOSE 22
-    ENTRYPOINT ["/sbin/entrypoint.sh"]
+    ENTRYPOINT ["/sbin/entrypoint.sh
     ```
     {: codeblock}
 
