@@ -143,7 +143,7 @@ For {{site.data.keyword.Bluemix_notm}} Dedicated environments, public IP address
     ```
     {: codeblock}
 
-    If you want to specify a NodePort and want to see which NodePorts are already in use, you can run the following command.
+    To specify a NodePort, but see which NodePorts are already in use, run the following command.
 
     ```
     kubectl get svc
