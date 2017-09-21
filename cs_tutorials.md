@@ -28,7 +28,7 @@ This tutorial series demonstrates how a fictional public relations firm can use 
 
 -   Create a Kubernetes cluster with one worker node
 -   Install the CLIs for using the Kubernetes API and managing Docker images
--   Create a private image repository in IBM {{site.data.keyword.Bluemix_notm}} Container Registry to store your images
+-   Create a private image repository in {{site.data.keyword.registrylong}} to store your images
 -   Add the Watson Tone Analyzer {{site.data.keyword.Bluemix_notm}} service to the cluster so that any app in the cluster can use the service
 
 ## Time required
@@ -73,7 +73,7 @@ To install the CLIs:
 
     To specify a specific {{site.data.keyword.Bluemix_notm}} region, include the API endpoint. If you have private Docker images that are stored in the container registry of a specific {{site.data.keyword.Bluemix_notm}} region, or {{site.data.keyword.Bluemix_notm}} services instances that you already created, log in to this region to access your images and {{site.data.keyword.Bluemix_notm}} services.
 
-    The {{site.data.keyword.Bluemix_notm}} region that you log in to also determines the region where you can create your Kubernetes clusters, including the available datacenters. If you do not specify a region, you are automatically logged in to the region that is closest to you.
+    The {{site.data.keyword.Bluemix_notm}} region that you log in to also determines the region where you can create Kubernetes clusters, including the available datacenters. If you do not specify a region, you are automatically logged in to the region that is closest to you.
 
        -  US South
 
@@ -332,10 +332,10 @@ Create your Kubernetes cluster, set up a private image repository in {{site.data
     {: screen}
 
 
-Great work! The cluster is created, configured, and your local environment is ready for you to start deploying apps into the cluster.
+Great work! The cluster is created, configured, and your local environment is ready for you to deploy apps into the cluster.
 
 ## What's next?
 
 * [Test your knowledge and take a quiz! ![External link icon](../icons/launch-glyph.svg "External link icon")](https://bluemix-quizzes.mybluemix.net/containers/cluster_tutorial/quiz.php)
 
-* Try the [Tutorial: Deploying apps into Kubernetes clusters in {{site.data.keyword.containershort_notm}}](cs_tutorials_apps.html#cs_apps_tutorial) to deploy the PR firm's app into the cluster that you created."]
+* Try the [Tutorial: Deploying apps into Kubernetes clusters in {{site.data.keyword.containershort_notm}}](cs_tutorials_apps.html#cs_apps_tutorial) to deploy the PR firm's app into the cluster that you created.
