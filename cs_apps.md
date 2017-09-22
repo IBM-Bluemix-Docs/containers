@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-08-13"
+lastupdated: "2017-09-21"
 
 ---
 
@@ -26,13 +26,13 @@ Deploying an app generally includes the following steps.
 
 1.  [Install the CLIs](cs_cli_install.html#cs_cli_install).
 
-2.  Create a configuration script for your app. [Review the best practices from Kubernetes. ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/configuration/overview/)
+2.  Create a configuration file for your app. [Review the best practices from Kubernetes. ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/configuration/overview/)
 
-3.  Run the configuration script by using one of the following methods.
+3.  Run the configuration file by using one of the following methods.
     -   [The Kubernetes CLI](#cs_apps_cli)
     -   The Kubernetes dashboard
         1.  [Start the Kubernetes dashboard.](#cs_cli_dashboard)
-        2.  [Run the configuration script.](#cs_apps_ui)
+        2.  [Run the configuration file.](#cs_apps_ui)
 
 <br />
 
@@ -92,7 +92,7 @@ When you are done with the Kubernetes dashboard, use `CTRL+C` to exit the `proxy
 ## Allowing public access to apps
 {: #cs_apps_public}
 
-To make an app publicly available, you must update your configuration script before you deploy the app into a cluster.
+To make an app publicly available, you must update your configuration file before you deploy the app into a cluster.
 {:shortdesc}
 
 Depending on whether you created a lite or a standard cluster, different ways exist to make your app accessible from the internet.
@@ -125,7 +125,7 @@ For {{site.data.keyword.Bluemix_notm}} Dedicated environments, public IP address
 
 
 
-1.  Define a [service ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/services-networking/service/) section in the configuration script.
+1.  Define a [service ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/services-networking/service/) section in the configuration file.
 2.  In the `spec` section for the service, add the NodePort type.
 
     ```
@@ -248,9 +248,9 @@ Before you begin:
 
 To create a load balancer service:
 
-1.  [Deploy your app to the cluster](#cs_apps_cli). When you deploy your app to the cluster, one or more pods are created for you that run your app in a container. Ensure that you add a label to your deployment in the metadata section of your configuration script. This label is needed to identify all pods where your app is running, so that they can be included in the load balancing.
+1.  [Deploy your app to the cluster](#cs_apps_cli). When you deploy your app to the cluster, one or more pods are created for you that run your app in a container. Ensure that you add a label to your deployment in the metadata section of your configuration file. This label is needed to identify all pods where your app is running, so that they can be included in the load balancing.
 2.  Create a load balancer service for the app that you want to expose. To make your app available on the public internet, you must create a Kubernetes service for your app and configure your service to include all the pods that make up your app into the load balancing.
-    1.  Open your preferred editor and create a service configuration script that is named, for example, `myloadbalancer.yaml`.
+    1.  Open your preferred editor and create a service configuration file that is named, for example, `myloadbalancer.yaml`.
     2.  Define a load balancer service for the app that you want to expose to the public.
 
         ```
@@ -368,9 +368,9 @@ Before you begin:
 
 To configure the Ingress controller:
 
-1.  [Deploy your app to the cluster](#cs_apps_cli). When you deploy your app to the cluster, one or more pods are created for you that run your app in a container. Ensure that you add a label to your deployment in the metadata section of your configuration script. This label is needed to identify all pods where your app is running, so that they can be included in the Ingress load balancing.
+1.  [Deploy your app to the cluster](#cs_apps_cli). When you deploy your app to the cluster, one or more pods are created for you that run your app in a container. Ensure that you add a label to your deployment in the metadata section of your configuration file. This label is needed to identify all pods where your app is running, so that they can be included in the Ingress load balancing.
 2.  Create a Kubernetes service for the app to expose. The Ingress controller can include your app into the Ingress load balancing only if your app is exposed via a Kubernetes service inside the cluster.
-    1.  Open your preferred editor and create a service configuration script that is named, for example, `myservice.yaml`.
+    1.  Open your preferred editor and create a service configuration file that is named, for example, `myservice.yaml`.
     2.  Define a service for the app that you want to expose to the public.
 
         ```
@@ -438,8 +438,8 @@ To configure the Ingress controller:
 
     You can see the IBM-provided domain in the **Ingress subdomain** field.
 4.  Create an Ingress resource. Ingress resources define the routing rules for the Kubernetes service that you created for your app and are used by the Ingress controller to route incoming network traffic to the service. You can use one Ingress resource to define routing rules for multiple apps as long as every app is exposed via a Kubernetes service inside the cluster.
-    1.  Open your preferred editor and create an Ingress configuration script that is named, for example, `myingress.yaml`.
-    2.  Define an Ingress resource in your configuration script that uses the IBM-provided domain to route incoming network traffic to the service that you created earlier.
+    1.  Open your preferred editor and create an Ingress configuration file that is named, for example, `myingress.yaml`.
+    2.  Define an Ingress resource in your configuration file that uses the IBM-provided domain to route incoming network traffic to the service that you created earlier.
 
         ```
         apiVersion: extensions/v1beta1
@@ -537,9 +537,9 @@ Before you begin:
 
 To configure the Ingress controller:
 
-1.  [Deploy your app to the cluster](#cs_apps_cli). Ensure that you add a label to your deployment in the metadata section of your configuration script. This label identifies all pods where your app is running, so that the pods are included in the Ingress load balancing.
+1.  [Deploy your app to the cluster](#cs_apps_cli). Ensure that you add a label to your deployment in the metadata section of your configuration file. This label identifies all pods where your app is running, so that the pods are included in the Ingress load balancing.
 2.  Create a Kubernetes service for the app to expose. The Ingress controller can include your app into the Ingress load balancing only if your app is exposed via a Kubernetes service inside the cluster.
-    1.  Open your preferred editor and create a service configuration script that is named, for example, `myservice.yaml`.
+    1.  Open your preferred editor and create a service configuration file that is named, for example, `myservice.yaml`.
     2.  Define a service for the app that you want to expose to the public.
 
         ```
@@ -612,8 +612,8 @@ To configure the Ingress controller:
     You can see the IBM-provided domain in the **Ingress subdomain** and the IBM-provided certificate in the **Ingress secret** field.
 
 4.  Create an Ingress resource. Ingress resources define the routing rules for the Kubernetes service that you created for your app and are used by the Ingress controller to route incoming network traffic to the service. You can use one Ingress resource to define routing rules for multiple apps as long as every app is exposed via a Kubernetes service inside the cluster.
-    1.  Open your preferred editor and create an Ingress configuration script that is named, for example, `myingress.yaml`.
-    2.  Define an Ingress resource in your configuration script that uses the IBM-provided domain to route incoming network traffic to your services, and the IBM-provided certificate to manage the TLS termination for you. For every service you can define an individual path that is appended to the IBM-provided domain to create a unique path to your app, for example `https://ingress_domain/myapp`. When you enter this route into a web browser, network traffic is routed to the Ingress controller. The Ingress controller looks up the associated service and sends network traffic to the service, and further to the pods where the app is running.
+    1.  Open your preferred editor and create an Ingress configuration file that is named, for example, `myingress.yaml`.
+    2.  Define an Ingress resource in your configuration file that uses the IBM-provided domain to route incoming network traffic to your services, and the IBM-provided certificate to manage the TLS termination for you. For every service you can define an individual path that is appended to the IBM-provided domain to create a unique path to your app, for example `https://ingress_domain/myapp`. When you enter this route into a web browser, network traffic is routed to the Ingress controller. The Ingress controller looks up the associated service and sends network traffic to the service, and further to the pods where the app is running.
 
         **Note:** Your app must listen on the path that you defined in the Ingress resource. Otherwise, network traffic cannot be forwarded to the app. Most apps do not listen on a specific path, but use the root path and a specific port. In this case, define the root path as `/` and do not specify an individual path for your app.
 
@@ -731,12 +731,12 @@ To configure the Ingress controller:
 1.  Create a custom domain. To create a custom domain, work with your Domain Name Service (DNS) provider to register your custom domain.
 2.  Configure your domain to route incoming network traffic to the IBM Ingress controller. Choose between these options:
     -   Define an alias for your custom domain by specifying the IBM-provided domain as a Canonical Name record (CNAME). To find the IBM-provided Ingress domain, run `bx cs cluster-get <mycluster>` and look for the **Ingress subdomain** field.
-    -   Map your custom domain to the portable public IP address of the IBM-provided Ingress controller by adding the IP address as a Pointer record (PTR). To find the portable public IP address of the Ingress controller:
+    -   Map your custom domain to the portable public IP address of the IBM-provided Ingress controller by adding the IP address as a record. To find the portable public IP address of the Ingress controller:
         1.  Run `bx cs cluster-get <mycluster>` and look for the **Ingress subdomain** field.
         2.  Run `nslookup <Ingress subdomain>`.
-3.  Create a TLS certificate and key for your domain that is encoded in base64 format.
+3.  Create a TLS certificate and key for your domain that is encoded in PEM format.
 4.  Store your TLS certificate and key in a Kubernetes secret.
-    1.  Open your preferred editor and create a Kubernetes secret configuration script that is named, for example, `mysecret.yaml`.
+    1.  Open your preferred editor and create a Kubernetes secret configuration file that is named, for example, `mysecret.yaml`.
     2.  Define a secret that uses your TLS certificate and key.
 
         ```
@@ -768,7 +768,7 @@ To configure the Ingress controller:
          <td>Replace <em>&lt;tlskey&gt;</em> with your custom TLS key that is encoded in base64 format.</td>
          </tbody></table>
 
-    3.  Save your configuration script.
+    3.  Save your configuration file.
     4.  Create the TLS secret for your cluster.
 
         ```
@@ -776,11 +776,11 @@ To configure the Ingress controller:
         ```
         {: pre}
 
-5.  [Deploy your app to the cluster](#cs_apps_cli). When you deploy your app to the cluster, one or more pods are created for you that run your app in a container. Enure that you add a label to your deployment in the metadata section of your configuration script. This label is needed to identify all pods where your app is running, so that they can be included in the Ingress load balancing.
+5.  [Deploy your app to the cluster](#cs_apps_cli). When you deploy your app to the cluster, one or more pods are created for you that run your app in a container. Enure that you add a label to your deployment in the metadata section of your configuration file. This label is needed to identify all pods where your app is running, so that they can be included in the Ingress load balancing.
 
 6.  Create a Kubernetes service for the app to expose. The Ingress controller can include your app into the Ingress load balancing only if your app is exposed via a Kubernetes service inside the cluster.
 
-    1.  Open your preferred editor and create a service configuration script that is named, for example, `myservice.yaml`.
+    1.  Open your preferred editor and create a service configuration file that is named, for example, `myservice.yaml`.
     2.  Define a service for the app that you want to expose to the public.
 
         ```
@@ -824,8 +824,8 @@ To configure the Ingress controller:
 
     5.  Repeat these steps for every app that you want to expose to the public.
 7.  Create an Ingress resource. Ingress resources define the routing rules for the Kubernetes service that you created for your app and are used by the Ingress controller to route incoming network traffic to the service. You can use one Ingress resource to define routing rules for multiple apps as long as every app is exposed via a Kubernetes service inside the cluster.
-    1.  Open your preferred editor and create an Ingress configuration script that is named, for example, `myingress.yaml`.
-    2.  Define an Ingress resource in your configuration script that uses your custom domain to route incoming network traffic to your services, and your custom certificate to manage the TLS termination. For every service you can define an individual path that is appended to your custom domain to create a unique path to your app, for example `https://mydomain/myapp`. When you enter this route into a web browser, network traffic is routed to the Ingress controller. The Ingress controller looks up the associated service and sends network traffic to the service, and further to the pods where the app is running.
+    1.  Open your preferred editor and create an Ingress configuration file that is named, for example, `myingress.yaml`.
+    2.  Define an Ingress resource in your configuration file that uses your custom domain to route incoming network traffic to your services, and your custom certificate to manage the TLS termination. For every service you can define an individual path that is appended to your custom domain to create a unique path to your app, for example `https://mydomain/myapp`. When you enter this route into a web browser, network traffic is routed to the Ingress controller. The Ingress controller looks up the associated service and sends network traffic to the service, and further to the pods where the app is running.
 
         **Note:** It is important that the app listens on the path that you defined in the Ingress resource. Otherwise, network traffic cannot be forwarded to the app. Most apps do not listen on a specific path, but use the root path and a specific port. In this case, define the root path as `/` and do not specify an individual path for your app.
 
@@ -948,7 +948,7 @@ Before you begin:
 You can configure the Ingress controller to route incoming network traffic on the IBM-provided domain to apps that are located outside your cluster. If you want to use a custom domain and TLS certificate instead, replace the IBM-provided domain and TLS certificate with your [custom domain and TLS certificate](#custom_domain_cert).
 
 1.  Configure a Kubernetes endpoint that defines the external location of the app that you want to include into the cluster load balancing.
-    1.  Open your preferred editor and create an endpoint configuration script that is named, for example, `myexternalendpoint.yaml`.
+    1.  Open your preferred editor and create an endpoint configuration file that is named, for example, `myexternalendpoint.yaml`.
     2.  Define your external endpoint. Include all public IP addresses and ports that you can use to access your external app.
 
         ```
@@ -991,7 +991,7 @@ You can configure the Ingress controller to route incoming network traffic on th
         {: pre}
 
 2.  Create a Kubernetes service for your cluster and configure it to forward incoming requests to the external endpoint that you created earlier.
-    1.  Open your preferred editor and create a service configuration script that is named, for example, `myexternalservice.yaml`.
+    1.  Open your preferred editor and create a service configuration file that is named, for example, `myexternalservice.yaml`.
     2.  Define the service.
 
         ```
@@ -1060,8 +1060,8 @@ You can configure the Ingress controller to route incoming network traffic on th
     You can see the IBM-provided domain in the **Ingress subdomain** and the IBM-provided certificate in the **Ingress secret** field.
 
 4.  Create an Ingress resource. Ingress resources define the routing rules for the Kubernetes service that you created for your app and are used by the Ingress controller to route incoming network traffic to the service. You can use one Ingress resource to define routing rules for multiple external apps as long as every app is exposed with its external endpoint via a Kubernetes service inside the cluster.
-    1.  Open your preferred editor and create an Ingress configuration script that is named, for example, `myexternalingress.yaml`.
-    2.  Define an Ingress resource in your configuration script that uses the IBM-provided domain and TLS certificate to route incoming network traffic to your external app by using the external endpoint that you defined earlier. For every service you can define an individual path that is appended to the IBM-provided or custom domain to create a unique path to your app, for example `https://ingress_domain/myapp`. When you enter this route into a web browser, network traffic is routed to the Ingress controller. The Ingress controller looks up the associated service and sends network traffic to the service, and further to the external app.
+    1.  Open your preferred editor and create an Ingress configuration file that is named, for example, `myexternalingress.yaml`.
+    2.  Define an Ingress resource in your configuration file that uses the IBM-provided domain and TLS certificate to route incoming network traffic to your external app by using the external endpoint that you defined earlier. For every service you can define an individual path that is appended to the IBM-provided or custom domain to create a unique path to your app, for example `https://ingress_domain/myapp`. When you enter this route into a web browser, network traffic is routed to the Ingress controller. The Ingress controller looks up the associated service and sends network traffic to the service, and further to the external app.
 
         **Note:** It is important that the app listens on the path that you defined in the Ingress resource. Otherwise, network traffic cannot be forwarded to the app. Most apps do not listen on a specific path, but use the root path and a specific port. In this case, define the root path as / and do not specify an individual path for your app.
 
@@ -1203,7 +1203,7 @@ kind: Ingress
 metadata:
   name: myingress
   annotations:
-    ingress.bluemix.net/rewrite-path: "serviceName=&lt;service_name1&gt; rewrite=&lt;rewrite_path1&gt;;serviceName=&lt;service_name2&gt; rewrite=&lt;rewrite_path2&gt;"
+    ingress.bluemix.net/rewrite-path: "serviceName=&lt;service_name1&gt; rewrite=&lt;target_path1&gt;;serviceName=&lt;service_name2&gt; rewrite=&lt;target_path2&gt;"
 spec:
   tls:
   - hosts:
@@ -1229,7 +1229,7 @@ spec:
 <tbody>
 <tr>
 <td><code>annotations</code></td>
-<td>Replace <em>&lt;service_name&gt;</em> with the name of the Kubernetes service that you created for your app, and <em>&lt;rewrite-path&gt;</em> with the path that your app listens on. Incoming network traffic on the Ingress controller domain is forwarded to the Kubernetes service by using this path. Most apps do not listen on a specific path, but use the root path and a specific port. In this case, define <code>/</code> as the <em>&lt;rewrite-path&gt;</em> for your app.</td>
+<td>Replace <em>&lt;service_name&gt;</em> with the name of the Kubernetes service that you created for your app, and <em>&lt;target-path&gt;</em> with the path that your app listens on. Incoming network traffic on the Ingress controller domain is forwarded to the Kubernetes service by using this path. Most apps do not listen on a specific path, but use the root path and a specific port. In this case, define <code>/</code> as the <em>rewrite-path</em> for your app.</td>
 </tr>
 <tr>
 <td><code>path</code></td>
@@ -1731,7 +1731,7 @@ One of the portable public IP addresses is used for the [Ingress controller](#cs
 
 
 
-1.  Create a Kubernetes service configuration script that is named `myservice.yaml` and define a service of type `LoadBalancer` with a dummy load balancer IP address. The following example uses the IP address 1.1.1.1 as the load balancer IP address.
+1.  Create a Kubernetes service configuration file that is named `myservice.yaml` and define a service of type `LoadBalancer` with a dummy load balancer IP address. The following example uses the IP address 1.1.1.1 as the load balancer IP address.
 
     ```
     apiVersion: v1
@@ -1836,7 +1836,7 @@ Before you begin:
 
 To deploy your app:
 
-1.  Create a configuration script based on [Kubernetes best practices ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/configuration/overview/). Generally, a configuration script contains configuration details for each of the resources you are creating in Kubernetes. Your script might include one or more of the following sections:
+1.  Create a configuration file based on [Kubernetes best practices ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/configuration/overview/). Generally, a configuration file contains configuration details for each of the resources you are creating in Kubernetes. Your script might include one or more of the following sections:
 
     -   [Deployment ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/): Defines the creation of pods and replica sets. A pod includes an individual containerized app and replica sets control multiple instances of pods.
 
@@ -1844,7 +1844,7 @@ To deploy your app:
 
     -   [Ingress ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/services-networking/ingress/): Specifies a type of load balancer that provides routes to access your app publicly.
 
-2.  Run the configuration script in a cluster's context.
+2.  Run the configuration file in a cluster's context.
 
     ```
     kubectl apply -f deployment_script_location
@@ -1899,7 +1899,7 @@ With Kubernetes, you can enable [Horizontal Pod Autoscaling ![External link icon
     <td>The port where your app is available externally.</td>
     </tr></tbody></table>
 
-    **Note:** For more complex deployments, you might need to create a [configuration script](#cs_apps_cli).
+    **Note:** For more complex deployments, you might need to create a [configuration file](#cs_apps_cli).
 2.  Create a Horizontal Pod Autoscaler and define your policy. For more information about working with the `kubetcl autoscale` command, see [the Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/user-guide/kubectl/v1.5/#autoscale).
 
     ```
@@ -2178,7 +2178,7 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
     ```
     {: screen}
 
-3.  In your preferred text editor, create a configuration script to define your persistent volume claim and save the configuration as a `.yaml` file.
+3.  In your preferred text editor, create a configuration file to define your persistent volume claim and save the configuration as a `.yaml` file.
 
     ```
     apiVersion: v1
@@ -2253,7 +2253,7 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
     ```
     {: screen}
 
-6.  {: #cs_apps_volume_mount}To mount the persistent volume claim to your pod, create a configuration script. Save the configuration as a `.yaml` file.
+6.  {: #cs_apps_volume_mount}To mount the persistent volume claim to your pod, create a configuration file. Save the configuration as a `.yaml` file.
 
     ```
     apiVersion: v1
@@ -2458,7 +2458,7 @@ For {{site.data.keyword.containershort_notm}}, the default owner of the volume m
     ```
     {: pre}
 
-8.  Create a configuration script to mount the volume and run the pod from the nonroot image. The volume mount path `/mnt/myvol` matches the mount path that is specified in the Dockerfile. Save the configuration as a `.yaml` file.
+8.  Create a configuration file to mount the volume and run the pod from the nonroot image. The volume mount path `/mnt/myvol` matches the mount path that is specified in the Dockerfile. Save the configuration as a `.yaml` file.
 
     ```
     apiVersion: v1
