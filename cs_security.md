@@ -112,6 +112,7 @@ When you set up a firewall for your worker nodes or customize the firewall setti
     ```
     {: pre}
 
+
 2.  In your firewall, allow the following connections to and from your worker nodes.
 
       <ul>
@@ -202,8 +203,8 @@ When you set up a firewall for your worker nodes or customize the firewall setti
 </p>
           </li>
           <li>For connectivity to your {{site.data.keyword.registryshort_notm}}, allow outgoing network traffic from the source worker node to each registry region that you want to use:</br>
-          <pre>TCP port 443 FROM <each_worker_node_publicIP> TO <registry_publicIP>, apt.dockerproject.org</pre></br>
-          Replace <em><registry_publicIP></em> with all the addresses for the registry regions:</br>
+          <pre class="codeblock">TCP port 443 FROM &lt;each_worker_node_publicIP&gt; TO &lt;registry_publicIP&gt;, apt.dockerproject.org</pre></br>
+          Replace <em>&lt;registry_publicIP&gt;</em> with all the addresses for the registry regions:</br>
             <p>      
 <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
         <thead>
@@ -235,6 +236,31 @@ When you set up a firewall for your worker nodes or customize the firewall setti
 3. Optional: To access the load balancer from outside of the VLAN, open the port for incoming network traffic on the specific IP address of that load balancer.
 
 4. Optional: To access the Ingress controller from outside of the VLAN, open either port 80 or 443 for incoming network traffic on the specific IP address of that Ingress controller, depending on which port you have configured.
+
+
+
+        <tr>
+          <td>metrics.ng.bluemix.net</td>
+          <td><code>169.47.204.128/29</code></td>
+         </tr>
+         <tr>
+          <td>metrics.eu-gb.bluemix.net</td>
+          <td><code>169.50.196.136/29</code></td>
+         </tr>
+         <tr>
+          <td>metrics.eu-de.bluemix.net</td>
+          <td><code>159.122.78.136/29</code></td>
+         </tr>
+        </tbody>
+      </table>
+</p>
+          </li>
+      </ul>
+
+4. Optional: To access the load balancer from outside of the VLAN, open the port for incoming network traffic on the specific IP address of that load balancer.
+
+5. Optional: To access the Ingress controller from outside of the VLAN, open either port 80 or 443 for incoming network traffic on the specific IP address of that Ingress controller, depending on which port you have configured.
+</staging>
 
 <br />
 

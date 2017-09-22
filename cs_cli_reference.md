@@ -43,34 +43,34 @@ Refer to these commands to create and manage clusters.
     <td>[bx cs cluster-service-unbind](cs_cli_reference.html#cs_cluster_service_unbind)</td>
     <td>[bx cs cluster-services](cs_cli_reference.html#cs_cluster_services)</td>
     <td>[bx cs cluster-subnet-add](cs_cli_reference.html#cs_cluster_subnet_add)</td>
-    <td>[bx cs cluster-update](cs_cli_reference.html#cs_cluster_update)</td>
-    <td>[bx cs clusters](cs_cli_reference.html#cs_clusters)</td>
+    <td>[bx cs cluster-user-subnet-add](cs_cli_reference.html#cs_cluster_user_subnet_add)</td>
+    <td>[bx cs cluster-user-subnet-rm](cs_cli_reference.html#cs_cluster_user_subnet_rm)</td>
  </tr>
  <tr>
+   <td>[bx cs cluster-update](cs_cli_reference.html#cs_cluster_update)</td>
+   <td>[bx cs clusters](cs_cli_reference.html#cs_clusters)</td>
    <td>[bx cs credentials-set](cs_cli_reference.html#cs_credentials_set)</td>
    <td>[bx cs credentials-unset](cs_cli_reference.html#cs_credentials_unset)</td>
    <td>[bx cs help](cs_cli_reference.html#cs_help)</td>
-   <td>[bx cs init](cs_cli_reference.html#cs_init)</td>
-   <td>[bx cs locations](cs_cli_reference.html#cs_datacenters)</td>
    </tr>
  <tr>
+    <td>[bx cs init](cs_cli_reference.html#cs_init)</td>
+    <td>[bx cs locations](cs_cli_reference.html#cs_datacenters)</td>
     <td>[bx cs machine-types](cs_cli_reference.html#cs_machine_types)</td>
     <td>[bx cs subnets](cs_cli_reference.html#cs_subnets)</td>
     <td>[bx cs vlans](cs_cli_reference.html#cs_vlans)</td>
-    <td>[bx cs webhook-create](cs_cli_reference.html#cs_webhook_create)</td>
-    <td>[bx cs worker-add](cs_cli_reference.html#cs_worker_add)</td>
     </tr>
  <tr>
+   <td>[bx cs webhook-create](cs_cli_reference.html#cs_webhook_create)</td>
+   <td>[bx cs worker-add](cs_cli_reference.html#cs_worker_add)</td>
    <td>[bx cs worker-get](cs_cli_reference.html#cs_worker_get)</td>
    <td>[bx cs worker-reboot](cs_cli_reference.html#cs_worker_reboot)</td>
    <td>[bx cs worker-reload](cs_cli_reference.html#cs_worker_reload)</td>
-   <td>[bx cs worker-rm](cs_cli_reference.html#cs_worker_rm)</td>
-   <td>[bx cs worker-update](cs_cli_reference.html#cs_worker_update)</td>
   </tr>
   <tr>
+   <td>[bx cs worker-rm](cs_cli_reference.html#cs_worker_rm)</td>
+   <td>[bx cs worker-update](cs_cli_reference.html#cs_worker_update)</td>
    <td>[bx cs workers](cs_cli_reference.html#cs_workers)</td>
-   
-   
   </tr>
  </tbody>
  </table>
@@ -176,7 +176,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 <dt><code>--location <em>LOCATION</em></code></dt>
 <dd>The location where you want to create the cluster. The locations that are available to you depend on the {{site.data.keyword.Bluemix_notm}} region you are logged in to. Select the region that is physically closest to you for best performance.  This value is required for standard clusters and is optional for lite clusters.
 
-<p>Available locations are:<ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>ra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul>
+<p>Available locations are:<ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>fra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul>
 </p>
 
 <p><strong>Note:</strong> When you select a location that is located outside your country, keep in mind that you might require legal authorization before data can be physically stored in a foreign country.</p>
@@ -399,7 +399,64 @@ Make a subnet in a {{site.data.keyword.BluSoftlayer_notm}} account available to 
   {: pre}
 
 
+### bx cs cluster-user-subnet-add CLUSTER SUBNET_CIDR PRIVATE_VLAN
+{: #cs_cluster_user_subnet_add}
 
+Bring your own private subnet to your {{site.data.keyword.containershort_notm}} clusters.
+
+This private subnet is not one provided by {{site.data.keyword.BluSoftlayer_notm}}. As such, you must configure any inbound and outbound network traffic routing for the subnet. If you want to add a {{site.data.keyword.BluSoftlayer_notm}} subnet, use the `bx cs cluster-subnet-add` [command](#cs_cluster_subnet_add).
+
+**Note**: When you add a private user subnet to a cluster, IP addresses of this subnet are used for private Load Balancers in the cluster. To avoid IP address conflicts, make sure that you use a subnet with one cluster only. Do not use a subnet for multiple clusters or for other purposes outside of {{site.data.keyword.containershort_notm}} at the same time.
+
+<strong>Command options</strong>:
+
+   <dl>
+   <dt><code><em>CLUSTER</em></code></dt>
+   <dd>The name or ID of the cluster. This value is required.</dd>
+
+   <dt><code><em>SUBNET_CIDR</em></code></dt>
+   <dd>The subnet Classless InterDomain Routing (CIDR). This value is required, and must not conflict with any subnet that is used by {{site.data.keyword.BluSoftlayer_notm}}.
+
+   Supported prefixes range from `/30` (1 IP address) to `/24` (253 IP addresses). If you set the CIDR at one prefix length and later need to change it, first add the new CIDR, then [remove the old CIDR](#cs_cluster_user_subnet_rm).</dd>
+
+   <dt><code><em>PRIVATE_VLAN</em></code></dt>
+   <dd>The ID of the private VLAN. This value is required. It must match the private VLAN ID of one or more of the worker nodes in the cluster.</dd>
+   </dl>
+
+**Example**:
+
+  ```
+  bx cs cluster-user-subnet-add my_cluster 192.168.10.0/29 1502175
+  ```
+  {: pre}
+
+
+### bx cs cluster-user-subnet-rm CLUSTER SUBNET_CIDR PRIVATE_VLAN
+{: #cs_cluster_user_subnet_rm}
+
+Remove your own private subnet from a specified cluster.
+
+**Note:** Any service that was deployed to an IP address from your own private subnet remains active after the subnet is removed.
+
+<strong>Command options</strong>:
+
+   <dl>
+   <dt><code><em>CLUSTER</em></code></dt>
+   <dd>The name or ID of the cluster. This value is required.</dd>
+
+   <dt><code><em>SUBNET_CIDR</em></code></dt>
+   <dd>The subnet Classless InterDomain Routing (CIDR). This value is required, and must match the CIDR that was set by the `bx cs cluster-user-subnet-add` [command](#cs_cluster_user_subnet_add).</dd>
+
+   <dt><code><em>PRIVATE_VLAN</em></code></dt>
+   <dd>The ID of the private VLAN. This value is required, and must match the VLAN ID that was set by the `bx cs cluster-user-subnet-add` [command](#cs_cluster_user_subnet_add).</dd>
+   </dl>
+
+**Example**:
+
+  ```
+  bx cs cluster-user-subnet-rm my_cluster 192.168.10.0/29 1502175
+  ```
+  {: pre}
 
 
 ### bx cs cluster-update [-f] CLUSTER
@@ -447,6 +504,8 @@ View a list of clusters in your organization.
 {: #cs_credentials_set}
 
 Set {{site.data.keyword.BluSoftlayer_notm}} account credentials for your {{site.data.keyword.Bluemix_notm}} account. These credentials allow you to access the {{site.data.keyword.BluSoftlayer_notm}} portfolio through your {{site.data.keyword.Bluemix_notm}} account.
+
+**Note:** Do not set multiple credentials for one {{site.data.keyword.Bluemix_notm}} account. Every {{site.data.keyword.Bluemix_notm}} account is linked to one {{site.data.keyword.BluSoftlayer_notm}} portfolio only.
 
 <strong>Command options</strong>:
 
@@ -586,7 +645,7 @@ View a list of available machine types for your worker nodes. Each machine type 
 
    <dl>
    <dt><em>LOCATION</em></dt>
-   <dd>Enter the location where you want to list available machine types.  This value is required. Available locations are: <ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>ra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul></dd></dl>
+   <dd>Enter the location where you want to list available machine types.  This value is required. Available locations are: <ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>fra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul></dd></dl>
 
 **Example**:
 
@@ -622,7 +681,7 @@ List the public and private VLANs that are available for a location in your {{si
 
    <dl>
    <dt>LOCATION</dt>
-   <dd>Enter the location where you want to list your private and public VLANs. This value is required. Available locations are: <ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>ra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul></dd>
+   <dd>Enter the location where you want to list your private and public VLANs. This value is required. Available locations are: <ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>fra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul></dd>
    </dl>
 
 **Example**:
@@ -867,10 +926,10 @@ You might need to change your YAML files for deployments before updating. Review
 <strong>Command options</strong>:
 
    <dl>
-   
+
    <dt><em>CLUSTER</em></dt>
    <dd>The name or ID of the cluster where you list available worker nodes. This value is required.</dd>
-   
+
    <dt><code>-f</code></dt>
    <dd>Use this option to force the update of the master with no user prompts. This value is optional.</dd>
 
