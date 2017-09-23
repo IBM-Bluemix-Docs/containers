@@ -87,7 +87,7 @@ To install the CLIs:
         1.  Move the executable file to the `/usr/local/bin` directory.
 
             ```
-            mv /<path_to_file>/kubectl/usr/local/bin/kubectl
+            mv /<path_to_file>/kubectl /usr/local/bin/kubectl
             ```
             {: pre}
 
