@@ -75,7 +75,7 @@ To install the CLIs:
 
     The {{site.data.keyword.Bluemix_notm}} region that you log in to also determines the region where you can create Kubernetes clusters, including the available datacenters. If you do not specify a region, you are automatically logged in to the region that is closest to you.
 
-       -  US South
+       -  US South and US East
 
            ```
            bx login -a api.ng.bluemix.net
@@ -115,6 +115,13 @@ To install the CLIs:
         bx cs init --host https://us-south.containers.bluemix.net
         ```
         {: pre}
+        
+    * US-East:
+
+    ```
+    bx cs init --host https://us-east.containers.bluemix.net
+    ```
+    {: pre}
 
     * UK-South:
 
