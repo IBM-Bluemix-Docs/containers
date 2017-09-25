@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-09-20"
+lastupdated: "2017-09-25"
 
 ---
 
@@ -111,7 +111,7 @@ To create a cluster:
 
       The {{site.data.keyword.Bluemix_notm}} region that you log in to also determines the region where you can create your Kubernetes clusters, including the available data centers. If you do not specify a region, you are automatically logged in to the region that is closest to you.
 
-       -  US South
+       -  US South and US East
 
            ```
            bx login -a api.ng.bluemix.net
@@ -155,6 +155,13 @@ To create a cluster:
         bx cs init --host https://us-south.containers.bluemix.net
         ```
         {: pre}
+        
+    -   US-East:
+
+        ```
+        bx cs init --host https://us-east.containers.bluemix.net
+        ```
+        {: pre}
 
     -   UK-South:
 
@@ -192,6 +199,14 @@ To create a cluster:
             ```
             dal10
             dal12
+            ```
+            {: screen}
+            
+        -   US-East:
+
+            ```
+            wdc06
+            wdc07
             ```
             {: screen}
 
@@ -283,7 +298,7 @@ To create a cluster:
         </tr>
         <tr>
         <td><code>--location <em>&lt;location&gt;</em></code></td>
-        <td>Replace <em>&lt;location&gt;</em> with the {{site.data.keyword.Bluemix_notm}} location ID where you want to create your cluster. The locations that are available to you depend on the {{site.data.keyword.containershort_notm}} region you are logged in to. Available locations are:<ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>fra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul></td>
+        <td>Replace <em>&lt;location&gt;</em> with the {{site.data.keyword.Bluemix_notm}} location ID where you want to create your cluster. The locations that are available to you depend on the {{site.data.keyword.containershort_notm}} region you are logged in to. Available locations are:<ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul><li>US-East<ul><li>wdc06 [Washington DC]</li><li>wdc07 [Washington DC]<strong>Note:</strong> US-East is available for use with CLI commands only.</p></li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>fra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul></td>
         </tr>
         <tr>
         <td><code>--machine-type <em>&lt;machine_type&gt;</em></code></td>
@@ -441,7 +456,7 @@ To create a cluster:
     </tr>
     <tr>
     <td><code>--location <em>&lt;location&gt;</em></code></td>
-    <td>Replace &lt;location&gt; with the {{site.data.keyword.Bluemix_notm}} location ID where you want to create your cluster. The locations that are available to you depend on the {{site.data.keyword.containershort_notm}} region you are logged in to. Available locations are:<ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>fra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul></td>
+    <td>Replace &lt;location&gt; with the {{site.data.keyword.Bluemix_notm}} location ID where you want to create your cluster. The locations that are available to you depend on the {{site.data.keyword.containershort_notm}} region you are logged in to. Available locations are:<ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul><li>US-East<ul><li>wdc06 [Washington DC]</li><li>wdc07 [Washington DC]<strong>Note:</strong> US-East is available for use with CLI commands only.</p></li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>fra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul></td>
     </tr>
     <tr>
     <td><code>--machine-type <em>&lt;machine_type&gt;</em></code></td>
@@ -679,7 +694,7 @@ To create your own imagePullSecret:
     </tr>
     <tr>
     <td><code>--docker-server <em>&lt;registry_url&gt;</em></code></td>
-    <td>Required. The URL to the image registry where your namespace is set up.<ul><li>For namespaces that are set up in US-South registry.ng.bluemix.net</li><li>For namespaces that are set up in UK-South registry.eu-gb.bluemix.net</li><li>For namespaces that are set up in EU-Central (Frankfurt) registry.eu-de.bluemix.net</li><li>For namespaces that are set up in Australia (Sydney) registry.au-syd.bluemix.net</li><li>For namespaces that are set up in {{site.data.keyword.Bluemix_notm}} Dedicated registry.<em>&lt;dedicated_domain&gt;</em></li></ul></td>
+    <td>Required. The URL to the image registry where your namespace is set up.<ul><li>For namespaces that are set up in US-South and US-East registry.ng.bluemix.net</li><li>For namespaces that are set up in UK-South registry.eu-gb.bluemix.net</li><li>For namespaces that are set up in EU-Central (Frankfurt) registry.eu-de.bluemix.net</li><li>For namespaces that are set up in Australia (Sydney) registry.au-syd.bluemix.net</li><li>For namespaces that are set up in {{site.data.keyword.Bluemix_notm}} Dedicated registry.<em>&lt;dedicated_domain&gt;</em></li></ul></td>
     </tr>
     <tr>
     <td><code>--docker-username <em>&lt;docker_username&gt;</em></code></td>
@@ -936,6 +951,9 @@ Before you begin:
 
 1. [Target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
 2. [Request an instance of the {{site.data.keyword.Bluemix_notm}} service](/docs/services/reqnsi.html#req_instance) in your space.
+   
+   **Note:** To create an instance of a service in the Washington DC location, you must use the CLI.
+   
 3. For {{site.data.keyword.Bluemix_notm}} Dedicated users, see [Adding {{site.data.keyword.Bluemix_notm}} services to clusters in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)](#binding_dedicated) instead.
 
 **Note:**
@@ -1008,9 +1026,11 @@ To use the service in a pod that is deployed in the cluster, cluster users can a
 ### Adding {{site.data.keyword.Bluemix_notm}} services to clusters in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)
 {: #binding_dedicated}
 
-Before you begin, [request an instance of the {{site.data.keyword.Bluemix_notm}} service](/docs/services/reqnsi.html#req_instance) in your space to add to your cluster.
+Before you begin, [request an instance of the {{site.data.keyword.Bluemix_notm}} service](/docs/services/reqnsi.html#req_instance) in your space to add to your cluster. 
 
-**Note**: The cluster and the worker nodes must be deployed fully before you can add a service.
+**Note**:
+- To create an instance of a service in the Washington DC location, you must use the CLI.
+- The cluster and the worker nodes must be deployed fully before you can add a service.
 
 1.  Log in to the {{site.data.keyword.Bluemix_notm}} Dedicated environment where the service instance was created.
 
@@ -1342,7 +1362,7 @@ Before you begin, make sure that you can access the {{site.data.keyword.BluSoftl
 
         To specify a specific {{site.data.keyword.Bluemix_notm}} region, choose one of the following API endpoints:
 
-       -  US South
+       -  US South and US East
 
            ```
            bx login -a api.ng.bluemix.net
