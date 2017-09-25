@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-09-21"
+lastupdated: "2017-09-25"
 
 ---
 
@@ -1714,6 +1714,8 @@ public-ingress-ctl-svc   10.10.10.149   169.60.16.246   &lt;port1&gt;:30776/TCP,
 
 
 
+
+
 <br />
 
 
@@ -2533,5 +2535,6 @@ For {{site.data.keyword.containershort_notm}}, the default owner of the volume m
     {: screen}
 
     This output shows that root has read, write, and execute permissions on the volume mount path `mnt/myvol/`, but the non-root myguest user has permission to read and write to the `mnt/myvol/mydata` folder. Because of these updated permissions, the non-root user can now write data to the persistent volume.
+
 
 
