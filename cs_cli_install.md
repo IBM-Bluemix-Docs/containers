@@ -87,7 +87,7 @@ To install the CLIs:
         1.  Move the executable file to the `/usr/local/bin` directory.
 
             ```
-            mv /<path_to_file>/kubectl/usr/local/bin/kubectl
+            mv /<path_to_file>/kubectl /usr/local/bin/kubectl
             ```
             {: pre}
 
@@ -378,10 +378,10 @@ To update the CLIs:
         **Tip:** If you are using Windows, install the Kubernetes CLI in the same directory as the {{site.data.keyword.Bluemix_notm}} CLI. This setup saves you some filepath changes when you run commands later.
 
     2.  For OSX and Linux users, complete the following steps.
-        1.  Move the executable file to the /usr/local/bin directory.
+        1.  Move the executable file to the `/usr/local/bin` directory.
 
             ```
-            mv /<path_to_file>/kubectl/usr/local/bin/kubectl
+            mv /<path_to_file>/kubectl /usr/local/bin/kubectl
             ```
             {: pre}
 
