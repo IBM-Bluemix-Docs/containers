@@ -14,8 +14,6 @@
         </tbody>
       </table>
 </p>
-          </li>
-      </ul>
 
 
 </staging>
