@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-09-20"
+lastupdated: "2017-09-25"
 
 ---
 
@@ -171,12 +171,12 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
     </p></dd>
 
 <dt><code>--hardware <em>HARDWARE</em></code></dt>
-<dd>The level of hardware isolation for your worker node. Use dedicated if you want to have available physical resources dedicated to you only, or shared to allow physical resources to be shared with other IBM customers. The default is shared.  This value is optional for standard clusters and is not available for lite clusters.</dd>
+<dd>The level of hardware isolation for your worker node. Use dedicated to have available physical resources dedicated to you only, or shared to allow physical resources to be shared with other IBM customers. The default is shared.  This value is optional for standard clusters and is not available for lite clusters.</dd>
 
 <dt><code>--location <em>LOCATION</em></code></dt>
 <dd>The location where you want to create the cluster. The locations that are available to you depend on the {{site.data.keyword.Bluemix_notm}} region you are logged in to. Select the region that is physically closest to you for best performance.  This value is required for standard clusters and is optional for lite clusters.
 
-<p>Available locations are:<ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>fra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul>
+<p>Available locations are:<ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul><li>US-East<ul><li>wdc06 [Washington DC]</li><li>wdc07 [Washington DC]</li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>fra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul>
 </p>
 
 <p><strong>Note:</strong> When you select a location that is located outside your country, keep in mind that you might require legal authorization before data can be physically stored in a foreign country.</p>
@@ -595,6 +595,12 @@ Initialize the {{site.data.keyword.containershort_notm}} plug-in or specify the 
     <pre class="codeblock">
     <code>bx cs init --host https://us-south.containers.bluemix.net</code>
     </pre></li>
+    
+    <li>US-East:
+
+    <pre class="codeblock">
+    <code>bx cs init --host https://us-east.containers.bluemix.net</code>
+    </pre></li>
 
     <li>UK-South:
 
@@ -645,7 +651,7 @@ View a list of available machine types for your worker nodes. Each machine type 
 
    <dl>
    <dt><em>LOCATION</em></dt>
-   <dd>Enter the location where you want to list available machine types.  This value is required. Available locations are: <ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>fra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul></dd></dl>
+   <dd>Enter the location where you want to list available machine types.  This value is required. Available locations are: <ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul><li>US-East<ul><li>wdc06 [Washington DC]</li><li>wdc07 [Washington DC]</li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>fra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul></dd></dl>
 
 **Example**:
 
@@ -681,7 +687,7 @@ List the public and private VLANs that are available for a location in your {{si
 
    <dl>
    <dt>LOCATION</dt>
-   <dd>Enter the location where you want to list your private and public VLANs. This value is required. Available locations are: <ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>fra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul></dd>
+   <dd>Enter the location where you want to list your private and public VLANs. This value is required. Available locations are: <ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul><li>US-East<ul><li>wdc06 [Washington DC]</li><li>wdc07 [Washington DC]</li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>fra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul></dd>
    </dl>
 
 **Example**:
