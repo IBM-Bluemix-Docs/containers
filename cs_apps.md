@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-09-21"
+lastupdated: "2017-09-25"
 
 ---
 
@@ -1714,6 +1714,8 @@ public-ingress-ctl-svc   10.10.10.149   169.60.16.246   &lt;port1&gt;:30776/TCP,
 
 
 
+
+
 <br />
 
 
@@ -2143,29 +2145,38 @@ You can now access the {{site.data.keyword.Bluemix_notm}} service details and cr
 ## Creating persistent storage
 {: #cs_apps_volume_claim}
 
-You create a persistent volume claim to provision NFS file storage for your cluster. You mount this claim to a pod to ensure that data is available even if the pod crashes or shuts down.
+Create a persistent volume claim (pvc) to provision NFS file storage for your cluster. Then, mount this claim to a pod to ensure that data is available even if the pod crashes or shuts down.
 {:shortdesc}
 
 The NFS file storage that backs the persistent volume is clustered by IBM in order to provide high availability for your data.
 
-1.  Review the available storage classes. {{site.data.keyword.containerlong}} provides three pre-defined storage classes so that the cluster admin does not have to create any storage classes.
+1.  Review the available storage classes. {{site.data.keyword.containerlong}} provides eight pre-defined storage classes so that the cluster admin does not have to create any storage classes. The `ibmc-file-bronze` storage class is the same as the `default` storage class.
 
     ```
     kubectl get storageclasses
     ```
     {: pre}
-
+    
     ```
     $ kubectl get storageclasses
     NAME                         TYPE
-    ibmc-file-bronze (default)   ibm.io/ibmc-file
-    ibmc-file-gold               ibm.io/ibmc-file
-    ibmc-file-silver             ibm.io/ibmc-file
+    default                      ibm.io/ibmc-file   
+    ibmc-file-bronze (default)   ibm.io/ibmc-file   
+    ibmc-file-custom             ibm.io/ibmc-file
+    ibmc-file-gold               ibm.io/ibmc-file   
+    ibmc-file-retain-bronze      ibm.io/ibmc-file   
+    ibmc-file-retain-custom      ibm.io/ibmc-file   
+    ibmc-file-retain-gold        ibm.io/ibmc-file   
+    ibmc-file-retain-silver      ibm.io/ibmc-file   
+    ibmc-file-silver             ibm.io/ibmc-file 
     ```
     {: screen}
 
-2.  Review the IOPS of a storage class or the available sizes.
+2.  Decide if you want to save your data and the NFS file share after you delete the pvc. If you want to keep your data, then choose a `retain` storage class. If you want the data and your file share to be deleted when you delete the pvc, choose a storage class without `retain`.
 
+3.  Review the IOPS of a storage class and the available storage sizes.
+    - The bronze, silver, and gold storage classes use Endurance storage and have a single defined IOPS per GB for each class. The total IOPS depends on the size of the storage. For example, 1000Gi pvc at 4 IOPS per GB has a total of 4000 IOPS.
+ 
     ```
     kubectl describe storageclasses ibmc-file-silver
     ```
@@ -2177,8 +2188,24 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
     Parameters: iopsPerGB=4,sizeRange=20Gi,40Gi,80Gi,100Gi,250Gi,500Gi,1000Gi,2000Gi,4000Gi,8000Gi,12000Gi
     ```
     {: screen}
+    
+    - The custom storage classes use [Performance storage ![External link icon](../icons/launch-glyph.svg "External link icon")]](https://knowledgelayer.softlayer.com/topic/performance-storage) and have discrete options for total IOPS and size.
 
-3.  In your preferred text editor, create a configuration file to define your persistent volume claim and save the configuration as a `.yaml` file.
+    ```
+    kubectl describe storageclasses ibmc-file-retain-custom 
+    ```
+    {: pre}
+
+    The **parameters** field provides the IOPS associated with the storage class and the available sizes in gigabytes. For example, a 40Gi pvc can select IOPS that is a multiple of 100 that is in the range of 100 - 2000 IOPS.
+
+    ```
+    Parameters: Note=IOPS value must be a multiple of 100,reclaimPolicy=Retain,sizeIOPSRange=20Gi:[100-1000],40Gi:[100-2000],80Gi:[100-4000],100Gi:[100-6000],1000Gi[100-6000],2000Gi:[200-6000],4000Gi:[300-6000],8000Gi:[500-6000],12000Gi:[1000-6000]
+    ```
+    {: screen}
+
+4.  Create a configuration file to define your persistent volume claim and save the configuration as a `.yaml` file.
+    
+    Example for bronze, silver, gold classes:
 
     ```
     apiVersion: v1
@@ -2195,6 +2222,25 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
           storage: 20Gi
     ```
     {: codeblock}
+    
+    Example for custom classes:
+
+    ```
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: <pvc_name>
+      annotations:
+        volume.beta.kubernetes.io/storage-class: "ibmc-file-retain-custom"
+    spec:
+      accessModes:
+        - ReadWriteMany
+      resources:
+        requests:
+          storage: 40Gi
+          iops: "500"
+    ```
+    {: codeblock}
 
     <table>
     <thead>
@@ -2207,25 +2253,35 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
     </tr>
     <tr>
     <td><code>metadata/annotations</code></td>
-    <td>Specify the storage class that defines the IOPS per GB of the host file share for the persistent volume:<ul><li>ibmc-file-bronze: 2 IOPS per GB.</li><li>ibmc-file-silver: 4 IOPS per GB.</li><li>ibmc-file-gold: 10 IOPS per GB.</li>
+    <td>Specify the storage class for the persistent volume:
+      <ul>
+      <li>ibmc-file-bronze / ibmc-file-retain-bronze : 2 IOPS per GB.</li>
+      <li>ibmc-file-silver / ibmc-file-retain-silver: 4 IOPS per GB.</li>
+      <li>ibmc-file-gold / ibmc-file-retain-gold: 10 IOPS per GB.</li>
+      <li>ibmc-file-custom / ibmc-file-retain-custom: Multiple values of IOPS available.
 
-    </li> If you do no specify a storage class, the persistent volume is created with the bronze storage class.</td>
+    </li> If you do not specify a storage class, the persistent volume is created with the bronze storage class.</td>
     </tr>
     <tr>
     <td><code>spec/accessModes</code>
     <code>resources/requests/storage</code></td>
     <td>If you choose a size other than one that is listed, the size is rounded up. If you select a size larger than the largest size, then the size is rounded down.</td>
     </tr>
+    <tr>
+    <td><code>spec/accessModes</code>
+    <code>resources/requests/iops</code></td>
+    <td>This option is for ibmc-file-custom / ibmc-file-retain-custom only. Specify the total IOPS for the storage. Run `kubectl describe storageclasses ibmc-file-custom` to see all options. If you choose an IOPS other than one that is listed, the IOPS is rounded up.</td>
+    </tr>
     </tbody></table>
 
-4.  Create the persistent volume claim.
+5.  Create the persistent volume claim.
 
     ```
     kubectl apply -f <local_file_path>
     ```
     {: pre}
 
-5.  Verify that your persistent volume claim is created and bound to the persistent volume. This process can take a few minutes.
+6.  Verify that your persistent volume claim is created and bound to the persistent volume. This process can take a few minutes.
 
     ```
     kubectl describe pvc <pvc_name>
@@ -2301,14 +2357,14 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
     </tr>
     </tbody></table>
 
-7.  Create the pod and mount the persistent volume claim to your pod.
+8.  Create the pod and mount the persistent volume claim to your pod.
 
     ```
     kubectl apply -f <local_yaml_path>
     ```
     {: pre}
 
-8.  Verify that the volume is successfully mounted to your pod.
+9.  Verify that the volume is successfully mounted to your pod.
 
     ```
     kubectl describe pod <pod_name>
@@ -2368,7 +2424,7 @@ For {{site.data.keyword.containershort_notm}}, the default owner of the volume m
     RUN chmod 755 /sbin/entrypoint.sh
 
     EXPOSE 22
-    ENTRYPOINT ["/sbin/entrypoint.sh"]
+    ENTRYPOINT ["/sbin/entrypoint.s.
     ```
     {: codeblock}
 
