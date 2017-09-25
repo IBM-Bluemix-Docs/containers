@@ -478,8 +478,8 @@ Open the following ports and IP addresses in your customized firewall.
 
 2.  In your firewall, allow the following connections to and from your worker nodes:
 
-    <ul><li>For INBOUND connectivity to your worker nodes, allow incoming network traffic from the following source network groups and IP addresses to the destination TCP/UDP port 10250 and `<each_worker_node_publicIP>`:</br>
-    
+    - For INBOUND connectivity to your worker nodes, allow incoming network traffic from the following source network groups and IP addresses to the destination TCP/UDP port 10250 and `<each_worker_node_publicIP>`:
+    <p>
   <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
       <thead>
       <th colspan=2><img src="images/idea.png"/> Inbound IP addresses</th>
@@ -519,9 +519,10 @@ Open the following ports and IP addresses in your customized firewall.
        <td><code>130.198.67.0/26</code></td>
       </tr>
     </table>
+</p>
 
-    <li>For OUTBOUND connectivity from your worker nodes, allow outgoing network traffic from the source worker node to the destination TCP/UDP port range 20000-32767 for `<each_worker_node_publicIP>`, and the following IP addresses and network groups:</br>
-    
+    - For OUTBOUND connectivity from your worker nodes, allow outgoing network traffic from the source worker node to the destination TCP/UDP port range 20000-32767 for `<each_worker_node_publicIP>`, and the following IP addresses and network groups:
+    <p>
   <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
       <thead>
       <th colspan=2><img src="images/idea.png"/> Outbound IP addresses</th>
@@ -561,11 +562,16 @@ Open the following ports and IP addresses in your customized firewall.
        <td><code>130.198.64.19</code></td>
       </tr>
     </table>
-</ul>
+</p>
 
-3.  Get all [the public IP addresses for each registry region](/docs/services/Registry/troubleshoot/ts_index.html#ts_firewall) to which you want to allow outgoing network traffic.
+3. Allow outgoing network traffic from the worker nodes to each {{site.data.keyword.registrylong_notm}} and {{site.data.keyword.monitoringlong_notm}} region that you want to use:
+    ```
+    TCP port 443 FROM <each_worker_node_publicIP> TO <registry_publicIP>, apt.dockerproject.org, <monitoring_publicIP>
+    ```
+    {: pre}
 
-      <p>      
+    - Replace <em>&lt;registry_publicIP&gt;</em> with all the addresses for the registry regions to which you want to allow traffic:
+        <p>      
 <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
         <thead>
         <th colspan=2><img src="images/idea.png"/> Registry IP addresses</th>
@@ -591,16 +597,33 @@ Open the following ports and IP addresses in your customized firewall.
       </table>
 </p>
 
-4.  Allow the connections to and from your worker nodes. Replace `<each_worker_node_publicIP>` and `<registry_publicIP>` with the IP addresses you retrieved previously.
-      ```
-      TCP port 443 FROM <each_worker_node_publicIP> TO <registry_publicIP>, apt.dockerproject.org
-      ```
-      {: pre}
+    - Replace <em>&lt;monitoring_publicIP&gt;</em> with all the addresses for the monitoring regions to which you want to allow traffic:
+        <p><table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
+        <thead>
+        <th colspan=2><img src="images/idea.png"/> Monitoring Public IP addresses</th>
+        </thead>
+      <tbody>
+        
+        <tr>
+          <td>metrics.ng.bluemix.net</td>
+          <td><code>169.47.204.128/29</code></td>
+         </tr>
+         <tr>
+          <td>metrics.eu-gb.bluemix.net</td>
+          <td><code>169.50.196.136/29</code></td>
+         </tr>
+         <tr>
+          <td>metrics.eu-de.bluemix.net</td>
+          <td><code>159.122.78.136/29</code></td>
+         </tr>
+        </tbody>
+      </table>
+</p>
 
 <br />
 
 
-## After updating or reloading a worker node, duplicate nodes and pods appear 
+## After updating or reloading a worker node, duplicate nodes and pods appear
 {: #cs_duplicate_nodes}
 
 {: tsSymptoms}
@@ -610,7 +633,7 @@ When you run `kubectl get nodes` you see duplicate worker nodes with the status 
 Older clusters had worker nodes listed by the cluster's public IP address. Now, worker nodes are listed by the cluster's private IP address. When you reload or update a node, the IP address is changed, but the reference to the public IP address remains.
 
 {: tsResolve}
-There are no service disruptions due to these duplicates, but you should remove the old worker node references from the API server. 
+There are no service disruptions due to these duplicates, but you should remove the old worker node references from the API server.
 
   ```
   kubectl delete node <node_name1> <node_name2>

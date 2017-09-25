@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-09-14"
+lastupdated: "2017-09-25"
 
 ---
 
@@ -76,7 +76,7 @@ In this lesson, you deploy a single instance of the Hello World app into a clust
 
     The {{site.data.keyword.Bluemix_notm}} region that you log in to also determines the region where you can create your Kubernetes clusters, including the available datacenters. If you do not specify a region, you are automatically logged in to the region that is closest to you.
 
-    -  US South
+    -  US South and US East
 
         ```
         bx login -a api.ng.bluemix.net
@@ -967,3 +967,4 @@ bx cs cluster-rm <pr_firm_cluster>
 ## What's next?
 
 Try exploring the container orchestration journeys on [developerWorks ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/code/journey/category/container-orchestration/).
+
