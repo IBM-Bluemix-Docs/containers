@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-08-14"
+lastupdated: "2017-09-25"
 
 ---
 
@@ -200,7 +200,7 @@ spec:
                         {
                           "key": "app",
                           "operator": "In",
-                          "values": ["wasliberty"]
+                          "values": ["waslibert
                         }
                       ]
                     },
@@ -441,9 +441,9 @@ You can use the standard Kubernetes and Docker features to monitor the health of
 <dt>Docker logs</dt>
 <dd>You can leverage the built-in Docker logging capabilities to review activities on the standard STDOUT and STDERR output streams. For more information, see [Viewing container logs for a container that runs in a Kubernetes cluster](/docs/services/CloudLogAnalysis/containers/logging_containers_other_logs.html#logging_containers_collect_data).</dd>
 <dt>{{site.data.keyword.monitoringlong_notm}}</dt>
-<dd>For standard clusters, metrics are located in the {{site.data.keyword.Bluemix_notm}} space that was logged in to when the Kubernetes cluster was created. Container metrics are collected automatically for all containers that are deployed in a cluster. These metrics are sent and are made available through Grafana. For more information on metrics, see [Monitoring for the {{site.data.keyword.containershort_notm}}](/docs/services/cloud-monitoring/containers/analyzing_metrics_bmx_ui.html#analyzing_metrics_bmx_ui).<p>To access the Grafana dashboard, go to one of the following URLs and select the {{site.data.keyword.Bluemix_notm}} organization and space where you created the cluster.<ul><li>US-South: https://metrics.ng.bluemix.net</li><li>UK-South: https://metrics.eu-gb.bluemix.net</li><li>EU-Central: https://metrics.eu-de.bluemix.net</li></ul></p></dd>
+<dd>For standard clusters, metrics are located in the {{site.data.keyword.Bluemix_notm}} space that was logged in to when the Kubernetes cluster was created. Container metrics are collected automatically for all containers that are deployed in a cluster. These metrics are sent and are made available through Grafana. For more information on metrics, see [Monitoring for the {{site.data.keyword.containershort_notm}}](/docs/services/cloud-monitoring/containers/analyzing_metrics_bmx_ui.html#analyzing_metrics_bmx_ui).<p>To access the Grafana dashboard, go to one of the following URLs and select the {{site.data.keyword.Bluemix_notm}} organization and space where you created the cluster.<ul><li>US-South and US-East: https://metrics.ng.bluemix.net</li><li>UK-South: https://metrics.eu-gb.bluemix.net</li><li>EU-Central: https://metrics.eu-de.bluemix.net</li></ul></p></dd>
 <dt>{{site.data.keyword.loganalysislong_notm}}</dt>
-<dd>For standard clusters, logs are located in the {{site.data.keyword.Bluemix_notm}} space that was logged in to when the Kubernetes cluster was created. Container logs are monitored and forwarded outside of the container. You can access logs for a container by using the Kibana dashboard. For more information on logging, see [Logging for the {{site.data.keyword.containershort_notm}}](/docs/services/CloudLogAnalysis/containers/logging_containers_ov.html#logging_containers_ov).<p>To access the Kibana dashboard, go to one of the following URLs and select the {{site.data.keyword.Bluemix_notm}} organization and space where you created the cluster.<ul><li>US-South: https://logging.ng.bluemix.net</li><li>UK-South: https://logging.eu-gb.bluemix.net</li><li>EU-Central: https://logging.eu-de.bluemix.net</li></ul></p></dd>
+<dd>For standard clusters, logs are located in the {{site.data.keyword.Bluemix_notm}} space that was logged in to when the Kubernetes cluster was created. Container logs are monitored and forwarded outside of the container. You can access logs for a container by using the Kibana dashboard. For more information on logging, see [Logging for the {{site.data.keyword.containershort_notm}}](/docs/services/CloudLogAnalysis/containers/logging_containers_ov.html#logging_containers_ov).<p>To access the Kibana dashboard, go to one of the following URLs and select the {{site.data.keyword.Bluemix_notm}} organization and space where you created the cluster.<ul><li>US-South and US-East: https://logging.ng.bluemix.net</li><li>UK-South: https://logging.eu-gb.bluemix.net</li><li>EU-Central: https://logging.eu-de.bluemix.net</li></ul></p></dd>
 </dl>
 
 

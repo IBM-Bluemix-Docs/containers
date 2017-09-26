@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-09-08"
+lastupdated: "2017-09-25"
 
 ---
 
@@ -87,7 +87,7 @@ To install the CLIs:
         1.  Move the executable file to the `/usr/local/bin` directory.
 
             ```
-            mv /<path_to_file>/kubectl/usr/local/bin/kubectl
+            mv /<path_to_file>/kubectl /usr/local/bin/kubectl
             ```
             {: pre}
 
@@ -160,13 +160,13 @@ Before you can run `kubectl` commands, [install the required CLIs](#cs_cli_insta
     To specify a specific {{site.data.keyword.Bluemix_notm}} region, include the API endpoint. If you have private Docker images that are stored in the container registry of a specific {{site.data.keyword.Bluemix_notm}} region, or {{site.data.keyword.Bluemix_notm}} services instances that you already created, log in to this region to access your images and {{site.data.keyword.Bluemix_notm}} services.
 
     The {{site.data.keyword.Bluemix_notm}} region that you log in to also determines the region where you can create your Kubernetes clusters, including the available datacenters. If you do not specify a region, you are automatically logged in to the region that is closest to you.
-      -   US South
+      -   US South and US East
 
           ```
           bx login -a api.ng.bluemix.net
           ```
           {: pre}
-
+      
       -   Sydney
 
           ```
@@ -199,6 +199,12 @@ Before you can run `kubectl` commands, [install the required CLIs](#cs_cli_insta
         - US-South:
           ```
           bx cs init --host https://us-south.containers.bluemix.net
+          ```
+          {: pre}
+        
+        - US-East:
+          ```
+          bx cs init --host https://us-east.containers.bluemix.net
           ```
           {: pre}
 
@@ -312,7 +318,7 @@ To update the CLIs:
 
     The {{site.data.keyword.Bluemix_notm}} region that you log in to also determines the region where you can create your Kubernetes clusters, including the available datacenters. If you do not specify a region, you are automatically logged in to the region that is closest to you.
 
-    -   US South
+    -   US South and US East
 
         ```
         bx login -a api.ng.bluemix.net
@@ -378,10 +384,10 @@ To update the CLIs:
         **Tip:** If you are using Windows, install the Kubernetes CLI in the same directory as the {{site.data.keyword.Bluemix_notm}} CLI. This setup saves you some filepath changes when you run commands later.
 
     2.  For OSX and Linux users, complete the following steps.
-        1.  Move the executable file to the /usr/local/bin directory.
+        1.  Move the executable file to the `/usr/local/bin` directory.
 
             ```
-            mv /<path_to_file>/kubectl/usr/local/bin/kubectl
+            mv /<path_to_file>/kubectl /usr/local/bin/kubectl
             ```
             {: pre}
 
@@ -777,6 +783,13 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
 
         ```
         GET https://us-south.containers.bluemix.net/v1/clusters
+        ```
+        {: codeblock}
+        
+    -   US-East
+
+        ```
+        GET https://us-east.containers.bluemix.net/v1/clusters
         ```
         {: codeblock}
 
