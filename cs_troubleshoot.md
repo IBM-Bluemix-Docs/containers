@@ -501,7 +501,6 @@ Open the following ports and IP addresses in your customized firewall.
         <td>fra02</td>
         <td><code>169.50.48.160/28</code></br><code>169.50.56.168/29</code></br><code>169.50.58.160/27</code></td>
        </tr>
-      </tbody>
       <tr>
        <td>lon02</td>
        <td><code>159.122.242.78</code></td>
@@ -518,6 +517,7 @@ Open the following ports and IP addresses in your customized firewall.
        <td>syd04</td>
        <td><code>130.198.67.0/26</code></td>
       </tr>
+      </tbody>
     </table>
 </p>
 
@@ -544,7 +544,6 @@ Open the following ports and IP addresses in your customized firewall.
         <td>fra02</td>
         <td><code>169.50.56.174</code></td>
        </tr>
-      </tbody>
       <tr>
        <td>lon02</td>
        <td><code>159.122.242.78</code></td>
@@ -561,6 +560,15 @@ Open the following ports and IP addresses in your customized firewall.
        <td>syd04</td>
        <td><code>130.198.64.19</code></td>
       </tr>
+      <tr>
+       <td>wdc06</td>
+       <td><code>169.60.73.142</code></td>
+      </tr>
+      <tr>
+       <td>wdc07</td>
+       <td><code>169.61.83.62</code></td>
+      </tr>
+      </tbody>
     </table>
 </p>
 
