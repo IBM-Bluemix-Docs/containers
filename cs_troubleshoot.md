@@ -561,6 +561,14 @@ Open the following ports and IP addresses in your customized firewall.
        <td>syd04</td>
        <td><code>130.198.64.19</code></td>
       </tr>
+      <tr>
+       <td>wdc06</td>
+       <td><code>169.60.73.142</code></td>
+      </tr>
+      <tr>
+       <td>wdc07</td>
+       <td><code>169.61.83.62</code></td>
+      </tr>
     </table>
 </p>
 

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-09-20"
+lastupdated: "2017-09-26"
 
 ---
 
@@ -101,9 +101,10 @@ Review the built-in worker node security features to protect the worker node env
 ### Opening required ports and IP addresses in your firewall
 {: #opening_ports}
 
-When you set up a firewall for your worker nodes or customize the firewall settings in your Bluemix Infrastructure (SoftLayer) account, you must open certain ports and IP addresses so that the worker node and the Kubernetes master can communicate. To access the load balancer or Ingress controller from outside of the cluster, you must also open ports in your firewall.
-
-
+Review these situations in which you might need to open specific ports and IP addresses in your firewalls:
+* To allow communication between the Kubernetes master and the worker nodes when either a firewall is set up for the worker nodes or the firewall settings are customized in your {{site.data.keyword.BluSoftlayer_notm}} account
+* To access the load balancer or Ingress controller from outside of the cluster
+* To run 'kubectl' commands from your local system when corporate network policies prevent access to public internet endpoints via proxies or firewalls
 
 
 1.  Note the public IP address for all your worker nodes in the cluster.
@@ -199,6 +200,14 @@ When you set up a firewall for your worker nodes or customize the firewall setti
        <td>syd04</td>
        <td><code>130.198.64.19</code></td>
       </tr>
+      <tr>
+       <td>wdc06</td>
+       <td><code>169.60.73.142</code></td>
+      </tr>
+      <tr>
+       <td>wdc07</td>
+       <td><code>169.61.83.62</code></td>
+      </tr>
     </table>
 </p>
           </li>
@@ -236,6 +245,31 @@ When you set up a firewall for your worker nodes or customize the firewall setti
 3. Optional: To access the load balancer from outside of the VLAN, open the port for incoming network traffic on the specific IP address of that load balancer.
 
 4. Optional: To access the Ingress controller from outside of the VLAN, open either port 80 or 443 for incoming network traffic on the specific IP address of that Ingress controller, depending on which port you have configured.
+
+
+
+
+        <tr>
+          <td>metrics.ng.bluemix.net</td>
+          <td><code>169.47.204.128/29</code></td>
+         </tr>
+         <tr>
+          <td>metrics.eu-gb.bluemix.net</td>
+          <td><code>169.50.196.136/29</code></td>
+         </tr>
+         <tr>
+          <td>metrics.eu-de.bluemix.net</td>
+          <td><code>159.122.78.136/29</code></td>
+         </tr>
+        </tbody>
+      </table>
+</p>
+
+  4. Optional: To access the load balancer from outside of the VLAN, open the port for incoming network traffic on the specific IP address of that load balancer.
+
+  5. Optional: To access the Ingress controller from outside of the VLAN, open either port 80 or 443 for incoming network traffic on the specific IP address of that Ingress controller, depending on which port you have configured.
+</staging>
+
 
 <br />
 
