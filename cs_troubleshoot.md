@@ -501,7 +501,6 @@ Open the following ports and IP addresses in your customized firewall.
         <td>fra02</td>
         <td><code>169.50.48.160/28</code></br><code>169.50.56.168/29</code></br><code>169.50.58.160/27</code></td>
        </tr>
-      </tbody>
       <tr>
        <td>lon02</td>
        <td><code>159.122.242.78</code></td>
@@ -518,6 +517,7 @@ Open the following ports and IP addresses in your customized firewall.
        <td>syd04</td>
        <td><code>130.198.67.0/26</code></td>
       </tr>
+      </tbody>
     </table>
 </p>
 
@@ -544,7 +544,6 @@ Open the following ports and IP addresses in your customized firewall.
         <td>fra02</td>
         <td><code>169.50.56.174</code></td>
        </tr>
-      </tbody>
       <tr>
        <td>lon02</td>
        <td><code>159.122.242.78</code></td>
@@ -561,16 +560,21 @@ Open the following ports and IP addresses in your customized firewall.
        <td>syd04</td>
        <td><code>130.198.64.19</code></td>
       </tr>
+      <tr>
+       <td>wdc06</td>
+       <td><code>169.60.73.142</code></td>
+      </tr>
+      <tr>
+       <td>wdc07</td>
+       <td><code>169.61.83.62</code></td>
+      </tr>
+      </tbody>
     </table>
 </p>
 
-3. Allow outgoing network traffic from the worker nodes to each {{site.data.keyword.registrylong_notm}} and {{site.data.keyword.monitoringlong_notm}} region that you want to use:
-    ```
-    TCP port 443 FROM <each_worker_node_publicIP> TO <registry_publicIP>, apt.dockerproject.org, <monitoring_publicIP>
-    ```
-    {: pre}
+3. If you are integrating with other {{site.data.keyword.Bluemix_notm}} services, allow outgoing network traffic from the worker nodes to each service's regions that you want to use: `TCP port 443 FROM <each_worker_node_publicIP> TO <registry_publicIP>, apt.dockerproject.org, <monitoring_publicIP>`.
 
-    - Replace <em>&lt;registry_publicIP&gt;</em> with all the addresses for the registry regions to which you want to allow traffic:
+    - Replace <em>&lt;registry_publicIP&gt;</em> with all the addresses for the {{site.data.keyword.registrylong_notm}} regions to which you want to allow traffic:
         <p>      
 <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
         <thead>
@@ -597,7 +601,7 @@ Open the following ports and IP addresses in your customized firewall.
       </table>
 </p>
 
-    - Replace <em>&lt;monitoring_publicIP&gt;</em> with all the addresses for the monitoring regions to which you want to allow traffic:
+    - Replace <em>&lt;monitoring_publicIP&gt;</em> with all the addresses for the {{site.data.keyword.monitoringlong_notm}} regions to which you want to allow traffic:
         <p><table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
         <thead>
         <th colspan=2><img src="images/idea.png"/> Monitoring Public IP addresses</th>
@@ -619,6 +623,8 @@ Open the following ports and IP addresses in your customized firewall.
         </tbody>
       </table>
 </p>
+
+
 
 <br />
 
