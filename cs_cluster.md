@@ -25,7 +25,7 @@ Design your cluster setup for maximum availability and capacity.
 
 Before you begin, review the options for [highly available cluster configurations](cs_planning.html#cs_planning_cluster_config).
 
-![Stages of high availability for a cluster](images/cs_cluster_ha_roadmap.png)](https://console.bluemix.net/docs/api/content/containers/images/cs_cluster_ha_roadmap.png)
+![Stages of high availability for a cluster](images/cs_cluster_ha_roadmap.png)
 
 <br />
 
@@ -155,7 +155,7 @@ To create a cluster:
         bx cs init --host https://us-south.containers.bluemix.net
         ```
         {: pre}
-        
+
     -   US-East:
 
         ```
@@ -201,7 +201,7 @@ To create a cluster:
             dal12
             ```
             {: screen}
-            
+
         -   US-East:
 
             ```
@@ -310,11 +310,11 @@ To create a cluster:
           <li>For lite clusters, you do not have to define a public VLAN. Your lite cluster is automatically connected to a public VLAN that is owned by IBM.</li>
           <li>For a standard cluster, if you already have a public VLAN set up in your {{site.data.keyword.BluSoftlayer_notm}} account for that location, enter the ID of the public VLAN. If you do not have both a public and a private VLAN in your account, do not specify this option. {{site.data.keyword.containershort_notm}} automatically creates a public VLAN for you.<br/><br/>
           <strong>Note</strong>: Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster.</li>
-        </ul></td> 
+        </ul></td>
         </tr>
         <tr>
         <td><code>--private-vlan <em>&lt;private_vlan_id&gt;</em></code></td>
-        <td><ul><li>For lite clusters, you do not have to define a private VLAN. Your lite cluster is automatically connected to a private VLAN that is owned by IBM.</li><li>For a standard cluster, if you already have a private VLAN set up in your {{site.data.keyword.BluSoftlayer_notm}} account for that location, enter the ID of the private VLAN. If you do not have both a public and a private VLAN in your account, do not specify this option. {{site.data.keyword.containershort_notm}} automatically creates a public VLAN for you.<br/><br/><strong>Note</strong>: Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster.</li></ul></td> 
+        <td><ul><li>For lite clusters, you do not have to define a private VLAN. Your lite cluster is automatically connected to a private VLAN that is owned by IBM.</li><li>For a standard cluster, if you already have a private VLAN set up in your {{site.data.keyword.BluSoftlayer_notm}} account for that location, enter the ID of the private VLAN. If you do not have both a public and a private VLAN in your account, do not specify this option. {{site.data.keyword.containershort_notm}} automatically creates a public VLAN for you.<br/><br/><strong>Note</strong>: Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster.</li></ul></td>
         </tr>
         <tr>
         <td><code>--name <em>&lt;name&gt;</em></code></td>
@@ -1024,20 +1024,44 @@ To use the service in a pod that is deployed in the cluster, cluster users can a
 ### Adding {{site.data.keyword.Bluemix_notm}} services to clusters in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)
 {: #binding_dedicated}
 
-Before you begin, [request an instance of the {{site.data.keyword.Bluemix_notm}} service](/docs/services/reqnsi.html#req_instance) in your space to add to your cluster. 
+**Note**: The cluster and the worker nodes must be deployed fully before you can add a service.
 
-**Note**:
-- To create an instance of a service in the Washington DC location, you must use the CLI.
-- The cluster and the worker nodes must be deployed fully before you can add a service.
-
-1.  Log in to the {{site.data.keyword.Bluemix_notm}} Dedicated environment where the service instance was created.
+1.  Set the path to your local Bluemix Dedicated configuration file as the `DEDICATED_BLUEMIX_CONFIG` environment variable.
 
     ```
-    bx login -a api.<dedicated_domain>
+    export DEDICATED_BLUEMIX_CONFIG=<path_to_config_directory>
     ```
     {: pre}
 
-2.  List all existing services in your {{site.data.keyword.Bluemix_notm}} space.
+2.  Set the same path defined above as the `BLUEMIX_HOME` environment variable.
+
+    ```
+    export BLUEMIX_HOME=$DEDICATED_BLUEMIX_CONFIG
+    ```
+    {: pre}
+
+3.  Log in to the Bluemix Dedicated environment where you want to create the service instance.
+
+    ```
+    bx login -a api.<dedicated_domain> -u <user> -p <password> -o <org> -s <space>
+    ```
+    {: pre}
+
+4.  List the available services in the {{site.data.keyword.Bluemix_notm}} catalog.
+
+    ```
+    bx service offerings
+    ```
+    {: pre}
+
+5.  Create an instance of the service you want to bind to the cluster.
+
+    ```
+    bx service create <service_name> <service_plan> <service_instance_name>
+    ```
+    {: pre}
+
+6.  Verify that you created your service instance by listing all existing services in your {{site.data.keyword.Bluemix_notm}} space.
 
     ```
     bx service list
@@ -1052,21 +1076,14 @@ Before you begin, [request an instance of the {{site.data.keyword.Bluemix_notm}}
     ```
     {: screen}
 
-3.  Create a service credentials key that contains the confidential information about the service, such as the user name, password, and URL.
+7.  Unset the `BLUEMIX_HOME` environment variable to return to using {{site.data.keyword.Bluemix_notm}} Public.
 
     ```
-    bx service key-create <service_name> <service_key_name>
-    ```
-    {: pre}
-
-4.  Use the service credentials key to create a JSON file on your computer that includes the confidential information about the service.
-
-    ```
-    bx service key-show <service_name> <service_key_name>| sed -n '/{/,/}/'p >> /filepath/<dedicated-service-key>.json
+    unset $BLUEMIX_HOME
     ```
     {: pre}
 
-5.  Log in to the public endpoint for {{site.data.keyword.containershort_notm}} and target your CLI to the cluster in your {{site.data.keyword.Bluemix_notm}} Dedicated environment.
+8.  Log in to the public endpoint for {{site.data.keyword.containershort_notm}} and target your CLI to the cluster in your {{site.data.keyword.Bluemix_notm}} Dedicated environment.
     1.  Log in to the account by using the public endpoint for {{site.data.keyword.containershort_notm}}. Enter your {{site.data.keyword.Bluemix_notm}} credentials and select the {{site.data.keyword.Bluemix_notm}} Dedicated account when prompted.
 
         ```
@@ -1100,17 +1117,28 @@ Before you begin, [request an instance of the {{site.data.keyword.Bluemix_notm}}
         {: screen}
 
     4.  Copy and paste the command that is displayed in your terminal to set the `KUBECONFIG` environment variable.
-6.  Create a Kubernetes secret from the service credentials JSON file.
 
-    ```
-    kubectl create secret generic <secret_name> --from-file=/filepath/<dedicated-service-key>.json
-    ```
-    {: pre}
+9.  Identify the cluster namespace that you want to use to add your service. Choose between the following options.
+    * List existing namespaces and choose a namespace that you want to use.
 
-7.  Repeat these steps for each {{site.data.keyword.Bluemix_notm}} service you want to use.
-To use the service in a pod deployed in the cluster, cluster users can access the service credentials of the {{site.data.keyword.Bluemix_notm}} service by [mounting the Kubernetes secret as a secret volume to a pod](cs_apps.html#cs_apps_service).
+          ```
+          kubectl get namespaces
+          ```
+          {: pre}
 
+    * Create a new namespace in your cluster.
 
+          ```
+          kubectl create namespace <namespace_name>
+          ```
+          {: pre}
+
+10.  Bind the service instance to your cluster.
+
+      ```
+      bx cs cluster-service-bind <cluster_name_or_id> <namespace> <service_instance_name>
+      ```
+      {: pre}
 
 <br />
 
