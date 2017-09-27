@@ -125,6 +125,7 @@ When you create a lite cluster, your worker node is automatically provisioned as
 
 When you create a cluster in {{site.data.keyword.Bluemix_notm}} Dedicated, a single-tenant set up only is used and all physical resources are dedicated to you only. You deploy multiple worker nodes as virtual machines on the same physical host.
 
+
 <br />
 
 
