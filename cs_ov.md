@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-09-25"
+lastupdated: "2017-09-26"
 
 ---
 
@@ -100,7 +100,7 @@ Each cluster is deployed on shared or dedicated virtual machines that provide na
 
 |Benefit|Description|
 |-------|-----------|
-|Single-tenant Kubernetes clusters with compute, network, and storage infrastructure isolation|<ul><li>Create your own customized infrastructure that meets the requirement of your business and development environment.</li><li>Provision a dedicated and secured Kubernetes master, worker nodes, virtual networks, and storage by using the resources provided by {{site.data.keyword.BluSoftlayer_full}}.</li><li>Store persistent data, share data between Kubernetes pods, and restore data when needed with the integrated and secure volume service.</li><li>Fully managed Kubernetes master that is highly available and continuously monitored by {{site.data.keyword.IBM_notm}}.</li><li>Benefit from full support for all native Kubernetes APIs.</li></ul>|
+|Single-tenant Kubernetes clusters with compute, network, and storage infrastructure isolation|<ul><li>Create your own customized infrastructure that meets the requirement of your business and development environment.</li><li>Provision a dedicated and secured Kubernetes master, worker nodes, virtual networks, and storage by using the resources provided by {{site.data.keyword.BluSoftlayer_full}}.</li><li>Store persistent data, share data between Kubernetes pods, and restore data when needed with the integrated and secure volume service.</li><li>Fully managed Kubernetes master that is continuously monitored and updated by {{site.data.keyword.IBM_notm}} to keep your cluster available.</li><li>Benefit from full support for all native Kubernetes APIs.</li></ul>|
 |Image security compliance with Vulnerability Advisor|<ul><li>Set up your own secured Docker private image registry where images are stored and shared by all users in the organization.</li><li>Benefit from automatic scanning of images in your private {{site.data.keyword.Bluemix_notm}} registry.</li><li>Review recommendations specific to the operating system used in the image to fix potential vulnerabilities.</li></ul>|
 |Automatic scaling of apps|<ul><li>Define custom policies to scale up and scale down apps based on CPU and memory consumption.</li></ul>|
 |Continuous monitoring of the cluster health|<ul><li>Use the cluster dashboard to quickly see and manage the health of your cluster, worker nodes, and container deployments.</li><li>Find detailed consumption metrics by using {{site.data.keyword.monitoringlong}} and quickly expand your cluster to meet work loads.</li><li>Review logging information by using {{site.data.keyword.loganalysislong}} to see detailed cluster activities.</li></ul>|
@@ -197,26 +197,7 @@ To set up your Dedicated environment to use clusters:
     2.  From the account menu, select your {{site.data.keyword.Bluemix_notm}} Dedicated account. The console is updated with the services and information for your {{site.data.keyword.Bluemix_notm}} Dedicated instance.
     3.  From the catalog for your {{site.data.keyword.Bluemix_notm}} Dedicated instance, select **Containers** and click **Kubernetes cluster**.
     For more information about creating a cluster, see [Creating Kubernetes clusters from the GUI in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)](cs_cluster.html#creating_ui_dedicated).
-5. If your local system or your corporate network places controls on public internet endpoints via proxies or firewalls, allow outbound traffic through these controls to the following {{site.data.keyword.containershort_notm}} public endpoints.
-
-  <ul>
-  <li><code>&#60;region&#62;.containers.bluemix.net:443</code></li>
-  <li><code>api.&#60;region&#62;.bluemix.net:443</code></li>
-  <li><code>accountmanagement.&#60;region&#62;.bluemix.net:443</code></li>
-  <li>For each cluster, also allow <code>&#60;region&#62;.containers.bluemix.net:&#60;cluster-master-port&#62;</code>. To find the &#60;cluster-master-port&#62;:
-  <ol>
-  <li><a href="cs_cli_install.html#cs_cli_install" target="_blank">Install the CLI.</a></li>
-  <li><a href="cs_cli_install.html#cs_cli_configure" target="_blank">In the CLI, set the context for the cluster that you created.</a></li>
-  <li>Open the configuration file that was set for the KUBECONFIG variable. Example: <code>/Users/&#60;user_name&#62;/.bluemix/plugins/container-service/clusters/&#60;cluster_name&#62;/kube-config-prod-dal10-&#60;cluster_name&#62;.yml</code></li>
-  <li>In the server field, identify the port that was assigned to access your cluster. In the following example, the &#60;cluster-master-port&#62; is 21264. Example: <pre class="screen"><code>server: https://192.168.10.38:21264</code></pre>
-  </ol></li>
-  </ul>
-
-  **Tip**: For the <em>&#60;region&#62;</em> variables, you can enter one of the following regions.
-  -   US South and US East: `ng`
-  -   Sydney: `au-syd`
-  -   Germany: `eu-de`
-  -   United Kingdom: `eu-gb`
+5. If your local system or your corporate network controls public internet endpoints by using proxies or firewalls, see [Opening required ports and IP addresses in your firewall](cs_security.html#opening_ports) for more information about how to allow outbound traffic.
 
 
 <br />
@@ -254,4 +235,3 @@ Misuse includes:
 *   Violation of the rights of others
 
 See [Cloud Services terms](/docs/navigation/notices.html#terms) for overall terms of use.
-
