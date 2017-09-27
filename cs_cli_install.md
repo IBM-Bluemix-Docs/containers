@@ -166,7 +166,7 @@ Before you can run `kubectl` commands, [install the required CLIs](#cs_cli_insta
           bx login -a api.ng.bluemix.net
           ```
           {: pre}
-      
+
       -   Sydney
 
           ```
@@ -187,6 +187,8 @@ Before you can run `kubectl` commands, [install the required CLIs](#cs_cli_insta
           bx login -a api.eu-gb.bluemix.net
           ```
           {: pre}
+      
+      
 
     **Note:** If you have a federated ID, use `bx login --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
 
@@ -195,13 +197,16 @@ Before you can run `kubectl` commands, [install the required CLIs](#cs_cli_insta
 3.  If you want to create or access Kubernetes clusters in a region other than the {{site.data.keyword.Bluemix_notm}} region that you selected earlier, specify this region. For example, you might want to log in to another {{site.data.keyword.containershort_notm}} region for the following reasons:
    -   You created {{site.data.keyword.Bluemix_notm}} services or private Docker images in one region and want to use them with {{site.data.keyword.containershort_notm}} in another region.
    -   You want to access a cluster in a region that is different from the default {{site.data.keyword.Bluemix_notm}} region you are logged in to.<br>
+
+   **Note**: If you want to create a cluster in US East, you must log in to the US East container region API endpoint using the `bx cs init --host https://us-east.containers.bluemix.net` command.
+
    Choose among the following API endpoints:
         - US-South:
           ```
           bx cs init --host https://us-south.containers.bluemix.net
           ```
           {: pre}
-        
+
         - US-East:
           ```
           bx cs init --host https://us-east.containers.bluemix.net
@@ -225,6 +230,9 @@ Before you can run `kubectl` commands, [install the required CLIs](#cs_cli_insta
           bx cs init --host https://ap-south.containers.bluemix.net
           ```
           {: pre}
+
+
+
 
 4.  List all of the clusters in the account to get the name of the cluster.
 
@@ -345,6 +353,9 @@ To update the CLIs:
         bx login -a api.eu-gb.bluemix.net
         ```
         {: pre}
+        
+
+        
 
         **Note:** If you have a federated ID, use `bx login --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
 
@@ -785,7 +796,7 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
         GET https://us-south.containers.bluemix.net/v1/clusters
         ```
         {: codeblock}
-        
+
     -   US-East
 
         ```
