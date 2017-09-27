@@ -43,13 +43,7 @@ To create a lite cluster:
 
 1.  From the [**catalog** ![External link icon](../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net/catalog/?category=containers), in the **Containers** category, click **Kubernetes cluster**.
 
-2.  Enter the cluster details. The default cluster type is lite, so you have just a few fields to customize. Next time, you can create a standard cluster and define additional customizations, like how many worker nodes are in the cluster.
-    1.  Enter a **Cluster Name**.
-    2.  Select a **Location** in which to deploy your cluster. The locations that are available to you depend on the region that you are logged in to. Select the region that is physically closest to you for best performance.
-
-    Available locations are:
-
-    <ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul><li>US-East<ul><li>wdc06 [Washington DC]</li><li>wdc07 [Washington DC]<p><strong>Note:</strong> US-East is available for use with CLI commands only.</p></li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>fra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul>
+2.  Enter a **Cluster Name**. The default cluster type is lite. Next time, you can create a standard cluster and define additional customizations, like how many worker nodes are in the cluster.
 
 3.  Click **Create Cluster**. The details for the cluster open, but the worker node in the cluster takes a few minutes to provision. You can see the status of the worker node in the **Worker nodes** tab. When the status reaches `Ready`, your worker node is ready to be used.
 
