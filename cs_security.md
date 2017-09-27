@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-09-20"
+lastupdated: "2017-09-26"
 
 ---
 
@@ -101,65 +101,20 @@ Review the built-in worker node security features to protect the worker node env
 ### Opening required ports and IP addresses in your firewall
 {: #opening_ports}
 
-When you set up a firewall for your worker nodes or customize the firewall settings in your Bluemix Infrastructure (SoftLayer) account, you must open certain ports and IP addresses so that the worker node and the Kubernetes master can communicate. To access the load balancer or Ingress controller from outside of the cluster, you must also open ports in your firewall.
+Review these situations in which you might need to open specific ports and IP addresses in your firewalls:
+* To allow communication between the Kubernetes master and the worker nodes when either a firewall is set up for the worker nodes or the firewall settings are customized in your {{site.data.keyword.BluSoftlayer_notm}} account
+* To access the load balancer or Ingress controller from outside of the cluster
+* To run 'kubectl' commands from your local system when corporate network policies prevent access to public internet endpoints via proxies or firewalls
 
+  1.  Note the public IP address for all your worker nodes in the cluster.
 
+      ```
+      bx cs workers <cluster_name_or_id>
+      ```
+      {: pre}
 
-
-1.  Note the public IP address for all your worker nodes in the cluster.
-
-    ```
-    bx cs workers <cluster_name_or_id>
-    ```
-    {: pre}
-
-2.  In your firewall, allow the following connections to and from your worker nodes.
-
-      <ul>
-          <li>For INBOUND connectivity to your worker nodes, allow incoming network traffic from the following source network groups and IP addresses to the destination TCP/UDP port 10250 and `<public_IP_of _each_worker_node>`:</br>
-            <p>
-  <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
-      <thead>
-      <th colspan=2><img src="images/idea.png"/> Inbound IP addresses</th>
-      </thead>
-    <tbody>
-      <tr>
-        <td>ams03</td>
-        <td><code>169.50.144.128/28</code></br><code>169.50.169.104/29</code></br><code>169.50.185.32/27</code></td>
-      </tr>
-      <tr>
-        <td>dal10</td>
-        <td><code>169.46.7.232/29</code></br><code>169.48.138.64/26</code></br><code>169.48.180.128/25</code></td>
-       </tr>
-       <tr>
-        <td>dal12</td>
-        <td><code>169.47.70.8/29</code></br><code>169.47.79.192/26</code></br><code>169.47.126.192/27</code></td>
-       </tr>
-       <tr>
-        <td>fra02</td>
-        <td><code>169.50.48.160/28</code></br><code>169.50.56.168/29</code></br><code>169.50.58.160/27</code></td>
-       </tr>
-      </tbody>
-      <tr>
-       <td>lon02</td>
-       <td><code>159.122.242.78</code></td>
-      </tr>
-      <tr>
-       <td>lon04</td>
-       <td><code>158.175.68.192/26</code></td>
-      </tr>
-      <tr>
-       <td>syd01</td>
-       <td><code>168.1.209.192/26</code></td>
-      </tr>
-      <tr>
-       <td>syd04</td>
-       <td><code>130.198.67.0/26</code></td>
-      </tr>
-    </table>
-</p>
-          </li>
-          <li>For OUTBOUND connectivity from your worker nodes, allow outgoing network traffic from the source worker node to the destination TCP/UDP port range 20000-32767 for `<each_worker_node_publicIP>`, and the following IP addresses and network groups:</br>
+  2.  In your firewall, allow the following connections to and from your worker nodes.
+        - For OUTBOUND connectivity from your worker nodes, allow outgoing network traffic from the source worker node to the destination TCP/UDP port range 20000-32767 for `<each_worker_node_publicIP>`, and the following IP addresses and network groups:
             <p>
   <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
       <thead>
@@ -182,7 +137,6 @@ When you set up a firewall for your worker nodes or customize the firewall setti
         <td>fra02</td>
         <td><code>169.50.56.174</code></td>
        </tr>
-      </tbody>
       <tr>
        <td>lon02</td>
        <td><code>159.122.242.78</code></td>
@@ -199,12 +153,21 @@ When you set up a firewall for your worker nodes or customize the firewall setti
        <td>syd04</td>
        <td><code>130.198.64.19</code></td>
       </tr>
+      <tr>
+       <td>wdc06</td>
+       <td><code>169.60.73.142</code></td>
+      </tr>
+      <tr>
+       <td>wdc07</td>
+       <td><code>169.61.83.62</code></td>
+      </tr>
+      </tbody>
     </table>
 </p>
-          </li>
-          <li>For connectivity to your {{site.data.keyword.registryshort_notm}}, allow outgoing network traffic from the source worker node to each registry region that you want to use:</br>
-          <pre class="codeblock">TCP port 443 FROM &lt;each_worker_node_publicIP&gt; TO &lt;registry_publicIP&gt;, apt.dockerproject.org</pre></br>
-          Replace <em>&lt;registry_publicIP&gt;</em> with all the addresses for the registry regions:</br>
+
+  3. Optional: If you are integrating with other {{site.data.keyword.Bluemix_notm}} services, allow outgoing network traffic from the worker nodes to each service's regions that you want to use: `TCP port 443 FROM <each_worker_node_publicIP> TO <registry_publicIP>, apt.dockerproject.org, <monitoring_publicIP>`.
+
+        - Replace <em>&lt;registry_publicIP&gt;</em> with all the addresses for the {{site.data.keyword.registrylong_notm}} regions to which you want to allow traffic:
             <p>      
 <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
         <thead>
@@ -230,12 +193,35 @@ When you set up a firewall for your worker nodes or customize the firewall setti
         </tbody>
       </table>
 </p>
-          </li>
-      </ul>
 
-3. Optional: To access the load balancer from outside of the VLAN, open the port for incoming network traffic on the specific IP address of that load balancer.
+        - Replace <em>&lt;monitoring_publicIP&gt;</em> with all the addresses for the {{site.data.keyword.monitoringlong_notm}} regions to which you want to allow traffic:
+            <p><table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
+        <thead>
+        <th colspan=2><img src="images/idea.png"/> Monitoring Public IP addresses</th>
+        </thead>
+      <tbody>
+        
+        <tr>
+          <td>metrics.ng.bluemix.net</td>
+          <td><code>169.47.204.128/29</code></td>
+         </tr>
+         <tr>
+          <td>metrics.eu-gb.bluemix.net</td>
+          <td><code>169.50.196.136/29</code></td>
+         </tr>
+         <tr>
+          <td>metrics.eu-de.bluemix.net</td>
+          <td><code>159.122.78.136/29</code></td>
+         </tr>
+        </tbody>
+      </table>
+</p>
 
-4. Optional: To access the Ingress controller from outside of the VLAN, open either port 80 or 443 for incoming network traffic on the specific IP address of that Ingress controller, depending on which port you have configured.
+  
+
+  4. Optional: To access the load balancer from outside of the VLAN, open the port for incoming network traffic on the specific IP address of that load balancer.
+
+  5. Optional: To access the Ingress controller from outside of the VLAN, open either port 80 or 443 for incoming network traffic on the specific IP address of that Ingress controller, depending on which port you have configured.
 
 <br />
 
@@ -250,7 +236,7 @@ You can choose between Calico and native Kubernetes capabilities to create netwo
 
 <ul><li>[Kubernetes network policies ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/services-networking/network-policies/): Some basic options are provided, such as specifying which pods can communicate with each other. Incoming network traffic for pods can be allowed or blocked for a protocol and port based on the labels and Kubernetes namespaces of the pod that is trying to connect to them.</br>These policies can be applied by using `kubectl` commands or the Kubernetes APIs. When these policies are applied, they are converted into Calico network policies and Calico enforces these policies.
 <li>[Calico network policies ![External link icon](../icons/launch-glyph.svg "External link icon")](http://docs.projectcalico.org/v2.0/getting-started/kubernetes/tutorials/advanced-policy): These policies are a superset of the Kubernetes network policies and enhance the native Kubernetes capabilities with the following features.
-<ul><ul><li>Allow or block network traffic on specific network interfaces, not only Kubernetes pod traffic.<li>Allow or block incoming (ingress) and outgoing (egress) network traffic.<li>Allow or block traffic that is based on a source or destination IP address or CIDR.</ul></ul></br>
+<ul><li>Allow or block network traffic on specific network interfaces, not only Kubernetes pod traffic.<li>Allow or block incoming (ingress) and outgoing (egress) network traffic.<li>Allow or block traffic that is based on a source or destination IP address or CIDR.</ul></br>
 These policies are applied by using `calicoctl` commands. Calico enforces these policies, including any Kubernetes network policies that are converted to Calico policies, by setting up Linux iptables rules on the Kubernetes worker nodes. Iptables rules serve as a firewall for the worker node to define the characteristics that the network traffic must meet to be forwarded to the targeted resource.</ul>
 
 
