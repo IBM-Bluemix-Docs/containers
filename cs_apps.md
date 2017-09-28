@@ -319,10 +319,10 @@ To create a load balancer service:
     Endpoints:              172.30.171.87:8080
     Session Affinity:       None
     Events:
-    FirstSeen LastSeen Count From   SubObjectPath Type  Reason   Message
-      --------- -------- ----- ----   ------------- -------- ------   -------
-      10s  10s  1 {service-controller }   Normal  CreatingLoadBalancer Creating load balancer
-      10s  10s  1 {service-controller }   Normal  CreatedLoadBalancer Created load balancer
+    FirstSeen	LastSeen	Count	From			SubObjectPath	Type		Reason			Message
+      ---------	--------	-----	----			-------------	--------	------			-------
+      10s		10s		1	{service-controller }			Normal		CreatingLoadBalancer	Creating load balancer
+      10s		10s		1	{service-controller }			Normal		CreatedLoadBalancer	Created load balancer
     ```
     {: screen}
 
@@ -342,7 +342,7 @@ To create a load balancer service:
 
 Expose multiple apps in your cluster by creating Ingress resources that are managed by the IBM-provided Ingress controller. The Ingress controller is an external HTTP or HTTPS load balancer that uses a secured and unique public entrypoint to route incoming requests to your apps inside or outside your cluster.
 
-**Note:** Ingress is available for standard clusters only and requires at least two worker nodes in the cluster to ensure high availability.
+**Note:** Ingress is available for standard clusters only and requires at least two worker nodes in the cluster to ensure high availability. Setting up Ingress requires an [Administrator access policy](cs_cluster.html#access_ov). Verify your current [access policy](cs_cluster.html#view_access).
 
 When you create a standard cluster, an Ingress controller is automatically created for you and assigned a portable public IP address and a public route. You can configure the Ingress controller and define individual routing rules for every app that you expose to the public. Every app that is exposed via Ingress is assigned a unique path that is appended to the public route, so that you can use a unique URL to access an app publicly in your cluster.
 
@@ -1568,7 +1568,7 @@ spec:
 ##### **Setting the maximum allowed size of the client request body**
 {: #client_max_body_size}
 
-Use this annotation to adjust the size of the body that the client can send as part of a request.
+Adjust the size of the body that the client can send as part of a request.
 {:shortdesc}
 
 <dl>
@@ -2185,7 +2185,7 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
     The **parameters** field provides the IOPS per GB associated with the storage class and the available sizes in gigabytes.
 
     ```
-    Parameters: iopsPerGB=4,sizeRange=20Gi,40Gi,80Gi,100Gi,250Gi,500Gi,1000Gi,2000Gi,4000Gi,8000Gi,12000Gi
+    Parameters:	iopsPerGB=4,sizeRange=20Gi,40Gi,80Gi,100Gi,250Gi,500Gi,1000Gi,2000Gi,4000Gi,8000Gi,12000Gi
     ```
     {: screen}
     
@@ -2199,7 +2199,7 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
     The **parameters** field provides the IOPS associated with the storage class and the available sizes in gigabytes. For example, a 40Gi pvc can select IOPS that is a multiple of 100 that is in the range of 100 - 2000 IOPS.
 
     ```
-    Parameters: Note=IOPS value must be a multiple of 100,reclaimPolicy=Retain,sizeIOPSRange=20Gi:[100-1000],40Gi:[100-2000],80Gi:[100-4000],100Gi:[100-6000],1000Gi[100-6000],2000Gi:[200-6000],4000Gi:[300-6000],8000Gi:[500-6000],12000Gi:[1000-6000]
+    Parameters:	Note=IOPS value must be a multiple of 100,reclaimPolicy=Retain,sizeIOPSRange=20Gi:[100-1000],40Gi:[100-2000],80Gi:[100-4000],100Gi:[100-6000],1000Gi[100-6000],2000Gi:[200-6000],4000Gi:[300-6000],8000Gi:[500-6000],12000Gi:[1000-6000]
     ```
     {: screen}
 
@@ -2291,20 +2291,20 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
     Your output looks similar to the following.
 
     ```
-    Name:  <pvc_name>
-    Namespace: default
-    StorageClass: ""
-    Status:  Bound
-    Volume:  pvc-0d787071-3a67-11e7-aafc-eef80dd2dea2
-    Labels:  <none>
-    Capacity: 20Gi
-    Access Modes: RWX
+    Name:		<pvc_name>
+    Namespace:	default
+    StorageClass:	""
+    Status:		Bound
+    Volume:		pvc-0d787071-3a67-11e7-aafc-eef80dd2dea2
+    Labels:		<none>
+    Capacity:	20Gi
+    Access Modes:	RWX
     Events:
-      FirstSeen LastSeen Count From        SubObjectPath Type  Reason   Message
-      --------- -------- ----- ----        ------------- -------- ------   -------
-      3m  3m  1 {ibm.io/ibmc-file 31898035-3011-11e7-a6a4-7a08779efd33 }   Normal  Provisioning  External provisioner is provisioning volume for claim "default/my-persistent-volume-claim"
-      3m  1m  10 {persistentvolume-controller }       Normal  ExternalProvisioning cannot find provisioner "ibm.io/ibmc-file", expecting that a volume for the claim is provisioned either manually or via external software
-      1m  1m  1 {ibm.io/ibmc-file 31898035-3011-11e7-a6a4-7a08779efd33 }   Normal  ProvisioningSucceeded Successfully provisioned volume pvc-0d787071-3a67-11e7-aafc-eef80dd2dea2
+      FirstSeen	LastSeen	Count	From								SubObjectPath	Type		Reason			Message
+      ---------	--------	-----	----								-------------	--------	------			-------
+      3m		3m		1	{ibm.io/ibmc-file 31898035-3011-11e7-a6a4-7a08779efd33 }			Normal		Provisioning		External provisioner is provisioning volume for claim "default/my-persistent-volume-claim"
+      3m		1m		10	{persistentvolume-controller }							Normal		ExternalProvisioning	cannot find provisioner "ibm.io/ibmc-file", expecting that a volume for the claim is provisioned either manually or via external software
+      1m		1m		1	{ibm.io/ibmc-file 31898035-3011-11e7-a6a4-7a08779efd33 }			Normal		ProvisioningSucceeded	Successfully provisioned volume pvc-0d787071-3a67-11e7-aafc-eef80dd2dea2
 
     ```
     {: screen}
@@ -2380,9 +2380,9 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
     ...
     Volumes:
       myvol:
-        Type: PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
-        ClaimName: mypvc
-        ReadOnly: false
+        Type:	PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+        ClaimName:	mypvc
+        ReadOnly:	false
 
     ```
     {: screen}
@@ -2424,7 +2424,7 @@ For {{site.data.keyword.containershort_notm}}, the default owner of the volume m
     RUN chmod 755 /sbin/entrypoint.sh
 
     EXPOSE 22
-    ENTRYPOINT ["/sbin/entrypoint.s
+    ENTRYPOINT ["/sbin/entrypoint.sh"]
     ```
     {: codeblock}
 
@@ -2558,9 +2558,9 @@ For {{site.data.keyword.containershort_notm}}, the default owner of the volume m
     ...
     Volumes:
       myvol:
-        Type: PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
-        ClaimName: mypvc
-        ReadOnly: false
+        Type:	PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+        ClaimName:	mypvc
+        ReadOnly:	false
 
     ```
     {: screen}
