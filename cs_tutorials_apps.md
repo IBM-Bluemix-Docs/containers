@@ -103,6 +103,9 @@ In this lesson, you deploy a single instance of the Hello World app into a clust
         bx login -a api.eu-gb.bluemix.net
         ```
         {: pre}
+        
+
+        
 
     **Note:** If you have a federated ID, use `bx login --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
 
@@ -967,4 +970,3 @@ bx cs cluster-rm <pr_firm_cluster>
 ## What's next?
 
 Try exploring the container orchestration journeys on [developerWorks ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/code/journey/category/container-orchestration/).
-

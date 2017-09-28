@@ -25,7 +25,7 @@ Design your cluster setup for maximum availability and capacity.
 
 Before you begin, review the options for [highly available cluster configurations](cs_planning.html#cs_planning_cluster_config).
 
-![Stages of high availability for a cluster](images/cs_cluster_ha_roadmap.png)](https://console.bluemix.net/docs/api/content/containers/images/cs_cluster_ha_roadmap.png)
+![Stages of high availability for a cluster](images/cs_cluster_ha_roadmap.png)
 
 <br />
 
@@ -147,6 +147,8 @@ To create a cluster:
     -   You created {{site.data.keyword.Bluemix_notm}} services or private Docker images in one region and want to use them with {{site.data.keyword.containershort_notm}} in another region.
     -   You want to access a cluster in a region that is different from the default {{site.data.keyword.Bluemix_notm}} region you are logged in to.
 
+    **Note**: If you want to create a cluster in US East, you must log in to the US East container region API endpoint using the `bx cs init --host https://us-east.containers.bluemix.net` command.
+
     Choose between the following API endpoints:
 
     -   US-South:
@@ -155,7 +157,7 @@ To create a cluster:
         bx cs init --host https://us-south.containers.bluemix.net
         ```
         {: pre}
-        
+
     -   US-East:
 
         ```
@@ -183,6 +185,10 @@ To create a cluster:
         bx cs init --host https://ap-south.containers.bluemix.net
         ```
         {: pre}
+        
+        
+
+
 
 6.  Create a cluster.
     1.  Review the locations that are available. The locations that are shown depend on the {{site.data.keyword.containershort_notm}} region that you are logged in.
@@ -194,15 +200,15 @@ To create a cluster:
 
         Your CLI output looks similar to the following:
 
-        -   US-South:
+        -   US South:
 
             ```
             dal10
             dal12
             ```
             {: screen}
-            
-        -   US-East:
+
+        -   US East:
 
             ```
             wdc06
@@ -210,7 +216,7 @@ To create a cluster:
             ```
             {: screen}
 
-        -   UK-South:
+        -   UK South:
 
             ```
             lon02
@@ -218,7 +224,7 @@ To create a cluster:
             ```
             {: screen}
 
-        -   EU-Central:
+        -   EU Central:
 
             ```
             ams03
@@ -226,13 +232,15 @@ To create a cluster:
             ```
             {: screen}
 
-        -   AP-South
+        -   AP South
 
             ```
             syd01
             syd02
             ```
             {: screen}
+            
+            
 
     2.  Choose a location and review the machine types available in that location. The machine type specifies the virtual compute resources that are available to each worker node.
 
@@ -245,11 +253,11 @@ To create a cluster:
         Getting machine types list...
         OK
         Machine Types
-        Name         Cores   Memory   Network Speed   OS             Storage   Server Type   
-        u1c.2x4      2       4GB      1000Mbps        UBUNTU_16_64   100GB     virtual   
-        b1c.4x16     4       16GB     1000Mbps        UBUNTU_16_64   100GB     virtual   
-        b1c.16x64    16      64GB     1000Mbps        UBUNTU_16_64   100GB     virtual   
-        b1c.32x128   32      128GB    1000Mbps        UBUNTU_16_64   100GB     virtual   
+        Name         Cores   Memory   Network Speed   OS             Storage   Server Type
+        u1c.2x4      2       4GB      1000Mbps        UBUNTU_16_64   100GB     virtual
+        b1c.4x16     4       16GB     1000Mbps        UBUNTU_16_64   100GB     virtual
+        b1c.16x64    16      64GB     1000Mbps        UBUNTU_16_64   100GB     virtual
+        b1c.32x128   32      128GB    1000Mbps        UBUNTU_16_64   100GB     virtual
         b1c.56x242   56      242GB    1000Mbps        UBUNTU_16_64   100GB     virtual
         ```
         {: screen}
@@ -262,8 +270,8 @@ To create a cluster:
         {: pre}
 
         ```
-        ID        Name                Number   Type      Router  
-        1519999   vlan   1355     private   bcr02a.dal10  
+        ID        Name                Number   Type      Router
+        1519999   vlan   1355     private   bcr02a.dal10
         1519898   vlan   1357     private   bcr02a.dal10
         1518787   vlan   1252     public   fcr02a.dal10
         1518888   vlan   1254     public    fcr02a.dal10
@@ -310,11 +318,11 @@ To create a cluster:
           <li>For lite clusters, you do not have to define a public VLAN. Your lite cluster is automatically connected to a public VLAN that is owned by IBM.</li>
           <li>For a standard cluster, if you already have a public VLAN set up in your {{site.data.keyword.BluSoftlayer_notm}} account for that location, enter the ID of the public VLAN. If you do not have both a public and a private VLAN in your account, do not specify this option. {{site.data.keyword.containershort_notm}} automatically creates a public VLAN for you.<br/><br/>
           <strong>Note</strong>: Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster.</li>
-        </ul></td> 
+        </ul></td>
         </tr>
         <tr>
         <td><code>--private-vlan <em>&lt;private_vlan_id&gt;</em></code></td>
-        <td><ul><li>For lite clusters, you do not have to define a private VLAN. Your lite cluster is automatically connected to a private VLAN that is owned by IBM.</li><li>For a standard cluster, if you already have a private VLAN set up in your {{site.data.keyword.BluSoftlayer_notm}} account for that location, enter the ID of the private VLAN. If you do not have both a public and a private VLAN in your account, do not specify this option. {{site.data.keyword.containershort_notm}} automatically creates a public VLAN for you.<br/><br/><strong>Note</strong>: Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster.</li></ul></td> 
+        <td><ul><li>For lite clusters, you do not have to define a private VLAN. Your lite cluster is automatically connected to a private VLAN that is owned by IBM.</li><li>For a standard cluster, if you already have a private VLAN set up in your {{site.data.keyword.BluSoftlayer_notm}} account for that location, enter the ID of the private VLAN. If you do not have both a public and a private VLAN in your account, do not specify this option. {{site.data.keyword.containershort_notm}} automatically creates a public VLAN for you.<br/><br/><strong>Note</strong>: Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster.</li></ul></td>
         </tr>
         <tr>
         <td><code>--name <em>&lt;name&gt;</em></code></td>
@@ -338,8 +346,8 @@ To create a cluster:
     When the provisioning of your cluster is completed, the status of your cluster changes to **deployed**.
 
     ```
-    Name         ID                                   State      Created          Workers   
-    my_cluster   paf97e8843e29941b49c598f516de72101   deployed   20170201162433   1   
+    Name         ID                                   State      Created          Workers
+    my_cluster   paf97e8843e29941b49c598f516de72101   deployed   20170201162433   1
     ```
     {: screen}
 
@@ -355,7 +363,7 @@ To create a cluster:
     **Note:** Every worker node is assigned a unique worker node ID and domain name that must not be changed manually after the cluster is created. Changing the ID or domain name prevents the Kubernetes master from managing your cluster.
 
     ```
-    ID                                                  Public IP        Private IP     Machine Type   State      Status  
+    ID                                                  Public IP        Private IP     Machine Type   State      Status
     prod-dal10-pa8dfcc5223804439c87489886dbbc9c07-w1   169.47.223.113   10.171.42.93   free           normal    Ready
     ```
     {: screen}
@@ -484,8 +492,8 @@ To create a cluster:
     When the provisioning of your cluster is completed, the state of your cluster changes to **deployed**.
 
     ```
-    Name         ID                                   State      Created          Workers   
-    my_cluster   paf97e8843e29941b49c598f516de72101   deployed   20170201162433   1   
+    Name         ID                                   State      Created          Workers
+    my_cluster   paf97e8843e29941b49c598f516de72101   deployed   20170201162433   1
     ```
     {: screen}
 
@@ -499,7 +507,7 @@ To create a cluster:
     When the worker nodes are ready, the state changes to **normal** and the status is **Ready**. When the node status is **Ready**, you can then access the cluster.
 
     ```
-    ID                                                  Public IP        Private IP     Machine Type   State      Status  
+    ID                                                  Public IP        Private IP     Machine Type   State      Status
     prod-dal10-pa8dfcc5223804439c87489886dbbc9c07-w1   169.47.223.113   10.171.42.93   free           normal    Ready
     ```
     {: screen}
@@ -729,7 +737,7 @@ To create your own imagePullSecret:
         spec:
           containers:
             - name: <container_name>
-              image: registry.<region>.bluemix.net/<my_namespace>/<my_image>:<tag>  
+              image: registry.<region>.bluemix.net/<my_namespace>/<my_image>:<tag>
           imagePullSecrets:
             - name: <secret_name>
         ```
@@ -896,7 +904,7 @@ To create an imagePullSecret:
         spec:
           containers:
             - name: <container_name>
-              image: <my_image>:<tag>  
+              image: <my_image>:<tag>
           imagePullSecrets:
             - name: <secret_name>
         ```
@@ -972,7 +980,7 @@ To add a service:
     Example CLI output:
 
     ```
-    name                      service           plan    bound apps   last operation   
+    name                      service           plan    bound apps   last operation
     <service_instance_name>   <service_name>    spark                create succeeded
     ```
     {: screen}
@@ -1024,20 +1032,44 @@ To use the service in a pod that is deployed in the cluster, cluster users can a
 ### Adding {{site.data.keyword.Bluemix_notm}} services to clusters in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)
 {: #binding_dedicated}
 
-Before you begin, [request an instance of the {{site.data.keyword.Bluemix_notm}} service](/docs/services/reqnsi.html#req_instance) in your space to add to your cluster. 
+**Note**: The cluster and the worker nodes must be deployed fully before you can add a service.
 
-**Note**:
-- To create an instance of a service in the Washington DC location, you must use the CLI.
-- The cluster and the worker nodes must be deployed fully before you can add a service.
-
-1.  Log in to the {{site.data.keyword.Bluemix_notm}} Dedicated environment where the service instance was created.
+1.  Set the path to your local Bluemix Dedicated configuration file as the `DEDICATED_BLUEMIX_CONFIG` environment variable.
 
     ```
-    bx login -a api.<dedicated_domain>
+    export DEDICATED_BLUEMIX_CONFIG=<path_to_config_directory>
     ```
     {: pre}
 
-2.  List all existing services in your {{site.data.keyword.Bluemix_notm}} space.
+2.  Set the same path defined above as the `BLUEMIX_HOME` environment variable.
+
+    ```
+    export BLUEMIX_HOME=$DEDICATED_BLUEMIX_CONFIG
+    ```
+    {: pre}
+
+3.  Log in to the Bluemix Dedicated environment where you want to create the service instance.
+
+    ```
+    bx login -a api.<dedicated_domain> -u <user> -p <password> -o <org> -s <space>
+    ```
+    {: pre}
+
+4.  List the available services in the {{site.data.keyword.Bluemix_notm}} catalog.
+
+    ```
+    bx service offerings
+    ```
+    {: pre}
+
+5.  Create an instance of the service you want to bind to the cluster.
+
+    ```
+    bx service create <service_name> <service_plan> <service_instance_name>
+    ```
+    {: pre}
+
+6.  Verify that you created your service instance by listing all existing services in your {{site.data.keyword.Bluemix_notm}} space.
 
     ```
     bx service list
@@ -1047,26 +1079,19 @@ Before you begin, [request an instance of the {{site.data.keyword.Bluemix_notm}}
     Example CLI output:
 
     ```
-    name                      service           plan    bound apps   last operation   
+    name                      service           plan    bound apps   last operation
     <service_instance_name>   <service_name>    spark                create succeeded
     ```
     {: screen}
 
-3.  Create a service credentials key that contains the confidential information about the service, such as the user name, password, and URL.
+7.  Unset the `BLUEMIX_HOME` environment variable to return to using {{site.data.keyword.Bluemix_notm}} Public.
 
     ```
-    bx service key-create <service_name> <service_key_name>
-    ```
-    {: pre}
-
-4.  Use the service credentials key to create a JSON file on your computer that includes the confidential information about the service.
-
-    ```
-    bx service key-show <service_name> <service_key_name>| sed -n '/{/,/}/'p >> /filepath/<dedicated-service-key>.json
+    unset $BLUEMIX_HOME
     ```
     {: pre}
 
-5.  Log in to the public endpoint for {{site.data.keyword.containershort_notm}} and target your CLI to the cluster in your {{site.data.keyword.Bluemix_notm}} Dedicated environment.
+8.  Log in to the public endpoint for {{site.data.keyword.containershort_notm}} and target your CLI to the cluster in your {{site.data.keyword.Bluemix_notm}} Dedicated environment.
     1.  Log in to the account by using the public endpoint for {{site.data.keyword.containershort_notm}}. Enter your {{site.data.keyword.Bluemix_notm}} credentials and select the {{site.data.keyword.Bluemix_notm}} Dedicated account when prompted.
 
         ```
@@ -1100,17 +1125,26 @@ Before you begin, [request an instance of the {{site.data.keyword.Bluemix_notm}}
         {: screen}
 
     4.  Copy and paste the command that is displayed in your terminal to set the `KUBECONFIG` environment variable.
-6.  Create a Kubernetes secret from the service credentials JSON file.
 
-    ```
-    kubectl create secret generic <secret_name> --from-file=/filepath/<dedicated-service-key>.json
-    ```
-    {: pre}
+9.  Identify the cluster namespace that you want to use to add your service. Choose between the following options.
+    * List existing namespaces and choose a namespace that you want to use.
+        ```
+        kubectl get namespaces
+        ```
+        {: pre}
 
-7.  Repeat these steps for each {{site.data.keyword.Bluemix_notm}} service you want to use.
-To use the service in a pod deployed in the cluster, cluster users can access the service credentials of the {{site.data.keyword.Bluemix_notm}} service by [mounting the Kubernetes secret as a secret volume to a pod](cs_apps.html#cs_apps_service).
+    * Create a new namespace in your cluster.
+        ```
+        kubectl create namespace <namespace_name>
+        ```
+        {: pre}
 
+10.  Bind the service instance to your cluster.
 
+      ```
+      bx cs cluster-service-bind <cluster_name_or_id> <namespace> <service_instance_name>
+      ```
+      {: pre}
 
 <br />
 
@@ -1238,6 +1272,8 @@ To test the version, use a test cluster or create a cluster that is not running 
 
 When the cluster update is complete, you can update your worker nodes to the latest version.
 
+
+
 <br />
 
 
@@ -1248,62 +1284,31 @@ Worker nodes can be updated to the Kubernetes version of the Kubernetes master. 
 
 **Attention**: Updating the worker node version can cause downtime for your apps and services. Data is deleted if not stored outside the pod. Use [replicas ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#replicas) in your deployments to allow pods to reschedule to available nodes.
 
-1. Review the [Kubernetes changes](cs_versions.html) and make any required changes marked _Update after master_ to your deployment scripts.
-2. View resource usage of the worker nodes. During an update, worker nodes are removed sequentially, and pods might be rescheduled. If you need more space for your apps, add worker nodes to your cluster.
+Some considerations for updating production-level clusters:
+- Use a test cluster to validate that your workloads and the delivery process are not impacted by the update. You cannot roll back worker nodes to a previous version.
+- Production-level clusters should have capacity to survive a worker node failure. If your cluster does not, add a worker node before updating the cluster.
+- Test the update on one node before updating all nodes in a cluster.
+- The update process does not drain nodes prior to the update. Consider using [`drain` ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes-v1-4.github.io/docs/user-guide/kubectl/kubectl_drain/) and [`uncordon` ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes-v1-4.github.io/docs/user-guide/kubectl/kubectl_uncordon/) to help avoid downtime for your apps.
+
+Before you begin, install the version of the [`kubectl cli` ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/tools/install-kubectl/) that matches the Kubernetes version of the Kubernetes master.
+
+1. Review the [Kubernetes changes](cs_versions.html) and make any changes marked _Update after master_ to your deployment scripts, if needed.
+
+2. Update your worker nodes. To update from the {{site.data.keyword.Bluemix_notm}} Dashboard, navigate to the `Worker Nodes` section of your cluster, and click `Update Worker`. To get worker node IDs, run `bx cs workers <cluster_name_or_id>`. If you select multiple worker nodes, the worker nodes are updated one at a time.
 
     ```
-    kubectl top nodes
+    bx cs worker-update <cluster_name_or_id> <worker_node_id1> <worker_node_id2>
     ```
     {: pre}
 
-3. Install the version of the [`kubectl cli` ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/tools/install-kubectl/) that matches the Kubernetes version of the Kubernetes master.
-4. Before you update all worker nodes, identify a worker node to test the update on. Note the `NAME` of the node.
+3. Verify that your worker nodes updated. Review the Kubernetes version on the {{site.data.keyword.Bluemix_notm}} Dashboard or run `bx cs workers <cluster_name_or_id>`. In addition, confirm that the Kubernetes version listed by `kubectl` updated. In some cases, older clusters might list duplicate worker nodes with a **NotReady** status after an update. To remove duplicates, see [troubleshooting](cs_troubleshoot.html#cs_duplicate_nodes).
 
     ```
     kubectl get nodes
     ```
     {: pre}
 
-5. **Optional**: Drain the worker node to remove any pods that are running and prevent other pods from deploying to the worker node. `DaemonSets` are ignored.
-
-    ```
-    kubectl drain <node_name> --force --timeout 60s --ignore-daemonsets --delete-local-data
-    ```
-    {: pre}
-
-6. Update your worker node. To update from the {{site.data.keyword.Bluemix_notm}} Dashboard, navigate to the `Worker Nodes` section of your cluster, select the worker node that you drained, and click `Update Worker`. To get your worker node id, run `bx cs workers <cluster_name_or_id>`.
-
-    ```
-    bx cs worker-update <cluster_name_or_id> <worker_node_id>
-    ```
-    {: pre}
-
-7. **Optional**: If you drained your worker node, run uncordon to allow pods to be deployed on the worker node.
-
-    ```
-    kubectl uncordon <node_name>
-    ```
-    {: pre}
-
-8. To target your deployment to the node that you updated, add this text to your deployment script's _PodSpec_. Replace <em>&lt;node_name&gt;</em> with the node's `NAME`.  
-
-    ```
-    nodeSelector:
-      kubernetes.io/hostname: <node_name>
-    ```
-    {: codeblock}
-
-9. When the worker node has updated and is in the `normal` state, deploy your updated app to the updated worker node.
-10. Monitor your app to confirm that it is working on the updated worker node.
-11. If the app does not work, delete the app and adjust your deployment script before you try again.
-12. When the deployment works as expected, update your remaining worker nodes.
-13. Run `kubectl get nodes` to verify the version of the worker nodes. In some cases, older clusters might list duplicate worker nodes with a **NotReady** status after an update. To remove duplicates, see [troubleshooting](cs_troubleshoot.html#cs_duplicate_nodes).
-14. After the update, if utilization graphs are not displaying in the Kubernetes dashboard, delete the `kube-dashboard` pod to force a restart. The pod will be re-created with RBAC policies to access heapster for utilization information.
-
-    ```
-    kubectl delete pod $(kubectl get pod -n kube-system -l k8s-app=kubernetes-dashboard -o jsonpath='{.items..metadata.name}') -n kube-system
-    ```
-    {: pre}
+5. If utilization graphs are not displaying in the Kubernetes dashboard, delete the `kube-dashboard` pod to force a restart. The pod will be re-created with RBAC policies to access heapster for utilization information.
 
 When you complete the update, repeat the update process with other clusters. In addition, inform developers who work in the cluster to update their `kubectl` CLI to the version of the Kubernetes master.
 
@@ -1387,6 +1392,9 @@ Before you begin, make sure that you can access the {{site.data.keyword.BluSoftl
            bx login -a api.eu-gb.bluemix.net
            ```
            {: pre}
+           
+
+           
 
     3.  List all clusters in your account and note the ID of the cluster where you want to make your subnet available.
 
@@ -1402,7 +1410,7 @@ Before you begin, make sure that you can access the {{site.data.keyword.BluSoftl
         ```
         {: pre}
 
-8.  Verify that the subnet was successfully added to your cluster. The cluster id is listed in the **Bound Cluster** column.
+8.  Verify that the subnet was successfully added to your cluster. The cluster ID is listed in the **Bound Cluster** column.
 
     ```
     bx cs subnets
@@ -1428,9 +1436,9 @@ If you have an existing subnet in your {{site.data.keyword.BluSoftlayer_notm}} p
     ```
     Getting subnet list...
     OK
-    ID        Network                                      Gateway                                   VLAN ID   Type      Bound Cluster   
-    553242    203.0.113.0/24                               10.87.15.00                               1565280   private      
-    807861    192.0.2.0/24                                 10.121.167.180                            1901230   public      
+    ID        Network                                      Gateway                                   VLAN ID   Type      Bound Cluster
+    553242    203.0.113.0/24                               10.87.15.00                               1565280   private
+    807861    192.0.2.0/24                                 10.121.167.180                            1901230   public
 
     ```
     {: screen}
@@ -1445,8 +1453,8 @@ If you have an existing subnet in your {{site.data.keyword.BluSoftlayer_notm}} p
     ```
     Getting VLAN list...
     OK
-    ID        Name                  Number   Type      Router   
-    1900403   vlan                    1391     private   bcr01a.dal10   
+    ID        Name                  Number   Type      Router
+    1900403   vlan                    1391     private   bcr01a.dal10
     1901230   vlan                    1180     public   fcr02a.dal10
     ```
     {: screen}
@@ -1470,8 +1478,8 @@ If you have an existing subnet in your {{site.data.keyword.BluSoftlayer_notm}} p
     When the provisioning of your cluster is completed, the status of your cluster changes to **deployed**.
 
     ```
-    Name         ID                                   State      Created          Workers   
-    my_cluster   paf97e8843e29941b49c598f516de72101   deployed   20170201162433   3   
+    Name         ID                                   State      Created          Workers
+    my_cluster   paf97e8843e29941b49c598f516de72101   deployed   20170201162433   3
     ```
     {: screen}
 
@@ -1485,7 +1493,7 @@ If you have an existing subnet in your {{site.data.keyword.BluSoftlayer_notm}} p
     When the worker nodes are ready, the state changes to **normal** and the status is **Ready**. When the node status is **Ready**, you can then access the cluster.
 
     ```
-    ID                                                  Public IP        Private IP     Machine Type   State      Status  
+    ID                                                  Public IP        Private IP     Machine Type   State      Status
     prod-dal10-pa8dfcc5223804439c87489886dbbc9c07-w1   169.47.223.113   10.171.42.93   free           normal    Ready
     ```
     {: screen}
