@@ -102,10 +102,13 @@ To install the CLIs:
            bx login -a api.eu-gb.bluemix.net
            ```
            {: pre}
+           
 
     **Note:** If you have a federated ID, use `bx login --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
 
 7.  If you want to create a Kubernetes cluster in a region other than the {{site.data.keyword.Bluemix_notm}} region that you selected earlier, specify this region. For example, you created {{site.data.keyword.Bluemix_notm}} services or private Docker images in one region and want to use them with {{site.data.keyword.containershort_notm}} in another region.
+
+**Note**: If you want to create a cluster in US East, you must log in to the US East container region API endpoint using the `bx cs init --host https://us-east.containers.bluemix.net` command.
 
     Choose between the following API endpoints:
 
@@ -115,7 +118,7 @@ To install the CLIs:
         bx cs init --host https://us-south.containers.bluemix.net
         ```
         {: pre}
-        
+
     * US-East:
 
         ```
@@ -143,6 +146,7 @@ To install the CLIs:
         bx cs init --host https://ap-south.containers.bluemix.net
         ```
         {: pre}
+        
 
 8.  To view a local version of the Kubernetes dashboard and to deploy apps into your clusters, [install the Kubernetes CLI ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/tools/install-kubectl/). The prefix for running commands by using the Kubernetes CLI is `kubectl`.
     1.  Download the Kubernetes CLI.
@@ -346,4 +350,3 @@ Great work! The cluster is created, configured, and your local environment is re
 * [Test your knowledge and take a quiz! ![External link icon](../icons/launch-glyph.svg "External link icon")](https://bluemix-quizzes.mybluemix.net/containers/cluster_tutorial/quiz.php)
 
 * Try the [Tutorial: Deploying apps into Kubernetes clusters in {{site.data.keyword.containershort_notm}}](cs_tutorials_apps.html#cs_apps_tutorial) to deploy the PR firm's app into the cluster that you created.
-

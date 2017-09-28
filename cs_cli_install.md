@@ -150,6 +150,7 @@ You can use the commands that are provided with the Kubernetes CLI to manage clu
 
 Before you can run `kubectl` commands, [install the required CLIs](#cs_cli_install) and [create a cluster](cs_cluster.html#cs_cluster_cli).
 
+
 1.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your {{site.data.keyword.Bluemix_notm}} credentials when prompted.
 
     ```
@@ -157,36 +158,38 @@ Before you can run `kubectl` commands, [install the required CLIs](#cs_cli_insta
     ```
     {: pre}
 
-    To specify a specific {{site.data.keyword.Bluemix_notm}} region, include the API endpoint. If you have private Docker images that are stored in the container registry of a specific {{site.data.keyword.Bluemix_notm}} region, or {{site.data.keyword.Bluemix_notm}} services instances that you already created, log in to this region to access your images and {{site.data.keyword.Bluemix_notm}} services.
+      To specify a specific {{site.data.keyword.Bluemix_notm}} region, include the API endpoint. If you have private Docker images that are stored in the container registry of a specific {{site.data.keyword.Bluemix_notm}} region, or {{site.data.keyword.Bluemix_notm}} services instances that you already created, log in to this region to access your images and {{site.data.keyword.Bluemix_notm}} services.
 
-    The {{site.data.keyword.Bluemix_notm}} region that you log in to also determines the region where you can create your Kubernetes clusters, including the available datacenters. If you do not specify a region, you are automatically logged in to the region that is closest to you.
-      -   US South and US East
+      The {{site.data.keyword.Bluemix_notm}} region that you log in to also determines the region where you can create your Kubernetes clusters, including the available datacenters. If you do not specify a region, you are automatically logged in to the region that is closest to you.
+        -   US South and US East
 
-          ```
-          bx login -a api.ng.bluemix.net
-          ```
-          {: pre}
-      
-      -   Sydney
+            ```
+            bx login -a api.ng.bluemix.net
+            ```
+            {: pre}
 
-          ```
-          bx login -a api.au-syd.bluemix.net
-          ```
-          {: pre}
+        -   Sydney
 
-      -   Germany
+            ```
+            bx login -a api.au-syd.bluemix.net
+            ```
+            {: pre}
 
-          ```
-          bx login -a api.eu-de.bluemix.net
-          ```
-          {: pre}
+        -   Germany
 
-      -   United Kingdom
+            ```
+            bx login -a api.eu-de.bluemix.net
+            ```
+            {: pre}
 
-          ```
-          bx login -a api.eu-gb.bluemix.net
-          ```
-          {: pre}
+        -   United Kingdom
+
+            ```
+            bx login -a api.eu-gb.bluemix.net
+            ```
+            {: pre}
+
+
 
     **Note:** If you have a federated ID, use `bx login --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
 
@@ -195,13 +198,16 @@ Before you can run `kubectl` commands, [install the required CLIs](#cs_cli_insta
 3.  If you want to create or access Kubernetes clusters in a region other than the {{site.data.keyword.Bluemix_notm}} region that you selected earlier, specify this region. For example, you might want to log in to another {{site.data.keyword.containershort_notm}} region for the following reasons:
    -   You created {{site.data.keyword.Bluemix_notm}} services or private Docker images in one region and want to use them with {{site.data.keyword.containershort_notm}} in another region.
    -   You want to access a cluster in a region that is different from the default {{site.data.keyword.Bluemix_notm}} region you are logged in to.<br>
+
+   **Note**: If you want to create a cluster in US East, you must log in to the US East container region API endpoint using the `bx cs init --host https://us-east.containers.bluemix.net` command.
+
    Choose among the following API endpoints:
         - US-South:
           ```
           bx cs init --host https://us-south.containers.bluemix.net
           ```
           {: pre}
-        
+
         - US-East:
           ```
           bx cs init --host https://us-east.containers.bluemix.net
@@ -282,9 +288,12 @@ Before you can run `kubectl` commands, [install the required CLIs](#cs_cli_insta
     {: screen}
 
 
+
+
 Now, you can run `kubectl` commands to manage your clusters in {{site.data.keyword.Bluemix_notm}}. For a full list of commands, see the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/user-guide/kubectl/v1.7/).
 
 **Tip:** If you are using Windows and the Kubernetes CLI is not installed in the same directory as the {{site.data.keyword.Bluemix_notm}} CLI, you must change directories to the path where the Kubernetes CLI is installed to run `kubectl` commands successfully.
+
 
 <br />
 
@@ -314,9 +323,9 @@ To update the CLIs:
     ```
      {: pre}
 
-    To specify a specific {{site.data.keyword.Bluemix_notm}} region, include the API endpoint. If you have private Docker images that are stored in the container registry of a specific {{site.data.keyword.Bluemix_notm}} region, or {{site.data.keyword.Bluemix_notm}} services instances that you already created, log in to this region to access your images and {{site.data.keyword.Bluemix_notm}} services.
+     To specify a specific {{site.data.keyword.Bluemix_notm}} region, include the API endpoint. If you have private Docker images that are stored in the container registry of a specific {{site.data.keyword.Bluemix_notm}} region, or {{site.data.keyword.Bluemix_notm}} services instances that you already created, log in to this region to access your images and {{site.data.keyword.Bluemix_notm}} services.
 
-    The {{site.data.keyword.Bluemix_notm}} region that you log in to also determines the region where you can create your Kubernetes clusters, including the available datacenters. If you do not specify a region, you are automatically logged in to the region that is closest to you.
+     The {{site.data.keyword.Bluemix_notm}} region that you log in to also determines the region where you can create your Kubernetes clusters, including the available datacenters. If you do not specify a region, you are automatically logged in to the region that is closest to you.
 
     -   US South and US East
 
@@ -347,6 +356,8 @@ To update the CLIs:
         {: pre}
 
         **Note:** If you have a federated ID, use `bx login --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
+
+
 
 3.  Update the {{site.data.keyword.containershort_notm}} plug-in.
     1.  Install the update from the {{site.data.keyword.Bluemix_notm}} plug-in repository.
@@ -482,9 +493,9 @@ To uninstall the CLIs:
 
 6.  Uninstall Docker. Instructions to uninstall Docker vary based on the operating system that you use.
 
-- [OSX ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.docker.com/docker-for-mac/#uninstall-or-reset)
-- [Linux ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#uninstall-docker-ce)
-- [Windows ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.docker.com/toolbox/toolbox_install_mac/#how-to-uninstall-toolbox)
+    - [OSX ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.docker.com/docker-for-mac/#uninstall-or-reset)
+    - [Linux ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#uninstall-docker-ce)
+    - [Windows ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.docker.com/toolbox/toolbox_install_mac/#how-to-uninstall-toolbox)
 
 <br />
 
@@ -785,7 +796,7 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
         GET https://us-south.containers.bluemix.net/v1/clusters
         ```
         {: codeblock}
-        
+
     -   US-East
 
         ```
