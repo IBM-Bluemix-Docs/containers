@@ -65,45 +65,12 @@ In this lesson, you deploy a single instance of the Hello World app into a clust
 <a href="https://console.bluemix.net/docs/api/content/containers/images/cs_app_tutorial_components1.png">![Deployment setup](images/cs_app_tutorial_components1.png)</a>
 
 
-1.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your {{site.data.keyword.Bluemix_notm}} credentials when prompted.
+1.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your {{site.data.keyword.Bluemix_notm}} credentials when prompted. To specify a {{site.data.keyword.Bluemix_notm}} region, [include the API endpoint](cs_regions.html#bluemix_regions).
 
     ```
     bx login
     ```
     {: pre}
-
-    To specify a specific {{site.data.keyword.Bluemix_notm}} region, include the API endpoint. If you have private Docker images that are stored in the container registry of a specific {{site.data.keyword.Bluemix_notm}} region, or {{site.data.keyword.Bluemix_notm}} services instances that you already created, log in to this region to access your images and {{site.data.keyword.Bluemix_notm}} services.
-
-    The {{site.data.keyword.Bluemix_notm}} region that you log in to also determines the region where you can create your Kubernetes clusters, including the available datacenters. If you do not specify a region, you are automatically logged in to the region that is closest to you.
-
-    -  US South and US East
-
-        ```
-        bx login -a api.ng.bluemix.net
-        ```
-        {: pre}
-
-    -  Sydney
-
-        ```
-        bx login -a api.au-syd.bluemix.net
-        ```
-        {: pre}
-
-    -  Germany
-
-        ```
-        bx login -a api.eu-de.bluemix.net
-        ```
-        {: pre}
-
-    -  United Kingdom
-
-        ```
-        bx login -a api.eu-gb.bluemix.net
-        ```
-        {: pre}
-        
 
     **Note:** If you have a federated ID, use `bx login --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
 

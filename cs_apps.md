@@ -342,7 +342,7 @@ To create a load balancer service:
 
 Expose multiple apps in your cluster by creating Ingress resources that are managed by the IBM-provided Ingress controller. The Ingress controller is an external HTTP or HTTPS load balancer that uses a secured and unique public entrypoint to route incoming requests to your apps inside or outside your cluster.
 
-**Note:** Ingress is available for standard clusters only and requires at least two worker nodes in the cluster to ensure high availability.
+**Note:** Ingress is available for standard clusters only and requires at least two worker nodes in the cluster to ensure high availability. Setting up Ingress requires an [Administrator access policy](cs_cluster.html#access_ov). Verify your current [access policy](cs_cluster.html#view_access).
 
 When you create a standard cluster, an Ingress controller is automatically created for you and assigned a portable public IP address and a public route. You can configure the Ingress controller and define individual routing rules for every app that you expose to the public. Every app that is exposed via Ingress is assigned a unique path that is appended to the public route, so that you can use a unique URL to access an app publicly in your cluster.
 
