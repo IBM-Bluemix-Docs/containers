@@ -241,11 +241,11 @@ spec:
                 ]
                }
              }
-    spec:
-      containers:
-      - name: wasliberty
-        image: registry.&lt;region&gt;.bluemix.net/ibmliberty
-        ports:
+      spec:
+        containers:
+        - name: wasliberty
+          image: registry.&lt;region&gt;.bluemix.net/ibmliberty
+          ports:
           - containerPort: 9080</code></pre>
 
 </dd>
