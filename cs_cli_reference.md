@@ -591,32 +591,32 @@ Initialize the {{site.data.keyword.containershort_notm}} plug-in or specify the 
    <dd>The {{site.data.keyword.containershort_notm}} API endpoint that you want to use.  This value is optional. Examples:
 
     <ul>
-    <li>US-South:
+    <li>US South:
 
     <pre class="codeblock">
     <code>bx cs init --host https://us-south.containers.bluemix.net</code>
     </pre></li>
-    
-    <li>US-East:
+
+    <li>US East:
 
     <pre class="codeblock">
     <code>bx cs init --host https://us-east.containers.bluemix.net</code>
     </pre>
     <p><strong>Note</strong>: US-East is available for use with CLI commands only.</p></li>
 
-    <li>UK-South:
+    <li>UK South:
 
     <pre class="codeblock">
     <code>bx cs init --host https://uk-south.containers.bluemix.net</code>
     </pre></li>
 
-    <li>EU-Central:
+    <li>EU Central:
 
     <pre class="codeblock">
     <code>bx cs init --host https://eu-central.containers.bluemix.net</code>
     </pre></li>
 
-    <li>AP-South:
+    <li>AP South:
 
     <pre class="codeblock">
     <code>bx cs init --host https://ap-south.containers.bluemix.net</code>
