@@ -150,145 +150,75 @@ You can use the commands that are provided with the Kubernetes CLI to manage clu
 
 Before you can run `kubectl` commands, [install the required CLIs](#cs_cli_install) and [create a cluster](cs_cluster.html#cs_cluster_cli).
 
+1.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your {{site.data.keyword.Bluemix_notm}} credentials when prompted. To specify a {{site.data.keyword.Bluemix_notm}} region, [include the API endpoint](cs_regions.html#bluemix_regions).
 
-1.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your {{site.data.keyword.Bluemix_notm}} credentials when prompted.
+      ```
+      bx login
+      ```
+      {: pre}
 
-    ```
-    bx login
-    ```
-    {: pre}
+      **Note:** If you have a federated ID, use `bx login --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
 
-      To specify a specific {{site.data.keyword.Bluemix_notm}} region, include the API endpoint. If you have private Docker images that are stored in the container registry of a specific {{site.data.keyword.Bluemix_notm}} region, or {{site.data.keyword.Bluemix_notm}} services instances that you already created, log in to this region to access your images and {{site.data.keyword.Bluemix_notm}} services.
+  2.  Select a {{site.data.keyword.Bluemix_notm}} account. If you are assigned to multiple {{site.data.keyword.Bluemix_notm}} organizations, select the organization where the cluster was created. Clusters are specific to an organization, but are independent from a {{site.data.keyword.Bluemix_notm}} space. Therefore, you are not required to select a space.
 
-      The {{site.data.keyword.Bluemix_notm}} region that you log in to also determines the region where you can create your Kubernetes clusters, including the available datacenters. If you do not specify a region, you are automatically logged in to the region that is closest to you.
-        -   US South and US East
+  3.  If you want to create or access Kubernetes clusters in a region other than the {{site.data.keyword.Bluemix_notm}} region that you selected earlier, [specify the {{site.data.keyword.containershort_notm}} region API endpoint](cs_regions.html#container_login_endpoints).
 
-            ```
-            bx login -a api.ng.bluemix.net
-            ```
-            {: pre}
+      **Note**: If you want to create a cluster in US East, you must specify the US East container region API endpoint using the `bx cs init --host https://us-east.containers.bluemix.net` command.
 
-        -   Sydney
+  4.  List all of the clusters in the account to get the name of the cluster.
 
-            ```
-            bx login -a api.au-syd.bluemix.net
-            ```
-            {: pre}
+      ```
+      bx cs clusters
+      ```
+      {: pre}
 
-        -   Germany
+  5.  Set the cluster you created as the context for this session. Complete these configuration steps every time that you work with your cluster.
+      1.  Get the command to set the environment variable and download the Kubernetes configuration files.
 
-            ```
-            bx login -a api.eu-de.bluemix.net
-            ```
-            {: pre}
-
-        -   United Kingdom
-
-            ```
-            bx login -a api.eu-gb.bluemix.net
-            ```
-            {: pre}
-
-
-
-    **Note:** If you have a federated ID, use `bx login --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
-
-2.  Select a {{site.data.keyword.Bluemix_notm}} account. If you are assigned to multiple {{site.data.keyword.Bluemix_notm}} organizations, select the organization where the cluster was created. Clusters are specific to an organization, but are independent from a {{site.data.keyword.Bluemix_notm}} space. Therefore, you are not required to select a space.
-
-3.  If you want to create or access Kubernetes clusters in a region other than the {{site.data.keyword.Bluemix_notm}} region that you selected earlier, specify this region. For example, you might want to log in to another {{site.data.keyword.containershort_notm}} region for the following reasons:
-   -   You created {{site.data.keyword.Bluemix_notm}} services or private Docker images in one region and want to use them with {{site.data.keyword.containershort_notm}} in another region.
-   -   You want to access a cluster in a region that is different from the default {{site.data.keyword.Bluemix_notm}} region you are logged in to.<br>
-
-   **Note**: If you want to create a cluster in US East, you must log in to the US East container region API endpoint using the `bx cs init --host https://us-east.containers.bluemix.net` command.
-
-   Choose among the following API endpoints:
-        - US-South:
           ```
-          bx cs init --host https://us-south.containers.bluemix.net
+          bx cs cluster-config <cluster_name_or_id>
           ```
           {: pre}
 
-        - US-East:
-          ```
-          bx cs init --host https://us-east.containers.bluemix.net
-          ```
-          {: pre}
+          After downloading the configuration files, a command is displayed that you can use to set the path to the local Kubernetes configuration file as an environment variable.
 
-        - UK-South:
-          ```
-          bx cs init --host https://uk-south.containers.bluemix.net
-          ```
-          {: pre}
+          Example:
 
-        - EU-Central:
           ```
-          bx cs init --host https://eu-central.containers.bluemix.net
+          export KUBECONFIG=/Users/<user_name>/.bluemix/plugins/container-service/clusters/<cluster_name>/kube-config-prod-dal10-<cluster_name>.yml
           ```
-          {: pre}
+          {: screen}
 
-        - AP-South:
+      2.  Copy and paste the command that is displayed in your terminal to set the `KUBECONFIG` environment variable.
+      3.  Verify that the `KUBECONFIG` environment variable is set properly.
+
+          Example:
+
           ```
-          bx cs init --host https://ap-south.containers.bluemix.net
+          echo $KUBECONFIG
           ```
           {: pre}
 
-4.  List all of the clusters in the account to get the name of the cluster.
+          Output:
+          ```
+          /Users/<user_name>/.bluemix/plugins/container-service/clusters/<cluster_name>/kube-config-prod-dal10-<cluster_name>.yml
+          ```
+          {: screen}
 
-    ```
-    bx cs clusters
-    ```
-    {: pre}
+  6.  Verify that the `kubectl` commands run properly with your cluster by checking the Kubernetes CLI server version.
 
-5.  Set the cluster you created as the context for this session. Complete these configuration steps every time that you work with your cluster.
-    1.  Get the command to set the environment variable and download the Kubernetes configuration files.
+      ```
+      kubectl version  --short
+      ```
+      {: pre}
 
-        ```
-        bx cs cluster-config <cluster_name_or_id>
-        ```
-        {: pre}
+      Example output:
 
-        After downloading the configuration files, a command is displayed that you can use to set the path to the local Kubernetes configuration file as an environment variable.
-
-        Example:
-
-        ```
-        export KUBECONFIG=/Users/<user_name>/.bluemix/plugins/container-service/clusters/<cluster_name>/kube-config-prod-dal10-<cluster_name>.yml
-        ```
-        {: screen}
-
-    2.  Copy and paste the command that is displayed in your terminal to set the `KUBECONFIG` environment variable.
-    3.  Verify that the `KUBECONFIG` environment variable is set properly.
-
-        Example:
-
-        ```
-        echo $KUBECONFIG
-        ```
-        {: pre}
-
-        Output:
-        ```
-        /Users/<user_name>/.bluemix/plugins/container-service/clusters/<cluster_name>/kube-config-prod-dal10-<cluster_name>.yml
-        ```
-        {: screen}
-
-6.  Verify that the `kubectl` commands run properly with your cluster by checking the Kubernetes CLI server version.
-
-    ```
-    kubectl version  --short
-    ```
-    {: pre}
-
-    Example output:
-
-    ```
-    Client Version: v1.7.4
-    Server Version: v1.7.4
-    ```
-    {: screen}
-
-
-
+      ```
+      Client Version: v1.7.4
+      Server Version: v1.7.4
+      ```
+      {: screen}
 
 Now, you can run `kubectl` commands to manage your clusters in {{site.data.keyword.Bluemix_notm}}. For a full list of commands, see the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/user-guide/kubectl/v1.7/).
 
@@ -314,50 +244,17 @@ This task includes the information for updating these CLIs.
 
 <br>
 To update the CLIs:
+
 1.  Update the {{site.data.keyword.Bluemix_notm}} CLI. Download the [latest version ![External link icon](../icons/launch-glyph.svg "External link icon")](https://clis.ng.bluemix.net/ui/home.html) and run the installer.
 
-2.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your {{site.data.keyword.Bluemix_notm}} credentials when prompted.
-
-    ```
-    bx login
-    ```
-     {: pre}
-
-     To specify a specific {{site.data.keyword.Bluemix_notm}} region, include the API endpoint. If you have private Docker images that are stored in the container registry of a specific {{site.data.keyword.Bluemix_notm}} region, or {{site.data.keyword.Bluemix_notm}} services instances that you already created, log in to this region to access your images and {{site.data.keyword.Bluemix_notm}} services.
-
-     The {{site.data.keyword.Bluemix_notm}} region that you log in to also determines the region where you can create your Kubernetes clusters, including the available datacenters. If you do not specify a region, you are automatically logged in to the region that is closest to you.
-
-    -   US South and US East
+2. Log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your {{site.data.keyword.Bluemix_notm}} credentials when prompted. To specify a {{site.data.keyword.Bluemix_notm}} region, [include the API endpoint](cs_regions.html#bluemix_regions).
 
         ```
-        bx login -a api.ng.bluemix.net
+        bx login
         ```
-        {: pre}
-
-    -   Sydney
-
-        ```
-        bx login -a api.au-syd.bluemix.net
-        ```
-        {: pre}
-
-    -   Germany
-
-        ```
-        bx login -a api.eu-de.bluemix.net
-        ```
-        {: pre}
-
-    -   United Kingdom
-
-        ```
-        bx login -a api.eu-gb.bluemix.net
-        ```
-        {: pre}
+         {: pre}
 
         **Note:** If you have a federated ID, use `bx login --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
-
-
 
 3.  Update the {{site.data.keyword.containershort_notm}} plug-in.
     1.  Install the update from the {{site.data.keyword.Bluemix_notm}} plug-in repository.
@@ -607,16 +504,16 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
 
     <table summary="Input parameters to get Bluemix account ID">
     <thead>
-   <th>Input parameters</th>
-   <th>Values</th>
+  	<th>Input parameters</th>
+  	<th>Values</th>
     </thead>
     <tbody>
-   <tr>
-    <td>Headers</td>
-    <td><ul><li>Content-Type: application/json</li>
+  	<tr>
+  		<td>Headers</td>
+  		<td><ul><li>Content-Type: application/json</li>
       <li>Authorization: bearer &lt;iam_token&gt;</li>
       <li>Accept: application/json</li></ul></td>
-   </tr>
+  	</tr>
     </tbody>
     </table>
 

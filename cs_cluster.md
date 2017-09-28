@@ -100,92 +100,19 @@ For {{site.data.keyword.Bluemix_notm}} Dedicated users, see [Creating Kubernetes
 
 To create a cluster:
 1.  Install the {{site.data.keyword.Bluemix_notm}} CLI and the [{{site.data.keyword.containershort_notm}} plug-in](cs_cli_install.html#cs_cli_install).
-2.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your {{site.data.keyword.Bluemix_notm}} credentials when prompted.
+2.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your {{site.data.keyword.Bluemix_notm}} credentials when prompted. To specify a {{site.data.keyword.Bluemix_notm}} region, [include the API endpoint](cs_regions.html#bluemix_regions).
 
     ```
     bx login
     ```
     {: pre}
 
-      To specify a specific {{site.data.keyword.Bluemix_notm}} region, include the API endpoint. If you have private Docker images that are stored in the container registry of a specific {{site.data.keyword.Bluemix_notm}} region, or {{site.data.keyword.Bluemix_notm}} services instances that you already created, log in to this region to access your images and {{site.data.keyword.Bluemix_notm}} services.
-
-      The {{site.data.keyword.Bluemix_notm}} region that you log in to also determines the region where you can create your Kubernetes clusters, including the available data centers. If you do not specify a region, you are automatically logged in to the region that is closest to you.
-
-       -  US South and US East
-
-           ```
-           bx login -a api.ng.bluemix.net
-           ```
-           {: pre}
-
-       -  Sydney
-
-           ```
-           bx login -a api.au-syd.bluemix.net
-           ```
-           {: pre}
-
-       -  Germany
-
-           ```
-           bx login -a api.eu-de.bluemix.net
-           ```
-           {: pre}
-
-       -  United Kingdom
-
-           ```
-           bx login -a api.eu-gb.bluemix.net
-           ```
-           {: pre}
-
-      **Note:** If you have a federated ID, use `bx login --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
+    **Note:** If you have a federated ID, use `bx login --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
 
 3.  If you are assigned to multiple {{site.data.keyword.Bluemix_notm}} accounts, organizations and spaces, select the account where you want to create your Kubernetes cluster. Clusters are specific to an account and an organization, but are independent from a {{site.data.keyword.Bluemix_notm}} space. Therefore, if you have access to multiple spaces in your organization, you can select any space from the list.
-4.  Optional: If you want to create or access Kubernetes clusters in a region other than the {{site.data.keyword.Bluemix_notm}} region that you selected earlier, specify this region. For example, you might want to log in to another {{site.data.keyword.containershort_notm}} region for the following reasons:
+4.  If you want to create or access Kubernetes clusters in a region other than the {{site.data.keyword.Bluemix_notm}} region that you selected earlier, [specify the {{site.data.keyword.containershort_notm}} region API endpoint](cs_regions.html#container_login_endpoints).
 
-    -   You created {{site.data.keyword.Bluemix_notm}} services or private Docker images in one region and want to use them with {{site.data.keyword.containershort_notm}} in another region.
-    -   You want to access a cluster in a region that is different from the default {{site.data.keyword.Bluemix_notm}} region you are logged in to.
-
-    **Note**: If you want to create a cluster in US East, you must log in to the US East container region API endpoint using the `bx cs init --host https://us-east.containers.bluemix.net` command.
-
-    Choose between the following API endpoints:
-
-    -   US-South:
-
-        ```
-        bx cs init --host https://us-south.containers.bluemix.net
-        ```
-        {: pre}
-
-    -   US-East:
-
-        ```
-        bx cs init --host https://us-east.containers.bluemix.net
-        ```
-        {: pre}
-
-    -   UK-South:
-
-        ```
-        bx cs init --host https://uk-south.containers.bluemix.net
-        ```
-        {: pre}
-
-    -   EU-Central:
-
-        ```
-        bx cs init --host https://eu-central.containers.bluemix.net
-        ```
-        {: pre}
-
-    -   AP-South:
-
-        ```
-        bx cs init --host https://ap-south.containers.bluemix.net
-        ```
-        {: pre}
-        
+        **Note**: If you want to create a cluster in US East, you must specify the US East container region API endpoint using the `bx cs init --host https://us-east.containers.bluemix.net` command.</staging>
 
 
 
@@ -197,48 +124,7 @@ To create a cluster:
         ```
         {: pre}
 
-        Your CLI output looks similar to the following:
-
-        -   US South:
-
-            ```
-            dal10
-            dal12
-            ```
-            {: screen}
-
-        -   US East:
-
-            ```
-            wdc06
-            wdc07
-            ```
-            {: screen}
-
-        -   UK South:
-
-            ```
-            lon02
-            lon04
-            ```
-            {: screen}
-
-        -   EU Central:
-
-            ```
-            ams03
-            fra02
-            ```
-            {: screen}
-
-        -   AP South
-
-            ```
-            syd01
-            syd02
-            ```
-            {: screen}
-            
+        Your CLI output matches the [locations for the container region](cs_regions.html#locations).
 
     2.  Choose a location and review the machine types available in that location. The machine type specifies the virtual compute resources that are available to each worker node.
 
@@ -1012,7 +898,7 @@ To add a service:
     bx cs cluster-service-bind mycluster mynamespace cleardb
     Binding service instance to namespace...
     OK
-    Namespace: mynamespace
+    Namespace:	mynamespace
     Secret name:     binding-<service_instance_name>
     ```
     {: screen}
@@ -1184,13 +1070,13 @@ Review the access policies and permissions that you can grant to users in your {
 
 |Access policy|Cluster Management Permissions|Kubernetes Resource Permissions|
 |-------------|------------------------------|-------------------------------|
-|<ul><li>Role: Administrator</li><li>Service Instances: all current service instances</li></ul>|<ul><li>Create a lite or standard cluster</li><li>Set credentials for a {{site.data.keyword.Bluemix_notm}} account to access the {{site.data.keyword.BluSoftlayer_notm}} portfolio</li><li>Remove a cluster</li><li>Assign and change {{site.data.keyword.containershort_notm}} access policies for other existing users in this account.</li></ul><br/>This role inherits permissions from the Editor, Operator, and Viewer roles for all clusters in this account.|<ul><li>RBAC Role: cluster-admin</li><li>Read/write access to resources in every namespace</li><li>Create roles within a namespace</li></ul>|
-|<ul><li>Role: Administrator</li><li>Service Instances: a specific cluster ID</li></ul>|<ul><li>Remove a specific cluster.</li></ul><br/>This role inherits permissions from the Editor, Operator, and Viewer roles for the selected cluster.|<ul><li>RBAC Role: cluster-admin</li><li>Read/write access to resources in every namespace</li><li>Create roles within a namespace</li><li>Access Kubernetes dashboard</li></ul>|
+|<ul><li>Role: Administrator</li><li>Service Instances: all current service instances</li></ul>|<ul><li>Create a lite or standard cluster</li><li>Set credentials for a {{site.data.keyword.Bluemix_notm}} account to access the {{site.data.keyword.BluSoftlayer_notm}} portfolio</li><li>Remove a cluster</li><li>Assign and change {{site.data.keyword.containershort_notm}} access policies for other existing users in this account.</li></ul><br/>This role inherits permissions from the Editor, Operator, and Viewer roles for all clusters in this account.|<ul><li>RBAC Role: cluster-admin</li><li>Read/write access to resources in every namespace</li><li>Create roles within a namespace</li><li>Access Kubernetes dashboard</li><li>Create an Ingress resource that makes apps publically available</li></ul>|
+|<ul><li>Role: Administrator</li><li>Service Instances: a specific cluster ID</li></ul>|<ul><li>Remove a specific cluster.</li></ul><br/>This role inherits permissions from the Editor, Operator, and Viewer roles for the selected cluster.|<ul><li>RBAC Role: cluster-admin</li><li>Read/write access to resources in every namespace</li><li>Create roles within a namespace</li><li>Access Kubernetes dashboard</li><li>Create an Ingress resource that makes apps publically available</li></ul>|
 |<ul><li>Role: Operator</li><li>Service Instances: all current service instances/ a specific cluster ID</li></ul>|<ul><li>Add additional worker nodes to a cluster</li><li>Remove worker nodes from a cluster</li><li>Reboot a worker node</li><li>Reload a worker node</li><li>Add a subnet to a cluster</li></ul>|<ul><li>RBAC Role: admin</li><li>Read/write access to resources inside the default namespace but not to the namespace itself</li><li>Create roles within a namespace</li></ul>|
 |<ul><li>Role: Editor</li><li>Service Instances: all current service instances a specific cluster ID</li></ul>|<ul><li>Bind a {{site.data.keyword.Bluemix_notm}} service to a cluster.</li><li>Unbind a {{site.data.keyword.Bluemix_notm}} service to a cluster.</li><li>Create a webhook.</li></ul><br/>Use this role for your app developers.|<ul><li>RBAC Role: edit</li><li>Read/write access to resources inside the default namespace</li></ul>|
 |<ul><li>Role: Viewer</li><li>Service Instances: all current service instances/ a specific cluster ID</li></ul>|<ul><li>List a cluster</li><li>View details for a cluster</li></ul>|<ul><li>RBAC Role: view</li><li>Read access to resources inside the default namespace</li><li>No read access to Kubernetes secrets</li></ul>|
-|<ul><li>Cloud Foundry organization role: Manager</li></ul>|<ul><li>Add additional users to a {{site.data.keyword.Bluemix_notm}} account</li></ul>||
-|<ul><li>Cloud Foundry space role: Developer</li></ul>|<ul><li>Create {{site.data.keyword.Bluemix_notm}} service instances/li><li>Bind {{site.data.keyword.Bluemix_notm}} service instances to clusters</li></ul>||
+|<ul><li>Cloud Foundry organization role: Manager</li></ul>|<ul><li>Add additional users to a {{site.data.keyword.Bluemix_notm}} account</li></ul>| |
+|<ul><li>Cloud Foundry space role: Developer</li></ul>|<ul><li>Create {{site.data.keyword.Bluemix_notm}} service instances/li><li>Bind {{site.data.keyword.Bluemix_notm}} service instances to clusters</li></ul>| |
 {: caption="Table 7. Overview of required IBM Bluemix Container Service access policies and permissions" caption-side="top"}
 
 ### Verifying your {{site.data.keyword.containershort_notm}} access policy
@@ -1354,45 +1240,14 @@ Before you begin, make sure that you can access the {{site.data.keyword.BluSoftl
 <!-- removed conref to test bx login -->
 7.  After the subnet is provisioned, make the subnet available to your Kubernetes cluster.
     1.  From the Infrastructure dashboard, select the subnet that you created and note the ID of the subnet.
-    2.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI.
+    2.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI. To specify a {{site.data.keyword.Bluemix_notm}} region, [include the API endpoint](cs_regions.html#bluemix_region_api_endpoints).
 
         ```
         bx login
         ```
         {: pre}
 
-        To specify a specific {{site.data.keyword.Bluemix_notm}} region, choose one of the following API endpoints:
-
-       -  US South and US East
-
-           ```
-           bx login -a api.ng.bluemix.net
-           ```
-           {: pre}
-
-       -  Sydney
-
-           ```
-           bx login -a api.au-syd.bluemix.net
-           ```
-           {: pre}
-
-       -  Germany
-
-           ```
-           bx login -a api.eu-de.bluemix.net
-           ```
-           {: pre}
-
-       -  United Kingdom
-
-           ```
-           bx login -a api.eu-gb.bluemix.net
-           ```
-           {: pre}
-           
-
-           
+        **Note:** If you have a federated ID, use `bx login --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
 
     3.  List all clusters in your account and note the ID of the cluster where you want to make your subnet available.
 
@@ -1631,7 +1486,7 @@ To create a persistent volume and matching persistent volume claim, follow these
     ```
     Name: mypvc
     Namespace: default
-    StorageClass: ""
+    StorageClass:	""
     Status: Bound
     Volume: pvc-0d787071-3a67-11e7-aafc-eef80dd2dea2
     Labels: <none>
@@ -1641,8 +1496,8 @@ To create a persistent volume and matching persistent volume claim, follow these
       FirstSeen LastSeen Count From        SubObjectPath Type Reason Message
       --------- -------- ----- ----        ------------- -------- ------ -------
       3m 3m 1 {ibm.io/ibmc-file 31898035-3011-11e7-a6a4-7a08779efd33 } Normal Provisioning External provisioner is provisioning volume for claim "default/my-persistent-volume-claim"
-      3m 1m  10 {persistentvolume-controller } Normal ExternalProvisioning cannot find provisioner "ibm.io/ibmc-file", expecting that a volume for the claim is provisioned either manually or via external software
-      1m 1m 1 {ibm.io/ibmc-file 31898035-3011-11e7-a6a4-7a08779efd33 } Normal ProvisioningSucceeded Successfully provisioned volume pvc-0d787071-3a67-11e7-aafc-eef80dd2dea2
+      3m 1m	 10 {persistentvolume-controller } Normal ExternalProvisioning cannot find provisioner "ibm.io/ibmc-file", expecting that a volume for the claim is provisioned either manually or via external software
+      1m 1m 1 {ibm.io/ibmc-file 31898035-3011-11e7-a6a4-7a08779efd33 } Normal ProvisioningSucceeded	Successfully provisioned volume pvc-0d787071-3a67-11e7-aafc-eef80dd2dea2
     ```
     {: screen}
 
