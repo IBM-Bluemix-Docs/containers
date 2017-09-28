@@ -128,6 +128,38 @@ When you create a cluster in {{site.data.keyword.Bluemix_notm}} Dedicated, a sin
 <br />
 
 
+## Cluster management responsibilities
+{: #responsibilities}
+
+Review the responsibilities that you share with IBM to manage your clusters. To review responsibilities for clusters that are managed in {{site.data.keyword.Bluemix_notm}} Dedicated environments, see [Differences in cluster management between the cloud environments](cs_ov.html#env_differences) instead.
+{:shortdesc}
+
+**IBM is responsible for:**
+
+- Deploying the master, worker nodes, and management components within the cluster, such as Ingress controller, at cluster creation time
+- Managing the updates, monitoring, and recovery of the Kubernetes master for the cluster
+- Monitoring the health of the worker nodes and providing automation for the update and recovery of those worker nodes
+- Performing automation tasks against your infrastructure account, including adding worker nodes, removing worker nodes, and creating a default subnet
+- Managing, updating, and recovering operational components within the cluster, such as the Ingress controller and the storage plug-in
+- Provisioning of storage volumes when requested by persistant volume claims
+- Providing security settings on all worker nodes 
+
+<br />
+**You are responsible for:**
+
+- [Deploying and managing Kubernetes resources, such as pods, services, and deployments, within the cluster](cs_apps.html#cs_apps_cli)
+- [Leveraging the capabilities of the service and Kubernetes to ensure high availability of apps](cs_planning.html#highly_available_apps)
+- [Adding or removing capacity by using the CLI to add or remove worker nodes](cs_cli_reference.html#cs_worker_add)
+- [Creating public and private VLANs in {{site.data.keyword.BluSoftlayer_notm}} for network isolation of your cluster ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/topic/vlans)
+- [Ensuring that all worker nodes have network connectivity to the Kubernetes master URL](cs_security.html#opening_ports) <p>**Note**: If a worker node has both public and private VLANs, then network connectivity is configured. If the worker node has a private VLAN only set up, then a vyatta is required to provide network connectivity.</p>
+- [Determining when to update the kube-apiserver and worker nodes when Kubernetes major or minor version updates are available](cs_cluster.html#cs_cluster_update)
+- [Taking action to recover troubled worker nodes by running `kubectl` commands, such as `cordon` or `drain`, and by running `bx cs` commands, such as `reboot`, `reload`, or `delete`](cs_cli_reference.html#cs_worker_reboot)
+- [Adding or removing additional subnets in {{site.data.keyword.BluSoftlayer_notm}} as needed](cs_cluster.html#cs_cluster_subnet)
+- [Backing up and restoring data in persistent storage in {{site.data.keyword.BluSoftlayer_notm}} ![External link icon](../icons/launch-glyph.svg "External link icon")](../services/RegistryImages/ibm-backup-restore/index.html#ibmbackup_restore_starter)
+
+<br />
+
+
 ## Deployments
 {: #highly_available_apps}
 
