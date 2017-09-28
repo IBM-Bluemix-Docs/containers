@@ -114,7 +114,7 @@ Review these situations in which you might need to open specific ports and IP ad
       {: pre}
 
   2.  In your firewall, allow the following connections to and from your worker nodes.
-        - For OUTBOUND connectivity from your worker nodes, allow outgoing network traffic from the source worker node to the destination TCP/UDP port range 20000-32767 for `<each_worker_node_publicIP>`, and the following IP addresses and network groups:
+        - For OUTBOUND connectivity from your worker nodes, allow outgoing network traffic from the source worker node to the destination TCP/UDP port range 20000-32767 and port 443 for `<each_worker_node_publicIP>`, and the following IP addresses and network groups:
             <p>
   <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
       <thead>
@@ -165,7 +165,7 @@ Review these situations in which you might need to open specific ports and IP ad
     </table>
 </p>
 
-  3. Optional: If you are integrating with other {{site.data.keyword.Bluemix_notm}} services, allow outgoing network traffic from the worker nodes to each service's regions that you want to use: `TCP port 443 FROM <each_worker_node_publicIP> TO <registry_publicIP>, apt.dockerproject.org, <monitoring_publicIP>`.
+  3. Allow outgoing network traffic from the worker nodes to each service's regions that you want to use: `TCP port 443 FROM <each_worker_node_publicIP> TO <registry_publicIP>, <monitoring_publicIP>`.
 
         - Replace <em>&lt;registry_publicIP&gt;</em> with all the addresses for the {{site.data.keyword.registrylong_notm}} regions to which you want to allow traffic:
             <p>      
@@ -536,3 +536,4 @@ To view the vulnerability assessment for your image:
 1.  From the **catalog**, in the Containers section, select **Container Registry**.
 2.  On the **Private Repositories** page, in the **Repositories** table, identify the image.
 3.  In the **Security Report** column, click the status of the image to retrieve its vulnerability assessment.
+
