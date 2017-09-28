@@ -39,11 +39,11 @@ You can create a lite cluster to get familiar and test Kubernetes capabilities o
 |[User access management](cs_cluster.html#cs_cluster_user)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 |[{{site.data.keyword.Bluemix_notm}} service access from the cluster and apps](cs_cluster.html#cs_cluster_service)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 |[Disk space on worker node for storage](#cs_planning_apps_storage)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
-|[Persistent NFS file-based storage with volumes](#cs_planning_apps_storage)||<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
-|[Public app access by a load balancer service](#cs_loadbalancer)||<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
-|[Public app access by an Ingress service](#cs_ingress)||<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
-|[Portable public IP addresses](cs_apps.html#cs_cluster_ip_subnet)||<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
-|[Available in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)](cs_ov.html#dedicated_environment)||<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
+|[Persistent NFS file-based storage with volumes](#cs_planning_apps_storage)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
+|[Public app access by a load balancer service](#cs_loadbalancer)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
+|[Public app access by an Ingress service](#cs_ingress)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
+|[Portable public IP addresses](cs_apps.html#cs_cluster_ip_subnet)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
+|[Available in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)](cs_ov.html#dedicated_environment)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 {: caption="Table 1. Differences between lite and standard clusters" caption-side="top"}
 
 <br />
@@ -232,7 +232,7 @@ spec:
                         {
                           "key": "app",
                           "operator": "In",
-                          "values": ["waslibert
+                          "values": ["wasliberty"]
                         }
                       ]
                     },
@@ -241,11 +241,11 @@ spec:
                 ]
                }
              }
-    spec:
-      containers:
-      - name: wasliberty
-        image: registry.&lt;region&gt;.bluemix.net/ibmliberty
-        ports:
+      spec:
+        containers:
+        - name: wasliberty
+          image: registry.&lt;region&gt;.bluemix.net/ibmliberty
+          ports:
           - containerPort: 9080</code></pre>
 
 </dd>
@@ -590,3 +590,4 @@ Before you begin, create a {{site.data.keyword.Bluemix_notm}} Pay-As-You-Go acco
 7.  Start [creating standard clusters](cs_cluster.html#cs_cluster_cli).
 
 **Note:** To review your API key after you generated it, follow step 1 and 2, and then in the **API key** section, click on **View** to see the API key for your user ID.
+
