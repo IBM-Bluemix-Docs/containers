@@ -405,7 +405,7 @@ Make a subnet in a {{site.data.keyword.BluSoftlayer_notm}} account available to 
 
 Bring your own private subnet to your {{site.data.keyword.containershort_notm}} clusters.
 
-This private subnet is not one provided by {{site.data.keyword.BluSoftlayer_notm}}. As such, you must configure any inbound and outbound network traffic routing for the subnet. If you want to add a {{site.data.keyword.BluSoftlayer_notm}} subnet, use the `bx cs cluster-subnet-add` [command](#cs_cluster_subnet_add).
+This private subnet is not one provided by {{site.data.keyword.BluSoftlayer_notm}}. As such, you must configure any inbound and outbound network traffic routing for the subnet. To add a {{site.data.keyword.BluSoftlayer_notm}} subnet, use the `bx cs cluster-subnet-add` [command](#cs_cluster_subnet_add).
 
 **Note**: When you add a private user subnet to a cluster, IP addresses of this subnet are used for private Load Balancers in the cluster. To avoid IP address conflicts, make sure that you use a subnet with one cluster only. Do not use a subnet for multiple clusters or for other purposes outside of {{site.data.keyword.containershort_notm}} at the same time.
 
