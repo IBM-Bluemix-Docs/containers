@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-09-26"
+lastupdated: "2017-09-29"
 
 ---
 
@@ -113,61 +113,70 @@ Review these situations in which you might need to open specific ports and IP ad
       ```
       {: pre}
 
-  2.  In your firewall, allow the following connections to and from your worker nodes.
-        - For OUTBOUND connectivity from your worker nodes, allow outgoing network traffic from the source worker node to the destination TCP/UDP port range 20000-32767 for `<each_worker_node_publicIP>`, and the following IP addresses and network groups:
-            <p>
+  2.  In your firewall for OUTBOUND connectivity from your worker nodes, allow outgoing network traffic from the source worker node to the destination TCP/UDP port range 20000-32767 and port 443 for `<each_worker_node_publicIP>`, and the following IP addresses and network groups.
+      - **Important**: You must allow outgoing traffic to port 443 and all the locations within the region to each other, to balance the load during the bootstrapping process. For example, if your cluster is in US South, you must allow traffic from port 443 to dal10 and dal12, and from dal10 and dal12 to each other.
+      <p>
   <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
+      <caption align="top"><img src="images/idea.png"/> Outbound IP addresses</caption>
       <thead>
-      <th colspan=2><img src="images/idea.png"/> Outbound IP addresses</th>
+      <th>Region</th>
+      <th>Location</th>
+      <th>IP address</th>
       </thead>
     <tbody>
       <tr>
-        <td>ams03</td>
-        <td><code>169.50.169.110</code></td>
-      </tr>
-      <tr>
+        <td rowspan="2">US South</td>
         <td>dal10</td>
         <td><code>169.46.7.238</code></td>
        </tr>
        <tr>
         <td>dal12</td>
         <td><code>169.47.70.10</code></td>
-       </tr>
-       <tr>
-        <td>fra02</td>
-        <td><code>169.50.56.174</code></td>
-       </tr>
-      <tr>
-       <td>lon02</td>
-       <td><code>159.122.242.78</code></td>
       </tr>
       <tr>
-       <td>lon04</td>
-       <td><code>158.175.65.170</code></td>
+        <td rowspan="2">US East</td>
+         <td>wdc06</td>
+         <td><code>169.60.73.142</code></td>
+        </tr>
+        <tr>
+         <td>wdc07</td>
+         <td><code>169.61.83.62</code></td>
+        </tr>
+      <tr>
+      <tr>
+        <td rowspan="2">UK South</td>
+        <td>lon02</td>
+        <td><code>159.122.242.78</code></td>
       </tr>
       <tr>
-       <td>syd01</td>
-       <td><code>168.1.8.195</code></td>
+        <td>lon04</td>
+        <td><code>158.175.65.170</code></td>
       </tr>
       <tr>
-       <td>syd04</td>
-       <td><code>130.198.64.19</code></td>
+         <td rowspan="2">EU Central</td>
+         <td>ams03</td>
+         <td><code>169.50.169.110</code></td>
+         </tr>
+         <tr>
+         <td>fra02</td>
+         <td><code>169.50.56.174</code></td>
       </tr>
       <tr>
-       <td>wdc06</td>
-       <td><code>169.60.73.142</code></td>
-      </tr>
-      <tr>
-       <td>wdc07</td>
-       <td><code>169.61.83.62</code></td>
+         <td rowspan="2">AP South</td>
+         <td>syd01</td>
+         <td><code>168.1.8.195</code></td>
+        </tr>
+        <tr>
+         <td>syd04</td>
+         <td><code>130.198.64.19</code></td>
       </tr>
       </tbody>
     </table>
 </p>
 
-  3. Optional: If you are integrating with other {{site.data.keyword.Bluemix_notm}} services, allow outgoing network traffic from the worker nodes to each service's regions that you want to use: `TCP port 443 FROM <each_worker_node_publicIP> TO <registry_publicIP>, apt.dockerproject.org, <monitoring_publicIP>`.
-
-        - Replace <em>&lt;registry_publicIP&gt;</em> with all the addresses for the {{site.data.keyword.registrylong_notm}} regions to which you want to allow traffic:
+  3.  Allow outgoing network traffic from the worker nodes to {{site.data.keyword.registrylong_notm}}:
+      - `TCP port 443 FROM <each_worker_node_publicIP> TO <registry_publicIP>`
+      - Replace <em>&lt;registry_publicIP&gt;</em> with all the addresses for registry regions to which you want to allow traffic:
             <p>      
 <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
         <thead>
@@ -194,7 +203,9 @@ Review these situations in which you might need to open specific ports and IP ad
       </table>
 </p>
 
-        - Replace <em>&lt;monitoring_publicIP&gt;</em> with all the addresses for the {{site.data.keyword.monitoringlong_notm}} regions to which you want to allow traffic:
+  4.  Optional: Allow outgoing network traffic from the worker nodes to {{site.data.keyword.monitoringlong_notm}}:
+      - `TCP port 443, port 9095 FROM <each_worker_node_publicIP> TO <monitoring_publicIP>`
+      - Replace <em>&lt;monitoring_publicIP&gt;</em> with all the addresses for the monitoring regions to which you want to allow traffic:
             <p><table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
         <thead>
         <th colspan=2><img src="images/idea.png"/> Monitoring Public IP addresses</th>
@@ -219,9 +230,9 @@ Review these situations in which you might need to open specific ports and IP ad
 
   
 
-  4. Optional: To access the load balancer from outside of the VLAN, open the port for incoming network traffic on the specific IP address of that load balancer.
+  6. Optional: To access the load balancer from outside of the VLAN, open the port for incoming network traffic on the specific IP address of that load balancer.
 
-  5. Optional: To access the Ingress controller from outside of the VLAN, open either port 80 or 443 for incoming network traffic on the specific IP address of that Ingress controller, depending on which port you have configured.
+  7. Optional: To access the Ingress controller from outside of the VLAN, open either port 80 or 443 for incoming network traffic on the specific IP address of that Ingress controller, depending on which port you have configured.
 
 <br />
 
@@ -234,9 +245,14 @@ Every Kubernetes cluster is set up with a network plug-in that is called Calico.
 
 You can choose between Calico and native Kubernetes capabilities to create network policies for your cluster. You might use Kubernetes network policies to get started, but for more robust capabilities, use the Calico network policies.
 
-<ul><li>[Kubernetes network policies ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/services-networking/network-policies/): Some basic options are provided, such as specifying which pods can communicate with each other. Incoming network traffic for pods can be allowed or blocked for a protocol and port based on the labels and Kubernetes namespaces of the pod that is trying to connect to them.</br>These policies can be applied by using `kubectl` commands or the Kubernetes APIs. When these policies are applied, they are converted into Calico network policies and Calico enforces these policies.
-<li>[Calico network policies ![External link icon](../icons/launch-glyph.svg "External link icon")](http://docs.projectcalico.org/v2.0/getting-started/kubernetes/tutorials/advanced-policy): These policies are a superset of the Kubernetes network policies and enhance the native Kubernetes capabilities with the following features.
-<ul><li>Allow or block network traffic on specific network interfaces, not only Kubernetes pod traffic.<li>Allow or block incoming (ingress) and outgoing (egress) network traffic.<li>Allow or block traffic that is based on a source or destination IP address or CIDR.</ul></br>
+<ul>
+  <li>[Kubernetes network policies ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/services-networking/network-policies/): Some basic options are provided, such as specifying which pods can communicate with each other. Incoming network traffic can be allowed or blocked for a protocol and port. This traffic can be filtered based on the labels and Kubernetes namespaces of the pod that is trying to connect to other pods.</br>These policies can be applied by using `kubectl` commands or the Kubernetes APIs. When these policies are applied, they are converted into Calico network policies and Calico enforces these policies.</li>
+  <li>[Calico network policies ![External link icon](../icons/launch-glyph.svg "External link icon")](http://docs.projectcalico.org/v2.4/getting-started/kubernetes/tutorials/advanced-policy): These policies are a superset of the Kubernetes network policies and enhance the native Kubernetes capabilities with the following features.</li>
+    <ul><ul><li>Allow or block network traffic on specific network interfaces, not only Kubernetes pod traffic.</li>
+    <li>Allow or block incoming (ingress) and outgoing (egress) network traffic.</li>
+    <li>[Block incoming (ingress) traffic to LoadBalancer or NodePort Kubernetes services](#cs_block_ingress).</li>
+    <li>Allow or block traffic that is based on a source or destination IP address or CIDR.</li></ul></ul></br>
+
 These policies are applied by using `calicoctl` commands. Calico enforces these policies, including any Kubernetes network policies that are converted to Calico policies, by setting up Linux iptables rules on the Kubernetes worker nodes. Iptables rules serve as a firewall for the worker node to define the characteristics that the network traffic must meet to be forwarded to the targeted resource.</ul>
 
 
@@ -301,7 +317,7 @@ Before you begin:
   ```
   {: pre}
 
-**Note**: Calico CLI version 1.4.0 is supported.
+  **Note**: Calico CLI version 1.4.0 is supported.
 
 To add network policies:
 1.  Install the Calico CLI.
@@ -513,6 +529,56 @@ To add network policies:
           calicoctl apply -f <path_to_>/<policy_file_name.yaml> --config=<path_to_>/calicoctl.cfg
           ```
           {: pre}
+
+### Block incoming (ingress) traffic to LoadBalancer or NodePort services.
+{: #cs_block_ingress}
+
+By default, Kubernetes `NodePort` and `LoadBalancer` services are designed to make your app available on all public and private cluster interfaces. However, you can block incoming traffic to your services based on traffic source or destination. To block traffic, create Calico `preDNAT` network policies.
+
+**Note**: A Kubernetes LoadBalancer service is also a NodePort service. A LoadBalancer service makes your app available over the load balancer IP address and port and makes your app available over the service's node ports. Node ports are accessible on every IP address (public and private) for every node within the cluster.
+
+The cluster administrator can use Calico `preDNAT` network policies block:
+
+  - Traffic to NodePort services. Traffic to LoadBalancer services is allowed.
+  - Traffic that is based on a source address or CIDR.
+
+One benefit of these features is that the cluster administrator can block traffic to public node ports of a private LoadBalancer service. The administrator can also enable whitelisting access to NodePort or LoadBalancer services. The `preDNAT` network policies are useful because default Kubernetes and Calico policies are difficult to apply to protecting Kubernetes NodePort and LoadBalancer services due to the DNAT iptables rules generated for these services.
+
+Calico `preDNAT` network policies generate iptables rules based on a [Calico
+network policy resource ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.projectcalico.org/v2.4/reference/calicoctl/resources/policy).
+
+1. Define a Calico `preDNAT` network policy for ingress access to Kubernetes services. This
+example blocks all node ports.
+
+  ```
+  apiVersion: v1
+  kind: policy
+  metadata:
+    name: deny-kube-node-port-services
+  spec:
+    preDNAT: true
+    selector: ibm.role in { 'worker_public', 'master_public' }
+    ingress:
+    - action: deny
+      protocol: tcp
+      destination:
+        ports:
+        - 30000:32767
+    - action: deny
+      protocol: udp
+      destination:
+        ports:
+        - 30000:32767
+  ```
+  {: codeblock}
+
+2. Apply the Calico preDNAT network policy. It takes about 1 minute for the
+policy changes to be applied throughout the cluster.
+
+  ```
+  /opt/bin/calicoctl apply -f deny-kube-node-port-services.yaml
+  ```
+  {: pre}
 
 <br />
 
