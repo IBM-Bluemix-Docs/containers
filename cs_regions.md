@@ -27,14 +27,8 @@ You can organize your resources across {{site.data.keyword.Bluemix_notm}} servic
 
 {{site.data.keyword.Bluemix_notm}} regions can be accessed by specifying the API endpoint when you log in. If you do not specify a region, you are automatically logged in to the region that is closest to you.
 
-{{site.data.keyword.Bluemix_notm}} region API endpoints:
-  * US South and US East: `api.ng.bluemix.net`
-  * Sydney: `api.au-syd.bluemix.net`
-  * Germany: `api.eu-de.bluemix.net`
-  * United Kingdom: `api.eu-gb.bluemix.net`
-<br>
+{{site.data.keyword.Bluemix_notm}} region API endpoints with example log in commands:
 
-Example commands to log in to {{site.data.keyword.Bluemix_notm}} regions:
   * US South and US East
       ```
       bx login -a api.ng.bluemix.net
@@ -155,4 +149,3 @@ Example of `GET /clusters` API in US South:
 
 To view documentation on the API commands, append `swagger-api` to the endpoint for the region you want to view. For example:
   * EU Central: https://eu-central.containers.bluemix.net/swagger-api/
-
