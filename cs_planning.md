@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-09-25"
+lastupdated: "2017-09-28"
 
 ---
 
@@ -39,11 +39,11 @@ You can create a lite cluster to get familiar and test Kubernetes capabilities o
 |[User access management](cs_cluster.html#cs_cluster_user)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 |[{{site.data.keyword.Bluemix_notm}} service access from the cluster and apps](cs_cluster.html#cs_cluster_service)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 |[Disk space on worker node for storage](#cs_planning_apps_storage)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
-|[Persistent NFS file-based storage with volumes](#cs_planning_apps_storage)||<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
-|[Public app access by a load balancer service](#cs_loadbalancer)||<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
-|[Public app access by an Ingress service](#cs_ingress)||<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
-|[Portable public IP addresses](cs_apps.html#cs_cluster_ip_subnet)||<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
-|[Available in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)](cs_ov.html#dedicated_environment)||<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
+|[Persistent NFS file-based storage with volumes](#cs_planning_apps_storage)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
+|[Public or private app access by a load balancer service](#cs_loadbalancer)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
+|[Public app access by an Ingress service](#cs_ingress)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
+|[Portable public IP addresses](cs_apps.html#cs_cluster_ip_subnet)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
+|[Available in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)](cs_ov.html#dedicated_environment)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 {: caption="Table 1. Differences between lite and standard clusters" caption-side="top"}
 
 <br />
@@ -232,7 +232,7 @@ spec:
                         {
                           "key": "app",
                           "operator": "In",
-                          "values": ["waslibert
+                          "values": ["wasliberty"]
                         }
                       ]
                     },
@@ -241,11 +241,11 @@ spec:
                 ]
                }
              }
-    spec:
-      containers:
-      - name: wasliberty
-        image: registry.&lt;region&gt;.bluemix.net/ibmliberty
-        ports:
+      spec:
+        containers:
+        - name: wasliberty
+          image: registry.&lt;region&gt;.bluemix.net/ibmliberty
+          ports:
           - containerPort: 9080</code></pre>
 
 </dd>
@@ -264,7 +264,7 @@ A basic app deployment in a lite or standard cluster might include the following
 
 <a href="../api/content/containers/images/cs_app_tutorial_components1.png">![Deployment setup](images/cs_app_tutorial_components1.png)</a>
 
-Configuration script example for a minimal app.
+Configuration file example for a minimal app.
 ```
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -343,43 +343,50 @@ The public network interface for the worker nodes in both lite and standard clus
 
 Depending on whether you created a lite or standard cluster, you can choose between the following options to expose an app to the public.
 
--   [Service of type NodePort](#cs_nodeport) (lite and standard clusters)
--   [Service of type LoadBalancer](#cs_loadbalancer) (standard clusters only)
+-   [NodePort service](#cs_nodeport) (lite and standard clusters)
+-   [LoadBalancer service](#cs_loadbalancer) (standard clusters only)
 -   [Ingress](#cs_ingress) (standard clusters only)
 
 
-### Expose an app to the internet by using a service of type NodePort
+### Expose an app to the internet by using a NodePort service
 {: #cs_nodeport}
 
 Expose a public port on your worker node and use the public IP address of the worker node to publicly access your service in the cluster.
 {:shortdesc}
 
-[![Expose a service by using a Kubernetes service of type NodePort](images/cs_nodeport.png)](https://console.bluemix.net/docs/api/content/containers/images/cs_nodeport.png)
+[![Expose a service by using a Kubernetes NodePort service](images/cs_nodeport.png)](https://console.bluemix.net/docs/api/content/containers/images/cs_nodeport.png)
 
-When you expose your app by creating a Kubernetes service of type NodePort, a NodePort in the range of 30000 - 32767 and an internal cluster IP address is assigned to the service. The NodePort service serves as the external entrypoint for incoming requests for your app. The assigned NodePort is publicly exposed in the kubeproxy settings of each worker node in the cluster. Every worker node starts listening on the assigned NodePort for incoming requests for the service. To access the service from the internet, you can use the public IP address of any worker node that was assigned during cluster creation and the NodePort in the format `<ip_address>:<nodeport>`.
+When you expose your app by creating a Kubernetes service of type NodePort, a NodePort in the range of 30000 - 32767 and an internal cluster IP address is assigned to the service. The NodePort service serves as the external entrypoint for incoming requests for your app. The assigned NodePort is publicly exposed in the kubeproxy settings of each worker node in the cluster. Every worker node starts listening on the assigned NodePort for incoming requests for the service. To access the service from the internet, you can use the public IP address of any worker node that was assigned during cluster creation and the NodePort in the format `<ip_address>:<nodeport>`. In addition to the public IP address, a NodePort service is available over the private IP address of a worker node.
 
-When a public request arrives at the NodePort service, it is automatically forwarded to the internal cluster IP of the service and further forwarded from the kubeproxy component to the private IP address of the pod where the app is deployed. The cluster IP is accessible inside the cluster only. If you have multiple replicas of your app running in different pods, the kubeproxy component load balances incoming requests across all replicas.
+When a request arrives at the NodePort service, it is automatically forwarded to the internal cluster IP of the service and further forwarded from the kubeproxy component to the private IP address of the pod where the app is deployed. The cluster IP is accessible inside the cluster only. If you have multiple replicas of your app running in different pods, the kubeproxy component load balances incoming requests across all replicas.
 
-**Note:** Keep in mind that the public IP address of the worker node is not permanent. When a worker node is removed or re-created, a new public IP address is assigned to the worker node. You can use the service of type NodePort for testing the public access for your app or when public access is needed for a short amount of time only. When you require a stable public IP address and more availability for your service, expose your app by using a [service of type LoadBalancer](#cs_loadbalancer) or [Ingress](#cs_ingress).
+**Note:** The public IP address of the worker node is not permanent. When a worker node is removed or re-created, a new public IP address is assigned to the worker node. You can use the NodePort service for testing the public access for your app or when public access is needed for a short amount of time only. When you require a stable public IP address and more availability for your service, expose your app by using a [LoadBalancer service](#cs_loadbalancer) or [Ingress](#cs_ingress).
 
 For more information about how to create a service of type NodePort with {{site.data.keyword.containershort_notm}}, see [Configuring public access to an app by using the NodePort service type](cs_apps.html#cs_apps_public_nodeport).
 
 
-### Expose an app to the internet by using a service of type LoadBalancer
+### Expose an app to the internet by using a LoadBalancer service
 {: #cs_loadbalancer}
 
-Expose a port and use the public IP address for the load balancer to access the app.
+Expose a port and use the public or private IP address for the load balancer to access the app.
 
-[![Expose a service by using a Kubernetes service of type LoadBalancer](images/cs_loadbalancer.png)](https://console.bluemix.net/docs/api/content/containers/images/cs_loadbalancer.png)
+[![Expose a service by using a Kubernetes LoadBalancer service type](images/cs_loadbalancer.png)](https://console.bluemix.net/docs/api/content/containers/images/cs_loadbalancer.png)
 
-When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically requests 5 portable public IP addresses and provisions them into your {{site.data.keyword.BluSoftlayer_notm}} account during cluster creation. One of the portable IP addresses is used for the [Ingress controller](#cs_ingress). 4 portable public IP addresses can be used to expose apps to the public by creating a service of type LoadBalancer.
+When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically requests 5 portable public and 5 private IP addresses and provisions them into your {{site.data.keyword.BluSoftlayer_notm}} account during cluster creation. Two of the portable IP addresses, one public and one private, are used for the [Ingress controller](#cs_ingress). 4 portable public and 4 private IP addresses can be used to expose apps by creating a LoadBalancer service.
 
-When you create a Kubernetes service of type LoadBalancer, an external load balancer is created and one of the 4 available public IP addresses is assigned to it. If no portable public IP address is available, the creation of your LoadBalancer service fails. The LoadBalancer service serves as the external entrypoint for incoming requests for the app. Unlike with services of type NodePort, you can assign any port to your load balancer and are not bound to a certain port range. The portable public IP address that is assigned to your LoadBalancer service is permanent and does not change when a worker node is removed or re-created which makes the LoadBalancer service more available than the NodePort service. To access the LoadBalancer service from the internet, use the public IP address of your load balancer and the assigned port in the format `<ip_address>:<port>`.
+When you create a Kubernetes LoadBalancer service in a cluster on a public VLAN, an external load balancer is created and one of the 4 available public IP addresses is assigned to it. If no portable public IP address is available, the creation of your LoadBalancer service fails. The LoadBalancer service serves as the external entrypoint for incoming requests for the app. Unlike with NodePort services, you can assign any port to your load balancer and are not bound to a certain port range. The portable public IP address that is assigned to your LoadBalancer service is permanent and does not change when a worker node is removed or re-created, which makes the LoadBalancer service more available than the NodePort service. To access the LoadBalancer service from the internet, use the public IP address of your load balancer and the assigned port in the format `<ip_address>:<port>`.
 
-When a public request arrives at the LoadBalancer service, it is automatically forwarded to the internal cluster IP address that is assigned to the LoadBalancer service during service creation. The cluster IP address is accessible inside the cluster only. From the cluster IP address, incoming requests are further forwarded to the kubeproxy component of your worker node and then to the private IP address of the pod where the app is deployed. If you have multiple replicas of your app running in different pods, the kubeproxy component load balances incoming requests across all replicas.
+When a request arrives at the LoadBalancer service, the request is automatically forwarded to the internal cluster IP address that is assigned to the LoadBalancer service during service creation. The cluster IP address is accessible inside the cluster only. From the cluster IP address, incoming requests are further forwarded to the `kube-proxy` component of your worker node and then to the private IP address of the pod where the app is deployed. If you have multiple replicas of your app running in different pods, the `kube-proxy` component load balances incoming requests across all replicas.
 
-For more information about how to create a service of type LoadBalancer with {{site.data.keyword.containershort_notm}}, see [Configuring public access to an app by using the load balancer service type](cs_apps.html#cs_apps_public_load_balancer).
+If you use a LoadBalancer service, a node port is also available on each IP address of any worker node. To block access to node ports while using a LoadBalancer service, see [Blocking incoming traffic](cs_security.html#cs_block_ingress).
 
+Your options for IP addresses when you create a LoadBalancer service are as follows:
+
+- If your cluster is on a public VLAN, a portable public IP address is used. 
+- If your cluster is available on a private VLAN only, then a portable private IP address is used. 
+- You can request a portable public or private IP address for a LoadBalancer service by adding an annotation to the configuration file: `service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: <public_or_private>`
+            
+For more information about how to create a LoadBalancer service with {{site.data.keyword.containershort_notm}}, see [Configuring public access to an app by using the load balancer service type](cs_apps.html#cs_apps_public_load_balancer). 
 
 ### Expose an app to the internet with Ingress
 {: #cs_ingress}
@@ -590,3 +597,4 @@ Before you begin, create a {{site.data.keyword.Bluemix_notm}} Pay-As-You-Go acco
 7.  Start [creating standard clusters](cs_cluster.html#cs_cluster_cli).
 
 **Note:** To review your API key after you generated it, follow step 1 and 2, and then in the **API key** section, click on **View** to see the API key for your user ID.
+
