@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-09-25"
+lastupdated: "2017-09-29"
 
 ---
 
@@ -98,10 +98,10 @@ To make an app publicly available, you must update your configuration file befor
 Depending on whether you created a lite or a standard cluster, different ways exist to make your app accessible from the internet.
 
 <dl>
-<dt><a href="#cs_apps_public_nodeport" target="_blank">Service of type NodePort</a> (lite and standard clusters)</dt>
-<dd>Expose a public port on every worker node and use the public IP address of any worker node to publicly access your service in the cluster. The public IP address of the worker node is not permanent. When a worker node is removed or re-created, a new public IP address is assigned to the worker node. You can use the service of type NodePort for testing the public access for your app or when public access is needed for a short amount of time only. When you require a stable public IP address and more availability for your service endpoint, expose your app by using a service of type LoadBalancer or Ingress.</dd>
-<dt><a href="#cs_apps_public_load_balancer" target="_blank">Service of type LoadBalancer</a> (standard clusters only)</dt>
-<dd>Every standard cluster is provisioned with 4 portable public IP addresses that you can use to create an external TCP/ UDP load balancer for your app. You can customize your load balancer by exposing any port that your app requires. The portable public IP address that is assigned to the load balancer is permanent and does not change when a worker node is re-created in the cluster.
+<dt><a href="#cs_apps_public_nodeport" target="_blank">NodePort service</a> (lite and standard clusters)</dt>
+<dd>Expose a public port on every worker node and use the public IP address of any worker node to publicly access your service in the cluster. The public IP address of the worker node is not permanent. When a worker node is removed or re-created, a new public IP address is assigned to the worker node. You can use the NodePort service for testing the public access for your app or when public access is needed for a short amount of time only. When you require a stable public IP address and more availability for your service endpoint, expose your app by using a LoadBalancer service or Ingress.</dd>
+<dt><a href="#cs_apps_public_load_balancer" target="_blank">LoadBalancer service</a> (standard clusters only)</dt>
+<dd>Every standard cluster is provisioned with 4 portable public and 4 portable private IP addresses that you can use to create an external TCP/ UDP load balancer for your app. You can customize your load balancer by exposing any port that your app requires. The portable public IP address that is assigned to the load balancer is permanent and does not change when a worker node is re-created in the cluster.
 
 </br>
 If you need HTTP or HTTPS load balancing for your app and want to use one public route to expose multiple apps in your cluster as services, use the built-in Ingress support with {{site.data.keyword.containershort_notm}}.</dd>
@@ -116,11 +116,11 @@ If you need HTTP or HTTPS load balancing for your app and want to use one public
 Make your app publicly available by using the public IP address of any worker node in a cluster and exposing a node port. Use this option for testing and short-term public access.
 {:shortdesc}
 
-You can expose your app as a Kubernetes service of type NodePort for lite or standard clusters.
+You can expose your app as a Kubernetes NodePort service for lite or standard clusters.
 
-For {{site.data.keyword.Bluemix_notm}} Dedicated environments, public IP addresses are blocked by a firewall. To make an app publicly available, use a [service of type LoadBalancer](#cs_apps_public_load_balancer) or [Ingress](#cs_apps_public_ingress) instead.
+For {{site.data.keyword.Bluemix_notm}} Dedicated environments, public IP addresses are blocked by a firewall. To make an app publicly available, use a [LoadBalancer service](#cs_apps_public_load_balancer) or [Ingress](#cs_apps_public_ingress) instead.
 
-**Note:** The public IP address of a worker node is not permanent. If the worker node must be re-created, a new public IP address is assigned to the worker node. If you need a stable public IP address and more availability for your service, expose your app by using a [service of type LoadBalancer](#cs_apps_public_load_balancer) or [Ingress](#cs_apps_public_ingress).
+**Note:** The public IP address of a worker node is not permanent. If the worker node must be re-created, a new public IP address is assigned to the worker node. If you need a stable public IP address and more availability for your service, expose your app by using a [LoadBalancer service](#cs_apps_public_load_balancer) or [Ingress](#cs_apps_public_ingress).
 
 
 
@@ -232,32 +232,59 @@ When the app is deployed, you can use the public IP address of any worker node a
 
 3.  Form the URL with one of the worker node public IP addresses and the NodePort. Example: `http://192.0.2.23:30872`
 
-### Configuring public access to an app by using the load balancer service type
+### Configuring access to an app by using the load balancer service type
 {: #cs_apps_public_load_balancer}
 
-Expose a port and use a portable public IP address for the load balancer to access the app. Unlike with NodePort service, the portable public IP address of the load balancer service is not dependent on the worker node that the app is deployed on. The portable public IP address of the load balancer is assigned for you and does not change when you add or remove worker nodes, which means that load balancer services are more highly available than NodePort services. Users can select any port for the load balancer and are not limited to the NodePort port range. You can use load balancer services for TCP and UDP protocols.
+Expose a port and use a portable public or private IP address for the load balancer to access the app. Unlike with a NodePort service, the portable IP address of the load balancer service is not dependent on the worker node that the app is deployed on. However, a Kubernetes LoadBalancer service is also a NodePort service. A LoadBalancer service makes your app available over the load balancer IP address and port and makes your app available over the service's node ports. 
+
+ The portable IP address of the load balancer is assigned for you and does not change when you add or remove worker nodes. Therefore, load balancer services are more highly available than NodePort services. Users can select any port for the load balancer and are not limited to the NodePort port range. You can use load balancer services for TCP and UDP protocols.
 
 When a {{site.data.keyword.Bluemix_notm}} Dedicated account is [enabled for clusters](cs_ov.html#setup_dedicated), you can request public subnets to be used for load balancer IP addresses. [Open a support ticket](/docs/support/index.html#contacting-support) to create the subnet, and then use the [`bx cs cluster-subnet-add`](cs_cli_reference.html#cs_cluster_subnet_add) command to add the subnet to the cluster.
 
-**Note:** Load balancer services do not support TLS termination. If your app requires TLS termination, you can expose your app via [Ingress](#cs_apps_public_ingress), or configure your app to manage the TLS termination.
+**Note:** Load balancer services do not support TLS termination. If your app requires TLS termination, you can expose your app by using [Ingress](#cs_apps_public_ingress), or configure your app to manage the TLS termination.
 
 Before you begin:
 
 -   This feature is available for standard clusters only.
--   You must have a portable public IP address available to assign to the load balancer service.
+-   You must have a portable public or private IP address available to assign to the load balancer service.
+-   A load balancer service with a portable private IP address still has a public node port open on every worker node. To add a network policy to prevent public traffic, see [Blocking incoming traffic](cs_security.html#cs_block_ingress).
 
 To create a load balancer service:
 
-1.  [Deploy your app to the cluster](#cs_apps_cli). When you deploy your app to the cluster, one or more pods are created for you that run your app in a container. Ensure that you add a label to your deployment in the metadata section of your configuration file. This label is needed to identify all pods where your app is running, so that they can be included in the load balancing.
-2.  Create a load balancer service for the app that you want to expose. To make your app available on the public internet, you must create a Kubernetes service for your app and configure your service to include all the pods that make up your app into the load balancing.
-    1.  Open your preferred editor and create a service configuration file that is named, for example, `myloadbalancer.yaml`.
-    2.  Define a load balancer service for the app that you want to expose to the public.
+1.  [Deploy your app to the cluster](#cs_apps_cli). When you deploy your app to the cluster, one or more pods are created for you that run your app in a container. Ensure that you add a label to your deployment in the metadata section of your configuration file. This label is needed to identify all pods where your app is running so that they can be included in the load balancing.
+2.  Create a load balancer service for the app that you want to expose. To make your app available on the public internet or on a private network, create a Kubernetes service for your app. Configure your service to include all the pods that make up your app into the load balancing.
+    1.  Create a service configuration file that is named, for example, `myloadbalancer.yaml`.
+    2.  Define a load balancer service for the app that you want to expose.
+        - If your cluster is on a public VLAN, a portable public IP address is used. Most clusters are on a public VLAN.
+        - If your cluster is available on a private VLAN only, then a portable private IP address is used. 
+        - You can request a portable public or private IP address for a LoadBalancer service by adding an annotation to the configuration file.
 
+        LoadBalancer service that uses a default IP address:
+        
         ```
         apiVersion: v1
         kind: Service
         metadata:
           name: <myservice>
+        spec:
+          type: LoadBalancer
+          selector:
+            <selectorkey>:<selectorvalue>
+          ports:
+           - protocol: TCP
+             port: 8080
+        ```
+        {: codeblock}
+        
+        LoadBalancer service that uses an annotation to specify a private or public IP address:
+        
+        ```
+        apiVersion: v1
+        kind: Service
+        metadata:
+          name: <myservice>
+          annotations: 
+            service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: <public_or_private> 
         spec:
           type: LoadBalancer
           selector:
@@ -274,27 +301,31 @@ To create a load balancer service:
         </thead>
         <tbody>
         <tr>
-        <td><code>name</code></td>
-        <td>Replace <em>&lt;myservice&gt;</em> with a name for your load balancer service.</td>
+          <td><code>name</code></td>
+          <td>Replace <em>&lt;myservice&gt;</em> with a name for your load balancer service.</td>
         </tr>
         <tr>
-        <td><code>selector</code></td>
-        <td>Enter the label key (<em>&lt;selectorkey&gt;</em>) and value (<em>&lt;selectorvalue&gt;</em>) pair that you want to use to target the pods where your app runs. For example, if you use the following selector <code>app: code</code>, all pods that have this label in their metadata are included in the load balancing. Enter the same label that you used when you deployed your app to the cluster. </td>
-         </tr>
-         <td><code>port</code></td>
-         <td>The port that the service listens on.</td>
-         </tbody></table>
-    3.  Optional: If you want to use a specific portable public IP address for your load balancer that is available to your cluster, you can specify that IP address by including the `loadBalancerIP` in the spec section. For more information, see the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/services-networking/service/).
-    4.  Optional: You might choose to configure a firewall by specifying the `loadBalancerSourceRanges` in the spec section. For more information, see the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/).
-    5.  Save your changes.
-    6.  Create the service in your cluster.
+          <td><code>selector</code></td>
+          <td>Enter the label key (<em>&lt;selectorkey&gt;</em>) and value (<em>&lt;selectorvalue&gt;</em>) pair that you want to use to target the pods where your app runs. For example, if you use the following selector <code>app: code</code>, all pods that have this label in their metadata are included in the load balancing. Enter the same label that you used when you deployed your app to the cluster. </td>
+        </tr>
+        <tr>
+          <td><code>port</code></td>
+          <td>The port that the service listens on.</td>
+        </tr>
+        <tr>
+          <td>`service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type:`
+          <td>Annotation to specify the type of LoadBalancer. The values are `private` and `public`. When creating a public LoadBalancer in clusters on public VLANs, this annotation is not required.
+        </tbody></table>
+    3.  Optional: To use a specific portable IP address for your load balancer that is available to your cluster, you can specify that IP address by including the `loadBalancerIP` in the spec section. For more information, see the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/services-networking/service/).
+    4.  Optional: Configure a firewall by specifying the `loadBalancerSourceRanges` in the spec section. For more information, see the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/).
+    5.  Create the service in your cluster.
 
         ```
         kubectl apply -f myloadbalancer.yaml
         ```
         {: pre}
 
-        When your load balancer service is created, a portable public IP address is automatically assigned to the load balancer. If no portable public IP address is available, the creation of the load balancer service fails.
+        When your load balancer service is created, a portable IP address is automatically assigned to the load balancer. If no portable IP address is available, the load balancer service cannot be created.
 3.  Verify that the load balancer service was created successfully. Replace _&lt;myservice&gt;_ with the name of the load balancer service that you created in the previous step.
 
     ```
@@ -302,9 +333,9 @@ To create a load balancer service:
     ```
     {: pre}
 
-    **Note:** It might take a few minutes for the load balancer service to be created properly and for the app to be available on the public internet.
+    **Note:** It might take a few minutes for the load balancer service to be created properly and for the app to be available.
 
-    Your CLI output looks similar to the following:
+    Example CLI output:
 
     ```
     Name:                   <myservice>
@@ -319,15 +350,15 @@ To create a load balancer service:
     Endpoints:              172.30.171.87:8080
     Session Affinity:       None
     Events:
-    FirstSeen LastSeen Count From   SubObjectPath Type  Reason   Message
-      --------- -------- ----- ----   ------------- -------- ------   -------
-      10s  10s  1 {service-controller }   Normal  CreatingLoadBalancer Creating load balancer
-      10s  10s  1 {service-controller }   Normal  CreatedLoadBalancer Created load balancer
+    FirstSeen	LastSeen	Count	From			SubObjectPath	Type		Reason			Message
+      ---------	--------	-----	----			-------------	--------	------			-------
+      10s		10s		1	{service-controller }			Normal		CreatingLoadBalancer	Creating load balancer
+      10s		10s		1	{service-controller }			Normal		CreatedLoadBalancer	Created load balancer
     ```
     {: screen}
 
-    The **LoadBalancer Ingress** IP address is the portable public IP address that was assigned to your load balancer service.
-4.  Access your app from the internet.
+    The **LoadBalancer Ingress** IP address is the portable IP address that was assigned to your load balancer service.
+4.  If you created a public load balancer, access your app from the internet.
     1.  Open your preferred web browser.
     2.  Enter the portable public IP address of the load balancer and port. In the example above, the portable public IP address `192.168.10.38` was assigned to the load balancer service.
 
@@ -342,7 +373,7 @@ To create a load balancer service:
 
 Expose multiple apps in your cluster by creating Ingress resources that are managed by the IBM-provided Ingress controller. The Ingress controller is an external HTTP or HTTPS load balancer that uses a secured and unique public entrypoint to route incoming requests to your apps inside or outside your cluster.
 
-**Note:** Ingress is available for standard clusters only and requires at least two worker nodes in the cluster to ensure high availability.
+**Note:** Ingress is available for standard clusters only and requires at least two worker nodes in the cluster to ensure high availability. Setting up Ingress requires an [Administrator access policy](cs_cluster.html#access_ov). Verify your current [access policy](cs_cluster.html#view_access).
 
 When you create a standard cluster, an Ingress controller is automatically created for you and assigned a portable public IP address and a public route. You can configure the Ingress controller and define individual routing rules for every app that you expose to the public. Every app that is exposed via Ingress is assigned a unique path that is appended to the public route, so that you can use a unique URL to access an app publicly in your cluster.
 
@@ -1568,7 +1599,7 @@ spec:
 ##### **Setting the maximum allowed size of the client request body**
 {: #client_max_body_size}
 
-Use this annotation to adjust the size of the body that the client can send as part of a request.
+Adjust the size of the body that the client can send as part of a request.
 {:shortdesc}
 
 <dl>
@@ -1722,12 +1753,12 @@ public-ingress-ctl-svc   10.10.10.149   169.60.16.246   &lt;port1&gt;:30776/TCP,
 ## Managing IP addresses and subnets
 {: #cs_cluster_ip_subnet}
 
-You can use portable public subnets and IP addresses to expose apps in your cluster and make them accessible from the internet.
+You can use portable public and private subnets and IP addresses to expose apps in your cluster and make them accessible from the internet or on a private network.
 {:shortdesc}
 
-In {{site.data.keyword.containershort_notm}}, you can add stable, portable IPs for Kubernetes services by adding network subnets to the cluster. When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically provisions a portable public subnet and 5 IP addresses. Portable public IP addresses are static and do not change when a worker node, or even the cluster, is removed.
+In {{site.data.keyword.containershort_notm}}, you can add stable, portable IPs for Kubernetes services by adding network subnets to the cluster. When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically provisions a portable public subnet, 5 portable public, and 5 portable private IP addresses. Portable IP addresses are static and do not change when a worker node, or even the cluster, is removed.
 
-One of the portable public IP addresses is used for the [Ingress controller](#cs_apps_public_ingress) that you can use to expose multiple apps in your cluster by using a public route. The remaining 4 portable public IP addresses can be used to expose single apps to the public by [creating a load balancer service](#cs_apps_public_load_balancer).
+ Two of the portable IP addresses, one public and one private, is used for the [Ingress controller](#cs_apps_public_ingress) that you can use to expose multiple apps in your cluster by using a public route. 4 portable public and 4 private IP addresses can be used to expose apps by [creating a load balancer service](#cs_apps_public_load_balancer). 
 
 **Note:** Portable public IP addresses are charged on a monthly basis. If you choose to remove portable public IP addresses after your cluster is provisioned, you still have to pay the monthly charge, even if you used them only for a short amount of time.
 
@@ -1779,10 +1810,10 @@ One of the portable public IP addresses is used for the [Ingress controller](#cs
 
 </staging>
 
-### Freeing up used public IP addresses
+### Freeing up used IP addresses
 {: #freeup_ip}
 
-You can free up a used portable public IP address by deleting the load balancer service that is using the portable public IP address.
+You can free up a used portable IP address by deleting the load balancer service that is using the portable IP address.
 
 [Before you begin, set the context for the cluster you want to use.](cs_cli_install.html#cs_cli_configure)
 
@@ -1793,7 +1824,7 @@ You can free up a used portable public IP address by deleting the load balancer 
     ```
     {: pre}
 
-2.  Remove the load balancer service that uses a public IP address.
+2.  Remove the load balancer service that uses a public or private IP address.
 
     ```
     kubectl delete service <myservice>
@@ -2185,7 +2216,7 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
     The **parameters** field provides the IOPS per GB associated with the storage class and the available sizes in gigabytes.
 
     ```
-    Parameters: iopsPerGB=4,sizeRange=20Gi,40Gi,80Gi,100Gi,250Gi,500Gi,1000Gi,2000Gi,4000Gi,8000Gi,12000Gi
+    Parameters:	iopsPerGB=4,sizeRange=20Gi,40Gi,80Gi,100Gi,250Gi,500Gi,1000Gi,2000Gi,4000Gi,8000Gi,12000Gi
     ```
     {: screen}
     
@@ -2199,7 +2230,7 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
     The **parameters** field provides the IOPS associated with the storage class and the available sizes in gigabytes. For example, a 40Gi pvc can select IOPS that is a multiple of 100 that is in the range of 100 - 2000 IOPS.
 
     ```
-    Parameters: Note=IOPS value must be a multiple of 100,reclaimPolicy=Retain,sizeIOPSRange=20Gi:[100-1000],40Gi:[100-2000],80Gi:[100-4000],100Gi:[100-6000],1000Gi[100-6000],2000Gi:[200-6000],4000Gi:[300-6000],8000Gi:[500-6000],12000Gi:[1000-6000]
+    Parameters:	Note=IOPS value must be a multiple of 100,reclaimPolicy=Retain,sizeIOPSRange=20Gi:[100-1000],40Gi:[100-2000],80Gi:[100-4000],100Gi:[100-6000],1000Gi[100-6000],2000Gi:[200-6000],4000Gi:[300-6000],8000Gi:[500-6000],12000Gi:[1000-6000]
     ```
     {: screen}
 
@@ -2291,20 +2322,20 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
     Your output looks similar to the following.
 
     ```
-    Name:  <pvc_name>
-    Namespace: default
-    StorageClass: ""
-    Status:  Bound
-    Volume:  pvc-0d787071-3a67-11e7-aafc-eef80dd2dea2
-    Labels:  <none>
-    Capacity: 20Gi
-    Access Modes: RWX
+    Name:		<pvc_name>
+    Namespace:	default
+    StorageClass:	""
+    Status:		Bound
+    Volume:		pvc-0d787071-3a67-11e7-aafc-eef80dd2dea2
+    Labels:		<none>
+    Capacity:	20Gi
+    Access Modes:	RWX
     Events:
-      FirstSeen LastSeen Count From        SubObjectPath Type  Reason   Message
-      --------- -------- ----- ----        ------------- -------- ------   -------
-      3m  3m  1 {ibm.io/ibmc-file 31898035-3011-11e7-a6a4-7a08779efd33 }   Normal  Provisioning  External provisioner is provisioning volume for claim "default/my-persistent-volume-claim"
-      3m  1m  10 {persistentvolume-controller }       Normal  ExternalProvisioning cannot find provisioner "ibm.io/ibmc-file", expecting that a volume for the claim is provisioned either manually or via external software
-      1m  1m  1 {ibm.io/ibmc-file 31898035-3011-11e7-a6a4-7a08779efd33 }   Normal  ProvisioningSucceeded Successfully provisioned volume pvc-0d787071-3a67-11e7-aafc-eef80dd2dea2
+      FirstSeen	LastSeen	Count	From								SubObjectPath	Type		Reason			Message
+      ---------	--------	-----	----								-------------	--------	------			-------
+      3m		3m		1	{ibm.io/ibmc-file 31898035-3011-11e7-a6a4-7a08779efd33 }			Normal		Provisioning		External provisioner is provisioning volume for claim "default/my-persistent-volume-claim"
+      3m		1m		10	{persistentvolume-controller }							Normal		ExternalProvisioning	cannot find provisioner "ibm.io/ibmc-file", expecting that a volume for the claim is provisioned either manually or via external software
+      1m		1m		1	{ibm.io/ibmc-file 31898035-3011-11e7-a6a4-7a08779efd33 }			Normal		ProvisioningSucceeded	Successfully provisioned volume pvc-0d787071-3a67-11e7-aafc-eef80dd2dea2
 
     ```
     {: screen}
@@ -2380,9 +2411,9 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
     ...
     Volumes:
       myvol:
-        Type: PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
-        ClaimName: mypvc
-        ReadOnly: false
+        Type:	PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+        ClaimName:	mypvc
+        ReadOnly:	false
 
     ```
     {: screen}
@@ -2424,7 +2455,7 @@ For {{site.data.keyword.containershort_notm}}, the default owner of the volume m
     RUN chmod 755 /sbin/entrypoint.sh
 
     EXPOSE 22
-    ENTRYPOINT ["/sbin/entrypoint.s
+    ENTRYPOINT ["/sbin/entrypoint.sh"]
     ```
     {: codeblock}
 
@@ -2558,9 +2589,9 @@ For {{site.data.keyword.containershort_notm}}, the default owner of the volume m
     ...
     Volumes:
       myvol:
-        Type: PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
-        ClaimName: mypvc
-        ReadOnly: false
+        Type:	PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+        ClaimName:	mypvc
+        ReadOnly:	false
 
     ```
     {: screen}
