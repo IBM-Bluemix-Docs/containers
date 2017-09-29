@@ -476,53 +476,9 @@ Open the following ports and IP addresses in your customized firewall.
   ```
   {: pre}
 
-2.  In your firewall, allow the following connections to and from your worker nodes:
-
-    - For INBOUND connectivity to your worker nodes, allow incoming network traffic from the following source network groups and IP addresses to the destination TCP/UDP port 10250 and `<each_worker_node_publicIP>`:
-    <p>
-  <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
-      <thead>
-      <th colspan=2><img src="images/idea.png"/> Inbound IP addresses</th>
-      </thead>
-    <tbody>
-      <tr>
-        <td>ams03</td>
-        <td><code>169.50.144.128/28</code></br><code>169.50.169.104/29</code></br><code>169.50.185.32/27</code></td>
-      </tr>
-      <tr>
-        <td>dal10</td>
-        <td><code>169.46.7.232/29</code></br><code>169.48.138.64/26</code></br><code>169.48.180.128/25</code></td>
-       </tr>
-       <tr>
-        <td>dal12</td>
-        <td><code>169.47.70.8/29</code></br><code>169.47.79.192/26</code></br><code>169.47.126.192/27</code></td>
-       </tr>
-       <tr>
-        <td>fra02</td>
-        <td><code>169.50.48.160/28</code></br><code>169.50.56.168/29</code></br><code>169.50.58.160/27</code></td>
-       </tr>
-      <tr>
-       <td>lon02</td>
-       <td><code>159.122.242.78</code></td>
-      </tr>
-      <tr>
-       <td>lon04</td>
-       <td><code>158.175.68.192/26</code></td>
-      </tr>
-      <tr>
-       <td>syd01</td>
-       <td><code>168.1.209.192/26</code></td>
-      </tr>
-      <tr>
-       <td>syd04</td>
-       <td><code>130.198.67.0/26</code></td>
-      </tr>
-      </tbody>
-    </table>
-</p>
-
-    - For OUTBOUND connectivity from your worker nodes, allow outgoing network traffic from the source worker node to the destination TCP/UDP port range 20000-32767 for `<each_worker_node_publicIP>`, and the following IP addresses and network groups:
-    <p>
+2.  In your firewall, allow the following connections to and from your worker nodes.
+      - For OUTBOUND connectivity from your worker nodes, allow outgoing network traffic from the source worker node to the destination TCP/UDP port range 20000-32767 and port 443 for `<each_worker_node_publicIP>`, and the following IP addresses and network groups:
+          <p>
   <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
       <thead>
       <th colspan=2><img src="images/idea.png"/> Outbound IP addresses</th>
@@ -572,10 +528,10 @@ Open the following ports and IP addresses in your customized firewall.
     </table>
 </p>
 
-3. If you are integrating with other {{site.data.keyword.Bluemix_notm}} services, allow outgoing network traffic from the worker nodes to each service's regions that you want to use: `TCP port 443 FROM <each_worker_node_publicIP> TO <registry_publicIP>, apt.dockerproject.org, <monitoring_publicIP>`.
-
-    - Replace <em>&lt;registry_publicIP&gt;</em> with all the addresses for the {{site.data.keyword.registrylong_notm}} regions to which you want to allow traffic:
-        <p>      
+3.  Allow outgoing network traffic from the worker nodes to {{site.data.keyword.registrylong_notm}}:
+    - `TCP port 443 FROM <each_worker_node_publicIP> TO <registry_publicIP>`
+    - Replace <em>&lt;registry_publicIP&gt;</em> with all the addresses for registry regions to which you want to allow traffic:
+          <p>      
 <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
         <thead>
         <th colspan=2><img src="images/idea.png"/> Registry IP addresses</th>
@@ -601,8 +557,10 @@ Open the following ports and IP addresses in your customized firewall.
       </table>
 </p>
 
-    - Replace <em>&lt;monitoring_publicIP&gt;</em> with all the addresses for the {{site.data.keyword.monitoringlong_notm}} regions to which you want to allow traffic:
-        <p><table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
+4.  Optional: Allow outgoing network traffic from the worker nodes to {{site.data.keyword.monitoringlong_notm}}:
+    - `TCP port 443, port 9095 FROM <each_worker_node_publicIP> TO <monitoring_publicIP>`
+    - Replace <em>&lt;monitoring_publicIP&gt;</em> with all the addresses for the monitoring regions to which you want to allow traffic:
+          <p><table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
         <thead>
         <th colspan=2><img src="images/idea.png"/> Monitoring Public IP addresses</th>
         </thead>

@@ -113,8 +113,7 @@ Review these situations in which you might need to open specific ports and IP ad
       ```
       {: pre}
 
-  2.  In your firewall, allow the following connections to and from your worker nodes.
-        - For OUTBOUND connectivity from your worker nodes, allow outgoing network traffic from the source worker node to the destination TCP/UDP port range 20000-32767 for `<each_worker_node_publicIP>`, and the following IP addresses and network groups:
+  2.  In your firewall for OUTBOUND connectivity from your worker nodes, allow outgoing network traffic from the source worker node to the destination TCP/UDP port range 20000-32767 and port 443 for `<each_worker_node_publicIP>`, and the following IP addresses and network groups:
             <p>
   <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
       <thead>
@@ -165,9 +164,9 @@ Review these situations in which you might need to open specific ports and IP ad
     </table>
 </p>
 
-  3. Optional: If you are integrating with other {{site.data.keyword.Bluemix_notm}} services, allow outgoing network traffic from the worker nodes to each service's regions that you want to use: `TCP port 443 FROM <each_worker_node_publicIP> TO <registry_publicIP>, apt.dockerproject.org, <monitoring_publicIP>`.
-
-        - Replace <em>&lt;registry_publicIP&gt;</em> with all the addresses for the {{site.data.keyword.registrylong_notm}} regions to which you want to allow traffic:
+  3.  Allow outgoing network traffic from the worker nodes to {{site.data.keyword.registrylong_notm}}:
+      - `TCP port 443 FROM <each_worker_node_publicIP> TO <registry_publicIP>`
+      - Replace <em>&lt;registry_publicIP&gt;</em> with all the addresses for registry regions to which you want to allow traffic:
             <p>      
 <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
         <thead>
@@ -194,7 +193,9 @@ Review these situations in which you might need to open specific ports and IP ad
       </table>
 </p>
 
-        - Replace <em>&lt;monitoring_publicIP&gt;</em> with all the addresses for the {{site.data.keyword.monitoringlong_notm}} regions to which you want to allow traffic:
+  4.  Optional: Allow outgoing network traffic from the worker nodes to {{site.data.keyword.monitoringlong_notm}}:
+      - `TCP port 443, port 9095 FROM <each_worker_node_publicIP> TO <monitoring_publicIP>`
+      - Replace <em>&lt;monitoring_publicIP&gt;</em> with all the addresses for the monitoring regions to which you want to allow traffic:
             <p><table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
         <thead>
         <th colspan=2><img src="images/idea.png"/> Monitoring Public IP addresses</th>
@@ -219,9 +220,9 @@ Review these situations in which you might need to open specific ports and IP ad
 
   
 
-  4. Optional: To access the load balancer from outside of the VLAN, open the port for incoming network traffic on the specific IP address of that load balancer.
+  6. Optional: To access the load balancer from outside of the VLAN, open the port for incoming network traffic on the specific IP address of that load balancer.
 
-  5. Optional: To access the Ingress controller from outside of the VLAN, open either port 80 or 443 for incoming network traffic on the specific IP address of that Ingress controller, depending on which port you have configured.
+  7. Optional: To access the Ingress controller from outside of the VLAN, open either port 80 or 443 for incoming network traffic on the specific IP address of that Ingress controller, depending on which port you have configured.
 
 <br />
 
@@ -301,7 +302,7 @@ Before you begin:
   ```
   {: pre}
 
-**Note**: Calico CLI version 1.4.0 is supported.
+  **Note**: Calico CLI version 1.4.0 is supported.
 
 To add network policies:
 1.  Install the Calico CLI.
