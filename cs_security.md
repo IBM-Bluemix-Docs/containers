@@ -249,7 +249,7 @@ Review these situations in which you might need to open specific ports and IP ad
 </p>
 
   5. For private firewalls, allow the appropriate {{site.data.keyword.BluSoftlayer_notm}} private IP ranges. Consult [this link](https://knowledgelayer.softlayer.com/faq/what-ip-ranges-do-i-allow-through-firewall) beginning with the **Backend (private) Network** section.
-      - Add all the [locations within the region(s)](cs_regions.html#locations) that you are using
+      - Add all of the [locations within the regions](cs_regions.html#locations) that you are using
       - Note that you must add the dal01 location (data center)
       - Open ports 80 and 443 to allow the cluster bootstrapping process
 
