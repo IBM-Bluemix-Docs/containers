@@ -249,7 +249,7 @@ Review these situations in which you might need to open specific ports and IP ad
 </p>
 
   5. For private firewalls, allow the appropriate {{site.data.keyword.BluSoftlayer_notm}} private IP ranges. Consult [this link](https://knowledgelayer.softlayer.com/faq/what-ip-ranges-do-i-allow-through-firewall) beginning with the **Backend (private) Network** section.
-      - Add all the [locations within the region(s)](cs_regions.html#locations) that you are using
+      - Add all of the [locations within the regions](cs_regions.html#locations) that you are using
       - Note that you must add the dal01 location (data center)
       - Open ports 80 and 443 to allow the cluster bootstrapping process
 
@@ -399,19 +399,19 @@ To add network policies:
 
     3.  Enter the following information in the <code>calicoctl.cfg</code> file.
 
-      ```
-      apiVersion: v1
-      kind: calicoApiConfig
-      metadata:
-      spec:
-          etcdEndpoints: <ETCD_URL>
-          etcdKeyFile: <CERTS_DIR>/admin-key.pem
-          etcdCertFile: <CERTS_DIR>/admin.pem
-          etcdCACertFile: <CERTS_DIR>/<ca-*pem_file>
-      ```
-      {: pre}
+        ```
+        apiVersion: v1
+        kind: calicoApiConfig
+        metadata:
+        spec:
+            etcdEndpoints: <ETCD_URL>
+            etcdKeyFile: <CERTS_DIR>/admin-key.pem
+            etcdCertFile: <CERTS_DIR>/admin.pem
+            etcdCACertFile: <CERTS_DIR>/<ca-*pem_file>
+        ```
+        {: pre}
 
-        1.  Retrieve the `<ETCD_URL>`. If this command fails with a `calico-config not found` error, then see this (troubleshooting topic)[cs_troubleshoot.html#cs_calico_fails].
+        1.  Retrieve the `<ETCD_URL>`. If this command fails with a `calico-config not found` error, then see this [troubleshooting topic](cs_troubleshoot.html#cs_calico_fails).
 
           -   Linux and OS X:
 
