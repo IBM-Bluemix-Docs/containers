@@ -34,7 +34,7 @@ IBM Bluemix Container Service
         [Planning single and scalable containers](container_planning.html)
         [Security for single and scalable containers](container_security.html)
         [Setting up the CLI for single and scalable containers](container_cli_cfic_install.html)
-        [IBM images](container_images.html)
+        [IBM Images](../services/RegistryImages/index.html)
         [Running short-term tasks as containers](container_single_ui.html)
         [Running highly available groups](container_ha.html)
         [Storing persistent data for single and scalable containers](container_volumes_ov.html)
@@ -47,3 +47,4 @@ IBM Bluemix Container Service
     cs_troubleshoot.md
     cs_popular_topics.md
     {: .navgroup-end}
+

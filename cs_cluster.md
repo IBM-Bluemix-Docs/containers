@@ -1105,7 +1105,7 @@ Before you begin, [verify that you have been assigned the Administrator access p
 3.  Find the user for whom you want to change the access policy. If you do not find the user you are looking for, [invite this user to the {{site.data.keyword.Bluemix_notm}} account](#add_users).
 4.  From the **Actions** tab, click **Assign policy**.
 5.  From the **Service** drop-down list, select **{{site.data.keyword.containershort_notm}}**.
-6.  From the **Roles** drop-down list, select the access policy that you want to assign.Selecting a role without any limitations on a specific region or cluster automatically applies this access policy to all clusters that were created in this account. If you want to limit the access to a certain cluster or region, select them from the **Service instance** and **Region** drop-down list. To find a list of supported actions per access policy, see [Overview of required {{site.data.keyword.containershort_notm}} access policies and permissions](#access_ov). To find the ID of a specific cluster, run `bx cs clusters`.
+6.  From the **Roles** drop-down list, select the access policy that you want to assign. Selecting a role without any limitations on a specific region or cluster automatically applies this access policy to all clusters that were created in this account. If you want to limit the access to a certain cluster or region, select them from the **Service instance** and **Region** drop-down list. To find a list of supported actions per access policy, see [Overview of required {{site.data.keyword.containershort_notm}} access policies and permissions](#access_ov). To find the ID of a specific cluster, run `bx cs clusters`.
 7.  Click **Assign Policy** to save your changes.
 
 ### Adding users to a {{site.data.keyword.Bluemix_notm}} account
@@ -1121,15 +1121,17 @@ Before you begin, verify that you have been assigned the Manager Cloud Foundry r
 4.  In **Email address or existing IBMid**, enter the email address of the user that you want to add to the {{site.data.keyword.Bluemix_notm}} account.
 5.  In the **Access** section, expand **Identity and Access enabled services**.
 6.  From the **Services** drop-down list, select **{{site.data.keyword.containershort_notm}}**.
-7.  From the **Roles** drop-down list, select the access policy that you want to assign. Selecting a role without any limitations on a specific region or cluster automatically applies this access policy to all clusters that were created in this account. If you want to limit the access to a certain cluster or region, select them from the **Service instance** and **Region** drop-down list. To find a list of supported actions per access policy, see [Overview of required {{site.data.keyword.containershort_notm}} access policies and permissions](#access_ov). To find the ID of a specific cluster, run `bx cs clusters`.
-8.  Expand the **Cloud Foundry access** section and select the {{site.data.keyword.Bluemix_notm}} organization from the **Organization** drop-down list to which you want to add the user.
-9.  From the **Space Roles** drop-down list, select any role. Kubernetes clusters are independent from {{site.data.keyword.Bluemix_notm}} spaces. To allow this user to add additional users to a {{site.data.keyword.Bluemix_notm}} account, you must assign the user a Cloud Foundry **Org Role**. However, you can assign Cloud Foundry org roles in a later step only.
-10. Click **Invite users**.
-11. Optional: From the **Users** overview, in the **Actions** tab, select **Manage User**.
-12. Optional: In the **Cloud Foundry roles** section, find the Cloud Foundry organization role that was granted to the user that you added in the previous steps.
-13. Optional: From the **Actions** tab, select **Edit Organization Role**.
-14. Optional: From the **Organization Roles** drop-down list, select **Manager**.
-15. Optional: Click **Save Role**.
+7.  From the **Region** drop-down list, select a region. If the region you want is not listed and is [supported for {{site.data.keyword.containershort_notm}}](cs_regions.html), select **All regions**.
+8.  From the **Roles** drop-down list, select the access policy that you want to assign. Selecting a role without any limitations on a specific region or cluster automatically applies this access policy to all clusters that were created in this account. To limit the access to a certain cluster or region, select a value from the **Service instance** and **Region** drop-down lists. To find a list of supported actions per access policy, see [Overview of required {{site.data.keyword.containershort_notm}} access policies and permissions](#access_ov). To find the ID of a specific cluster, run `bx cs clusters`.
+9.  Expand the **Cloud Foundry access** section and select the {{site.data.keyword.Bluemix_notm}} organization from the **Organization** drop-down list to which you want to add the user.
+10.  From the **Space Roles** drop-down list, select any role. Kubernetes clusters are independent from {{site.data.keyword.Bluemix_notm}} spaces. 
+11. Click **Invite users**.
+12. Optional: To allow this user to add additional users to a {{site.data.keyword.Bluemix_notm}} account, assign the user a Cloud Foundry org role.
+    1. From the **Users** overview table, in the **Actions** column, select **Manage User**.
+    2. In the **Cloud Foundry roles** section, find the Cloud Foundry organization role that was granted to the user that you added in the previous steps.
+    3. From the **Actions** tab, select **Edit Organization Role**.
+    4. From the **Organization Roles** drop-down list, select **Manager**.
+    5. Click **Save Role**.
 
 <br />
 
@@ -1169,7 +1171,7 @@ Worker nodes can be updated to the Kubernetes version of the Kubernetes master. 
 
 **Attention**: Updating the worker node version can cause downtime for your apps and services. Data is deleted if not stored outside the pod. Use [replicas ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#replicas) in your deployments to allow pods to reschedule to available nodes.
 
-Some considerations for updating production-level clusters:
+Updating production-level clusters:
 - Use a test cluster to validate that your workloads and the delivery process are not impacted by the update. You cannot roll back worker nodes to a previous version.
 - Production-level clusters should have capacity to survive a worker node failure. If your cluster does not, add a worker node before updating the cluster.
 - The update process does not drain nodes prior to the update. Consider using [`drain` ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes-v1-4.github.io/docs/user-guide/kubectl/kubectl_drain/) and [`uncordon` ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes-v1-4.github.io/docs/user-guide/kubectl/kubectl_uncordon/) to help avoid downtime for your apps.
