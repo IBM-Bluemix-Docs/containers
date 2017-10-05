@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-09-26"
+lastupdated: "2017-10-05"
 
 ---
 
@@ -250,7 +250,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
   {: pre}
 
 
-### bx cs cluster-get CLUSTER
+### bx cs cluster-get CLUSTER [--showResources]
 {: #cs_cluster_get}
 
 View information about a cluster in your organization.
@@ -260,6 +260,9 @@ View information about a cluster in your organization.
    <dl>
    <dt><code><em>CLUSTER</em></code></dt>
    <dd>The name or ID of the cluster. This value is required.</dd>
+   
+   <dt><code><em>--showResources</em></code></dt>
+   <dd>Shows the VLANs and subnets for a cluster.</dd>
    </dl>
 
 **Example**:
