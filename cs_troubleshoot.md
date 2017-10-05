@@ -522,6 +522,8 @@ Open the following ports and IP addresses in your customized firewall.
       </tr>
       <tr>
          <td rowspan="2">AP South</td>
+         <td>mel01</td>
+         <td><code>168.1.97.67</code></td>
          <td>syd01</td>
          <td><code>168.1.8.195</code></td>
         </tr>

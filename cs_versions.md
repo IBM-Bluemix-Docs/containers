@@ -41,7 +41,7 @@ For more information on the updating process, see [Updating clusters](cs_cluster
 <tr>
 <td>Storage</td>
 <td>Update before master</td>
-<td>Configuration scripts with `hostPath` and `mountPath` with parent directory references like `../to/dir` are not allowed. Change paths to simple absolute paths, for example, `/path/to/dir`. 
+<td>Configuration scripts with `hostPath` and `mountPath` with parent directory references like `../to/dir` are not allowed. Change paths to simple absolute paths, for example, `/path/to/dir`.
 <ol>
   <li>Run this command to determine whether you need to update your storage paths.</br> ```kubectl get pods --all-namespaces -o yaml | grep "\.\." && echo "Action required"```</br></br>
 
@@ -58,7 +58,7 @@ For more information on the updating process, see [Updating clusters](cs_cluster
  <li>`create rolebinding`
  <li>`create clusterrolebinding`
  <li>`create secret`
- </ul> 
+ </ul>
 </br>  For example, run `kubectl create role --resource-name <x> --resource-name <y>` and not `kubectl create role --resource-name <x>,<y>`.</td>
 </tr>
 <tr>
@@ -79,7 +79,7 @@ For more information on the updating process, see [Updating clusters](cs_cluster
   <li>Run this command to determine whether you need to update your network policies.<br/>
   ```kubectl get ns -o yaml | grep "net.beta.kubernetes.io/network-policy" | grep "DefaultDeny" && echo "Action required"```
   <li>If `Action required` returns, add the following network policy to each Kubernetes namespace that was listed.<br/>
-    
+
   <pre class="codeblock">
   <code>
   kubectl create -n &lt;namespace&gt; -f - &lt;&lt;EOF  
@@ -87,13 +87,13 @@ For more information on the updating process, see [Updating clusters](cs_cluster
   apiVersion: networking.k8s.io/v1  
   metadata:  
     name: default-deny  
-    namespace: &lt;namespace&gt; 
+    namespace: &lt;namespace&gt;
   spec:  
-    podSelector:  
-  EOF 
-  </code> 
+    podSelector: {}
+  EOF
+  </code>
   </pre>
-  
+
   <li> With the network policy in place, remove the `net.beta.kubernetes.io/network-policy` annotation.
   ```
   kubectl annotate ns <namespace> --overwrite "net.beta.kubernetes.io/network-policy-"
