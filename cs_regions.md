@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-09-29"
+lastupdated: "2017-10-05"
 
 ---
 
@@ -19,22 +19,23 @@ lastupdated: "2017-09-29"
 {{site.data.keyword.Bluemix}} is hosted worldwide. A region is a geographic area that is accessed by an endpoint. Locations are data centers within the region. Services within {{site.data.keyword.Bluemix_notm}} might be available globally, or within a specific region.
 {:shortdesc}
 
+Supported regions:
+  * US South
+  * US East
+  * UK South
+  * EU Central
+  * AP South
+
 ## {{site.data.keyword.Bluemix_notm}} region API endpoints
 {: #bluemix_regions}
 
-You can organize your resources across {{site.data.keyword.Bluemix_notm}} services by using {{site.data.keyword.Bluemix_notm}} regions. For example, you can create a Kubernetes cluster using a private Docker image that is stored in your {{site.data.keyword.registryshort_notm}} of the same region.
+You can organize your resources across {{site.data.keyword.Bluemix_notm}} services by using {{site.data.keyword.Bluemix_notm}} regions. For example, you can create a Kubernetes cluster by using a private Docker image that is stored in your {{site.data.keyword.registryshort_notm}} of the same region.
 {:shortdesc}
 
 {{site.data.keyword.Bluemix_notm}} regions can be accessed by specifying the API endpoint when you log in. If you do not specify a region, you are automatically logged in to the region that is closest to you.
 
-{{site.data.keyword.Bluemix_notm}} region API endpoints:
-  * US South and US East: `api.ng.bluemix.net`
-  * Sydney: `api.au-syd.bluemix.net`
-  * Germany: `api.eu-de.bluemix.net`
-  * United Kingdom: `api.eu-gb.bluemix.net`
-<br>
+{{site.data.keyword.Bluemix_notm}} region API endpoints with example log in commands:
 
-Example commands to log in to {{site.data.keyword.Bluemix_notm}} regions:
   * US South and US East
       ```
       bx login -a api.ng.bluemix.net
@@ -77,7 +78,7 @@ By using {{site.data.keyword.containershort_notm}} regions, you can create or ac
 
 **Note:** US East is available for use with CLI commands only.
 
-### Logging in to a different container region
+### Logging in to a different container service region
 {: #container_login_endpoints}
 
 You might want to log in to another {{site.data.keyword.containershort_notm}} region for the following reasons:
@@ -118,19 +119,19 @@ Example commands to log in to a {{site.data.keyword.containershort_notm}} region
     ```
     {: pre}
 
-### Creating lite clusters in container regions
+### Creating lite clusters in container service regions
 {: #lite_regions}
 
-You can only create Kubernetes lite clusters in the following regions:
+You can create Kubernetes lite clusters in the following regions:
   * US South
   * UK South
   * EU Central
   * AP South
 
-### Locations in container regions
+### Locations available for the container service
 {: #locations}
 
-Locations are data centers within a region.
+Locations are data centers that are available within a region.
 
   | Region | Location | City |
   |--------|----------|------|
@@ -138,9 +139,9 @@ Locations are data centers within a region.
   | US East      | wdc06, wdc07        | Washington, DC |
   | UK South      | lon02, lon04         | London |
   | EU Central     | ams03, fra02        | Amsterdam, Frankfurt |
-  | AP South     | syd01, syd02        | Sydney |
+  | AP South     | mel01, syd01, syd02        | Melbourne, Sydney |
 
-### Using container API commands
+### Using container service API commands
 {: #container_api}
 
 To interact with the {{site.data.keyword.containershort_notm}} API, enter the command type and append `/v1/command` to the endpoint.
@@ -153,6 +154,10 @@ Example of `GET /clusters` API in US South:
 
 </br>
 
-To view documentation on the API commands, append `swagger-api` to the endpoint for the region you want to view. For example:
+To view documentation on the API commands, append `swagger-api` to the endpoint for the region to view.
+  * US South: https://us-south.containers.bluemix.net/swagger-api/
+  * US East: https://us-east.containers.bluemix.net/swagger-api/
+  * UK South: https://uk-south.containers.bluemix.net/swagger-api/
   * EU Central: https://eu-central.containers.bluemix.net/swagger-api/
-
+  * AP South: https://ap-south.containers.bluemix.net/swagger-api/
+  
