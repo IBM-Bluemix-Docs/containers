@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-10-05"
+lastupdated: "2017-10-06"
 
 ---
 
@@ -160,13 +160,15 @@ Review these situations in which you might need to open specific ports and IP ad
          <td><code>169.50.56.174</code></td>
       </tr>
       <tr>
-         <td rowspan="2">AP South</td>
+         <td rowspan="3">AP South</td>
          <td>mel01</td>
          <td><code>168.1.97.67</code></td>
+      <tr>
          <td>syd01</td>
          <td><code>168.1.8.195</code></td>
-        </tr>
-        <tr>
+      </tr>
+      </tr>
+      <tr>
          <td>syd04</td>
          <td><code>130.198.64.19</code></td>
       </tr>
@@ -338,7 +340,7 @@ Before you begin:
 3.  [Target the Kubernetes CLI to the cluster](cs_cli_install.html#cs_cli_configure). Include the `--admin` option with the `bx cs cluster-config` command, which is used to download the certificates and permission files. This download also includes the keys for the Administrator rbac role, which you need to run Calico commands.
 
   ```
-  bx cs cluster-config <cluster_name> 
+  bx cs cluster-config <cluster_name> --admin
   ```
   {: pre}
 
@@ -362,7 +364,7 @@ To add network policies:
             -   OS X:
 
               ```
-              mv /<path_to_file>/calico-darwin-amd64 /usr/local/bin/calicoctl
+              mv /<path_to_file>/calicoctl-darwin-amd64 /usr/local/bin/calicoctl
               ```
               {: pre}
 
@@ -385,7 +387,7 @@ To add network policies:
     1.  For Linux and OS X, create the '/etc/calico' directory. For Windows, any directory can be used.
 
       ```
-      mkdir -p /etc/calico/
+      sudo mkdir -p /etc/calico/
       ```
       {: pre}
 
@@ -411,7 +413,7 @@ To add network policies:
             etcdCertFile: <CERTS_DIR>/admin.pem
             etcdCACertFile: <CERTS_DIR>/<ca-*pem_file>
         ```
-        {: pre}
+        {: codeblock}
 
         1.  Retrieve the `<ETCD_URL>`. If this command fails with a `calico-config not found` error, then see this [troubleshooting topic](cs_troubleshoot.html#cs_calico_fails).
 
