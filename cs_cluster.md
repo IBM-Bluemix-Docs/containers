@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-10-05"
+lastupdated: "2017-10-06"
 
 ---
 
@@ -1147,9 +1147,9 @@ Kubernetes provides these update types:
 
 |Update type|Version label|Updated by|Impact
 |-----|-----|-----|-----|
-|Major|example: 1.x.x|User|Might involve changes to the operation of a cluster and might require changes to scripts or deployments|
-|Minor|example: x.5.x|User|Might involve changes to the operation of a cluster and might require changes to scripts or deployments
-|Patch|example: x.x.3|IBM|A small fix that is non-disruptive. A patch does not require changes to scripts or deployments|
+|Major|example: 1.x.x|User|Might involve changes to the operation of a cluster and might require changes to scripts or deployments.|
+|Minor|example: x.5.x|User|Might involve changes to the operation of a cluster and might require changes to scripts or deployments.
+|Patch|example: x.x.3|IBM/User|A small fix that is non-disruptive. A patch does not require changes to scripts or deployments. IBM updates masters automatically, but the user must update worker nodes to apply patches.|
 {: caption="Types of Kubernetes updates" caption-side="top"}
 
 
@@ -1239,7 +1239,7 @@ Before you begin, make sure that you can access the {{site.data.keyword.BluSoftl
 6.  Complete the questionnaire and click **Place order**.
 
     **Note:** Portable public IP addresses are charged on a monthly. If you choose to remove portable public IP addresses after you created them, you still must pay the monthly charge, even if you used them only part of the month.
-<!-- removed conref to test bx login -->
+
 7.  After the subnet is provisioned, make the subnet available to your Kubernetes cluster.
     1.  From the Infrastructure dashboard, select the subnet that you created and note the ID of the subnet.
     2.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI. To specify a {{site.data.keyword.Bluemix_notm}} region, [include the API endpoint](cs_regions.html#bluemix_regions).
@@ -1265,10 +1265,10 @@ Before you begin, make sure that you can access the {{site.data.keyword.BluSoftl
         ```
         {: pre}
 
-8.  Verify that the subnet was successfully added to your cluster. The cluster ID is listed in the **Bound Cluster** column.
+8.  Verify that the subnet was successfully added to your cluster. The subnet CIDR is listed in the **VLANs** section.
 
     ```
-    bx cs subnets
+    bx cs cluster-get --showResources <cluster name or id>
     ```
     {: pre}
 
@@ -1419,25 +1419,25 @@ Before you begin: Configure the routing of network traffic into and out of the e
 
 4. Add a private load balancer to access your app over the private network. If you want to use a private IP address from the subnet that you added, you must specify an IP address when you create a private load balancer. Otherwise, an IP address is chosen at random from the {{site.data.keyword.BluSoftlayer_notm}} subnets or user-provided subnets on the private VLAN. For more information See [Configuring access to an app](cs_apps.html#cs_apps_public_load_balancer).
 
-        Example configuration file for a private load balancer service with a specified IP address:
+    Example configuration file for a private load balancer service with a specified IP address:
         
-        ```
-        apiVersion: v1
-        kind: Service
-        metadata:
-          name: <myservice>
-          annotations: 
-            service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: private 
-        spec:
-          type: LoadBalancer
-          selector:
-            <selectorkey>:<selectorvalue>
-          ports:
-           - protocol: TCP
-             port: 8080
-          loadBalancerIP: <private_ip_address>
-        ```
-        {: codeblock}
+    ```
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: <myservice>
+      annotations: 
+        service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: private 
+    spec:
+      type: LoadBalancer
+      selector:
+        <selectorkey>:<selectorvalue>
+      ports:
+       - protocol: TCP
+         port: 8080
+      loadBalancerIP: <private_ip_address>
+    ```
+    {: codeblock}
 
 <br />
 
