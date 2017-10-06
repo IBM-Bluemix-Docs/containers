@@ -521,13 +521,15 @@ Open the following ports and IP addresses in your customized firewall.
          <td><code>169.50.56.174</code></td>
       </tr>
       <tr>
-         <td rowspan="2">AP South</td>
+         <td rowspan="3">AP South</td>
          <td>mel01</td>
          <td><code>168.1.97.67</code></td>
+      <tr>
          <td>syd01</td>
          <td><code>168.1.8.195</code></td>
-        </tr>
-        <tr>
+      </tr>
+      </tr>
+      <tr>
          <td>syd04</td>
          <td><code>130.198.64.19</code></td>
       </tr>
