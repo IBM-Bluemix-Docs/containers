@@ -1419,7 +1419,7 @@ Before you begin: Configure the routing of network traffic into and out of the e
 
 4. Add a private load balancer to access your app over the private network. If you want to use a private IP address from the subnet that you added, you must specify an IP address when you create a private load balancer. Otherwise, an IP address is chosen at random from the {{site.data.keyword.BluSoftlayer_notm}} subnets or user-provided subnets on the private VLAN. For more information See [Configuring access to an app](cs_apps.html#cs_apps_public_load_balancer).
 
-        Example configuration file for a private load balancer service with a specified IP address:
+Example configuration file for a private load balancer service with a specified IP address:
         
         ```
         apiVersion: v1

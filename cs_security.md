@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-10-05"
+lastupdated: "2017-10-06"
 
 ---
 
@@ -163,10 +163,12 @@ Review these situations in which you might need to open specific ports and IP ad
          <td rowspan="2">AP South</td>
          <td>mel01</td>
          <td><code>168.1.97.67</code></td>
+      <tr>
          <td>syd01</td>
          <td><code>168.1.8.195</code></td>
-        </tr>
-        <tr>
+      </tr>
+      </tr>
+      <tr>
          <td>syd04</td>
          <td><code>130.198.64.19</code></td>
       </tr>
@@ -338,7 +340,7 @@ Before you begin:
 3.  [Target the Kubernetes CLI to the cluster](cs_cli_install.html#cs_cli_configure). Include the `--admin` option with the `bx cs cluster-config` command, which is used to download the certificates and permission files. This download also includes the keys for the Administrator rbac role, which you need to run Calico commands.
 
   ```
-  bx cs cluster-config <cluster_name> 
+  bx cs cluster-config <cluster_name> --admin
   ```
   {: pre}
 
