@@ -1196,6 +1196,11 @@ Before you begin, install the version of the [`kubectl cli` ![External link icon
 
 5. Check the Kubernetes dashboard. If utilization graphs are not displaying in the Kubernetes dashboard, delete the `kube-dashboard` pod to force a restart. The pod will be re-created with RBAC policies to access heapster for utilization information.
 
+    ```
+    kubectl delete pod -n kube-system $(kubectl get pod -n kube-system --selector=k8s-app=kubernetes-dashboard -o jsonpath='{.items..metadata.name}')
+    ```
+    {: pre}
+
 When you complete the update, repeat the update process with other clusters. In addition, inform developers who work in the cluster to update their `kubectl` CLI to the version of the Kubernetes master.
 
 <br />
