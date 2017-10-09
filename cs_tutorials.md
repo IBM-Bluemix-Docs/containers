@@ -110,7 +110,7 @@ To install the CLIs:
             ```
             {: screen}
 
-        3.  Convert the binary file to an executable file.
+        3.  Make the file executable.
 
             ```
             chmod +x /usr/local/bin/kubectl
@@ -279,4 +279,3 @@ Great work! The cluster is created, configured, and your local environment is re
 * [Test your knowledge and take a quiz! ![External link icon](../icons/launch-glyph.svg "External link icon")](https://bluemix-quizzes.mybluemix.net/containers/cluster_tutorial/quiz.php)
 
 * Try the [Tutorial: Deploying apps into Kubernetes clusters in {{site.data.keyword.containershort_notm}}](cs_tutorials_apps.html#cs_apps_tutorial) to deploy the PR firm's app into the cluster that you created.
-
