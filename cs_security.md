@@ -368,7 +368,7 @@ To add network policies:
               ```
               {: pre}
 
-        2.  Convert the binary file to an executable.
+        2.  Make the file executable.
 
             ```
             chmod +x /usr/local/bin/calicoctl
