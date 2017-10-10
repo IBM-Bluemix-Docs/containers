@@ -20,6 +20,7 @@ lastupdated: "2017-09-25"
 {: #container_index}
 
 Manage highly available apps inside Docker containers and Kubernetes clusters on the {{site.data.keyword.IBM}} cloud. A container is a standard way to package an app and all its dependencies so that the app can be moved between environments and run without changes. Unlike virtual machines, containers do not bundle the operating system. Only the app code, run time, system tools, libraries, and settings are packaged inside the container, which makes a container more lightweight, portable, and efficient than a virtual machine.
+{:shortdesc}
 
 Click an option to get started:
 

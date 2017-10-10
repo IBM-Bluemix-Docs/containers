@@ -489,9 +489,9 @@ When you create a cluster, a non-expiring registry token is automatically create
 
 **Note:** By using this initial setup, you can deploy containers from any image that is available in a namespace in your {{site.data.keyword.Bluemix_notm}} account into the **default** namespace of your cluster. If you want to deploy a container into other namespaces of your cluster, or if you want to use an image that is stored in another {{site.data.keyword.Bluemix_notm}} region or in another {{site.data.keyword.Bluemix_notm}} account, you must [create your own imagePullSecret for your cluster](#bx_registry_other).
 
-To deploy a container into the **default** namespace of your cluster, create a deployment configuration script.
+To deploy a container into the **default** namespace of your cluster, create a configuration file.
 
-1.  Open your preferred editor and create a deployment configuration script that is named <em>mydeployment.yaml</em>.
+1.  Create a deployment configuration file that is named <em>mydeployment.yaml</em>.
 2.  Define the deployment and the image that you want to use from your namespace in {{site.data.keyword.registryshort_notm}}.
 
     To use a private image from a namespace in {{site.data.keyword.registryshort_notm}}:
@@ -523,7 +523,7 @@ To deploy a container into the **default** namespace of your cluster, create a d
     ```
     {: pre}
 
-    **Tip:** You can also deploy an existing configuration script, such as one of the IBM-provided public images. This example uses the **ibmliberty** image in the US-South region.
+    **Tip:** You can also deploy an existing configuration file, such as one of the IBM-provided public images. This example uses the **ibmliberty** image in the US-South region.
 
     ```
     kubectl apply -f https://raw.githubusercontent.com/IBM-{{site.data.keyword.Bluemix_notm}}/kube-samples/master/deploy-apps-clusters/deploy-ibmliberty.yaml
@@ -543,17 +543,17 @@ Before you begin:
 
 To create your own imagePullSecret:
 
-**Note:** ImagePullSecrets are valid only for the Kubernetes namespaces that they were created for. Repeat these steps for every namespace where you want to deploy containers from a private image.
+**Note:** ImagePullSecrets are valid only for the Kubernetes namespaces that they were created for. Repeat these steps for every namespace where you want to deploy containers. Images from [DockerHub](#dockerhub) do not require ImagePullSecrets.
 
-1.  If you do not have a token yet, [create a token for the registry that you want to access.](/docs/services/Registry/registry_tokens.html#registry_tokens_create)
-2.  List available tokens in your {{site.data.keyword.Bluemix_notm}} account.
+1.  If you do not have a token, [create a token for the registry that you want to access.](/docs/services/Registry/registry_tokens.html#registry_tokens_create)
+2.  List tokens in your {{site.data.keyword.Bluemix_notm}} account.
 
     ```
     bx cr token-list
     ```
     {: pre}
 
-3.  Note down the token ID that you want to use.
+3.  Note the token ID that you want to use.
 4.  Retrieve the value for your token. Replace <em>&lt;token_id&gt;</em> with the ID of the token that you retrieved in the previous step.
 
     ```
@@ -610,8 +610,10 @@ To create your own imagePullSecret:
     {: pre}
 
 7.  Create a pod that references the imagePullSecret.
-    1.  Open your preferred editor and create a pod configuration script that is named mypod.yaml.
-    2.  Define the pod and the imagePullSecret that you want to use to access the private {{site.data.keyword.Bluemix_notm}} registry. To use a private image from a namespace:
+    1.  Create a pod configuration file that is named `mypod.yaml`.
+    2.  Define the pod and the imagePullSecret that you want to use to access the private {{site.data.keyword.Bluemix_notm}} registry.
+
+        A private image from a namespace:
 
         ```
         apiVersion: v1
@@ -627,6 +629,22 @@ To create your own imagePullSecret:
         ```
         {: codeblock}
 
+        A {{site.data.keyword.Bluemix_notm}} public image:
+
+        ```
+        apiVersion: v1
+        kind: Pod
+        metadata:
+          name: <pod_name>
+        spec:
+          containers:
+            - name: <container_name>
+              image: registry.<region>.bluemix.net/
+          imagePullSecrets:
+            - name: <secret_name>
+        ```
+        {: codeblock}
+
         <table>
         <caption>Table 4. Understanding the YAML file components</caption>
         <thead>
@@ -636,10 +654,6 @@ To create your own imagePullSecret:
         <tr>
         <td><code><em>&lt;container_name&gt;</em></code></td>
         <td>The name of the container that you want to deploy to your cluster.</td>
-        </tr>
-        <tr>
-        <td><code><em>&lt;secret_name&gt;</em></code></td>
-        <td>The namespace where your image is stored. To list available namespaces, run `bx cr namespace-list`.</td>
         </tr>
         <tr>
         <td><code><em>&lt;my_namespace&gt;</em></code></td>
@@ -671,17 +685,17 @@ To create your own imagePullSecret:
 ### Accessing public images from Docker Hub
 {: #dockerhub}
 
-You can use any public image that is stored in Docker Hub to deploy a container to your cluster without any additional configuration. Create a deployment configuration script file or deploy an existing one.
+You can use any public image that is stored in Docker Hub to deploy a container to your cluster without any additional configuration.
 
 Before you begin:
 
 1.  [Create a cluster](#cs_cluster_cli).
 2.  [Target your CLI to your cluster](cs_cli_install.html#cs_cli_configure).
 
-Create a deployment configuration script.
+Create a deployment configuration file.
 
-1.  Open your preferred editor and create a deployment configuration script that is named mydeployment.yaml.
-2.  Define the deployment and the public image from Docker Hub that you want to use. The following configuration script uses the public NGINX image that is available on Docker Hub.
+1.  Create a configuration file that is named `mydeployment.yaml`.
+2.  Define the deployment and the public image from Docker Hub that you want to use. The following configuration file uses the public NGINX image that is available on Docker Hub.
 
     ```
     apiVersion: extensions/v1beta1
@@ -708,7 +722,7 @@ Create a deployment configuration script.
     ```
     {: pre}
 
-    **Tip:** Alternatively, deploy an existing configuration script. The following example uses the same public NGINX image, but applies it directly to your cluster.
+    **Tip:** Alternatively, deploy an existing configuration file. The following example uses the same public NGINX image, but applies it directly to your cluster.
 
     ```
     kubectl apply -f https://raw.githubusercontent.com/IBM-{{site.data.keyword.Bluemix_notm}}/kube-samples/master/deploy-apps-clusters/deploy-nginx.yaml
@@ -719,7 +733,7 @@ Create a deployment configuration script.
 ### Accessing private images that are stored in other private registries
 {: #private_registry}
 
-If you already have a private registry that you want to use, you must store the registry credentials in a Kubernetes imagePullSecret and reference this secret in your configuration script.
+If you already have a private registry that you want to use, you must store the registry credentials in a Kubernetes imagePullSecret and reference this secret in your configuration file.
 
 Before you begin:
 
@@ -777,7 +791,7 @@ To create an imagePullSecret:
     {: pre}
 
 3.  Create a pod that references the imagePullSecret.
-    1.  Open your preferred editor and create a pod configuration script that is named mypod.yaml.
+    1.  Create a pod configuration file that is named `mypod.yaml`.
     2.  Define the pod and the imagePullSecret that you want to use to access the private {{site.data.keyword.Bluemix_notm}} registry. To use a private image from your private registry:
 
         ```
@@ -1124,7 +1138,7 @@ Before you begin, verify that you have been assigned the Manager Cloud Foundry r
 7.  From the **Region** drop-down list, select a region. If the region you want is not listed and is [supported for {{site.data.keyword.containershort_notm}}](cs_regions.html), select **All regions**.
 8.  From the **Roles** drop-down list, select the access policy that you want to assign. Selecting a role without any limitations on a specific region or cluster automatically applies this access policy to all clusters that were created in this account. To limit the access to a certain cluster or region, select a value from the **Service instance** and **Region** drop-down lists. To find a list of supported actions per access policy, see [Overview of required {{site.data.keyword.containershort_notm}} access policies and permissions](#access_ov). To find the ID of a specific cluster, run `bx cs clusters`.
 9.  Expand the **Cloud Foundry access** section and select the {{site.data.keyword.Bluemix_notm}} organization from the **Organization** drop-down list to which you want to add the user.
-10.  From the **Space Roles** drop-down list, select any role. Kubernetes clusters are independent from {{site.data.keyword.Bluemix_notm}} spaces. 
+10.  From the **Space Roles** drop-down list, select any role. Kubernetes clusters are independent from {{site.data.keyword.Bluemix_notm}} spaces.
 11. Click **Invite users**.
 12. Optional: To allow this user to add additional users to a {{site.data.keyword.Bluemix_notm}} account, assign the user a Cloud Foundry org role.
     1. From the **Users** overview table, in the **Actions** column, select **Manage User**.
@@ -1195,6 +1209,11 @@ Before you begin, install the version of the [`kubectl cli` ![External link icon
     {: pre}
 
 5. Check the Kubernetes dashboard. If utilization graphs are not displaying in the Kubernetes dashboard, delete the `kube-dashboard` pod to force a restart. The pod will be re-created with RBAC policies to access heapster for utilization information.
+
+    ```
+    kubectl delete pod -n kube-system $(kubectl get pod -n kube-system --selector=k8s-app=kubernetes-dashboard -o jsonpath='{.items..metadata.name}')
+    ```
+    {: pre}
 
 When you complete the update, repeat the update process with other clusters. In addition, inform developers who work in the cluster to update their `kubectl` CLI to the version of the Kubernetes master.
 
@@ -1359,7 +1378,7 @@ If you have an existing subnet in your {{site.data.keyword.BluSoftlayer_notm}} p
     bx cs cluster-subnet-add mycluster 807861
     ```
     {: pre}
-    
+
 ### Adding user-managed subnets and IP addresses to Kubernetes clusters
 {: #user_subnet}
 
@@ -1378,12 +1397,12 @@ Before you begin: Configure the routing of network traffic into and out of the e
     bx cs cluster-get --showResources <cluster_name>
     ```
     {: pre}
-    
+
     ```
     VLANs
-    VLAN ID   Subnet CIDR         Is Public?   Is BYOIP?   
-    1555503   192.0.2.0/24        true         false 
-    1555505   198.51.100.0/24     false        false         
+    VLAN ID   Subnet CIDR         Is Public?   Is BYOIP?
+    1555503   192.0.2.0/24        true         false
+    1555505   198.51.100.0/24     false        false
     ```
     {: screen}
 
@@ -1400,19 +1419,19 @@ Before you begin: Configure the routing of network traffic into and out of the e
     bx cs cluster-user-subnet-add 203.0.113.0/24 1555505
     ```
     {: pre}
-    
+
 3. Verify that the user-provided subnet is added. The field **Is BYOIP?** is _true_.
 
     ```
     bx cs cluster-get --showResources <cluster_name>
     ```
     {: pre}
-    
+
     ```
     VLANs
     VLAN ID   Subnet CIDR         Is Public?   Is BYOIP?
-    1555503   192.0.2.0/24        true         false   
-    1555505   198.51.100.0/24     false        false   
+    1555503   192.0.2.0/24        true         false
+    1555505   198.51.100.0/24     false        false
     1555505   203.0.113.0/24      false        true
     ```
     {: screen}
@@ -1420,14 +1439,14 @@ Before you begin: Configure the routing of network traffic into and out of the e
 4. Add a private load balancer to access your app over the private network. If you want to use a private IP address from the subnet that you added, you must specify an IP address when you create a private load balancer. Otherwise, an IP address is chosen at random from the {{site.data.keyword.BluSoftlayer_notm}} subnets or user-provided subnets on the private VLAN. For more information See [Configuring access to an app](cs_apps.html#cs_apps_public_load_balancer).
 
     Example configuration file for a private load balancer service with a specified IP address:
-        
+
     ```
     apiVersion: v1
     kind: Service
     metadata:
       name: <myservice>
-      annotations: 
-        service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: private 
+      annotations:
+        service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: private
     spec:
       type: LoadBalancer
       selector:
@@ -1463,7 +1482,7 @@ To create a persistent volume and matching persistent volume claim, follow these
     2.  Click **Storage**.
     3.  Click **File Storage** and note the ID and path of the NFS file share that you want to use.
 2.  Open your preferred editor.
-3.  Create a storage configuration script for your persistent volume.
+3.  Create a storage configuration file for your persistent volume.
 
     ```
     apiVersion: v1
@@ -1530,7 +1549,7 @@ To create a persistent volume and matching persistent volume claim, follow these
     ```
     {: pre}
 
-6.  Create another configuration script to create your persistent volume claim. In order for the persistent volume claim to match the persistent volume object that you created earlier, you must choose the same value for `storage` and `accessMode`. The `storage-class` field must be empty. If any of these fields do not match the persistent volume, then a new persistent volume is created automatically instead.
+6.  Create another configuration file to create your persistent volume claim. In order for the persistent volume claim to match the persistent volume object that you created earlier, you must choose the same value for `storage` and `accessMode`. The `storage-class` field must be empty. If any of these fields do not match the persistent volume, then a new persistent volume is created automatically instead.
 
     ```
     kind: PersistentVolumeClaim
