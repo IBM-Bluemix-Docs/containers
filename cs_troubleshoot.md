@@ -493,6 +493,10 @@ Open the following ports and IP addresses in your customized firewall.
         <td>dal12</td>
         <td><code>169.47.70.10</code></td>
       </tr>
+       <tr>
+        <td>dal13</td>
+        <td><code>169.60.128.2</code></td>
+      </tr>
       <tr>
         <td rowspan="2">US East</td>
          <td>wdc06</td>
