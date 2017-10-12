@@ -485,13 +485,17 @@ Open the following ports and IP addresses in your customized firewall.
       </thead>
     <tbody>
       <tr>
-        <td rowspan="2">US South</td>
+        <td rowspan="3">US South</td>
         <td>dal10</td>
         <td><code>169.46.7.238</code></td>
        </tr>
        <tr>
         <td>dal12</td>
         <td><code>169.47.70.10</code></td>
+      </tr>
+       <tr>
+        <td>dal13</td>
+        <td><code>169.60.128.2</code></td>
       </tr>
       <tr>
         <td rowspan="2">US East</td>
