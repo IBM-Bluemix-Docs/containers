@@ -20,6 +20,7 @@ lastupdated: "2017-09-25"
 {: #container_index}
 
 Manage highly available apps inside Docker containers and Kubernetes clusters on the {{site.data.keyword.IBM}} cloud. A container is a standard way to package an app and all its dependencies so that the app can be moved between environments and run without changes. Unlike virtual machines, containers do not bundle the operating system. Only the app code, run time, system tools, libraries, and settings are packaged inside the container, which makes a container more lightweight, portable, and efficient than a virtual machine.
+{:shortdesc}
 
 Click an option to get started:
 
@@ -51,7 +52,7 @@ Good work! You created your first cluster!
 
 *   The lite cluster has one worker node with 2 CPU and 4 GB memory available for your apps to use.
 *   The worker node is centrally monitored and managed by a dedicated and highly available {{site.data.keyword.IBM_notm}}-owned Kubernetes master that controls and monitors all of the Kubernetes resources in the cluster. You can focus on your worker node and the apps that are deployed in the worker node without worrying about managing this master too.
-*   The resources that are required to run the cluster, such as VLANS and IP addresses, are managed in an {{site.data.keyword.IBM_notm}}-owned {{site.data.keyword.BluSoftlayer_full}} account. When you create a standard cluster, you manage these resources in your own {{site.data.keyword.BluSoftlayer_notm}} account. You can learn more about these resources when you create a standard cluster.
+*   The resources that are required to run the cluster, such as VLANS and IP addresses, are managed in an {{site.data.keyword.IBM_notm}}-owned IBM Bluemix Infrastructure (SoftLayer) account. When you create a standard cluster, you manage these resources in your own IBM Bluemix Infrastructure (SoftLayer) account. You can learn more about these resources when you create a standard cluster.
 *   **Tip:** Lite clusters that are created with a {{site.data.keyword.Bluemix_notm}} free trial account are automatically removed after the free trial period ends, unless you [upgrade to a {{site.data.keyword.Bluemix_notm}} Pay-As-You-Go account](/docs/pricing/billable.html#upgradetopayg).
 
 
@@ -102,4 +103,3 @@ When the cluster is up and running, you can check out the following tasks.
 * [Deploy an app to your cluster.](cs_apps.html#cs_apps_cli)
 * [Add {{site.data.keyword.Bluemix_notm}} services to your cluster.](cs_cluster.html#binding_dedicated)
 * [Learn about the differences between clusters in {{site.data.keyword.Bluemix_notm}} Dedicated and Public.](cs_ov.html#env_differences)
-
