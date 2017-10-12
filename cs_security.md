@@ -56,7 +56,7 @@ Review the built-in Kubernetes master security features to protect the Kubernete
 
 <dl>
   <dt>Fully managed and dedicated Kubernetes master</dt>
-    <dd>Every Kubernetes cluster in {{site.data.keyword.containershort_notm}} is controlled by a dedicated Kubernetes master that is managed by IBM in an IBM-owned {{site.data.keyword.BluSoftlayer_full}} account. The Kubernetes master is set up with the following dedicated components that are not shared with other IBM customers.
+    <dd>Every Kubernetes cluster in {{site.data.keyword.containershort_notm}} is controlled by a dedicated Kubernetes master that is managed by IBM in an IBM-owned IBM Bluemix Infrastructure (SoftLayer) account. The Kubernetes master is set up with the following dedicated components that are not shared with other IBM customers.
     <ul><li>etcd data store: Stores all Kubernetes resources of a cluster, such as Services, Deployments, and Pods. Kubernetes ConfigMaps and Secrets are app data that are stored as key value pairs so that they can be used by an app that runs in a pod. Data in etcd is stored on an encrypted disk that is managed by IBM and is encrypted via TLS when sent to a pod to assure data protection and integrity.</li>
     <li>kube-apiserver: Serves as the main entry point for all requests from the worker node to the Kubernetes master. The kube-apiserver validates and processes requests and can read from and write to the etcd data store.</li>
     <li>kube-scheduler: Decides where to deploy pods, taking into account capacity and performance needs, hardware and software policy constraints, anti-affinity specifications, and workload requirements. If no worker node can be found that matches the requirements, the pod is not deployed in the cluster.</li>
@@ -83,13 +83,13 @@ Review the built-in worker node security features to protect the worker node env
 
 <dl>
   <dt>Compute, network and storage infrastructure isolation</dt>
-    <dd>When you create a cluster, virtual machines are provisioned as worker nodes in the customer {{site.data.keyword.BluSoftlayer_notm}} account or in the dedicated {{site.data.keyword.BluSoftlayer_notm}} account by IBM. Worker nodes are dedicated to a cluster and do not host workloads of other clusters.</br> Every {{site.data.keyword.Bluemix_notm}} account is set up with {{site.data.keyword.BluSoftlayer_notm}} VLANs to assure quality network performance and isolation on the worker nodes. </br>To persist data in your cluster, you can provision dedicated NFS based file storage from {{site.data.keyword.BluSoftlayer_notm}} and leverage the built-in data security features of that platform.</dd>
+    <dd>When you create a cluster, virtual machines are provisioned as worker nodes in the customer IBM Bluemix Infrastructure (SoftLayer) account or in the dedicated IBM Bluemix Infrastructure (SoftLayer) account by IBM. Worker nodes are dedicated to a cluster and do not host workloads of other clusters.</br> Every {{site.data.keyword.Bluemix_notm}} account is set up with IBM Bluemix Infrastructure (SoftLayer) VLANs to assure quality network performance and isolation on the worker nodes. </br>To persist data in your cluster, you can provision dedicated NFS based file storage from IBM Bluemix Infrastructure (SoftLayer) and leverage the built-in data security features of that platform.</dd>
   <dt>Secured worker node set up</dt>
     <dd>Every worker node is set up with an Ubuntu operating system that cannot be changed by the user. To protect the operating system of the worker nodes from potential attacks, every worker node is configured with expert firewall settings that are enforced by Linux iptable rules.</br> All containers that run on Kubernetes are protected by predefined Calico network policy settings that are configured on every worker node during cluster creation. This set up assures secure network communication between worker nodes and pods. To further restrict the actions that a container can perform on the worker node, users can choose to configure [AppArmor policies ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tutorials/clusters/apparmor/) on the worker nodes.</br> By default, SSH access for the root user is disabled on the worker node. If you want to install additional features on your worker node, you can use [Kubernetes daemon sets ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset) for everything that you want to run on every worker node, or [Kubernetes jobs ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/) for any one-time action you must execute.</dd>
   <dt>Kubernetes worker node security compliance</dt>
-    <dd>IBM works with security advisory teams internally and externally to identify potential security compliance issues for worker nodes and continuously releases compliance updates and security patches to address any vulnerabilities that are found. Updates and security patches are automatically deployed to the operating system of the worker node by IBM. To do that, IBM maintains SSH access to the worker nodes.</br> <b>Note</b>: Some updates require a worker node reboot. However, IBM does not reboot worker nodes during the installation of updates or security patches. Users are advised to reboot worker nodes on a regular basis to ensure that the installation of updates and security patches can finish.</dd>
-  <dt>Support for SoftLayer network firewalls</dt>
-    <dd>{{site.data.keyword.containershort_notm}} is compatible with all [{{site.data.keyword.BluSoftlayer_notm}} firewall offerings ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/cloud-computing/bluemix/network-security). On {{site.data.keyword.Bluemix_notm}} Public, you can set up a firewall with custom network policies to provide dedicated network security for your cluster and to detect and remediate network intrusion. For example, you might choose to set up a [Vyatta ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/topic/vyatta-1) to act as your firewall and block unwanted traffic. When you set up a firewall, [you must also open up the required ports and IP addresses](#opening_ports) for each region so that the master and the worker nodes can communicate. On {{site.data.keyword.Bluemix_notm}} Dedicated, firewalls, DataPower, Fortigate, and DNS are already configured as part of the standard dedicated environment deployment.</dd>
+    <dd>IBM works with internal and external security advisory teams to address potential security compliance vulnerabilities. IBM maintains SSH access to the worker nodes in order to deploy updates and security patches to the operating system.</br> <b>Important</b>: Reboot your worker nodes on a regular basis to ensure the installation of the updates and security patches that are automatically deployed to the operating system. IBM does not reboot your worker nodes.</dd>
+  <dt>Support for IBM Bluemix Infrastructure (SoftLayer) network firewalls</dt>
+    <dd>{{site.data.keyword.containershort_notm}} is compatible with all [IBM Bluemix Infrastructure (SoftLayer) firewall offerings ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/cloud-computing/bluemix/network-security). On {{site.data.keyword.Bluemix_notm}} Public, you can set up a firewall with custom network policies to provide dedicated network security for your cluster and to detect and remediate network intrusion. For example, you might choose to set up a [Vyatta ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/topic/vyatta-1) to act as your firewall and block unwanted traffic. When you set up a firewall, [you must also open up the required ports and IP addresses](#opening_ports) for each region so that the master and the worker nodes can communicate. On {{site.data.keyword.Bluemix_notm}} Dedicated, firewalls, DataPower, Fortigate, and DNS are already configured as part of the standard dedicated environment deployment.</dd>
   <dt>Keep services private or selectively expose services and apps to the public internet</dt>
     <dd>You can choose to keep your services and apps private and leverage the built-in security features described in this topic to assure secured communication between worker nodes and pods. To expose services and apps to the public internet, you can leverage the Ingress and load balancer support to securely make your services publicly available.</dd>
   <dt>Securely connect your worker nodes and apps to an on-premise data center</dt>
@@ -102,7 +102,7 @@ Review the built-in worker node security features to protect the worker node env
 {: #opening_ports}
 
 Review these situations in which you might need to open specific ports and IP addresses in your firewalls:
-* To allow communication between the Kubernetes master and the worker nodes when either a firewall is set up for the worker nodes or the firewall settings are customized in your {{site.data.keyword.BluSoftlayer_notm}} account
+* To allow communication between the Kubernetes master and the worker nodes when either a firewall is set up for the worker nodes or the firewall settings are customized in your IBM Bluemix Infrastructure (SoftLayer) account
 * To access the load balancer or Ingress controller from outside of the cluster
 * To run `kubectl` commands from your local system when corporate network policies prevent access to public internet endpoints via proxies or firewalls
 
@@ -252,7 +252,7 @@ Review these situations in which you might need to open specific ports and IP ad
       </table>
 </p>
 
-  5. For private firewalls, allow the appropriate {{site.data.keyword.BluSoftlayer_notm}} private IP ranges. Consult [this link](https://knowledgelayer.softlayer.com/faq/what-ip-ranges-do-i-allow-through-firewall) beginning with the **Backend (private) Network** section.
+  5. For private firewalls, allow the appropriate IBM Bluemix Infrastructure (SoftLayer) private IP ranges. Consult [this link](https://knowledgelayer.softlayer.com/faq/what-ip-ranges-do-i-allow-through-firewall) beginning with the **Backend (private) Network** section.
       - Add all of the [locations within the regions](cs_regions.html#locations) that you are using
       - Note that you must add the dal01 location (data center)
       - Open ports 80 and 443 to allow the cluster bootstrapping process
@@ -318,7 +318,7 @@ Note that a policy to allow SSH does not exist, so SSH access by way of the publ
    </tr>
    <tr>
       <td><code>allow-sys-mgmt</code></td>
-      <td>Allows incoming connections for specific {{site.data.keyword.BluSoftlayer_notm}} systems that are used to manage the worker nodes.</td>
+      <td>Allows incoming connections for specific IBM Bluemix Infrastructure (SoftLayer) systems that are used to manage the worker nodes.</td>
    </tr>
    <tr>
     <td><code>allow-vrrp</code></td>
@@ -368,7 +368,7 @@ To add network policies:
               ```
               {: pre}
 
-        2.  Convert the binary file to an executable.
+        2.  Make the file executable.
 
             ```
             chmod +x /usr/local/bin/calicoctl
@@ -474,7 +474,7 @@ To add network policies:
             -   Linux and OS X:
 
               ```
-              ls `dirname $KUBECONFIG` | grep ca-*.pem
+              ls `dirname $KUBECONFIG` | grep "ca-"
               ```
               {: pre}
 
