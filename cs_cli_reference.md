@@ -177,7 +177,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 <dt><code>--location <em>LOCATION</em></code></dt>
 <dd>The location where you want to create the cluster. The locations that are available to you depend on the {{site.data.keyword.Bluemix_notm}} region you are logged in to. Select the region that is physically closest to you for best performance.  This value is required for standard clusters and is optional for lite clusters.
 
-<p>Available locations are:<ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul><li>US-East<ul><li>wdc06 [Washington DC]</li><li>wdc07 [Washington DC]<p><strong>Note:</strong> US-East is available for use with CLI commands only.</p></li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>fra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul>
+<p>Available locations are:<ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li><li>dal13 [Dallas]</li></ul><li>US-East<ul><li>wdc06 [Washington DC]</li><li>wdc07 [Washington DC]<p><strong>Note:</strong> US-East is available for use with CLI commands only.</p></li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>fra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>mel01 [Melbourne]<li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul>
 </p>
 
 <p><strong>Note:</strong> When you select a location that is located outside your country, keep in mind that you might require legal authorization before data can be physically stored in a foreign country.</p>
@@ -190,7 +190,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 <dd>The name for the cluster.  This value is required.</dd>
 
 <dt><code>--no-subnet</code></dt>
-<dd>Include the flag to create a cluster without a portable subnet. The default is to not use the flag and to create a subnet in your {{site.data.keyword.BluSoftlayer_full}} portfolio. This value is optional.</dd>
+<dd>Include the flag to create a cluster without a portable subnet. The default is to not use the flag and to create a subnet in your IBM Bluemix Infrastructure (SoftLayer) portfolio. This value is optional.</dd>
 
 <dt><code>--private-vlan <em>PRIVATE_VLAN</em></code></dt>
 <dd>
@@ -198,7 +198,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 <ul>
 <li>This parameter is not available for lite clusters.</li>
 <li>If this standard cluster is the first standard cluster that you create in this location, do not include this flag. A private VLAN is created for you when the clusters is created.</li>
-<li>If you created a standard cluster before in this location or created a private VLAN in {{site.data.keyword.BluSoftlayer_notm}} before, you must specify that private VLAN.
+<li>If you created a standard cluster before in this location or created a private VLAN in IBM Bluemix Infrastructure (SoftLayer) before, you must specify that private VLAN.
 
 <p><strong>Note:</strong> The public and private VLANs that you specify with the create command must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></li>
 </ul>
@@ -210,7 +210,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 <ul>
 <li>This parameter is not available for lite clusters.</li>
 <li>If this standard cluster is the first standard cluster that you create in this location, do not use this flag. A public VLAN is created for you when the cluster is created.</li>
-<li>If you created a standard cluster before in this location or created a public VLAN in {{site.data.keyword.BluSoftlayer_notm}} before, you must specify that public VLAN.
+<li>If you created a standard cluster before in this location or created a public VLAN in IBM Bluemix Infrastructure (SoftLayer) before, you must specify that public VLAN.
 
 <p><strong>Note:</strong> The public and private VLANs that you specify with the create command must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></li>
 </ul>
@@ -260,7 +260,7 @@ View information about a cluster in your organization.
    <dl>
    <dt><code><em>CLUSTER</em></code></dt>
    <dd>The name or ID of the cluster. This value is required.</dd>
-   
+
    <dt><code><em>--showResources</em></code></dt>
    <dd>Shows the VLANs and subnets for a cluster.</dd>
    </dl>
@@ -381,7 +381,7 @@ List the services that are bound to one or all of the Kubernetes namespace in a 
 ### bx cs cluster-subnet-add CLUSTER SUBNET
 {: #cs_cluster_subnet_add}
 
-Make a subnet in a {{site.data.keyword.BluSoftlayer_notm}} account available to a specified cluster.
+Make a subnet in an IBM Bluemix Infrastructure (SoftLayer) account available to a specified cluster.
 
 **Note:** When you make a subnet available to a cluster, IP addresses of this subnet are used for cluster networking purposes. To avoid IP address conflicts, make sure that you use a subnet with one cluster only. Do not use a subnet for multiple clusters or for other purposes outside of {{site.data.keyword.containershort_notm}} at the same time.
 
@@ -408,7 +408,7 @@ Make a subnet in a {{site.data.keyword.BluSoftlayer_notm}} account available to 
 
 Bring your own private subnet to your {{site.data.keyword.containershort_notm}} clusters.
 
-This private subnet is not one provided by {{site.data.keyword.BluSoftlayer_notm}}. As such, you must configure any inbound and outbound network traffic routing for the subnet. To add a {{site.data.keyword.BluSoftlayer_notm}} subnet, use the `bx cs cluster-subnet-add` [command](#cs_cluster_subnet_add).
+This private subnet is not one provided by IBM Bluemix Infrastructure (SoftLayer). As such, you must configure any inbound and outbound network traffic routing for the subnet. To add an IBM Bluemix Infrastructure (SoftLayer) subnet, use the `bx cs cluster-subnet-add` [command](#cs_cluster_subnet_add).
 
 **Note**: When you add a private user subnet to a cluster, IP addresses of this subnet are used for private Load Balancers in the cluster. To avoid IP address conflicts, make sure that you use a subnet with one cluster only. Do not use a subnet for multiple clusters or for other purposes outside of {{site.data.keyword.containershort_notm}} at the same time.
 
@@ -419,7 +419,7 @@ This private subnet is not one provided by {{site.data.keyword.BluSoftlayer_notm
    <dd>The name or ID of the cluster. This value is required.</dd>
 
    <dt><code><em>SUBNET_CIDR</em></code></dt>
-   <dd>The subnet Classless InterDomain Routing (CIDR). This value is required, and must not conflict with any subnet that is used by {{site.data.keyword.BluSoftlayer_notm}}.
+   <dd>The subnet Classless InterDomain Routing (CIDR). This value is required, and must not conflict with any subnet that is used by IBM Bluemix Infrastructure (SoftLayer).
 
    Supported prefixes range from `/30` (1 IP address) to `/24` (253 IP addresses). If you set the CIDR at one prefix length and later need to change it, first add the new CIDR, then [remove the old CIDR](#cs_cluster_user_subnet_rm).</dd>
 
@@ -507,33 +507,33 @@ View a list of clusters in your organization.
 ### bx cs credentials-set --infrastructure-api-key API_KEY --infrastructure-username USERNAME
 {: #cs_credentials_set}
 
-Set {{site.data.keyword.BluSoftlayer_notm}} account credentials for your {{site.data.keyword.Bluemix_notm}} account. These credentials allow you to access the {{site.data.keyword.BluSoftlayer_notm}} portfolio through your {{site.data.keyword.Bluemix_notm}} account.
+Set IBM Bluemix Infrastructure (SoftLayer) account credentials for your {{site.data.keyword.Bluemix_notm}} account. These credentials allow you to access the IBM Bluemix Infrastructure (SoftLayer) portfolio through your {{site.data.keyword.Bluemix_notm}} account.
 
-**Note:** Do not set multiple credentials for one {{site.data.keyword.Bluemix_notm}} account. Every {{site.data.keyword.Bluemix_notm}} account is linked to one {{site.data.keyword.BluSoftlayer_notm}} portfolio only.
+**Note:** Do not set multiple credentials for one {{site.data.keyword.Bluemix_notm}} account. Every {{site.data.keyword.Bluemix_notm}} account is linked to one IBM Bluemix Infrastructure (SoftLayer) portfolio only.
 
 <strong>Command options</strong>:
 
    <dl>
    <dt><code>--infrastructure-username <em>USERNAME</em></code></dt>
-   <dd>A {{site.data.keyword.BluSoftlayer_notm}} account username. This value is required.</dd>
+   <dd>IBM Bluemix Infrastructure (SoftLayer) account username. This value is required.</dd>
    </dl>
 
    <dt><code>--infrastructure-api-key <em>API_KEY</em></code></dt>
-   <dd>A {{site.data.keyword.BluSoftlayer_notm}} account API key. This value is required.
+   <dd>IBM Bluemix Infrastructure (SoftLayer) account API key. This value is required.
 
  <p>
   To generate an API key:
 
   <ol>
-  <li>Log in to the [{{site.data.keyword.BluSoftlayer_notm}} portal ![External link icon](../icons/launch-glyph.svg "External link icon")](https://control.softlayer.com/).</li>
+  <li>Log in to the [IBM Bluemix Infrastructure (SoftLayer) portal ![External link icon](../icons/launch-glyph.svg "External link icon")](https://control.softlayer.com/).</li>
   <li>Select <strong>Account</strong>, and then <strong>Users</strong>.</li>
-  <li>Click <strong>Generate</strong> to generate a {{site.data.keyword.BluSoftlayer_notm}} API key for your account.</li>
+  <li>Click <strong>Generate</strong> to generate an IBM Bluemix Infrastructure (SoftLayer) API key for your account.</li>
   <li>Copy the API key to use in this command.</li>
   </ol>
 
   To view your existing API key:
   <ol>
-  <li>Log in to the [{{site.data.keyword.BluSoftlayer_notm}} portal ![External link icon](../icons/launch-glyph.svg "External link icon")](https://control.softlayer.com/).</li>
+  <li>Log in to the [IBM Bluemix Infrastructure (SoftLayer)portal ![External link icon](../icons/launch-glyph.svg "External link icon")](https://control.softlayer.com/).</li>
   <li>Select <strong>Account</strong>, and then <strong>Users</strong>.</li>
   <li>Click <strong>View</strong> to see your existing API key.</li>
   <li>Copy the API key to use in this command.</li>
@@ -550,7 +550,7 @@ Set {{site.data.keyword.BluSoftlayer_notm}} account credentials for your {{site.
 ### bx cs credentials-unset
 {: #cs_credentials_unset}
 
-Remove {{site.data.keyword.BluSoftlayer_notm}} account credentials from your {{site.data.keyword.Bluemix_notm}} account. After removing the credentials, you cannot access the {{site.data.keyword.BluSoftlayer_notm}} portfolio through your {{site.data.keyword.Bluemix_notm}} account anymore.
+Remove IBM Bluemix Infrastructure (SoftLayer) account credentials from your {{site.data.keyword.Bluemix_notm}} account. After removing the credentials, you cannot access the IBM Bluemix Infrastructure (SoftLayer) portfolio through your {{site.data.keyword.Bluemix_notm}} account anymore.
 
 <strong>Command options</strong>:
 
@@ -656,7 +656,7 @@ View a list of available machine types for your worker nodes. Each machine type 
 
    <dl>
    <dt><em>LOCATION</em></dt>
-   <dd>Enter the location where you want to list available machine types.  This value is required. Available locations are: <ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul><li>US-East<ul><li>wdc06 [Washington DC]</li><li>wdc07 [Washington DC]<p><strong>Note:</strong> US-East is available for use with CLI commands only.</p></li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>fra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul></dd></dl>
+   <dd>Enter the location where you want to list available machine types.  This value is required. Available locations are: <ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li><li>dal13 [Dallas]</li></ul><li>US-East<ul><li>wdc06 [Washington DC]</li><li>wdc07 [Washington DC]<p><strong>Note:</strong> US-East is available for use with CLI commands only.</p></li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>fra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>mel01 [Melbourne]<li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul></dd></dl>
 
 **Example**:
 
@@ -669,7 +669,7 @@ View a list of available machine types for your worker nodes. Each machine type 
 ### bx cs subnets
 {: #cs_subnets}
 
-View a list of subnets that are available in a {{site.data.keyword.BluSoftlayer_notm}} account.
+View a list of subnets that are available in an IBM Bluemix Infrastructure (SoftLayer) account.
 
 <strong>Command options</strong>:
 
@@ -686,13 +686,13 @@ View a list of subnets that are available in a {{site.data.keyword.BluSoftlayer_
 ### bx cs vlans LOCATION
 {: #cs_vlans}
 
-List the public and private VLANs that are available for a location in your {{site.data.keyword.BluSoftlayer_notm}} account. To list available VLANs, you must have a paid account.
+List the public and private VLANs that are available for a location in your IBM Bluemix Infrastructure (SoftLayer) account. To list available VLANs, you must have a paid account.
 
 <strong>Command options</strong>:
 
    <dl>
    <dt>LOCATION</dt>
-   <dd>Enter the location where you want to list your private and public VLANs. This value is required. Available locations are: <ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul><li>US-East<ul><li>wdc06 [Washington DC]</li><li>wdc07 [Washington DC]<p><strong>Note:</strong> US-East is available for use with CLI commands only.</p></li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>fra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul></dd>
+   <dd>Enter the location where you want to list your private and public VLANs. This value is required. Available locations are: <ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li><li>dal13 [Dallas]</li></ul><li>US-East<ul><li>wdc06 [Washington DC]</li><li>wdc07 [Washington DC]<p><strong>Note:</strong> US-East is available for use with CLI commands only.</p></li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>fra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>mel01 [Melbourne]<li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul></dd>
    </dl>
 
 **Example**:
@@ -989,5 +989,5 @@ You can view the current cluster state by running the bx cs clusters command and
 |Pending|The Kubernetes master is deployed. The worker nodes are being provisioned and are not available in the cluster yet. You can access the cluster, but you cannot deploy apps to the cluster.|
 |Normal|All worker nodes in a cluster are up and running. You can access the cluster and deploy apps to the cluster.|
 |Warning|At least one worker node in the cluster is not available, but other worker nodes are available and can take over the workload. <ol><li>List the worker nodes in your cluster and note the ID of the worker nodes that show a <strong>Warning</strong> state.<pre class="pre"><code>bx cs workers &lt;cluster_name_or_id&gt;</code></pre><li>Get the details for a worker node.<pre class="pre"><code>bx cs worker-get &lt;worker_id&gt;</code></pre><li>Review the <strong>State</strong>, <strong>Status</strong>, and <strong>Details</strong> fields to find the root problem for why the worker node is down.</li><li>If your worker node almost reached the memory or disk space limit, reduce work load on your worker node or add a worker node to your cluster to help load balance the work load.</li></ol>|
-|Critical|The Kubernetes master cannot be reached or all worker nodes in the cluster are down. <ol><li>List the worker nodes in your cluster.<pre class="pre"><code>bx cs workers &lt;cluser_name_or_id&gt;</code></pre><li>Get the details for each worker node.<pre class="pre"><code>bx cs worker-get &lt;worker_id&gt;</code></pre></li><li>Review the <strong>State</strong>, <strong>Status</strong>, and <strong>Details</strong> field to find the root problem for why the worker node is down.</li><li>If the worker node state shows <strong>Provision_failed</strong>, you might not have the required permissions to provision a worker node from the {{site.data.keyword.BluSoftlayer_notm}} portfolio. To find the required permissions, see [Configure access to the {{site.data.keyword.BluSoftlayer_notm}} portfolio to create standard Kubernetes clusters](cs_planning.html#cs_planning_unify_accounts).</li><li>If the worker node state shows <strong>Critical</strong> and the worker node status shows <strong>Out of disk</strong>, then your worker node ran out of capacity. You can either reduce work load on your worker node or add a worker node to your cluster to help load balance the work load.</li><li>If the worker node state shows <strong>Critical</strong> and the worker node status shows <strong>Unknown</strong>, then the Kubernetes master is not available. Contact {{site.data.keyword.Bluemix_notm}} support by opening a [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/support/index.html#contacting-support).</li></ol>|
+|Critical|The Kubernetes master cannot be reached or all worker nodes in the cluster are down. <ol><li>List the worker nodes in your cluster.<pre class="pre"><code>bx cs workers &lt;cluser_name_or_id&gt;</code></pre><li>Get the details for each worker node.<pre class="pre"><code>bx cs worker-get &lt;worker_id&gt;</code></pre></li><li>Review the <strong>State</strong>, <strong>Status</strong>, and <strong>Details</strong> field to find the root problem for why the worker node is down.</li><li>If the worker node state shows <strong>Provision_failed</strong>, you might not have the required permissions to provision a worker node from the IBM Bluemix Infrastructure (SoftLayer) portfolio. To find the required permissions, see [Configure access to the IBM Bluemix Infrastructure (SoftLayer) portfolio to create standard Kubernetes clusters](cs_planning.html#cs_planning_unify_accounts).</li><li>If the worker node state shows <strong>Critical</strong> and the worker node status shows <strong>Out of disk</strong>, then your worker node ran out of capacity. You can either reduce work load on your worker node or add a worker node to your cluster to help load balance the work load.</li><li>If the worker node state shows <strong>Critical</strong> and the worker node status shows <strong>Unknown</strong>, then the Kubernetes master is not available. Contact {{site.data.keyword.Bluemix_notm}} support by opening a [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/support/index.html#contacting-support).</li></ol>|
 {: caption="Table 3. Cluster states" caption-side="top"}
