@@ -105,7 +105,7 @@ To install the CLIs:
             ```
             {: screen}
 
-        3.  Convert the binary file to an executable.
+        3.  Make the file executable.
 
             ```
             chmod +x /usr/local/bin/kubectl
@@ -313,7 +313,7 @@ To update the CLIs:
             ```
             {: screen}
 
-        3.  Convert the binary file to an executable.
+        3.  Make the file executable.
 
             ```
             chmod +x /usr/local/bin/kubectl
@@ -800,4 +800,3 @@ Use the following steps if you want to refresh your IAM token.
     You can find your new IAM token in the **access_token**, and the IAM refresh token in the **refresh_token** field of your API output.
 
 2.  Continue working with the [{{site.data.keyword.containershort_notm}} API documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://us-south.containers.bluemix.net/swagger-api) by using the token from the previous step.
-

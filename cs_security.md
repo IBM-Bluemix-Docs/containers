@@ -132,6 +132,10 @@ Review these situations in which you might need to open specific ports and IP ad
         <td>dal12</td>
         <td><code>169.47.70.10</code></td>
       </tr>
+       <tr>
+        <td>dal13</td>
+        <td><code>169.60.128.2</code></td>
+      </tr>
       <tr>
         <td rowspan="2">US East</td>
          <td>wdc06</td>
@@ -368,7 +372,7 @@ To add network policies:
               ```
               {: pre}
 
-        2.  Convert the binary file to an executable.
+        2.  Make the file executable.
 
             ```
             chmod +x /usr/local/bin/calicoctl
@@ -474,7 +478,7 @@ To add network policies:
             -   Linux and OS X:
 
               ```
-              ls `dirname $KUBECONFIG` | grep ca-*.pem
+              ls `dirname $KUBECONFIG` | grep "ca-"
               ```
               {: pre}
 
