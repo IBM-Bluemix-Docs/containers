@@ -87,7 +87,7 @@ Review the built-in worker node security features to protect the worker node env
   <dt>Secured worker node set up</dt>
     <dd>Every worker node is set up with an Ubuntu operating system that cannot be changed by the user. To protect the operating system of the worker nodes from potential attacks, every worker node is configured with expert firewall settings that are enforced by Linux iptable rules.</br> All containers that run on Kubernetes are protected by predefined Calico network policy settings that are configured on every worker node during cluster creation. This set up assures secure network communication between worker nodes and pods. To further restrict the actions that a container can perform on the worker node, users can choose to configure [AppArmor policies ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tutorials/clusters/apparmor/) on the worker nodes.</br> By default, SSH access for the root user is disabled on the worker node. If you want to install additional features on your worker node, you can use [Kubernetes daemon sets ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset) for everything that you want to run on every worker node, or [Kubernetes jobs ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/) for any one-time action you must execute.</dd>
   <dt>Kubernetes worker node security compliance</dt>
-    <dd>IBM works with security advisory teams internally and externally to identify potential security compliance issues for worker nodes and continuously releases compliance updates and security patches to address any vulnerabilities that are found. Updates and security patches are automatically deployed to the operating system of the worker node by IBM. To do that, IBM maintains SSH access to the worker nodes.</br> <b>Note</b>: Some updates require a worker node reboot. However, IBM does not reboot worker nodes during the installation of updates or security patches. Users are advised to reboot worker nodes on a regular basis to ensure that the installation of updates and security patches can finish.</dd>
+    <dd>IBM works with internal and external security advisory teams to address potential security compliance vulnerabilities. IBM maintains SSH access to the worker nodes in order to deploy updates and security patches to the operating system.</br> <b>Important</b>: Reboot your worker nodes on a regular basis to ensure the installation of the updates and security patches that are automatically deployed to the operating system. IBM does not reboot your worker nodes.</dd>
   <dt>Support for SoftLayer network firewalls</dt>
     <dd>{{site.data.keyword.containershort_notm}} is compatible with all [{{site.data.keyword.BluSoftlayer_notm}} firewall offerings ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/cloud-computing/bluemix/network-security). On {{site.data.keyword.Bluemix_notm}} Public, you can set up a firewall with custom network policies to provide dedicated network security for your cluster and to detect and remediate network intrusion. For example, you might choose to set up a [Vyatta ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/topic/vyatta-1) to act as your firewall and block unwanted traffic. When you set up a firewall, [you must also open up the required ports and IP addresses](#opening_ports) for each region so that the master and the worker nodes can communicate. On {{site.data.keyword.Bluemix_notm}} Dedicated, firewalls, DataPower, Fortigate, and DNS are already configured as part of the standard dedicated environment deployment.</dd>
   <dt>Keep services private or selectively expose services and apps to the public internet</dt>
@@ -131,6 +131,10 @@ Review these situations in which you might need to open specific ports and IP ad
        <tr>
         <td>dal12</td>
         <td><code>169.47.70.10</code></td>
+      </tr>
+       <tr>
+        <td>dal13</td>
+        <td><code>169.60.128.2</code></td>
       </tr>
       <tr>
         <td rowspan="2">US East</td>
@@ -368,7 +372,7 @@ To add network policies:
               ```
               {: pre}
 
-        2.  Convert the binary file to an executable.
+        2.  Make the file executable.
 
             ```
             chmod +x /usr/local/bin/calicoctl
@@ -474,7 +478,7 @@ To add network policies:
             -   Linux and OS X:
 
               ```
-              ls `dirname $KUBECONFIG` | grep ca-*.pem
+              ls `dirname $KUBECONFIG` | grep "ca-"
               ```
               {: pre}
 
