@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-09-29"
+lastupdated: "2017-10-12"
 
 ---
 
@@ -106,7 +106,7 @@ Learn more about how you can use these techniques to increase the availability o
 A Kubernetes cluster consists of virtual machine worker nodes and is centrally monitored and managed by the Kubernetes master. Cluster admins must decide how to set up the cluster of worker nodes to ensure that cluster users have all the resources to deploy and run apps in the cluster.
 {:shortdesc}
 
-When you create a standard cluster, worker nodes are ordered in {{site.data.keyword.BluSoftlayer_full}} on your behalf and set up in {{site.data.keyword.Bluemix_notm}}. Every worker node is assigned a unique worker node ID and domain name that must not be changed after the cluster is created. Depending on the level of hardware isolation that you choose, worker nodes can be set up as shared or dedicated nodes. Every worker node is provisioned with a specific machine type that determines the number of vCPUs, memory, and disk space that are available to the containers that are deployed to the worker node. Kubernetes limits the maximum number of worker nodes that you can have in a cluster. Review [worker node and pod quotas ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/admin/cluster-large/) for more information.
+When you create a standard cluster, worker nodes are ordered in IBM Bluemix Infrastructure (SoftLayer) on your behalf and set up in {{site.data.keyword.Bluemix_notm}}. Every worker node is assigned a unique worker node ID and domain name that must not be changed after the cluster is created. Depending on the level of hardware isolation that you choose, worker nodes can be set up as shared or dedicated nodes. Every worker node is provisioned with a specific machine type that determines the number of vCPUs, memory, and disk space that are available to the containers that are deployed to the worker node. Kubernetes limits the maximum number of worker nodes that you can have in a cluster. Review [worker node and pod quotas ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/admin/cluster-large/) for more information.
 
 
 ### Hardware for worker nodes
@@ -121,7 +121,7 @@ In a single-tenant set up, all physical resources are dedicated to you only. You
 
 Shared nodes are usually cheaper than dedicated nodes because the costs for the underlying hardware are shared among multiple customers. However, when you decide between shared and dedicated nodes, you might want to check with your legal department to discuss the level of infrastructure isolation and compliance that your app environment requires.
 
-When you create a lite cluster, your worker node is automatically provisioned as a shared node in the {{site.data.keyword.IBM_notm}} {{site.data.keyword.BluSoftlayer_notm}} account.
+When you create a lite cluster, your worker node is automatically provisioned as a shared node in the {{site.data.keyword.IBM_notm}} IBM Bluemix Infrastructure (SoftLayer) account.
 
 When you create a cluster in {{site.data.keyword.Bluemix_notm}} Dedicated, a single-tenant set up only is used and all physical resources are dedicated to you only. You deploy multiple worker nodes as virtual machines on the same physical host.
 
@@ -142,7 +142,7 @@ Review the responsibilities that you share with IBM to manage your clusters. To 
 - Performing automation tasks against your infrastructure account, including adding worker nodes, removing worker nodes, and creating a default subnet
 - Managing, updating, and recovering operational components within the cluster, such as the Ingress controller and the storage plug-in
 - Provisioning of storage volumes when requested by persistant volume claims
-- Providing security settings on all worker nodes 
+- Providing security settings on all worker nodes
 
 <br />
 **You are responsible for:**
@@ -150,12 +150,12 @@ Review the responsibilities that you share with IBM to manage your clusters. To 
 - [Deploying and managing Kubernetes resources, such as pods, services, and deployments, within the cluster](cs_apps.html#cs_apps_cli)
 - [Leveraging the capabilities of the service and Kubernetes to ensure high availability of apps](cs_planning.html#highly_available_apps)
 - [Adding or removing capacity by using the CLI to add or remove worker nodes](cs_cli_reference.html#cs_worker_add)
-- [Creating public and private VLANs in {{site.data.keyword.BluSoftlayer_notm}} for network isolation of your cluster ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/topic/vlans)
+- [Creating public and private VLANs in IBM Bluemix Infrastructure (SoftLayer) for network isolation of your cluster ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/topic/vlans)
 - [Ensuring that all worker nodes have network connectivity to the Kubernetes master URL](cs_security.html#opening_ports) <p>**Note**: If a worker node has both public and private VLANs, then network connectivity is configured. If the worker node has a private VLAN only set up, then a vyatta is required to provide network connectivity.</p>
 - [Determining when to update the kube-apiserver and worker nodes when Kubernetes major or minor version updates are available](cs_cluster.html#cs_cluster_update)
 - [Taking action to recover troubled worker nodes by running `kubectl` commands, such as `cordon` or `drain`, and by running `bx cs` commands, such as `reboot`, `reload`, or `delete`](cs_cli_reference.html#cs_worker_reboot)
-- [Adding or removing additional subnets in {{site.data.keyword.BluSoftlayer_notm}} as needed](cs_cluster.html#cs_cluster_subnet)
-- [Backing up and restoring data in persistent storage in {{site.data.keyword.BluSoftlayer_notm}} ![External link icon](../icons/launch-glyph.svg "External link icon")](../services/RegistryImages/ibm-backup-restore/index.html#ibmbackup_restore_starter)
+- [Adding or removing additional subnets in IBM Bluemix Infrastructure (SoftLayer) as needed](cs_cluster.html#cs_cluster_subnet)
+- [Backing up and restoring data in persistent storage in IBM Bluemix Infrastructure (SoftLayer) ![External link icon](../icons/launch-glyph.svg "External link icon")](../services/RegistryImages/ibm-backup-restore/index.html#ibmbackup_restore_starter)
 
 <br />
 
@@ -197,7 +197,36 @@ Every deployment keeps track of the revisions that were deployed. You can use th
 <strong>Note:</strong> The following YAML file enforces that every pod is deployed to a different worker node. When you have more replicas defined than you have available worker nodes in your cluster, only the number of replicas is deployed that can fulfill the anti-affinity requirement. Any additional replicas remain in a pending state until additional worker nodes are added to the cluster.
 
 <pre class="codeblock">
-<code>apiVersion: v1
+<code>apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: wasliberty
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: wasliberty
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - wasliberty
+              topologyKey: kubernetes.io/hostname
+      containers:
+      - name: wasliberty
+        image: registry.&lt;region&gt;.bluemix.net/ibmliberty
+        ports:
+        - containerPort: 9080
+---
+apiVersion: v1
 kind: Service
 metadata:
   name: wasliberty
@@ -209,44 +238,7 @@ spec:
   - port: 9080
   selector:
     app: wasliberty
-  type: NodePort
----
-apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  name: wasliberty
-spec:
-  replicas: 3
-  template:
-    metadata:
-      labels:
-        app: wasliberty
-      annotations:
-        scheduler.alpha.kubernetes.io/affinity: >
-            {
-              "podAntiAffinity": {
-                "requiredDuringSchedulingIgnoredDuringExecution": [
-                  {
-                    "labelSelector": {
-                      "matchExpressions": [
-                        {
-                          "key": "app",
-                          "operator": "In",
-                          "values": ["wasliberty"]
-                        }
-                      ]
-                    },
-                    "topologyKey": "kubernetes.io/hostname"
-                 }
-                ]
-               }
-             }
-      spec:
-        containers:
-        - name: wasliberty
-          image: registry.&lt;region&gt;.bluemix.net/ibmliberty
-          ports:
-          - containerPort: 9080</code></pre>
+  type: NodePort</code></pre>
 
 </dd>
 <dt>Distribute pods across multiple locations or regions</dt>
@@ -311,7 +303,7 @@ When you create a cluster, every cluster is automatically connected to a private
 |Cluster type|Manager of the private VLAN for the cluster|
 |------------|-------------------------------------------|
 |Lite clusters in {{site.data.keyword.Bluemix_notm}} Public|{{site.data.keyword.IBM_notm}}|
-|Standard clusters in {{site.data.keyword.Bluemix_notm}} Public|You in your {{site.data.keyword.BluSoftlayer_notm}} account <p>**Tip:** To have access to all VLANs in your account, turn on [VLAN Spanning ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/procedure/enable-or-disable-vlan-spanning).</p>|
+|Standard clusters in {{site.data.keyword.Bluemix_notm}} Public|You in your IBM Bluemix Infrastructure (SoftLayer) account <p>**Tip:** To have access to all VLANs in your account, turn on [VLAN Spanning ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/procedure/enable-or-disable-vlan-spanning).</p>|
 |Standard clusters in {{site.data.keyword.Bluemix_notm}} Dedicated|{{site.data.keyword.IBM_notm}}|
 {: caption="Table 2. Private VLAN management responsibilities" caption-side="top"}
 
@@ -337,7 +329,7 @@ The public network interface for the worker nodes in both lite and standard clus
 |Cluster type|Manager of the public VLAN for the cluster|
 |------------|------------------------------------------|
 |Lite clusters in {{site.data.keyword.Bluemix_notm}} Public|{{site.data.keyword.IBM_notm}}|
-|Standard clusters in {{site.data.keyword.Bluemix_notm}} Public|You in your {{site.data.keyword.BluSoftlayer_notm}} account|
+|Standard clusters in {{site.data.keyword.Bluemix_notm}} Public|You in your IBM Bluemix Infrastructure (SoftLayer) account|
 |Standard clusters in {{site.data.keyword.Bluemix_notm}} Dedicated|{{site.data.keyword.IBM_notm}}|
 {: caption="Table 3. VLAN management responsibilities" caption-side="top"}
 
@@ -372,9 +364,9 @@ Expose a port and use the public or private IP address for the load balancer to 
 
 [![Expose a service by using a Kubernetes LoadBalancer service type](images/cs_loadbalancer.png)](https://console.bluemix.net/docs/api/content/containers/images/cs_loadbalancer.png)
 
-When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically requests five portable public and five private IP addresses and provisions them into your {{site.data.keyword.BluSoftlayer_notm}} account during cluster creation. Two of the portable IP addresses, one public and one private, are used for the [Ingress controller](#cs_ingress). Four portable public and Four private IP addresses can be used to expose apps by creating a LoadBalancer service.
+When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically requests five portable public and five private IP addresses and provisions them into your IBM Bluemix Infrastructure (SoftLayer) account during cluster creation. Two of the portable IP addresses, one public and one private, are used for the [Ingress controller](#cs_ingress). Four portable public and Four private IP addresses can be used to expose apps by creating a LoadBalancer service.
 
-When you create a Kubernetes LoadBalancer service in a cluster on a public VLAN, an external load balancer is created. One of the four available public IP addresses is assigned to the load balancer. If no portable public IP address is available, the creation of your LoadBalancer service fails. The LoadBalancer service serves as the external entry point for incoming requests for the app. Unlike with NodePort services, you can assign any port to your load balancer and are not bound to a certain port range. The portable public IP address that is assigned to your LoadBalancer service is permanent and does not change when a worker node is removed or re-created. Therefore, the LoadBalancer service more available than the NodePort service. To access the LoadBalancer service from the internet, use the public IP address of your load balancer and the assigned port in the format `<ip_address>:<port>`.
+When you create a Kubernetes LoadBalancer service in a cluster on a public VLAN, an external load balancer is created. One of the four available public IP addresses is assigned to the load balancer. If no portable public IP address is available, the creation of your LoadBalancer service fails. The LoadBalancer service serves as the external entry point for incoming requests for the app. Unlike with NodePort services, you can assign any port to your load balancer and are not bound to a certain port range. The portable public IP address that is assigned to your LoadBalancer service is permanent and does not change when a worker node is removed or re-created. Therefore, the LoadBalancer service is more available than the NodePort service. To access the LoadBalancer service from the internet, use the public IP address of your load balancer and the assigned port in the format `<ip_address>:<port>`.
 
 When a request arrives at the LoadBalancer service, the request is automatically forwarded to the internal cluster IP address that is assigned to the LoadBalancer service during service creation. The cluster IP address is accessible inside the cluster only. From the cluster IP address, incoming requests are further forwarded to the `kube-proxy` component of your worker node. Then the requests are forwarded to the private IP address of the pod where the app is deployed. If you have multiple replicas of your app that are running in different pods, the `kube-proxy` component load balances incoming requests across all replicas.
 
@@ -382,11 +374,11 @@ If you use a LoadBalancer service, a node port is also available on each IP addr
 
 Your options for IP addresses when you create a LoadBalancer service are as follows:
 
-- If your cluster is on a public VLAN, a portable public IP address is used. 
-- If your cluster is available on a private VLAN only, then a portable private IP address is used. 
+- If your cluster is on a public VLAN, a portable public IP address is used.
+- If your cluster is available on a private VLAN only, then a portable private IP address is used.
 - You can request a portable public or private IP address for a LoadBalancer service by adding an annotation to the configuration file: `service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: <public_or_private>`.
-            
-For more information about how to create a LoadBalancer service with {{site.data.keyword.containershort_notm}}, see [Configuring public access to an app by using the load balancer service type](cs_apps.html#cs_apps_public_load_balancer). 
+
+For more information about how to create a LoadBalancer service with {{site.data.keyword.containershort_notm}}, see [Configuring public access to an app by using the load balancer service type](cs_apps.html#cs_apps_public_load_balancer).
 
 ### Expose an app to the internet with Ingress
 {: #cs_ingress}
@@ -397,7 +389,7 @@ Ingress allows you to expose multiple services in your cluster and make them pub
 
 Rather than creating a load balancer service for each app that you want to expose to the public, Ingress provides a unique public route that lets you forward public requests to apps inside and outside your cluster based on their individual paths. Ingress consists of two main components. The Ingress resource defines the rules for how to route incoming requests for an app. All Ingress resources must be registered with the Ingress controller that listens for incoming HTTP or HTTPS service requests and forwards requests based on the rules defined for each Ingress resource.
 
-When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically creates a highly available Ingress controller for your cluster and assigns a unique public route with the format `<cluster_name>.<region>.containers.mybluemix.net` to it. The public route is linked to a portable public IP address that is provisioned into your {{site.data.keyword.BluSoftlayer_notm}} account during cluster creation.
+When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically creates a highly available Ingress controller for your cluster and assigns a unique public route with the format `<cluster_name>.<region>.containers.mybluemix.net` to it. The public route is linked to a portable public IP address that is provisioned into your IBM Bluemix Infrastructure (SoftLayer) account during cluster creation.
 
 To expose an app via Ingress, you must create a Kubernetes service for your app and register this service with the Ingress controller by defining an Ingress resource. The Ingress resource specifies the path that you want to append to the public route to form a unique URL for your exposed app, like for example: `mycluster.us-south.containers.mybluemix.net/myapp`. When you enter this route into your web browser, the request is sent to the linked portable public IP address of the Ingress controller. The Ingress controller checks if a routing rule for the `myapp` path in the `mycluster` cluster exists. If a matching rule is found, the request including the individual path is forwarded to the pod where the app is deployed, considering the rules that were defined in the original Ingress resource object. In order for the app to process incoming requests, make sure that your app listens on the individual path that you defined in the Ingress resource.
 
@@ -514,11 +506,14 @@ You can use various external services and services in the {{site.data.keyword.Bl
 </thead>
 <tbody>
 <tr>
-<td>IBM Blockchain</td>
+<td>Blockchain</td>
 <td>Deploy a publicly available development environment for IBM Blockchain to a Kubernetes cluster in {{site.data.keyword.containerlong_notm}}. Use this environment to develop and customize your own blockchain network to deploy apps that share an immutable ledger for recording the history of transactions. For more information, see <a href="https://ibm-blockchain.github.io" target="_blank">Develop in a cloud sandbox
 IBM Blockchain Platform <img src="../icons/launch-glyph.svg" alt="External link icon"></a>. </td>
 </tr>
 <tr>
+<td>Continuous Delivery</td>
+<td>Automate your app builds and container deployments to Kubernetes clusters by using a toolchain. For setup information, see the blog <a href="https://developer.ibm.com/recipes/tutorials/deploy-kubernetes-pods-to-the-bluemix-container-service-using-devops-pipelines/" target="_blank">Deploy Kubernetes pods to the {{site.data.keyword.containerlong_notm}} using DevOps Pipelines <img src="../icons/launch-glyph.svg" alt="External link icon"></a>. </td>
+</tr><tr>
 <td>Istio</td>
 <td>Istio is an open source service that gives developers a way to connect, secure, manage, and monitor a network of microservices, also known a service mesh, on cloud orchestration platforms like Kubernetes. Istio provides the capability to manage network traffic, load balance across microservices, enforce access policies, and verify service identity on the service mesh. To install Istio on your Kubernetes cluster in {{site.data.keyword.containershort_notm}}, see the <a href="https://istio.io/docs/tasks/installing-istio.html" target="_blank">installation topic <img src="../icons/launch-glyph.svg" alt="External link icon"></a> in the Istio documentation. To review a sample developer journey about how to use Istio with Kubernetes, see <a href="https://developer.ibm.com/code/journey/manage-microservices-traffic-using-istio/" target="_blank">Manage microservices traffic using Istio <img src="../icons/launch-glyph.svg" alt="External link icon"></a>.</td>
 </tr>
@@ -547,38 +542,38 @@ IBM Blockchain Platform <img src="../icons/launch-glyph.svg" alt="External link 
 <br />
 
 
-## Access the {{site.data.keyword.BluSoftlayer_notm}} portfolio
+## Access the IBM Bluemix Infrastructure (SoftLayer) portfolio
 {: #cs_planning_unify_accounts}
 
-To create a standard Kubernetes cluster, you must have access to the {{site.data.keyword.BluSoftlayer_notm}} portfolio. This access is needed to request paid infrastructure resources, such as worker nodes, portable public IP addresses, or persistent storage for your cluster.
+To create a standard Kubernetes cluster, you must have access to the IBM Bluemix Infrastructure (SoftLayer) portfolio. This access is needed to request paid infrastructure resources, such as worker nodes, portable public IP addresses, or persistent storage for your cluster.
 {:shortdesc}
 
-{{site.data.keyword.Bluemix_notm}} Pay-As-You-Go accounts that were created after automatic account linking was enabled are already set up with access to the {{site.data.keyword.BluSoftlayer_notm}} portfolio, so that you can purchase infrastructure resources for your cluster without additional configuration.
+{{site.data.keyword.Bluemix_notm}} Pay-As-You-Go accounts that were created after automatic account linking was enabled are already set up with access to the IBM Bluemix Infrastructure (SoftLayer) portfolio, so that you can purchase infrastructure resources for your cluster without additional configuration.
 
-Users with other {{site.data.keyword.Bluemix_notm}} account types or users that have an existing {{site.data.keyword.BluSoftlayer_notm}} account that is not linked to their {{site.data.keyword.Bluemix_notm}} account, must configure their accounts to create standard clusters.
+Users with other {{site.data.keyword.Bluemix_notm}} account types or users that have an existing IBM Bluemix Infrastructure (SoftLayer) account that is not linked to their {{site.data.keyword.Bluemix_notm}} account, must configure their accounts to create standard clusters.
 
 Review the following table to find available options for each account type.
 
 |Account type|Description|Available options to create a standard cluster|
 |------------|-----------|----------------------------------------------|
-|Free trial accounts|Free trial accounts cannot access the {{site.data.keyword.BluSoftlayer_notm}} portfolio.<p>If you have an existing {{site.data.keyword.BluSoftlayer_notm}} account, you can link it to your free trial account.</p>|<ul><li>Option 1: [Upgrade your free trial account to a {{site.data.keyword.Bluemix_notm}} Pay-As-You-Go account](/docs/pricing/billable.html#upgradetopayg) that is set up with access to the {{site.data.keyword.BluSoftlayer_notm}} portfolio.</li><li>Option 2: [Link your free trial account to an existing {{site.data.keyword.BluSoftlayer_notm}} account](/docs/pricing/linking_accounts.html#unifyingaccounts).<p>After linking both accounts, your free trial account is automatically upgraded to a Pay-As-You-Go account. When you link your accounts, you are billed through {{site.data.keyword.Bluemix_notm}} for both, {{site.data.keyword.Bluemix_notm}} and {{site.data.keyword.BluSoftlayer_notm}} resources.</p><p>**Note:** The {{site.data.keyword.BluSoftlayer_notm}} account that you link must be set up with Super User permissions.</p></li></ul>|
-|Older Pay-As-You-Go accounts|Pay-As-You-Go accounts that were created before automatic account linking was available, did not come with access to the {{site.data.keyword.BluSoftlayer_notm}} portfolio.<p>If you have an existing {{site.data.keyword.BluSoftlayer_notm}} account, you cannot link this account to an older Pay-As-You-Go account.</p>|<ul><li>Option 1: [Create a new Pay-As-You-Go account](/docs/pricing/billable.html#billable) that is set up with access to the {{site.data.keyword.BluSoftlayer_notm}} portfolio. When you choose this option, you have two separate {{site.data.keyword.Bluemix_notm}} accounts and billings.<p>If you want to continue using your old Pay-As-You-Go account to create standard clusters, you can use your new Pay-As-You-Go account to generate an API key to access the {{site.data.keyword.BluSoftlayer_notm}} portfolio. Then, you must set the API key for your old Pay-As-You-Go account. For more information, see [Generating an API key for old Pay-As-You-Go and Subscription accounts](#old_account). Keep in mind that {{site.data.keyword.BluSoftlayer_notm}} resources are billed through your new Pay-As-You-Go account.</p></li><li>Option 2: If you already have an existing {{site.data.keyword.BluSoftlayer_notm}} account that you want to use, you can [set your credentials](cs_cli_reference.html#cs_credentials_set) for your {{site.data.keyword.Bluemix_notm}} account.<p>**Note:** The {{site.data.keyword.BluSoftlayer_notm}} account that you use with your {{site.data.keyword.Bluemix_notm}} account must be set up with Super User permissions.</p></li></ul>|
-|Subscription accounts|Subscription accounts are not set up with access to the {{site.data.keyword.BluSoftlayer_notm}} portfolio.|<ul><li>Option 1: [Create a new Pay-As-You-Go account](/docs/pricing/billable.html#billable) that is set up with access to the {{site.data.keyword.BluSoftlayer_notm}} portfolio. When you choose this option, you have two separate {{site.data.keyword.Bluemix_notm}} accounts and billings.<p>If you want to continue using your Subscription account to create standard clusters, you can use your new Pay-As-You-Go account to generate an API key to access the {{site.data.keyword.BluSoftlayer_notm}} portfolio. Then, you must set the API key for your Subscription account. For more information, see [Generating an API key for old Pay-As-You-Go and Subscription accounts](#old_account). Keep in mind that {{site.data.keyword.BluSoftlayer_notm}} resources are billed through your new Pay-As-You-Go account.</p></li><li>Option 2: If you already have an existing {{site.data.keyword.BluSoftlayer_notm}} account that you want to use, you can [set your credentials](cs_cli_reference.html#cs_credentials_set) for your {{site.data.keyword.Bluemix_notm}} account.<p>**Note:** The {{site.data.keyword.BluSoftlayer_notm}} account that you use with your {{site.data.keyword.Bluemix_notm}} account must be set up with Super User permissions.</p></li></ul>|
-|{{site.data.keyword.BluSoftlayer_notm}} accounts, no {{site.data.keyword.Bluemix_notm}} account|To create a standard cluster, you must have a {{site.data.keyword.Bluemix_notm}} account.|<ul><li>Option 1: [Create a new Pay-As-You-Go account](/docs/pricing/billable.html#billable) that is set up with access to the {{site.data.keyword.BluSoftlayer_notm}} portfolio. When you choose this option, a new {{site.data.keyword.BluSoftlayer_notm}} is created for you. You have two separate {{site.data.keyword.BluSoftlayer_notm}} accounts and billing.</li><li>Option 2: [Create a free trial account](/docs/pricing/free.html#pricing) and [link it to your existing {{site.data.keyword.BluSoftlayer_notm}} account](/docs/pricing/linking_accounts.html#unifyingaccounts). After linking both accounts, your free trial account is automatically upgraded to a Pay-As-You-Go account. When you link your accounts, you are billed through {{site.data.keyword.Bluemix_notm}} for both, {{site.data.keyword.Bluemix_notm}} and {{site.data.keyword.BluSoftlayer_notm}} resources.<p>**Note:** The {{site.data.keyword.BluSoftlayer_notm}} account that you link must be set up with Super User permissions.</p></li></ul>|
-{: caption="Table 7. Available options to create standard clusters with accounts that are not linked to a {{site.data.keyword.BluSoftlayer_notm}} account" caption-side="top"}
+|Free trial accounts|Free trial accounts cannot access the IBM Bluemix Infrastructure (SoftLayer) portfolio.<p>If you have an existing IBM Bluemix Infrastructure (SoftLayer) account, you can link it to your free trial account.</p>|<ul><li>Option 1: [Upgrade your free trial account to a {{site.data.keyword.Bluemix_notm}} Pay-As-You-Go account](/docs/pricing/billable.html#upgradetopayg) that is set up with access to the IBM Bluemix Infrastructure (SoftLayer) portfolio.</li><li>Option 2: [Link your free trial account to an existing IBM Bluemix Infrastructure (SoftLayer) account](/docs/pricing/linking_accounts.html#unifyingaccounts).<p>After linking both accounts, your free trial account is automatically upgraded to a Pay-As-You-Go account. When you link your accounts, you are billed through {{site.data.keyword.Bluemix_notm}} for both, {{site.data.keyword.Bluemix_notm}} and IBM Bluemix Infrastructure (SoftLayer) resources.</p><p>**Note:** The IBM Bluemix Infrastructure (SoftLayer) account that you link must be set up with Super User permissions.</p></li></ul>|
+|Older Pay-As-You-Go accounts|Pay-As-You-Go accounts that were created before automatic account linking was available, did not come with access to the IBM Bluemix Infrastructure (SoftLayer) portfolio.<p>If you have an existing IBM Bluemix Infrastructure (SoftLayer) account, you cannot link this account to an older Pay-As-You-Go account.</p>|<ul><li>Option 1: [Create a new Pay-As-You-Go account](/docs/pricing/billable.html#billable) that is set up with access to the IBM Bluemix Infrastructure (SoftLayer) portfolio. When you choose this option, you have two separate {{site.data.keyword.Bluemix_notm}} accounts and billings.<p>If you want to continue using your old Pay-As-You-Go account to create standard clusters, you can use your new Pay-As-You-Go account to generate an API key to access the IBM Bluemix Infrastructure (SoftLayer) portfolio. Then, you must set the API key for your old Pay-As-You-Go account. For more information, see [Generating an API key for old Pay-As-You-Go and Subscription accounts](#old_account). Keep in mind that IBM Bluemix Infrastructure (SoftLayer) resources are billed through your new Pay-As-You-Go account.</p></li><li>Option 2: If you already have an existing IBM Bluemix Infrastructure (SoftLayer) account that you want to use, you can [set your credentials](cs_cli_reference.html#cs_credentials_set) for your {{site.data.keyword.Bluemix_notm}} account.<p>**Note:** The IBM Bluemix Infrastructure (SoftLayer) account that you use with your {{site.data.keyword.Bluemix_notm}} account must be set up with Super User permissions.</p></li></ul>|
+|Subscription accounts|Subscription accounts are not set up with access to the IBM Bluemix Infrastructure (SoftLayer) portfolio.|<ul><li>Option 1: [Create a new Pay-As-You-Go account](/docs/pricing/billable.html#billable) that is set up with access to the IBM Bluemix Infrastructure (SoftLayer) portfolio. When you choose this option, you have two separate {{site.data.keyword.Bluemix_notm}} accounts and billings.<p>If you want to continue using your Subscription account to create standard clusters, you can use your new Pay-As-You-Go account to generate an API key to access the IBM Bluemix Infrastructure (SoftLayer) portfolio. Then, you must set the API key for your Subscription account. For more information, see [Generating an API key for old Pay-As-You-Go and Subscription accounts](#old_account). Keep in mind that IBM Bluemix Infrastructure (SoftLayer) resources are billed through your new Pay-As-You-Go account.</p></li><li>Option 2: If you already have an existing IBM Bluemix Infrastructure (SoftLayer) account that you want to use, you can [set your credentials](cs_cli_reference.html#cs_credentials_set) for your {{site.data.keyword.Bluemix_notm}} account.<p>**Note:** The IBM Bluemix Infrastructure (SoftLayer) account that you use with your {{site.data.keyword.Bluemix_notm}} account must be set up with Super User permissions.</p></li></ul>|
+|IBM Bluemix Infrastructure (SoftLayer) accounts, no {{site.data.keyword.Bluemix_notm}} account|To create a standard cluster, you must have a {{site.data.keyword.Bluemix_notm}} account.|<ul><li>Option 1: [Create a new Pay-As-You-Go account](/docs/pricing/billable.html#billable) that is set up with access to the IBM Bluemix Infrastructure (SoftLayer) portfolio. When you choose this option, a new IBM Bluemix Infrastructure (SoftLayer) is created for you. You have two separate IBM Bluemix Infrastructure (SoftLayer) accounts and billing.</li><li>Option 2: [Create a free trial account](/docs/pricing/free.html#pricing) and [link it to your existing IBM Bluemix Infrastructure (SoftLayer) account](/docs/pricing/linking_accounts.html#unifyingaccounts). After linking both accounts, your free trial account is automatically upgraded to a Pay-As-You-Go account. When you link your accounts, you are billed through {{site.data.keyword.Bluemix_notm}} for both, {{site.data.keyword.Bluemix_notm}} and IBM Bluemix Infrastructure (SoftLayer) resources.<p>**Note:** The IBM Bluemix Infrastructure (SoftLayer) account that you link must be set up with Super User permissions.</p></li></ul>|
+{: caption="Table 7. Available options to create standard clusters with accounts that are not linked to an IBM Bluemix Infrastructure (SoftLayer) account" caption-side="top"}
 
 
-### Generating a {{site.data.keyword.BluSoftlayer_notm}} API key to use with {{site.data.keyword.Bluemix_notm}} accounts
+### Generating an IBM Bluemix Infrastructure (SoftLayer) API key to use with {{site.data.keyword.Bluemix_notm}} accounts
 {: #old_account}
 
 If you want to continue using your old Pay-As-You-Go or Subscription account to create standard clusters, you must generate an API key with your new Pay-As-You-Go account and set the API key for your old account.
 {:shortdesc}
 
-Before you begin, create a {{site.data.keyword.Bluemix_notm}} Pay-As-You-Go account that is automatically set up with access to the {{site.data.keyword.BluSoftlayer_notm}} portfolio.
+Before you begin, create a {{site.data.keyword.Bluemix_notm}} Pay-As-You-Go account that is automatically set up with access to the IBM Bluemix Infrastructure (SoftLayer) portfolio.
 
-1.  Log in to the [{{site.data.keyword.BluSoftlayer_notm}} portal ![External link icon](../icons/launch-glyph.svg "External link icon")](https://control.softlayer.com/) by using the {{site.data.keyword.ibmid}} and password that you created for your new Pay-As-You-Go account.
+1.  Log in to the [IBM Bluemix Infrastructure (SoftLayer) portal ![External link icon](../icons/launch-glyph.svg "External link icon")](https://control.softlayer.com/) by using the {{site.data.keyword.ibmid}} and password that you created for your new Pay-As-You-Go account.
 2.  Select **Account**, and then **Users**.
-3.  Click **Generate** to generate a {{site.data.keyword.BluSoftlayer_notm}} API key for your new Pay-As-You-Go account.
+3.  Click **Generate** to generate an IBM Bluemix Infrastructure (SoftLayer) API key for your new Pay-As-You-Go account.
 4.  Copy the API key.
 5.  From the CLI, log in to {{site.data.keyword.Bluemix_notm}} by using the {{site.data.keyword.ibmid}} and password of your old Pay-As-You-Go or Subscription account.
 
@@ -587,7 +582,7 @@ Before you begin, create a {{site.data.keyword.Bluemix_notm}} Pay-As-You-Go acco
   ```
   {: pre}
 
-6.  Set the API key that you generated earlier to access the {{site.data.keyword.BluSoftlayer_notm}} portfolio. Replace `<API_KEY>` with the API key and `<USERNAME>` with the {{site.data.keyword.ibmid}} of your new Pay-As-You-Go account.
+6.  Set the API key that you generated earlier to access the IBM Bluemix Infrastructure (SoftLayer) portfolio. Replace `<API_KEY>` with the API key and `<USERNAME>` with the {{site.data.keyword.ibmid}} of your new Pay-As-You-Go account.
 
   ```
   bx cs credentials-set --infrastructure-api-key <API_KEY> --infrastructure-username <USERNAME>
@@ -597,4 +592,3 @@ Before you begin, create a {{site.data.keyword.Bluemix_notm}} Pay-As-You-Go acco
 7.  Start [creating standard clusters](cs_cluster.html#cs_cluster_cli).
 
 **Note:** To review your API key after you generated it, follow step 1 and 2, and then in the **API key** section, click on **View** to see the API key for your user ID.
-
