@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-09-20"
+lastupdated: "2017-10-12"
 
 ---
 
@@ -28,19 +28,20 @@ For more information on the updating process, see [Updating clusters](cs_cluster
 ## Version 1.7
 {: #cs_v17}
 
+### Update before master
+{: #17_before}
+
 <table summary="Kubernetes updates for versions 1.7 and 1.6">
-<caption>Table 1. Important changes from the Kubernetes 1.7 and 1.6 changelog</caption>
+<caption>Table 1. Changes to make before updating the master to Kubernetes 1.7</caption>
 <thead>
 <tr>
 <th>Type</th>
-<th>Priority</th>
 <th>Description
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Storage</td>
-<td>Update before master</td>
 <td>Configuration scripts with `hostPath` and `mountPath` with parent directory references like `../to/dir` are not allowed. Change paths to simple absolute paths, for example, `/path/to/dir`.
 <ol>
   <li>Run this command to determine whether you need to update your storage paths.</br> ```kubectl get pods --all-namespaces -o yaml | grep "\.\." && echo "Action required"```</br></br>
@@ -49,9 +50,23 @@ For more information on the updating process, see [Updating clusters](cs_cluster
 </ol>
 </td>
 </tr>
+</tbody>
+</table>
+
+### Update after master
+{: #17_after}
+
+<table summary="Kubernetes updates for versions 1.7 and 1.6">
+<caption>Table 2. Changes to make after updating the master to Kubernetes 1.7</caption>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description
+</tr>
+</thead>
+<tbod>
 <tr>
 <td>kubectl</td>
-<td>Update after master</td>
 <td>After you update `kubectl` CLI to the version of your cluster, these `kubectl` commands must use multiple flags instead of comma separated arguments. <ul>
  <li>`create role`
  <li>`create clusterrole`
@@ -63,7 +78,6 @@ For more information on the updating process, see [Updating clusters](cs_cluster
 </tr>
 <tr>
 <td>Pod Affinity Scheduling</td>
-<td>Update after master</td>
 <td> The `scheduler.alpha.kubernetes.io/affinity` annotation is deprecated.
 <ol>
   <li>Run this command for each namespace except for `ibm-system` and `kube-system` to determine whether you need to update pod affinity scheduling.</br> ```kubectl get pods -n <namespace> -o yaml | grep "scheduler.alpha.kubernetes.io/affinity" && echo "Action required"```</br></br>
@@ -73,7 +87,6 @@ For more information on the updating process, see [Updating clusters](cs_cluster
 </tr>
 <tr>
 <td>Network Policy</td>
-<td>Update after master</td>
 <td>The `net.beta.kubernetes.io/network-policy` annotation is no longer supported.
 <ol>
   <li>Run this command to determine whether you need to update your network policies.<br/>
@@ -102,7 +115,6 @@ For more information on the updating process, see [Updating clusters](cs_cluster
 </tr>
 <tr>
 <td>Tolerations</td>
-<td>Update after master</td>
 <td>The `scheduler.alpha.kubernetes.io/tolerations` annotation is no longer supported.
 <ol>
   <li>Run this command for each namespace except for `ibm-system` and `kube-system` to determine whether you need to update tolerations.</br> ```kubectl get pods -n <namespace> -o yaml | grep "scheduler.alpha.kubernetes.io/tolerations" && echo "Action required"```</br></br>
@@ -112,7 +124,6 @@ For more information on the updating process, see [Updating clusters](cs_cluster
 </tr>
 <tr>
 <td>Taints</td>
-<td>Update after master</td>
 <td>The `scheduler.alpha.kubernetes.io/taints` annotation is no longer supported.
 <ol>
   <li>Run this command to determine whether you need to update taints. </br>
@@ -124,4 +135,4 @@ For more information on the updating process, see [Updating clusters](cs_cluster
   </ol>
 </tr>
 </tbody>
-</table>
+</table></staging>
