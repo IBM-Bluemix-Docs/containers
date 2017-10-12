@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-10-06"
+lastupdated: "2017-10-11"
 
 ---
 
@@ -135,7 +135,7 @@ Locations are data centers that are available within a region.
 
   | Region | Location | City |
   |--------|----------|------|
-  | US South     | dal10, dal12        | Dallas |
+  | US South     | dal10, dal12       | Dallas |
   | US East      | wdc06, wdc07        | Washington, DC |
   | UK South      | lon02, lon04         | London |
   | EU Central     | ams03, fra02        | Amsterdam, Frankfurt |
