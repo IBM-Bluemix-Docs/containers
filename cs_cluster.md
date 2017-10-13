@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-10-12"
+lastupdated: "2017-10-13"
 
 ---
 
@@ -197,7 +197,7 @@ To create a cluster:
         </tr>
         <tr>
         <td><code>--location <em>&lt;location&gt;</em></code></td>
-        <td>Replace <em>&lt;location&gt;</em> with the {{site.data.keyword.Bluemix_notm}} location ID where you want to create your cluster. The locations that are available to you depend on the {{site.data.keyword.containershort_notm}} region you are logged in to. Available locations are:<ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul><li>US-East<ul><li>wdc06 [Washington DC]</li><li>wdc07 [Washington DC]<p><strong>Note:</strong> US-East is available for use with CLI commands only.</p></li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>fra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>mel01 [Melbourne]<li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul></td>
+        <td>Replace <em>&lt;location&gt;</em> with the {{site.data.keyword.Bluemix_notm}} location ID where you want to create your cluster. [Available locations](cs_regions.html#locations) depend on the {{site.data.keyword.containershort_notm}} region you are logged in to.</td>
         </tr>
         <tr>
         <td><code>--machine-type <em>&lt;machine_type&gt;</em></code></td>
@@ -355,7 +355,7 @@ To create a cluster:
     </tr>
     <tr>
     <td><code>--location <em>&lt;location&gt;</em></code></td>
-    <td>Replace &lt;location&gt; with the {{site.data.keyword.Bluemix_notm}} location ID where you want to create your cluster. The locations that are available to you depend on the {{site.data.keyword.containershort_notm}} region you are logged in to. Available locations are:<ul><li>US-South<ul><li>dal10 [Dallas]</li><li>dal12 [Dallas]</li></ul><li>US-East<ul><li>wdc06 [Washington DC]</li><li>wdc07 [Washington DC]<p><strong>Note:</strong> US-East is available for use with CLI commands only.</p></li></ul></li><li>UK-South<ul><li>lon02 [London]</li><li>lon04 [London]</li></ul></li><li>EU-Central<ul><li>ams03 [Amsterdam]</li><li>fra02 [Frankfurt]</li></ul></li><li>AP-South<ul><li>mel01 [Melbourne]<li>syd01 [Sydney]</li><li>syd04 [Sydney]</li></ul></li></ul></td>
+    <td>Replace &lt;location&gt; with the {{site.data.keyword.Bluemix_notm}} location ID where you want to create your cluster. [Available locations](cs_regions.html#locations) depend on the {{site.data.keyword.containershort_notm}} region you are logged in to.</td>
     </tr>
     <tr>
     <td><code>--machine-type <em>&lt;machine_type&gt;</em></code></td>
