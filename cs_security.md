@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-10-13"
+lastupdated: "2017-10-12"
 
 ---
 
@@ -170,7 +170,6 @@ Review these situations in which you might need to open specific ports and IP ad
       <tr>
          <td>syd01</td>
          <td><code>168.1.8.195</code></td>
-      </tr>
       </tr>
       <tr>
          <td>syd04</td>
