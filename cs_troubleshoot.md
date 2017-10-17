@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-10-13"
+lastupdated: "2017-10-06"
 
 ---
 
@@ -531,7 +531,6 @@ Open the following ports and IP addresses in your customized firewall.
       <tr>
          <td>syd01</td>
          <td><code>168.1.8.195</code></td>
-      </tr>
       </tr>
       <tr>
          <td>syd04</td>
