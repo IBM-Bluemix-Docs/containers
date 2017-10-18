@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-10-13"
+lastupdated: "2017-10-06"
 
 ---
 
@@ -23,6 +23,8 @@ lastupdated: "2017-10-13"
 {: #cs_troubleshoot}
 
 As you use {{site.data.keyword.containershort_notm}}, consider these techniques for troubleshooting and getting help. You can also check the [status of the {{site.data.keyword.Bluemix_notm}} system ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/bluemix/support/#status).
+
+
 
 {: shortdesc}
 
@@ -485,57 +487,29 @@ Open the following ports and IP addresses in your customized firewall.
       </thead>
     <tbody>
       <tr>
-        <td rowspan="3">US South</td>
-        <td>dal10</td>
-        <td><code>169.46.7.238</code></td>
-       </tr>
-       <tr>
-        <td>dal12</td>
-        <td><code>169.47.70.10</code></td>
-      </tr>
-       <tr>
-        <td>dal13</td>
-        <td><code>169.60.128.2</code></td>
+         <td>AP South</td>
+         <td>mel01<br>syd01</td>
+         <td><code>168.1.97.67</code><br><code>168.1.8.195</code></td>
       </tr>
       <tr>
-        <td rowspan="2">US East</td>
-         <td>wdc06</td>
-         <td><code>169.60.73.142</code></td>
-        </tr>
-        <tr>
-         <td>wdc07</td>
-         <td><code>169.61.83.62</code></td>
+         <td>EU Central</td>
+         <td>ams03<br>fra02</td>
+         <td><code>169.50.169.110</code><br><code>169.50.56.174</code></td>
         </tr>
       <tr>
-        <td rowspan="2">UK South</td>
-        <td>lon02</td>
-        <td><code>159.122.242.78</code></td>
+        <td>UK South</td>
+        <td>lon02<br>lon04</td>
+        <td><code>159.122.242.78</code><br><code>158.175.65.170</code></td>
       </tr>
       <tr>
-        <td>lon04</td>
-        <td><code>158.175.65.170</code></td>
+        <td>US East</td>
+         <td>wdc06<br>wdc07</td>
+         <td><code>169.60.73.142</code><br><code>169.61.83.62</code></td>
       </tr>
       <tr>
-         <td rowspan="2">EU Central</td>
-         <td>ams03</td>
-         <td><code>169.50.169.110</code></td>
-        </tr>
-        <tr>
-         <td>fra02</td>
-         <td><code>169.50.56.174</code></td>
-      </tr>
-      <tr>
-         <td rowspan="3">AP South</td>
-         <td>mel01</td>
-         <td><code>168.1.97.67</code></td>
-      <tr>
-         <td>syd01</td>
-         <td><code>168.1.8.195</code></td>
-      </tr>
-      </tr>
-      <tr>
-         <td>syd04</td>
-         <td><code>130.198.64.19</code></td>
+        <td>US South</td>
+        <td>dal10<br>dal12<br>dal13</td>
+        <td><code>169.46.7.238</code><br><code>169.47.70.10</code><br><code>169.60.128.2</code></td>
       </tr>
       </tbody>
     </table>
@@ -578,19 +552,19 @@ Open the following ports and IP addresses in your customized firewall.
         <th colspan=2><img src="images/idea.png"/> Monitoring Public IP addresses</th>
         </thead>
       <tbody>
-        
+        <tr>
+         <td>metrics.eu-de.bluemix.net</td>
+         <td><code>159.122.78.136/29</code></td>
+        </tr>
+        <tr>
+         <td>metrics.eu-gb.bluemix.net</td>
+         <td><code>169.50.196.136/29</code></td>
+        </tr>
         <tr>
           <td>metrics.ng.bluemix.net</td>
           <td><code>169.47.204.128/29</code></td>
          </tr>
-         <tr>
-          <td>metrics.eu-gb.bluemix.net</td>
-          <td><code>169.50.196.136/29</code></td>
-         </tr>
-         <tr>
-          <td>metrics.eu-de.bluemix.net</td>
-          <td><code>159.122.78.136/29</code></td>
-         </tr>
+         
         </tbody>
       </table>
 </p>
@@ -602,16 +576,16 @@ Open the following ports and IP addresses in your customized firewall.
         </thead>
       <tbody>
         <tr>
+         <td>ingest.logging.eu-de.bluemix.net</td>
+         <td><code>169.50.25.125</code></td>
+        </tr>
+        <tr>
+         <td>ingest.logging.eu-gb.bluemix.net</td>
+         <td><code>169.50.115.113</code></td>
+        </tr>
+        <tr>
           <td>ingest.logging.ng.bluemix.net</td>
           <td><code>169.48.79.236</code><br><code>169.46.186.113</code></td>
-         </tr>
-         <tr>
-          <td>ingest.logging.eu-gb.bluemix.net</td>
-          <td><code>169.50.115.113</code></td>
-         </tr>
-         <tr>
-          <td>ingest.logging.eu-de.bluemix.net</td>
-          <td><code>169.50.25.125</code></td>
          </tr>
         </tbody>
       </table>
