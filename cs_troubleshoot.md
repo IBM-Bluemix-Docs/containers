@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-10-13"
+lastupdated: "2017-10-06"
 
 ---
 
@@ -485,35 +485,16 @@ Open the following ports and IP addresses in your customized firewall.
       </thead>
     <tbody>
       <tr>
-        <td rowspan="3">US South</td>
-        <td>dal10</td>
-        <td><code>169.46.7.238</code></td>
-       </tr>
-       <tr>
-        <td>dal12</td>
-        <td><code>169.47.70.10</code></td>
-      </tr>
-       <tr>
-        <td>dal13</td>
-        <td><code>169.60.128.2</code></td>
+         <td rowspan="3">AP South</td>
+         <td>mel01</td>
+         <td><code>168.1.97.67</code></td>
+      <tr>
+         <td>syd01</td>
+         <td><code>168.1.8.195</code></td>
       </tr>
       <tr>
-        <td rowspan="2">US East</td>
-         <td>wdc06</td>
-         <td><code>169.60.73.142</code></td>
-        </tr>
-        <tr>
-         <td>wdc07</td>
-         <td><code>169.61.83.62</code></td>
-        </tr>
-      <tr>
-        <td rowspan="2">UK South</td>
-        <td>lon02</td>
-        <td><code>159.122.242.78</code></td>
-      </tr>
-      <tr>
-        <td>lon04</td>
-        <td><code>158.175.65.170</code></td>
+         <td>syd04</td>
+         <td><code>130.198.64.19</code></td>
       </tr>
       <tr>
          <td rowspan="2">EU Central</td>
@@ -525,17 +506,35 @@ Open the following ports and IP addresses in your customized firewall.
          <td><code>169.50.56.174</code></td>
       </tr>
       <tr>
-         <td rowspan="3">AP South</td>
-         <td>mel01</td>
-         <td><code>168.1.97.67</code></td>
-      <tr>
-         <td>syd01</td>
-         <td><code>168.1.8.195</code></td>
-      </tr>
+        <td rowspan="2">UK South</td>
+        <td>lon02</td>
+        <td><code>159.122.242.78</code></td>
       </tr>
       <tr>
-         <td>syd04</td>
-         <td><code>130.198.64.19</code></td>
+        <td>lon04</td>
+        <td><code>158.175.65.170</code></td>
+      </tr>
+      <tr>
+        <td rowspan="2">US East</td>
+         <td>wdc06</td>
+         <td><code>169.60.73.142</code></td>
+        </tr>
+        <tr>
+         <td>wdc07</td>
+         <td><code>169.61.83.62</code></td>
+        </tr>
+      <tr>
+        <td rowspan="3">US South</td>
+        <td>dal10</td>
+        <td><code>169.46.7.238</code></td>
+       </tr>
+       <tr>
+        <td>dal12</td>
+        <td><code>169.47.70.10</code></td>
+      </tr>
+       <tr>
+        <td>dal13</td>
+        <td><code>169.60.128.2</code></td>
       </tr>
       </tbody>
     </table>
@@ -578,19 +577,19 @@ Open the following ports and IP addresses in your customized firewall.
         <th colspan=2><img src="images/idea.png"/> Monitoring Public IP addresses</th>
         </thead>
       <tbody>
-        
+        <tr>
+         <td>metrics.eu-de.bluemix.net</td>
+         <td><code>159.122.78.136/29</code></td>
+        </tr>
+        <tr>
+         <td>metrics.eu-gb.bluemix.net</td>
+         <td><code>169.50.196.136/29</code></td>
+        </tr>
         <tr>
           <td>metrics.ng.bluemix.net</td>
           <td><code>169.47.204.128/29</code></td>
          </tr>
-         <tr>
-          <td>metrics.eu-gb.bluemix.net</td>
-          <td><code>169.50.196.136/29</code></td>
-         </tr>
-         <tr>
-          <td>metrics.eu-de.bluemix.net</td>
-          <td><code>159.122.78.136/29</code></td>
-         </tr>
+         
         </tbody>
       </table>
 </p>
@@ -602,16 +601,16 @@ Open the following ports and IP addresses in your customized firewall.
         </thead>
       <tbody>
         <tr>
+         <td>ingest.logging.eu-de.bluemix.net</td>
+         <td><code>169.50.25.125</code></td>
+        </tr>
+        <tr>
+         <td>ingest.logging.eu-gb.bluemix.net</td>
+         <td><code>169.50.115.113</code></td>
+        </tr>
+        <tr>
           <td>ingest.logging.ng.bluemix.net</td>
           <td><code>169.48.79.236</code><br><code>169.46.186.113</code></td>
-         </tr>
-         <tr>
-          <td>ingest.logging.eu-gb.bluemix.net</td>
-          <td><code>169.50.115.113</code></td>
-         </tr>
-         <tr>
-          <td>ingest.logging.eu-de.bluemix.net</td>
-          <td><code>169.50.25.125</code></td>
          </tr>
         </tbody>
       </table>
