@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-10-13"
+lastupdated: "2017-10-18"
 
 ---
 
@@ -44,30 +44,30 @@ Refer to these commands to create and manage clusters.
     <td>[bx cs cluster-services](cs_cli_reference.html#cs_cluster_services)</td>
     <td>[bx cs cluster-subnet-add](cs_cli_reference.html#cs_cluster_subnet_add)</td>
     <td>[bx cs cluster-user-subnet-add](cs_cli_reference.html#cs_cluster_user_subnet_add)</td>
-    <td>[bx cs cluster-user-subnet-rm](cs_cli_reference.html#cs_cluster_user_subnet_rm)</td>
  </tr>
  <tr>
+   <td>[bx cs cluster-user-subnet-rm](cs_cli_reference.html#cs_cluster_user_subnet_rm)</td>
    <td>[bx cs cluster-update](cs_cli_reference.html#cs_cluster_update)</td>
    <td>[bx cs clusters](cs_cli_reference.html#cs_clusters)</td>
    <td>[bx cs credentials-set](cs_cli_reference.html#cs_credentials_set)</td>
    <td>[bx cs credentials-unset](cs_cli_reference.html#cs_credentials_unset)</td>
-   <td>[bx cs help](cs_cli_reference.html#cs_help)</td>
    </tr>
  <tr>
+    <td>[bx cs help](cs_cli_reference.html#cs_help)</td>
     <td>[bx cs init](cs_cli_reference.html#cs_init)</td>
     <td>[bx cs locations](cs_cli_reference.html#cs_datacenters)</td>
     <td>[bx cs machine-types](cs_cli_reference.html#cs_machine_types)</td>
     <td>[bx cs subnets](cs_cli_reference.html#cs_subnets)</td>
-    <td>[bx cs vlans](cs_cli_reference.html#cs_vlans)</td>
     </tr>
  <tr>
+   <td>[bx cs vlans](cs_cli_reference.html#cs_vlans)</td>
    <td>[bx cs webhook-create](cs_cli_reference.html#cs_webhook_create)</td>
    <td>[bx cs worker-add](cs_cli_reference.html#cs_worker_add)</td>
    <td>[bx cs worker-get](cs_cli_reference.html#cs_worker_get)</td>
    <td>[bx cs worker-reboot](cs_cli_reference.html#cs_worker_reboot)</td>
-   <td>[bx cs worker-reload](cs_cli_reference.html#cs_worker_reload)</td>
   </tr>
   <tr>
+   <td>[bx cs worker-reload](cs_cli_reference.html#cs_worker_reload)</td>
    <td>[bx cs worker-rm](cs_cli_reference.html#cs_worker_rm)</td>
    <td>[bx cs worker-update](cs_cli_reference.html#cs_worker_update)</td>
    <td>[bx cs workers](cs_cli_reference.html#cs_workers)</td>
@@ -401,6 +401,7 @@ Make a subnet in an IBM Bluemix Infrastructure (SoftLayer) account available to 
   bx cs cluster-subnet-add my_cluster subnet
   ```
   {: pre}
+
 
 
 ### bx cs cluster-user-subnet-add CLUSTER SUBNET_CIDR PRIVATE_VLAN
