@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-08-18"
+lastupdated: "2017-10-17"
 
 ---
 
@@ -46,6 +46,7 @@ Check out what container developers are interested in.
 </tbody></table>
 
 ## Chat with like-minded developers on Slack
+{: #slack}
 
 You can see what others are talking about and ask your own questions in the [{{site.data.keyword.containershort_notm}} Slack. ![External link icon](../icons/launch-glyph.svg "External link icon")](https://ibm-container-service.slack.com)
 
