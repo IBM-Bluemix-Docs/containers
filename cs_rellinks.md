@@ -33,8 +33,9 @@ lastupdated: "2017-09-15"
 
 **Links related to clusters**  
 
-- [developerWorks container orchestration journeys ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/code/journey/category/container-orchestration/)
+- [Pricing calculator for clusters ![External link icon](../icons/launch-glyph.svg "External link icon")](https://console.ng.bluemix.net/?direct=classic/&cm_mc_uid=33539371372315075622962&cm_mc_sid_50200000=1508245865&cm_mc_sid_52640000=1508246079#/pricing/cloudOEPaneId=pricing&paneId=pricingSheet)
 - [REST API for clusters ![External link icon](../icons/launch-glyph.svg "External link icon")](https://us-south.containers.bluemix.net/swagger)
+- [developerWorks container orchestration journeys ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/code/journey/category/container-orchestration/)
 - [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/)
 - [Weave Scope ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.weave.works/oss/scope/)
 
