@@ -939,7 +939,7 @@ To use the service in a pod that is deployed in the cluster, cluster users can a
 
 **Note**: The cluster and the worker nodes must be deployed fully before you can add a service.
 
-1.  Set the path to your local Bluemix Dedicated configuration file as the `DEDICATED_BLUEMIX_CONFIG` environment variable.
+1.  Set the path to your local {{site.data.keyword.Bluemix_notm}} Dedicated configuration file as the `DEDICATED_BLUEMIX_CONFIG` environment variable.
 
     ```
     export DEDICATED_BLUEMIX_CONFIG=<path_to_config_directory>
@@ -953,7 +953,7 @@ To use the service in a pod that is deployed in the cluster, cluster users can a
     ```
     {: pre}
 
-3.  Log in to the Bluemix Dedicated environment where you want to create the service instance.
+3.  Log in to the {{site.data.keyword.Bluemix_notm}} Dedicated environment where you want to create the service instance.
 
     ```
     bx login -a api.<dedicated_domain> -u <user> -p <password> -o <org> -s <space>
@@ -1098,7 +1098,7 @@ Review the access policies and permissions that you can grant to users in your {
 |<ul><li>Role: Viewer</li><li>Service Instances: all current service instances/ a specific cluster ID</li></ul>|<ul><li>List a cluster</li><li>View details for a cluster</li></ul>|<ul><li>RBAC Role: view</li><li>Read access to resources inside the default namespace</li><li>No read access to Kubernetes secrets</li></ul>|
 |<ul><li>Cloud Foundry organization role: Manager</li></ul>|<ul><li>Add additional users to a {{site.data.keyword.Bluemix_notm}} account</li></ul>| |
 |<ul><li>Cloud Foundry space role: Developer</li></ul>|<ul><li>Create {{site.data.keyword.Bluemix_notm}} service instances/li><li>Bind {{site.data.keyword.Bluemix_notm}} service instances to clusters</li></ul>| |
-{: caption="Table 7. Overview of required IBM Bluemix Container Service access policies and permissions" caption-side="top"}
+{: caption="Table 7. Overview of required {{site.data.keyword.containershort_notm}} access policies and permissions" caption-side="top"}
 
 ### Verifying your {{site.data.keyword.containershort_notm}} access policy
 {: #view_access}
