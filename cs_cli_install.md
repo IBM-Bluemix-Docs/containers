@@ -502,7 +502,7 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     ```
     {: codeblock}
 
-    <table summary="Input parameters to get Bluemix account ID">
+    <table summary="Input parameters to get {{site.data.keyword.Bluemix_notm}} account ID">
     <thead>
   	<th>Input parameters</th>
   	<th>Values</th>
