@@ -935,4 +935,3 @@ bx cs cluster-rm <pr_firm_cluster>
 ## What's next?
 
 Try exploring the container orchestration journeys on [developerWorks ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/code/journey/category/container-orchestration/).
-
