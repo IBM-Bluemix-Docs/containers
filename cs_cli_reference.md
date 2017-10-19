@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-10-13"
+lastupdated: "2017-10-18"
 
 ---
 
@@ -44,34 +44,39 @@ Refer to these commands to create and manage clusters.
     <td>[bx cs cluster-services](cs_cli_reference.html#cs_cluster_services)</td>
     <td>[bx cs cluster-subnet-add](cs_cli_reference.html#cs_cluster_subnet_add)</td>
     <td>[bx cs cluster-user-subnet-add](cs_cli_reference.html#cs_cluster_user_subnet_add)</td>
-    <td>[bx cs cluster-user-subnet-rm](cs_cli_reference.html#cs_cluster_user_subnet_rm)</td>
  </tr>
  <tr>
+   <td>[bx cs cluster-user-subnet-rm](cs_cli_reference.html#cs_cluster_user_subnet_rm)</td>
    <td>[bx cs cluster-update](cs_cli_reference.html#cs_cluster_update)</td>
    <td>[bx cs clusters](cs_cli_reference.html#cs_clusters)</td>
    <td>[bx cs credentials-set](cs_cli_reference.html#cs_credentials_set)</td>
    <td>[bx cs credentials-unset](cs_cli_reference.html#cs_credentials_unset)</td>
-   <td>[bx cs help](cs_cli_reference.html#cs_help)</td>
-   </tr>
+ </tr>
  <tr>
+    <td>[bx cs help](cs_cli_reference.html#cs_help)</td>
     <td>[bx cs init](cs_cli_reference.html#cs_init)</td>
     <td>[bx cs locations](cs_cli_reference.html#cs_datacenters)</td>
-    <td>[bx cs machine-types](cs_cli_reference.html#cs_machine_types)</td>
-    <td>[bx cs subnets](cs_cli_reference.html#cs_subnets)</td>
-    <td>[bx cs vlans](cs_cli_reference.html#cs_vlans)</td>
-    </tr>
+    <td>[{[bxcs}] logging-config-get](cs_cli_reference.html#logging_get)</td>
+    <td>[{[bxcs}] logging-config-rm](cs_cli_reference.html#logging_rm)</td>
+ </tr>
  <tr>
+   <td>[{[bxcs}] logging-config-update](cs_cli_reference.html#logging_update)</td>
+   <td>[bx cs machine-types](cs_cli_reference.html#cs_machine_types)</td>
+   <td>[bx cs subnets](cs_cli_reference.html#cs_subnets)</td>
+   <td>[bx cs vlans](cs_cli_reference.html#cs_vlans)</td>
    <td>[bx cs webhook-create](cs_cli_reference.html#cs_webhook_create)</td>
+ </tr>
+ <tr>
    <td>[bx cs worker-add](cs_cli_reference.html#cs_worker_add)</td>
-   <td>[bx cs worker-get](cs_cli_reference.html#cs_worker_get)</td>
-   <td>[bx cs worker-reboot](cs_cli_reference.html#cs_worker_reboot)</td>
-   <td>[bx cs worker-reload](cs_cli_reference.html#cs_worker_reload)</td>
-  </tr>
-  <tr>
    <td>[bx cs worker-rm](cs_cli_reference.html#cs_worker_rm)</td>
    <td>[bx cs worker-update](cs_cli_reference.html#cs_worker_update)</td>
    <td>[bx cs workers](cs_cli_reference.html#cs_workers)</td>
-  </tr>
+   <td>[bx cs worker-get](cs_cli_reference.html#cs_worker_get)</td>
+ </tr>
+ <tr>
+    <td>[bx cs worker-reboot](cs_cli_reference.html#cs_worker_reboot)</td>
+    <td>[bx cs worker-reload](cs_cli_reference.html#cs_worker_reload)</td>
+ </tr>
  </tbody>
  </table>
 
@@ -403,6 +408,7 @@ Make a subnet in an IBM Bluemix Infrastructure (SoftLayer) account available to 
   {: pre}
 
 
+
 ### bx cs cluster-user-subnet-add CLUSTER SUBNET_CIDR PRIVATE_VLAN
 {: #cs_cluster_user_subnet_add}
 
@@ -646,6 +652,75 @@ View a list of available locations for you to create a cluster in.
   ```
   {: pre}
 
+### bx cs logging-config-get CLUSTER
+{: #cs_logging_get}
+
+View log forwarding configurations for a cluster.
+
+<strong>Command options</strong>:
+
+   <dl>
+   <dt><code><em>CLUSTER</em></code></dt>
+   <dd>The name or ID of the cluster. This value is required.</dd>
+   </dl>
+
+**Example**:
+
+  ```
+  bx cs logging-config-get CLUSTER
+  ```
+  {: pre}
+
+
+### bx cs logging-config-rm CLUSTER --namespace KUBERNETES_NAMESPACE
+{: #cs_logging_rm}
+
+Delete a log forwarding configuration for a Kubernetes namespace by stopping any special log forwarding rules. The namespace continues to forward logs to logmet.
+
+<strong>Command options</strong>:
+
+   <dl>
+   <dt><code><em>CLUSTER</em></code></dt>
+   <dd>The name or ID of the cluster. This value is required.</dd>
+   <dt><code>--namespace <em>KUBERNETES_NAMESPACE</em></code></dt>
+   <dd>The namespace from which you want to remove the log forwarding configuration. This value is required.</dd>
+   </dl>
+
+**Example**:
+
+  ```
+  bx cs logging-config-rm my_cluster --namespace my_namespace
+  ```
+  {: pre}
+
+
+### bx cs logging-config-update CLUSTER [--hostname LOG_SERVER_HOSTNAME] --port LOG_COLLECTOR_PORT --type LOGGING_TYPE [--namespace NAMESPACE]
+{: #cs_logging_update}
+
+Update log forwarding to the logging server you want use for a specified Kubernetes namespace. Currently, 'syslog' is supported as a logging type. Log forwarding is not supported for the 'ibm-system' and 'kube-system' Kubernetes namespaces.
+
+<strong>Command options</strong>:
+
+   <dl>
+   <dt><code><em>CLUSTER</em></code></dt>
+   <dd>The name or ID of the cluster. This value is required.</dd>
+   <dt><code>--hostname <em>LOG_SERVER_HOSTNAME</em></code></dt>
+   <dd>The hostname or IP address of the log collector server. This value is required.</dd>
+   <dt><code>--port <em>LOG_COLLECTOR_PORT</em></code></dt>
+   <dd>The port of the log collector server. This value is optional. If you do not specify a port, then the standard port 514 is used for syslog.</dd>
+   <dt><code>--type <em>LOGGING_TYPE</em></code></dt>
+   <dd>The log forwarding protocol that you want to use. Currently, syslog is supported. This value is required.</dd>
+   <dt><code>--namespace <em>NAMESPACE</em></code></dt>
+   <dd>The namespace to which you want to apply the log forwarding configuration. This value is optional. If you do not specify a namespace, then all namespaces use this configuration.</dd>
+   </dl>
+
+**Example**:
+
+  ```
+  bx cs logging-config-update my_cluster --hostname collector_hostname --port collector_port --type syslog --namespace my_namespace
+  ```
+  {: pre}
+
 
 ### bx cs machine-types LOCATION
 {: #cs_machine_types}
@@ -655,8 +730,8 @@ View a list of available machine types for your worker nodes. Each machine type 
 <strong>Command options</strong>:
 
    <dl>
-   <dt><em>LOCATION</em></dt>
-   <dd>Enter the location where you want to list available machine types.  This value is required. Review [available locations](cs_regions.html#locations).</dd></dl>
+   <dt><code><em>LOCATION</em></code></dt>
+   <dd>Enter the location where you want to list available machine types. This value is required. Review [available locations](cs_regions.html#locations).</dd></dl>
 
 **Example**:
 
@@ -691,7 +766,7 @@ List the public and private VLANs that are available for a location in your IBM 
 <strong>Command options</strong>:
 
    <dl>
-   <dt>LOCATION</dt>
+   <dt><code><em>LOCATION</em></code></dt>
    <dd>Enter the location where you want to list your private and public VLANs. This value is required. Review [available locations](cs_regions.html#locations).</dd>
    </dl>
 
@@ -836,7 +911,7 @@ View details of a worker node.
 <strong>Command options</strong>:
 
    <dl>
-   <dt><em>WORKER_NODE_ID</em></dt>
+   <dt><code><em>WORKER_NODE_ID</em></code></dt>
    <dd>The ID for a worker node. Run <code>bx cs workers <em>CLUSTER</em></code> to view the IDs for the worker nodes in a cluster. This value is required.</dd>
    </dl>
 
