@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-08-18"
+lastupdated: "2017-10-17"
 
 ---
 
@@ -43,9 +43,14 @@ Check out what container developers are interested in.
 <td>[Setting up the CLI](cs_cli_install.html)</td>
 <td>With the CLI, you create and manage your Kubernetes clusters.</td>
 </tr>
+<tr>
+<td>[Update to Kubernetes 1.7](cs_versions.html)</td>
+<td>Review the changes to make to your clusters before updating to Kubernetes 1.7.</td>
+</tr>
 </tbody></table>
 
 ## Chat with like-minded developers on Slack
+{: #slack}
 
 You can see what others are talking about and ask your own questions in the [{{site.data.keyword.containershort_notm}} Slack. ![External link icon](../icons/launch-glyph.svg "External link icon")](https://ibm-container-service.slack.com)
 
