@@ -2,11 +2,11 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-10-05"
+lastupdated: "2017-10-16"
 
 ---
 
-{:new_window: target="_blank"}
+{:new_window: target="blank"}
 {:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
@@ -22,7 +22,7 @@ lastupdated: "2017-10-05"
 Deploy and manage your own Kubernetes cluster in the cloud. You can automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of independent compute hosts called worker nodes.
 {:shortdesc}
 
-In this tutorial series, you can see how a fictional public relations firm can use Kubernetes to deploy a containerized app in {{site.data.keyword.Bluemix_short}}. Leveraging {{site.data.keyword.toneanalyzerfull}}, the PR firm analyzes their press releases and receives feedback.
+In this tutorial series, you can see how a fictional public relations firm uses Kubernetes to deploy a containerized app in {{site.data.keyword.Bluemix_short}}. Leveraging {{site.data.keyword.toneanalyzerfull}}, the PR firm analyzes their press releases and receives feedback.
 
 
 ## Objectives
@@ -39,7 +39,7 @@ To set up the infrastructure:
 
 ## Time required
 
-25 minutes
+40 minutes
 
 
 ## Audience
@@ -47,7 +47,7 @@ To set up the infrastructure:
 This tutorial is intended for software developers and network administrators who have never created a Kubernetes cluster before.
 
 
-## prerequisites
+## Prerequisites
 
 -  A [{{site.data.keyword.Bluemix_notm}} account ![External link icon](../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net/registration/)
 
@@ -56,12 +56,12 @@ This tutorial is intended for software developers and network administrators who
 ## Lesson 1: Creating a cluster and setting up the CLI
 {: #cs_cluster_tutorial_lesson1}
 
-Create your cluster in the GUI and install the required CLIs. For purposes of this tutorial, you create your cluster in the UK {{site.data.keyword.Bluemix_notm}} region.
+Create your cluster in the GUI and install the required CLIs. For this tutorial, create your cluster in the UK South region.
 
 
 To create your cluster:
 
-1. It can take a few minutes to provision your cluster. To make the most of your time, [create your cluster ![External link icon](../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net/containers-kubernetes/launch?env_id=ibm:yp:united-kingdom) before installing the CLIs. A lite cluster comes with one worker node in which to deploy container pods. A worker node is the compute host, typically a virtual machine, that your apps run on. An app in production runs replicas of the app across multiple worker nodes to provide higher availability for your app.
+1. It can take a few minutes to provision your cluster. To make the most of your time, [create your cluster ![External link icon](../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net/containers-kubernetes/launch?env_id=ibm:yp:united-kingdom) before installing the CLIs. A lite cluster comes with one worker node in which to deploy container pods. A worker node is the compute host, typically a virtual machine, on which your apps run.
 
 
 The following CLIs and their prerequisites are used to manage clusters through the CLI:
@@ -71,6 +71,7 @@ The following CLIs and their prerequisites are used to manage clusters through t
 -   {{site.data.keyword.registryshort_notm}} plug-in
 -   Docker CLI
 
+</br>
 To install the CLIs:
 
 1.  As a prerequisite for the {{site.data.keyword.containershort_notm}} plug-in, install the [{{site.data.keyword.Bluemix_notm}} CLI ![External link icon](../icons/launch-glyph.svg "External link icon")](https://clis.ng.bluemix.net/ui/home.html). To run {{site.data.keyword.Bluemix_notm}} CLI commands, use the prefix `bx`.
@@ -150,16 +151,13 @@ Create your Kubernetes cluster, set up a private image repository in {{site.data
 1.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI by using your {{site.data.keyword.Bluemix_notm}} credentials, when prompted.
 
     ```
-    bx login -a api.eu-gb.bluemix.net
+    bx login [--sso] -a api.eu-gb.bluemix.net
     ```
     {: pre}
 
-    To specify a {{site.data.keyword.Bluemix_notm}} region, include the [API endpoint](cs_regions.html#bluemix_regions). The {{site.data.keyword.Bluemix_notm}} region that you log in to determines the region where you can create your Kubernetes clusters, including the available data centers. If you do not specify a region, you are automatically logged in to the region that is closest to you.
+    **Note:** If you have a federated ID, use the `--sso` flag to log in. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode.
 
-    **Note:** If you have a federated ID, use `bx login --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
-
-
-2.  Set up your own private image repository in {{site.data.keyword.registryshort_notm}} to securely store and share Docker images with all cluster users. A private image repository in {{site.data.keyword.Bluemix_notm}} is identified by a namespace. The namespace is used to create a unique URL to your image repository that developers can use to access private Docker images. You can create multiple namespaces in your account to group and organize your images. For example, you can create a namespace for every department, environment, or app.
+2.  Set up your own private image repository in {{site.data.keyword.registryshort_notm}} to securely store and share Docker images with all cluster users. A private image repository in {{site.data.keyword.Bluemix_notm}} is identified by a namespace. The namespace is used to create a unique URL to your image repository that developers can use to access private Docker images.
 
     In this example, the PR firm wants to create only one image repository in {{site.data.keyword.registryshort_notm}}, so they choose _pr_firm_ as their namespace to group all images in their account. Replace _&lt;your_namespace&gt;_ with a namespace of your choice and not something that is related to the tutorial.
 
@@ -171,7 +169,7 @@ Create your Kubernetes cluster, set up a private image repository in {{site.data
 3.  Before you continue to the next step, verify that the deployment of your worker node is complete.
 
     ```
-    bx cs workers <pr_firm_cluster>
+    bx cs workers <cluster_name>
     ```
      {: pre}
 
@@ -179,7 +177,7 @@ Create your Kubernetes cluster, set up a private image repository in {{site.data
 
     ```
     ID                                                 Public IP       Private IP       Machine Type   State    Status   
-    kube-dal10-pafe24f557f070463caf9e31ecf2d96625-w1   169.48.131.37   10.177.161.132   free           normal    Ready   
+    kube-par02-pafe24f557f070463caf9e31ecf2d96625-w1   169.48.131.37   10.177.161.132   free           normal    Ready   
     ```
     {: screen}
 
@@ -197,7 +195,7 @@ Create your Kubernetes cluster, set up a private image repository in {{site.data
         Example for OS X:
 
         ```
-        export KUBECONFIG=/Users/<user_name>/.bluemix/plugins/container-service/clusters/pr_firm_cluster/kube-config-prod-dal10-pr_firm_cluster.yml
+        export KUBECONFIG=/Users/<user_name>/.bluemix/plugins/container-service/clusters/pr_firm_cluster/kube-config-prod-par02-pr_firm_cluster.yml
         ```
         {: screen}
 
@@ -215,7 +213,7 @@ Create your Kubernetes cluster, set up a private image repository in {{site.data
         Output:
 
         ```
-        /Users/<user_name>/.bluemix/plugins/container-service/clusters/pr_firm_cluster/kube-config-prod-dal10-pr_firm_cluster.yml
+        /Users/<user_name>/.bluemix/plugins/container-service/clusters/pr_firm_cluster/kube-config-prod-par02-pr_firm_cluster.yml
         ```
         {: screen}
 
@@ -247,14 +245,14 @@ Create your Kubernetes cluster, set up a private image repository in {{site.data
     2.  Bind the {{site.data.keyword.toneanalyzershort}} instance to the `default` Kubernetes namespace for the cluster. Later, you can create your own namespaces to manage user access to Kubernetes resources, but for now, use the `default` namespace. Kubernetes namespaces are different from the registry namespace you created earlier.
 
         ```
-        bx cs cluster-service-bind <pr_firm_cluster> default <mytoneanalyzer>
+        bx cs cluster-service-bind <cluster_name> default <mytoneanalyzer>
         ```
         {: pre}
 
         Output:
 
         ```
-        bx cs cluster-service-bind <pr_firm_cluster> default <mytoneanalyzer>
+        bx cs cluster-service-bind <cluster_name> default <mytoneanalyzer>
         Binding service instance to namespace...
         OK
         Namespace:	default
@@ -279,7 +277,7 @@ Create your Kubernetes cluster, set up a private image repository in {{site.data
     ```
     {: screen}
 
-
+</br>
 Great work! You've configured your cluster and your local environment is ready for you to start deploying apps into the cluster.
 
 ## What's next?

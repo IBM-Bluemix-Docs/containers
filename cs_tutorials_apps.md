@@ -134,7 +134,7 @@ In this lesson, you deploy a single instance of the Hello World app into a clust
           ```
           {: pre}
 
-4.  Log in to the {{site.data.keyword.registryshort_notm}} CLI.
+4.  Log in to the {{site.data.keyword.registryshort_notm}} CLI. **Note**: Ensure that you have the container-registry plugin [installed](/docs/services/Registry/index.html#registry_cli_install).
 
     ```
     bx cr login
@@ -935,4 +935,3 @@ bx cs cluster-rm <pr_firm_cluster>
 ## What's next?
 
 Try exploring the container orchestration journeys on [developerWorks ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/code/journey/category/container-orchestration/).
-
