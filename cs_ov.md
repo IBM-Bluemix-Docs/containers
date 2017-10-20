@@ -128,10 +128,13 @@ With clusters in {{site.data.keyword.Bluemix_notm}} Public, you can choose the l
 
 Click one of the following options to get started:
 
-<img usemap="#public_options" border="0" class="image" id="cs_ov_environments__image_ztx_crb_f1b" src="images/cs_public_options.png" width="320" alt="With Bluemix Public, you can create Kubernetes clusters or migrate single and scalable container groups to clusters. " style="width:320px;" />
+<img usemap="#public_options" border="0" class="image" id="cs_ov_environments__image_ztx_crb_f1b" src="images/cs_public_options.png" width="320" alt="With {{site.data.keyword.Bluemix_notm}}
+ Public, you can create Kubernetes clusters or migrate single and scalable container groups to clusters." style="width:320px;" />
     <map name="public_options" id="public_options">
-    <area href="container_index.html#clusters" alt="Getting started with Kubernetes clusters in Bluemix" title="Getting started with Kubernetes clusters in Bluemix" shape="rect" coords="-5, -6, 123, 154" />
-    <area href="cs_classic.html#cs_classic" alt="Running single and scalable containers in IBM Bluemix Container Service (Kraken)" title="Running single and scalable containers in IBM Bluemix Container Service (Kraken)" shape="rect" coords="181, -5, 320, 161" />
+    <area href="container_index.html#clusters" alt="Getting started with Kubernetes clusters in {{site.data.keyword.Bluemix_notm}}
+" title="Getting started with Kubernetes clusters in {{site.data.keyword.Bluemix_notm}}
+" shape="rect" coords="-5, -6, 123, 154" />
+    <area href="cs_classic.html#cs_classic" alt="Running single and scalable containers in {{site.data.keyword.containershort_notm}}" title="Running single and scalable containers in I{{site.data.keyword.containershort_notm}}" shape="rect" coords="181, -5, 320, 161" />
     </map>
 
 ### {{site.data.keyword.Bluemix_notm}} Dedicated
@@ -148,12 +151,12 @@ You might choose to set up a {{site.data.keyword.Bluemix_notm}} Dedicated enviro
 
 Click one of the following options to get started:
 
-<img usemap="#dedicated_options" border="0" class="image" id="cs_ov_environments__image_hjb_4ln_j1b" src="images/cs_dedicated_options.png" width="600" alt="With Bluemix Dedicated, you can create Kubernetes clusters or migrate single and scalable container groups to clusters. " style="width:600px;" />
+<img usemap="#dedicated_options" border="0" class="image" id="cs_ov_environments__image_hjb_4ln_j1b" src="images/cs_dedicated_options.png" width="600" alt="With {{site.data.keyword.Bluemix_notm}} Dedicated, you can create Kubernetes clusters or migrate single and scalable container groups to clusters. " style="width:600px;" />
     <map name="dedicated_options" id="dedicated_options">
-    <area href="#setup_dedicated" alt="Setting up IBM Bluemix Container Service on Bluemix Dedicated (Closed Beta)" title="Setting up IBM Bluemix Container Service on Bluemix Dedicated (Closed Beta)" shape="rect" coords="-5, -15, 100, 153" />
-    <area href="container_index.html#dedicated" alt="Getting started with Kubernetes clusters in Bluemix Dedicated (Closed Beta)" title="Getting started with Kubernetes clusters in Bluemix Dedicated (Closed Beta)" shape="rect" coords="153, -10, 276, 182" />
-    <area href="cs_classic.html#cs_classic" alt="Running single and scalable containers in IBM Bluemix Container Service (Kraken)" title="Running single and scalable containers in IBM Bluemix Container Service (Kraken)" shape="rect" coords="317, -11, 436, 188" />
-    <area href="container_ha.html#container_group_ui" alt="Running long-term services as container groups from the Bluemix GUI" title="Running long-term services as container groups from the Bluemix GUI" shape="rect" coords="485, -1, 600, 173" />
+    <area href="#setup_dedicated" alt="Setting up {{site.data.keyword.containershort_notm}} on {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)" title="Setting up {{site.data.keyword.containershort_notm}} on {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)" shape="rect" coords="-5, -15, 100, 153" />
+    <area href="container_index.html#dedicated" alt="Getting started with Kubernetes clusters in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)" title="Getting started with Kubernetes clusters in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)" shape="rect" coords="153, -10, 276, 182" />
+    <area href="cs_classic.html#cs_classic" alt="Running single and scalable containers in {{site.data.keyword.containershort_notm}}" title="Running single and scalable containers in {{site.data.keyword.containershort_notm}}" shape="rect" coords="317, -11, 436, 188" />
+    <area href="container_ha.html#container_group_ui" alt="Running long-term services as container groups from the {{site.data.keyword.Bluemix_notm}} GUI" title="Running long-term services as container groups from the {{site.data.keyword.Bluemix_notm}} GUI" shape="rect" coords="485, -1, 600, 173" />
     </map>
 
 ### Differences in cluster management between the cloud environments
@@ -209,7 +212,7 @@ To set up your Dedicated environment to use clusters:
 Each worker node is set up with an {{site.data.keyword.IBM_notm}} managed Docker Engine, separate compute resources, networking, and volume service, as well as built-in security features that provide isolation, resource management capabilities, and worker node security compliance. The worker node communicates with the master by using secure TLS certificates and openVPN connection.
 {:shortdesc}
 
-*Figure 1. Kubernetes architecture and networking in the IBM Bluemix Container Service*
+*Figure 1. Kubernetes architecture and networking in the {{site.data.keyword.containershort_notm}}*
 
 <a href="https://console.bluemix.net/docs/api/content/containers/images/cs_org_ov.png">![{{site.data.keyword.containerlong_notm}} Kubernetes architecture](images/cs_org_ov.png)</a>
 
