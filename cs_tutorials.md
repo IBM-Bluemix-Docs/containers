@@ -85,7 +85,7 @@ To install the CLIs:
     {: pre}
 
 5.  To view a local version of the Kubernetes dashboard and deploy apps into your clusters, [install the Kubernetes CLI ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/tools/install-kubectl/). To run commands by using the Kubernetes CLI, use the prefix `kubectl`.
-    1.  Download the Kubernetes CLI.
+    1.  For complete functional compatibility, download the Kubernetes CLI version that matches the Kubernetes cluster version you plan to use. The current {{site.data.keyword.containershort_notm}} default Kubernetes version is 1.7.4.
 
         OS X:   [https://storage.googleapis.com/kubernetes-release/release/v1.7.4/bin/darwin/amd64/kubectl ![External link icon](../icons/launch-glyph.svg "External link icon")](https://storage.googleapis.com/kubernetes-release/release/v1.7.4/bin/darwin/amd64/kubectl)
 
@@ -176,8 +176,8 @@ Create your Kubernetes cluster, set up a private image repository in {{site.data
     When the provisioning of your worker node is completed, the status changes to **Ready** and you can start binding {{site.data.keyword.Bluemix_notm}} services to use in a future tutorial.
 
     ```
-    ID                                                 Public IP       Private IP       Machine Type   State    Status   
-    kube-par02-pafe24f557f070463caf9e31ecf2d96625-w1   169.48.131.37   10.177.161.132   free           normal    Ready   
+    ID                                                 Public IP       Private IP       Machine Type   State    Status
+    kube-par02-pafe24f557f070463caf9e31ecf2d96625-w1   169.48.131.37   10.177.161.132   free           normal    Ready
     ```
     {: screen}
 
