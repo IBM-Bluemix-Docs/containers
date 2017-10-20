@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-09-29"
+lastupdated: "2017-10-20"
 
 ---
 
@@ -134,7 +134,7 @@ In this lesson, you deploy a single instance of the Hello World app into a clust
           ```
           {: pre}
 
-4.  Log in to the {{site.data.keyword.registryshort_notm}} CLI.
+4.  Log in to the {{site.data.keyword.registryshort_notm}} CLI. **Note**: Ensure that you have the container-registry plugin [installed](/docs/services/Registry/index.html#registry_cli_install).
 
     ```
     bx cr login
@@ -586,7 +586,7 @@ service "hw-demo-service" deleted
 
 In the previous lessons, the apps were deployed as single components in one worker node. In this lesson, you deploy two components of an app into a cluster that use the Watson Tone Analyzer service that you added to your cluster in the previous tutorial. Separating components into different containers ensures that you can update one without affecting the others. Then, you will update the app to scale it up with more replicas to make it more highly available.
 
-<a href="https://console.bluemix.net/docs/api/content/containers/images/cs_app_tutorial_components3.png">[![Deployment setup](images/cs_app_tutorial_components3.png)</a>
+<a href="https://console.bluemix.net/docs/api/content/containers/images/cs_app_tutorial_components3.png">![Deployment setup](images/cs_app_tutorial_components3.png)</a>
 
 
 ### Lesson 3a: Deploying the Watson Tone Analyzer app
@@ -935,4 +935,3 @@ bx cs cluster-rm <pr_firm_cluster>
 ## What's next?
 
 Try exploring the container orchestration journeys on [developerWorks ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/code/journey/category/container-orchestration/).
-
