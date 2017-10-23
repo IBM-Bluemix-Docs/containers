@@ -44,37 +44,38 @@ Refer to these commands to create and manage clusters.
     <td>[bx cs cluster-services](cs_cli_reference.html#cs_cluster_services)</td>
     <td>[bx cs cluster-subnet-add](cs_cli_reference.html#cs_cluster_subnet_add)</td>
     <td>[bx cs cluster-user-subnet-add](cs_cli_reference.html#cs_cluster_user_subnet_add)</td>
-    <td>[bx cs cluster-user-subnet-rm](cs_cli_reference.html#cs_cluster_user_subnet_rm)</td>
  </tr>
  <tr>
+   <td>[bx cs cluster-user-subnet-rm](cs_cli_reference.html#cs_cluster_user_subnet_rm)</td>
    <td>[bx cs cluster-update](cs_cli_reference.html#cs_cluster_update)</td>
    <td>[bx cs clusters](cs_cli_reference.html#cs_clusters)</td>
    <td>[bx cs credentials-set](cs_cli_reference.html#cs_credentials_set)</td>
    <td>[bx cs credentials-unset](cs_cli_reference.html#cs_credentials_unset)</td>
-   <td>[bx cs help](cs_cli_reference.html#cs_help)</td>
  </tr>
  <tr>
+    <td>[bx cs help](cs_cli_reference.html#cs_help)</td>
     <td>[bx cs init](cs_cli_reference.html#cs_init)</td>
     <td>[bx cs locations](cs_cli_reference.html#cs_datacenters)</td>
+    <td>[bx cs logging-config-create](cs_cli_reference.html#cs_logging_create)</td>
     <td>[bx cs logging-config-get](cs_cli_reference.html#cs_logging_get)</td>
-    <td>[bx cs logging-config-rm](cs_cli_reference.html#cs_logging_rm)</td>
-    <td>[bx cs logging-config-update](cs_cli_reference.html#cs_logging_update)</td>
  </tr>
  <tr>
+   <td>[bx cs logging-config-rm](cs_cli_reference.html#cs_logging_rm)</td>
+   <td>[bx cs logging-config-update](cs_cli_reference.html#cs_logging_update)</td>
    <td>[bx cs machine-types](cs_cli_reference.html#cs_machine_types)</td>
    <td>[bx cs subnets](cs_cli_reference.html#cs_subnets)</td>
    <td>[bx cs vlans](cs_cli_reference.html#cs_vlans)</td>
-   <td>[bx cs webhook-create](cs_cli_reference.html#cs_webhook_create)</td>
-   <td>[bx cs worker-add](cs_cli_reference.html#cs_worker_add)</td>
  </tr>
  <tr>
+   <td>[bx cs webhook-create](cs_cli_reference.html#cs_webhook_create)</td>
+   <td>[bx cs worker-add](cs_cli_reference.html#cs_worker_add)</td>
    <td>[bx cs worker-rm](cs_cli_reference.html#cs_worker_rm)</td>
    <td>[bx cs worker-update](cs_cli_reference.html#cs_worker_update)</td>
    <td>[bx cs workers](cs_cli_reference.html#cs_workers)</td>
-   <td>[bx cs worker-get](cs_cli_reference.html#cs_worker_get)</td>
-   <td>[bx cs worker-reboot](cs_cli_reference.html#cs_worker_reboot)</td>
  </tr>
  <tr>
+    <td>[bx cs worker-get](cs_cli_reference.html#cs_worker_get)</td>
+    <td>[bx cs worker-reboot](cs_cli_reference.html#cs_worker_reboot)</td>
     <td>[bx cs worker-reload](cs_cli_reference.html#cs_worker_reload)</td>
  </tr>
  </tbody>
@@ -652,30 +653,68 @@ View a list of available locations for you to create a cluster in.
   ```
   {: pre}
 
-### bx cs logging-config-get CLUSTER
+### bx cs logging-config-create CLUSTER [--namespace KUBERNETES_NAMESPACE] [--logsource LOG_SOURCE] [--hostname LOG_SERVER_HOSTNAME] [--port LOG_SERVER_PORT] --type LOG_TYPE
+{: #cs_logging_create}
+
+Create a logging configuration. By default, namespace logs are forwarded to {{site.data.keyword.loganalysislong_notm}}. You can use this command to forward namespace logs to an external syslog server. You can also use this command to forward logs for applications, worker nodes, Kubernetes clusters, and Ingress controllers to {{site.data.keyword.loganalysisshort_notm}} or to an external syslog server.
+
+<strong>Command options</strong>:
+
+<dl>
+<dt><code><em>CLUSTER</em></code></dt>
+<dd>The name or ID of the cluster.</dd>
+<dt><code>--logsource <em>LOG_SOURCE</em></code></dt>
+<dd>The kind of log source for which you want to enable log forwarding. Accepted values are 'application', 'worker', 'kubernetes', and 'ingress'. This is required when the log source is a namespace.</dd>
+<dt><code>--namespace <em>KUBERNETES_NAMESPACE</em></code></dt>
+<dd>The Docker container namespace from which you want to forward logs to syslog. Log forwarding is not supported for the 'ibm-system' and 'kube-system' Kubernetes namespaces. This value is required when the log source is a namespace.</dd>
+<dt><code>--hostname <em>LOG_SERVER_HOSTNAME</em></code></dt>
+<dd>The hostname or IP address of the log collector server. This value is required when the logging type is <code>syslog</code>.</dd>
+<dt><code>--port <em>LOG_SERVER_PORT</em></code></dt>
+<dd>The port of the log collector server. This value is optional when the logging type is <code>syslog</code>. If you do not specify a port, then the standard port <code>514</code> is used for <code>syslog</code>.</dd>
+<dt><code>--type <em>LOG_TYPE</em></code></dt>
+<dd>The log forwarding protocol that you want to use. Currently, <code>syslog</code> and <code>ibm</code> are supported. This value is required.</dd>
+</dl>
+
+**Example for log source `namespace`**:
+
+  ```
+  bx cs logging-config-create my_cluster --namespace my_namespace --hostname localhost --port 5514 --type syslog
+  ```
+  {: pre}
+
+**Example for log source `ingress`**:
+
+  ```
+  bx cs logging-config-create my_cluster f4bc77c0-ee7d-422d-aabf-a4e6b977264e --type ibm
+  ```
+  {: pre}
+
+### bx cs logging-config-get CLUSTER [--logsource LOG_SOURCE]
 {: #cs_logging_get}
 
-View log forwarding configurations for a cluster.
+View all log forwarding configurations for a cluster, or filter logging configurations based on log source.
 
 <strong>Command options</strong>:
 
    <dl>
    <dt><code><em>CLUSTER</em></code></dt>
    <dd>The name or ID of the cluster. This value is required.</dd>
+   <dt><code>--logsource <em>LOG_SOURCE</em></code></dt>
+   <dd>The kind of log source for which you want to filter. Only logging configurations of this log source in the cluster are returned. Accepted values are <code>namespace</code>, <code>application</code>, <code>worker</code>, <code>kubernetes</code>, and <code>ingress</code>. This value is optional.</dd>
    </dl>
 
 **Example**:
 
   ```
-  bx cs logging-config-get CLUSTER
+  bx cs logging-config-get my_cluster --logsource worker
   ```
   {: pre}
 
 
-### bx cs logging-config-rm CLUSTER --namespace KUBERNETES_NAMESPACE
+### bx cs logging-config-rm CLUSTER [--namespace KUBERNETES_NAMESPACE] [--id LOG_SOURCE_LOGGING_ID]
 {: #cs_logging_rm}
 
-Delete a log forwarding configuration for a Kubernetes namespace by stopping any special log forwarding rules. The namespace continues to forward logs to logmet.
+Deletes a log forwarding configuration. For a Docker container namespace, you can stop forwarding logs to a syslog server. The namespace continues to forward logs to {{site.data.keyword.loganalysislong_notm}}. For a log source other than a Docker container namespace, you can stop forwarding logs to a syslog server or to {{site.data.keyword.loganalysisshort_notm}}.
 
 <strong>Command options</strong>:
 
@@ -683,7 +722,9 @@ Delete a log forwarding configuration for a Kubernetes namespace by stopping any
    <dt><code><em>CLUSTER</em></code></dt>
    <dd>The name or ID of the cluster. This value is required.</dd>
    <dt><code>--namespace <em>KUBERNETES_NAMESPACE</em></code></dt>
-   <dd>The namespace from which you want to remove the log forwarding configuration. This value is required.</dd>
+   <dd>The Docker container namespace from which you want to stop forwarding logs to syslog. This value is required for Docker container namespaces. Do not use this flag for log sources that are not a namespace.</dd>
+   <dt><code>--id <em>LOG_SOURCE_LOGGING_ID</em></code></dt>
+   <dd>The logging configuration UUID that you want to remove from the log source. This value is required for log sources other than Docker container namespaces. Do not use this flag for namespaces.</dd>
    </dl>
 
 **Example**:
@@ -694,33 +735,41 @@ Delete a log forwarding configuration for a Kubernetes namespace by stopping any
   {: pre}
 
 
-### bx cs logging-config-update CLUSTER [--hostname LOG_SERVER_HOSTNAME] --port LOG_COLLECTOR_PORT --type LOGGING_TYPE [--namespace NAMESPACE]
+### bx cs logging-config-update CLUSTER [--namespace NAMESPACE] [--id LOG_SOURCE_LOGGING_ID] [--hostname LOG_SERVER_HOSTNAME] [--port LOG_SERVER_PORT] --type LOG_TYPE
 {: #cs_logging_update}
 
-Update log forwarding to the logging server you want use for a specified Kubernetes namespace. Currently, 'syslog' is supported as a logging type. Log forwarding is not supported for the 'ibm-system' and 'kube-system' Kubernetes namespaces.
+Update log forwarding to the logging server you want use. For a Docker container namespace, you can use this command to update details for the current syslog server or change to a different syslog server. For a logging source other than a Docker container namespace, you can use this command to change the log collector server type. Currently, 'syslog' and 'ibm' are supported as log types.
 
 <strong>Command options</strong>:
 
    <dl>
    <dt><code><em>CLUSTER</em></code></dt>
    <dd>The name or ID of the cluster. This value is required.</dd>
-   <dt><code>--hostname <em>LOG_SERVER_HOSTNAME</em></code></dt>
-   <dd>The hostname or IP address of the log collector server. This value is required.</dd>
-   <dt><code>--port <em>LOG_COLLECTOR_PORT</em></code></dt>
-   <dd>The port of the log collector server. This value is optional. If you do not specify a port, then the standard port 514 is used for syslog.</dd>
-   <dt><code>--type <em>LOGGING_TYPE</em></code></dt>
-   <dd>The log forwarding protocol that you want to use. Currently, syslog is supported. This value is required.</dd>
    <dt><code>--namespace <em>NAMESPACE</em></code></dt>
-   <dd>The namespace to which you want to apply the log forwarding configuration. This value is optional. If you do not specify a namespace, then all namespaces use this configuration.</dd>
+   <dd>The Docker container namespace from which you want to forward logs to syslog. Log forwarding is not supported for the 'ibm-system' and 'kube-system' Kubernetes namespaces. This value is required for Docker container namespaces.</dd>
+   <dt><code>--id <em>LOG_SOURCE_LOGGING_ID</em></code></dt>
+   <dd>The logging configuration UUID that you want to remove from the log source. This value is required for log sources other than Docker container namespaces.</dd>
+   <dt><code>--hostname <em>LOG_SERVER_HOSTNAME</em></code></dt>
+   <dd>The hostname or IP address of the log collector server. This value is required when the logging type is <code>syslog</code>. Do not use this flag when the log type is <code>ibm</code>.</dd>
+   <dt><code>--port <em>LOG_SERVER_PORT</em></code></dt>
+   <dd>The port of the log collector server. This value is optional when the logging type is <code>syslog</code>. If you do not specify a port, then the standard port 514 is used for <code>syslog</code>. Do not use this flag when the log type is <code>ibm</code>.</dd>
+   <dt><code>--type <em>LOG_TYPE</em></code></dt>
+   <dd>The log forwarding protocol that you want to use. Currently, <code>syslog</code> and <code>ibm</code> are supported. This value is required.</dd>
    </dl>
 
-**Example**:
+**Example for log type `ibm`**:
 
   ```
-  bx cs logging-config-update my_cluster --hostname collector_hostname --port collector_port --type syslog --namespace my_namespace
+  bx cs logging-config-update my_cluster --id f4bc77c0-ee7d-422d-aabf-a4e6b977264e --type ibm
   ```
   {: pre}
 
+**Example for log type `syslog`**:
+
+  ```
+  bx cs logging-config-update my_cluster --namespace my_namespace --hostname localhost --port 5514 --type syslog
+  ```
+  {: pre}
 
 ### bx cs machine-types LOCATION
 {: #cs_machine_types}
