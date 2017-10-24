@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-10-12"
+lastupdated: "2017-10-24"
 
 ---
 
@@ -23,7 +23,9 @@ Review the Kubernetes versions that are available on {{site.data.keyword.contain
 
 The table contains updates that are likely to have impact on deployed apps when you update a cluster to a new version. Review the [Kubernetes changelog ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG.md) for a complete list of changes in Kubernetes versions.
 
-For more information on the updating process, see [Updating clusters](cs_cluster.html#cs_cluster_update) and [Updating worker nodes](cs_cluster.html#cs_cluster_worker_update)
+For more information on the updating process, see [Updating clusters](cs_cluster.html#cs_cluster_update) and [Updating worker nodes](cs_cluster.html#cs_cluster_worker_update).
+
+
 
 ## Version 1.7
 {: #cs_v17}
@@ -95,13 +97,13 @@ For more information on the updating process, see [Updating clusters](cs_cluster
 
   <pre class="codeblock">
   <code>
-  kubectl create -n &lt;namespace&gt; -f - &lt;&lt;EOF  
-  kind: NetworkPolicy  
-  apiVersion: networking.k8s.io/v1  
-  metadata:  
-    name: default-deny  
+  kubectl create -n &lt;namespace&gt; -f - &lt;&lt;EOF
+  kind: NetworkPolicy
+  apiVersion: networking.k8s.io/v1
+  metadata:
+    name: default-deny
     namespace: &lt;namespace&gt;
-  spec:  
+  spec:
     podSelector: {}
   EOF
   </code>
