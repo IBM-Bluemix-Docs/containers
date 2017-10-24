@@ -1615,7 +1615,7 @@ You successfully created a persistent volume object and bound it to a persistent
 ## Configuring cluster logging
 {: #cs_logging}
 
-Logs help you troubleshoot issues with your clusters and apps. You can enable log forwarding for various cluster log types and choose where your logs are forwarded.
+Logs help you troubleshoot issues with your clusters and apps. You can enable log forwarding for various cluster log sources and choose where your logs are forwarded.
 {:shortdesc}
 
 ### Viewing logs
@@ -1637,15 +1637,18 @@ To access the Kibana dashboard, go to one of the following URLs and select the {
 #### Docker logs
 {: #cs_view_logs_docker}
 
-You can leverage the built-in Docker logging capabilities to review activities on the standard STDOUT and STDERR output streams. For more information, see [Viewing container logs for a container that runs in a Kubernetes cluster](/docs/services/CloudLogAnalysis/containers/logging_containers_other_logs.html#logging_containers_collect_data).
+You can leverage the built-in Docker logging capabilities to review activities on the standard STDOUT and STDERR output streams. For more information, see [Viewing container logs for a container that runs in a Kubernetes cluster](/docs/services/CloudLogAnalysis/containers/logging_containers_ov.html#logging_containers_ov_methods_view_kube).
 
-### Updating the logging server configuration
-{: #cs_update_server}
+### Configuring log forwarding for a Docker container namespace
+{: #cs_configure_namespace_logs}
 
-By default, the {{site.data.keyword.containerlong}} forwards cluster logs to {{site.data.keyword.loganalysislong_notm}}. You can also configure your cluster to forward logs to an external syslog server.
+By default, the {{site.data.keyword.containershort_notm}} forwards Docker container namespace logs to {{site.data.keyword.loganalysislong_notm}}. You can also forward container namespace logs to an external syslog server by creating a new log forwarding configuration.
 {:shortdesc}
 
-**Note**: To view logs in the Sydney location, you must configure your cluster to forward logs to an external syslog server.
+**Note**: To view logs in the Sydney location, you must forward logs to an external syslog server.
+
+#### Enabling log forwarding to syslog
+{: #cs_namespace_enable}
 
 Before you begin:
 
@@ -1653,14 +1656,14 @@ Before you begin:
   * Set up and manage your own server or have a provider manage it for you. If a provider manages the server for you, get the logging endpoint from the logging provider.
   * Run syslog from a container. For example, you can use this [deployment .yaml file](https://github.com/IBM-Bluemix/kube-samples/blob/master/deploy-apps-clusters/deploy-syslog-from-kube) to fetch a Docker public image that runs a container in a Kubernetes cluster. The image publishes the port `30514` on the public cluster IP address, and uses this public cluster IP address to configure the syslog host.
 
-2. [Target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster for which you want to configure logging.
+2. [Target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster where the namespace is located.
 
-To configure your cluster to forward logs to a syslog server:
+To forward your namespace logs to a syslog server:
 
-1. Update the logging configuration.
+1. Create the logging configuration.
 
     ```
-    bx cs logging-config-update <my_cluster> --hostname <log_server_hostname> --port <log_server_port> --type syslog --namespace <my_namespace>
+    bx cs logging-config-create <my_cluster> --namespace <my_namespace> --hostname <log_server_hostname> --port <log_server_port> --type syslog
     ```
     {: pre}
 
@@ -1671,33 +1674,34 @@ To configure your cluster to forward logs to a syslog server:
     </thead>
     <tbody>
     <tr>
-    <td><code>logging-config-update</code></td>
-    <td>The command to update the log forwarding configuration for your cluster.</td>
+    <td><code>logging-config-create</code></td>
+    <td>The command to create the log forwarding configuration for your namespace.</td>
     </tr>
     <tr>
     <td><code><em>&lt;my_cluster&gt;</em></code></td>
     <td>Replace <em>&lt;my_cluster&gt;</em> with the name or ID of the cluster.</td>
     </tr>
     <tr>
+    <td><code>--namespace <em>&lt;my_namespace&gt;</em></code></td>
+    <td>Replace <em>&lt;my_namespace&gt;</em> with the name of the namespace. Log forwarding is not supported for the <code>ibm-system</code> and <code>kube-system</code> Kubernetes namespaces. If you do not specify a namespace, then all namespaces in the container use this configuration.</td>
+    </tr>
+    <tr>
     <td><code>--hostname <em>&lt;log_server_hostname&gt;</em></code></td>
     <td>Replace <em>&lt;log_server_hostname&gt;</em> with the hostname or IP address of the log collector server.</td>
     </tr>
     <tr>
-    <td><code>--port <em>&lt;log_collector_port&gt;</em></code></td>
-    <td>Replace <em>&lt;log_server_port&gt;</em> with the port of the log collector server. If you do not specify a port, then the standard port `514` is used for syslog.</td>
+    <td><code>--port <em>&lt;log_server_port&gt;</em></code></td>
+    <td>Replace <em>&lt;log_server_port&gt;</em> with the port of the log collector server. If you do not specify a port, then the standard port <code>514</code> is used for syslog.</td>
     </tr>
     <tr>
-    <td><code>--type syslog/code></td>
-    <td>The logging type for syslog.</td>
-    </tr>
-    <tr>
-    <td><code>--namespace <em>&lt;my_namespace&gt;</em></code></td>
-    <td>Replace <em>&lt;my_namespace&gt;</em> with the name of the namespace to which you want to apply the log forwarding configuration. Log forwarding is not supported for the 'ibm-system' and 'kube-system' Kubernetes namespaces. If you do not specify a namespace, then all namespaces in the cluster use this configuration.</td>
+    <td><code>--type syslog</code></td>
+    <td>The log type for syslog.</td>
     </tr>
     </tbody></table>
 
 2. Verify that the log forwarding configuration was created.
 
+  * To list all of the logging configurations in the cluster:
     ```
     bx cs logging-config-get <my_cluster>
     ```
@@ -1706,21 +1710,122 @@ To configure your cluster to forward logs to a syslog server:
     Example output:
 
     ```
-    Namespace         Host             Port   Protocol
-    mykubenamespace   myhostname.com   514    syslog
+    Logging Configurations
+    ---------------------------------------------
+    Id                                    Source      Protocol Host       Port
+    f4bc77c0-ee7d-422d-aabf-a4e6b977264e  kubernetes  syslog   localhost  5514
+    5bd9c609-13c8-4c48-9d6e-3a6664c825a9  ingress     ibm      -          -
+
+    Container Log Namespace configurations
+    ---------------------------------------------
+    Namespace         Protocol    Host        Port
+    default           syslog      localhost   5514
+    my-namespace      syslog      localhost   5514   
     ```
     {: screen}
 
-To stop forwarding cluster logs to a syslog server:
+  * To list only namespace logging configurations:
+    ```
+    bx cs logging-config-get <my_cluster> --logsource namespaces
+    ```
+    {: pre}
 
-1. Delete the logging configuration. Replace <em>&lt;my_cluster&gt;</em> with the name of the cluster that the logging configuration is in and <em>&lt;my_namespace&gt;</em> with the name of the namespace from which the logs are forwarded.
+    Example output:
+
+    ```
+    Namespace         Protocol    Host        Port
+    default           syslog      localhost   5514
+    myapp-namespace   syslog      localhost   5514
+    ```
+    {: screen}
+
+#### Updating the syslog server configuration
+{: #cs_namespace_update}
+
+If you want to update details for the current syslog server configuration or change to a different syslog server, you can update the logging forwarding configuration.
+{:shortdesc}
+
+Before you begin:
+
+1. [Target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster where the namespace is located.
+
+To change the details of the syslog forwarding configuration:
+
+1. Update the log forwarding configuration.
+
+    ```
+    bx cs logging-config-update <my_cluster> --namespace <my_namespace> --hostname <log_server_hostname> --port <log_server_port> --type syslog
+    ```
+    {: pre}
+
+    <table>
+    <caption>Table 2. Understanding this command's components</caption>
+    <thead>
+    <th colspan=2><img src="images/idea.png"/> Understanding this command's components</th>
+    </thead>
+    <tbody>
+    <tr>
+    <td><code>logging-config-update</code></td>
+    <td>The command to update the log forwarding configuration for your namespace.</td>
+    </tr>
+    <tr>
+    <td><code><em>&lt;my_cluster&gt;</em></code></td>
+    <td>Replace <em>&lt;my_cluster&gt;</em> with the name or ID of the cluster.</td>
+    </tr>
+    <tr>
+    <td><code>--namepsace <em>&lt;my_namespace&gt;</em></code></td>
+    <td>Replace <em>&lt;log_source_id&gt;</em> with the name of the namespace with the logging configuration.</td>
+    </tr>
+    <tr>
+    <td><code>--hostname <em>&lt;log_server_hostname&gt;</em></code></td>
+    <td>Replace <em>&lt;log_server_hostname&gt;</em> with the hostname or IP address of the log collector server.</td>
+    </tr>
+    <tr>
+    <td><code>--port <em>&lt;log_collector_port&gt;</em></code></td>
+    <td>Replace <em>&lt;log_server_port&gt;</em> with the port of the log collector server. If you do not specify a port, then the standard port <code>514</code> is used.</td>
+    </tr>
+    <tr>
+    <td><code>--type syslog</code></td>
+    <td>The logging type for <code>syslog</code>.</td>
+    </tr>
+    </tbody></table>
+
+2. Verify that the log forwarding configuration was updated.
+    ```
+    bx cs logging-config-get <my_cluster> --logsource namespaces
+    ```
+    {: pre}
+
+    Example output:
+
+    ```
+    Namespace         Protocol    Host        Port
+    default           syslog      localhost   5514
+    myapp-namespace   syslog      localhost   5514
+    ```
+    {: screen}
+
+#### Stopping log forwarding to syslog
+{: #cs_namespace_delete}
+
+You can stop forwarding logs from a namespace by deleting the logging configuration.
+
+**Note**: This action deletes only the configuration for forwarding logs to a syslog server. Logs for the namespace continue to be forwarded to {{site.data.keyword.loganalysislong_notm}}.
+
+Before you begin:
+
+1. [Target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster where the namespace is located.
+
+To stop forwarding logs to syslog:
+
+1. Delete the logging configuration.
 
     ```
     bx cs logging-config-rm <my_cluster> --namespace <my_namespace>
     ```
     {: pre}
+    Replace <em>&lt;my_cluster&gt;</em> with the name of the cluster that the logging configuration is in and <em>&lt;my_namespace&gt;</em> with the name of the namespace.
 
-    **Note**: This action deletes only the configuration for forwarding logs to a syslog server. Logs for the namespace continue to be forwarded to {{site.data.keyword.loganalysislong_notm}}.
 
 <br />
 

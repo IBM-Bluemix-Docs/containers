@@ -313,7 +313,7 @@ Before you begin:
 
 1.  [Install the {{site.data.keyword.containershort_notm}} and Kubernetes CLIs.](cs_cli_install.html#cs_cli_install)
 2.  [Create a lite or standard cluster.](cs_cluster.html#cs_cluster_ui)
-3.  [Target the Kubernetes CLI to the cluster](cs_cli_install.html#cs_cli_configure). Include the `--admin` option with the `bx cs cluster-config` command, which is used to download the certificates and permission files. This download also includes the keys for the Administrator rbac role, which you need to run Calico commands.
+3.  [Target the Kubernetes CLI to the cluster](cs_cli_install.html#cs_cli_configure). Include the `--admin` option with the `bx cs cluster-config` command, which is used to download the certificates and permission files. This download also includes the keys for the Super User role, which you need to run Calico commands.
 
   ```
   bx cs cluster-config <cluster_name> --admin
@@ -455,7 +455,7 @@ To add network policies:
               {: pre}
 
             -   Windows:
-              <ol><li>Open the directory you retrieved in the last step.</br><pre class="codeblock"><code>C:\Users\<user>\.bluemix\plugins\container-service\&#60;cluster_name&#62;-admin\</code></pre>
+              <ol><li>Open the directory you retrieved in the last step.</br><pre class="codeblock"><code>C:\Users\<user>\.bluemix\plugins\container-service\&lt;cluster_name&gt;-admin\</code></pre>
               <li> Locate the <code>ca-*pem_file</code> file.</ol>
 
         4.  Verify that the Calico configuration is working correctly.

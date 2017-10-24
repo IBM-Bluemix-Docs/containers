@@ -176,7 +176,7 @@ Review the options that you have to debug your app deployments and find the root
 1. Look for abnormalities in the service or deployment resources by running the `describe` command.
 
  Example:
- <pre class="pre"><code>kubectl describe service &#60;service_name&#62;</code></pre>
+ <pre class="pre"><code>kubectl describe service &lt;service_name&gt; </code></pre>
 
 2. [Check if the containers are stuck in the ContainerCreating state](#stuck_creating_state).
 
@@ -186,25 +186,25 @@ Review the options that you have to debug your app deployments and find the root
    1. Get the name of a pod.
      <pre class="pre"><code>kubectl get pods</code></pre>
    2. Log in to a container.
-     <pre class="pre"><code>kubectl exec -it &#60;pod_name&#62; -- /bin/bash</code></pre>
+     <pre class="pre"><code>kubectl exec -it &lt;pod_name&gt; -- /bin/bash</code></pre>
    3. Curl the app from within the container. If the port is not accessible, the service might not be listening on the correct port or the app might have issues. Update the configuration file for the service with the correct port and redeploy or investigate potential issues with the app.
-     <pre class="pre"><code>curl localhost:&#60;port&#62;</code></pre>
+     <pre class="pre"><code>curl localhost: &lt;port&gt;</code></pre>
 
 5. Verify that the service is linked correctly to the pods.
    1. Get the name of a pod.
      <pre class="pre"><code>kubectl get pods</code></pre>
    2. Log in to a container.
-     <pre class="pre"><code>kubectl exec -it &#60;pod_name&#62; -- /bin/bash</code></pre>
+     <pre class="pre"><code>kubectl exec -it &lt;pod_name&gt; -- /bin/bash</code></pre>
    3. Curl the cluster IP address and port of the service. If the IP address and port are not accessible, look at the endpoints for the service. If there are no endpoints, then the selector for the service does not match the pods. If there are endpoints, then look at the target port field on the service and make sure that the target port is the same as what is being used for the pods.
-     <pre class="pre"><code>curl &#60;cluster_IP&#62;:&#60;port&#62;</code></pre>
+     <pre class="pre"><code>curl &lt;cluster_IP&gt;:&lt;port&gt;</code></pre>
 
 6. For Ingress services, verify that the service is accessible from within the cluster.
    1. Get the name of a pod.
      <pre class="pre"><code>kubectl get pods</code></pre>
    2. Log in to a container.
-     <pre class="pre"><code>kubectl exec -it &#60;pod_name&#62; -- /bin/bash</code></pre>
+     <pre class="pre"><code>kubectl exec -it &lt;pod_name&gt; -- /bin/bash</code></pre>
    2. Curl the URL specified for the Ingress service. If the URL is not accessible, check for a firewall issue between the cluster and the external endpoint. 
-     <pre class="pre"><code>curl &#60;host_name&#62;.&#60;domain&#62;</code></pre>
+     <pre class="pre"><code>curl &lt;host_name&gt;.&lt;domain&gt;</code></pre>
 
 <br />
 
@@ -345,7 +345,7 @@ The file system on the worker node is read-only.
 1. Back up any data that might be stored on the worker node or in your containers.
 2. Rebuild the worker node by running the following command.
 
-<pre class="pre"><code>bx cs worker-reload &#60;cluster_name&#62; &#60;worker_id&#62;</code></pre>
+<pre class="pre"><code>bx cs worker-reload &lt;cluster_name&gt; &lt;worker_id&gt;</code></pre>
 
 <br />
 
