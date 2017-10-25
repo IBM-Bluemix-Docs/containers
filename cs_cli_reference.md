@@ -147,7 +147,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 <table>
     <caption>Table 1.Understanding the YAML file components</caption>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
     </thead>
     <tbody>
     <tr>
@@ -916,7 +916,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 <table>
 <caption>Table 2. Understanding the YAML file components</caption>
 <thead>
-<th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+<th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
 </thead>
 <tbody>
 <tr>
