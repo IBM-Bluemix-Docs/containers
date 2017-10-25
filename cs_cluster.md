@@ -186,7 +186,7 @@ To create a cluster:
         <table>
         <caption>Table 1. Understanding this command's components</caption>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding this command's components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
         </thead>
         <tbody>
         <tr>
@@ -344,7 +344,7 @@ To create a cluster:
     <table>
     <caption>Table 2. Understanding this command's components</caption>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding this command's components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
     </thead>
     <tbody>
     <tr>
@@ -578,7 +578,7 @@ To create your own imagePullSecret:
     <table>
     <caption>Table 3. Understanding this command's components</caption>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding this command's components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
     </thead>
     <tbody>
     <tr>
@@ -653,7 +653,7 @@ To create your own imagePullSecret:
         <table>
         <caption>Table 4. Understanding the YAML file components</caption>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
         <tbody>
         <tr>
@@ -759,7 +759,7 @@ To create an imagePullSecret:
     <table>
     <caption>Table 5. Understanding this command's components</caption>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding this command's components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
     </thead>
     <tbody>
     <tr>
@@ -816,7 +816,7 @@ To create an imagePullSecret:
         <table>
         <caption>Table 6. Understanding the YAML file components</caption>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
         <tbody>
         <tr>
@@ -1508,7 +1508,7 @@ To create a persistent volume and matching persistent volume claim, follow these
     <table>
     <caption>Table 8. Understanding the YAML file components</caption>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
     </thead>
     <tbody>
     <tr>
@@ -1654,7 +1654,7 @@ Before you begin:
 
 1. Set up a server that can accept a syslog protocol. You can run a syslog server in two ways:
   * Set up and manage your own server or have a provider manage it for you. If a provider manages the server for you, get the logging endpoint from the logging provider.
-  * Run syslog from a container. For example, you can use this [deployment .yaml file](https://github.com/IBM-Bluemix/kube-samples/blob/master/deploy-apps-clusters/deploy-syslog-from-kube) to fetch a Docker public image that runs a container in a Kubernetes cluster. The image publishes the port `30514` on the public cluster IP address, and uses this public cluster IP address to configure the syslog host.
+  * Run syslog from a container. For example, you can use this [deployment .yaml file](https://github.com/IBM-Bluemix/kube-samples/blob/master/deploy-apps-clusters/deploy-syslog-from-kube) to fetch a Docker public image that runs a container in a Kubernetes cluster. The image publishes the port `514` on the public cluster IP address, and uses this public cluster IP address to configure the syslog host.
 
 2. [Target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster where the namespace is located.
 
@@ -1670,7 +1670,7 @@ To forward your namespace logs to a syslog server:
     <table>
     <caption>Table 1. Understanding this command's components</caption>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding this command's components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
     </thead>
     <tbody>
     <tr>
@@ -1701,43 +1701,43 @@ To forward your namespace logs to a syslog server:
 
 2. Verify that the log forwarding configuration was created.
 
-  * To list all of the logging configurations in the cluster:
-    ```
-    bx cs logging-config-get <my_cluster>
-    ```
-    {: pre}
+    * To list all of the logging configurations in the cluster:
+      ```
+      bx cs logging-config-get <my_cluster>
+      ```
+      {: pre}
 
-    Example output:
+      Example output:
 
-    ```
-    Logging Configurations
-    ---------------------------------------------
-    Id                                    Source      Protocol Host       Port
-    f4bc77c0-ee7d-422d-aabf-a4e6b977264e  kubernetes  syslog   localhost  5514
-    5bd9c609-13c8-4c48-9d6e-3a6664c825a9  ingress     ibm      -          -
+      ```
+      Logging Configurations
+      ---------------------------------------------
+      Id                                    Source        Host             Port    Protocol   Paths
+      f4bc77c0-ee7d-422d-aabf-a4e6b977264e  kubernetes    172.30.162.138   5514    syslog     /var/log/kubelet.log,/var/log/kube-proxy.log
+      5bd9c609-13c8-4c48-9d6e-3a6664c825a9  application   localhost        -       ibm        /var/log/apps/**/*.log,/var/log/apps/**/*.err
 
-    Container Log Namespace configurations
-    ---------------------------------------------
-    Namespace         Protocol    Host        Port
-    default           syslog      localhost   5514
-    my-namespace      syslog      localhost   5514   
-    ```
-    {: screen}
+      Container Log Namespace configurations
+      ---------------------------------------------
+      Namespace         Host             Port    Protocol
+      default           myhostname.com   5514    syslog
+      my-namespace      localhost        5514    syslog    
+      ```
+      {: screen}
 
-  * To list only namespace logging configurations:
-    ```
-    bx cs logging-config-get <my_cluster> --logsource namespaces
-    ```
-    {: pre}
+    * To list only namespace logging configurations:
+      ```
+      bx cs logging-config-get <my_cluster> --logsource namespaces
+      ```
+      {: pre}
 
-    Example output:
+      Example output:
 
-    ```
-    Namespace         Protocol    Host        Port
-    default           syslog      localhost   5514
-    myapp-namespace   syslog      localhost   5514
-    ```
-    {: screen}
+      ```
+      Namespace         Host             Port    Protocol
+      default           myhostname.com   5514    syslog
+      my-namespace      localhost        5514    syslog    
+      ```
+      {: screen}
 
 #### Updating the syslog server configuration
 {: #cs_namespace_update}
@@ -1761,7 +1761,7 @@ To change the details of the syslog forwarding configuration:
     <table>
     <caption>Table 2. Understanding this command's components</caption>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding this command's components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
     </thead>
     <tbody>
     <tr>
@@ -1799,9 +1799,9 @@ To change the details of the syslog forwarding configuration:
     Example output:
 
     ```
-    Namespace         Protocol    Host        Port
-    default           syslog      localhost   5514
-    myapp-namespace   syslog      localhost   5514
+    Namespace         Host             Port    Protocol
+    default           myhostname.com   5514    syslog
+    my-namespace      localhost        5514    syslog    
     ```
     {: screen}
 
