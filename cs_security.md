@@ -27,7 +27,7 @@ You can use built-in security features for risk analysis and security protection
 
   <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
   <thead>
-  <th colspan=2><img src="images/idea.png"/> Built-in cluster security settings in {{site.data.keyword.containershort_notm}}</th>
+  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Built-in cluster security settings in {{site.data.keyword.containershort_notm}}</th>
   </thead>
   <tbody>
     <tr>
@@ -273,7 +273,7 @@ Note that a policy to allow SSH does not exist, so SSH access by way of the publ
 
  <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
   <thead>
-  <th colspan=2><img src="images/idea.png"/> Default policies for each cluster</th>
+  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Default policies for each cluster</th>
   </thead>
   <tbody>
     <tr>

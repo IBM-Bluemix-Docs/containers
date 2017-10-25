@@ -186,7 +186,7 @@ To create a cluster:
         <table>
         <caption>Table 1. Understanding this command's components</caption>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding this command's components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
         </thead>
         <tbody>
         <tr>
@@ -344,7 +344,7 @@ To create a cluster:
     <table>
     <caption>Table 2. Understanding this command's components</caption>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding this command's components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
     </thead>
     <tbody>
     <tr>
@@ -578,7 +578,7 @@ To create your own imagePullSecret:
     <table>
     <caption>Table 3. Understanding this command's components</caption>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding this command's components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
     </thead>
     <tbody>
     <tr>
@@ -653,7 +653,7 @@ To create your own imagePullSecret:
         <table>
         <caption>Table 4. Understanding the YAML file components</caption>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
         <tbody>
         <tr>
@@ -759,7 +759,7 @@ To create an imagePullSecret:
     <table>
     <caption>Table 5. Understanding this command's components</caption>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding this command's components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
     </thead>
     <tbody>
     <tr>
@@ -816,7 +816,7 @@ To create an imagePullSecret:
         <table>
         <caption>Table 6. Understanding the YAML file components</caption>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
         <tbody>
         <tr>
@@ -1508,7 +1508,7 @@ To create a persistent volume and matching persistent volume claim, follow these
     <table>
     <caption>Table 8. Understanding the YAML file components</caption>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
     </thead>
     <tbody>
     <tr>
@@ -1670,7 +1670,7 @@ To forward your namespace logs to a syslog server:
     <table>
     <caption>Table 1. Understanding this command's components</caption>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding this command's components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
     </thead>
     <tbody>
     <tr>
@@ -1761,7 +1761,7 @@ To change the details of the syslog forwarding configuration:
     <table>
     <caption>Table 2. Understanding this command's components</caption>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding this command's components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
     </thead>
     <tbody>
     <tr>
