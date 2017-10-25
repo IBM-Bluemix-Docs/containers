@@ -147,7 +147,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 <table>
     <caption>Table 1.Understanding the YAML file components</caption>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
     </thead>
     <tbody>
     <tr>
@@ -705,14 +705,16 @@ Create a logging configuration. By default, namespace logs are forwarded to {{si
 <dd>The log forwarding protocol that you want to use. Currently, <code>syslog</code> and <code>ibm</code> are supported. This value is required.</dd>
 </dl>
 
-**Example for log source `namespace`**:
+**Examples**:
+
+Example for log source `namespace`:
 
   ```
   bx cs logging-config-create my_cluster --namespace my_namespace --hostname localhost --port 5514 --type syslog
   ```
   {: pre}
 
-**Example for log source `ingress`**:
+Example for log source `ingress`:
 
   ```
   bx cs logging-config-create my_cluster f4bc77c0-ee7d-422d-aabf-a4e6b977264e --type ibm
@@ -916,7 +918,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 <table>
 <caption>Table 2. Understanding the YAML file components</caption>
 <thead>
-<th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+<th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
 </thead>
 <tbody>
 <tr>
