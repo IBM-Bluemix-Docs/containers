@@ -152,7 +152,7 @@ Review the responsibilities that you share with IBM to manage your clusters. To 
 - [Adding or removing capacity by using the CLI to add or remove worker nodes](cs_cli_reference.html#cs_worker_add)
 - [Creating public and private VLANs in IBM Bluemix Infrastructure (SoftLayer) for network isolation of your cluster ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/topic/vlans)
 - [Ensuring that all worker nodes have network connectivity to the Kubernetes master URL](cs_security.html#opening_ports) <p>**Note**: If a worker node has both public and private VLANs, then network connectivity is configured. If the worker node has a private VLAN only set up, then a vyatta is required to provide network connectivity.</p>
-- [Determining when to update the kube-apiserver and worker nodes when Kubernetes major or minor version updates are available](cs_cluster.html#cs_cluster_update)
+- [Updating the kube-apiserver master and worker nodes when Kubernetes major or minor version updates are available](cs_cluster.html#cs_cluster_update)
 - [Taking action to recover troubled worker nodes by running `kubectl` commands, such as `cordon` or `drain`, and by running `bx cs` commands, such as `reboot`, `reload`, or `delete`](cs_cli_reference.html#cs_worker_reboot)
 - [Adding or removing additional subnets in IBM Bluemix Infrastructure (SoftLayer) as needed](cs_cluster.html#cs_cluster_subnet)
 - [Backing up and restoring data in persistent storage in IBM Bluemix Infrastructure (SoftLayer) ![External link icon](../icons/launch-glyph.svg "External link icon")](../services/RegistryImages/ibm-backup-restore/index.html#ibmbackup_restore_starter)
