@@ -78,7 +78,7 @@ Create a non-expiring token to use an image registry that you used for single an
     <table>
     <caption>Table 1. Understanding this command's components</caption>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding this command's components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
     </thead>
     <tbody>
     <tr>

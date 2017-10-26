@@ -70,7 +70,7 @@ Kubernetes was developed by Google as part of the Borg project and handed off to
 
 Learn about the basics of how Kubernetes works with a little terminology.
 
-<a href="https://console.bluemix.net/docs/api/content/containers/images/cs_app_tutorial_components1.png">![Deployment setup](images/cs_app_tutorial_components1.png)</a>
+<a href="../api/content/containers/images/cs_app_tutorial_components1.png">![Deployment setup](images/cs_app_tutorial_components1.png)</a>
 
 <dl>
 <dt>Cluster</dt>
@@ -214,7 +214,7 @@ Each worker node is set up with an {{site.data.keyword.IBM_notm}} managed Docker
 
 *Figure 1. Kubernetes architecture and networking in the {{site.data.keyword.containershort_notm}}*
 
-<a href="https://console.bluemix.net/docs/api/content/containers/images/cs_org_ov.png">![{{site.data.keyword.containerlong_notm}} Kubernetes architecture](images/cs_org_ov.png)</a>
+<a href="../api/content/containers/images/cs_org_ov.png">![{{site.data.keyword.containerlong_notm}} Kubernetes architecture](images/cs_org_ov.png)</a>
 
 
 
