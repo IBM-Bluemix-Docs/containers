@@ -78,6 +78,12 @@ Refer to these commands to create and manage clusters.
     <td>[bx cs worker-get](cs_cli_reference.html#cs_worker_get)</td>
     <td>[bx cs worker-reboot](cs_cli_reference.html#cs_worker_reboot)</td>
     <td>[bx cs worker-reload](cs_cli_reference.html#cs_worker_reload)</td>
+    <td>[bx cs alb-types](cs_cli_reference.html#cs_albs)</td>
+ </tr>
+ <tr>
+   <td>[bx cs albs](cs_cli_reference.html#cs_albs)</td>
+   <td>[bx cs alb-get](cs_cli_reference.html#cs_albs)</td>
+   <td>[bx cs alb-configure](cs_cli_reference.html#cs_albs)</td>
  </tr>
  </tbody>
  </table>
@@ -147,7 +153,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 <table>
     <caption>Table 1.Understanding the YAML file components</caption>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
     </thead>
     <tbody>
     <tr>
@@ -705,14 +711,16 @@ Create a logging configuration. By default, namespace logs are forwarded to {{si
 <dd>The log forwarding protocol that you want to use. Currently, <code>syslog</code> and <code>ibm</code> are supported. This value is required.</dd>
 </dl>
 
-**Example for log source `namespace`**:
+**Examples**:
+
+Example for log source `namespace`:
 
   ```
   bx cs logging-config-create my_cluster --namespace my_namespace --hostname localhost --port 5514 --type syslog
   ```
   {: pre}
 
-**Example for log source `ingress`**:
+Example for log source `ingress`:
 
   ```
   bx cs logging-config-create my_cluster f4bc77c0-ee7d-422d-aabf-a4e6b977264e --type ibm
@@ -916,7 +924,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 <table>
 <caption>Table 2. Understanding the YAML file components</caption>
 <thead>
-<th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+<th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
 </thead>
 <tbody>
 <tr>
@@ -1127,6 +1135,109 @@ View a list of worker nodes and the status for each in a cluster.
 
   ```
   bx cs workers mycluster
+  ```
+  {: pre}
+
+### bx cs alb-types
+{: #cs_albs}
+
+View the application load balancer types that are supported in the region.
+
+<strong>Command options</strong>:
+
+   None
+
+**Example**:
+
+  ```
+  bx cs alb-types
+  ```
+  {: pre}
+
+### bx cs albs --cluster CLUSTER
+{: #cs_albs}
+
+View the status of all application load balancers, also known as ingress, in a cluster.
+
+<strong>Command options</strong>:
+
+   <dl>
+   <dt><code><em>--cluster </em>CLUSTER</code></dt>
+   <dd>The name or ID of the cluster where you list available albs. This value is required.</dd>
+   </dl>
+
+**Example**:
+
+  ```
+  bx cs albs --cluster mycluster
+  ```
+  {: pre}
+
+### bx cs alb-get --albID ALB_ID
+{: #cs_albs}
+
+View the details of an application load balancer.
+
+<strong>Command options</strong>:
+
+   <dl>
+   <dt><code><em>--albID </em>ALB_ID</code></dt>
+   <dd>The ID for an alb. Run <code>bx cs albs <em>--cluster </em>CLUSTER</code> to view the IDs for the albs in a cluster. This value is required.</dd>
+   </dl>
+
+**Example**:
+
+  ```
+  bx cs alb-get --albID ALB_ID
+  ```
+  {: pre}
+
+### bx cs alb-configure --albID ALB_ID [--enable][--disable][--user-ip USERIP]
+{: #cs_albs}
+
+Enable or disable a application load balancer, also known as an ingress, in your standard cluster. The public application load balancer is enabled by default.
+
+**Command options**:
+
+   <dl>
+   <dt><code><em>--albID </em>ALB_ID</code></dt>
+   <dd>The ID for an alb. Run <code>bx cs albs <em>--cluster </em>CLUSTER</code> to view the IDs for the albs in a cluster. This value is required.</dd>
+
+   <dt><code>--enable</code></dt>
+   <dd>Include this flag to enable alb in cluster</dd>
+
+   <dt><code>--disable</code></dt>
+   <dd>Include this flag to disable alb in cluster</dd>
+
+   <dt><code>--user-ip <em>USER_IP</em></code></dt>
+   <dd>
+
+   <ul>
+   <li>This parameter is available for private alb only</li>
+   <li>The private ALB is deployed with an IP address from a user-provided private subnet. If no IP address is provided, the ALB is deployed with a random IP address from a private subnet in the account's Bluemix Infrastructure.</li>
+
+   </dl>
+
+**Examples**:
+
+  Example for enabling alb:
+
+  ```
+  bx cs alb-configure --albID my_alb_id --enable
+  ```
+  {: pre}
+
+  Example for disabling alb:
+
+  ```
+  bx cs alb-configure --albID my_alb_id --disable
+  ```
+  {: pre}
+
+  Example for enabling alb with byoip:
+
+  ```
+  bx cs alb-configure --albID my_private_alb_id --enable --user-ip USERIP
   ```
   {: pre}
 
