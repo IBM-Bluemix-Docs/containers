@@ -70,7 +70,7 @@ For more information on the updating process, see [Updating clusters](cs_cluster
 <th>Description
 </tr>
 </thead>
-<tbod>
+<tbody>
 <tr>
 <td>kubectl</td>
 <td>After you update `kubectl` CLI to the version of your cluster, these `kubectl` commands must use multiple flags instead of comma separated arguments. <ul>
@@ -152,4 +152,4 @@ For more information on the updating process, see [Updating clusters](cs_cluster
   </ol>
 </tr>
 </tbody>
-</table></staging>
+</table>
