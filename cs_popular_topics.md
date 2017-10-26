@@ -24,7 +24,7 @@ Check out what container developers are interested in.
 
 <table>
 <thead>
-<th colspan=2><img src="images/idea.png"/>Popular topics for containers and Kubernetes clusters</th>
+<th colspan=2><img src="images/idea.png" alt="Idea icon"/>Popular topics for containers and Kubernetes clusters</th>
 </thead>
 <tbody>
 <tr>
