@@ -297,7 +297,7 @@ To create a load balancer service:
 
         <table>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
         <tbody>
         <tr>
@@ -314,7 +314,7 @@ To create a load balancer service:
         </tr>
         <tr>
           <td>`service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type:`
-          <td>Annotation to specify the type of LoadBalancer. The values are `private` and `public`. When creating a public LoadBalancer in clusters on public VLANs, this annotation is not required.
+          <td>Annotation to specify the type of LoadBalancer. The values are `private` and `public`. When creating a public LoadBalancer in clusters on public VLANs, this annotation is not required.</td>
         </tbody></table>
     3.  Optional: To use a specific portable IP address for your load balancer that is available to your cluster, you can specify that IP address by including the `loadBalancerIP` in the spec section. For more information, see the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/services-networking/service/).
     4.  Optional: Configure a firewall by specifying the `loadBalancerSourceRanges` in the spec section. For more information, see the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/).
@@ -420,7 +420,7 @@ To configure the Ingress controller:
 
         <table>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
         <tbody>
         <tr>
@@ -495,7 +495,7 @@ To configure the Ingress controller:
 
         <table>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
         <tbody>
         <tr>
@@ -589,7 +589,7 @@ To configure the Ingress controller:
 
         <table>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
         <tbody>
         <tr>
@@ -675,7 +675,7 @@ To configure the Ingress controller:
 
         <table>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
         <tbody>
         <tr>
@@ -784,7 +784,7 @@ To configure the Ingress controller:
 
         <table>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
         <tbody>
         <tr>
@@ -830,7 +830,7 @@ To configure the Ingress controller:
 
         <table>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
         <tbody>
         <tr>
@@ -887,7 +887,7 @@ To configure the Ingress controller:
 
         <table>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
         <tbody>
         <tr>
@@ -998,7 +998,7 @@ You can configure the Ingress controller to route incoming network traffic on th
 
         <table>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
         <tbody>
         <tr>
@@ -1041,7 +1041,7 @@ You can configure the Ingress controller to route incoming network traffic on th
 
         <table>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
         <tbody>
         <tr>
@@ -1123,7 +1123,7 @@ You can configure the Ingress controller to route incoming network traffic on th
 
         <table>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
         <tbody>
         <tr>
@@ -1255,7 +1255,7 @@ spec:
 
 <table>
 <thead>
-<th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+<th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
 </thead>
 <tbody>
 <tr>
@@ -1324,7 +1324,7 @@ spec:
   <table>
   <caption>Table 12. Understanding the YAML file components</caption>
   <thead>
-  <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
   </thead>
   <tbody>
   <tr>
@@ -1393,7 +1393,7 @@ spec:
 
  <table>
   <thead>
-  <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
   </thead>
   <tbody>
   <tr>
@@ -1449,7 +1449,7 @@ spec:
 
  <table>
   <thead>
-  <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
   </thead>
   <tbody>
   <tr>
@@ -1582,7 +1582,7 @@ spec:
 
 <table>
   <thead>
-  <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
   </thead>
   <tbody>
   <tr>
@@ -1636,7 +1636,7 @@ spec:
 
 <table>
   <thead>
-  <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
   </thead>
   <tbody>
   <tr>
@@ -1689,7 +1689,7 @@ spec:
 
 <table>
   <thead>
-  <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
   </thead>
   <tbody>
   <tr>
@@ -1889,6 +1889,8 @@ To deploy your app:
 <br />
 
 
+
+
 ## Scaling apps
 {: #cs_apps_scaling}
 
@@ -1912,7 +1914,7 @@ With Kubernetes, you can enable [Horizontal Pod Autoscaling ![External link icon
 
     <table>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding this command&apos;s components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command&apos;s components</th>
     </thead>
     <tbody>
     <tr>
@@ -1942,7 +1944,7 @@ With Kubernetes, you can enable [Horizontal Pod Autoscaling ![External link icon
 
     <table>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding this command&apos;s components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command&apos;s components</th>
     </thead>
     <tbody>
     <tr>
@@ -2102,7 +2104,7 @@ When you mount a secret volume to your pod, a file named binding is stored in th
 
     <table>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
     </thead>
     <tbody>
     <tr>
@@ -2275,7 +2277,7 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
 
     <table>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
     </thead>
     <tbody>
     <tr>
@@ -2363,7 +2365,7 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
 
     <table>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
     </thead>
     <tbody>
     <tr>
