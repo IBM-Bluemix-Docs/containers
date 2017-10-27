@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-10-13"
+lastupdated: "2017-10-25"
 
 ---
 
@@ -81,7 +81,7 @@ bx plugin list
 ## bx cs commands
 {: #cs_commands}
 
-### bx cs cluster-config CLUSTER [--admin]
+### bx cs cluster-config CLUSTER [--admin] [--export]
 {: #cs_cluster_config}
 
 After logging in, download Kubernetes configuration data and certificates to connect to your cluster and to run `kubectl` commands. The files are downloaded to `user_home_directory/.bluemix/plugins/container-service/clusters/<cluster_name>`.
@@ -93,7 +93,10 @@ After logging in, download Kubernetes configuration data and certificates to con
    <dd>The name or ID of the cluster. This value is required.</dd>
 
    <dt><code>--admin</code></dt>
-   <dd>Download the certificates and permission files for the Administrator rbac role. Users with these files can perform admin actions on the cluster, such as removing the cluster. This value is optional.</dd>
+   <dd>Download the TLS certificates and permission files for the Super User role. You can use the certs to automate tasks in a cluster without having to re-authenticate. The files are downloaded to `<user_home_directory>/.bluemix/plugins/container-service/clusters/<cluster_name>-admin`. This value is optional.</dd>
+
+   <dt><code>--export</code></dt>
+   <dd>Download Kubernetes configuration data and certificates without any messages other than the export command. Because no messages are displayed, you can use this flag when you create automated scripts. This value is optional.</dd>
    </dl>
 
 **Example**:
@@ -102,6 +105,7 @@ After logging in, download Kubernetes configuration data and certificates to con
 bx cs cluster-config my_cluster
 ```
 {: pre}
+
 
 
 ### bx cs cluster-create [--file FILE_LOCATION] [--hardware HARDWARE] --location LOCATION --machine-type MACHINE_TYPE --name NAME [--no-subnet] [--private-vlan PRIVATE_VLAN] [--public-vlan PUBLIC_VLAN] [--workers WORKER]
@@ -131,7 +135,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 <table>
     <caption>Table 1.Understanding the YAML file components</caption>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
     </thead>
     <tbody>
     <tr>
@@ -236,7 +240,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
   ```
   {: pre}
 
-  Example for a {{site.data.keyword.Bluemix_notm}} Dedicated environment:
+  Example for a {{site.data.keyword.Bluemix_dedicated_notm}} environment:
 
   ```
   bx cs cluster-create --machine-type machine-type --workers number --name cluster_name
@@ -244,7 +248,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
   {: pre}
 
 
-### bx cs cluster-get CLUSTER
+### bx cs cluster-get CLUSTER [--showResources]
 {: #cs_cluster_get}
 
 View information about a cluster in your organization.
@@ -254,6 +258,9 @@ View information about a cluster in your organization.
    <dl>
    <dt><code><em>CLUSTER</em></code></dt>
    <dd>The name or ID of the cluster. This value is required.</dd>
+
+   <dt><code><em>--showResources</em></code></dt>
+   <dd>Shows the VLANs and subnets for a cluster.</dd>
    </dl>
 
 **Example**:
@@ -292,7 +299,7 @@ Remove a cluster from your organization.
 
 Add a {{site.data.keyword.Bluemix_notm}} service to a cluster.
 
-**Tip:** For {{site.data.keyword.Bluemix_notm}} Dedicated users, see [Adding {{site.data.keyword.Bluemix_notm}} services to clusters in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)](cs_cluster.html#binding_dedicated).
+**Tip:** For {{site.data.keyword.Bluemix_dedicated_notm}} users, see [Adding {{site.data.keyword.Bluemix_notm}} services to clusters in {{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)](cs_cluster.html#binding_dedicated).
 
 <strong>Command options</strong>:
 
@@ -372,7 +379,7 @@ List the services that are bound to one or all of the Kubernetes namespace in a 
 ### bx cs cluster-subnet-add CLUSTER SUBNET
 {: #cs_cluster_subnet_add}
 
-Make a subnet in a IBM Bluemix Infrastructure (SoftLayer) account available to a specified cluster.
+Make a subnet in an IBM Bluemix Infrastructure (SoftLayer) account available to a specified cluster.
 
 **Note:** When you make a subnet available to a cluster, IP addresses of this subnet are used for cluster networking purposes. To avoid IP address conflicts, make sure that you use a subnet with one cluster only. Do not use a subnet for multiple clusters or for other purposes outside of {{site.data.keyword.containershort_notm}} at the same time.
 
@@ -393,13 +400,39 @@ Make a subnet in a IBM Bluemix Infrastructure (SoftLayer) account available to a
   ```
   {: pre}
 
+### bx cs cluster-subnet-create CLUSTER SIZE VLAN_ID
+{: #cs_cluster_subnet_create}
+
+Create a subnet in an IBM Bluemix Infrastructure (SoftLayer) account and make it available to a specified cluster in {{site.data.keyword.containershort_notm}}.
+
+**Note:** When you make a subnet available to a cluster, IP addresses of this subnet are used for cluster networking purposes. To avoid IP address conflicts, make sure that you use a subnet with one cluster only. Do not use a subnet for multiple clusters or for other purposes outside of {{site.data.keyword.containershort_notm}} at the same time.
+
+<strong>Command options</strong>:
+
+   <dl>
+   <dt><code><em>CLUSTER</em></code></dt>
+   <dd>The name or ID of the cluster. This value is required. To list your clusters, use the `bx cs clusters` [command](#cs_clusters).</dd>
+
+   <dt><code><em>SIZE</em></code></dt>
+   <dd>The number of subnet IP addresses. This value is required. Possible values are 8, 16, 32, or 64.</dd>
+
+   <dt><code><em>VLAN_ID</em></code></dt>
+   <dd>The VLAN in which to create the subnet. This value is required. To list available VLANS, use the `bx cs vlans <location>` [command](#cs_vlans).</dd>
+   </dl>
+
+**Example**:
+
+  ```
+  bx cs cluster-subnet-create my_cluster 8 1764905
+  ```
+  {: pre}
 
 ### bx cs cluster-user-subnet-add CLUSTER SUBNET_CIDR PRIVATE_VLAN
 {: #cs_cluster_user_subnet_add}
 
 Bring your own private subnet to your {{site.data.keyword.containershort_notm}} clusters.
 
-This private subnet is not one provided by IBM Bluemix Infrastructure (SoftLayer). As such, you must configure any inbound and outbound network traffic routing for the subnet. If you want to add an IBM Bluemix Infrastructure (SoftLayer) subnet, use the `bx cs cluster-subnet-add` [command](#cs_cluster_subnet_add).
+This private subnet is not one provided by IBM Bluemix Infrastructure (SoftLayer). As such, you must configure any inbound and outbound network traffic routing for the subnet. To add an IBM Bluemix Infrastructure (SoftLayer) subnet, use the `bx cs cluster-subnet-add` [command](#cs_cluster_subnet_add).
 
 **Note**: When you add a private user subnet to a cluster, IP addresses of this subnet are used for private Load Balancers in the cluster. To avoid IP address conflicts, make sure that you use a subnet with one cluster only. Do not use a subnet for multiple clusters or for other purposes outside of {{site.data.keyword.containershort_notm}} at the same time.
 
@@ -506,11 +539,11 @@ Set IBM Bluemix Infrastructure (SoftLayer) account credentials for your {{site.d
 
    <dl>
    <dt><code>--infrastructure-username <em>USERNAME</em></code></dt>
-   <dd>An IBM Bluemix Infrastructure (SoftLayer) account username. This value is required.</dd>
+   <dd>IBM Bluemix Infrastructure (SoftLayer) account username. This value is required.</dd>
    </dl>
 
    <dt><code>--infrastructure-api-key <em>API_KEY</em></code></dt>
-   <dd>An IBM Bluemix Infrastructure (SoftLayer) account API key. This value is required.
+   <dd>IBM Bluemix Infrastructure (SoftLayer) account API key. This value is required.
 
  <p>
   To generate an API key:
@@ -524,7 +557,7 @@ Set IBM Bluemix Infrastructure (SoftLayer) account credentials for your {{site.d
 
   To view your existing API key:
   <ol>
-  <li>Log in to the [IBM Bluemix Infrastructure (SoftLayer) portal ![External link icon](../icons/launch-glyph.svg "External link icon")](https://control.softlayer.com/).</li>
+  <li>Log in to the [IBM Bluemix Infrastructure (SoftLayer)portal ![External link icon](../icons/launch-glyph.svg "External link icon")](https://control.softlayer.com/).</li>
   <li>Select <strong>Account</strong>, and then <strong>Users</strong>.</li>
   <li>Click <strong>View</strong> to see your existing API key.</li>
   <li>Copy the API key to use in this command.</li>
@@ -541,7 +574,7 @@ Set IBM Bluemix Infrastructure (SoftLayer) account credentials for your {{site.d
 ### bx cs credentials-unset
 {: #cs_credentials_unset}
 
-Remove IBM Bluemix Infrastructure (SoftLayer) account credentials from your {{site.data.keyword.Bluemix_notm}} account. After removing the credentials, you cannot access the IBM Bluemix Infrastructure (SoftLayer)} portfolio through your {{site.data.keyword.Bluemix_notm}} account anymore.
+Remove IBM Bluemix Infrastructure (SoftLayer) account credentials from your {{site.data.keyword.Bluemix_notm}} account. After removing the credentials, you cannot access the IBM Bluemix Infrastructure (SoftLayer) portfolio through your {{site.data.keyword.Bluemix_notm}} account anymore.
 
 <strong>Command options</strong>:
 
@@ -585,38 +618,39 @@ Initialize the {{site.data.keyword.containershort_notm}} plug-in or specify the 
    <dd>The {{site.data.keyword.containershort_notm}} API endpoint that you want to use.  This value is optional. Examples:
 
     <ul>
-    <li>US-South:
+    <li>US South:
 
     <pre class="codeblock">
     <code>bx cs init --host https://us-south.containers.bluemix.net</code>
     </pre></li>
 
-    <li>US-East:
+    <li>US East:
 
     <pre class="codeblock">
     <code>bx cs init --host https://us-east.containers.bluemix.net</code>
     </pre>
     <p><strong>Note</strong>: US-East is available for use with CLI commands only.</p></li>
 
-    <li>UK-South:
+    <li>UK South:
 
     <pre class="codeblock">
     <code>bx cs init --host https://uk-south.containers.bluemix.net</code>
     </pre></li>
 
-    <li>EU-Central:
+    <li>EU Central:
 
     <pre class="codeblock">
     <code>bx cs init --host https://eu-central.containers.bluemix.net</code>
     </pre></li>
 
-    <li>AP-South:
+    <li>AP South:
 
     <pre class="codeblock">
     <code>bx cs init --host https://ap-south.containers.bluemix.net</code>
     </pre></li></ul>
 </dd>
 </dl>
+
 
 
 
@@ -637,6 +671,125 @@ View a list of available locations for you to create a cluster in.
   ```
   {: pre}
 
+### bx cs logging-config-create CLUSTER [--namespace KUBERNETES_NAMESPACE] [--logsource LOG_SOURCE] [--hostname LOG_SERVER_HOSTNAME] [--port LOG_SERVER_PORT] --type LOG_TYPE
+{: #cs_logging_create}
+
+Create a logging configuration. By default, namespace logs are forwarded to {{site.data.keyword.loganalysislong_notm}}. You can use this command to forward namespace logs to an external syslog server. You can also use this command to forward logs for applications, worker nodes, Kubernetes clusters, and Ingress controllers to {{site.data.keyword.loganalysisshort_notm}} or to an external syslog server.
+
+<strong>Command options</strong>:
+
+<dl>
+<dt><code><em>CLUSTER</em></code></dt>
+<dd>The name or ID of the cluster.</dd>
+<dt><code>--logsource <em>LOG_SOURCE</em></code></dt>
+<dd>The log source for which you want to enable log forwarding. Accepted values are <code>application</code>, <code>worker</code>, <code>kubernetes</code>, and <code>ingress</code>. This value is required for log sources other than Docker container namespaces.</dd>
+<dt><code>--namespace <em>KUBERNETES_NAMESPACE</em></code></dt>
+<dd>The Docker container namespace from which you want to forward logs to syslog. Log forwarding is not supported for the <code>ibm-system</code> and <code>kube-system</code> Kubernetes namespaces. This value is required for namespaces. If you do not specify a namespace, then all namespaces in the container use this configuration.</dd>
+<dt><code>--hostname <em>LOG_SERVER_HOSTNAME</em></code></dt>
+<dd>The hostname or IP address of the log collector server. This value is required when the logging type is <code>syslog</code>.</dd>
+<dt><code>--port <em>LOG_SERVER_PORT</em></code></dt>
+<dd>The port of the log collector server. This value is optional when the logging type is <code>syslog</code>. If you do not specify a port, then the standard port <code>514</code> is used for <code>syslog</code>.</dd>
+<dt><code>--type <em>LOG_TYPE</em></code></dt>
+<dd>The log forwarding protocol that you want to use. Currently, <code>syslog</code> and <code>ibm</code> are supported. This value is required.</dd>
+</dl>
+
+**Example for log source `namespace`**:
+
+  ```
+  bx cs logging-config-create my_cluster --namespace my_namespace --hostname localhost --port 5514 --type syslog
+  ```
+  {: pre}
+
+**Example for log source `ingress`**:
+
+  ```
+  bx cs logging-config-create my_cluster f4bc77c0-ee7d-422d-aabf-a4e6b977264e --type ibm
+  ```
+  {: pre}
+
+### bx cs logging-config-get CLUSTER [--logsource LOG_SOURCE]
+{: #cs_logging_get}
+
+View all log forwarding configurations for a cluster, or filter logging configurations based on log source.
+
+<strong>Command options</strong>:
+
+   <dl>
+   <dt><code><em>CLUSTER</em></code></dt>
+   <dd>The name or ID of the cluster. This value is required.</dd>
+   <dt><code>--logsource <em>LOG_SOURCE</em></code></dt>
+   <dd>The kind of log source for which you want to filter. Only logging configurations of this log source in the cluster are returned. Accepted values are <code>namespace</code>, <code>application</code>, <code>worker</code>, <code>kubernetes</code>, and <code>ingress</code>. This value is optional.</dd>
+   </dl>
+
+**Example**:
+
+  ```
+  bx cs logging-config-get my_cluster --logsource worker
+  ```
+  {: pre}
+
+
+### bx cs logging-config-rm CLUSTER [--namespace KUBERNETES_NAMESPACE] [--id LOG_SOURCE_LOGGING_ID]
+{: #cs_logging_rm}
+
+Deletes a log forwarding configuration. For a Docker container namespace, you can stop forwarding logs to a syslog server. The namespace continues to forward logs to {{site.data.keyword.loganalysislong_notm}}. For a log source other than a Docker container namespace, you can stop forwarding logs to a syslog server or to {{site.data.keyword.loganalysisshort_notm}}.
+
+<strong>Command options</strong>:
+
+   <dl>
+   <dt><code><em>CLUSTER</em></code></dt>
+   <dd>The name or ID of the cluster. This value is required.</dd>
+   <dt><code>--namespace <em>KUBERNETES_NAMESPACE</em></code></dt>
+   <dd>The Docker container namespace from which you want to stop forwarding logs to syslog. This value is required for Docker container namespaces.</dd>
+   <dt><code>--id <em>LOG_SOURCE_LOGGING_ID</em></code></dt>
+   <dd>The logging configuration ID that you want to remove from the log source. This value is required for log sources other than Docker container namespaces.</dd>
+   </dl>
+
+**Example**:
+
+  ```
+  bx cs logging-config-rm my_cluster --namespace my_namespace
+  ```
+  {: pre}
+
+
+### bx cs logging-config-update CLUSTER [--namespace NAMESPACE] [--id LOG_SOURCE_LOGGING_ID] [--logsource LOG_SOURCE] [--hostname LOG_SERVER_HOSTNAME] [--port LOG_SERVER_PORT] --type LOG_TYPE
+{: #cs_logging_update}
+
+Update log forwarding to the logging server you want use. For a Docker container namespace, you can use this command to update details for the current syslog server or change to a different syslog server. For a logging source other than a Docker container namespace, you can use this command to change the log collector server type. Currently, 'syslog' and 'ibm' are supported as log types.
+
+<strong>Command options</strong>:
+
+   <dl>
+   <dt><code><em>CLUSTER</em></code></dt>
+   <dd>The name or ID of the cluster. This value is required.</dd>
+   <dt><code>--namespace <em>NAMESPACE</em></code></dt>
+   <dd>The Docker container namespace from which you want to forward logs to syslog. Log forwarding is not supported for the <code>ibm-system</code> and <code>kube-system</code> Kubernetes namespaces. This value is required for namespaces.</dd>
+   <dt><code>--logsource <em>LOG_SOURCE</em></code></dt>
+   <dd>The log source for which you want to update log forwarding. Accepted values are <code>application</code>, <code>worker</code>, <code>kubernetes</code>, and <code>ingress</code>. This value is required for log sources other than Docker container namespaces.</dd>
+   <dt><code>--id <em>LOG_SOURCE_LOGGING_ID</em></code></dt>
+   <dd>The logging configuration ID that you want to update. This value is required for log sources other than Docker container namespaces.</dd>
+   <dt><code>--hostname <em>LOG_SERVER_HOSTNAME</em></code></dt>
+   <dd>The hostname or IP address of the log collector server. This value is required when the logging type is <code>syslog</code>.</dd>
+   <dt><code>--port <em>LOG_SERVER_PORT</em></code></dt>
+   <dd>The port of the log collector server. This value is optional when the logging type is <code>syslog</code>. If you do not specify a port, then the standard port 514 is used for <code>syslog</code>.</dd>
+   <dt><code>--type <em>LOG_TYPE</em></code></dt>
+   <dd>The log forwarding protocol that you want to use. Currently, <code>syslog</code> and <code>ibm</code> are supported. This value is required.</dd>
+   </dl>
+
+**Example for log type `ibm`**:
+
+  ```
+  bx cs logging-config-update my_cluster --id f4bc77c0-ee7d-422d-aabf-a4e6b977264e --type ibm
+  ```
+  {: pre}
+
+**Example for log type `syslog`**:
+
+  ```
+  bx cs logging-config-update my_cluster --namespace my_namespace --hostname localhost --port 5514 --type syslog
+  ```
+  {: pre}
 
 ### bx cs machine-types LOCATION
 {: #cs_machine_types}
@@ -646,8 +799,8 @@ View a list of available machine types for your worker nodes. Each machine type 
 <strong>Command options</strong>:
 
    <dl>
-   <dt><em>LOCATION</em></dt>
-   <dd>Enter the location where you want to list available machine types.  This value is required. Review [available locations](cs_regions.html#locations).</dd></dl>
+   <dt><code><em>LOCATION</em></code></dt>
+   <dd>Enter the location where you want to list available machine types. This value is required. Review [available locations](cs_regions.html#locations).</dd></dl>
 
 **Example**:
 
@@ -660,7 +813,7 @@ View a list of available machine types for your worker nodes. Each machine type 
 ### bx cs subnets
 {: #cs_subnets}
 
-View a list of subnets that are available in an IBM Bluemix Infrastructure (SoftLayer)account.
+View a list of subnets that are available in an IBM Bluemix Infrastructure (SoftLayer) account.
 
 <strong>Command options</strong>:
 
@@ -682,7 +835,7 @@ List the public and private VLANs that are available for a location in your IBM 
 <strong>Command options</strong>:
 
    <dl>
-   <dt>LOCATION</dt>
+   <dt><code><em>LOCATION</em></code></dt>
    <dd>Enter the location where you want to list your private and public VLANs. This value is required. Review [available locations](cs_regions.html#locations).</dd>
    </dl>
 
@@ -751,7 +904,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 <table>
 <caption>Table 2. Understanding the YAML file components</caption>
 <thead>
-<th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+<th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
 </thead>
 <tbody>
 <tr>
@@ -811,7 +964,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
   ```
   {: pre}
 
-  Example for {{site.data.keyword.Bluemix_notm}} Dedicated:
+  Example for {{site.data.keyword.Bluemix_dedicated_notm}}:
 
   ```
   bx cs worker-add --cluster my_cluster --number 3 --machine-type u1c.2x4
@@ -827,7 +980,7 @@ View details of a worker node.
 <strong>Command options</strong>:
 
    <dl>
-   <dt><em>WORKER_NODE_ID</em></dt>
+   <dt><code><em>WORKER_NODE_ID</em></code></dt>
    <dd>The ID for a worker node. Run <code>bx cs workers <em>CLUSTER</em></code> to view the IDs for the worker nodes in a cluster. This value is required.</dd>
    </dl>
 
