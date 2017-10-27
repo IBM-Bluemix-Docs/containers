@@ -78,6 +78,7 @@ Refer to these commands to create and manage clusters.
     <td>[bx cs worker-get](cs_cli_reference.html#cs_worker_get)</td>
     <td>[bx cs worker-reboot](cs_cli_reference.html#cs_worker_reboot)</td>
     <td>[bx cs worker-reload](cs_cli_reference.html#cs_worker_reload)</td>
+    <td>[bx cs alb-types](cs_cli_reference.html#cs_albs)</td>
  </tr>
  </tbody>
  </table>
@@ -106,7 +107,7 @@ After logging in, download Kubernetes configuration data and certificates to con
 
    <dt><code>--admin</code></dt>
    <dd>Download the TLS certificates and permission files for the Super User role. You can use the certs to automate tasks in a cluster without having to re-authenticate. The files are downloaded to `<user_home_directory>/.bluemix/plugins/container-service/clusters/<cluster_name>-admin`. This value is optional.</dd>
-   
+
    <dt><code>--export</code></dt>
    <dd>Download Kubernetes configuration data and certificates without any messages other than the export command. Because no messages are displayed, you can use this flag when you create automated scripts. This value is optional.</dd>
    </dl>
@@ -147,7 +148,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 <table>
     <caption>Table 1.Understanding the YAML file components</caption>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
     </thead>
     <tbody>
     <tr>
@@ -252,7 +253,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
   ```
   {: pre}
 
-  Example for a {{site.data.keyword.Bluemix_notm}} Dedicated environment:
+  Example for a {{site.data.keyword.Bluemix_dedicated_notm}} environment:
 
   ```
   bx cs cluster-create --machine-type machine-type --workers number --name cluster_name
@@ -311,7 +312,7 @@ Remove a cluster from your organization.
 
 Add a {{site.data.keyword.Bluemix_notm}} service to a cluster.
 
-**Tip:** For {{site.data.keyword.Bluemix_notm}} Dedicated users, see [Adding {{site.data.keyword.Bluemix_notm}} services to clusters in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)](cs_cluster.html#binding_dedicated).
+**Tip:** For {{site.data.keyword.Bluemix_dedicated_notm}} users, see [Adding {{site.data.keyword.Bluemix_notm}} services to clusters in {{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)](cs_cluster.html#binding_dedicated).
 
 <strong>Command options</strong>:
 
@@ -705,14 +706,16 @@ Create a logging configuration. By default, namespace logs are forwarded to {{si
 <dd>The log forwarding protocol that you want to use. Currently, <code>syslog</code> and <code>ibm</code> are supported. This value is required.</dd>
 </dl>
 
-**Example for log source `namespace`**:
+**Examples**:
+
+Example for log source `namespace`:
 
   ```
   bx cs logging-config-create my_cluster --namespace my_namespace --hostname localhost --port 5514 --type syslog
   ```
   {: pre}
 
-**Example for log source `ingress`**:
+Example for log source `ingress`:
 
   ```
   bx cs logging-config-create my_cluster f4bc77c0-ee7d-422d-aabf-a4e6b977264e --type ibm
@@ -916,7 +919,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 <table>
 <caption>Table 2. Understanding the YAML file components</caption>
 <thead>
-<th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+<th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
 </thead>
 <tbody>
 <tr>
@@ -976,7 +979,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
   ```
   {: pre}
 
-  Example for {{site.data.keyword.Bluemix_notm}} Dedicated:
+  Example for {{site.data.keyword.Bluemix_dedicated_notm}}:
 
   ```
   bx cs worker-add --cluster my_cluster --number 3 --machine-type u1c.2x4
@@ -1129,6 +1132,7 @@ View a list of worker nodes and the status for each in a cluster.
   bx cs workers mycluster
   ```
   {: pre}
+
 
 <br />
 
