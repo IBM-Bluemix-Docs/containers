@@ -57,7 +57,7 @@ Use standard clusters to increase app availability. Your users are less likely t
 
 Review these potential cluster setups that are ordered with increasing degrees of availability:
 
-[![Stages of high availability for a cluster](images/cs_cluster_ha_roadmap.png)](https://console.bluemix.net/docs/api/content/containers/images/cs_cluster_ha_roadmap.png)
+[![Stages of high availability for a cluster](images/cs_cluster_ha_roadmap.png)](../api/content/containers/images/cs_cluster_ha_roadmap.png)
 
 1.  One cluster with multiple worker nodes
 2.  Two clusters that run in different locations in the same region, each with multiple worker nodes
@@ -152,7 +152,7 @@ Review the responsibilities that you share with IBM to manage your clusters. To 
 - [Adding or removing capacity by using the CLI to add or remove worker nodes](cs_cli_reference.html#cs_worker_add)
 - [Creating public and private VLANs in IBM Bluemix Infrastructure (SoftLayer) for network isolation of your cluster ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/topic/vlans)
 - [Ensuring that all worker nodes have network connectivity to the Kubernetes master URL](cs_security.html#opening_ports) <p>**Note**: If a worker node has both public and private VLANs, then network connectivity is configured. If the worker node has a private VLAN only set up, then a vyatta is required to provide network connectivity.</p>
-- [Determining when to update the kube-apiserver and worker nodes when Kubernetes major or minor version updates are available](cs_cluster.html#cs_cluster_update)
+- [Updating the master kube-apiserver and worker nodes when Kubernetes major or minor version updates are available](cs_cluster.html#cs_cluster_update)
 - [Taking action to recover troubled worker nodes by running `kubectl` commands, such as `cordon` or `drain`, and by running `bx cs` commands, such as `reboot`, `reload`, or `delete`](cs_cli_reference.html#cs_worker_reboot)
 - [Adding or removing additional subnets in IBM Bluemix Infrastructure (SoftLayer) as needed](cs_cluster.html#cs_cluster_subnet)
 - [Backing up and restoring data in persistent storage in IBM Bluemix Infrastructure (SoftLayer) ![External link icon](../icons/launch-glyph.svg "External link icon")](../services/RegistryImages/ibm-backup-restore/index.html#ibmbackup_restore_starter)
@@ -242,9 +242,9 @@ spec:
 
 </dd>
 <dt>Distribute pods across multiple locations or regions</dt>
-<dd>To protect your app from a location or region failure, you can create a second cluster in another location or region and use a deployment YAML to deploy a duplicate replica set for your app. By adding a shared route and load balancer in front of your clusters, you can spread your work load across locations and regions. For more information about sharing a route between clusters, see <a href="https://console.bluemix.net/docs/containers/cs_cluster.html#cs_cluster" target="_blank">High availability of clusters</a>.
+<dd>To protect your app from a location or region failure, you can create a second cluster in another location or region and use a deployment YAML to deploy a duplicate replica set for your app. By adding a shared route and load balancer in front of your clusters, you can spread your work load across locations and regions. For more information about sharing a route between clusters, see <a href="cs_cluster.html#cs_cluster" target="_blank">High availability of clusters</a>.
 
-For more detail, review the options for <a href="https://console.bluemix.net/docs/containers/cs_planning.html#cs_planning_cluster_config" target="_blank">highly available deployments</a>.</dd>
+For more detail, review the options for <a href="cs_planning.html#cs_planning_cluster_config" target="_blank">highly available deployments</a>.</dd>
 </dl>
 
 
@@ -346,7 +346,7 @@ Depending on whether you created a lite or standard cluster, you can choose betw
 Expose a public port on your worker node and use the public IP address of the worker node to publicly access your service in the cluster.
 {:shortdesc}
 
-[![Expose a service by using a Kubernetes NodePort service](images/cs_nodeport.png)](https://console.bluemix.net/docs/api/content/containers/images/cs_nodeport.png)
+[![Expose a service by using a Kubernetes NodePort service](images/cs_nodeport.png)](../api/content/containers/images/cs_nodeport.png)
 
 When you expose your app by creating a Kubernetes service of type NodePort, a NodePort in the range of 30000 - 32767 and an internal cluster IP address is assigned to the service. The NodePort service serves as the external entry point for incoming requests for your app. The assigned NodePort is publicly exposed in the kubeproxy settings of each worker node in the cluster. Every worker node starts listening on the assigned NodePort for incoming requests for the service. To access the service from the internet, you can use the public IP address of any worker node that was assigned during cluster creation and the NodePort in the format `<ip_address>:<nodeport>`. In addition to the public IP address, a NodePort service is available over the private IP address of a worker node.
 
@@ -362,7 +362,7 @@ For more information about how to create a service of type NodePort with {{site.
 
 Expose a port and use the public or private IP address for the load balancer to access the app.
 
-[![Expose a service by using a Kubernetes LoadBalancer service type](images/cs_loadbalancer.png)](https://console.bluemix.net/docs/api/content/containers/images/cs_loadbalancer.png)
+[![Expose a service by using a Kubernetes LoadBalancer service type](images/cs_loadbalancer.png)](../api/content/containers/images/cs_loadbalancer.png)
 
 When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically requests five portable public and five private IP addresses and provisions them into your IBM Bluemix Infrastructure (SoftLayer) account during cluster creation. Two of the portable IP addresses, one public and one private, are used for the [Ingress controller](#cs_ingress). Four portable public and Four private IP addresses can be used to expose apps by creating a LoadBalancer service.
 
@@ -385,7 +385,7 @@ For more information about how to create a LoadBalancer service with {{site.data
 
 Ingress allows you to expose multiple services in your cluster and make them publicly available by using a single public entry point.
 
-[![Expose a service by using the {{site.data.keyword.containershort_notm}} ingress support](images/cs_ingress.png)](https://console.bluemix.net/docs/api/content/containers/images/cs_ingress.png)
+[![Expose a service by using the {{site.data.keyword.containershort_notm}} ingress support](images/cs_ingress.png)](../api/content/containers/images/cs_ingress.png)
 
 Rather than creating a load balancer service for each app that you want to expose to the public, Ingress provides a unique public route that lets you forward public requests to apps inside and outside your cluster based on their individual paths. Ingress consists of two main components. The Ingress resource defines the rules for how to route incoming requests for an app. All Ingress resources must be registered with the Ingress controller that listens for incoming HTTP or HTTPS service requests and forwards requests based on the rules defined for each Ingress resource.
 
@@ -447,7 +447,7 @@ For more information about how to access a public or private registry and use an
 A container is, by design, short-lived. However, you can choose between several options to persist data for the case of a container failover and to share data between containers.
 {:shortdesc}
 
-[![Persistent storage options for deployments in Kubernetes clusters](images/cs_planning_apps_storage.png)](https://console.bluemix.net/docs/api/content/containers/images/cs_planning_apps_storage.png)
+[![Persistent storage options for deployments in Kubernetes clusters](images/cs_planning_apps_storage.png)](../api/content/containers/images/cs_planning_apps_storage.png)
 
 |Option|Description|
 |------|-----------|
