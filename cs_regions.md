@@ -28,6 +28,8 @@ Supported {{site.data.keyword.containershort_notm}} regions:
   * US East
   * US South
 
+
+
 ## {{site.data.keyword.Bluemix_notm}} region API endpoints
 {: #bluemix_regions}
 
@@ -126,6 +128,7 @@ Example commands to log in to an {{site.data.keyword.containershort_notm}} regio
     ```
     {: pre}
 
+
 ### Creating lite clusters in container service regions
 {: #lite_regions}
 
@@ -134,6 +137,7 @@ You can create Kubernetes lite clusters in the following regions:
   * EU Central
   * UK South
   * US South
+
 
 ### Locations available for the container service
 {: #locations}
