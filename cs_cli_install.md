@@ -441,7 +441,7 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     <tbody>
     <tr>
     <td>Header</td>
-    <td><ul><li>Content-Type:application/x-www-form-urlencoded</li> <li>Authorization: Basic Yng6Yng=</li></ul>
+    <td><ul><li>Content-Type:application/x-www-form-urlencoded</li> <li>Authorization: Basic Yng6Yng=<p>Note: Provided for you is Yng6Yng=, the URL-encoded authorization for the username **bx** and the password **bx**.</p></li></ul>
     </td>
     </tr>
     <tr>
@@ -554,7 +554,7 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     <tbody>
     <tr>
     <td>Header</td>
-    <td><ul><li>Content-Type:application/x-www-form-urlencoded</li> <li>Authorization: Basic Yng6Yng=</li></ul>
+    <td><ul><li>Content-Type:application/x-www-form-urlencoded</li> <li>Authorization: Basic Yng6Yng=<p>Note: Provided for you is Yng6Yng=, the URL-encoded authorization for the username **bx** and the password **bx**.</p></li></ul>
     </td>
     </tr>
     <tr>
@@ -765,7 +765,7 @@ Use the following steps if you want to refresh your IAM token.
     <tr>
     <td>Header</td>
     <td><ul><li>Content-Type: application/x-www-form-urlencoded</li>
-    <li>Authorization: Basic Yng6Yng=</li></ul></td>
+    <li>Authorization: Basic Yng6Yng=<p>Note: Provided for you is Yng6Yng=, the URL-encoded authorization for the username **bx** and the password **bx**.</p></li></ul></td>
     </tr>
     <tr>
     <td>Body</td>
