@@ -17,14 +17,14 @@ lastupdated: "2017-10-17"
 
 
 # Popular topics for {{site.data.keyword.containershort_notm}}
-{: #cs_internal}
+{: #cs_popular_topics}
 
 Check out what container developers are interested in.
 {:shortdesc}
 
 <table>
 <thead>
-<th colspan=2><img src="images/idea.png"/>Popular topics for containers and Kubernetes clusters</th>
+<th colspan=2><img src="images/idea.png" alt="Idea icon"/>Popular topics for containers and Kubernetes clusters</th>
 </thead>
 <tbody>
 <tr>
@@ -55,3 +55,5 @@ Check out what container developers are interested in.
 You can see what others are talking about and ask your own questions in the [{{site.data.keyword.containershort_notm}} Slack. ![External link icon](../icons/launch-glyph.svg "External link icon")](https://ibm-container-service.slack.com)
 
 If you are not using an IBM ID for your {{site.data.keyword.Bluemix_notm}} account, contact [crosen@us.ibm.com](mailto:crosen@us.ibm.com) and request an invitation to this Slack.
+
+
