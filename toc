@@ -47,4 +47,3 @@ IBM Bluemix Container Service
     cs_troubleshoot.md
     cs_popular_topics.md
     {: .navgroup-end}
-
