@@ -17,14 +17,14 @@ lastupdated: "2017-10-17"
 
 
 # Popular topics for {{site.data.keyword.containershort_notm}}
-{: #cs_internal}
+{: #cs_popular_topics}
 
 Check out what container developers are interested in.
 {:shortdesc}
 
 <table>
 <thead>
-<th colspan=2><img src="images/idea.png"/>Popular topics for containers and Kubernetes clusters</th>
+<th colspan=2><img src="images/idea.png" alt="Idea icon"/>Popular topics for containers and Kubernetes clusters</th>
 </thead>
 <tbody>
 <tr>
