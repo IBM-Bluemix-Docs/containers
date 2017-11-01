@@ -22,12 +22,12 @@ lastupdated: "2017-10-24"
 You can use built-in security features for risk analysis and security protection. These features help you to protect your cluster infrastructure and network communication, isolate your compute resources, and ensure security compliance across your infrastructure components and container deployments.
 {: shortdesc}
 
-<a href="https://console.bluemix.net/docs/api/content/containers/images/cs_security.png" ><img src="images/cs_security.png" width="400" alt="{{site.data.keyword.containershort_notm}} cluster security" style="width:400px; border-style: none"/></a>
+<a href="../api/content/containers/images/cs_security.png" ><img src="images/cs_security.png" width="400" alt="{{site.data.keyword.containershort_notm}} cluster security" style="width:400px; border-style: none"/></a>
 
 
   <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
   <thead>
-  <th colspan=2><img src="images/idea.png"/> Built-in cluster security settings in {{site.data.keyword.containershort_notm}}</th>
+  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Built-in cluster security settings in {{site.data.keyword.containershort_notm}}</th>
   </thead>
   <tbody>
     <tr>
@@ -89,7 +89,7 @@ Review the built-in worker node security features to protect the worker node env
   <dt>Kubernetes worker node security compliance</dt>
     <dd>IBM works with internal and external security advisory teams to address potential security compliance vulnerabilities. IBM maintains SSH access to the worker nodes in order to deploy updates and security patches to the operating system.</br> <b>Important</b>: Reboot your worker nodes on a regular basis to ensure the installation of the updates and security patches that are automatically deployed to the operating system. IBM does not reboot your worker nodes.</dd>
   <dt>Support for IBM Bluemix Infrastructure (SoftLayer) network firewalls</dt>
-    <dd>{{site.data.keyword.containershort_notm}} is compatible with all [IBM Bluemix Infrastructure (SoftLayer) firewall offerings ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/cloud-computing/bluemix/network-security). On {{site.data.keyword.Bluemix_notm}} Public, you can set up a firewall with custom network policies to provide dedicated network security for your cluster and to detect and remediate network intrusion. For example, you might choose to set up a [Vyatta ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/topic/vyatta-1) to act as your firewall and block unwanted traffic. When you set up a firewall, [you must also open up the required ports and IP addresses](#opening_ports) for each region so that the master and the worker nodes can communicate. On {{site.data.keyword.Bluemix_notm}} Dedicated, firewalls, DataPower, Fortigate, and DNS are already configured as part of the standard dedicated environment deployment.</dd>
+    <dd>{{site.data.keyword.containershort_notm}} is compatible with all [IBM Bluemix Infrastructure (SoftLayer) firewall offerings ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/cloud-computing/bluemix/network-security). On {{site.data.keyword.Bluemix_notm}} Public, you can set up a firewall with custom network policies to provide dedicated network security for your cluster and to detect and remediate network intrusion. For example, you might choose to set up a [Vyatta ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/topic/vyatta-1) to act as your firewall and block unwanted traffic. When you set up a firewall, [you must also open up the required ports and IP addresses](#opening_ports) for each region so that the master and the worker nodes can communicate. On {{site.data.keyword.Bluemix_dedicated_notm}}, firewalls, DataPower, Fortigate, and DNS are already configured as part of the standard dedicated environment deployment.</dd>
   <dt>Keep services private or selectively expose services and apps to the public internet</dt>
     <dd>You can choose to keep your services and apps private and leverage the built-in security features described in this topic to assure secured communication between worker nodes and pods. To expose services and apps to the public internet, you can leverage the Ingress and load balancer support to securely make your services publicly available.</dd>
   <dt>Securely connect your worker nodes and apps to an on-premise data center</dt>
@@ -237,6 +237,79 @@ Review these situations in which you might need to open specific ports and IP ad
 
   7. Optional: To access the Ingress controller from outside of the VLAN, open either port 80 or 443 for incoming network traffic on the specific IP address of that Ingress controller, depending on which port you have configured.
 
+## Restricting network traffic to edge worker nodes
+{: #cs_edge}
+
+Add the `edge` label to two or more worker nodes in your cluster to ensure that Ingress and load balancers are deployed to those worker nodes only. 
+
+Edge worker nodes can improve the security of your cluster by allowing fewer worker nodes to be accessed externally and by isolating the networking workload. When these worker nodes are marked for networking only, other workloads cannot consume the CPU or memory of the worker node and interfere with networking.
+
+Before you begin:
+
+- [Create a standard cluster.](cs_cluster.html#cs_cluster_cli)
+- Ensure your cluster has a least one public VLAN. Edge worker nodes are not available for clusters with private VLANs only.
+- [Target the Kubernetes CLI to the cluster](cs_cli_install.html#cs_cli_configure).
+
+
+1. List all of the worker nodes in the cluster. Use the private IP address from the **NAME** column to identify the nodes. Select at least two worker nodes to be edge worker nodes. Using two or more worker nodes improves availability of the networking resources.
+  
+  ```
+  kubectl get nodes -L publicVLAN,privateVLAN,dedicated
+  ```
+  {: pre}
+  
+2. Label the worker nodes with `dedicated=edge`. After a worker node is marked with `dedicated=edge`, all subsequent Ingress and load balancers are deployed to an edge worker node.
+
+  ```
+  kubectl label nodes <node_name> <node_name2> dedicated=edge
+  ```
+  {: pre}
+  
+3. Retrieve all existing load balancer services in your cluster. 
+
+  ```
+  kubectl get services --all-namespaces -o jsonpath='{range .items[*]}kubectl get service -n {.metadata.namespace} {.metadata.name} -o yaml | kubectl apply -f - :{.spec.type},{end}' | tr "," "\n" | grep "LoadBalancer" | cut -d':' -f1
+  ```
+  {: pre}
+  
+  Output:
+  
+  ```
+  kubectl get service -n <namespace> <name> -o yaml | kubectl apply -f
+  ```
+  {: screen}
+  
+4. Using the output from the previous step, copy and paste each `kubectl get service` line. This command re-deploys the load balancer to an edge worker node. Only public load balancers need to be re-deployed.
+
+  Output:
+  
+  ```
+  service "<name>" configured
+  ```
+  {: screen}
+  
+You labeled worker nodes with `dedicated=edge` and re-deployed all existing load balancers and Ingress to the edge worker nodes. Next, prevent other [workloads from running on edge worker nodes](#cs_edge_workloads) and [block inbound traffic to node ports on worker nodes](#cs_block_ingress).
+
+### Prevent workloads from running on edge worker nodes.
+{: #cs_edge_workloads}
+
+One of the benefits of edge worker nodes is that these worker nodes can be specified to run networking services only. Using the `dedicated=edge` toleration means that all load balancer and Ingress services are deployed to the labeled worker nodes only. However, to prevent other workloads from running on edge worker nodes and consuming worker node resources, you must use [Kubernetes taints ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/).
+
+1. List all worker nodes with the `edge` label.
+
+  ```
+  kubectl get nodes -L publicVLAN,privateVLAN,dedicated -l dedicated=edge
+  ```
+  {: pre}
+
+2. Apply a taint to each worker node that prevents pods from running on the worker node and that removes pods that do not have the `edge` label from the worker node. The pods that are removed are re-deployed on other worker nodes with capacity.
+
+  ```
+  kubectl taint node <node_name> dedicated=edge:NoSchedule dedicated=edge:NoExecute
+  ```
+
+Now, only pods with the `dedicated=edge` toleration are deployed to your edge worker nodes.
+
 <br />
 
 
@@ -273,7 +346,7 @@ Note that a policy to allow SSH does not exist, so SSH access by way of the publ
 
  <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
   <thead>
-  <th colspan=2><img src="images/idea.png"/> Default policies for each cluster</th>
+  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Default policies for each cluster</th>
   </thead>
   <tbody>
     <tr>
@@ -320,11 +393,11 @@ Before you begin:
   ```
   {: pre}
 
-  **Note**: Calico CLI version 1.4.0 is supported.
+  **Note**: Calico CLI version 1.6.1 is supported.
 
 To add network policies:
 1.  Install the Calico CLI.
-    1.  [Download the Calico CLI ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/projectcalico/calicoctl/releases/tag/v1.4.0).
+    1.  [Download the Calico CLI ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/projectcalico/calicoctl/releases/tag/v1.6.1).
 
         **Tip:** If you are using Windows, install the Calico CLI in the same directory as the {{site.data.keyword.Bluemix_notm}} CLI. This setup saves you some filepath changes when you run commands later.
 
@@ -533,7 +606,7 @@ To add network policies:
           ```
           {: pre}
 
-### Block incoming (ingress) traffic to LoadBalancer or NodePort services.
+### Block incoming traffic to LoadBalancer or NodePort services.
 {: #cs_block_ingress}
 
 By default, Kubernetes `NodePort` and `LoadBalancer` services are designed to make your app available on all public and private cluster interfaces. However, you can block incoming traffic to your services based on traffic source or destination. To block traffic, create Calico `preDNAT` network policies.
@@ -545,13 +618,19 @@ The cluster administrator can use Calico `preDNAT` network policies block:
   - Traffic to NodePort services. Traffic to LoadBalancer services is allowed.
   - Traffic that is based on a source address or CIDR.
 
-One benefit of these features is that the cluster administrator can block traffic to public node ports of a private LoadBalancer service. The administrator can also enable whitelisting access to NodePort or LoadBalancer services. The `preDNAT` network policies are useful because default Kubernetes and Calico policies are difficult to apply to protecting Kubernetes NodePort and LoadBalancer services due to the DNAT iptables rules generated for these services.
+Some common uses for Calico `preDNAT` network policies:
+  
+  - Block traffic to public node ports of a private LoadBalancer service.
+  - Block traffic to public node ports on clusters that are running [edge worker nodes](#cs_edge). Blocking node ports ensures that the edge worker nodes are the only worker nodes that handle incoming traffic.
+
+The `preDNAT` network policies are useful because default Kubernetes and Calico policies are difficult to apply to protecting Kubernetes NodePort and LoadBalancer services due to the DNAT iptables rules generated for these services.
 
 Calico `preDNAT` network policies generate iptables rules based on a [Calico
 network policy resource ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.projectcalico.org/v2.4/reference/calicoctl/resources/policy).
 
-1. Define a Calico `preDNAT` network policy for ingress access to Kubernetes services. This
-example blocks all node ports.
+1. Define a Calico `preDNAT` network policy for ingress access to Kubernetes services. 
+
+  Example that blocks all node ports:
 
   ```
   apiVersion: v1
@@ -579,7 +658,7 @@ example blocks all node ports.
 policy changes to be applied throughout the cluster.
 
   ```
-  /opt/bin/calicoctl apply -f deny-kube-node-port-services.yaml
+  calicoctl apply -f deny-kube-node-port-services.yaml
   ```
   {: pre}
 
