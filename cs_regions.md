@@ -28,6 +28,8 @@ Supported {{site.data.keyword.containershort_notm}} regions:
   * US East
   * US South
 
+
+
 ## {{site.data.keyword.Bluemix_notm}} region API endpoints
 {: #bluemix_regions}
 
@@ -126,6 +128,7 @@ Example commands to log in to an {{site.data.keyword.containershort_notm}} regio
     ```
     {: pre}
 
+
 ### Creating lite clusters in container service regions
 {: #lite_regions}
 
@@ -135,6 +138,7 @@ You can create Kubernetes lite clusters in the following regions:
   * UK South
   * US South
 
+
 ### Locations available for the container service
 {: #locations}
 
@@ -143,7 +147,7 @@ Locations are data centers that are available within a region.
   | Region | Location | City |
   |--------|----------|------|
   | AP South     | mel01, syd01, syd04        | Melbourne, Sydney |
-  | EU Central     | ams03, fra02        | Amsterdam, Frankfurt |
+  | EU Central     | ams03, fra02,         | Amsterdam, Frankfurt, Paris |
   | UK South      | lon02, lon04         | London |
   | US East      | wdc06, wdc07        | Washington, DC |
   | US South     | dal10, dal12, dal13       | Dallas |
