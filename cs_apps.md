@@ -113,12 +113,13 @@ If you need HTTP or HTTPS load balancing for your app and want to use one public
 ### Configuring public access to an app by using the NodePort service type
 {: #cs_apps_public_nodeport}
 
-Make your app publicly available by using the public IP address of any worker node in a cluster and exposing a node port. Use this option for testing and short-term public access.
+Make your app publicly available by using the public IP address of any worker node in a cluster and exposing a node port. Use this option for testing and short-term public acc
+ess.
 {:shortdesc}
 
 You can expose your app as a Kubernetes NodePort service for lite or standard clusters.
 
-For {{site.data.keyword.Bluemix_notm}} Dedicated environments, public IP addresses are blocked by a firewall. To make an app publicly available, use a [LoadBalancer service](#cs_apps_public_load_balancer) or [Ingress](#cs_apps_public_ingress) instead.
+For {{site.data.keyword.Bluemix_dedicated_notm}} environments, public IP addresses are blocked by a firewall. To make an app publicly available, use a [LoadBalancer service](#cs_apps_public_load_balancer) or [Ingress](#cs_apps_public_ingress) instead.
 
 **Note:** The public IP address of a worker node is not permanent. If the worker node must be re-created, a new public IP address is assigned to the worker node. If you need a stable public IP address and more availability for your service, expose your app by using a [LoadBalancer service](#cs_apps_public_load_balancer) or [Ingress](#cs_apps_public_ingress).
 
@@ -235,11 +236,11 @@ When the app is deployed, you can use the public IP address of any worker node a
 ### Configuring access to an app by using the load balancer service type
 {: #cs_apps_public_load_balancer}
 
-Expose a port and use a portable public or private IP address for the load balancer to access the app. Unlike with a NodePort service, the portable IP address of the load balancer service is not dependent on the worker node that the app is deployed on. However, a Kubernetes LoadBalancer service is also a NodePort service. A LoadBalancer service makes your app available over the load balancer IP address and port and makes your app available over the service's node ports. 
+Expose a port and use a portable public or private IP address for the load balancer to access the app. Unlike with a NodePort service, the portable IP address of the load balancer service is not dependent on the worker node that the app is deployed on. However, a Kubernetes LoadBalancer service is also a NodePort service. A LoadBalancer service makes your app available over the load balancer IP address and port and makes your app available over the service's node ports.
 
  The portable IP address of the load balancer is assigned for you and does not change when you add or remove worker nodes. Therefore, load balancer services are more highly available than NodePort services. Users can select any port for the load balancer and are not limited to the NodePort port range. You can use load balancer services for TCP and UDP protocols.
 
-When a {{site.data.keyword.Bluemix_notm}} Dedicated account is [enabled for clusters](cs_ov.html#setup_dedicated), you can request public subnets to be used for load balancer IP addresses. [Open a support ticket](/docs/support/index.html#contacting-support) to create the subnet, and then use the [`bx cs cluster-subnet-add`](cs_cli_reference.html#cs_cluster_subnet_add) command to add the subnet to the cluster.
+When a {{site.data.keyword.Bluemix_dedicated_notm}} account is [enabled for clusters](cs_ov.html#setup_dedicated), you can request public subnets to be used for load balancer IP addresses. [Open a support ticket](/docs/support/index.html#contacting-support) to create the subnet, and then use the [`bx cs cluster-subnet-add`](cs_cli_reference.html#cs_cluster_subnet_add) command to add the subnet to the cluster.
 
 **Note:** Load balancer services do not support TLS termination. If your app requires TLS termination, you can expose your app by using [Ingress](#cs_apps_public_ingress), or configure your app to manage the TLS termination.
 
@@ -256,11 +257,11 @@ To create a load balancer service:
     1.  Create a service configuration file that is named, for example, `myloadbalancer.yaml`.
     2.  Define a load balancer service for the app that you want to expose.
         - If your cluster is on a public VLAN, a portable public IP address is used. Most clusters are on a public VLAN.
-        - If your cluster is available on a private VLAN only, then a portable private IP address is used. 
+        - If your cluster is available on a private VLAN only, then a portable private IP address is used.
         - You can request a portable public or private IP address for a LoadBalancer service by adding an annotation to the configuration file.
 
         LoadBalancer service that uses a default IP address:
-        
+
         ```
         apiVersion: v1
         kind: Service
@@ -275,16 +276,16 @@ To create a load balancer service:
              port: 8080
         ```
         {: codeblock}
-        
+
         LoadBalancer service that uses an annotation to specify a private or public IP address:
-        
+
         ```
         apiVersion: v1
         kind: Service
         metadata:
           name: <myservice>
-          annotations: 
-            service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: <public_or_private> 
+          annotations:
+            service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: <public_or_private>
         spec:
           type: LoadBalancer
           selector:
@@ -297,7 +298,7 @@ To create a load balancer service:
 
         <table>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
         <tbody>
         <tr>
@@ -314,7 +315,7 @@ To create a load balancer service:
         </tr>
         <tr>
           <td>`service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type:`
-          <td>Annotation to specify the type of LoadBalancer. The values are `private` and `public`. When creating a public LoadBalancer in clusters on public VLANs, this annotation is not required.
+          <td>Annotation to specify the type of LoadBalancer. The values are `private` and `public`. When creating a public LoadBalancer in clusters on public VLANs, this annotation is not required.</td>
         </tbody></table>
     3.  Optional: To use a specific portable IP address for your load balancer that is available to your cluster, you can specify that IP address by including the `loadBalancerIP` in the spec section. For more information, see the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/services-networking/service/).
     4.  Optional: Configure a firewall by specifying the `loadBalancerSourceRanges` in the spec section. For more information, see the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/).
@@ -368,6 +369,8 @@ To create a load balancer service:
         {: codeblock}
 
 
+
+
 ### Configuring public access to an app by using the Ingress controller
 {: #cs_apps_public_ingress}
 
@@ -377,7 +380,7 @@ Expose multiple apps in your cluster by creating Ingress resources that are mana
 
 When you create a standard cluster, an Ingress controller is automatically created for you and assigned a portable public IP address and a public route. You can configure the Ingress controller and define individual routing rules for every app that you expose to the public. Every app that is exposed via Ingress is assigned a unique path that is appended to the public route, so that you can use a unique URL to access an app publicly in your cluster.
 
-When a {{site.data.keyword.Bluemix_notm}} Dedicated account is [enabled for clusters](cs_ov.html#setup_dedicated), you can request public subnets to be used for Ingress controller IP addresses. Then, the Ingress controller is created and a public route is assigned. [Open a support ticket](/docs/support/index.html#contacting-support) to create the subnet, and then use the [`bx cs cluster-subnet-add`](cs_cli_reference.html#cs_cluster_subnet_add) command to add the subnet to the cluster.
+When a {{site.data.keyword.Bluemix_dedicated_notm}} account is [enabled for clusters](cs_ov.html#setup_dedicated), you can request public subnets to be used for Ingress controller IP addresses. Then, the Ingress controller is created and a public route is assigned. [Open a support ticket](/docs/support/index.html#contacting-support) to create the subnet, and then use the [`bx cs cluster-subnet-add`](cs_cli_reference.html#cs_cluster_subnet_add) command to add the subnet to the cluster.
 
 You can configure the Ingress controller for the following scenarios.
 
@@ -385,7 +388,11 @@ You can configure the Ingress controller for the following scenarios.
 -   [Use the IBM-provided domain with TLS termination](#ibm_domain_cert)
 -   [Use a custom domain and TLS certificate to do TLS termination](#custom_domain_cert)
 -   [Use the IBM-provided or a custom domain with TLS termination to access apps outside your cluster](#external_endpoint)
+-   [Open ports in the Ingress load balancer](#opening_ingress_ports)
 -   [Customize your Ingress controller with annotations](#ingress_annotation)
+
+
+
 
 #### Using the IBM-provided domain without TLS termination
 {: #ibm_domain}
@@ -420,7 +427,7 @@ To configure the Ingress controller:
 
         <table>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
         <tbody>
         <tr>
@@ -495,7 +502,7 @@ To configure the Ingress controller:
 
         <table>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
         <tbody>
         <tr>
@@ -589,7 +596,7 @@ To configure the Ingress controller:
 
         <table>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
         <tbody>
         <tr>
@@ -675,7 +682,7 @@ To configure the Ingress controller:
 
         <table>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
         <tbody>
         <tr>
@@ -784,7 +791,7 @@ To configure the Ingress controller:
 
         <table>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
         <tbody>
         <tr>
@@ -830,7 +837,7 @@ To configure the Ingress controller:
 
         <table>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
         <tbody>
         <tr>
@@ -887,7 +894,7 @@ To configure the Ingress controller:
 
         <table>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
         <tbody>
         <tr>
@@ -998,7 +1005,7 @@ You can configure the Ingress controller to route incoming network traffic on th
 
         <table>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
         <tbody>
         <tr>
@@ -1041,7 +1048,7 @@ You can configure the Ingress controller to route incoming network traffic on th
 
         <table>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
         <tbody>
         <tr>
@@ -1123,7 +1130,7 @@ You can configure the Ingress controller to route incoming network traffic on th
 
         <table>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
         <tbody>
         <tr>
@@ -1198,6 +1205,8 @@ You can configure the Ingress controller to route incoming network traffic on th
         {: codeblock}
 
 
+
+
 #### Supported Ingress annotations
 {: #ingress_annotation}
 
@@ -1255,7 +1264,7 @@ spec:
 
 <table>
 <thead>
-<th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+<th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
 </thead>
 <tbody>
 <tr>
@@ -1324,7 +1333,7 @@ spec:
   <table>
   <caption>Table 12. Understanding the YAML file components</caption>
   <thead>
-  <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
   </thead>
   <tbody>
   <tr>
@@ -1393,7 +1402,7 @@ spec:
 
  <table>
   <thead>
-  <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
   </thead>
   <tbody>
   <tr>
@@ -1449,7 +1458,7 @@ spec:
 
  <table>
   <thead>
-  <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
   </thead>
   <tbody>
   <tr>
@@ -1582,7 +1591,7 @@ spec:
 
 <table>
   <thead>
-  <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
   </thead>
   <tbody>
   <tr>
@@ -1636,7 +1645,7 @@ spec:
 
 <table>
   <thead>
-  <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
   </thead>
   <tbody>
   <tr>
@@ -1649,7 +1658,7 @@ spec:
   </tbody></table>
 
   </dd></dl>
-  
+
 
 ##### **Changing the default ports for HTTP and HTTPS network traffic**
 {: #custom_http_https_ports}
@@ -1659,7 +1668,7 @@ Use this annotation to change the default ports for HTTP (port 80) and HTTPS (po
 
 <dl>
 <dt>Description</dt>
-<dd>By default, the Ingress controller is configured to listen for incoming HTTP network traffic on port 80 and for incoming HTTPS network traffic on port 443. You can change the default ports to add security to your Ingress controller domain, or to enable an HTTPS port only. 
+<dd>By default, the Ingress controller is configured to listen for incoming HTTP network traffic on port 80 and for incoming HTTPS network traffic on port 443. You can change the default ports to add security to your Ingress controller domain, or to enable an HTTPS port only.
 </dd>
 
 
@@ -1689,7 +1698,7 @@ spec:
 
 <table>
   <thead>
-  <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
   </thead>
   <tbody>
   <tr>
@@ -1706,14 +1715,14 @@ spec:
   <dd><ol><li>Review open ports for your Ingress controller.
 <pre class="pre">
 <code>kubectl get service -n kube-system</code></pre>
-Your CLI output looks similar to the following: 
+Your CLI output looks similar to the following:
 <pre class="screen">
 <code>NAME                     CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
 public-ingress-ctl-svc   10.10.10.149   169.60.16.246   80:30776/TCP,443:30412/TCP   8d</code></pre></li>
-<li>Open the Ingress controller config map. 
+<li>Open the Ingress controller config map.
 <pre class="pre">
 <code>kubectl edit configmap ibm-cloud-provider-ingress-cm -n kube-system</code></pre></li>
-<li>Add the non-default HTTP and HTTPS ports to the config map. Replace &lt;port&gt; with the HTTP or HTTPS port that you want to open. 
+<li>Add the non-default HTTP and HTTPS ports to the config map. Replace &lt;port&gt; with the HTTP or HTTPS port that you want to open.
 <pre class="codeblock">
 <code>apiVersion: v1
 kind: ConfigMap
@@ -1729,7 +1738,7 @@ metadata:
   <li>Verify that your Ingress controller is re-configured with the non-default ports.
 <pre class="pre">
 <code>kubectl get service -n kube-system</code></pre>
-Your CLI output looks similar to the following: 
+Your CLI output looks similar to the following:
 <pre class="screen">
 <code>NAME                     CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
 public-ingress-ctl-svc   10.10.10.149   169.60.16.246   &lt;port1&gt;:30776/TCP,&lt;port2&gt;:30412/TCP   8d</code></pre></li>
@@ -1758,7 +1767,7 @@ You can use portable public and private subnets and IP addresses to expose apps 
 
 In {{site.data.keyword.containershort_notm}}, you can add stable, portable IPs for Kubernetes services by adding network subnets to the cluster. When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically provisions a portable public subnet, 5 portable public, and 5 portable private IP addresses. Portable IP addresses are static and do not change when a worker node, or even the cluster, is removed.
 
- Two of the portable IP addresses, one public and one private, is used for the [Ingress controller](#cs_apps_public_ingress) that you can use to expose multiple apps in your cluster by using a public route. 4 portable public and 4 private IP addresses can be used to expose apps by [creating a load balancer service](#cs_apps_public_load_balancer). 
+ Two of the portable IP addresses, one public and one private, is used for the [Ingress controller](#cs_apps_public_ingress) that you can use to expose multiple apps in your cluster by using a public route. 4 portable public and 4 private IP addresses can be used to expose apps by [creating a load balancer service](#cs_apps_public_load_balancer).
 
 **Note:** Portable public IP addresses are charged on a monthly basis. If you choose to remove portable public IP addresses after your cluster is provisioned, you still have to pay the monthly charge, even if you used them only for a short amount of time.
 
@@ -1889,6 +1898,8 @@ To deploy your app:
 <br />
 
 
+
+
 ## Scaling apps
 {: #cs_apps_scaling}
 
@@ -1912,7 +1923,7 @@ With Kubernetes, you can enable [Horizontal Pod Autoscaling ![External link icon
 
     <table>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding this command&apos;s components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command&apos;s components</th>
     </thead>
     <tbody>
     <tr>
@@ -1942,7 +1953,7 @@ With Kubernetes, you can enable [Horizontal Pod Autoscaling ![External link icon
 
     <table>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding this command&apos;s components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command&apos;s components</th>
     </thead>
     <tbody>
     <tr>
@@ -2102,7 +2113,7 @@ When you mount a secret volume to your pod, a file named binding is stored in th
 
     <table>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
     </thead>
     <tbody>
     <tr>
@@ -2181,25 +2192,26 @@ Create a persistent volume claim (pvc) to provision NFS file storage for your cl
 
 The NFS file storage that backs the persistent volume is clustered by IBM in order to provide high availability for your data.
 
+
 1.  Review the available storage classes. {{site.data.keyword.containerlong}} provides eight pre-defined storage classes so that the cluster admin does not have to create any storage classes. The `ibmc-file-bronze` storage class is the same as the `default` storage class.
 
     ```
     kubectl get storageclasses
     ```
     {: pre}
-    
+
     ```
     $ kubectl get storageclasses
     NAME                         TYPE
-    default                      ibm.io/ibmc-file   
-    ibmc-file-bronze (default)   ibm.io/ibmc-file   
+    default                      ibm.io/ibmc-file
+    ibmc-file-bronze (default)   ibm.io/ibmc-file
     ibmc-file-custom             ibm.io/ibmc-file
-    ibmc-file-gold               ibm.io/ibmc-file   
-    ibmc-file-retain-bronze      ibm.io/ibmc-file   
-    ibmc-file-retain-custom      ibm.io/ibmc-file   
-    ibmc-file-retain-gold        ibm.io/ibmc-file   
-    ibmc-file-retain-silver      ibm.io/ibmc-file   
-    ibmc-file-silver             ibm.io/ibmc-file 
+    ibmc-file-gold               ibm.io/ibmc-file
+    ibmc-file-retain-bronze      ibm.io/ibmc-file
+    ibmc-file-retain-custom      ibm.io/ibmc-file
+    ibmc-file-retain-gold        ibm.io/ibmc-file
+    ibmc-file-retain-silver      ibm.io/ibmc-file
+    ibmc-file-silver             ibm.io/ibmc-file
     ```
     {: screen}
 
@@ -2207,7 +2219,7 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
 
 3.  Review the IOPS of a storage class and the available storage sizes.
     - The bronze, silver, and gold storage classes use Endurance storage and have a single defined IOPS per GB for each class. The total IOPS depends on the size of the storage. For example, 1000Gi pvc at 4 IOPS per GB has a total of 4000 IOPS.
- 
+
     ```
     kubectl describe storageclasses ibmc-file-silver
     ```
@@ -2219,11 +2231,11 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
     Parameters:	iopsPerGB=4,sizeRange=20Gi,40Gi,80Gi,100Gi,250Gi,500Gi,1000Gi,2000Gi,4000Gi,8000Gi,12000Gi
     ```
     {: screen}
-    
+
     - The custom storage classes use [Performance storage ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/topic/performance-storage) and have discrete options for total IOPS and size.
 
     ```
-    kubectl describe storageclasses ibmc-file-retain-custom 
+    kubectl describe storageclasses ibmc-file-retain-custom
     ```
     {: pre}
 
@@ -2235,7 +2247,7 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
     {: screen}
 
 4.  Create a configuration file to define your persistent volume claim and save the configuration as a `.yaml` file.
-    
+
     Example for bronze, silver, gold classes:
 
     ```
@@ -2253,7 +2265,7 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
           storage: 20Gi
     ```
     {: codeblock}
-    
+
     Example for custom classes:
 
     ```
@@ -2275,7 +2287,7 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
 
     <table>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
     </thead>
     <tbody>
     <tr>
@@ -2363,7 +2375,7 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
 
     <table>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
     </thead>
     <tbody>
     <tr>
