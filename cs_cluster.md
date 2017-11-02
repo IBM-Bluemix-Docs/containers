@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-10-24"
+lastupdated: "2017-11-02"
 
 ---
 
@@ -36,7 +36,7 @@ Before you begin, review the options for [highly available cluster configuration
 A Kubernetes cluster is a set of worker nodes that are organized into a network. The purpose of the cluster is to define a set of resources, nodes, networks, and storage devices that keep applications highly available. Before you can deploy an app, you must create a cluster and set the definitions for the worker nodes in that cluster.
 {:shortdesc}
 
-For {{site.data.keyword.Bluemix_notm}} Dedicated users, see [Creating Kubernetes clusters from the GUI in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)](#creating_ui_dedicated) instead.
+For {{site.data.keyword.Bluemix_dedicated_notm}} users, see [Creating Kubernetes clusters from the GUI in {{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)](#creating_ui_dedicated) instead.
 
 To create a cluster:
 1. In the catalog, select **Kubernetes Cluster**.
@@ -64,11 +64,11 @@ When the cluster is up and running, you can check out the following tasks:
 -   [Set up your own private registry in {{site.data.keyword.Bluemix_notm}} to store and share Docker images with other users.](/docs/services/Registry/index.html)
 
 
-### Creating clusters with the GUI in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)
+### Creating clusters with the GUI in {{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)
 {: #creating_ui_dedicated}
 
 1.  Log in to {{site.data.keyword.Bluemix_notm}} Public console ([https://console.bluemix.net ![External link icon](../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net)) with your IBMid.
-2.  From the account menu, select your {{site.data.keyword.Bluemix_notm}} Dedicated account. The console is updated with the services and information for your {{site.data.keyword.Bluemix_notm}} Dedicated instance.
+2.  From the account menu, select your {{site.data.keyword.Bluemix_dedicated_notm}} account. The console is updated with the services and information for your {{site.data.keyword.Bluemix_dedicated_notm}} instance.
 3.  From the catalog, select **Containers** and click **Kubernetes cluster**.
 4.  Enter a **Cluster Name**.
 5.  Select a **Machine type**. The machine type defines the amount of virtual CPU and memory that is set up in each worker node and that is available for all the containers that you deploy in your nodes.
@@ -94,7 +94,7 @@ When the cluster is up and running, you can check out the following tasks:
 A cluster is a set of worker nodes that are organized into a network. The purpose of the cluster is to define a set of resources, nodes, networks, and storage devices that keep applications highly available. Before you can deploy an app, you must create a cluster and set the definitions for the worker nodes in that cluster.
 {:shortdesc}
 
-For {{site.data.keyword.Bluemix_notm}} Dedicated users, see [Creating Kubernetes clusters from the CLI in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)](#creating_cli_dedicated) instead.
+For {{site.data.keyword.Bluemix_dedicated_notm}} users, see [Creating Kubernetes clusters from the CLI in {{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)](#creating_cli_dedicated) instead.
 
 To create a cluster:
 1.  Install the {{site.data.keyword.Bluemix_notm}} CLI and the [{{site.data.keyword.containershort_notm}} plug-in](cs_cli_install.html#cs_cli_install).
@@ -186,7 +186,7 @@ To create a cluster:
         <table>
         <caption>Table 1. Understanding this command's components</caption>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding this command's components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
         </thead>
         <tbody>
         <tr>
@@ -319,11 +319,11 @@ To create a cluster:
 -   [Manage your cluster with the `kubectl` command line. ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/user-guide/kubectl/)
 -   [Set up your own private registry in {{site.data.keyword.Bluemix_notm}} to store and share Docker images with other users.](/docs/services/Registry/index.html)
 
-### Creating clusters with the CLI in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)
+### Creating clusters with the CLI in {{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)
 {: #creating_cli_dedicated}
 
 1.  Install the {{site.data.keyword.Bluemix_notm}} CLI and the [{{site.data.keyword.containershort_notm}} plug-in](cs_cli_install.html#cs_cli_install).
-2.  Log in to the public endpoint for {{site.data.keyword.containershort_notm}}. Enter your {{site.data.keyword.Bluemix_notm}} credentials and select the {{site.data.keyword.Bluemix_notm}} Dedicated account when prompted.
+2.  Log in to the public endpoint for {{site.data.keyword.containershort_notm}}. Enter your {{site.data.keyword.Bluemix_notm}} credentials and select the {{site.data.keyword.Bluemix_dedicated_notm}} account when prompted.
 
     ```
     bx login -a api.<region>.bluemix.net
@@ -344,7 +344,7 @@ To create a cluster:
     <table>
     <caption>Table 2. Understanding this command's components</caption>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding this command's components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
     </thead>
     <tbody>
     <tr>
@@ -486,7 +486,7 @@ You can deploy containers to your cluster from an IBM-provided public image or a
 
 Before you begin:
 
-1. [Set up a namespace in {{site.data.keyword.registryshort_notm}} on {{site.data.keyword.Bluemix_notm}} Public or {{site.data.keyword.Bluemix_notm}} Dedicated and push images to this namespace](/docs/services/Registry/registry_setup_cli_namespace.html#registry_namespace_add).
+1. [Set up a namespace in {{site.data.keyword.registryshort_notm}} on {{site.data.keyword.Bluemix_notm}} Public or {{site.data.keyword.Bluemix_dedicated_notm}} and push images to this namespace](/docs/services/Registry/registry_setup_cli_namespace.html#registry_namespace_add).
 2. [Create a cluster](#cs_cluster_cli).
 3. [Target your CLI to your cluster](cs_cli_install.html#cs_cli_configure).
 
@@ -538,11 +538,11 @@ To deploy a container into the **default** namespace of your cluster, create a c
 ### Deploying images to other Kubernetes namespaces or accessing images in other {{site.data.keyword.Bluemix_notm}} regions and accounts
 {: #bx_registry_other}
 
-You can deploy containers to other Kubernetes namespaces, use images that are stored in other {{site.data.keyword.Bluemix_notm}} regions or accounts, or use images that are stored in {{site.data.keyword.Bluemix_notm}} Dedicated by creating your own imagePullSecret.
+You can deploy containers to other Kubernetes namespaces, use images that are stored in other {{site.data.keyword.Bluemix_notm}} regions or accounts, or use images that are stored in {{site.data.keyword.Bluemix_dedicated_notm}} by creating your own imagePullSecret.
 
 Before you begin:
 
-1.  [Set up a namespace in {{site.data.keyword.registryshort_notm}} on {{site.data.keyword.Bluemix_notm}} Public or {{site.data.keyword.Bluemix_notm}} Dedicated and push images to this namespace](/docs/services/Registry/registry_setup_cli_namespace.html#registry_namespace_add).
+1.  [Set up a namespace in {{site.data.keyword.registryshort_notm}} on {{site.data.keyword.Bluemix_notm}} Public or {{site.data.keyword.Bluemix_dedicated_notm}} and push images to this namespace](/docs/services/Registry/registry_setup_cli_namespace.html#registry_namespace_add).
 2.  [Create a cluster](#cs_cluster_cli).
 3.  [Target your CLI to your cluster](cs_cli_install.html#cs_cli_configure).
 
@@ -578,7 +578,7 @@ To create your own imagePullSecret:
     <table>
     <caption>Table 3. Understanding this command's components</caption>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding this command's components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
     </thead>
     <tbody>
     <tr>
@@ -591,7 +591,7 @@ To create your own imagePullSecret:
     </tr>
     <tr>
     <td><code>--docker-server <em>&lt;registry_url&gt;</em></code></td>
-    <td>Required. The URL to the image registry where your namespace is set up.<ul><li>For namespaces that are set up in US-South and US-East registry.ng.bluemix.net</li><li>For namespaces that are set up in UK-South registry.eu-gb.bluemix.net</li><li>For namespaces that are set up in EU-Central (Frankfurt) registry.eu-de.bluemix.net</li><li>For namespaces that are set up in Australia (Sydney) registry.au-syd.bluemix.net</li><li>For namespaces that are set up in {{site.data.keyword.Bluemix_notm}} Dedicated registry.<em>&lt;dedicated_domain&gt;</em></li></ul></td>
+    <td>Required. The URL to the image registry where your namespace is set up.<ul><li>For namespaces that are set up in US-South and US-East registry.ng.bluemix.net</li><li>For namespaces that are set up in UK-South registry.eu-gb.bluemix.net</li><li>For namespaces that are set up in EU-Central (Frankfurt) registry.eu-de.bluemix.net</li><li>For namespaces that are set up in Australia (Sydney) registry.au-syd.bluemix.net</li><li>For namespaces that are set up in {{site.data.keyword.Bluemix_dedicated_notm}} registry.<em>&lt;dedicated_domain&gt;</em></li></ul></td>
     </tr>
     <tr>
     <td><code>--docker-username <em>&lt;docker_username&gt;</em></code></td>
@@ -653,7 +653,7 @@ To create your own imagePullSecret:
         <table>
         <caption>Table 4. Understanding the YAML file components</caption>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
         <tbody>
         <tr>
@@ -759,7 +759,7 @@ To create an imagePullSecret:
     <table>
     <caption>Table 5. Understanding this command's components</caption>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding this command's components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
     </thead>
     <tbody>
     <tr>
@@ -816,7 +816,7 @@ To create an imagePullSecret:
         <table>
         <caption>Table 6. Understanding the YAML file components</caption>
         <thead>
-        <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
         <tbody>
         <tr>
@@ -863,7 +863,7 @@ Before you begin:
 1. [Target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
 2. [Request an instance of the {{site.data.keyword.Bluemix_notm}} service](/docs/services/reqnsi.html#req_instance) in your space.
    **Note:** To create an instance of a service in the Washington DC location, you must use the CLI.
-3. For {{site.data.keyword.Bluemix_notm}} Dedicated users, see [Adding {{site.data.keyword.Bluemix_notm}} services to clusters in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)](#binding_dedicated) instead.
+3. For {{site.data.keyword.Bluemix_dedicated_notm}} users, see [Adding {{site.data.keyword.Bluemix_notm}} services to clusters in {{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)](#binding_dedicated) instead.
 
 **Note:**
 <ul><ul>
@@ -932,12 +932,12 @@ To add a service:
 
 To use the service in a pod that is deployed in the cluster, cluster users can access the service credentials of the {{site.data.keyword.Bluemix_notm}} service by [mounting the Kubernetes secret as a secret volume to a pod](cs_apps.html#cs_apps_service).
 
-### Adding {{site.data.keyword.Bluemix_notm}} services to clusters in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)
+### Adding {{site.data.keyword.Bluemix_notm}} services to clusters in {{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)
 {: #binding_dedicated}
 
 **Note**: The cluster and the worker nodes must be deployed fully before you can add a service.
 
-1.  Set the path to your local {{site.data.keyword.Bluemix_notm}} Dedicated configuration file as the `DEDICATED_BLUEMIX_CONFIG` environment variable.
+1.  Set the path to your local {{site.data.keyword.Bluemix_dedicated_notm}} configuration file as the `DEDICATED_BLUEMIX_CONFIG` environment variable.
 
     ```
     export DEDICATED_BLUEMIX_CONFIG=<path_to_config_directory>
@@ -951,7 +951,7 @@ To use the service in a pod that is deployed in the cluster, cluster users can a
     ```
     {: pre}
 
-3.  Log in to the {{site.data.keyword.Bluemix_notm}} Dedicated environment where you want to create the service instance.
+3.  Log in to the {{site.data.keyword.Bluemix_dedicated_notm}} environment where you want to create the service instance.
 
     ```
     bx login -a api.<dedicated_domain> -u <user> -p <password> -o <org> -s <space>
@@ -994,8 +994,8 @@ To use the service in a pod that is deployed in the cluster, cluster users can a
     ```
     {: pre}
 
-8.  Log in to the public endpoint for {{site.data.keyword.containershort_notm}} and target your CLI to the cluster in your {{site.data.keyword.Bluemix_notm}} Dedicated environment.
-    1.  Log in to the account by using the public endpoint for {{site.data.keyword.containershort_notm}}. Enter your {{site.data.keyword.Bluemix_notm}} credentials and select the {{site.data.keyword.Bluemix_notm}} Dedicated account when prompted.
+8.  Log in to the public endpoint for {{site.data.keyword.containershort_notm}} and target your CLI to the cluster in your {{site.data.keyword.Bluemix_dedicated_notm}} environment.
+    1.  Log in to the account by using the public endpoint for {{site.data.keyword.containershort_notm}}. Enter your {{site.data.keyword.Bluemix_notm}} credentials and select the {{site.data.keyword.Bluemix_dedicated_notm}} account when prompted.
 
         ```
         bx login -a api.ng.bluemix.net
@@ -1242,7 +1242,7 @@ One of the portable public IP addresses is used for the [Ingress controller](cs_
 
 You can add stable, portable public IPs to the cluster by assigning subnets to the cluster.
 
-For {{site.data.keyword.Bluemix_notm}} Dedicated users, instead of using this task, you must [open a support ticket](/docs/support/index.html#contacting-support) to create the subnet, and then use the [`bx cs cluster-subnet-add`](cs_cli_reference.html#cs_cluster_subnet_add) command to add the subnet to the cluster.
+For {{site.data.keyword.Bluemix_dedicated_notm}} users, instead of using this task, you must [open a support ticket](/docs/support/index.html#contacting-support) to create the subnet, and then use the [`bx cs cluster-subnet-add`](cs_cli_reference.html#cs_cluster_subnet_add) command to add the subnet to the cluster.
 
 Before you begin, make sure that you can access the IBM Bluemix Infrastructure (SoftLayer) portfolio through the {{site.data.keyword.Bluemix_notm}} GUI. To access the portfolio, you must set up or use an existing {{site.data.keyword.Bluemix_notm}} Pay-As-You-Go account.
 
@@ -1474,7 +1474,7 @@ If you already have existing NFS file shares in your IBM Bluemix Infrastructure 
 
 Before you begin, make sure that you have an existing NFS file share that you can use to create your persistent volume.
 
-[![Create persistent volumes and persistent volume claims](images/cs_cluster_pv_pvc.png)](https://console.bluemix.net/docs/api/content/containers/images/cs_cluster_pv_pvc.png)
+[![Create persistent volumes and persistent volume claims](images/cs_cluster_pv_pvc.png)](../api/content/containers/images/cs_cluster_pv_pvc.png)
 
 Kubernetes differentiates between persistent volumes that represent the actual hardware and persistent volume claims that are requests for storage usually initiated by the cluster user. When you want to enable existing NFS file shares to be used with Kubernetes, you must create persistent volumes with a certain size and access mode and create a persistent volume claim that matches the persistent volume specification. If persistent volume and persistent volume claim match, they are bound to each other. Only bound persistent volume claims can be used by the cluster user to mount the volume to a pod. This process is referred to as static provisioning of persistent storage.
 
@@ -1508,7 +1508,7 @@ To create a persistent volume and matching persistent volume claim, follow these
     <table>
     <caption>Table 8. Understanding the YAML file components</caption>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding the YAML file components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
     </thead>
     <tbody>
     <tr>
@@ -1615,7 +1615,7 @@ You successfully created a persistent volume object and bound it to a persistent
 ## Configuring cluster logging
 {: #cs_logging}
 
-Logs help you troubleshoot issues with your clusters and apps. You can enable log forwarding for various cluster log sources and choose where your logs are forwarded.
+Logs help you troubleshoot issues with your clusters and apps. Sometimes, you might want to send logs to a specific location for processing or long-term storage. On a Kubernetes cluster in {{site.data.keyword.containershort_notm}}, you can enable log forwarding for your cluster and choose where your logs are forwarded.
 {:shortdesc}
 
 ### Viewing logs
@@ -1654,7 +1654,7 @@ Before you begin:
 
 1. Set up a server that can accept a syslog protocol. You can run a syslog server in two ways:
   * Set up and manage your own server or have a provider manage it for you. If a provider manages the server for you, get the logging endpoint from the logging provider.
-  * Run syslog from a container. For example, you can use this [deployment .yaml file](https://github.com/IBM-Bluemix/kube-samples/blob/master/deploy-apps-clusters/deploy-syslog-from-kube) to fetch a Docker public image that runs a container in a Kubernetes cluster. The image publishes the port `30514` on the public cluster IP address, and uses this public cluster IP address to configure the syslog host.
+  * Run syslog from a container. For example, you can use this [deployment .yaml file](https://github.com/IBM-Bluemix/kube-samples/blob/master/deploy-apps-clusters/deploy-syslog-from-kube) to fetch a Docker public image that runs a container in a Kubernetes cluster. The image publishes the port `514` on the public cluster IP address, and uses this public cluster IP address to configure the syslog host.
 
 2. [Target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster where the namespace is located.
 
@@ -1668,9 +1668,9 @@ To forward your namespace logs to a syslog server:
     {: pre}
 
     <table>
-    <caption>Table 1. Understanding this command's components</caption>
+    <caption>Table 9. Understanding this command's components</caption>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding this command's components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
     </thead>
     <tbody>
     <tr>
@@ -1701,43 +1701,43 @@ To forward your namespace logs to a syslog server:
 
 2. Verify that the log forwarding configuration was created.
 
-  * To list all of the logging configurations in the cluster:
-    ```
-    bx cs logging-config-get <my_cluster>
-    ```
-    {: pre}
+    * To list all of the logging configurations in the cluster:
+      ```
+      bx cs logging-config-get <my_cluster>
+      ```
+      {: pre}
 
-    Example output:
+      Example output:
 
-    ```
-    Logging Configurations
-    ---------------------------------------------
-    Id                                    Source      Protocol Host       Port
-    f4bc77c0-ee7d-422d-aabf-a4e6b977264e  kubernetes  syslog   localhost  5514
-    5bd9c609-13c8-4c48-9d6e-3a6664c825a9  ingress     ibm      -          -
+      ```
+      Logging Configurations
+      ---------------------------------------------
+      Id                                    Source        Host             Port    Protocol   Paths
+      f4bc77c0-ee7d-422d-aabf-a4e6b977264e  kubernetes    172.30.162.138   5514    syslog     /var/log/kubelet.log,/var/log/kube-proxy.log
+      5bd9c609-13c8-4c48-9d6e-3a6664c825a9  application   localhost        -       ibm        /var/log/apps/**/*.log,/var/log/apps/**/*.err
 
-    Container Log Namespace configurations
-    ---------------------------------------------
-    Namespace         Protocol    Host        Port
-    default           syslog      localhost   5514
-    my-namespace      syslog      localhost   5514   
-    ```
-    {: screen}
+      Container Log Namespace configurations
+      ---------------------------------------------
+      Namespace         Host             Port    Protocol
+      default           myhostname.com   5514    syslog
+      my-namespace      localhost        5514    syslog
+      ```
+      {: screen}
 
-  * To list only namespace logging configurations:
-    ```
-    bx cs logging-config-get <my_cluster> --logsource namespaces
-    ```
-    {: pre}
+    * To list only namespace logging configurations:
+      ```
+      bx cs logging-config-get <my_cluster> --logsource namespaces
+      ```
+      {: pre}
 
-    Example output:
+      Example output:
 
-    ```
-    Namespace         Protocol    Host        Port
-    default           syslog      localhost   5514
-    myapp-namespace   syslog      localhost   5514
-    ```
-    {: screen}
+      ```
+      Namespace         Host             Port    Protocol
+      default           myhostname.com   5514    syslog
+      my-namespace      localhost        5514    syslog
+      ```
+      {: screen}
 
 #### Updating the syslog server configuration
 {: #cs_namespace_update}
@@ -1759,9 +1759,9 @@ To change the details of the syslog forwarding configuration:
     {: pre}
 
     <table>
-    <caption>Table 2. Understanding this command's components</caption>
+    <caption>Table 10. Understanding this command's components</caption>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> Understanding this command's components</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
     </thead>
     <tbody>
     <tr>
@@ -1799,9 +1799,9 @@ To change the details of the syslog forwarding configuration:
     Example output:
 
     ```
-    Namespace         Protocol    Host        Port
-    default           syslog      localhost   5514
-    myapp-namespace   syslog      localhost   5514
+    Namespace         Host             Port    Protocol
+    default           myhostname.com   5514    syslog
+    my-namespace      localhost        5514    syslog
     ```
     {: screen}
 
@@ -1941,4 +1941,6 @@ When you delete a cluster, you are also deleting resources on the cluster, inclu
 
     3.  Follow the prompts and choose whether to delete cluster resources.
 
-When you remove a cluster, the portable public and private subnets are not removed automatically. Subnets are used to assign portable public IP addresses to load balancer services or your Ingress controller. You can choose to manually delete subnets or reuse them in a new cluster.
+When you remove a cluster, you can choose to remove the portable subnets and persistent storage associated with it:
+- Subnets are used to assign portable public IP addresses to load balancer services or your Ingress controller. If you keep them, you can reuse them in a new cluster or manually delete them later from your IBM Bluemix Infrastructure (SoftLayer) portfolio.
+- Persistent storage provides high availability for your data. If you delete it, you cannot recover your data.
