@@ -32,52 +32,59 @@ Refer to these commands to create and manage clusters.
     <th colspan=5>Commands for creating clusters on {{site.data.keyword.Bluemix_notm}}</th>
  </thead>
  <tbody>
+  <tr>
+    <td>[bx cs albs](#cs_albs)</td>
+    <td>[bx cs alb-configure](#cs_alb_configure)</td>
+    <td>[bx cs alb-get](#cs_alb_get)</td>
+    <td>[bx cs alb-types](#cs_albs_types)</td>
+    <td>[bx cs cluster-config](#cs_cluster_config)</td>
+  </tr>
  <tr>
-    <td>[bx cs cluster-config](cs_cli_reference.html#cs_cluster_config)</td>
-    <td>[bx cs cluster-create](cs_cli_reference.html#cs_cluster_create)</td>
-    <td>[bx cs cluster-get](cs_cli_reference.html#cs_cluster_get)</td>
-    <td>[bx cs cluster-rm](cs_cli_reference.html#cs_cluster_rm)</td>
-    <td>[bx cs cluster-service-bind](cs_cli_reference.html#cs_cluster_service_bind)</td>
+    <td>[bx cs cluster-create](#cs_cluster_create)</td>
+    <td>[bx cs cluster-get](#cs_cluster_get)</td>
+    <td>[bx cs cluster-rm](#cs_cluster_rm)</td>
+    <td>[bx cs cluster-service-bind](#cs_cluster_service_bind)</td>
+    <td>[bx cs cluster-service-unbind](#cs_cluster_service_unbind)</td>
  </tr>
  <tr>
-    <td>[bx cs cluster-service-unbind](cs_cli_reference.html#cs_cluster_service_unbind)</td>
-    <td>[bx cs cluster-services](cs_cli_reference.html#cs_cluster_services)</td>
-    <td>[bx cs cluster-subnet-add](cs_cli_reference.html#cs_cluster_subnet_add)</td>
-    <td>[bx cs cluster-subnet-create](cs_cli_reference.html#cs_cluster_subnet_create)</td>
-    <td>[bx cs cluster-user-subnet-add](cs_cli_reference.html#cs_cluster_user_subnet_add)</td>
+    <td>[bx cs cluster-services](#cs_cluster_services)</td>
+    <td>[bx cs cluster-subnet-add](#cs_cluster_subnet_add)</td>
+    <td>[bx cs cluster-subnet-create](#cs_cluster_subnet_create)</td>
+    <td>[bx cs cluster-user-subnet-add](#cs_cluster_user_subnet_add)</td>
+    <td>[bx cs cluster-user-subnet-rm](#cs_cluster_user_subnet_rm)</td>
  </tr>
  <tr>
-   <td>[bx cs cluster-user-subnet-rm](cs_cli_reference.html#cs_cluster_user_subnet_rm)</td>
-   <td>[bx cs cluster-update](cs_cli_reference.html#cs_cluster_update)</td>
-   <td>[bx cs clusters](cs_cli_reference.html#cs_clusters)</td>
-   <td>[bx cs credentials-set](cs_cli_reference.html#cs_credentials_set)</td>
-   <td>[bx cs credentials-unset](cs_cli_reference.html#cs_credentials_unset)</td>
+    <td>[bx cs cluster-update](#cs_cluster_update)</td>
+    <td>[bx cs clusters](#cs_clusters)</td>
+    <td>[bx cs credentials-set](#cs_credentials_set)</td>
+    <td>[bx cs credentials-unset](#cs_credentials_unset)</td>
+    <td>[bx cs help](#cs_help)</td>
  </tr>
  <tr>
-    <td>[bx cs help](cs_cli_reference.html#cs_help)</td>
-    <td>[bx cs init](cs_cli_reference.html#cs_init)</td>
-    <td>[bx cs locations](cs_cli_reference.html#cs_datacenters)</td>
-    <td>[bx cs logging-config-create](cs_cli_reference.html#cs_logging_create)</td>
+    <td>[bx cs init](#cs_init)</td>
+    <td>[bx cs kube-versions](#cs_kube_versions)</td>
+    <td>[bx cs locations](#cs_datacenters)</td>
+    <td>[bx cs logging-config-create](#cs_logging_create)</td>
+    <td>[bx cs logging-config-get](#cs_logging_get)</td>
  </tr>
  <tr>
-   <td>[bx cs logging-config-get](cs_cli_reference.html#cs_logging_get)</td>
-   <td>[bx cs logging-config-rm](cs_cli_reference.html#cs_logging_rm)</td>
-   <td>[bx cs logging-config-update](cs_cli_reference.html#cs_logging_update)</td>
-   <td>[bx cs machine-types](cs_cli_reference.html#cs_machine_types)</td>
-   <td>[bx cs subnets](cs_cli_reference.html#cs_subnets)</td>
+    <td>[bx cs logging-config-rm](#cs_logging_rm)</td>
+    <td>[bx cs logging-config-update](#cs_logging_update)</td>
+    <td>[bx cs machine-types](#cs_machine_types)</td>
+    <td>[bx cs subnets](#cs_subnets)</td>
+    <td>[bx cs vlans](#cs_vlans)</td>
  </tr>
  <tr>
-   <td>[bx cs vlans](cs_cli_reference.html#cs_vlans)</td>
-   <td>[bx cs webhook-create](cs_cli_reference.html#cs_webhook_create)</td>
-   <td>[bx cs worker-add](cs_cli_reference.html#cs_worker_add)</td>
-   <td>[bx cs worker-rm](cs_cli_reference.html#cs_worker_rm)</td>
-   <td>[bx cs worker-update](cs_cli_reference.html#cs_worker_update)</td>
+    <td>[bx cs webhook-create](#cs_webhook_create)</td>
+    <td>[bx cs worker-add](#cs_worker_add)</td>
+    <td>[bx cs worker-get](#cs_worker_get)</td>
+    <td>[bx cs worker-rm](#cs_worker_rm)</td>
+    <td>[bx cs worker-update](#cs_worker_update)</td>
  </tr>
  <tr>
-    <td>[bx cs workers](cs_cli_reference.html#cs_workers)</td>
-    <td>[bx cs worker-get](cs_cli_reference.html#cs_worker_get)</td>
-    <td>[bx cs worker-reboot](cs_cli_reference.html#cs_worker_reboot)</td>
-    <td>[bx cs worker-reload](cs_cli_reference.html#cs_worker_reload)</td>
+    <td>[bx cs worker-reboot](#cs_worker_reboot)</td>
+    <td>[bx cs worker-reload](#cs_worker_reload)</td>
+    <td>[bx cs workers](#cs_workers)</td>
  </tr>
  </tbody>
  </table>
@@ -89,10 +96,113 @@ bx plugin list
 ```
 {: pre}
 
-
 ## bx cs commands
 {: #cs_commands}
 
+### bx cs albs --cluster CLUSTER
+{: #cs_albs}
+
+View the status of all application load balancers (ALBs) in a cluster. An ALB is also called an Ingress controller.
+
+<strong>Command options</strong>:
+
+   <dl>
+   <dt><code><em>--cluster </em>CLUSTER</code></dt>
+   <dd>The name or ID of the cluster where you list available application load balancers. This value is required.</dd>
+   </dl>
+
+**Example**:
+
+  ```
+  bx cs albs --cluster mycluster
+  ```
+  {: pre}
+
+### bx cs alb-configure --albID ALB_ID [--enable][--disable][--user-ip USERIP]
+{: #cs_alb_configure}
+
+Enable or disable a application load balancer (ALB), also called the Ingress controller, in your standard cluster. The public application load balancer is enabled by default.
+
+**Command options**:
+
+   <dl>
+   <dt><code><em>--albID </em>ALB_ID</code></dt>
+   <dd>The ID for an alb. Run <code>bx cs albs <em>--cluster </em>CLUSTER</code> to view the IDs for the ALBs in a cluster. This value is required.</dd>
+
+   <dt><code>--enable</code></dt>
+   <dd>Include this flag to enable an ALB in a cluster.</dd>
+
+   <dt><code>--disable</code></dt>
+   <dd>Include this flag to disable an ALB in a cluster.</dd>
+
+   <dt><code>--user-ip <em>USER_IP</em></code></dt>
+   <dd>
+
+   <ul>
+    <li>This parameter is available for a private alb only</li>
+    <li>The private ALB is deployed with an IP address from a user-provided private subnet. If no IP address is provided, the ALB is deployed with a random IP address from a private subnet in IBM Bluemix Infrastructure (SoftLayer).</li>
+   </ul>
+   </dd>
+   </dl>
+
+**Examples**:
+
+  Example for enabling an ALB:
+
+  ```
+  bx cs alb-configure --albID my_alb_id --enable
+  ```
+  {: pre}
+
+  Example for disabling an ALB:
+
+  ```
+  bx cs alb-configure --albID my_alb_id --disable
+  ```
+  {: pre}
+
+  Example for enabling an ALB with a user-provided IP address:
+
+  ```
+  bx cs alb-configure --albID my_private_alb_id --enable --user-ip user_ip
+  ```
+  {: pre}
+
+### bx cs alb-get --albID ALB_ID
+{: #cs_alb_get}
+
+View the details of an application load balancer (alb).
+
+<strong>Command options</strong>:
+
+   <dl>
+   <dt><code><em>--albID </em>ALB_ID</code></dt>
+   <dd>The ID for an alb. Run <code>bx cs albs --cluster <em>CLUSTER</em></code> to view the IDs for the albs in a cluster. This value is required.</dd>
+   </dl>
+
+**Example**:
+
+  ```
+  bx cs alb-get --albID ALB_ID
+  ```
+  {: pre}
+  
+### bx cs alb-types
+{: #cs_alb_types}
+
+View the application load balancer types that are supported in the region.
+
+<strong>Command options</strong>:
+
+   None
+
+**Example**:
+
+  ```
+  bx cs alb-types
+  ```
+  {: pre}
+  
 ### bx cs cluster-config CLUSTER [--admin] [--export]
 {: #cs_cluster_config}
 
@@ -1131,7 +1241,6 @@ View a list of worker nodes and the status for each in a cluster.
   bx cs workers mycluster
   ```
   {: pre}
-
 
 <br />
 
