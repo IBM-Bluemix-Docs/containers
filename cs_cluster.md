@@ -1170,9 +1170,10 @@ Kubernetes provides these update types:
 |Minor|example: x.5.x|User|Might involve changes to the operation of a cluster and might require changes to scripts or deployments.
 |Patch|example: x.x.3|IBM/User|A small fix that is non-disruptive. A patch does not require changes to scripts or deployments. IBM updates masters automatically, but the user must update worker nodes to apply patches.|
 {: caption="Types of Kubernetes updates" caption-side="top"}
+ 
+ By default, you cannot update a Kubernetes master more than two minor versions ahead. For example, if your current master is version 1.5 and you want to update to 1.8, you must update to 1.7 first. You can force the update to continue, but updating more than two minor versions might cause unexpected results.
 
-
-When making a _major_ or _minor_ update, complete the following steps. Before updating a production environment, use a test cluster. You cannot roll back a cluster to a previous version.
+When making a _major_ or _minor_ update, complete the following steps. Before updating a production environment, use a test cluster.
 
 1. Review the [Kubernetes changes](cs_versions.html) and make any updates marked _Update before master_.
 2. Update your Kubernetes master by using the GUI or running the [CLI command](cs_cli_reference.html#cs_cluster_update). When you update the Kubernetes master, the master is down for about 5 - 10 minutes. During the update, you cannot access or change the cluster. However, worker nodes, apps, and resources that cluster users have deployed are not modified and continue to run.
@@ -1191,9 +1192,9 @@ Worker nodes can be updated to the Kubernetes version of the Kubernetes master. 
 **Attention**: Updating the worker node version can cause downtime for your apps and services. Data is deleted if not stored outside the pod. Use [replicas ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#replicas) in your deployments to allow pods to reschedule to available nodes.
 
 Updating production-level clusters:
+- To help avoid downtime for your apps, the update process prevents pods from being scheduled on the worker node during the update. See [`kubectl drain` ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/user-guide/kubectl/v1.8/#drain) for more information.
 - Use a test cluster to validate that your workloads and the delivery process are not impacted by the update. You cannot roll back worker nodes to a previous version.
 - Production-level clusters should have capacity to survive a worker node failure. If your cluster does not, add a worker node before updating the cluster.
-- The update process does not drain nodes prior to the update. Consider using [`drain` ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes-v1-4.github.io/docs/user-guide/kubectl/kubectl_drain/) and [`uncordon` ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes-v1-4.github.io/docs/user-guide/kubectl/kubectl_uncordon/) to help avoid downtime for your apps.
 
 Before you begin, install the version of the [`kubectl cli` ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/tools/install-kubectl/) that matches the Kubernetes version of the Kubernetes master.
 
@@ -1213,14 +1214,10 @@ Before you begin, install the version of the [`kubectl cli` ![External link icon
     ```
     {: pre}
 
-5. Check the Kubernetes dashboard. If utilization graphs are not displaying in the Kubernetes dashboard, delete the `kube-dashboard` pod to force a restart. The pod will be re-created with RBAC policies to access heapster for utilization information.
-
-    ```
-    kubectl delete pod -n kube-system $(kubectl get pod -n kube-system --selector=k8s-app=kubernetes-dashboard -o jsonpath='{.items..metadata.name}')
-    ```
-    {: pre}
-
-When you complete the update, repeat the update process with other clusters. In addition, inform developers who work in the cluster to update their `kubectl` CLI to the version of the Kubernetes master.
+After you complete the update:
+  - Repeat the update process with other clusters.
+  - Inform developers who work in the cluster to update their `kubectl` CLI to the version of the Kubernetes master. 
+  - If the Kubernetes dashboard does not display utilization graphs, [delete the `kube-dashboard` pod](cs_troubleshoot.html#cs_dashboard_graphs).
 
 <br />
 
