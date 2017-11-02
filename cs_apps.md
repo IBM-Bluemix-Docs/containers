@@ -61,27 +61,37 @@ You can use the default port or set your own port to launch the Kubernetes dashb
         ```
         {: screen}
 
-    2.  Open the following URL in a web browser to see the Kubernetes dashboard.
+    2.  Open the Kubernetes dashboard in a web browser.
 
+        1. For clusters with a Kubernetes master version of 1.7.4 or earlier, use the following URL.
+        
         ```
         http://localhost:8001/ui
         ```
         {: codeblock}
+        
+        2. For clusters with a Kubernetes master version of 1.8.2 or later, use the following instructions.
+          
+          1. Download your credentials.
+          
+          ```
+          bx cs cluster-config <cluster_name>
+          ```
+          {: codeblock}
+          
+          2. Copy the credentials to your local home directory to make the file more easily accessible. Use the filepath that is specified in the export in the previous step.
 
--   Launch your Kubernetes dashboard with your own port.
-    1.  Set the proxy with your own port number.
+          ```
+          cp <filepath_to_cluster_credentials> ~
+          ```
+          {: codeblock}
+          
+          3. Copy this URL into your browser. Choose the **KUBECONFIG** option and select your cluster credentials file from the file picker that is displayed.
 
-        ```
-        kubectl proxy -p <port>
-        ```
-        {: pre}
-
-    2.  Open the following URL in a browser.
-
-        ```
-        http://localhost:<port>/ui
-        ```
-        {: codeblock}
+          ```
+          http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
+          ```
+          {: codeblock}
 
 
 When you are done with the Kubernetes dashboard, use `CTRL+C` to exit the `proxy` command. After you exit, the Kubernetes dashboard is no longer available. Run the `proxy` command again to restart the Kubernetes dashboard.
@@ -2193,6 +2203,9 @@ Create a persistent volume claim (pvc) to provision NFS file storage for your cl
 {:shortdesc}
 
 The NFS file storage that backs the persistent volume is clustered by IBM in order to provide high availability for your data.
+
+
+When a {{site.data.keyword.Bluemix_dedicated_notm}} account is [enabled for clusters](cs_ov.html#setup_dedicated), instead of using this task, you must [open a support ticket](/docs/support/index.html#contacting-support). By opening a ticket, you can request a backup for your volumes, a restoration from your volumes, and other storage functions.
 
 
 1.  Review the available storage classes. {{site.data.keyword.containerlong}} provides eight pre-defined storage classes so that the cluster admin does not have to create any storage classes. The `ibmc-file-bronze` storage class is the same as the `default` storage class.

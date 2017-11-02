@@ -216,7 +216,12 @@ Each worker node is set up with an {{site.data.keyword.IBM_notm}} managed Docker
 
 <a href="../api/content/containers/images/cs_org_ov.png">![{{site.data.keyword.containerlong_notm}} Kubernetes architecture](images/cs_org_ov.png)</a>
 
+### {{site.data.keyword.Bluemix_dedicated_notm}}
+{: #dedicated_architecture}
 
+*Figure 2. Kubernetes architecture and networking in the {{site.data.keyword.Bluemix_dedicated_notm}}*
+
+<a href="../api/content/containers/images/cs_dedicated_arch.png">![{{site.data.keyword.containershort_notm}} Kubernetes architecture on {{site.data.keyword.Bluemix_dedicated_notm}}](images/cs_dedicated_arch.png)</a>
 
 <br />
 
