@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-10-24"
+lastupdated: "2017-11-02"
 
 ---
 
@@ -21,11 +21,70 @@ lastupdated: "2017-10-24"
 Review the Kubernetes versions that are available on {{site.data.keyword.containerlong}}.
 {:shortdesc}
 
+{{site.data.keyword.containershort_notm}} supports several versions of Kubernetes. The default version is used when you create or update a cluster, unless you specify a different version. The available Kubernetes versions are:
+- 1.8.2
+- 1.7.4 (Default version)
+- 1.5.6
+
 The table contains updates that are likely to have impact on deployed apps when you update a cluster to a new version. Review the [Kubernetes changelog ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG.md) for a complete list of changes in Kubernetes versions.
 
 For more information on the updating process, see [Updating clusters](cs_cluster.html#cs_cluster_update) and [Updating worker nodes](cs_cluster.html#cs_cluster_worker_update).
 
+## Version 1.8
+{: #cs_v18}
 
+### Update before master
+{: #18_before}
+
+<table summary="Kubernetes updates for versions 1.8">
+<caption>Changes to make before you update the master to Kubernetes 1.8</caption>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan='2'>No changes required before you update the master</td>
+</tr>
+</tbody>
+</table>
+
+### Update after master
+{: #18_after}
+
+<table summary="Kubernetes updates for versions 1.8">
+<caption>Changes to make after you update the master to Kubernetes 1.8</caption>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kubernetes dashboard login</td>
+The URL for accessing the Kubernetes dashboard in version 1.8 has changed, and the login process includes a new authentication step. See [accessing the Kubernetes dashboard](cs_cluster.html#cs_cli_dashboard) for more information.</td>
+</tr>
+<tr>
+<tr>
+<td>Kubernetes dashboard permissions</td>
+<td>To force users to log in with their credentials to view cluster resources in version 1.8, remove the 1.7 ClusterRoleBinding RBAC authorization. Run `kubectl delete clusterrolebinding -n kube-system kubernetes-dashboard`.</td>
+</tr>
+<tr>
+<td>`kubectl delete`</td>
+<td>The `kubectl delete` command no longer scales down workload API objects, like pods, before the object is deleted. If you require the object to scale down, use [kubectl scale ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/user-guide/kubectl/v1.8/#scale) before you delete the object.</td>
+</tr>
+<tr>
+<td>`kubectl run`</td>
+<td>The `kubectl run` must use multiple flags for `--env` instead of comma separated arguments. For example, run `kubectl run --env <x>=<y> --env <z>=<a>` and not `kubectl run --env <x>=<y>,<z>=<a>`.</td>
+</tr>
+<td>`kubectl stop`</td>
+<td>The `kubectl stop` command is no longer available.</td>
+</tr>
+</tbody>
+</table>
 
 ## Version 1.7
 {: #cs_v17}
@@ -34,7 +93,7 @@ For more information on the updating process, see [Updating clusters](cs_cluster
 {: #17_before}
 
 <table summary="Kubernetes updates for versions 1.7 and 1.6">
-<caption>Table 1. Changes to make before updating the master to Kubernetes 1.7</caption>
+<caption>Changes to make before you update the master to Kubernetes 1.7</caption>
 <thead>
 <tr>
 <th>Type</th>
@@ -63,7 +122,7 @@ For more information on the updating process, see [Updating clusters](cs_cluster
 {: #17_after}
 
 <table summary="Kubernetes updates for versions 1.7 and 1.6">
-<caption>Table 2. Changes to make after updating the master to Kubernetes 1.7</caption>
+<caption>Changes to make after you update the master to Kubernetes 1.7</caption>
 <thead>
 <tr>
 <th>Type</th>

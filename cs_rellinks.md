@@ -32,7 +32,7 @@ lastupdated: "2017-11-02"
 
 
 **Glossaries**
-- [{{site.data.keyword.Bluemix_notm}} glossary](/docs/glossary/index.html#glossary)
+- [{{site.data.keyword.Bluemix_notm}} glossary](/docs/overview/glossary/index.html)
 - [Kubernetes glossary ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/reference/glossary/?fundamental=true)
 - [Docker glossary ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.docker.com/glossary/)
 
