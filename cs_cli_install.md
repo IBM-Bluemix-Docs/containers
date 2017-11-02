@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-10-12"
+lastupdated: "2017-11-02"
 
 ---
 
@@ -441,7 +441,7 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     <tbody>
     <tr>
     <td>Header</td>
-    <td><ul><li>Content-Type:application/x-www-form-urlencoded</li> <li>Authorization: Basic Yng6Yng=</li></ul>
+    <td><ul><li>Content-Type:application/x-www-form-urlencoded</li> <li>Authorization: Basic Yng6Yng=<p><b>Note</b>: Provided for you is Yng6Yng=, the URL-encoded authorization for the username **bx** and the password **bx**.</p></li></ul>
     </td>
     </tr>
     <tr>
@@ -452,7 +452,7 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     <li>password: <em>&lt;my_bluemix_password&gt;</em></li>
     <li>uaa_client_id: cf</li>
     <li>uaa_client_secret:</li></ul>
-    <p>**Note:** Add the uaa_client_secret key with no value specified.</p></td>
+    <p><b>Note</b>: Add the uaa_client_secret key with no value specified.</p></td>
     </tr>
     <tr>
     <td>Body for {{site.data.keyword.Bluemix_notm}} API keys</td>
@@ -461,7 +461,7 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     <li>apikey: <em>&lt;my_api_key&gt;</em></li>
     <li>uaa_client_id: cf</li>
     <li>uaa_client_secret:</li></ul>
-    <p>**Note:** Add the uaa_client_secret key with no value specified.</p></td>
+    <p><b>Note</b>: Add the uaa_client_secret key with no value specified.</p></td>
     </tr>
     <tr>
     <td>Body for {{site.data.keyword.Bluemix_notm}} one-time passcode</td>
@@ -470,7 +470,7 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     <li>passcode: <em>&lt;my_passcode&gt;</em></li>
     <li>uaa_client_id: cf</li>
     <li>uaa_client_secret:</li></ul>
-    <p>**Note:** Add the uaa_client_secret key with no value specified.</p></td>
+    <p><b>Note</b>: Add the uaa_client_secret key with no value specified.</p></td>
     </tr>
     </tbody>
     </table>
@@ -554,7 +554,7 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     <tbody>
     <tr>
     <td>Header</td>
-    <td><ul><li>Content-Type:application/x-www-form-urlencoded</li> <li>Authorization: Basic Yng6Yng=</li></ul>
+    <td><ul><li>Content-Type:application/x-www-form-urlencoded</li> <li>Authorization: Basic Yng6Yng=<p><b>Note</b>: Provided for you is Yng6Yng=, the URL-encoded authorization for the username **bx** and the password **bx**.</p></li></ul>
     </td>
     </tr>
     <tr>
@@ -566,7 +566,7 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     <li>uaa_client_id: cf</li>
     <li>uaa_client_secret:</li>
     <li>bss_account: <em>&lt;my_bluemix_account_id&gt;</em></li></ul>
-    <p>**Note:** Add the uaa_client_secret key with no value specified.</p></td>
+    <p><b>Note</b>: Add the uaa_client_secret key with no value specified.</p></td>
     </tr>
     <tr>
     <td>Body for {{site.data.keyword.Bluemix_notm}} API keys</td>
@@ -576,7 +576,7 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     <li>uaa_client_id: cf</li>
     <li>uaa_client_secret:</li>
     <li>bss_account: <em>&lt;my_bluemix_account_id&gt;</em></li></ul>
-    <p>**Note:** Add the uaa_client_secret key with no value specified.</p></td>
+    <p><b>Note</b>: Add the uaa_client_secret key with no value specified.</p></td>
     </tr>
     <tr>
     <td>Body for {{site.data.keyword.Bluemix_notm}} one-time passcode</td>
@@ -586,7 +586,7 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     <li>uaa_client_id: cf</li>
     <li>uaa_client_secret:</li>
     <li>bss_account: <em>&lt;my_bluemix_account_id&gt;</em></li></ul>
-    <p>**Note:** Add the uaa_client_secret key with no value specified.</p></td>
+    <p><b>Note<b>: Add the uaa_client_secret key with no value specified.</p></td>
     </tr>
     </tbody>
     </table>
@@ -765,7 +765,7 @@ Use the following steps if you want to refresh your IAM token.
     <tr>
     <td>Header</td>
     <td><ul><li>Content-Type: application/x-www-form-urlencoded</li>
-    <li>Authorization: Basic Yng6Yng=</li></ul></td>
+    <li>Authorization: Basic Yng6Yng=<p><b>Note</b>: Provided for you is Yng6Yng=, the URL-encoded authorization for the username **bx** and the password **bx**.</p></li></ul></td>
     </tr>
     <tr>
     <td>Body</td>
@@ -774,7 +774,7 @@ Use the following steps if you want to refresh your IAM token.
     <li>refresh_token: <em>&lt;iam_refresh_token&gt;</em></li>
     <li>uaa_client_id: cf</li>
     <li>uaa_client_secret:</li>
-    <li>bss_account: <em>&lt;bluemix_account_id&gt;</em></li></ul><p>**Note:** Add the uaa_client_secret key with no value specified.</p></td>
+    <li>bss_account: <em>&lt;bluemix_account_id&gt;</em></li></ul><p><b>Note</b>: Add the uaa_client_secret key with no value specified.</p></td>
     </tr>
     </tbody>
     </table>

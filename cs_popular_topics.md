@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-10-17"
+lastupdated: "2017-11-02"
 
 ---
 
@@ -17,14 +17,14 @@ lastupdated: "2017-10-17"
 
 
 # Popular topics for {{site.data.keyword.containershort_notm}}
-{: #cs_internal}
+{: #cs_popular_topics}
 
 Check out what container developers are interested in.
 {:shortdesc}
 
 <table>
 <thead>
-<th colspan=2><img src="images/idea.png"/>Popular topics for containers and Kubernetes clusters</th>
+<th colspan=2><img src="images/idea.png" alt="Idea icon"/>Popular topics for containers and Kubernetes clusters</th>
 </thead>
 <tbody>
 <tr>
@@ -46,6 +46,10 @@ Check out what container developers are interested in.
 <tr>
 <td>[Update to Kubernetes 1.7](cs_versions.html)</td>
 <td>Review the changes to make to your clusters before updating to Kubernetes 1.7.</td>
+</tr>
+<tr>
+<td>[REST API for clusters ![External link icon](../icons/launch-glyph.svg "External link icon")](https://us-south.containers.bluemix.net/swagger)</td>
+<td>View the API documentation to manage the {{site.data.keyword.containershort_notm}}.</td>
 </tr>
 </tbody></table>
 
