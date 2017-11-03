@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-11-02"
+lastupdated: "2017-11-03"
 
 ---
 
@@ -46,8 +46,58 @@ Open a Kubernetes dashboard on your local system to view information about a clu
 Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster. This task requires the [Administrator access policy](cs_cluster.html#access_ov). Verify your current [access policy](cs_cluster.html#view_access).
 
 You can use the default port or set your own port to launch the Kubernetes dashboard for a cluster.
--   Launch your Kubernetes dashboard with the default port 8001.
+
+1.  For clusters with a Kubernetes master version of 1.7.4 or earlier: 
+        
     1.  Set the proxy with the default port number.
+
+        ```
+        kubectl proxy
+        ```
+        {: pre}
+
+        Output:
+
+        ```
+        Starting to serve on 127.0.0.1:8001
+        ```
+        {: screen}
+
+    2.  Open the Kubernetes dashboard in a web browser.
+
+        ```
+        http://localhost:8001/ui
+        ```
+        {: codeblock}
+      
+2.  For clusters with a Kubernetes master version of 1.8.2 or later:
+      
+    1.  Download your credentials.
+      
+        ```
+        bx cs cluster-config <cluster_name>
+        ```
+        {: codeblock}
+      
+    2.  View the cluster credentials that you downloaded. Use the filepath that is specified in the export in the previous step.
+
+        For macOS or Linux: 
+      
+        ```
+        cat <filepath_to_cluster_credentials>
+        ```
+        {: codeblock}
+      
+        For Windows: 
+      
+        ```
+        type <filepath_to_cluster_credentials>
+        ```
+        {: codeblock}
+      
+    3.  Copy the token in the **id-token** field.
+
+    4.  Set the proxy with the default port number.
 
         ```
         kubectl proxy
@@ -60,31 +110,21 @@ You can use the default port or set your own port to launch the Kubernetes dashb
         Starting to serve on 127.0.0.1:8001
         ```
         {: screen}
+      
+    6.  Sign in to the dashboard.
 
-    2.  Open the following URL in a web browser to see the Kubernetes dashboard.
+        1.  Copy this URL into your browser. 
 
-        ```
-        http://localhost:8001/ui
-        ```
-        {: codeblock}
+            ```
+            http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
+            ```
+            {: codeblock}
 
--   Launch your Kubernetes dashboard with your own port.
-    1.  Set the proxy with your own port number.
+        2.  In the sign on page, select the **Token** authentication method. 
 
-        ```
-        kubectl proxy -p <port>
-        ```
-        {: pre}
+        3.  Then, paste the **id-token** value into the **Token** field and click **SIGN IN**.
 
-    2.  Open the following URL in a browser.
-
-        ```
-        http://localhost:<port>/ui
-        ```
-        {: codeblock}
-
-
-When you are done with the Kubernetes dashboard, use `CTRL+C` to exit the `proxy` command. After you exit, the Kubernetes dashboard is no longer available. Run the `proxy` command again to restart the Kubernetes dashboard.
+When you are done with the Kubernetes dashboard, use `CTRL+C` to exit the `proxy` command. After you exit, the Kubernetes dashboard is no longer available. Run the `proxy` command to restart the Kubernetes dashboard.
 
 <br />
 
@@ -94,7 +134,7 @@ When you are done with the Kubernetes dashboard, use `CTRL+C` to exit the `proxy
 ## Allowing public access to apps
 {: #cs_apps_public}
 
-To make an app publicly available, you must update your configuration file before you deploy the app into a cluster.
+To make an app publicly available to the internet, you must update your configuration file before you deploy the app into a cluster.
 {:shortdesc}
 
 Depending on whether you created a lite or a standard cluster, different ways exist to make your app accessible from the internet.
@@ -115,8 +155,8 @@ If you need HTTP or HTTPS load balancing for your app and want to use one public
 ### Configuring public access to an app by using the NodePort service type
 {: #cs_apps_public_nodeport}
 
-Make your app publicly available by using the public IP address of any worker node in a cluster and exposing a node port. Use this option for testing and short-term public acc
-ess.
+Make your app available to internet access by using the public IP address of any worker node in a cluster and exposing a node port. Use this option for testing and short-term public access.
+
 {:shortdesc}
 
 You can expose your app as a Kubernetes NodePort service for lite or standard clusters.
@@ -238,9 +278,11 @@ When the app is deployed, you can use the public IP address of any worker node a
 ### Configuring access to an app by using the load balancer service type
 {: #cs_apps_public_load_balancer}
 
-Expose a port and use a portable public or private IP address for the load balancer to access the app. Unlike with a NodePort service, the portable IP address of the load balancer service is not dependent on the worker node that the app is deployed on. However, a Kubernetes LoadBalancer service is also a NodePort service. A LoadBalancer service makes your app available over the load balancer IP address and port and makes your app available over the service's node ports.
+Expose a port and use a portable IP address for the load balancer to access the app. Use a public IP address to make an app accessible on the internet, or a private IP address to make an app accessible on your private infrastructure network.
 
- The portable IP address of the load balancer is assigned for you and does not change when you add or remove worker nodes. Therefore, load balancer services are more highly available than NodePort services. Users can select any port for the load balancer and are not limited to the NodePort port range. You can use load balancer services for TCP and UDP protocols.
+Unlike with a NodePort service, the portable IP address of the load balancer service is not dependent on the worker node that the app is deployed on. However, a Kubernetes LoadBalancer service is also a NodePort service. A LoadBalancer service makes your app available over the load balancer IP address and port and makes your app available over the service's node ports.
+
+The portable IP address of the load balancer is assigned for you and does not change when you add or remove worker nodes. Therefore, load balancer services are more highly available than NodePort services. Users can select any port for the load balancer and are not limited to the NodePort port range. You can use load balancer services for TCP and UDP protocols.
 
 When a {{site.data.keyword.Bluemix_dedicated_notm}} account is [enabled for clusters](cs_ov.html#setup_dedicated), you can request public subnets to be used for load balancer IP addresses. [Open a support ticket](/docs/support/index.html#contacting-support) to create the subnet, and then use the [`bx cs cluster-subnet-add`](cs_cli_reference.html#cs_cluster_subnet_add) command to add the subnet to the cluster.
 
@@ -2193,6 +2235,9 @@ Create a persistent volume claim (pvc) to provision NFS file storage for your cl
 {:shortdesc}
 
 The NFS file storage that backs the persistent volume is clustered by IBM in order to provide high availability for your data.
+
+
+When a {{site.data.keyword.Bluemix_dedicated_notm}} account is [enabled for clusters](cs_ov.html#setup_dedicated), instead of using this task, you must [open a support ticket](/docs/support/index.html#contacting-support). By opening a ticket, you can request a backup for your volumes, a restoration from your volumes, and other storage functions.
 
 
 1.  Review the available storage classes. {{site.data.keyword.containerlong}} provides eight pre-defined storage classes so that the cluster admin does not have to create any storage classes. The `ibmc-file-bronze` storage class is the same as the `default` storage class.
