@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-11-02"
+  lastupdated: "2017-11-02"
 
 ---
 
@@ -34,14 +34,14 @@ You can create a lite cluster to get familiar and test Kubernetes capabilities o
 |Characteristics|Lite clusters|Standard clusters|
 |---------------|-------------|-----------------|
 |[Available in {{site.data.keyword.Bluemix_notm}} Public](cs_ov.html#public_environment)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
-|[Private networking within a cluster](#cs_planning_private_network)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
-|[Public app access by a NodePort service](#cs_nodeport)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
+|[In-cluster networking](#cs_planning_private_network)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
+|[Public network app access by a NodePort service](#cs_nodeport)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 |[User access management](cs_cluster.html#cs_cluster_user)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 |[{{site.data.keyword.Bluemix_notm}} service access from the cluster and apps](cs_cluster.html#cs_cluster_service)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 |[Disk space on worker node for storage](#cs_planning_apps_storage)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 |[Persistent NFS file-based storage with volumes](#cs_planning_apps_storage)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
-|[Public or private app access by a load balancer service](#cs_loadbalancer)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
-|[Public app access by an Ingress service](#cs_ingress)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
+|[Public or private network app access by a load balancer service](#cs_loadbalancer)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
+|[Public network app access by an Ingress service](#cs_ingress)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 |[Portable public IP addresses](cs_apps.html#cs_cluster_ip_subnet)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 |[Available in {{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)](cs_ov.html#dedicated_environment)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 {: caption="Table 1. Differences between lite and standard clusters" caption-side="top"}
@@ -292,10 +292,10 @@ spec:
 <br />
 
 
-## Private networking
+## In-cluster networking
 {: #cs_planning_private_network}
 
-Secured private network communication between worker nodes and pods is realized with private virtual local area networks, also referred to as private VLANs. A VLAN configures a group of worker nodes and pods as if they were attached to the same physical wire.
+Secured, in-cluster network communication between worker nodes and pods is realized with private virtual local area networks (VLANs). A VLAN configures a group of worker nodes and pods as if they were attached to the same physical wire.
 {:shortdesc}
 
 When you create a cluster, every cluster is automatically connected to a private VLAN. The private VLAN determines the private IP address that is assigned to a worker node during cluster creation.
@@ -343,7 +343,7 @@ Depending on whether you created a lite or standard cluster, you can choose betw
 ### Expose an app to the internet by using a NodePort service
 {: #cs_nodeport}
 
-Expose a public port on your worker node and use the public IP address of the worker node to publicly access your service in the cluster.
+Expose a public port on your worker node and use the public IP address of the worker node to access your service in the cluster publicly from the internet.
 {:shortdesc}
 
 [![Expose a service by using a Kubernetes NodePort service](images/cs_nodeport.png)](../api/content/containers/images/cs_nodeport.png)

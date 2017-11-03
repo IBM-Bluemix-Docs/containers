@@ -35,7 +35,6 @@ Before you begin, review the options for [highly available cluster configuration
 
 A Kubernetes cluster is a set of worker nodes that are organized into a network. The purpose of the cluster is to define a set of resources, nodes, networks, and storage devices that keep applications highly available. Before you can deploy an app, you must create a cluster and set the definitions for the worker nodes in that cluster.
 {:shortdesc}
-
 For {{site.data.keyword.Bluemix_dedicated_notm}} users, see [Creating Kubernetes clusters from the GUI in {{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)](#creating_ui_dedicated) instead.
 
 To create a cluster:
@@ -1158,27 +1157,19 @@ Before you begin, verify that you have been assigned the Manager Cloud Foundry r
 ## Updating the Kubernetes master
 {: #cs_cluster_update}
 
-Updating a cluster is a two-step process. First, you must update the Kubernetes master, and then you can update each of the worker nodes.
+Kubernetes periodically updates [major, minor, and patch versions](cs_versions.html#version_types), which impacts your clusters. Updating a cluster is a two-step process. First, you must update the Kubernetes master, and then you can update each of the worker nodes.
 
-**Attention**: Updates _might_ cause outages and interruptions for your apps unless you plan accordingly.
+By default, you cannot update a Kubernetes master more than two minor versions ahead. For example, if your current master is version 1.5 and you want to update to 1.8, you must update to 1.7 first. You can force the update to continue, but updating more than two minor versions might cause unexpected results.
 
-Kubernetes provides these update types:
+**Attention**: Follow the update instructions and use a test cluster to address potential app outages and interruptions during the update. You cannot roll back a cluster to a previous version.
 
-|Update type|Version label|Updated by|Impact
-|-----|-----|-----|-----|
-|Major|example: 1.x.x|User|Might involve changes to the operation of a cluster and might require changes to scripts or deployments.|
-|Minor|example: x.5.x|User|Might involve changes to the operation of a cluster and might require changes to scripts or deployments.
-|Patch|example: x.x.3|IBM/User|A small fix that is non-disruptive. A patch does not require changes to scripts or deployments. IBM updates masters automatically, but the user must update worker nodes to apply patches.|
-{: caption="Types of Kubernetes updates" caption-side="top"}
-
-
-When making a _major_ or _minor_ update, complete the following steps. Before updating a production environment, use a test cluster. You cannot roll back a cluster to a previous version.
+When making a _major_ or _minor_ update, complete the following steps.
 
 1. Review the [Kubernetes changes](cs_versions.html) and make any updates marked _Update before master_.
 2. Update your Kubernetes master by using the GUI or running the [CLI command](cs_cli_reference.html#cs_cluster_update). When you update the Kubernetes master, the master is down for about 5 - 10 minutes. During the update, you cannot access or change the cluster. However, worker nodes, apps, and resources that cluster users have deployed are not modified and continue to run.
 3. Confirm that the update is complete. Review the Kubernetes version on the {{site.data.keyword.Bluemix_notm}} Dashboard or run `bx cs clusters`.
 
-When the Kubernetes master update is complete, you can update your worker nodes to the latest version.
+When the Kubernetes master update is complete, you can update your worker nodes.
 
 <br />
 
@@ -1186,41 +1177,39 @@ When the Kubernetes master update is complete, you can update your worker nodes 
 ## Updating worker nodes
 {: #cs_cluster_worker_update}
 
-Worker nodes can be updated to the Kubernetes version of the Kubernetes master. While IBM automatically applies patches to the Kubernetes master, worker nodes require a user command for both updates and patches.
+While IBM automatically applies patches to the Kubernetes master, you must explicitly update worker nodes for major and minor updates. The worker node version cannot be higher than the Kubernetes master.
 
-**Attention**: Updating the worker node version can cause downtime for your apps and services. Data is deleted if not stored outside the pod. Use [replicas ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#replicas) in your deployments to allow pods to reschedule to available nodes.
+**Attention**: Updates to worker nodes can cause downtime for your apps and services:
+- Data is deleted if not stored outside the pod.
+- Use [replicas ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#replicas) in your deployments to reschedule pods on available nodes.
 
 Updating production-level clusters:
+- To help avoid downtime for your apps, the update process prevents pods from being scheduled on the worker node during the update. See [`kubectl drain` ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/user-guide/kubectl/v1.8/#drain) for more information.
 - Use a test cluster to validate that your workloads and the delivery process are not impacted by the update. You cannot roll back worker nodes to a previous version.
 - Production-level clusters should have capacity to survive a worker node failure. If your cluster does not, add a worker node before updating the cluster.
-- The update process does not drain nodes prior to the update. Consider using [`drain` ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes-v1-4.github.io/docs/user-guide/kubectl/kubectl_drain/) and [`uncordon` ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes-v1-4.github.io/docs/user-guide/kubectl/kubectl_uncordon/) to help avoid downtime for your apps.
 
-Before you begin, install the version of the [`kubectl cli` ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/tools/install-kubectl/) that matches the Kubernetes version of the Kubernetes master.
+1. Install the version of the [`kubectl cli` ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/tools/install-kubectl/) that matches the Kubernetes version of the Kubernetes master.
 
-1. Review the [Kubernetes changes](cs_versions.html) and make any changes marked _Update after master_ to your deployment scripts, if needed.
+2. Make any changes that are marked _Update after master_ in [Kubernetes changes](cs_versions.html).
 
-2. Update your worker nodes. To update from the {{site.data.keyword.Bluemix_notm}} Dashboard, navigate to the `Worker Nodes` section of your cluster, and click `Update Worker`. To get worker node IDs, run `bx cs workers <cluster_name_or_id>`. If you select multiple worker nodes, the worker nodes are updated one at a time.
+3. Update your worker nodes:
+  * To update from the {{site.data.keyword.Bluemix_notm}} Dashboard, navigate to the `Worker Nodes` section of your cluster, and click `Update Worker`.
+  * To get worker node IDs, run `bx cs workers <cluster_name_or_id>`. If you select multiple worker nodes, the worker nodes are updated one at a time.
 
     ```
     bx cs worker-update <cluster_name_or_id> <worker_node_id1> <worker_node_id2>
     ```
     {: pre}
 
-3. Verify that your worker nodes updated. Review the Kubernetes version on the {{site.data.keyword.Bluemix_notm}} Dashboard or run `bx cs workers <cluster_name_or_id>`. In addition, confirm that the Kubernetes version listed by `kubectl` updated. In some cases, older clusters might list duplicate worker nodes with a **NotReady** status after an update. To remove duplicates, see [troubleshooting](cs_troubleshoot.html#cs_duplicate_nodes).
+4. Confirm that the update is complete:
+  * Review the Kubernetes version on the {{site.data.keyword.Bluemix_notm}} Dashboard or run `bx cs workers <cluster_name_or_id>`.
+  * Review the Kubernets version of the worker nodes by running `kubectl get nodes`.
+  * In some cases, older clusters might list duplicate worker nodes with a **NotReady** status after an update. To remove duplicates, see [troubleshooting](cs_troubleshoot.html#cs_duplicate_nodes).
 
-    ```
-    kubectl get nodes
-    ```
-    {: pre}
-
-5. Check the Kubernetes dashboard. If utilization graphs are not displaying in the Kubernetes dashboard, delete the `kube-dashboard` pod to force a restart. The pod will be re-created with RBAC policies to access heapster for utilization information.
-
-    ```
-    kubectl delete pod -n kube-system $(kubectl get pod -n kube-system --selector=k8s-app=kubernetes-dashboard -o jsonpath='{.items..metadata.name}')
-    ```
-    {: pre}
-
-When you complete the update, repeat the update process with other clusters. In addition, inform developers who work in the cluster to update their `kubectl` CLI to the version of the Kubernetes master.
+After you complete the update:
+  - Repeat the update process with other clusters.
+  - Inform developers who work in the cluster to update their `kubectl` CLI to the version of the Kubernetes master.
+  - If the Kubernetes dashboard does not display utilization graphs, [delete the `kube-dashboard` pod](cs_troubleshoot.html#cs_dashboard_graphs).
 
 <br />
 
@@ -1826,8 +1815,6 @@ To stop forwarding logs to syslog:
     {: pre}
     Replace <em>&lt;my_cluster&gt;</em> with the name of the cluster that the logging configuration is in and <em>&lt;my_namespace&gt;</em> with the name of the namespace.
 
-
-<br />
 
 
 ## Visualizing Kubernetes cluster resources
