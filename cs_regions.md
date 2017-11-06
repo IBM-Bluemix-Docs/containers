@@ -147,7 +147,7 @@ Locations are data centers that are available within a region.
   | Region | Location | City |
   |--------|----------|------|
   | AP South     | mel01, syd01, syd04        | Melbourne, Sydney |
-  | EU Central     | ams03, fra02        | Amsterdam, Frankfurt |
+  | EU Central     | ams03, fra02, par01        | Amsterdam, Frankfurt, Paris |
   | UK South      | lon02, lon04         | London |
   | US East      | wdc06, wdc07        | Washington, DC |
   | US South     | dal10, dal12, dal13       | Dallas |

@@ -130,8 +130,8 @@ Review these situations in which you might need to open specific ports and IP ad
       </tr>
       <tr>
          <td>EU Central</td>
-         <td>ams03<br>fra02</td>
-         <td><code>169.50.169.110</code><br><code>169.50.56.174</code></td>
+         <td>ams03<br>fra02<br>par01</td>
+         <td><code>169.50.169.110</code><br><code>169.50.56.174</code><br><code>159.8.86.149</code></td>
         </tr>
       <tr>
         <td>UK South</td>
