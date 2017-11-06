@@ -1735,11 +1735,7 @@ To forward your namespace logs to a syslog server:
 If you want to update details for the current syslog server configuration or change to a different syslog server, you can update the logging forwarding configuration.
 {:shortdesc}
 
-Before you begin:
-
-1. [Target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster where the namespace is located.
-
-To change the details of the syslog forwarding configuration:
+Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster where the namespace is located.
 
 1. Update the log forwarding configuration.
 
@@ -1802,11 +1798,7 @@ You can stop forwarding logs from a namespace by deleting the logging configurat
 
 **Note**: This action deletes only the configuration for forwarding logs to a syslog server. Logs for the namespace continue to be forwarded to {{site.data.keyword.loganalysislong_notm}}.
 
-Before you begin:
-
-1. [Target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster where the namespace is located.
-
-To stop forwarding logs to syslog:
+Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster where the namespace is located.
 
 1. Delete the logging configuration.
 
