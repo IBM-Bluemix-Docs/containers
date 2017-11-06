@@ -141,7 +141,7 @@ Review the responsibilities that you share with IBM to manage your clusters. To 
 - Monitoring the health of the worker nodes and providing automation for the update and recovery of those worker nodes
 - Performing automation tasks against your infrastructure account, including adding worker nodes, removing worker nodes, and creating a default subnet
 - Managing, updating, and recovering operational components within the cluster, such as the Ingress controller and the storage plug-in
-- Provisioning of storage volumes when requested by persistant volume claims
+- Provisioning of storage volumes when requested by persistent volume claims
 - Providing security settings on all worker nodes
 
 <br />
