@@ -21,6 +21,7 @@ IBM Bluemix Container Service
     cs_cli_reference.md
     cs_versions.md
     cs_regions.md
+    cs_annotations.md
     {: .navgroup-end}
 
     {: .navgroup id="howto"}
