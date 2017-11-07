@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-11-03"
+lastupdated: "2017-11-07"
 
 ---
 
@@ -171,7 +171,7 @@ To create a cluster:
     4.  Run the `cluster-create` command. You can choose between a lite cluster, which includes one worker node set up with 2vCPU and 4GB memory, or a standard cluster, which can include as many worker nodes as you choose in your IBM Bluemix Infrastructure (SoftLayer) account. When you create a standard cluster, by default, the hardware of the worker node is shared by multiple IBM customers and billed by hours of usage. </br>Example for a standard cluster:
 
         ```
-        bx cs cluster-create --location dal10 --public-vlan <public_vlan_id> --private-vlan <private_vlan_id> --machine-type u1c.2x4 --workers 3 --name <cluster_name>
+        bx cs cluster-create --location dal10 --public-vlan <public_vlan_id> --private-vlan <private_vlan_id> --machine-type u1c.2x4 --workers 3 --name <cluster_name> --kube-version <major.minor.patch>
         ```
         {: pre}
 
@@ -183,7 +183,7 @@ To create a cluster:
         {: pre}
 
         <table>
-        <caption>Table 1. Understanding this command's components</caption>
+        <caption>Table 1. Understanding <code>bx cs cluster-create</code> command components</caption>
         <thead>
         <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
         </thead>
@@ -220,6 +220,7 @@ To create a cluster:
         <td><code>--workers <em>&lt;number&gt;</em></code></td>
         <td>The number of worker nodes to include in the cluster. If the <code>--workers</code> option is not specified, 1 worker node is created.</td>
         </tr>
+        
         </tbody></table>
 
 8.  Verify that the creation of the cluster was requested.
@@ -1735,11 +1736,7 @@ To forward your namespace logs to a syslog server:
 If you want to update details for the current syslog server configuration or change to a different syslog server, you can update the logging forwarding configuration.
 {:shortdesc}
 
-Before you begin:
-
-1. [Target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster where the namespace is located.
-
-To change the details of the syslog forwarding configuration:
+Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster where the namespace is located.
 
 1. Update the log forwarding configuration.
 
@@ -1802,11 +1799,7 @@ You can stop forwarding logs from a namespace by deleting the logging configurat
 
 **Note**: This action deletes only the configuration for forwarding logs to a syslog server. Logs for the namespace continue to be forwarded to {{site.data.keyword.loganalysislong_notm}}.
 
-Before you begin:
-
-1. [Target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster where the namespace is located.
-
-To stop forwarding logs to syslog:
+Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster where the namespace is located.
 
 1. Delete the logging configuration.
 
