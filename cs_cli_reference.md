@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-11-03"
+lastupdated: "2017-11-07"
 
 ---
 
@@ -186,7 +186,7 @@ View the details of an application load balancer (alb).
   bx cs alb-get --albID ALB_ID
   ```
   {: pre}
-  
+
 ### bx cs alb-types
 {: #cs_alb_types}
 
@@ -202,7 +202,7 @@ View the application load balancer types that are supported in the region.
   bx cs alb-types
   ```
   {: pre}
-  
+
 ### bx cs cluster-config CLUSTER [--admin] [--export]
 {: #cs_cluster_config}
 
@@ -230,7 +230,7 @@ bx cs cluster-config my_cluster
 
 
 
-### bx cs cluster-create [--file FILE_LOCATION] [--hardware HARDWARE] --location LOCATION --machine-type MACHINE_TYPE --name NAME [--no-subnet] [--private-vlan PRIVATE_VLAN] [--public-vlan PUBLIC_VLAN] [--workers WORKER]
+### bx cs cluster-create [--file FILE_LOCATION] [--hardware HARDWARE] --location LOCATION --machine-type MACHINE_TYPE --name NAME  [--no-subnet] [--private-vlan PRIVATE_VLAN] [--public-vlan PUBLIC_VLAN] [--workers WORKER]
 {: #cs_cluster_create}
 
 To create a cluster in your organization.
@@ -247,11 +247,14 @@ To create a cluster in your organization.
 <pre class="codeblock">
 <code>name: <em>&lt;cluster_name&gt;</em>
 location: <em>&lt;location&gt;</em>
+
 machine-type: <em>&lt;machine_type&gt;</em>
 private-vlan: <em>&lt;private_vlan&gt;</em>
 public-vlan: <em>&lt;public_vlan&gt;</em>
 hardware: <em>&lt;shared_or_dedicated&gt;</em>
-workerNum: <em>&lt;number_workers&gt;</em></code></pre>
+workerNum: <em>&lt;number_workers&gt;</em>
+
+</code></pre>
 
 
 <table>
@@ -268,6 +271,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
     <td><code><em>location</em></code></td>
     <td>Replace <code><em>&lt;location&gt;</em></code> with the location where you want to create your cluster. The available locations are dependent on the region that you are logged in. To list available locations, run <code>bx cs locations</code>. </td>
      </tr>
+     
      <tr>
      <td><code><em>machine-type</em></code></td>
      <td>Replace <code><em>&lt;machine_type&gt;</em></code> with the machine type that you want for your worker nodes. To list available machine types for your location, run <code>bx cs machine-types <em>&lt;location&gt;</em></code>.</td>
@@ -288,26 +292,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
      <td><code><em>workerNum</em></code></td>
      <td>Replace <code><em>&lt;number_workers&gt;</em></code> with the number of worker nodes that you want to deploy.</td>
      </tr>
-     </tbody></table>
-    </p></dd>
-
-<dt><code>--hardware <em>HARDWARE</em></code></dt>
-<dd>The level of hardware isolation for your worker node. Use dedicated to have available physical resources dedicated to you only, or shared to allow physical resources to be shared with other IBM customers. The default is shared.  This value is optional for standard clusters and is not available for lite clusters.</dd>
-
-<dt><code>--location <em>LOCATION</em></code></dt>
-<dd>The location where you want to create the cluster. The locations that are available to you depend on the {{site.data.keyword.Bluemix_notm}} region you are logged in to. Select the region that is physically closest to you for best performance.  This value is required for standard clusters and is optional for lite clusters.
-
-<p>Review [available locations](cs_regions.html#locations).
-</p>
-
-<p><strong>Note:</strong> When you select a location that is located outside your country, keep in mind that you might require legal authorization before data can be physically stored in a foreign country.</p>
-</dd>
-
-<dt><code>--machine-type <em>MACHINE_TYPE</em></code></dt>
-<dd>The machine type that you choose impacts the amount of memory and disk space that is available to the containers that are deployed to your worker node. To list available machine types, see [bx cs machine-types <em>LOCATION</em>](cs_cli_reference.html#cs_machine_types).  This value is required for standard clusters and is not available for lite clusters.</dd>
-
-<dt><code>--name <em>NAME</em></code></dt>
-<dd>The name for the cluster.  This value is required.</dd>
+     
 
 <dt><code>--no-subnet</code></dt>
 <dd>Include the flag to create a cluster without a portable subnet. The default is to not use the flag and to create a subnet in your IBM Bluemix Infrastructure (SoftLayer) portfolio. This value is optional.</dd>
