@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-11-03"
+lastupdated: "2017-11-07"
 
 ---
 
@@ -128,6 +128,83 @@ When you are done with the Kubernetes dashboard, use `CTRL+C` to exit the `proxy
 
 <br />
 
+
+## Creating secrets
+{: #secrets}
+
+Kubernetes secrets are a secure way to store confidential information, such as user names, passwords, or keys.
+
+
+<table>
+<caption>Table. Files needed to be stored in secrets by task</caption>
+<thead>
+<th>Task</th>
+<th>Required files to store in secrets</th>
+</thead>
+<tbody>
+<tr>
+<td>Add a service to a cluster</td>
+<td>None. A secret is created for you when you bind a service to a cluster.</td>
+</tr>
+<tr>
+<td>Optional: Configure the Ingress service with TLS, if you are not using ingress-secret. <p><b>Note</b>: TLS is already enabled by default and a secret is created already for the TLS Connection.
+
+To view the default TLS secret:
+<pre>
+bx cs cluster-get &gt;CLUSTER-NAME&lt; &#124; grep "Ingress secret"
+</pre>
+</p>
+To create your own instead, complete the steps in this topic.</td>
+<td>Server cert and key: <code>server.crt</code> and <code>server.key</code></td>
+<tr>
+<td>Create the mutual-authentication annotation.</td>
+<td>CA cert: <code>ca.crt</code></td>
+</tr>
+</tbody>
+</table>
+
+For more information on what you can store in secrets, see the [Kubernetes documentation](https://kubernetes.io/docs/concepts/configuration/secret/).
+
+
+
+To create a secret with a certificate:
+
+1. Generate the certificate authority (CA) cert and key from your certificate provider. If you have your own domain, purchase an official TLS certificate for your domain. For test purposes, you can generate a self-signed certificate.
+
+ Important: Make sure the [CN](https://support.dnsimple.com/articles/what-is-common-name/) is different for each certificate.
+
+ The client cert and client key must be verified up to the trusted root certificate, which in this case, is the CA cert. Example:
+
+ ```
+ Client Certificate: issued by Intermediate Certificate
+ Intermediate Certificate: issued by Root Certificate
+ Root Certificate: issued by itself
+ ```
+ {: codeblock}
+
+2. Create the certificate as a Kubernetes secret.
+
+ ```
+ kubectl create secret generic <secretName> --from-file=<cert_file>=<cert_file>
+ ```
+ {: pre}
+
+ Examples:
+ - TLS connection:
+
+ ```
+ kubectl create secret tls <secretName> --from-file=tls.crt=server.crt --from-file=tls.key=server.key
+ ```
+ {: pre}
+
+ - Mutual authentication annotation:
+
+ ```
+ kubectl create secret generic <secretName> --from-file=ca.crt=ca.crt
+ ```
+ {: pre}
+ 
+<br />
 
 
 
@@ -432,9 +509,10 @@ You can configure the Ingress controller for the following scenarios.
 -   [Use the IBM-provided domain with TLS termination](#ibm_domain_cert)
 -   [Use a custom domain and TLS certificate to do TLS termination](#custom_domain_cert)
 -   [Use the IBM-provided or a custom domain with TLS termination to access apps outside your cluster](#external_endpoint)
--   [Customize your Ingress controller with annotations](#ingress_annotation)
-
-
+-   [Opening ports in the Ingress load balancer](#opening_ingress_ports)
+-   [Configuring SSL protocols and SSL ciphers at the HTTP level](#ssl_protocols_ciphers)
+-   [Customize your Ingress controller with annotations](cs_annotations.html)
+{: #ingress_annotation}
 
 
 #### Using the IBM-provided domain without TLS termination
@@ -571,7 +649,7 @@ To configure the Ingress controller:
         </br>
         Examples: <ul><li>For <code>http://ingress_host_name/</code>, enter <code>/</code> as the path.</li><li>For <code>http://ingress_host_name/myservicepath</code>, enter <code>/myservicepath</code> as the path.</li></ul>
         </br>
-        <strong>Tip:</strong> If you want to configure your Ingress to listen on a path that is different to the one that your app listens on, you can use the <a href="#rewrite" target="_blank">rewrite annotation</a> to establish proper routing to your app.</td>
+        <strong>Tip:</strong> If you want to configure your Ingress to listen on a path that is different to the one that your app listens on, you can use the [rewrite annotation](cs_annotations.html#rewrite-path) to establish proper routing to your app.</td>
         </tr>
         <tr>
         <td><code>serviceName</code></td>
@@ -762,7 +840,7 @@ To configure the Ingress controller:
 
         </br>
         Examples: <ul><li>For <code>http://ingress_host_name/</code>, enter <code>/</code> as the path.</li><li>For <code>http://ingress_host_name/myservicepath</code>, enter <code>/myservicepath</code> as the path.</li></ul>
-        <strong>Tip:</strong> If you want to configure your Ingress to listen on a path that is different to the one that your app listens on, you can use the <a href="#rewrite" target="_blank">rewrite annotation</a> to establish proper routing to your app.</td>
+        <strong>Tip:</strong> If you want to configure your Ingress to listen on a path that is different to the one that your app listens on, you can use the [rewrite annotation](cs_annotations.html#rewrite-path) to establish proper routing to your app.</td>
         </tr>
         <tr>
         <td><code>serviceName</code></td>
@@ -975,7 +1053,7 @@ To configure the Ingress controller:
 
         </br></br>
         Examples: <ul><li>For <code>https://mycustomdomain/</code>, enter <code>/</code> as the path.</li><li>For <code>https://mycustomdomain/myservicepath</code>, enter <code>/myservicepath</code> as the path.</li></ul>
-        <strong>Tip:</strong> If you want to configure your Ingress to listen on a path that is different to the one that your app listens on, you can use the <a href="#rewrite" target="_blank">rewrite annotation</a> to establish proper routing to your app.
+        <strong>Tip:</strong> If you want to configure your Ingress to listen on a path that is different to the one that your app listens on, you can use the [rewrite annotation](cs_annotations.html#rewrite-path) to establish proper routing to your app.
         </td>
         </tr>
         <tr>
@@ -1209,7 +1287,7 @@ You can configure the Ingress controller to route incoming network traffic on th
         Many apps do not listen on a specific path, but use the root path and a specific port. In this case, define the root path as <code>/</code> and do not specify an individual path for your app.
 
         </br></br>
-        <strong>Tip:</strong> If you want to configure your Ingress to listen on a path that is different to the one that your app listens on, you can use the <a href="#rewrite" target="_blank">rewrite annotation</a> to establish proper routing to your app.</td>
+        <strong>Tip:</strong> If you want to configure your Ingress to listen on a path that is different to the one that your app listens on, you can use the [rewrite annotation](cs_annotations.html#rewrite-path) to establish proper routing to your app.</td>
         </tr>
         <tr>
         <td><code>serviceName</code></td>
@@ -1249,557 +1327,127 @@ You can configure the Ingress controller to route incoming network traffic on th
 
 
 
+#### Opening ports in the Ingress load balancer
+{: #opening_ingress_ports}
 
-#### Supported Ingress annotations
-{: #ingress_annotation}
+By default, only ports 80 and 443 are exposed in the Ingress load balancer. To expose other ports, you can edit the ibm-cloud-provider-ingress-cm config map resource.
 
-You can specify metadata for your Ingress resource to add capabilities to your Ingress controller.
-{: shortdesc}
+1.  Create a local version of the configuration file for the ibm-cloud-provider-ingress-cm config map resource. Add a <code>data</code> section and specify public ports 80, 443, and any other ports you want to add to the config map file separated by a semi-colon (;).
+
+ Note: When specifying the ports, 80 and 443 must also be included to keep those ports open. Any port not specified is closed.
 
-|Supported annotation|Description|
-|--------------------|-----------|
-|[Rewrites](#rewrite)|Route incoming network traffic to a different path that your back-end app listens on.|
-|[Session-affinity with cookies](#sticky_cookie)|Always route incoming network traffic to the same upstream server by using a sticky cookie.|
-|[Additional client request or response header](#add_header)|Add extra header information to a client request before forwarding the request to your back-end app, or to a client response before sending the reponse to the client.|
-|[Client response header removal](#remove_response_headers)|Remove header information from a client response before forwarding the response to the client.|
-|[HTTP redirects to HTTPS](#redirect_http_to_https)|Redirect insecure HTTP requests on your domain to HTTPS.|
-|[Client response data buffering](#response_buffer)|Disable the buffering of a client response on the Ingress controller while sending the response to the client.|
-|[Custom connect-timeouts and read-timeouts](#timeout)|Adjust the time the Ingress controller waits to connect to and read from the back-end app before the back-end app is considered to be not available.|
-|[Custom maximum client request body size](#client_max_body_size)|Adjust the size of the client request body that is allowed to be sent to the Ingress controller.|
-|[Custom HTTP and HTTPS ports](#custom_http_https_ports)|Change the default ports for HTTP and HTTPS network traffic.|
-
-
-##### **Route incoming network traffic to a different path by using rewrites**
-{: #rewrite}
-
-Use the rewrite annotation to route incoming network traffic on an Ingress controller domain path to a different path that your back-end application listens on.
-{:shortdesc}
-
-<dl>
-<dt>Description</dt>
-<dd>Your Ingress controller domain routes incoming network traffic on <code>mykubecluster.us-south.containers.mybluemix.net/beans</code> to your app. Your app listens on <code>/coffee</code>, instead of <code>/beans</code>. To forward incoming network traffic to your app, add the rewrite annotation to your Ingress resource configuration file, so that incoming network traffic on <code>/beans</code> is forwarded to your app by using the <code>/coffee</code> path. When including multiple services, use only a semi-colon (;) to separate them.</dd>
-<dt>Sample Ingress resource YAML</dt>
-<dd>
-<pre class="codeblock">
-<code>apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: myingress
-  annotations:
-    ingress.bluemix.net/rewrite-path: "serviceName=&lt;service_name1&gt; rewrite=&lt;target_path1&gt;;serviceName=&lt;service_name2&gt; rewrite=&lt;target_path2&gt;"
-spec:
-  tls:
-  - hosts:
-    - mydomain
-    secretName: mytlssecret
-  rules:
-  - host: mydomain
-    http:
-      paths:
-      - path: /&lt;domain_path1&gt;
-        backend:
-          serviceName: &lt;service_name1&gt;
-          servicePort: &lt;service_port1&gt;
-      - path: /&lt;domain_path2&gt;
-        backend:
-          serviceName: &lt;service_name2&gt;
-          servicePort: &lt;service_port2&gt;</code></pre>
-
-<table>
-<thead>
-<th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
-</thead>
-<tbody>
-<tr>
-<td><code>annotations</code></td>
-<td>Replace <em>&lt;service_name&gt;</em> with the name of the Kubernetes service that you created for your app, and <em>&lt;target-path&gt;</em> with the path that your app listens on. Incoming network traffic on the Ingress controller domain is forwarded to the Kubernetes service by using this path. Most apps do not listen on a specific path, but use the root path and a specific port. In this case, define <code>/</code> as the <em>rewrite-path</em> for your app.</td>
-</tr>
-<tr>
-<td><code>path</code></td>
-<td>Replace <em>&lt;domain_path&gt;</em> with the path that you want to append to your Ingress controller domain. Incoming network traffic on this path is forwarded to the rewrite path that you defined in your annotation. In the example above, set the domain path to <code>/beans</code> to include this path into the load balancing of your Ingress controller.</td>
-</tr>
-<tr>
-<td><code>serviceName</code></td>
-<td>Replace <em>&lt;service_name&gt;</em> with the name of the Kubernetes service that you created for your app. The service name that you use here must be the same name that you defined in your annotation.</td>
-</tr>
-<tr>
-<td><code>servicePort</code></td>
-<td>Replace <em>&lt;service_port&gt;</em> with the port that your service listens on.</td>
-</tr></tbody></table>
-
-</dd></dl>
-
-
-##### **Always route incoming network traffic to the same upstream server by using a sticky cookie**
-{: #sticky_cookie}
-
-Use the sticky cookie annotation to add session affinity to your Ingress controller.
-{:shortdesc}
-
-<dl>
-<dt>Description</dt>
-<dd>Your app setup might require you to deploy multiple upstream servers that handle incoming client requests and that ensure higher availability. When a client connects to your back-end app, it might be useful that a client is served by the same upstream server for the duration of a session or for the time it takes to complete a task. You can configure your Ingress controller to ensure session-affinity by always routing incoming network traffic to the same upstream server.
-
-</br>
-Every client that connects to your back-end app is assigned to one of the available upstream servers by the Ingress controller. The Ingress controller creates a session cookie that is stored in the client's app and that is included in the header information of every request between the Ingress controller and the client. The information in the cookie ensures that all requests are handled by the same upstream server throughout the session.
-
-</br></br>
-When you include multiple services, use a semi-colon (;) to separate them.</dd>
-<dt>Sample Ingress resource YAML</dt>
-<dd>
-
-<pre class="codeblock">
-<code>apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: myingress
-  annotations:
-    ingress.bluemix.net/sticky-cookie-services: "serviceName=&lt;service_name1&gt; name=&lt;cookie_name1&gt; expires=&lt;expiration_time1&gt; path=&lt;cookie_path1&gt; hash=&lt;hash_algorithm1&gt;;serviceName=&lt;service_name2&gt; name=&lt;cookie_name2&gt; expires=&lt;expiration_time2&gt; path=&lt;cookie_path2&gt; hash=&lt;hash_algorithm2&gt;"
-spec:
-  tls:
-  - hosts:
-    - mydomain
-    secretName: mytlssecret
-  rules:
-  - host: mydomain
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: &lt;service_name1&gt;
-          servicePort: 8080
-      - path: /myapp
-        backend:
-          serviceName: &lt;service_name2&gt;
-          servicePort: 80</code></pre>
-
-  <table>
-  <caption>Table 12. Understanding the YAML file components</caption>
-  <thead>
-  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
-  </thead>
-  <tbody>
-  <tr>
-  <td><code>annotations</code></td>
-  <td>Replace the following values:<ul><li><code><em>&lt;service_name&gt;</em></code>: The name of the Kubernetes service that you created for your app.</li><li><code><em>&lt;cookie_name&gt;</em></code>: Choose a name of the sticky cookie that is created during a session.</li><li><code><em>&lt;expiration_time&gt;</em></code>: The time in seconds, minutes, or hours before the sticky cookie expires. This time is independent of the user activity. After the cookie is expired, the cookie is deleted by the client web browser and no longer sent to the Ingress controller. For example, to set an expiration time of 1 second, 1 minute, or 1 hour, enter <strong>1s</strong>, <strong>1m</strong>, or <strong>1h</strong>.</li><li><code><em>&lt;cookie_path&gt;</em></code>: The path that is appended to the Ingress subdomain and that indicates for which domains and subdomains the cookie is sent to the Ingress controller. For example, if your Ingress domain is <code>www.myingress.com</code> and you want to send the cookie in every client request, you must set <code>path=/</code>. If you want to send the cookie only for <code>www.myingress.com/myapp</code> and all its subdomains, then you must set <code>path=/myapp</code>.</li><li><code><em>&lt;hash_algorithm&gt;</em></code>: The hash algorithm that protects the information in the cookie. Only <code>sha1</code> is supported. SHA1 creates a hash sum based on the information in the cookie and appends this hash sum to the cookie. The server can decrypt the information in the cookie and verify data integrity.</li></ul></td>
-  </tr>
-  </tbody></table>
-
- </dd></dl>
-
-
-##### **Adding custom HTTP headers to a client request or client response**
-{: #add_header}
-
-Use this annotation to add extra header information to a client request before sending the request to the back-end app, or to a client response before sending the response to the client.
-{:shortdesc}
-
-<dl>
-<dt>Description</dt>
-<dd>The Ingress controller acts as a proxy between the client app and your back-end app. Client requests that are sent to the Ingress controller are processed (proxied), and put into a new request that is then sent from the Ingress controller to your back-end app. Proxying a request removes http header information, such as the user name, that was initially sent from the client. If your back-end app requires this information, you can use the <strong>ingress.bluemix.net/proxy-add-headers</strong> annotation to add header information to the client request before the request is forwarded from the Ingress controller to your back-end app.
-
-</br></br>
-When a back-end app sends a response to the client, the response is proxied by the Ingress controller and http headers are removed from the response. The client web app might require this header information to successfully process the response. You can use the <strong>ingress.bluemix.net/response-add-headers</strong> annotation to add header information to the client response before the response is forwarded from the Ingress controller to client web app.</dd>
-<dt>Sample Ingress resource YAML</dt>
-<dd>
-
-<pre class="codeblock">
-<code>apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: myingress
-  annotations:
-    ingress.bluemix.net/proxy-add-headers: |
-      serviceName=&lt;service_name1&gt; {
-      &lt;header1> &lt;value1&gt;;
-      &lt;header2> &lt;value2&gt;;
-      }
-      serviceName=&lt;service_name2&gt; {
-      &lt;header3&gt; &lt;value3&gt;;
-      }
-    ingress.bluemix.net/response-add-headers: |
-      serviceName=&lt;service_name1&gt; {
-      "&lt;header1&gt;: &lt;value1&gt;";
-      "&lt;header2&gt;: &lt;value2&gt;";
-      }
-      serviceName=&lt;service_name1&gt; {
-      "&lt;header3&gt;: &lt;value3&gt;";
-      }
-spec:
-  tls:
-  - hosts:
-    - mydomain
-    secretName: mytlssecret
-  rules:
-  - host: mydomain
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: &lt;service_name1&gt;
-          servicePort: 8080
-      - path: /myapp
-        backend:
-          serviceName: &lt;service_name2&gt;
-          servicePort: 80</code></pre>
-
- <table>
-  <thead>
-  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
-  </thead>
-  <tbody>
-  <tr>
-  <td><code>annotations</code></td>
-  <td>Replace the following values:<ul><li><code><em>&lt;service_name&gt;</em></code>: The name of the Kubernetes service that you created for your app.</li><li><code><em>&lt;header&gt;</em></code>: The key of the header information to add to the client request or client response.</li><li><code><em>&lt;value&gt;</em></code>: The value of the header information to add to the client request or client response.</li></ul></td>
-  </tr>
-  </tbody></table>
-
- </dd></dl>
-
-##### **Removing http header information from a client's response**
-{: #remove_response_headers}
-
-Use this annotation to remove header information that is included in the client response from the back-end end app before the response is sent to the client.
-{:shortdesc}
-
-<dl>
-<dt>Description</dt>
-<dd>The Ingress controller acts as a proxy between your back-end app and the client web browser. Client responses from the back-end app that are sent to the Ingress controller are processed (proxied), and put into a new response that is then sent from the Ingress controller to the client web browser. Although proxying a response removes http header information that was initially sent from the back-end app, this process might not remove all back-end app specific headers. Use this annotation to remove header information from a client reponse before the response is forwarded from the Ingress controller to the client web browser.</dd>
-<dt>Sample Infress resource YAML</dt>
-<dd>
-<pre class="codeblock">
-<code>apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: myingress
-  annotations:
-    ingress.bluemix.net/response-remove-headers: |
-      serviceName=&lt;service_name1&gt; {
-      "&lt;header1&gt;";
-      "&lt;header2&gt;";
-      }
-      serviceName=&lt;service_name2&gt; {
-      "&lt;header3&gt;";
-      }
-spec:
-  tls:
-  - hosts:
-    - mydomain
-    secretName: mytlssecret
-  rules:
-  - host: mydomain
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: &lt;service_name1&gt;
-          servicePort: 8080
-      - path: /myapp
-        backend:
-          serviceName: &lt;service_name2&gt;
-          servicePort: 80</code></pre>
-
- <table>
-  <thead>
-  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
-  </thead>
-  <tbody>
-  <tr>
-  <td><code>annotations</code></td>
-  <td>Replace the following values:<ul><li><code><em>&lt;service_name&gt;</em></code>: The name of the Kubernetes service that you created for your app.</li><li><code><em>&lt;header&gt;</em></code>: The key of the header to remove from the client response.</li></ul></td>
-  </tr>
-  </tbody></table>
-
-  </dd></dl>
-
-
-##### **Redirecting insecure http client requests to https**
-{: #redirect_http_to_https}
-
-Use the redirect annotation to convert insecure http client requests to https.
-{:shortdesc}
-
-<dl>
-<dt>Description</dt>
-<dd>You set up your Ingress controller to secure your domain with the IBM-provided TLS certificate or your custom TLS certificate. Some users might try to access your apps by using an insecure http request to your Ingress controller domain, for example <code>http://www.myingress.com</code>, instead of using <code>https</code>. You can use the redirect annotation to always convert insecure http requests to https. If you do not use this annotation, insecure http requests are not converted into https requests by default and might expose confidential information to the public without encryption.
-
-</br></br>
-Redirecting http requests to https is disabled by default.</dd>
-<dt>Sample Ingress resource YAML</dt>
-
-<pre class="codeblock">
-<code>apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: myingress
-  annotations:
-    ingress.bluemix.net/redirect-to-https: "True"
-spec:
-  tls:
-  - hosts:
-    - mydomain
-    secretName: mytlssecret
-  rules:
-  - host: mydomain
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: myservice
-          servicePort: 8080</code></pre>
-</dd></dl>
-
-##### **Disabling buffering of back-end responses on your Ingress controller**
-{: #response_buffer}
-
-Use the buffer annotation to disable the storage of response data on the Ingress controller while the data is sent to the client.
-{:shortdesc}
-
-<dl>
-<dt>Description</dt>
-<dd>The Ingress controller acts as a proxy between your back-end app and the client web browser. When a response is sent from the back-end app to the client, the response data is buffered on the Ingress controller by default. The Ingress controller proxies the client response and starts sending the response to the client at the client's pace. After all data from the back-end app is received by the Ingress controller, the connection to the back-end app is closed. The connection from the Ingress controller to the client remains open until the client received all data.
-
-</br></br>
-If buffering of response data on the Ingress controller is disabled, data is immediately sent from the Ingress controller to the client. The client must be able to handle incoming data at the pace of the Ingress controller. If the client is too slow, data might get lost.
-</br></br>
-Response data buffering on the Ingress controller is enabled by default.</dd>
-<dt>Sample Ingress resource YAML</dt>
-<dd>
-
-<pre class="codeblock">
-<code>apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: myingress
-  annotations:
-    ingress.bluemix.net/proxy-buffering: "False"
-spec:
-  tls:
-  - hosts:
-    - mydomain
-    secretName: mytlssecret
-  rules:
-  - host: mydomain
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: myservice
-          servicePort: 8080</code></pre>
-</dd></dl>
-
-
-##### **Setting a custom connect-timeout and read-timeout for the Ingress controller**
-{: #timeout}
-
-Adjust the time for the Ingress controller to wait while connecting and reading from the back-end app before the back-end app is considered to be not available.
-{:shortdesc}
-
-<dl>
-<dt>Description</dt>
-<dd>When a client request is sent to the Ingress controller, a connection to the back-end app is opened by the Ingress controller. By default, the Ingress controller waits 60 seconds to receive a reply from the back-end app. If the back-end app does not reply within 60 seconds, then the connection request is aborted and the back-end app is considered to be not available.
-
-</br></br>
-After the Ingress controller is connected to the back-end app, response data from the back-end app is read by the Ingress controller. During this read operation, the Ingress controller waits a maximum of 60 seconds between two read operations to receive data from the back-end app. If the back-end app does not send data within 60 seconds, the connection to the back-end app is closed and the app is considered to be not available.
-</br></br>
-A 60 second connect-timeout and read-timeout is the default timeout on a proxy and ideally should not be changed.
-</br></br>
-If the availability of your app is not steady or your app is slow to respond because of high workloads, you might want to increase the connect-timeout or read-timeout. Keep in mind that increasing the timeout impacts the performance of the Ingress controller as the connection to the back-end app must stay open until the timeout is reached.
-</br></br>
-On the other hand, you can decrease the timeout to gain performance on the Ingress controller. Ensure that your back-end app is able to handle requests within the specified timeout, even during higher workloads.</dd>
-<dt>Sample Ingress resource YAML</dt>
-<dd>
-
-<pre class="codeblock">
-<code>apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: myingress
-  annotations:
-    ingress.bluemix.net/proxy-connect-timeout: "&lt;connect_timeout&gt;s"
-    ingress.bluemix.net/proxy-read-timeout: "&lt;read_timeout&gt;s"
-spec:
-  tls:
-  - hosts:
-    - mydomain
-    secretName: mytlssecret
-  rules:
-  - host: mydomain
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: myservice
-          servicePort: 8080</code></pre>
-
-<table>
-  <thead>
-  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
-  </thead>
-  <tbody>
-  <tr>
-  <td><code>annotations</code></td>
-  <td>Replace the following values:<ul><li><code><em>&lt;connect_timeout&gt;</em></code>: Enter the number of seconds to wait to connect to the back-end app, for example <strong>65s</strong>.
-
-  </br></br>
-  <strong>Note:</strong> A connect-timeout cannot exceed 75 seconds.</li><li><code><em>&lt;read_timeout&gt;</em></code>: Enter the number of seconds to wait before the back-end app is read, for example <strong>65s</strong>.</li></ul></td>
-  </tr>
-  </tbody></table>
-
-  </dd></dl>
-
-##### **Setting the maximum allowed size of the client request body**
-{: #client_max_body_size}
-
-Adjust the size of the body that the client can send as part of a request.
-{:shortdesc}
-
-<dl>
-<dt>Description</dt>
-<dd>To maintain the expected performance, the maximum client request body size is set to 1 megabyte. When a client request with a body size over the limit is sent to the Ingress controller, and the client does not allow to split up data into multiple chunks, the Ingress controller returns a 413 (Request Entity Too Large) http response to the client. A connection between the client and the Ingress controller is not possible until the size of the request body is reduced. When the client allows data to be split up into multiple chunks, data is divided into packages of 1 megabyte and sent to the Ingress controller.
-
-</br></br>
-You might want to increase the maximum body size because you expect client requests with a body size that is greater than 1 megabyte. For example, you want your client to be able to upload big files. Increasing the maximum request body size might impact the performance of your Ingress controller because the connection to the client must stay open until the request is received.
-</br></br>
-<strong>Note:</strong> Some client web browsers cannot display the 413 http response message properly.</dd>
-<dt>Sample Ingress resource YAML</dt>
-<dd>
-
-<pre class="codeblock">
-<code>apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: myingress
-  annotations:
-    ingress.bluemix.net/client-max-body-size: "&lt;size&gt;"
-spec:
-  tls:
-  - hosts:
-    - mydomain
-    secretName: mytlssecret
-  rules:
-  - host: mydomain
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: myservice
-          servicePort: 8080</code></pre>
-
-<table>
-  <thead>
-  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
-  </thead>
-  <tbody>
-  <tr>
-  <td><code>annotations</code></td>
-  <td>Replace the following value:<ul><li><code><em>&lt;size&gt;</em></code>: Enter the maximum size of the client response body. For example, to set it to 200 megabyte, define <strong>200m</strong>.
-
-  </br></br>
-  <strong>Note:</strong> You can set the size to 0 to disable the check of the client request body size.</li></ul></td>
-  </tr>
-  </tbody></table>
-
-  </dd></dl>
-
-
-##### **Changing the default ports for HTTP and HTTPS network traffic**
-{: #custom_http_https_ports}
-
-Use this annotation to change the default ports for HTTP (port 80) and HTTPS (port 443) network traffic.
-{:shortdesc}
-
-<dl>
-<dt>Description</dt>
-<dd>By default, the Ingress controller is configured to listen for incoming HTTP network traffic on port 80 and for incoming HTTPS network traffic on port 443. You can change the default ports to add security to your Ingress controller domain, or to enable an HTTPS port only.
-</dd>
-
-
-<dt>Sample Ingress resource YAML</dt>
-<dd>
-
-<pre class="codeblock">
-<code>apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: myingress
-  annotations:
-    ingress.bluemix.net/custom-port: "protocol=&lt;protocol1&gt; port=&lt;port1&gt;;protocol=&lt;protocol2&gt;port=&lt;port2&gt;"
-spec:
-  tls:
-  - hosts:
-    - mydomain
-    secretName: mytlssecret
-  rules:
-  - host: mydomain
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: myservice
-          servicePort: 8080</code></pre>
-
-<table>
-  <thead>
-  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
-  </thead>
-  <tbody>
-  <tr>
-  <td><code>annotations</code></td>
-  <td>Replace the following values:<ul><li><code><em>&lt;protocol&gt;</em></code>: Enter <strong>http</strong> or <strong>https</strong> to change the default port for incoming HTTP or HTTPS network traffic.</li>
-  <li><code><em>&lt;port&gt;</em></code>: Enter the port number that you want to use for incoming HTTP or HTTPS network traffic.</li></ul>
-  <p><strong>Note:</strong> When a custom port is specified for either HTTP or HTTPS, the default ports are no longer valid for both HTTP and HTTPS. For example, to change the default port for HTTPS to 8443, but use the default port for HTTP, you must set custom ports for both: <code>custom-port: "protocol=http port=80; protocol=https port=8443"</code>.</p>
-  </td>
-  </tr>
-  </tbody></table>
-
-  </dd>
-  <dt>Usage</dt>
-  <dd><ol><li>Review open ports for your Ingress controller.
-<pre class="pre">
-<code>kubectl get service -n kube-system</code></pre>
-Your CLI output looks similar to the following:
-<pre class="screen">
-<code>NAME                     CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
-public-ingress-ctl-svc   10.10.10.149   169.60.16.246   80:30776/TCP,443:30412/TCP   8d</code></pre></li>
-<li>Open the Ingress controller config map.
-<pre class="pre">
-<code>kubectl edit configmap ibm-cloud-provider-ingress-cm -n kube-system</code></pre></li>
-<li>Add the non-default HTTP and HTTPS ports to the config map. Replace &lt;port&gt; with the HTTP or HTTPS port that you want to open.
-<pre class="codeblock">
-<code>apiVersion: v1
-kind: ConfigMap
-data:
-  public-ports: &lt;port1&gt;;&lt;port2&gt;
-metadata:
-  creationTimestamp: 2017-08-22T19:06:51Z
-  name: ibm-cloud-provider-ingress-cm
-  namespace: kube-system
-  resourceVersion: "1320"
-  selfLink: /api/v1/namespaces/kube-system/configmaps/ibm-cloud-provider-ingress-cm
-  uid: &lt;uid&gt;</code></pre></li>
-  <li>Verify that your Ingress controller is re-configured with the non-default ports.
-<pre class="pre">
-<code>kubectl get service -n kube-system</code></pre>
-Your CLI output looks similar to the following:
-<pre class="screen">
-<code>NAME                     CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
-public-ingress-ctl-svc   10.10.10.149   169.60.16.246   &lt;port1&gt;:30776/TCP,&lt;port2&gt;:30412/TCP   8d</code></pre></li>
-<li>Configure your Ingress to use the non-default ports when routing incoming network traffic to your services. Use the sample YAML file in this reference. </li>
-<li>Update your Ingress controller configuration.
-<pre class="pre">
-<code>kubectl apply -f &lt;yaml_file&gt;</code></pre>
-</li>
-<li>Open your preferred web browser to access your app. Example: <code>https://&lt;ibmdomain&gt;:&lt;port&gt;/&lt;service_path&gt;/</code></li></ol></dd></dl>
-
-
-
-
-
-
-
-
-<br />
+ ```
+ apiVersion: v1
+ data:
+   public-ports: "80;443;<port3>"
+ kind: ConfigMap
+ metadata:
+   name: ibm-cloud-provider-ingress-cm
+   namespace: kube-system
+ ```
+ {: codeblock}
+
+ Example:
+ ```
+ apiVersion: v1
+ data:
+   public-ports: "80;443;9443"
+ kind: ConfigMap
+ metadata:
+   name: ibm-cloud-provider-ingress-cm
+   namespace: kube-system
+ ```
+
+2. Apply the configuration file.
+
+ ```
+ kubectl apply -f <path/to/configmap.yaml>
+ ```
+ {: pre}
+
+3. Verify that the configuration file was applied.
+
+ ```
+ kubectl describe cm ibm-cloud-provider-ingress-cm -n kube-system
+ ```
+ {: pre}
+
+ Output:
+ ```
+ Name:        ibm-cloud-provider-ingress-cm
+ Namespace:    kube-system
+ Labels:        <none>
+ Annotations:    <none>
+
+ Data
+ ====
+
+  public-ports: "80;443;&ltport3&gt;"
+ ```
+ {: codeblock}
+
+For more information about config map resources, see the [Kubernetes documentation](https://kubernetes-v1-4.github.io/docs/user-guide/configmap/).
+
+
+
+#### Configuring SSL protocols and SSL ciphers at the HTTP level
+{: #ssl_protocols_ciphers}
+
+Enable SSL protocols and ciphers at the global HTTP level by editing the `ibm-cloud-provider-ingress-cm` config map.
+
+By default, the following values are used for ssl-protocols and ssl-ciphers:
+
+```
+ssl-protocols : "TLSv1 TLSv1.1 TLSv1.2" 
+ssl-ciphers : "HIGH:!aNULL:!MD5"
+```
+{: codeblock}
+
+For more information about these parameters, see the NGINX documentation for [ssl-protocols ![External link icon](../icons/launch-glyph.svg "External link icon")](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_protocols) and [ssl-ciphers ![External link icon](../icons/launch-glyph.svg "External link icon")](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_ciphers).
+
+To change the default values:
+1. Create a local version of the configuration file for the ibm-cloud-provider-ingress-cm config map resource. 
+
+ ```
+ apiVersion: v1
+ data:
+   ssl-protocols: "TLSv1 TLSv1.1 TLSv1.2"
+   ssl-ciphers: "HIGH:!aNULL:!MD5"
+ kind: ConfigMap
+ metadata:
+   name: ibm-cloud-provider-ingress-cm
+   namespace: kube-system
+ ```
+ {: codeblock}
+
+2. Apply the configuration file.
+
+ ```
+ kubectl apply -f <path/to/configmap.yaml>
+ ```
+ {: pre}
+
+3. Verify that the configuration file is applied.
+
+ ```
+ kubectl describe cm ibm-cloud-provider-ingress-cm -n kube-system
+ ```
+ {: pre}
+
+ Output:
+ ```
+ Name:        ibm-cloud-provider-ingress-cm
+ Namespace:    kube-system
+ Labels:        <none>
+ Annotations:    <none>
+
+ Data
+ ====
+
+  ssl-protocols: "TLSv1 TLSv1.1 TLSv1.2" 
+  ssl-ciphers: "HIGH:!aNULL:!MD5" 
+ ```
+ {: screen}
 
 
 ## Managing IP addresses and subnets
@@ -1813,6 +1461,53 @@ In {{site.data.keyword.containershort_notm}}, you can add stable, portable IPs f
  Two of the portable IP addresses, one public and one private, is used for the [Ingress controller](#cs_apps_public_ingress) that you can use to expose multiple apps in your cluster by using a public route. 4 portable public and 4 private IP addresses can be used to expose apps by [creating a load balancer service](#cs_apps_public_load_balancer).
 
 **Note:** Portable public IP addresses are charged on a monthly basis. If you choose to remove portable public IP addresses after your cluster is provisioned, you still have to pay the monthly charge, even if you used them only for a short amount of time.
+
+
+
+1.  Create a Kubernetes service configuration file that is named `myservice.yaml` and define a service of type `LoadBalancer` with a dummy load balancer IP address. The following example uses the IP address 1.1.1.1 as the load balancer IP address.
+
+    ```
+    apiVersion: v1
+    kind: Service
+    metadata:
+      labels:
+        run: myservice
+      name: myservice
+      namespace: default
+    spec:
+      ports:
+      - port: 80
+        protocol: TCP
+        targetPort: 80
+      selector:
+        run: myservice
+      sessionAffinity: None
+      type: LoadBalancer
+      loadBalancerIP: 1.1.1.1
+    ```
+    {: codeblock}
+
+2.  Create the service in your cluster.
+
+    ```
+    kubectl apply -f myservice.yaml
+    ```
+    {: pre}
+
+3.  Inspect the service.
+
+    ```
+    kubectl describe service myservice
+    ```
+    {: pre}
+
+    **Note:** The creation of this service fails because the Kubernetes master cannot find the specified load balancer IP address in the Kubernetes config map. When you run this command, you can see the error message and the list of available public IP addresses for the cluster.
+
+    ```
+    Error on cloud load balancer a8bfa26552e8511e7bee4324285f6a4a for service default/myservice with UID 8bfa2655-2e85-11e7-bee4-324285f6a4af: Requested cloud provider IP 1.1.1.1 is not available. The following cloud provider IPs are available: <list_of_IP_addresses>
+    ```
+    {: screen}
+
 
 
 
