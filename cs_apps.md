@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-11-03"
+lastupdated: "2017-11-07"
 
 ---
 
@@ -432,6 +432,7 @@ You can configure the Ingress controller for the following scenarios.
 -   [Use the IBM-provided domain with TLS termination](#ibm_domain_cert)
 -   [Use a custom domain and TLS certificate to do TLS termination](#custom_domain_cert)
 -   [Use the IBM-provided or a custom domain with TLS termination to access apps outside your cluster](#external_endpoint)
+-   [Configuring SSL protocols and SSL ciphers at the HTTP level](#ssl_protocols_ciphers)
 -   [Customize your Ingress controller with annotations](#ingress_annotation)
 
 
@@ -1247,6 +1248,69 @@ You can configure the Ingress controller to route incoming network traffic on th
         ```
         {: codeblock}
 
+
+
+
+
+
+#### Configuring SSL protocols and SSL ciphers at the HTTP level
+{: #ssl_protocols_ciphers}
+
+Enable SSL protocols and ciphers at the global HTTP level by editing the `ibm-cloud-provider-ingress-cm` config map.
+
+By default, the following values are used for ssl-protocols and ssl-ciphers:
+
+```
+ssl-protocols : "TLSv1 TLSv1.1 TLSv1.2" 
+ssl-ciphers : "HIGH:!aNULL:!MD5"
+```
+{: codeblock}
+
+For more information about these parameters, see the NGINX documentation for [ssl-protocols ![External link icon](../icons/launch-glyph.svg "External link icon")](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_protocols) and [ssl-ciphers ![External link icon](../icons/launch-glyph.svg "External link icon")](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_ciphers).
+
+To change the default values:
+1. Create a local version of the configuration file for the ibm-cloud-provider-ingress-cm config map resource. 
+
+```
+apiVersion: v1
+data:
+  ssl-protocols: "TLSv1 TLSv1.1 TLSv1.2"
+  ssl-ciphers: "HIGH:!aNULL:!MD5"
+kind: ConfigMap
+metadata:
+  name: ibm-cloud-provider-ingress-cm
+  namespace: kube-system
+```
+{: codeblock}
+
+2. Apply the configuration file.
+
+```
+kubectl apply -f <path/to/configmap.yaml>
+```
+{: pre}
+
+3. Verify that the configuration file is applied.
+
+```
+kubectl describe cm ibm-cloud-provider-ingress-cm -n kube-system
+```
+{: pre}
+
+Output:
+```
+Name:        ibm-cloud-provider-ingress-cm
+Namespace:    kube-system
+Labels:        <none>
+Annotations:    <none>
+
+Data
+====
+
+ ssl-protocols: "TLSv1 TLSv1.1 TLSv1.2" 
+ ssl-ciphers: "HIGH:!aNULL:!MD5" 
+```
+{: screen}
 
 
 
