@@ -114,7 +114,7 @@ Review these situations in which you might need to open specific ports and IP ad
       {: pre}
 
   2.  In your firewall for OUTBOUND connectivity from your worker nodes, allow outgoing network traffic from the source worker node to the destination TCP/UDP port range 20000-32767 and port 443 for `<each_worker_node_publicIP>`, and the following IP addresses and network groups.
-      - **Important**: You must allow outgoing traffic to port 443 and all the locations within the region to each other, to balance the load during the bootstrapping process. For example, if your cluster is in US South, you must allow traffic from port 443 to dal10 and dal12, and from dal10 and dal12 to each other.
+      - **Important**: You must allow outgoing traffic to port 443 for all of the locations within the region, to balance the load during the bootstrapping process. For example, if your cluster is in US South, you must allow traffic from port 443 to the IP addresses for all of the locations (dal10, dal12, and dal13).
       <p>
   <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
       <thead>
@@ -240,7 +240,7 @@ Review these situations in which you might need to open specific ports and IP ad
 ## Restricting network traffic to edge worker nodes
 {: #cs_edge}
 
-Add the `dedicated=edge` label to two or more worker nodes in your cluster to ensure that Ingress and load balancers are deployed to those worker nodes only. 
+Add the `dedicated=edge` label to two or more worker nodes in your cluster to ensure that Ingress and load balancers are deployed to those worker nodes only.
 
 Edge worker nodes can improve the security of your cluster by allowing fewer worker nodes to be accessed externally and by isolating the networking workload. When these worker nodes are marked for networking only, other workloads cannot consume the CPU or memory of the worker node and interfere with networking.
 
@@ -252,42 +252,42 @@ Before you begin:
 
 
 1. List all of the worker nodes in the cluster. Use the private IP address from the **NAME** column to identify the nodes. Select at least two worker nodes to be edge worker nodes. Using two or more worker nodes improves availability of the networking resources.
-  
+
   ```
   kubectl get nodes -L publicVLAN,privateVLAN,dedicated
   ```
   {: pre}
-  
+
 2. Label the worker nodes with `dedicated=edge`. After a worker node is marked with `dedicated=edge`, all subsequent Ingress and load balancers are deployed to an edge worker node.
 
   ```
   kubectl label nodes <node_name> <node_name2> dedicated=edge
   ```
   {: pre}
-  
-3. Retrieve all existing load balancer services in your cluster. 
+
+3. Retrieve all existing load balancer services in your cluster.
 
   ```
   kubectl get services --all-namespaces -o jsonpath='{range .items[*]}kubectl get service -n {.metadata.namespace} {.metadata.name} -o yaml | kubectl apply -f - :{.spec.type},{end}' | tr "," "\n" | grep "LoadBalancer" | cut -d':' -f1
   ```
   {: pre}
-  
+
   Output:
-  
+
   ```
   kubectl get service -n <namespace> <name> -o yaml | kubectl apply -f
   ```
   {: screen}
-  
+
 4. Using the output from the previous step, copy and paste each `kubectl get service` line. This command redeploys the load balancer to an edge worker node. Only public load balancers need to be redeployed.
 
   Output:
-  
+
   ```
   service "<name>" configured
   ```
   {: screen}
-  
+
 You labeled worker nodes with `dedicated=edge` and redeployed all existing load balancers and Ingress to the edge worker nodes. Next, prevent other [workloads from running on edge worker nodes](#cs_edge_workloads) and [block inbound traffic to node ports on worker nodes](#cs_block_ingress).
 
 ### Prevent workloads from running on edge worker nodes
@@ -619,7 +619,7 @@ The cluster administrator can use Calico `preDNAT` network policies to block:
   - Traffic that is based on a source address or CIDR.
 
 Some common uses for Calico `preDNAT` network policies:
-  
+
   - Block traffic to public node ports of a private LoadBalancer service.
   - Block traffic to public node ports on clusters that are running [edge worker nodes](#cs_edge). Blocking node ports ensures that the edge worker nodes are the only worker nodes that handle incoming traffic.
 
@@ -628,7 +628,7 @@ The `preDNAT` network policies are useful because default Kubernetes and Calico 
 Calico `preDNAT` network policies generate iptables rules based on a [Calico
 network policy resource ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.projectcalico.org/v2.4/reference/calicoctl/resources/policy).
 
-1. Define a Calico `preDNAT` network policy for ingress access to Kubernetes services. 
+1. Define a Calico `preDNAT` network policy for ingress access to Kubernetes services.
 
   Example that blocks all node ports:
 
