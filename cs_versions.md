@@ -102,6 +102,7 @@ Review changes you might need to make when updating to Kubernetes version 1.8.
 </tbody>
 </table>
 
+
 ## Version 1.7
 {: #cs_v17}
 
@@ -109,6 +110,7 @@ Review changes you might need to make when updating to Kubernetes version 1.7.
 
 ### Update before master
 {: #17_before}
+
 
 <table summary="Kubernetes updates for versions 1.7 and 1.6">
 <caption>Changes to make before you update the master to Kubernetes 1.7</caption>
@@ -230,3 +232,6 @@ Review changes you might need to make when updating to Kubernetes version 1.7.
 </tr>
 </tbody>
 </table>
+
+
+

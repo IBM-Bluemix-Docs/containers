@@ -479,7 +479,7 @@ Open the following ports and IP addresses in your customized firewall.
   {: pre}
 
 2.  In your firewall for OUTBOUND connectivity from your worker nodes, allow outgoing network traffic from the source worker node to the destination TCP/UDP port range 20000-32767 and port 443 for `<each_worker_node_publicIP>`, and the following IP addresses and network groups.
-    - **Important**: You must allow outgoing traffic to port 443 and all of the locations within the region to each other, to balance the load during the bootstrapping process. For example, if your cluster is in US South, you must allow traffic from port 443 to dal10 and dal12, and from dal10 and dal12 to each other.
+    - **Important**: You must allow outgoing traffic to port 443 for all of the locations within the region, to balance the load during the bootstrapping process. For example, if your cluster is in US South, you must allow traffic from port 443 to the IP addresses for all of the locations (dal10, dal12, and dal13).
     <p>
   <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
       <thead>
