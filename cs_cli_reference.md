@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-11-03"
+lastupdated: "2017-11-07"
 
 ---
 
@@ -99,6 +99,7 @@ bx plugin list
 ## bx cs commands
 {: #cs_commands}
 
+
 ### bx cs albs --cluster CLUSTER
 {: #cs_albs}
 
@@ -186,7 +187,7 @@ View the details of an application load balancer (alb).
   bx cs alb-get --albID ALB_ID
   ```
   {: pre}
-  
+
 ### bx cs alb-types
 {: #cs_alb_types}
 
@@ -202,7 +203,7 @@ View the application load balancer types that are supported in the region.
   bx cs alb-types
   ```
   {: pre}
-  
+
 ### bx cs cluster-config CLUSTER [--admin] [--export]
 {: #cs_cluster_config}
 
@@ -230,7 +231,7 @@ bx cs cluster-config my_cluster
 
 
 
-### bx cs cluster-create [--file FILE_LOCATION] [--hardware HARDWARE] --location LOCATION --machine-type MACHINE_TYPE --name NAME [--no-subnet] [--private-vlan PRIVATE_VLAN] [--public-vlan PUBLIC_VLAN] [--workers WORKER]
+### bx cs cluster-create [--file FILE_LOCATION] [--hardware HARDWARE] --location LOCATION --machine-type MACHINE_TYPE --name NAME  [--no-subnet] [--private-vlan PRIVATE_VLAN] [--public-vlan PUBLIC_VLAN] [--workers WORKER]
 {: #cs_cluster_create}
 
 To create a cluster in your organization.
@@ -247,11 +248,14 @@ To create a cluster in your organization.
 <pre class="codeblock">
 <code>name: <em>&lt;cluster_name&gt;</em>
 location: <em>&lt;location&gt;</em>
+
 machine-type: <em>&lt;machine_type&gt;</em>
 private-vlan: <em>&lt;private_vlan&gt;</em>
 public-vlan: <em>&lt;public_vlan&gt;</em>
 hardware: <em>&lt;shared_or_dedicated&gt;</em>
-workerNum: <em>&lt;number_workers&gt;</em></code></pre>
+workerNum: <em>&lt;number_workers&gt;</em>
+
+</code></pre>
 
 
 <table>
@@ -268,6 +272,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
     <td><code><em>location</em></code></td>
     <td>Replace <code><em>&lt;location&gt;</em></code> with the location where you want to create your cluster. The available locations are dependent on the region that you are logged in. To list available locations, run <code>bx cs locations</code>. </td>
      </tr>
+     
      <tr>
      <td><code><em>machine-type</em></code></td>
      <td>Replace <code><em>&lt;machine_type&gt;</em></code> with the machine type that you want for your worker nodes. To list available machine types for your location, run <code>bx cs machine-types <em>&lt;location&gt;</em></code>.</td>
@@ -288,29 +293,10 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
      <td><code><em>workerNum</em></code></td>
      <td>Replace <code><em>&lt;number_workers&gt;</em></code> with the number of worker nodes that you want to deploy.</td>
      </tr>
-     </tbody></table>
-    </p></dd>
-
-<dt><code>--hardware <em>HARDWARE</em></code></dt>
-<dd>The level of hardware isolation for your worker node. Use dedicated to have available physical resources dedicated to you only, or shared to allow physical resources to be shared with other IBM customers. The default is shared.  This value is optional for standard clusters and is not available for lite clusters.</dd>
-
-<dt><code>--location <em>LOCATION</em></code></dt>
-<dd>The location where you want to create the cluster. The locations that are available to you depend on the {{site.data.keyword.Bluemix_notm}} region you are logged in to. Select the region that is physically closest to you for best performance.  This value is required for standard clusters and is optional for lite clusters.
-
-<p>Review [available locations](cs_regions.html#locations).
-</p>
-
-<p><strong>Note:</strong> When you select a location that is located outside your country, keep in mind that you might require legal authorization before data can be physically stored in a foreign country.</p>
-</dd>
-
-<dt><code>--machine-type <em>MACHINE_TYPE</em></code></dt>
-<dd>The machine type that you choose impacts the amount of memory and disk space that is available to the containers that are deployed to your worker node. To list available machine types, see [bx cs machine-types <em>LOCATION</em>](cs_cli_reference.html#cs_machine_types).  This value is required for standard clusters and is not available for lite clusters.</dd>
-
-<dt><code>--name <em>NAME</em></code></dt>
-<dd>The name for the cluster.  This value is required.</dd>
+     
 
 <dt><code>--no-subnet</code></dt>
-<dd>Include the flag to create a cluster without a portable subnet. The default is to not use the flag and to create a subnet in your IBM Bluemix Infrastructure (SoftLayer) portfolio. This value is optional.</dd>
+<dd>By default, both a public and a private portable subnets are created on the VLAN associated with the cluster. Include the <code>--no-subnet</code> flag to avoid creating subnets with the cluster. You can [create](#cs_cluster_subnet_create) or [add](#cs_cluster_subnet_add) subnets to a cluster later.</dd>
 
 <dt><code>--private-vlan <em>PRIVATE_VLAN</em></code></dt>
 <dd>
@@ -807,7 +793,7 @@ View a list of available locations for you to create a cluster in.
   ```
   {: pre}
 
-### bx cs logging-config-create CLUSTER [--namespace KUBERNETES_NAMESPACE] [--logsource LOG_SOURCE] [--hostname LOG_SERVER_HOSTNAME] [--port LOG_SERVER_PORT] --type LOG_TYPE
+### bx cs logging-config-create CLUSTER --logsource LOG_SOURCE [--namespace KUBERNETES_NAMESPACE] [--hostname LOG_SERVER_HOSTNAME] [--port LOG_SERVER_PORT] --type LOG_TYPE
 {: #cs_logging_create}
 
 Create a logging configuration. By default, namespace logs are forwarded to {{site.data.keyword.loganalysislong_notm}}. You can use this command to forward namespace logs to an external syslog server. You can also use this command to forward logs for applications, worker nodes, Kubernetes clusters, and Ingress controllers to {{site.data.keyword.loganalysisshort_notm}} or to an external syslog server.
@@ -818,7 +804,7 @@ Create a logging configuration. By default, namespace logs are forwarded to {{si
 <dt><code><em>CLUSTER</em></code></dt>
 <dd>The name or ID of the cluster.</dd>
 <dt><code>--logsource <em>LOG_SOURCE</em></code></dt>
-<dd>The log source for which you want to enable log forwarding. Accepted values are <code>application</code>, <code>worker</code>, <code>kubernetes</code>, and <code>ingress</code>. This value is required for log sources other than Docker container namespaces.</dd>
+<dd>The log source for which you want to enable log forwarding. Accepted values are <code>application</code>, <code>worker</code>, <code>kubernetes</code>, and <code>ingress</code>. This value is required.</dd>
 <dt><code>--namespace <em>KUBERNETES_NAMESPACE</em></code></dt>
 <dd>The Docker container namespace from which you want to forward logs to syslog. Log forwarding is not supported for the <code>ibm-system</code> and <code>kube-system</code> Kubernetes namespaces. This value is required for namespaces. If you do not specify a namespace, then all namespaces in the container use this configuration.</dd>
 <dt><code>--hostname <em>LOG_SERVER_HOSTNAME</em></code></dt>
@@ -834,14 +820,14 @@ Create a logging configuration. By default, namespace logs are forwarded to {{si
 Example for log source `namespace`:
 
   ```
-  bx cs logging-config-create my_cluster --namespace my_namespace --hostname localhost --port 5514 --type syslog
+  bx cs logging-config-create my_cluster --logsource namespaces --namespace my_namespace --hostname localhost --port 5514 --type syslog
   ```
   {: pre}
 
 Example for log source `ingress`:
 
   ```
-  bx cs logging-config-create my_cluster f4bc77c0-ee7d-422d-aabf-a4e6b977264e --type ibm
+  bx cs logging-config-create my_cluster --logsource ingress --type ibm
   ```
   {: pre}
 
@@ -867,7 +853,7 @@ View all log forwarding configurations for a cluster, or filter logging configur
   {: pre}
 
 
-### bx cs logging-config-rm CLUSTER [--namespace KUBERNETES_NAMESPACE] [--id LOG_SOURCE_LOGGING_ID]
+### bx cs logging-config-rm CLUSTER --id LOG_SOURCE_LOGGING_ID
 {: #cs_logging_rm}
 
 Deletes a log forwarding configuration. For a Docker container namespace, you can stop forwarding logs to a syslog server. The namespace continues to forward logs to {{site.data.keyword.loganalysislong_notm}}. For a log source other than a Docker container namespace, you can stop forwarding logs to a syslog server or to {{site.data.keyword.loganalysisshort_notm}}.
@@ -877,10 +863,8 @@ Deletes a log forwarding configuration. For a Docker container namespace, you ca
    <dl>
    <dt><code><em>CLUSTER</em></code></dt>
    <dd>The name or ID of the cluster. This value is required.</dd>
-   <dt><code>--namespace <em>KUBERNETES_NAMESPACE</em></code></dt>
-   <dd>The Docker container namespace from which you want to stop forwarding logs to syslog. This value is required for Docker container namespaces.</dd>
    <dt><code>--id <em>LOG_SOURCE_LOGGING_ID</em></code></dt>
-   <dd>The logging configuration ID that you want to remove from the log source. This value is required for log sources other than Docker container namespaces.</dd>
+   <dd>The logging configuration ID that you want to remove from the log source. This value is required.</dd>
    </dl>
 
 **Example**:
