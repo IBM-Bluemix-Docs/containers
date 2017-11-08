@@ -1382,7 +1382,7 @@ By default, only ports 80 and 443 are exposed in the Ingress load balancer. To e
  Data
  ====
 
-  public-ports: "80;443;&ltport3&gt;"
+  public-ports: "80;443;<port3>"
  ```
  {: codeblock}
 
