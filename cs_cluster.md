@@ -108,19 +108,11 @@ To create a cluster:
 
 3. If you have multiple {{site.data.keyword.Bluemix_notm}} accounts, select the account where you want to create your Kubernetes cluster.
 
-4.  Specify the {{site.data.keyword.Bluemix_notm}} organization and space where you want to create your Kubernetes cluster.
-    ```
-    bx target --cf
-    ```
-    {: pre}
-
-    **Note**: Clusters are specific to an account and an organization, but are independent from a {{site.data.keyword.Bluemix_notm}} space. For example, if you create a cluster in your organization in `test` space, you can still work with that cluster if you later target the `dev` space.
-
-5.  If you want to create or access Kubernetes clusters in a region other than the {{site.data.keyword.Bluemix_notm}} region that you selected earlier, [specify the {{site.data.keyword.containershort_notm}} region API endpoint](cs_regions.html#container_login_endpoints).
+4.  If you want to create or access Kubernetes clusters in a region other than the {{site.data.keyword.Bluemix_notm}} region that you selected earlier, [specify the {{site.data.keyword.containershort_notm}} region API endpoint](cs_regions.html#container_login_endpoints).
 
     **Note**: If you want to create a cluster in US East, you must specify the US East container region API endpoint using the `bx cs init --host https://us-east.containers.bluemix.net` command.
 
-7.  Create a cluster.
+6.  Create a cluster.
     1.  Review the locations that are available. The locations that are shown depend on the {{site.data.keyword.containershort_notm}} region that you are logged in.
 
         ```
@@ -226,7 +218,7 @@ To create a cluster:
         </tr>
         </tbody></table>
 
-8.  Verify that the creation of the cluster was requested.
+7.  Verify that the creation of the cluster was requested.
 
     ```
     bx cs clusters
@@ -243,7 +235,7 @@ To create a cluster:
     ```
     {: screen}
 
-9.  Check the status of the worker nodes.
+8.  Check the status of the worker nodes.
 
     ```
     bx cs workers <cluster>
@@ -260,7 +252,7 @@ To create a cluster:
     ```
     {: screen}
 
-10. Set the cluster you created as the context for this session. Complete these configuration steps every time that you work with your cluster.
+9. Set the cluster you created as the context for this session. Complete these configuration steps every time that you work with your cluster.
     1.  Get the command to set the environment variable and download the Kubernetes configuration files.
 
         ```
@@ -295,7 +287,7 @@ To create a cluster:
         ```
         {: screen}
 
-11. Launch your Kubernetes dashboard with the default port `8001`.
+10. Launch your Kubernetes dashboard with the default port `8001`.
     1.  Set the proxy with the default port number.
 
         ```
