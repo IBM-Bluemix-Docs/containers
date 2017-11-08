@@ -102,6 +102,7 @@ Review changes you might need to make when updating to Kubernetes version 1.8.
 </tbody>
 </table>
 
+
 ## Version 1.7
 {: #cs_v17}
 

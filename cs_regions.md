@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-10-18"
+lastupdated: "2017-11-07"
 
 ---
 
@@ -28,6 +28,13 @@ Supported {{site.data.keyword.containershort_notm}} regions:
   * US East
   * US South
 
+You can create Kubernetes lite clusters in the following regions:
+  * AP South
+  * EU Central
+  * UK South
+  * US South
+  
+  **Note**: If you are not a paid customer, you are unable to create lite clusters in the US South region.
 
 
 ## {{site.data.keyword.Bluemix_notm}} region API endpoints
@@ -127,16 +134,6 @@ Example commands to log in to an {{site.data.keyword.containershort_notm}} regio
     bx cs init --host https://us-south.containers.bluemix.net
     ```
     {: pre}
-
-
-### Creating lite clusters in container service regions
-{: #lite_regions}
-
-You can create Kubernetes lite clusters in the following regions:
-  * AP South
-  * EU Central
-  * UK South
-  * US South
 
 
 ### Locations available for the container service
