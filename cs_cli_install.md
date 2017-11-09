@@ -56,7 +56,7 @@ To install the CLIs:
 3.  To create Kubernetes clusters and manage worker nodes, install the {{site.data.keyword.containershort_notm}} plug-in. The prefix for running commands by using the {{site.data.keyword.containershort_notm}} plug-in is `bx cs`.
 
     ```
-    bx plugin install container-service -r {{site.data.keyword.Bluemix_notm}}
+    bx plugin install container-service -r Bluemix
     ```
     {: pre}
 
@@ -113,7 +113,7 @@ To install the CLIs:
 5.  To manage a private image repository, install the {{site.data.keyword.registryshort_notm}} plug-in. Use this plug-in to set up your own namespace in a multi-tenant, highly available, and scalable private image registry that is hosted by IBM, and to store and share Docker images with other users. Docker images are required to deploy containers into a cluster. The prefix for running registry commands is `bx cr`.
 
     ```
-    bx plugin install container-registry -r {{site.data.keyword.Bluemix_notm}}
+    bx plugin install container-registry -r Bluemix
     ```
     {: pre}
 
@@ -258,7 +258,7 @@ To update the CLIs:
     1.  Install the update from the {{site.data.keyword.Bluemix_notm}} plug-in repository.
 
         ```
-        bx plugin update container-service -r {{site.data.keyword.Bluemix_notm}}
+        bx plugin update container-service -r Bluemix
         ```
         {: pre}
 
@@ -322,7 +322,7 @@ To update the CLIs:
     1.  Install the update from the {{site.data.keyword.Bluemix_notm}} plug-in repository.
 
         ```
-        bx plugin update container-registry -r {{site.data.keyword.Bluemix_notm}}
+        bx plugin update container-registry -r Bluemix
         ```
         {: pre}
 

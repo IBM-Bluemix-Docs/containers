@@ -80,7 +80,7 @@ To install the CLIs:
 4.  Install the {{site.data.keyword.containershort_notm}} plug-in to create Kubernetes clusters and manage worker nodes. To run {{site.data.keyword.containershort_notm}} plug-in commands, use the prefix `bx cs`.
 
     ```
-    bx plugin install container-service -r {{site.data.keyword.Bluemix_notm}}
+    bx plugin install container-service -r Bluemix
     ```
     {: pre}
 
@@ -127,7 +127,7 @@ To install the CLIs:
 6. To set up and manage a private image repository in {{site.data.keyword.registryshort_notm}}, install the {{site.data.keyword.registryshort_notm}} plug-in. To run registry commands, use the prefix `bx cr`.
 
     ```
-    bx plugin install container-registry -r {{site.data.keyword.Bluemix_notm}}
+    bx plugin install container-registry -r Bluemix
     ```
     {: pre}
 
