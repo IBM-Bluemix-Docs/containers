@@ -56,7 +56,7 @@ Good work! You created your first cluster!
 
 *   The lite cluster has one worker node with 2 CPU and 4 GB memory available for your apps to use.
 *   The worker node is centrally monitored and managed by a dedicated and highly available {{site.data.keyword.IBM_notm}}-owned Kubernetes master that controls and monitors all of the Kubernetes resources in the cluster. You can focus on your worker node and the apps that are deployed in the worker node without worrying about managing this master too.
-*   The resources that are required to run the cluster, such as VLANS and IP addresses, are managed in an {{site.data.keyword.IBM_notm}}-owned IBM Bluemix Infrastructure (SoftLayer) account. When you create a standard cluster, you manage these resources in your own IBM Bluemix Infrastructure (SoftLayer) account. You can learn more about these resources when you create a standard cluster.
+*   The resources that are required to run the cluster, such as VLANS and IP addresses, are managed in an {{site.data.keyword.IBM_notm}}-owned IBM Cloud infrastructure (SoftLayer) account. When you create a standard cluster, you manage these resources in your own IBM Cloud infrastructure (SoftLayer) account. You can learn more about these resources when you create a standard cluster.
 *   **Tip:** Lite clusters that are created with a {{site.data.keyword.Bluemix_notm}} free trial account are automatically removed after the free trial period ends, unless you [upgrade to a {{site.data.keyword.Bluemix_notm}} Pay-As-You-Go account](/docs/pricing/billable.html#upgradetopayg).
 
 
