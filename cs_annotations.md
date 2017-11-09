@@ -53,6 +53,7 @@ For general information about Ingress services and how to get started using them
 
 
 
+
 ## Additional client request or response header (proxy-add-headers)
 {: #proxy-add-headers}
 
@@ -598,6 +599,11 @@ To set the limit, zones are defined by the `ngx_http_limit_conn_module` and the 
 <br />
 
 
+
+
+ <br />
+
+ 
  ## Keepalive requests (keepalive-requests)
  {: #keepalive-requests}
 
@@ -665,7 +671,7 @@ To set the limit, zones are defined by the `ngx_http_limit_conn_module` and the 
   <dl>
   <dt>Description</dt>
   <dd>
-  Sets the time that a keepalive connection stays open on the server. 
+  Sets the time that a keepalive connection stays open on the server.
   </dd>
 
 
@@ -835,7 +841,7 @@ spec:
   </table>
   </dd>
   </dl>
- 
+
  <br />
 
 
@@ -893,7 +899,7 @@ spec:
 
   </dd>
   </dl>
- 
+
  <br />
 
 
@@ -952,7 +958,7 @@ spec:
 
   </dd>
   </dl>
- 
+
  <br />
 
 
@@ -1478,7 +1484,7 @@ Use this annotation for an app that is running a TCP streams workload.
   <dl>
   <dt>Description</dt>
   <dd>
-  Change the maximum number of idle keepalive connections to the upstream server of a given service. The upstream server has 64 idle keepalive connections by default. 
+  Change the maximum number of idle keepalive connections to the upstream server of a given service. The upstream server has 64 idle keepalive connections by default.
   </dd>
 
 
@@ -1522,3 +1528,5 @@ Use this annotation for an app that is running a TCP streams workload.
     </tbody></table>
     </dd>
     </dl>
+
+
