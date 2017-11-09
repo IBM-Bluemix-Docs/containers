@@ -103,7 +103,7 @@ bx plugin list
 ### bx cs albs --cluster CLUSTER
 {: #cs_albs}
 
-View the status of all application load balancers (ALBs) in a cluster. An ALB is also called an Ingress controller.
+View the status of all application load balancers (ALBs) in a cluster. An ALB is also called an Ingress controller. If no ALB IDs are returned, then the cluster does not have a portable subnet. You can [create](#cs_cluster_subnet_create) or [add](#cs_cluster_subnet_add) subnets to a cluster.
 
 <strong>Command options</strong>:
 

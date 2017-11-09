@@ -904,7 +904,7 @@ While a deployment is running, you can edit the deployment to change values in t
 
 2.  Optional: Repeat the changes for the watson-pod deployment.
 
-[Test your knowledge and take a quiz! ![External link icon](../icons/launch-glyph.svg "External link icon")](https://bluemix-quizzes.mybluemix.net/containers/apps_tutorial/quiz.php)
+[Test your knowledge and take a quiz! ![External link icon](../icons/launch-glyph.svg "External link icon")](https://ibmcloud-quizzes.mybluemix.net/containers/apps_tutorial/quiz.php)
 
 Congratulations! You deployed the Watson Tone Analyzer app. The PR firm can definitely start using this deployment of the app to start analyzing their press releases.
 
