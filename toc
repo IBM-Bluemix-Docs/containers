@@ -2,7 +2,7 @@
 {:topicgroup: .topicgroup}
 
 {: .toc subcollection="containers" audience="compute" href="/docs/containers/index.html"}
-IBM Bluemix Container Service
+IBM Cloud Container Service
 
     {: .navgroup id="learn"}
     container_index.md
