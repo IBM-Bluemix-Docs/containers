@@ -679,8 +679,4 @@ Manage the security and integrity of your images with built-in security features
 
 When you use {{site.data.keyword.registryshort_notm}}, you can leverage the built-in security scanning that is provided by Vulnerability Advisor. Every image that is pushed to your namespace is automatically scanned for vulnerabilities against a database of known CentOS, Debian, Red Hat, and Ubuntu issues. If vulnerabilities are found, Vulnerability Advisor provides instructions for how to resolve them to assure image integrity and security.
 
-To view the vulnerability assessment for your image:
-
-1.  From the **catalog**, in the Containers section, select **Container Registry**.
-2.  On the **Private Repositories** page, in the **Repositories** table, identify the image.
-3.  In the **Security Report** column, click the status of the image to retrieve its vulnerability assessment.
+To view the vulnerability assessment for your images, [review the Vulnerability Advisor documentation](/docs/services/va/va_index.html#va_registry_cli).
