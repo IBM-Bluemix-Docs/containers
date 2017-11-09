@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-11-07"
+lastupdated: "2017-11-08"
 
 ---
 
@@ -45,7 +45,7 @@ To create a cluster:
     2. Select a type of machine and specify the number of worker nodes that you need. The machine type defines the amount of virtual CPU and memory that is set up in each worker node and made available to the containers.
         - The micro machine type indicates the smallest option.
         - A balanced machine has an equal amount of memory that is assigned to each CPU, which optimizes performance.
-    3. Select a Public and Private VLAN from your IBM Bluemix Infrastructure (SoftLayer) account. Both VLANs communicate between worker nodes but the public VLAN also communicates with the IBM-managed Kubernetes master. You can use the same VLAN for multiple clusters.
+    3. Select a Public and Private VLAN from your IBM Cloud infrastructure (SoftLayer) account. Both VLANs communicate between worker nodes but the public VLAN also communicates with the IBM-managed Kubernetes master. You can use the same VLAN for multiple clusters.
         **Note**: If you choose not to select a public VLAN, you must configure an alternative solution.
     4. Select a type of hardware. Shared is a sufficient option for most situations.
         - **Dedicated**: Ensure complete isolation of your physical resources.
@@ -97,7 +97,7 @@ For {{site.data.keyword.Bluemix_dedicated_notm}} users, see [Creating Kubernetes
 
 To create a cluster:
 1.  Install the {{site.data.keyword.Bluemix_notm}} CLI and the [{{site.data.keyword.containershort_notm}} plug-in](cs_cli_install.html#cs_cli_install).
-2.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your {{site.data.keyword.Bluemix_notm}} credentials when prompted. To specify a {{site.data.keyword.Bluemix_notm}} region, [include the API endpoint](cs_regions.html#bluemix_regions).
+2.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your {{site.data.keyword.Bluemix_notm}} credentials when prompted. To specify an {{site.data.keyword.Bluemix_notm}} region, [include the API endpoint](cs_regions.html#bluemix_regions).
 
     ```
     bx login
@@ -108,19 +108,11 @@ To create a cluster:
 
 3. If you have multiple {{site.data.keyword.Bluemix_notm}} accounts, select the account where you want to create your Kubernetes cluster.
 
-4.  Specify the {{site.data.keyword.Bluemix_notm}} organization and space where you want to create your Kubernetes cluster.
-    ```
-    bx target --cf
-    ```
-    {: pre}
-
-    **Note**: Clusters are specific to an account and an organization, but are independent from a {{site.data.keyword.Bluemix_notm}} space. For example, if you create a cluster in your organization in `test` space, you can still work with that cluster if you later target the `dev` space.
-
-5.  If you want to create or access Kubernetes clusters in a region other than the {{site.data.keyword.Bluemix_notm}} region that you selected earlier, [specify the {{site.data.keyword.containershort_notm}} region API endpoint](cs_regions.html#container_login_endpoints).
+4.  If you want to create or access Kubernetes clusters in a region other than the {{site.data.keyword.Bluemix_notm}} region that you selected earlier, [specify the {{site.data.keyword.containershort_notm}} region API endpoint](cs_regions.html#container_login_endpoints).
 
     **Note**: If you want to create a cluster in US East, you must specify the US East container region API endpoint using the `bx cs init --host https://us-east.containers.bluemix.net` command.
 
-7.  Create a cluster.
+6.  Create a cluster.
     1.  Review the locations that are available. The locations that are shown depend on the {{site.data.keyword.containershort_notm}} region that you are logged in.
 
         ```
@@ -150,7 +142,7 @@ To create a cluster:
         ```
         {: screen}
 
-    3.  Check to see if a public and private VLAN already exists in the IBM Bluemix Infrastructure (SoftLayer) for this account.
+    3.  Check to see if a public and private VLAN already exists in the IBM Cloud infrastructure (SoftLayer) for this account.
 
         ```
         bx cs vlans <location>
@@ -168,7 +160,7 @@ To create a cluster:
 
         If a public and private VLAN already exists, note the matching routers. Private VLAN routers always begin with `bcr` (back-end router) and public VLAN routers always begin with `fcr` (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. In the example output, any of the private VLANs can be used with any of public VLANs because the routers all include `02a.dal10`.
 
-    4.  Run the `cluster-create` command. You can choose between a lite cluster, which includes one worker node set up with 2vCPU and 4GB memory, or a standard cluster, which can include as many worker nodes as you choose in your IBM Bluemix Infrastructure (SoftLayer) account. When you create a standard cluster, by default, the hardware of the worker node is shared by multiple IBM customers and billed by hours of usage. </br>Example for a standard cluster:
+    4.  Run the `cluster-create` command. You can choose between a lite cluster, which includes one worker node set up with 2vCPU and 4GB memory, or a standard cluster, which can include as many worker nodes as you choose in your IBM Cloud infrastructure (SoftLayer) account. When you create a standard cluster, by default, the hardware of the worker node is shared by multiple IBM customers and billed by hours of usage. </br>Example for a standard cluster:
 
         ```
         bx cs cluster-create --location dal10 --public-vlan <public_vlan_id> --private-vlan <private_vlan_id> --machine-type u1c.2x4 --workers 3 --name <cluster_name> --kube-version <major.minor.patch>
@@ -204,13 +196,13 @@ To create a cluster:
         <td><code>--public-vlan <em>&lt;public_vlan_id&gt;</em></code></td>
         <td><ul>
           <li>For lite clusters, you do not have to define a public VLAN. Your lite cluster is automatically connected to a public VLAN that is owned by IBM.</li>
-          <li>For a standard cluster, if you already have a public VLAN set up in your IBM Bluemix Infrastructure (SoftLayer) account for that location, enter the ID of the public VLAN. If you do not have both a public and a private VLAN in your account, do not specify this option. {{site.data.keyword.containershort_notm}} automatically creates a public VLAN for you.<br/><br/>
+          <li>For a standard cluster, if you already have a public VLAN set up in your IBM Cloud infrastructure (SoftLayer) account for that location, enter the ID of the public VLAN. If you do not have both a public and a private VLAN in your account, do not specify this option. {{site.data.keyword.containershort_notm}} automatically creates a public VLAN for you.<br/><br/>
           <strong>Note</strong>: Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster.</li>
         </ul></td>
         </tr>
         <tr>
         <td><code>--private-vlan <em>&lt;private_vlan_id&gt;</em></code></td>
-        <td><ul><li>For lite clusters, you do not have to define a private VLAN. Your lite cluster is automatically connected to a private VLAN that is owned by IBM.</li><li>For a standard cluster, if you already have a private VLAN set up in your IBM Bluemix Infrastructure (SoftLayer) account for that location, enter the ID of the private VLAN. If you do not have both a public and a private VLAN in your account, do not specify this option. {{site.data.keyword.containershort_notm}} automatically creates a public VLAN for you.<br/><br/><strong>Note</strong>: Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster.</li></ul></td>
+        <td><ul><li>For lite clusters, you do not have to define a private VLAN. Your lite cluster is automatically connected to a private VLAN that is owned by IBM.</li><li>For a standard cluster, if you already have a private VLAN set up in your IBM Cloud infrastructure (SoftLayer) account for that location, enter the ID of the private VLAN. If you do not have both a public and a private VLAN in your account, do not specify this option. {{site.data.keyword.containershort_notm}} automatically creates a public VLAN for you.<br/><br/><strong>Note</strong>: Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster.</li></ul></td>
         </tr>
         <tr>
         <td><code>--name <em>&lt;name&gt;</em></code></td>
@@ -226,7 +218,7 @@ To create a cluster:
         </tr>
         </tbody></table>
 
-8.  Verify that the creation of the cluster was requested.
+7.  Verify that the creation of the cluster was requested.
 
     ```
     bx cs clusters
@@ -243,7 +235,7 @@ To create a cluster:
     ```
     {: screen}
 
-9.  Check the status of the worker nodes.
+8.  Check the status of the worker nodes.
 
     ```
     bx cs workers <cluster>
@@ -260,7 +252,7 @@ To create a cluster:
     ```
     {: screen}
 
-10. Set the cluster you created as the context for this session. Complete these configuration steps every time that you work with your cluster.
+9. Set the cluster you created as the context for this session. Complete these configuration steps every time that you work with your cluster.
     1.  Get the command to set the environment variable and download the Kubernetes configuration files.
 
         ```
@@ -295,7 +287,7 @@ To create a cluster:
         ```
         {: screen}
 
-11. Launch your Kubernetes dashboard with the default port `8001`.
+10. Launch your Kubernetes dashboard with the default port `8001`.
     1.  Set the proxy with the default port number.
 
         ```
@@ -637,7 +629,7 @@ To create your own imagePullSecret:
         ```
         {: codeblock}
 
-        A {{site.data.keyword.Bluemix_notm}} public image:
+        An {{site.data.keyword.Bluemix_notm}} public image:
 
         ```
         apiVersion: v1
@@ -669,7 +661,7 @@ To create your own imagePullSecret:
         </tr>
         <tr>
         <td><code><em>&lt;my_image&gt;</em></code></td>
-        <td>The name of the image that you want to use. To list available images in a {{site.data.keyword.Bluemix_notm}} account, run `bx cr image-list`.</td>
+        <td>The name of the image that you want to use. To list available images in an {{site.data.keyword.Bluemix_notm}} account, run `bx cr image-list`.</td>
         </tr>
         <tr>
         <td><code><em>&lt;tag&gt;</em></code></td>
@@ -1092,12 +1084,12 @@ Review the access policies and permissions that you can grant to users in your {
 
 |Access policy|Cluster Management Permissions|Kubernetes Resource Permissions|
 |-------------|------------------------------|-------------------------------|
-|<ul><li>Role: Administrator</li><li>Service Instances: all current service instances</li></ul>|<ul><li>Create a lite or standard cluster</li><li>Set credentials for a {{site.data.keyword.Bluemix_notm}} account to access the IBM Bluemix Infrastructure (SoftLayer) portfolio</li><li>Remove a cluster</li><li>Assign and change {{site.data.keyword.containershort_notm}} access policies for other existing users in this account.</li></ul><br/>This role inherits permissions from the Editor, Operator, and Viewer roles for all clusters in this account.|<ul><li>RBAC Role: cluster-admin</li><li>Read/write access to resources in every namespace</li><li>Create roles within a namespace</li><li>Access Kubernetes dashboard</li><li>Create an Ingress resource that makes apps publically available</li></ul>|
+|<ul><li>Role: Administrator</li><li>Service Instances: all current service instances</li></ul>|<ul><li>Create a lite or standard cluster</li><li>Set credentials for an {{site.data.keyword.Bluemix_notm}} account to access the IBM Cloud infrastructure (SoftLayer) portfolio</li><li>Remove a cluster</li><li>Assign and change {{site.data.keyword.containershort_notm}} access policies for other existing users in this account.</li></ul><br/>This role inherits permissions from the Editor, Operator, and Viewer roles for all clusters in this account.|<ul><li>RBAC Role: cluster-admin</li><li>Read/write access to resources in every namespace</li><li>Create roles within a namespace</li><li>Access Kubernetes dashboard</li><li>Create an Ingress resource that makes apps publically available</li></ul>|
 |<ul><li>Role: Administrator</li><li>Service Instances: a specific cluster ID</li></ul>|<ul><li>Remove a specific cluster.</li></ul><br/>This role inherits permissions from the Editor, Operator, and Viewer roles for the selected cluster.|<ul><li>RBAC Role: cluster-admin</li><li>Read/write access to resources in every namespace</li><li>Create roles within a namespace</li><li>Access Kubernetes dashboard</li><li>Create an Ingress resource that makes apps publically available</li></ul>|
 |<ul><li>Role: Operator</li><li>Service Instances: all current service instances/ a specific cluster ID</li></ul>|<ul><li>Add additional worker nodes to a cluster</li><li>Remove worker nodes from a cluster</li><li>Reboot a worker node</li><li>Reload a worker node</li><li>Add a subnet to a cluster</li></ul>|<ul><li>RBAC Role: admin</li><li>Read/write access to resources inside the default namespace but not to the namespace itself</li><li>Create roles within a namespace</li></ul>|
-|<ul><li>Role: Editor</li><li>Service Instances: all current service instances a specific cluster ID</li></ul>|<ul><li>Bind a {{site.data.keyword.Bluemix_notm}} service to a cluster.</li><li>Unbind a {{site.data.keyword.Bluemix_notm}} service to a cluster.</li><li>Create a webhook.</li></ul><br/>Use this role for your app developers.|<ul><li>RBAC Role: edit</li><li>Read/write access to resources inside the default namespace</li></ul>|
+|<ul><li>Role: Editor</li><li>Service Instances: all current service instances a specific cluster ID</li></ul>|<ul><li>Bind an {{site.data.keyword.Bluemix_notm}} service to a cluster.</li><li>Unbind an {{site.data.keyword.Bluemix_notm}} service to a cluster.</li><li>Create a webhook.</li></ul><br/>Use this role for your app developers.|<ul><li>RBAC Role: edit</li><li>Read/write access to resources inside the default namespace</li></ul>|
 |<ul><li>Role: Viewer</li><li>Service Instances: all current service instances/ a specific cluster ID</li></ul>|<ul><li>List a cluster</li><li>View details for a cluster</li></ul>|<ul><li>RBAC Role: view</li><li>Read access to resources inside the default namespace</li><li>No read access to Kubernetes secrets</li></ul>|
-|<ul><li>Cloud Foundry organization role: Manager</li></ul>|<ul><li>Add additional users to a {{site.data.keyword.Bluemix_notm}} account</li></ul>| |
+|<ul><li>Cloud Foundry organization role: Manager</li></ul>|<ul><li>Add additional users to an {{site.data.keyword.Bluemix_notm}} account</li></ul>| |
 |<ul><li>Cloud Foundry space role: Developer</li></ul>|<ul><li>Create {{site.data.keyword.Bluemix_notm}} service instances/li><li>Bind {{site.data.keyword.Bluemix_notm}} service instances to clusters</li></ul>| |
 {: caption="Table 7. Overview of required {{site.data.keyword.containershort_notm}} access policies and permissions" caption-side="top"}
 
@@ -1112,7 +1104,7 @@ You can review and verify your assigned access policy for {{site.data.keyword.co
 4.  In the **Service Policies** section, review the access policy for the user. To find detailed information about the actions that you can perform with this role, see [Overview of required {{site.data.keyword.containershort_notm}} access policies and permissions](#access_ov).
 5.  Optional: [Change your current access policy](#change_access).
 
-    **Note:** Only users with an assigned Administrator service policy for all resources in {{site.data.keyword.containershort_notm}} can change the access policy for an existing user. To add further users to a {{site.data.keyword.Bluemix_notm}} account, you must have the Manager Cloud Foundry role for the account. To find the ID of the {{site.data.keyword.Bluemix_notm}} account owner, run `bx iam accounts` and look for the **Owner User ID**.
+    **Note:** Only users with an assigned Administrator service policy for all resources in {{site.data.keyword.containershort_notm}} can change the access policy for an existing user. To add further users to an {{site.data.keyword.Bluemix_notm}} account, you must have the Manager Cloud Foundry role for the account. To find the ID of the {{site.data.keyword.Bluemix_notm}} account owner, run `bx iam accounts` and look for the **Owner User ID**.
 
 
 ### Changing the {{site.data.keyword.containershort_notm}} access policy for an existing user
@@ -1130,12 +1122,12 @@ Before you begin, [verify that you have been assigned the Administrator access p
 6.  From the **Roles** drop-down list, select the access policy that you want to assign. Selecting a role without any limitations on a specific region or cluster automatically applies this access policy to all clusters that were created in this account. If you want to limit the access to a certain cluster or region, select them from the **Service instance** and **Region** drop-down list. To find a list of supported actions per access policy, see [Overview of required {{site.data.keyword.containershort_notm}} access policies and permissions](#access_ov). To find the ID of a specific cluster, run `bx cs clusters`.
 7.  Click **Assign Policy** to save your changes.
 
-### Adding users to a {{site.data.keyword.Bluemix_notm}} account
+### Adding users to an {{site.data.keyword.Bluemix_notm}} account
 {: #add_users}
 
-You can add additional users to a {{site.data.keyword.Bluemix_notm}} account to grant access to your clusters.
+You can add additional users to an {{site.data.keyword.Bluemix_notm}} account to grant access to your clusters.
 
-Before you begin, verify that you have been assigned the Manager Cloud Foundry role for a {{site.data.keyword.Bluemix_notm}} account.
+Before you begin, verify that you have been assigned the Manager Cloud Foundry role for an {{site.data.keyword.Bluemix_notm}} account.
 
 1.  Select the {{site.data.keyword.Bluemix_notm}} account where you want to add users.
 2.  From the menu bar, click **Manage** > **Security** > **Identity and Access**. The Users window displays a list of users with their email addresses and current status for the selected account.
@@ -1148,7 +1140,7 @@ Before you begin, verify that you have been assigned the Manager Cloud Foundry r
 9.  Expand the **Cloud Foundry access** section and select the {{site.data.keyword.Bluemix_notm}} organization from the **Organization** drop-down list to which you want to add the user.
 10.  From the **Space Roles** drop-down list, select any role. Kubernetes clusters are independent from {{site.data.keyword.Bluemix_notm}} spaces.
 11. Click **Invite users**.
-12. Optional: To allow this user to add additional users to a {{site.data.keyword.Bluemix_notm}} account, assign the user a Cloud Foundry org role.
+12. Optional: To allow this user to add additional users to an {{site.data.keyword.Bluemix_notm}} account, assign the user a Cloud Foundry org role.
     1. From the **Users** overview table, in the **Actions** column, select **Manage User**.
     2. In the **Cloud Foundry roles** section, find the Cloud Foundry organization role that was granted to the user that you added in the previous steps.
     3. From the **Actions** tab, select **Edit Organization Role**.
@@ -1238,7 +1230,7 @@ You can add stable, portable public IPs to the cluster by assigning subnets to t
 
 For {{site.data.keyword.Bluemix_dedicated_notm}} users, instead of using this task, you must [open a support ticket](/docs/support/index.html#contacting-support) to create the subnet, and then use the [`bx cs cluster-subnet-add`](cs_cli_reference.html#cs_cluster_subnet_add) command to add the subnet to the cluster.
 
-Before you begin, make sure that you can access the IBM Bluemix Infrastructure (SoftLayer) portfolio through the {{site.data.keyword.Bluemix_notm}} GUI. To access the portfolio, you must set up or use an existing {{site.data.keyword.Bluemix_notm}} Pay-As-You-Go account.
+Before you begin, make sure that you can access the IBM Cloud infrastructure (SoftLayer) portfolio through the {{site.data.keyword.Bluemix_notm}} GUI. To access the portfolio, you must set up or use an existing {{site.data.keyword.Bluemix_notm}} Pay-As-You-Go account.
 
 1.  From the catalog, in the **Infrastructure** section, select **Network**.
 2.  Select **Subnet/IPs** and click **Create**.
@@ -1260,7 +1252,7 @@ Before you begin, make sure that you can access the IBM Bluemix Infrastructure (
 
 7.  After the subnet is provisioned, make the subnet available to your Kubernetes cluster.
     1.  From the Infrastructure dashboard, select the subnet that you created and note the ID of the subnet.
-    2.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI. To specify a {{site.data.keyword.Bluemix_notm}} region, [include the API endpoint](cs_regions.html#bluemix_regions).
+    2.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI. To specify an {{site.data.keyword.Bluemix_notm}} region, [include the API endpoint](cs_regions.html#bluemix_regions).
 
         ```
         bx login
@@ -1297,7 +1289,7 @@ You can add existing portable public subnets to your Kubernetes cluster.
 
 Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
 
-If you have an existing subnet in your IBM Bluemix Infrastructure (SoftLayer) portfolio with custom firewall rules or available IP addresses that you want to use, create a cluster with no subnet and make your existing subnet available to the cluster when the cluster provisions.
+If you have an existing subnet in your IBM Cloud infrastructure (SoftLayer) portfolio with custom firewall rules or available IP addresses that you want to use, create a cluster with no subnet and make your existing subnet available to the cluster when the cluster provisions.
 
 1.  Identify the subnet to use. Note the ID of the subnet and the VLAN ID. In this example, the subnet ID is 807861 and the VLAN ID is 1901230.
 
@@ -1388,7 +1380,7 @@ Requirements:
 - The subnet prefix length limit is /24 to /30. For example, `203.0.113.0/24` specifies 253 usable private IP addresses, while `203.0.113.0/30` specifies 1 usable private IP address.
 - The first IP address in the subnet must be used as the gateway for the subnet.
 
-Before you begin: Configure the routing of network traffic into and out of the external subnet. In addition, confirm that you have VPN connectivity between the on-premises data center gateway device and the private network Vyatta in your IBM Bluemix Infrastructure (SoftLayer) portfolio. For more information see this [blog post ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/blogs/bluemix/2017/07/kubernetes-and-bluemix-container-based-workloads-part4/).
+Before you begin: Configure the routing of network traffic into and out of the external subnet. In addition, confirm that you have VPN connectivity between the on-premises data center gateway device and the private network Vyatta in your IBM Cloud infrastructure (SoftLayer) portfolio. For more information see this [blog post ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/blogs/bluemix/2017/07/kubernetes-and-bluemix-container-based-workloads-part4/).
 
 1. View the ID of your cluster's Private VLAN. Locate the **VLANs** section. In the field **User-managed**, identify the VLAN ID with _false_.
 
@@ -1435,7 +1427,7 @@ Before you begin: Configure the routing of network traffic into and out of the e
     ```
     {: screen}
 
-4. Add a private load balancer to access your app over the private network. If you want to use a private IP address from the subnet that you added, you must specify an IP address when you create a private load balancer. Otherwise, an IP address is chosen at random from the IBM Bluemix Infrastructure (SoftLayer) subnets or user-provided subnets on the private VLAN. For more information See [Configuring access to an app](cs_apps.html#cs_apps_public_load_balancer).
+4. Add a private load balancer to access your app over the private network. If you want to use a private IP address from the subnet that you added, you must specify an IP address when you create a private load balancer. Otherwise, an IP address is chosen at random from the IBM Cloud infrastructure (SoftLayer) subnets or user-provided subnets on the private VLAN. For more information See [Configuring access to an app](cs_apps.html#cs_apps_public_load_balancer).
 
     Example configuration file for a private load balancer service with a specified IP address:
 
@@ -1463,7 +1455,7 @@ Before you begin: Configure the routing of network traffic into and out of the e
 ## Using existing NFS file shares in clusters
 {: #cs_cluster_volume_create}
 
-If you already have existing NFS file shares in your IBM Bluemix Infrastructure (SoftLayer) account that you want to use with Kubernetes, you can do so by creating persistent volumes on your existing NFS file share. A persistent volume is a piece of actual hardware that serves as a Kubernetes cluster resource and can be consumed by the cluster user.
+If you already have existing NFS file shares in your IBM Cloud infrastructure (SoftLayer) account that you want to use with Kubernetes, you can do so by creating persistent volumes on your existing NFS file share. A persistent volume is a piece of actual hardware that serves as a Kubernetes cluster resource and can be consumed by the cluster user.
 {:shortdesc}
 
 Before you begin, make sure that you have an existing NFS file share that you can use to create your persistent volume.
@@ -1476,8 +1468,8 @@ Kubernetes differentiates between persistent volumes that represent the actual h
 
 To create a persistent volume and matching persistent volume claim, follow these steps.
 
-1.  In your IBM Bluemix Infrastructure (SoftLayer) account, look up the ID and path of the NFS file share where you want to create your persistent volume object.
-    1.  Log in to your IBM Bluemix Infrastructure (SoftLayer) account.
+1.  In your IBM Cloud infrastructure (SoftLayer) account, look up the ID and path of the NFS file share where you want to create your persistent volume object.
+    1.  Log in to your IBM Cloud infrastructure (SoftLayer) account.
     2.  Click **Storage**.
     3.  Click **File Storage** and note the ID and path of the NFS file share that you want to use.
 2.  Open your preferred editor.
@@ -1618,12 +1610,12 @@ Logs help you troubleshoot issues with your clusters and apps. Sometimes, you mi
 To view logs for clusters and containers, you can use the standard Kubernetes and Docker logging features.
 {:shortdesc}
 
-**Note**: In order to view logs, the account owner needs Manager, Developer, or Auditor permissions to the space that the cluster was created in. For more information about changing {{site.data.keyword.containershort_notm}} access policies and permissions, see [Managing cluster access](cs_cluster.html#cs_cluster_user). Once permissions are changed, it can take up to 24 hours for logs to start appearing.
-
 #### {{site.data.keyword.loganalysislong_notm}}
 {: #cs_view_logs_k8s}
 
-For standard clusters, logs are located in the {{site.data.keyword.Bluemix_notm}} space you were logged in to when you created the Kubernetes cluster. Container logs are monitored and forwarded outside of the container. You can access logs for a container by using the Kibana dashboard. For more information about logging, see [Logging for the {{site.data.keyword.containershort_notm}}](/docs/services/CloudLogAnalysis/containers/logging_containers_ov.html#logging_containers_ov).
+For standard clusters, logs are located in the {{site.data.keyword.Bluemix_notm}} account you were logged in to when you created the Kubernetes cluster. If you specified an {{site.data.keyword.Bluemix_notm}} space when you created the cluster, then logs are located in that space. Container logs are monitored and forwarded outside of the container. You can access logs for a container by using the Kibana dashboard. For more information about logging, see [Logging for the {{site.data.keyword.containershort_notm}}](/docs/services/CloudLogAnalysis/containers/logging_containers_ov.html#logging_containers_ov).
+
+**Note**: If logs are located in the space that you specified at cluster creation, the account owner needs Manager, Developer, or Auditor permissions to that space to view logs. For more information about changing {{site.data.keyword.containershort_notm}} access policies and permissions, see [Managing cluster access](cs_cluster.html#cs_cluster_user). Once permissions are changed, it can take up to 24 hours for logs to start appearing.
 
 To access the Kibana dashboard, go to one of the following URLs and select the {{site.data.keyword.Bluemix_notm}} organization and space where you created the cluster.
 - US-South and US-East: https://logging.ng.bluemix.net
@@ -2187,7 +2179,7 @@ When you are finished with a cluster, you can remove it so that the cluster is n
 
 Lite and standard clusters created with a standard or {{site.data.keyword.Bluemix_notm}} Pay-As-You-Go account must be removed manually by the user when they are not needed anymore. Lite clusters created with a free trial account are automatically removed after the free trial period ends.
 
-When you delete a cluster, you are also deleting resources on the cluster, including containers, pods, bound services, and secrets. If you do not delete your storage when you delete your cluster, you can delete your storage through the IBM Bluemix Infrastructure (SoftLayer) dashboard in the {{site.data.keyword.Bluemix_notm}} GUI. Due to the monthly billing cycle, a persistent volume claim cannot be deleted on the last day of a month. If you delete the persistent volume claim on the last day of the month, the deletion remains pending until the beginning of the next month.
+When you delete a cluster, you are also deleting resources on the cluster, including containers, pods, bound services, and secrets. If you do not delete your storage when you delete your cluster, you can delete your storage through the IBM Cloud infrastructure (SoftLayer) dashboard in the {{site.data.keyword.Bluemix_notm}} GUI. Due to the monthly billing cycle, a persistent volume claim cannot be deleted on the last day of a month. If you delete the persistent volume claim on the last day of the month, the deletion remains pending until the beginning of the next month.
 
 **Warning:** No backups are created of your cluster or your data in your persistent storage. Deleting a cluster is permanent and cannot be undone.
 
@@ -2211,5 +2203,5 @@ When you delete a cluster, you are also deleting resources on the cluster, inclu
     3.  Follow the prompts and choose whether to delete cluster resources.
 
 When you remove a cluster, you can choose to remove the portable subnets and persistent storage associated with it:
-- Subnets are used to assign portable public IP addresses to load balancer services or your Ingress controller. If you keep them, you can reuse them in a new cluster or manually delete them later from your IBM Bluemix Infrastructure (SoftLayer) portfolio.
+- Subnets are used to assign portable public IP addresses to load balancer services or your Ingress controller. If you keep them, you can reuse them in a new cluster or manually delete them later from your IBM Cloud infrastructure (SoftLayer) portfolio.
 - Persistent storage provides high availability for your data. If you delete it, you cannot recover your data.

@@ -56,8 +56,8 @@ Good work! You created your first cluster!
 
 *   The lite cluster has one worker node with 2 CPU and 4 GB memory available for your apps to use.
 *   The worker node is centrally monitored and managed by a dedicated and highly available {{site.data.keyword.IBM_notm}}-owned Kubernetes master that controls and monitors all of the Kubernetes resources in the cluster. You can focus on your worker node and the apps that are deployed in the worker node without worrying about managing this master too.
-*   The resources that are required to run the cluster, such as VLANS and IP addresses, are managed in an {{site.data.keyword.IBM_notm}}-owned IBM Bluemix Infrastructure (SoftLayer) account. When you create a standard cluster, you manage these resources in your own IBM Bluemix Infrastructure (SoftLayer) account. You can learn more about these resources when you create a standard cluster.
-*   **Tip:** Lite clusters that are created with a {{site.data.keyword.Bluemix_notm}} free trial account are automatically removed after the free trial period ends, unless you [upgrade to a {{site.data.keyword.Bluemix_notm}} Pay-As-You-Go account](/docs/pricing/billable.html#upgradetopayg).
+*   The resources that are required to run the cluster, such as VLANS and IP addresses, are managed in an {{site.data.keyword.IBM_notm}}-owned IBM Cloud infrastructure (SoftLayer) account. When you create a standard cluster, you manage these resources in your own IBM Cloud infrastructure (SoftLayer) account. You can learn more about these resources when you create a standard cluster.
+*   **Tip:** Lite clusters that are created with an {{site.data.keyword.Bluemix_notm}} free trial account are automatically removed after the free trial period ends, unless you [upgrade to an {{site.data.keyword.Bluemix_notm}} Pay-As-You-Go account](/docs/pricing/billable.html#upgradetopayg).
 
 
 **What's next?**
@@ -78,12 +78,12 @@ Kubernetes is an orchestration tool for scheduling app containers onto a cluster
 
 Before you begin, [set up your {{site.data.keyword.Bluemix_dedicated_notm}} environment to use clusters](cs_ov.html#setup_dedicated). Then, you can create a cluster. A cluster is a set of worker nodes that are organized into a network. The purpose of the cluster is to define a set of resources, nodes, networks, and storage devices that keep applications highly available. After you have a cluster, then you can deploy your app into the cluster.
 
-**Tip:** If your organization does not have a {{site.data.keyword.Bluemix_dedicated_notm}} environment already, you might not need one. [Try a dedicated, standard cluster in the {{site.data.keyword.Bluemix_notm}} Public environment first.](cs_cluster.html#cs_cluster_ui)
+**Tip:** If your organization does not have an {{site.data.keyword.Bluemix_dedicated_notm}} environment already, you might not need one. [Try a dedicated, standard cluster in the {{site.data.keyword.Bluemix_notm}} Public environment first.](cs_cluster.html#cs_cluster_ui)
 
 To deploy a cluster in {{site.data.keyword.Bluemix_dedicated_notm}}:
 
 1.  Log in to the {{site.data.keyword.Bluemix_notm}} Public console ([https://console.bluemix.net ![External link icon](../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net/catalog/?category=containers)) with your IBMid. Though you must request a cluster from {{site.data.keyword.Bluemix_notm}} Public, you are deploying it into your {{site.data.keyword.Bluemix_dedicated_notm}} account.
-2.  If you have multiple accounts, from the account menu, select a {{site.data.keyword.Bluemix_notm}} account.
+2.  If you have multiple accounts, from the account menu, select an {{site.data.keyword.Bluemix_notm}} account.
 3.  From the catalog, in the **Containers** category, click **Kubernetes cluster**.
 4.  Enter the cluster details.
     1.  Enter a **Cluster Name**.

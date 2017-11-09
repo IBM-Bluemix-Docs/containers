@@ -103,7 +103,7 @@ bx plugin list
 ### bx cs albs --cluster CLUSTER
 {: #cs_albs}
 
-View the status of all application load balancers (ALBs) in a cluster. An ALB is also called an Ingress controller.
+View the status of all application load balancers (ALBs) in a cluster. An ALB is also called an Ingress controller. If no ALB IDs are returned, then the cluster does not have a portable subnet. You can [create](#cs_cluster_subnet_create) or [add](#cs_cluster_subnet_add) subnets to a cluster.
 
 <strong>Command options</strong>:
 
@@ -141,7 +141,7 @@ Enable or disable a application load balancer (ALB), also called the Ingress con
 
    <ul>
     <li>This parameter is available for a private alb only</li>
-    <li>The private ALB is deployed with an IP address from a user-provided private subnet. If no IP address is provided, the ALB is deployed with a random IP address from a private subnet in IBM Bluemix Infrastructure (SoftLayer).</li>
+    <li>The private ALB is deployed with an IP address from a user-provided private subnet. If no IP address is provided, the ALB is deployed with a random IP address from a private subnet in IBM Cloud infrastructure (SoftLayer).</li>
    </ul>
    </dd>
    </dl>
@@ -332,7 +332,7 @@ kube-version: <em>&lt;kube-version&gt;</em>
 <ul>
 <li>This parameter is not available for lite clusters.</li>
 <li>If this standard cluster is the first standard cluster that you create in this location, do not include this flag. A private VLAN is created for you when the clusters is created.</li>
-<li>If you created a standard cluster before in this location or created a private VLAN in IBM Bluemix Infrastructure (SoftLayer) before, you must specify that private VLAN.
+<li>If you created a standard cluster before in this location or created a private VLAN in IBM Cloud infrastructure (SoftLayer) before, you must specify that private VLAN.
 
 <p><strong>Note:</strong> The public and private VLANs that you specify with the create command must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></li>
 </ul>
@@ -344,7 +344,7 @@ kube-version: <em>&lt;kube-version&gt;</em>
 <ul>
 <li>This parameter is not available for lite clusters.</li>
 <li>If this standard cluster is the first standard cluster that you create in this location, do not use this flag. A public VLAN is created for you when the cluster is created.</li>
-<li>If you created a standard cluster before in this location or created a public VLAN in IBM Bluemix Infrastructure (SoftLayer) before, you must specify that public VLAN.
+<li>If you created a standard cluster before in this location or created a public VLAN in IBM Cloud infrastructure (SoftLayer) before, you must specify that public VLAN.
 
 <p><strong>Note:</strong> The public and private VLANs that you specify with the create command must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></li>
 </ul>
@@ -376,7 +376,7 @@ kube-version: <em>&lt;kube-version&gt;</em>
   ```
   {: pre}
 
-  Example for a {{site.data.keyword.Bluemix_dedicated_notm}} environment:
+  Example for an {{site.data.keyword.Bluemix_dedicated_notm}} environment:
 
   ```
   bx cs cluster-create --machine-type machine-type --workers number --name cluster_name
@@ -433,7 +433,7 @@ Remove a cluster from your organization.
 ### bx cs cluster-service-bind CLUSTER KUBERNETES_NAMESPACE SERVICE_INSTANCE_GUID
 {: #cs_cluster_service_bind}
 
-Add a {{site.data.keyword.Bluemix_notm}} service to a cluster.
+Add an {{site.data.keyword.Bluemix_notm}} service to a cluster.
 
 **Tip:** For {{site.data.keyword.Bluemix_dedicated_notm}} users, see [Adding {{site.data.keyword.Bluemix_notm}} services to clusters in {{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)](cs_cluster.html#binding_dedicated).
 
@@ -461,9 +461,9 @@ Add a {{site.data.keyword.Bluemix_notm}} service to a cluster.
 ### bx cs cluster-service-unbind CLUSTER KUBERNETES_NAMESPACE SERVICE_INSTANCE_GUID
 {: #cs_cluster_service_unbind}
 
-Remove a {{site.data.keyword.Bluemix_notm}} service from a cluster.
+Remove an {{site.data.keyword.Bluemix_notm}} service from a cluster.
 
-**Note:** When you remove a {{site.data.keyword.Bluemix_notm}} service, the service credentials are removed from the cluster. If a pod is still using the service, it fails because the service credentials cannot be found.
+**Note:** When you remove an {{site.data.keyword.Bluemix_notm}} service, the service credentials are removed from the cluster. If a pod is still using the service, it fails because the service credentials cannot be found.
 
 <strong>Command options</strong>:
 
@@ -515,7 +515,7 @@ List the services that are bound to one or all of the Kubernetes namespace in a 
 ### bx cs cluster-subnet-add CLUSTER SUBNET
 {: #cs_cluster_subnet_add}
 
-Make a subnet in an IBM Bluemix Infrastructure (SoftLayer) account available to a specified cluster.
+Make a subnet in an IBM Cloud infrastructure (SoftLayer) account available to a specified cluster.
 
 **Note:** When you make a subnet available to a cluster, IP addresses of this subnet are used for cluster networking purposes. To avoid IP address conflicts, make sure that you use a subnet with one cluster only. Do not use a subnet for multiple clusters or for other purposes outside of {{site.data.keyword.containershort_notm}} at the same time.
 
@@ -539,7 +539,7 @@ Make a subnet in an IBM Bluemix Infrastructure (SoftLayer) account available to 
 ### bx cs cluster-subnet-create CLUSTER SIZE VLAN_ID
 {: #cs_cluster_subnet_create}
 
-Create a subnet in an IBM Bluemix Infrastructure (SoftLayer) account and make it available to a specified cluster in {{site.data.keyword.containershort_notm}}.
+Create a subnet in an IBM Cloud infrastructure (SoftLayer) account and make it available to a specified cluster in {{site.data.keyword.containershort_notm}}.
 
 **Note:** When you make a subnet available to a cluster, IP addresses of this subnet are used for cluster networking purposes. To avoid IP address conflicts, make sure that you use a subnet with one cluster only. Do not use a subnet for multiple clusters or for other purposes outside of {{site.data.keyword.containershort_notm}} at the same time.
 
@@ -568,7 +568,7 @@ Create a subnet in an IBM Bluemix Infrastructure (SoftLayer) account and make it
 
 Bring your own private subnet to your {{site.data.keyword.containershort_notm}} clusters.
 
-This private subnet is not one provided by IBM Bluemix Infrastructure (SoftLayer). As such, you must configure any inbound and outbound network traffic routing for the subnet. To add an IBM Bluemix Infrastructure (SoftLayer) subnet, use the `bx cs cluster-subnet-add` [command](#cs_cluster_subnet_add).
+This private subnet is not one provided by IBM Cloud infrastructure (SoftLayer). As such, you must configure any inbound and outbound network traffic routing for the subnet. To add an IBM Cloud infrastructure (SoftLayer) subnet, use the `bx cs cluster-subnet-add` [command](#cs_cluster_subnet_add).
 
 **Note**: When you add a private user subnet to a cluster, IP addresses of this subnet are used for private Load Balancers in the cluster. To avoid IP address conflicts, make sure that you use a subnet with one cluster only. Do not use a subnet for multiple clusters or for other purposes outside of {{site.data.keyword.containershort_notm}} at the same time.
 
@@ -579,7 +579,7 @@ This private subnet is not one provided by IBM Bluemix Infrastructure (SoftLayer
    <dd>The name or ID of the cluster. This value is required.</dd>
 
    <dt><code><em>SUBNET_CIDR</em></code></dt>
-   <dd>The subnet Classless InterDomain Routing (CIDR). This value is required, and must not conflict with any subnet that is used by IBM Bluemix Infrastructure (SoftLayer).
+   <dd>The subnet Classless InterDomain Routing (CIDR). This value is required, and must not conflict with any subnet that is used by IBM Cloud infrastructure (SoftLayer).
 
    Supported prefixes range from `/30` (1 IP address) to `/24` (253 IP addresses). If you set the CIDR at one prefix length and later need to change it, first add the new CIDR, then [remove the old CIDR](#cs_cluster_user_subnet_rm).</dd>
 
@@ -667,33 +667,33 @@ View a list of clusters in your organization.
 ### bx cs credentials-set --infrastructure-api-key API_KEY --infrastructure-username USERNAME
 {: #cs_credentials_set}
 
-Set IBM Bluemix Infrastructure (SoftLayer) account credentials for your {{site.data.keyword.Bluemix_notm}} account. These credentials allow you to access the IBM Bluemix Infrastructure (SoftLayer) portfolio through your {{site.data.keyword.Bluemix_notm}} account.
+Set IBM Cloud infrastructure (SoftLayer) account credentials for your {{site.data.keyword.Bluemix_notm}} account. These credentials allow you to access the IBM Cloud infrastructure (SoftLayer) portfolio through your {{site.data.keyword.Bluemix_notm}} account.
 
-**Note:** Do not set multiple credentials for one {{site.data.keyword.Bluemix_notm}} account. Every {{site.data.keyword.Bluemix_notm}} account is linked to one IBM Bluemix Infrastructure (SoftLayer) portfolio only.
+**Note:** Do not set multiple credentials for one {{site.data.keyword.Bluemix_notm}} account. Every {{site.data.keyword.Bluemix_notm}} account is linked to one IBM Cloud infrastructure (SoftLayer) portfolio only.
 
 <strong>Command options</strong>:
 
    <dl>
    <dt><code>--infrastructure-username <em>USERNAME</em></code></dt>
-   <dd>IBM Bluemix Infrastructure (SoftLayer) account username. This value is required.</dd>
+   <dd>IBM Cloud infrastructure (SoftLayer) account username. This value is required.</dd>
    </dl>
 
    <dt><code>--infrastructure-api-key <em>API_KEY</em></code></dt>
-   <dd>IBM Bluemix Infrastructure (SoftLayer) account API key. This value is required.
+   <dd>IBM Cloud infrastructure (SoftLayer) account API key. This value is required.
 
  <p>
   To generate an API key:
 
   <ol>
-  <li>Log in to the [IBM Bluemix Infrastructure (SoftLayer) portal ![External link icon](../icons/launch-glyph.svg "External link icon")](https://control.softlayer.com/).</li>
+  <li>Log in to the [IBM Cloud infrastructure (SoftLayer) portal ![External link icon](../icons/launch-glyph.svg "External link icon")](https://control.softlayer.com/).</li>
   <li>Select <strong>Account</strong>, and then <strong>Users</strong>.</li>
-  <li>Click <strong>Generate</strong> to generate an IBM Bluemix Infrastructure (SoftLayer) API key for your account.</li>
+  <li>Click <strong>Generate</strong> to generate an IBM Cloud infrastructure (SoftLayer) API key for your account.</li>
   <li>Copy the API key to use in this command.</li>
   </ol>
 
   To view your existing API key:
   <ol>
-  <li>Log in to the [IBM Bluemix Infrastructure (SoftLayer)portal ![External link icon](../icons/launch-glyph.svg "External link icon")](https://control.softlayer.com/).</li>
+  <li>Log in to the [IBM Cloud infrastructure (SoftLayer)portal ![External link icon](../icons/launch-glyph.svg "External link icon")](https://control.softlayer.com/).</li>
   <li>Select <strong>Account</strong>, and then <strong>Users</strong>.</li>
   <li>Click <strong>View</strong> to see your existing API key.</li>
   <li>Copy the API key to use in this command.</li>
@@ -710,7 +710,7 @@ Set IBM Bluemix Infrastructure (SoftLayer) account credentials for your {{site.d
 ### bx cs credentials-unset
 {: #cs_credentials_unset}
 
-Remove IBM Bluemix Infrastructure (SoftLayer) account credentials from your {{site.data.keyword.Bluemix_notm}} account. After removing the credentials, you cannot access the IBM Bluemix Infrastructure (SoftLayer) portfolio through your {{site.data.keyword.Bluemix_notm}} account anymore.
+Remove IBM Cloud infrastructure (SoftLayer) account credentials from your {{site.data.keyword.Bluemix_notm}} account. After removing the credentials, you cannot access the IBM Cloud infrastructure (SoftLayer) portfolio through your {{site.data.keyword.Bluemix_notm}} account anymore.
 
 <strong>Command options</strong>:
 
@@ -961,7 +961,7 @@ View a list of available machine types for your worker nodes. Each machine type 
 ### bx cs subnets
 {: #cs_subnets}
 
-View a list of subnets that are available in an IBM Bluemix Infrastructure (SoftLayer) account.
+View a list of subnets that are available in an IBM Cloud infrastructure (SoftLayer) account.
 
 <strong>Command options</strong>:
 
@@ -978,7 +978,7 @@ View a list of subnets that are available in an IBM Bluemix Infrastructure (Soft
 ### bx cs vlans LOCATION
 {: #cs_vlans}
 
-List the public and private VLANs that are available for a location in your IBM Bluemix Infrastructure (SoftLayer) account. To list available VLANs, you must have a paid account.
+List the public and private VLANs that are available for a location in your IBM Cloud infrastructure (SoftLayer) account. To list available VLANs, you must have a paid account.
 
 <strong>Command options</strong>:
 
@@ -1281,5 +1281,5 @@ You can view the current cluster state by running the bx cs clusters command and
 |Pending|The Kubernetes master is deployed. The worker nodes are being provisioned and are not available in the cluster yet. You can access the cluster, but you cannot deploy apps to the cluster.|
 |Normal|All worker nodes in a cluster are up and running. You can access the cluster and deploy apps to the cluster.|
 |Warning|At least one worker node in the cluster is not available, but other worker nodes are available and can take over the workload. <ol><li>List the worker nodes in your cluster and note the ID of the worker nodes that show a <strong>Warning</strong> state.<pre class="pre"><code>bx cs workers &lt;cluster_name_or_id&gt;</code></pre><li>Get the details for a worker node.<pre class="pre"><code>bx cs worker-get &lt;worker_id&gt;</code></pre><li>Review the <strong>State</strong>, <strong>Status</strong>, and <strong>Details</strong> fields to find the root problem for why the worker node is down.</li><li>If your worker node almost reached the memory or disk space limit, reduce work load on your worker node or add a worker node to your cluster to help load balance the work load.</li></ol>|
-|Critical|The Kubernetes master cannot be reached or all worker nodes in the cluster are down. <ol><li>List the worker nodes in your cluster.<pre class="pre"><code>bx cs workers &lt;cluser_name_or_id&gt;</code></pre><li>Get the details for each worker node.<pre class="pre"><code>bx cs worker-get &lt;worker_id&gt;</code></pre></li><li>Review the <strong>State</strong>, <strong>Status</strong>, and <strong>Details</strong> field to find the root problem for why the worker node is down.</li><li>If the worker node state shows <strong>Provision_failed</strong>, you might not have the required permissions to provision a worker node from the IBM Bluemix Infrastructure (SoftLayer) portfolio. To find the required permissions, see [Configure access to the IBM Bluemix Infrastructure (SoftLayer) portfolio to create standard Kubernetes clusters](cs_planning.html#cs_planning_unify_accounts).</li><li>If the worker node state shows <strong>Critical</strong> and the worker node status shows <strong>Out of disk</strong>, then your worker node ran out of capacity. You can either reduce work load on your worker node or add a worker node to your cluster to help load balance the work load.</li><li>If the worker node state shows <strong>Critical</strong> and the worker node status shows <strong>Unknown</strong>, then the Kubernetes master is not available. Contact {{site.data.keyword.Bluemix_notm}} support by opening a [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/support/index.html#contacting-support).</li></ol>|
+|Critical|The Kubernetes master cannot be reached or all worker nodes in the cluster are down. <ol><li>List the worker nodes in your cluster.<pre class="pre"><code>bx cs workers &lt;cluser_name_or_id&gt;</code></pre><li>Get the details for each worker node.<pre class="pre"><code>bx cs worker-get &lt;worker_id&gt;</code></pre></li><li>Review the <strong>State</strong>, <strong>Status</strong>, and <strong>Details</strong> field to find the root problem for why the worker node is down.</li><li>If the worker node state shows <strong>Provision_failed</strong>, you might not have the required permissions to provision a worker node from the IBM Cloud infrastructure (SoftLayer) portfolio. To find the required permissions, see [Configure access to the IBM Cloud infrastructure (SoftLayer) portfolio to create standard Kubernetes clusters](cs_planning.html#cs_planning_unify_accounts).</li><li>If the worker node state shows <strong>Critical</strong> and the worker node status shows <strong>Out of disk</strong>, then your worker node ran out of capacity. You can either reduce work load on your worker node or add a worker node to your cluster to help load balance the work load.</li><li>If the worker node state shows <strong>Critical</strong> and the worker node status shows <strong>Unknown</strong>, then the Kubernetes master is not available. Contact {{site.data.keyword.Bluemix_notm}} support by opening an [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/support/index.html#contacting-support).</li></ol>|
 {: caption="Table 3. Cluster states" caption-side="top"}

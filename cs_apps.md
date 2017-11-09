@@ -47,8 +47,8 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to you
 
 You can use the default port or set your own port to launch the Kubernetes dashboard for a cluster.
 
-1.  For clusters with a Kubernetes master version of 1.7.4 or earlier: 
-        
+1.  For clusters with a Kubernetes master version of 1.7.4 or earlier:
+
     1.  Set the proxy with the default port number.
 
         ```
@@ -69,32 +69,32 @@ You can use the default port or set your own port to launch the Kubernetes dashb
         http://localhost:8001/ui
         ```
         {: codeblock}
-      
+
 2.  For clusters with a Kubernetes master version of 1.8.2 or later:
-      
+
     1.  Download your credentials.
-      
+
         ```
         bx cs cluster-config <cluster_name>
         ```
         {: codeblock}
-      
+
     2.  View the cluster credentials that you downloaded. Use the filepath that is specified in the export in the previous step.
 
-        For macOS or Linux: 
-      
+        For macOS or Linux:
+
         ```
         cat <filepath_to_cluster_credentials>
         ```
         {: codeblock}
-      
-        For Windows: 
-      
+
+        For Windows:
+
         ```
         type <filepath_to_cluster_credentials>
         ```
         {: codeblock}
-      
+
     3.  Copy the token in the **id-token** field.
 
     4.  Set the proxy with the default port number.
@@ -110,17 +110,17 @@ You can use the default port or set your own port to launch the Kubernetes dashb
         Starting to serve on 127.0.0.1:8001
         ```
         {: screen}
-      
+
     6.  Sign in to the dashboard.
 
-        1.  Copy this URL into your browser. 
+        1.  Copy this URL into your browser.
 
             ```
             http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
             ```
             {: codeblock}
 
-        2.  In the sign on page, select the **Token** authentication method. 
+        2.  In the sign on page, select the **Token** authentication method.
 
         3.  Then, paste the **id-token** value into the **Token** field and click **SIGN IN**.
 
@@ -203,7 +203,7 @@ To create a secret with a certificate:
  kubectl create secret generic <secretName> --from-file=ca.crt=ca.crt
  ```
  {: pre}
- 
+
 <br />
 
 
@@ -361,7 +361,7 @@ Unlike with a NodePort service, the portable IP address of the load balancer ser
 
 The portable IP address of the load balancer is assigned for you and does not change when you add or remove worker nodes. Therefore, load balancer services are more highly available than NodePort services. Users can select any port for the load balancer and are not limited to the NodePort port range. You can use load balancer services for TCP and UDP protocols.
 
-When a {{site.data.keyword.Bluemix_dedicated_notm}} account is [enabled for clusters](cs_ov.html#setup_dedicated), you can request public subnets to be used for load balancer IP addresses. [Open a support ticket](/docs/support/index.html#contacting-support) to create the subnet, and then use the [`bx cs cluster-subnet-add`](cs_cli_reference.html#cs_cluster_subnet_add) command to add the subnet to the cluster.
+When an {{site.data.keyword.Bluemix_dedicated_notm}} account is [enabled for clusters](cs_ov.html#setup_dedicated), you can request public subnets to be used for load balancer IP addresses. [Open a support ticket](/docs/support/index.html#contacting-support) to create the subnet, and then use the [`bx cs cluster-subnet-add`](cs_cli_reference.html#cs_cluster_subnet_add) command to add the subnet to the cluster.
 
 **Note:** Load balancer services do not support TLS termination. If your app requires TLS termination, you can expose your app by using [Ingress](#cs_apps_public_ingress), or configure your app to manage the TLS termination.
 
@@ -501,7 +501,7 @@ Expose multiple apps in your cluster by creating Ingress resources that are mana
 
 When you create a standard cluster, an Ingress controller is automatically created for you and assigned a portable public IP address and a public route. You can configure the Ingress controller and define individual routing rules for every app that you expose to the public. Every app that is exposed via Ingress is assigned a unique path that is appended to the public route, so that you can use a unique URL to access an app publicly in your cluster.
 
-When a {{site.data.keyword.Bluemix_dedicated_notm}} account is [enabled for clusters](cs_ov.html#setup_dedicated), you can request public subnets to be used for Ingress controller IP addresses. Then, the Ingress controller is created and a public route is assigned. [Open a support ticket](/docs/support/index.html#contacting-support) to create the subnet, and then use the [`bx cs cluster-subnet-add`](cs_cli_reference.html#cs_cluster_subnet_add) command to add the subnet to the cluster.
+When an {{site.data.keyword.Bluemix_dedicated_notm}} account is [enabled for clusters](cs_ov.html#setup_dedicated), you can request public subnets to be used for Ingress controller IP addresses. Then, the Ingress controller is created and a public route is assigned. [Open a support ticket](/docs/support/index.html#contacting-support) to create the subnet, and then use the [`bx cs cluster-subnet-add`](cs_cli_reference.html#cs_cluster_subnet_add) command to add the subnet to the cluster.
 
 You can configure the Ingress controller for the following scenarios.
 
@@ -1382,7 +1382,7 @@ By default, only ports 80 and 443 are exposed in the Ingress load balancer. To e
  Data
  ====
 
-  public-ports: "80;443;&ltport3&gt;"
+  public-ports: "80;443;<port3>"
  ```
  {: codeblock}
 
@@ -1398,7 +1398,7 @@ Enable SSL protocols and ciphers at the global HTTP level by editing the `ibm-cl
 By default, the following values are used for ssl-protocols and ssl-ciphers:
 
 ```
-ssl-protocols : "TLSv1 TLSv1.1 TLSv1.2" 
+ssl-protocols : "TLSv1 TLSv1.1 TLSv1.2"
 ssl-ciphers : "HIGH:!aNULL:!MD5"
 ```
 {: codeblock}
@@ -1406,7 +1406,7 @@ ssl-ciphers : "HIGH:!aNULL:!MD5"
 For more information about these parameters, see the NGINX documentation for [ssl-protocols ![External link icon](../icons/launch-glyph.svg "External link icon")](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_protocols) and [ssl-ciphers ![External link icon](../icons/launch-glyph.svg "External link icon")](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_ciphers).
 
 To change the default values:
-1. Create a local version of the configuration file for the ibm-cloud-provider-ingress-cm config map resource. 
+1. Create a local version of the configuration file for the ibm-cloud-provider-ingress-cm config map resource.
 
  ```
  apiVersion: v1
@@ -1444,8 +1444,8 @@ To change the default values:
  Data
  ====
 
-  ssl-protocols: "TLSv1 TLSv1.1 TLSv1.2" 
-  ssl-ciphers: "HIGH:!aNULL:!MD5" 
+  ssl-protocols: "TLSv1 TLSv1.1 TLSv1.2"
+  ssl-ciphers: "HIGH:!aNULL:!MD5"
  ```
  {: screen}
 
@@ -1932,7 +1932,7 @@ Create a persistent volume claim (pvc) to provision NFS file storage for your cl
 The NFS file storage that backs the persistent volume is clustered by IBM in order to provide high availability for your data.
 
 
-When a {{site.data.keyword.Bluemix_dedicated_notm}} account is [enabled for clusters](cs_ov.html#setup_dedicated), instead of using this task, you must [open a support ticket](/docs/support/index.html#contacting-support). By opening a ticket, you can request a backup for your volumes, a restoration from your volumes, and other storage functions.
+When an {{site.data.keyword.Bluemix_dedicated_notm}} account is [enabled for clusters](cs_ov.html#setup_dedicated), instead of using this task, you must [open a support ticket](/docs/support/index.html#contacting-support). By opening a ticket, you can request a backup for your volumes, a restoration from your volumes, and other storage functions.
 
 
 1.  Review the available storage classes. {{site.data.keyword.containerlong}} provides eight pre-defined storage classes so that the cluster admin does not have to create any storage classes. The `ibmc-file-bronze` storage class is the same as the `default` storage class.
