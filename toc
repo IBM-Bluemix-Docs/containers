@@ -2,7 +2,7 @@
 {:topicgroup: .topicgroup}
 
 {: .toc subcollection="containers" audience="compute" href="/docs/containers/index.html"}
-IBM Bluemix Container Service
+IBM Cloud Container Service
 
     {: .navgroup id="learn"}
     container_index.md
@@ -28,7 +28,7 @@ IBM Bluemix Container Service
     cs_cli_install.md
     cs_cluster.md
     cs_apps.md
-    [Running single and scalable containers](cs_classic.html)
+    [Deprecated: Running single and scalable containers](cs_classic.html)
         [Migrating single and scalable containers to Kubernetes clusters](cs_classic.html#cs_classic_migrating)
         [About single and scalable containers](container_ov.html)
         [Planning single and scalable containers](container_planning.html)

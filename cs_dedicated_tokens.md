@@ -16,7 +16,7 @@ lastupdated: "2017-11-02"
 {:download: .download}
 
 
-# Creating a {{site.data.keyword.registryshort_notm}} token for a {{site.data.keyword.Bluemix_dedicated_notm}} image registry
+# Creating a {{site.data.keyword.registryshort_notm}} token for an {{site.data.keyword.Bluemix_dedicated_notm}} image registry
 {: #cs_dedicated_tokens}
 
 Create a non-expiring token to use an image registry that you used for single and scalable groups with clusters.
@@ -145,7 +145,7 @@ Create a non-expiring token to use an image registry that you used for single an
         <td>The namespace where your image is stored. To list available namespaces, run `bx cr namespace-list`.</td>
         </tr>
         <td><code>&lt;my_image&gt;</code></td>
-        <td>The name of the image that you want to use. To list available images in a {{site.data.keyword.Bluemix_notm}} account, run <code>bx cr image-list</code>.</td>
+        <td>The name of the image that you want to use. To list available images in an {{site.data.keyword.Bluemix_notm}} account, run <code>bx cr image-list</code>.</td>
         </tr>
         <tr>
         <td><code>&lt;tag&gt;</code></td>

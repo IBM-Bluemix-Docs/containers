@@ -34,7 +34,7 @@ Services group a set of pods and provide network connection to these pods for ot
 
 To make your app even more highly available, in standard clusters, you can create multiple worker nodes to run even more replicas of your app. This task is not covered in this tutorial, but keep this concept in mind for future improvements to an app's availability.
 
-Only one of the lessons includes the integration of a {{site.data.keyword.Bluemix_notm}} service into an app, but you can use them with as simple or complex of an app as you can imagine.
+Only one of the lessons includes the integration of an {{site.data.keyword.Bluemix_notm}} service into an app, but you can use them with as simple or complex of an app as you can imagine.
 
 ## Objectives
 
@@ -43,7 +43,7 @@ Only one of the lessons includes the integration of a {{site.data.keyword.Bluemi
 * Make an app publicly accessible
 * Deploy a single instance of an app in a cluster by using a Kubernetes command and a script
 * Deploy multiple instances of an app in containers that are re-created during health checks
-* Deploy an app that uses functionality from a {{site.data.keyword.Bluemix_notm}} service
+* Deploy an app that uses functionality from an {{site.data.keyword.Bluemix_notm}} service
 
 ## Time required
 
@@ -65,7 +65,7 @@ In this lesson, you deploy a single instance of the Hello World app into a clust
 <a href="../api/content/containers/images/cs_app_tutorial_components1.png">![Deployment setup](images/cs_app_tutorial_components1.png)</a>
 
 
-1.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your {{site.data.keyword.Bluemix_notm}} credentials when prompted. To specify a {{site.data.keyword.Bluemix_notm}} region, [include the API endpoint](cs_regions.html#bluemix_regions).
+1.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your {{site.data.keyword.Bluemix_notm}} credentials when prompted. To specify an {{site.data.keyword.Bluemix_notm}} region, [include the API endpoint](cs_regions.html#bluemix_regions).
 
     ```
     bx login
@@ -904,7 +904,7 @@ While a deployment is running, you can edit the deployment to change values in t
 
 2.  Optional: Repeat the changes for the watson-pod deployment.
 
-[Test your knowledge and take a quiz! ![External link icon](../icons/launch-glyph.svg "External link icon")](https://bluemix-quizzes.mybluemix.net/containers/apps_tutorial/quiz.php)
+[Test your knowledge and take a quiz! ![External link icon](../icons/launch-glyph.svg "External link icon")](https://ibmcloud-quizzes.mybluemix.net/containers/apps_tutorial/quiz.php)
 
 Congratulations! You deployed the Watson Tone Analyzer app. The PR firm can definitely start using this deployment of the app to start analyzing their press releases.
 
