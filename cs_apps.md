@@ -124,7 +124,11 @@ You can use the default port or set your own port to launch the Kubernetes dashb
 
         3.  Then, paste the **id-token** value into the **Token** field and click **SIGN IN**.
 
+[Next, you can run a configuration file from the dashboard.](#cs_apps_ui)
+
 When you are done with the Kubernetes dashboard, use `CTRL+C` to exit the `proxy` command. After you exit, the Kubernetes dashboard is no longer available. Run the `proxy` command to restart the Kubernetes dashboard.
+
+
 
 <br />
 
