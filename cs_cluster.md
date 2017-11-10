@@ -1623,17 +1623,16 @@ To view logs for clusters and containers, you can use the standard Kubernetes an
 #### {{site.data.keyword.loganalysislong_notm}}
 {: #cs_view_logs_k8s}
 
-For standard clusters, logs are located in the {{site.data.keyword.Bluemix_notm}} space you were logged in to when you created the Kubernetes cluster. Container logs are monitored and forwarded outside of the container. You can access logs for a container by using the Kibana dashboard. For more information about logging, see [Logging for the {{site.data.keyword.containershort_notm}}](/docs/services/CloudLogAnalysis/containers/logging_containers_ov.html#logging_containers_ov).
-
-To access the Kibana dashboard, go to one of the following URLs and select the {{site.data.keyword.Bluemix_notm}} account or space where you created the cluster.
+For standard clusters, logs are located in the {{site.data.keyword.Bluemix_notm}} space you were logged in to when you created the Kubernetes cluster. Container logs are monitored and forwarded outside of the container. You can access logs for a container by using the Kibana dashboard. To access the Kibana dashboard, go to one of the following URLs and select the {{site.data.keyword.Bluemix_notm}} account or space where you created the cluster.
 - US-South and US-East: https://logging.ng.bluemix.net
 - UK-South: https://logging.eu-gb.bluemix.net
 - EU-Central: https://logging.eu-de.bluemix.net
 
+For more information about viewing logs, see [Navigating to Kibana from a web browser](/docs/services/CloudLogAnalysis/kibana/launch.html#launch_Kibana_from_browser).
 #### Docker logs
 {: #cs_view_logs_docker}
 
-You can leverage the built-in Docker logging capabilities to review activities on the standard STDOUT and STDERR output streams. For more information, see [Viewing container logs for a container that runs in a Kubernetes cluster](/docs/services/CloudLogAnalysis/containers/logging_containers_ov.html#logging_containers_ov_methods_view_kube).
+You can leverage the built-in Docker logging capabilities to review activities on the standard STDOUT and STDERR output streams. For more information, see [Viewing container logs for a container that runs in a Kubernetes cluster](/docs/services/CloudLogAnalysis/containers/containers_kubernetes.html#containers_kubernetes).
 
 ### Configuring log forwarding for a Docker container namespace
 {: #cs_configure_namespace_logs}
