@@ -24,6 +24,7 @@ You can use Kubernetes techniques to deploy apps and to ensure your apps are up 
 
 Deploying an app generally includes the following steps.
 
+
 1.  [Install the CLIs](cs_cli_install.html#cs_cli_install).
 
 2.  Create a configuration file for your app. [Review the best practices from Kubernetes. ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/configuration/overview/)
@@ -33,6 +34,9 @@ Deploying an app generally includes the following steps.
     -   The Kubernetes dashboard
         1.  [Start the Kubernetes dashboard.](#cs_cli_dashboard)
         2.  [Run the configuration file.](#cs_apps_ui)
+
+
+
 
 <br />
 
@@ -124,7 +128,11 @@ You can use the default port or set your own port to launch the Kubernetes dashb
 
         3.  Then, paste the **id-token** value into the **Token** field and click **SIGN IN**.
 
+[Next, you can run a configuration file from the dashboard.](#cs_apps_ui)
+
 When you are done with the Kubernetes dashboard, use `CTRL+C` to exit the `proxy` command. After you exit, the Kubernetes dashboard is no longer available. Run the `proxy` command to restart the Kubernetes dashboard.
+
+
 
 <br />
 
