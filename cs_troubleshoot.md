@@ -621,6 +621,60 @@ There are no service disruptions due to these duplicates, but you should remove 
 <br />
 
 
+## Logs do not appear
+{: #cs_no_logs}
+
+{: tsSymptoms}
+When you access the Kibana dashboard, logs do not display.
+
+{: tsCauses}
+Logs might not be appearing for one of the following reasons:<br/><br/>
+    A. The cluster is not in a `Normal` state.<br/><br/>
+    B. The log storage quota has been hit.<br/><br/>
+    C. If you specified a space at cluster creation, the account owner does not have Manager, Developer, or Auditor permissions to that space.<br/><br/>
+    D. No events that trigger logs have occurred in your pod yet.<br/><br/>
+
+{: tsResolve}
+Review the following options to resolve each of the possible reasons why logs do not appear:
+
+A. To check the state of your cluster, see [Debugging clusters](cs_troubleshoot.html#debug_clusters).<br/><br/>
+B. To increase your log storage limits, see the [{{site.data.keyword.loganalysislong_notm}} documentation](https://console.bluemix.net/docs/services/CloudLogAnalysis/troubleshooting/error_msgs.html#error_msgs).<br/><br/>
+C. To change {{site.data.keyword.containershort_notm}} access permissions for the account owner, see [Managing cluster access](cs_cluster.html#cs_cluster_user). Once permissions are changed, it can take up to 24 hours for logs to start appearing.<br/><br/>
+D. To trigger a log for an event, you can deploy Noisy, a sample pod that produces several log events, onto a worker node in your cluster.<br/>
+  1. [Target your CLI](cs_cli_install.html#cs_cli_configure) to a cluster where you want to start producing logs.
+
+  2. Create the `deploy-noisy.yaml` configuration file.
+
+      ```
+      apiVersion: v1
+      kind: Pod
+      metadata:
+        name: noisy
+      spec:
+        containers:
+        - name: noisy
+          image: ubuntu:16.04
+          command: ["/bin/sh"]
+          args: ["-c", "while true; do sleep 10; echo 'Hello world!'; done"]
+          imagePullPolicy: "Always"
+        ```
+        {: codeblock}
+
+  3. Run the configuration file in the cluster's context.
+
+        ```
+        kubectl apply -f <filepath_to_noisy>
+        ```
+        {:pre}
+
+  4. After a few minutes, you can view your logs in the Kibana dashboard. To access the Kibana dashboard, go to one of the following URLs and select the {{site.data.keyword.Bluemix_notm}} account where you created the cluster. If you specified a space at cluster creation, go to that space instead.
+        - US-South and US-East: https://logging.ng.bluemix.net
+        - UK-South: https://logging.eu-gb.bluemix.net
+        - EU-Central: https://logging.eu-de.bluemix.net
+
+<br />
+
+
 ## Kubernetes dashboard does not display utilization graphs
 {: #cs_dashboard_graphs}
 

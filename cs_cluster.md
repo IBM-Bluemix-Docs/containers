@@ -1838,7 +1838,8 @@ Review the following aspects of application log forwarding:
 * Logs are read recursively from the /var/log/apps path. This means that you can put application logs in subdirectories of the /var/log/apps path.
 * Only application log files with `.log` or `.err` file extensions are forwarded.
 * When you enable log forwarding for the first time, application logs are tailed instead of being read from head. This means that the contents of any logs already present before application logging was enabled are not read. The logs are read from the point that logging was enabled. However, after the first time that log forwarding is enabled, logs are always picked up from where they last left off.
-* When you mount the `/var/log/apps` host path volume to containers, the containers all write to this same directory. This means that if your containers are writing to the same file name, the containers will write to the extact same file on the host. If this is not your intention, you can prevent your containers from overwriting the same log files by name the log files from each container differently.
+* When you mount the `/var/log/apps` host path volume to containers, the containers all write to this same directory. This means that if your containers are writing to the same file name, the containers will write to the exact same file on the host. If this is not your intention, you can prevent your containers from overwriting the same log files by naming the log files from each container differently.
+* Because all containers write to the same file name, do not use this method to forward application logs for ReplicaSets. Instead, you can write logs from the application to STDOUT and STDERR. These logs are picked up as container logs, and container logs are automatically forwarded to {{site.data.keyword.loganalysisshort_notm}}. To forward application logs written to STDOUT and STDERR to an external syslog server instead, follow the steps in [Enabling log forwarding to syslog](cs_cluster.html#cs_namespace_enable).
 
 Before you start, [target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster where the log source is located.
 
@@ -1853,7 +1854,7 @@ Before you start, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
       name: <pod_name>
     containers:
     - name: fluentd
-      image: "<registry_url>/armada/<image_prefix>-fluentd-collector:<tag>"
+      image: "<your_registry_image>"
       volumeMounts:
         # Docker paths
           - mountPath: /var/log/my-app-log-files-directory
