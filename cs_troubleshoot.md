@@ -91,7 +91,7 @@ Review the options to debug your clusters and find the root causes for failures.
     <tbody>
       <tr>
        <td>Unknown</td>
-       <td>The Kubernetes master is not reachable for one of the following reasons:<ul><li>You requested an update of your Kubernetes master. The state of the worker node cannot be retrieved during the update.</li><li>You might have an additional firewall that is protecting your worker nodes, or changed firewall settings recently. {{site.data.keyword.containershort_notm}} requires certain IP addresses and ports to be opened to allow communication from the worker node to the Kubernetes master and vice versa. For more information, see [Worker nodes are stuck in a reloading loop](#cs_firewall).</li><li>The Kubernetes master is down. Contact {{site.data.keyword.Bluemix_notm}} support by opening an [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/support/index.html#contacting-support).</li></ul></td>
+       <td>The Kubernetes master is not reachable for one of the following reasons:<ul><li>You requested an update of your Kubernetes master. The state of the worker node cannot be retrieved during the update.</li><li>You might have an additional firewall that is protecting your worker nodes, or changed firewall settings recently. {{site.data.keyword.containershort_notm}} requires certain IP addresses and ports to be opened to allow communication from the worker node to the Kubernetes master and vice versa. For more information, see [Firewall prevents worker nodes from connecting](#cs_firewall).</li><li>The Kubernetes master is down. Contact {{site.data.keyword.Bluemix_notm}} support by opening an [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/support/index.html#contacting-support).</li></ul></td>
       </tr>
       <tr>
         <td>Provisioning</td>
@@ -426,7 +426,7 @@ The deleted node is no longer listed in Calico.
 <br />
 
 
-## Worker nodes fail to connect
+## Firewall prevents worker nodes from connecting
 {: #cs_firewall}
 
 {: tsSymptoms}
@@ -915,35 +915,6 @@ When you retrieve the `<ETCD_URL>`, continue with the steps as listed in (Adding
 
 <br />
 
-
-## Known issues
-{: #cs_known_issues}
-
-Learn about the known issues.
-{: shortdesc}
-
-### Clusters
-{: #ki_clusters}
-
-<dl>
-  <dt>Cloud Foundry apps in the same {{site.data.keyword.Bluemix_notm}} space cannot access a cluster</dt>
-    <dd>When you create a Kubernetes cluster, the cluster is created at the account level and does not use the space, except when you bind {{site.data.keyword.Bluemix_notm}} services. If you have a Cloud Foundry app that you want the cluster to access, you must either make the Cloud Foundry app publicly available, or you must make your app in your cluster [publicly available](cs_planning.html#cs_planning_public_network).</dd>
-  <dt>Kube dashboard NodePort service has been disabled</dt>
-    <dd>For security reasons, the Kubernetes dashboard NodePort service is disabled. To access your Kubernetes dashboard, run the following command.</br><pre class="codeblock"><code>kubectl proxy</code></pre></br>Then, you can access the Kubernetes dashboard at `http://localhost:8001/ui`.</dd>
-  <dt>Limitations with the service type of load balancer</dt>
-    <dd><ul><li>You cannot use load balancing on private VLANs.<li>You cannot use service.beta.kubernetes.io/external-traffic and service.beta.kubernetes.io/healthcheck-nodeport service annotations. For more information about these annotations, see the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tutorials/services/source-ip/).</ul></dd>
-  <dt>Horizontal autoscaling does not work in some clusters</dt>
-    <dd>For security reasons, the standard port that is used by Heapster (10255) is closed in all worker nodes in old clusters. Because this port is closed, Heapster is unable to report metrics for worker nodes and horizontal autoscaling cannot work as documented in [Horizontal Pod Autoscaling ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) in the Kubernetes documentation. Create another cluster to avoid this issue.</dd>
-</dl>
-
-### Persistent Storage
-{: #persistent_storage}
-
-The `kubectl describe <pvc_name>` command displays **ProvisioningFailed** for a persistent volume claim:
-<ul><ul>
-<li>When you create a persistent volume claim, no persistent volume is available, so Kubernetes returns the message **ProvisioningFailed**.
-<li>When the persistent volume is created and bound to the claim, Kubernetes returns the message **ProvisioningSucceeded**. This process can take a few minutes.
-</ul></ul>
 
 ## Getting help and support
 {: #ts_getting_help}
