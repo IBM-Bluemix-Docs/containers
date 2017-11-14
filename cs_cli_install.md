@@ -607,83 +607,9 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     ```
     {: screen}
 
-    You can find the IAM token in the **access_token**, the IAM refresh token in the **refresh_token**, and the UAA token in the **uaa_token** field of your CLI output.
+    You can find the IAM token in the **access_token** and the IAM refresh token in the **refresh_token**.
 
-4.  Retrieve the ID of the {{site.data.keyword.Bluemix_notm}} space where the cluster was created.
-    1.  Retrieve the API endpoint to access the space ID. Replace _&lt;uaa_token&gt;_ with the UAA token that you retrieved in the previous step.
-
-        ```
-        GET https://api.<region>.bluemix.net/v2/organizations
-        ```
-        {: codeblock}
-
-        <table summary="Input parametersto retrive space ID">
-        <thead>
-        <th>Input parameters</th>
-        <th>Values</th>
-        </thead>
-        <tbody>
-        <tr>
-        <td>Header</td>
-        <td><ul><li>Content-Type: application/x-www-form-urlencoded;charset=utf</li>
-        <li>Authorization: bearer &lt;uaa_token&gt;</li>
-        <li>Accept: application/json;charset=utf-8</li></ul></td>
-        </tr>
-        </tbody>
-        </table>
-
-      Example API output:
-
-      ```
-      {
-            "metadata": {
-              "guid": "<org_id>",
-              "url": "/v2/organizations/<my_org_id>",
-              "created_at": "2016-01-07T18:55:19Z",
-              "updated_at": "2016-02-09T15:56:22Z"
-            },
-            "entity": {
-              "name": "<org_name>",
-              "billing_enabled": false,
-              "quota_definition_guid": "<my_org_id>",
-              "status": "active",
-              "quota_definition_url": "/v2/quota_definitions/<my_org_id>",
-              "spaces_url": "/v2/organizations/<my_org_id>/spaces",
-      ...
-
-      ```
-      {: screen}
-
-5.  Note the output of the **spaces_url** field.
-6.  Retrieve the ID of the {{site.data.keyword.Bluemix_notm}} space by using the **spaces_url** endpoint.
-
-      ```
-      GET https://api.<region>.bluemix.net/v2/organizations/<my_org_id>/spaces
-      ```
-      {: codeblock}
-
-      Example API output:
-
-      ```
-      {
-            "metadata": {
-              "guid": "<my_space_id>",
-              "url": "/v2/spaces/<my_space_id>",
-              "created_at": "2016-01-07T18:55:22Z",
-              "updated_at": null
-            },
-            "entity": {
-              "name": "<space_name>",
-              "organization_guid": "<my_org_id>",
-              "space_quota_definition_guid": null,
-              "allow_ssh": true,
-      ...
-      ```
-      {: screen}
-
-      You can find the ID of the {{site.data.keyword.Bluemix_notm}} space in the **metadata/guid** field of your API output.
-
-7.  List all Kubernetes clusters in your account. Use the information that you retrieved in earlier steps to build your header information.
+4.  List all Kubernetes clusters in your account. Use the information that you retrieved in earlier steps to build your header information.
 
     -   US-South
 
@@ -734,7 +660,7 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
         </tbody>
         </table>
 
-8.  Review the [{{site.data.keyword.containershort_notm}} API documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://us-south.containers.bluemix.net/swagger-api) to find a list of supported APIs.
+5.  Review the [{{site.data.keyword.containershort_notm}} API documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://us-south.containers.bluemix.net/swagger-api) to find a list of supported APIs.
 
 <br />
 
