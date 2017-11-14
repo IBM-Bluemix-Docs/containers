@@ -489,9 +489,10 @@ spec:
  <tbody>
  <tr>
  <td><code>annotations</code></td>
- <td>Replace the following value:<ul>
+ <td>Replace the following value:
+ <ul>
  <li><code><em>&lt;external_service&gt;</em></code>: Enter the external service to be called. For example, https://&lt;myservice&gt;.&lt;region&gt;.mybluemix.net.</li>
-
+ </ul>
  </tr>
  </tbody></table>
 
@@ -881,7 +882,7 @@ spec:
         backend:
           serviceName: myservice
           servicePort: 8080
-          </code>
+          </code></pre>
  <table>
   <thead>
   <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>

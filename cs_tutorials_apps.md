@@ -148,10 +148,10 @@ In this lesson, you deploy a single instance of the Hello World app into a clust
         ```
         {: pre}
 
-5.  Clone or download the source code for the [Hello world app ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/IBM/container-service-getting-started-wt) to your user home directory.
+5.  Clone or download the source code for the [Hello world app ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/Osthanes/container-service-getting-started-wt) to your user home directory.
 
     ```
-    git clone https://github.com/IBM/container-service-getting-started-wt.git
+    git clone https://github.com/Osthanes/container-service-getting-started-wt.git
     ```
     {: pre}
 
