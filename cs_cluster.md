@@ -1620,8 +1620,7 @@ For standard clusters, logs are located in the {{site.data.keyword.Bluemix_notm}
 
 To access the Kibana dashboard, go to one of the following URLs and select the {{site.data.keyword.Bluemix_notm}} account or space where you created the cluster.
 - US-South and US-East: https://logging.ng.bluemix.net
-- UK-South: https://logging.eu-gb.bluemix.net
-- EU-Central: https://logging.eu-de.bluemix.net
+- UK-South and EU-Central: https://logging.eu-fra.bluemix.net
 
 For more information about viewing logs, see [Navigating to Kibana from a web browser](/docs/services/CloudLogAnalysis/kibana/launch.html#launch_Kibana_from_browser).
 
