@@ -108,19 +108,11 @@ To create a cluster:
 
 3. If you have multiple {{site.data.keyword.Bluemix_notm}} accounts, select the account where you want to create your Kubernetes cluster.
 
-4.  Specify the {{site.data.keyword.Bluemix_notm}} organization and space where you want to create your Kubernetes cluster.
-    ```
-    bx target --cf
-    ```
-    {: pre}
-
-    **Note**: Clusters are specific to an account and an organization, but are independent from a {{site.data.keyword.Bluemix_notm}} space. For example, if you create a cluster in your organization in `test` space, you can still work with that cluster if you later target the `dev` space.
-
-5.  If you want to create or access Kubernetes clusters in a region other than the {{site.data.keyword.Bluemix_notm}} region that you selected earlier, [specify the {{site.data.keyword.containershort_notm}} region API endpoint](cs_regions.html#container_login_endpoints).
+4.  If you want to create or access Kubernetes clusters in a region other than the {{site.data.keyword.Bluemix_notm}} region that you selected earlier, [specify the {{site.data.keyword.containershort_notm}} region API endpoint](cs_regions.html#container_login_endpoints).
 
     **Note**: If you want to create a cluster in US East, you must specify the US East container region API endpoint using the `bx cs init --host https://us-east.containers.bluemix.net` command.
 
-7.  Create a cluster.
+6.  Create a cluster.
     1.  Review the locations that are available. The locations that are shown depend on the {{site.data.keyword.containershort_notm}} region that you are logged in.
 
         ```
@@ -226,7 +218,7 @@ To create a cluster:
         </tr>
         </tbody></table>
 
-8.  Verify that the creation of the cluster was requested.
+7.  Verify that the creation of the cluster was requested.
 
     ```
     bx cs clusters
@@ -243,7 +235,7 @@ To create a cluster:
     ```
     {: screen}
 
-9.  Check the status of the worker nodes.
+8.  Check the status of the worker nodes.
 
     ```
     bx cs workers <cluster>
@@ -260,7 +252,7 @@ To create a cluster:
     ```
     {: screen}
 
-10. Set the cluster you created as the context for this session. Complete these configuration steps every time that you work with your cluster.
+9. Set the cluster you created as the context for this session. Complete these configuration steps every time that you work with your cluster.
     1.  Get the command to set the environment variable and download the Kubernetes configuration files.
 
         ```
@@ -295,7 +287,7 @@ To create a cluster:
         ```
         {: screen}
 
-11. Launch your Kubernetes dashboard with the default port `8001`.
+10. Launch your Kubernetes dashboard with the default port `8001`.
     1.  Set the proxy with the default port number.
 
         ```
@@ -864,7 +856,7 @@ Add an existing {{site.data.keyword.Bluemix_notm}} service instance to your clus
 Before you begin:
 
 1. [Target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
-2. [Request an instance of the {{site.data.keyword.Bluemix_notm}} service](/docs/services/reqnsi.html#req_instance) in your space.
+2. [Request an instance of the {{site.data.keyword.Bluemix_notm}} service](/docs/services/reqnsi.html#req_instance).
    **Note:** To create an instance of a service in the Washington DC location, you must use the CLI.
 3. For {{site.data.keyword.Bluemix_dedicated_notm}} users, see [Adding {{site.data.keyword.Bluemix_notm}} services to clusters in {{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)](#binding_dedicated) instead.
 
@@ -876,7 +868,7 @@ Before you begin:
 
 
 To add a service:
-2.  List all existing services in your {{site.data.keyword.Bluemix_notm}} space.
+2.  List available {{site.data.keyword.Bluemix_notm}} services.
 
     ```
     bx service list
@@ -975,7 +967,7 @@ To use the service in a pod that is deployed in the cluster, cluster users can a
     ```
     {: pre}
 
-6.  Verify that you created your service instance by listing all existing services in your {{site.data.keyword.Bluemix_notm}} space.
+6.  Verify that you created your service instance by listing available {{site.data.keyword.Bluemix_notm}} services.
 
     ```
     bx service list
@@ -1191,6 +1183,7 @@ Updating production-level clusters:
 - To help avoid downtime for your apps, the update process prevents pods from being scheduled on the worker node during the update. See [`kubectl drain` ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/user-guide/kubectl/v1.8/#drain) for more information.
 - Use a test cluster to validate that your workloads and the delivery process are not impacted by the update. You cannot roll back worker nodes to a previous version.
 - Production-level clusters should have capacity to survive a worker node failure. If your cluster does not, add a worker node before updating the cluster.
+- A rolling update is performed when multiple worker nodes are requested to upgrade. A maximum of 20 percent of the total amount of worker nodes in a cluster can be upgraded simultaneously. The upgrade process waits for a worker node to complete the upgrade before another worker starts upgrading.
 
 
 1. Install the version of the [`kubectl cli` ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/tools/install-kubectl/) that matches the Kubernetes version of the Kubernetes master.
@@ -1618,17 +1611,20 @@ Logs help you troubleshoot issues with your clusters and apps. Sometimes, you mi
 To view logs for clusters and containers, you can use the standard Kubernetes and Docker logging features.
 {:shortdesc}
 
-**Note**: In order to view logs, the account owner needs Manager, Developer, or Auditor permissions to the space that the cluster was created in. For more information about changing {{site.data.keyword.containershort_notm}} access policies and permissions, see [Managing cluster access](cs_cluster.html#cs_cluster_user). Once permissions are changed, it can take up to 24 hours for logs to start appearing.
-
 #### {{site.data.keyword.loganalysislong_notm}}
 {: #cs_view_logs_k8s}
 
-For standard clusters, logs are located in the {{site.data.keyword.Bluemix_notm}} space you were logged in to when you created the Kubernetes cluster. Container logs are monitored and forwarded outside of the container. You can access logs for a container by using the Kibana dashboard. To access the Kibana dashboard, go to one of the following URLs and select the {{site.data.keyword.Bluemix_notm}} account or space where you created the cluster.
+For standard clusters, logs are located in the {{site.data.keyword.Bluemix_notm}} account you were logged in to when you created the Kubernetes cluster. If you specified an {{site.data.keyword.Bluemix_notm}} space when you created the cluster, then logs are located in that space. Container logs are monitored and forwarded outside of the container. You can access logs for a container by using the Kibana dashboard. For more information about logging, see [Logging for the {{site.data.keyword.containershort_notm}}](/docs/services/CloudLogAnalysis/containers/logging_containers_ov.html#logging_containers_ov).
+
+**Note**: If logs are located in the space that you specified at cluster creation, the account owner needs Manager, Developer, or Auditor permissions to that space to view logs. For more information about changing {{site.data.keyword.containershort_notm}} access policies and permissions, see [Managing cluster access](cs_cluster.html#cs_cluster_user). Once permissions are changed, it can take up to 24 hours for logs to start appearing.
+
+To access the Kibana dashboard, go to one of the following URLs and select the {{site.data.keyword.Bluemix_notm}} account or space where you created the cluster.
 - US-South and US-East: https://logging.ng.bluemix.net
 - UK-South: https://logging.eu-gb.bluemix.net
 - EU-Central: https://logging.eu-de.bluemix.net
 
 For more information about viewing logs, see [Navigating to Kibana from a web browser](/docs/services/CloudLogAnalysis/kibana/launch.html#launch_Kibana_from_browser).
+
 #### Docker logs
 {: #cs_view_logs_docker}
 
