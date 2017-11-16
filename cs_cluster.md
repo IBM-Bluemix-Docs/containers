@@ -23,9 +23,11 @@ lastupdated: "2017-11-15"
 Design your cluster setup for maximum availability and capacity.
 {:shortdesc}
 
-Before you begin, review the options for [highly available cluster configurations](cs_planning.html#cs_planning_cluster_config).
+The following diagram includes common cluster configurations with increasing availability.
 
 ![Stages of high availability for a cluster](images/cs_cluster_ha_roadmap.png)
+
+As shown in the diagram, deploying your apps across multiple worker nodes makes the apps more highly available. Deploying your apps across multiple clusters makes them even more highly available. For the highest availability, deploy your apps across clusters in different regions. [For more detail, review the options for highly available cluster configurations.](cs_planning.html#cs_planning_cluster_config)
 
 <br />
 
@@ -1459,11 +1461,13 @@ Before you begin: Configure the routing of network traffic into and out of the e
 If you already have existing NFS file shares in your IBM Cloud infrastructure (SoftLayer) account that you want to use with Kubernetes, you can do so by creating persistent volumes on your existing NFS file share. A persistent volume is a piece of actual hardware that serves as a Kubernetes cluster resource and can be consumed by the cluster user.
 {:shortdesc}
 
+Kubernetes differentiates between persistent volumes that represent the actual hardware and persistent volume claims that are requests for storage usually initiated by the cluster user. The following diagram illustrates the relationship between persistent volumes and persistent volume claims.
+
+![Create persistent volumes and persistent volume claims](images/cs_cluster_pv_pvc.png)
+
+ As depicted in the diagram, to enable existing NFS file shares to be used with Kubernetes, you must create persistent volumes with a certain size and access mode and create a persistent volume claim that matches the persistent volume specification. If persistent volume and persistent volume claim match, they are bound to each other. Only bound persistent volume claims can be used by the cluster user to mount the volume to a pod. This process is referred to as static provisioning of persistent storage.
+
 Before you begin, make sure that you have an existing NFS file share that you can use to create your persistent volume.
-
-[![Create persistent volumes and persistent volume claims](images/cs_cluster_pv_pvc.png)](../api/content/containers/images/cs_cluster_pv_pvc.png)
-
-Kubernetes differentiates between persistent volumes that represent the actual hardware and persistent volume claims that are requests for storage usually initiated by the cluster user. When you want to enable existing NFS file shares to be used with Kubernetes, you must create persistent volumes with a certain size and access mode and create a persistent volume claim that matches the persistent volume specification. If persistent volume and persistent volume claim match, they are bound to each other. Only bound persistent volume claims can be used by the cluster user to mount the volume to a pod. This process is referred to as static provisioning of persistent storage.
 
 **Note:** Static provisioning of persistent storage only applies to existing NFS file shares. If you do not have existing NFS file shares, cluster users can use the [dynamic provisioning](cs_apps.html#cs_apps_volume_claim) process to add persistent volumes.
 
@@ -1620,8 +1624,7 @@ For standard clusters, logs are located in the {{site.data.keyword.Bluemix_notm}
 
 To access the Kibana dashboard, go to one of the following URLs and select the {{site.data.keyword.Bluemix_notm}} account or space where you created the cluster.
 - US-South and US-East: https://logging.ng.bluemix.net
-- UK-South: https://logging.eu-gb.bluemix.net
-- EU-Central: https://logging.eu-de.bluemix.net
+- UK-South and EU-Central: https://logging.eu-fra.bluemix.net
 
 For more information about viewing logs, see [Navigating to Kibana from a web browser](/docs/services/CloudLogAnalysis/kibana/launch.html#launch_Kibana_from_browser).
 
@@ -2165,7 +2168,7 @@ To use Weave Scope with a cluster:
     ```
     {: screen}
 
-5.  Open your web browser to `http://localhost:4040`. Choose to view topology diagrams or tables of the Kubernetes resources in the cluster.
+5.  Open your web browser to `http://localhost:4040`. Without the default components deployed, you see the following diagram. You can choose to view topology diagrams or tables of the Kubernetes resources in the cluster.
 
      <img src="images/weave_scope.png" alt="Example topology from Weave Scope" style="width:357px;" />
 
