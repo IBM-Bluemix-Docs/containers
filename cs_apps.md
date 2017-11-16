@@ -22,7 +22,7 @@ lastupdated: "2017-11-07"
 You can use Kubernetes techniques to deploy apps and to ensure your apps are up and running at all times. For example, you can perform rolling updates and rollbacks without downtime for your users.
 {:shortdesc}
 
-Learn the general steps for deploying apps by clicking an area of the image.
+Learn the general steps for deploying apps by clicking an area of the following image.
 
 <img usemap="#d62e18" border="0" class="image" id="basic_deployment_process" src="images/basic_deployment_process.png" width="780" style="width:780px;"/>
 <map name="d62e18" id="d62e18">

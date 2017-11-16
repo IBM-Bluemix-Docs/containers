@@ -24,11 +24,11 @@ This second tutorial continues how you can use Kubernetes to deploy a containeri
 
 In this scenario, the PR firm's app developer deploys a Hello World version of the app into the Kubernetes cluster that the network administrator created in the [first tutorial](cs_tutorials.html#cs_cluster_tutorial).
 
-Each lesson teaches you how to deploy progressively more complicated versions of the same app. The diagram shows the tutorial's components of the app deployments, except the fourth part.
+Each lesson teaches you how to deploy progressively more complicated versions of the same app. The following diagram shows the tutorial's components of the app deployments, except the fourth part.
 
-<a href="../api/content/containers/images/cs_app_tutorial_roadmap.png">![Lesson components](images/cs_app_tutorial_roadmap.png)</a>
+![Lesson components](images/cs_app_tutorial_roadmap.png)
 
-Kubernetes uses several different types of resources to get your apps up and running in clusters. In Kubernetes, deployments and services work together. Deployments include the definitions for the app, like for example the image to use for the container and which port must be exposed for the app. When you create a deployment, a Kubernetes pod is created for each container that you defined in the deployment. To make your app more resilient, you can define multiple instances of the same app in your deployment and let Kubernetes automatically create a replica set for you. The replica set monitors the pods and assures that the desired number of pods is up and running at all times. If one of the pods becomes unresponsive, the pod is re-created automatically.
+As depicted in the diagram, Kubernetes uses several different types of resources to get your apps up and running in clusters. In Kubernetes, deployments and services work together. Deployments include the definitions for the app, like for example the image to use for the container and which port must be exposed for the app. When you create a deployment, a Kubernetes pod is created for each container that you defined in the deployment. To make your app more resilient, you can define multiple instances of the same app in your deployment and let Kubernetes automatically create a replica set for you. The replica set monitors the pods and assures that the desired number of pods is up and running at all times. If one of the pods becomes unresponsive, the pod is re-created automatically.
 
 Services group a set of pods and provide network connection to these pods for other services in the cluster without exposing the actual private IP address of each pod. You can use Kubernetes services to make an app available to other pods inside the cluster or to expose an app to the internet. In this tutorial, you will use a Kubernetes service to access your running app from the internet by using a public IP address that is automatically assigned to a worker node and a public port.
 
@@ -60,9 +60,12 @@ Software developers and network administrators who have never deployed an app in
 ## Lesson 1: Deploying single instance apps to Kubernetes clusters
 {: #cs_apps_tutorial_lesson1}
 
-In this lesson, you deploy a single instance of the Hello World app into a cluster.
+In this lesson, you deploy a single instance of the Hello World app into a cluster. The following diagram includes the components that you deploy by completing this lesson.
+{:shortdesc}
 
-<a href="../api/content/containers/images/cs_app_tutorial_components1.png">![Deployment setup](images/cs_app_tutorial_components1.png)</a>
+![Deployment setup](images/cs_app_tutorial_components1.png)
+
+From the previous tutorial, you have an account and a cluster with one worker node already. In this lesson, you configure a deployment and deploy the Hello World app in a Kubernetes pod in the worker node. To make it publicly available, you create a Kubernetes service.
 
 
 1.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your {{site.data.keyword.Bluemix_notm}} credentials when prompted. To specify an {{site.data.keyword.Bluemix_notm}} region, [include the API endpoint](cs_regions.html#bluemix_regions).
@@ -381,14 +384,19 @@ Congratulations! You deployed your first version of the app.
 
 Too many commands in this lesson? Agreed. How about using a configuration script to do some of the work for you? To use a configuration script for the second version of the app, and to create higher availability by deploying multiple instances of that app, continue to the next lesson.
 
+
+
 ## Lesson 2: Deploying and updating apps with higher availability
 {: #cs_apps_tutorial_lesson2}
 
 In this lesson, you deploy three instances of the Hello World app into a cluster for higher availability than the first version of the app. Higher availability means that user access is divided between the three instances. When too many users are trying to access the same app instance, they might notice slow response times. Multiple instances can mean faster response times for your users. In this lesson, you will also learn how health checks and deployment updates can work with Kubernetes.
+{:shortdesc}
 
+The following diagram includes the components that you deploy by completing this lesson.
 
-<a href="../api/content/containers/images/cs_app_tutorial_components2.png">![Deployment setup](images/cs_app_tutorial_components2.png)</a>
+![Deployment setup](images/cs_app_tutorial_components2.png)
 
+From the previous tutorial, you have your account and a cluster with one worker node. In this lesson, you configure a deployment and deploy three instances of the Hello World app. Each instance is deployed in a Kubernetes pod as part of a replica set in the worker node. To make it publicly available, you also create a Kubernetes service. 
 
 As defined in the configuration script, Kubernetes can use an availability check to see whether a container in a pod is running or not. For example, these checks might catch deadlocks, where an app is running, but it is unable to make progress. Restarting a container that is in this condition can help to make the app more available despite bugs. Then, Kubernetes uses readiness check to know when a container is ready to start accepting traffic again. A pod is considered ready when its container is ready. When the pod is ready, it is started again. In the Stage2 app, every 15 seconds, the app times out. With a health check configured in the configuration script, containers are re-created if the health check finds an issue with an app.
 
@@ -585,8 +593,13 @@ service "hw-demo-service" deleted
 {: #cs_apps_tutorial_lesson3}
 
 In the previous lessons, the apps were deployed as single components in one worker node. In this lesson, you deploy two components of an app into a cluster that use the Watson Tone Analyzer service that you added to your cluster in the previous tutorial. Separating components into different containers ensures that you can update one without affecting the others. Then, you will update the app to scale it up with more replicas to make it more highly available.
+{:shortdesc}
 
-<a href="../api/content/containers/images/cs_app_tutorial_components3.png">![Deployment setup](images/cs_app_tutorial_components3.png)</a>
+The following diagram includes the components that you deploy by completing this lesson.
+
+![Deployment setup](images/cs_app_tutorial_components3.png)
+
+From the previous tutorial, you have your account and a cluster with one worker node. In this lesson, you create an instance of Watson Tone Analyzer service in your {{site.data.keyword.Bluemix_notm}} account and configure two deployments, one deployment for each component of the app. Each component is deployed in a Kubernetes pod in the worker node. To make both of those components publicly available, you also create a Kubernetes service for each component. 
 
 
 ### Lesson 3a: Deploying the Watson Tone Analyzer app
