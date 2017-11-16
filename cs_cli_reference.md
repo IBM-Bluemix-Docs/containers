@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-11-07"
+lastupdated: "2017-11-16"
 
 ---
 
@@ -623,10 +623,10 @@ Remove your own private subnet from a specified cluster.
   {: pre}
 
 
-### bx cs cluster-update [-f] CLUSTER
+### bx cs cluster-update [-f] CLUSTER [--kube-version MAJOR.MINOR.PATCH] [--force-update]
 {: #cs_cluster_update}
 
-Update the Kubernetes master to the latest API version. During the update, you cannot access or change the cluster. Worker nodes, apps, and resources that have been deployed by the user are not modified and will continue to run.
+Update the Kubernetes master to the default API version. During the update, you cannot access or change the cluster. Worker nodes, apps, and resources that have been deployed by the user are not modified and will continue to run.
 
 You might need to change your YAML files for future deployments. Review this [release note](cs_versions.html) for details.
 
@@ -635,9 +635,15 @@ You might need to change your YAML files for future deployments. Review this [re
    <dl>
    <dt><code><em>CLUSTER</em></code></dt>
    <dd>The name or ID of the cluster. This value is required.</dd>
+   
+   <dt><code>--kube-version <em>MAJOR.MINOR.PATCH</em></code></dt>
+   <dd>The Kubernetes version of the cluster. If this flag is not specified, the Kubernetes master is update to the default API version. To see available versions, run [bx cs kube-versions](#cs_kube_versions). This value is optional.</dd>
 
    <dt><code>-f</code></dt>
    <dd>Use this option to force the update of the master with no user prompts. This value is optional.</dd>
+   
+   <dt><code>--force-update</code></dt>
+   <dd>Attempt the update even if the change is greater than two minor versions. This value is optional.</dd>
    </dl>
 
 **Example**:
@@ -1219,7 +1225,7 @@ Remove one or more worker nodes from a cluster.
   ```
   {: pre}
 
-### bx cs worker-update [-f] CLUSTER WORKER [WORKER]
+### bx cs worker-update [-f] CLUSTER WORKER [WORKER] [--kube-version MAJOR.MINOR.PATCH] [--force-update]
 {: #cs_worker_update}
 
 Update worker nodes to the latest Kubernetes version. Running `bx cs worker-update` can cause downtime for your apps and services. During the update, all pods are rescheduled onto other worker nodes and data is deleted if not stored outside the pod. To avoid downtime, ensure that you have enough worker nodes to handle your workload while the selected worker nodes are updating.
@@ -1232,9 +1238,15 @@ You might need to change your YAML files for deployments before updating. Review
 
    <dt><em>CLUSTER</em></dt>
    <dd>The name or ID of the cluster where you list available worker nodes. This value is required.</dd>
+   
+   <dt><code>--kube-version <em>MAJOR.MINOR.PATCH</em></code></dt>
+   <dd>The Kubernetes version of the cluster. If this flag is not specified, the worker node is update to the default version. To see available versions, run [bx cs kube-versions](#cs_kube_versions). This value is optional.</dd>
 
    <dt><code>-f</code></dt>
    <dd>Use this option to force the update of the master with no user prompts. This value is optional.</dd>
+   
+   <dt><code>--force-update</code></dt>
+   <dd>Attempt the update even if the change is greater than two minor versions. This value is optional.</dd>
 
    <dt><code><em>WORKER</em></code></dt>
    <dd>The ID of one or more worker nodes. Use a space to list multiple worker nodes. This value is required.</dd>
