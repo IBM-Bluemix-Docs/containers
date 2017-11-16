@@ -1461,7 +1461,7 @@ If you already have existing NFS file shares in your IBM Cloud infrastructure (S
 
 Before you begin, make sure that you have an existing NFS file share that you can use to create your persistent volume.
 
-[![Create persistent volumes and persistent volume claims](images/cs_cluster_pv_pvc.png)](../api/content/containers/images/cs_cluster_pv_pvc.png)
+![Create persistent volumes and persistent volume claims](images/cs_cluster_pv_pvc.png)
 
 Kubernetes differentiates between persistent volumes that represent the actual hardware and persistent volume claims that are requests for storage usually initiated by the cluster user. When you want to enable existing NFS file shares to be used with Kubernetes, you must create persistent volumes with a certain size and access mode and create a persistent volume claim that matches the persistent volume specification. If persistent volume and persistent volume claim match, they are bound to each other. Only bound persistent volume claims can be used by the cluster user to mount the volume to a pod. This process is referred to as static provisioning of persistent storage.
 
@@ -1620,8 +1620,7 @@ For standard clusters, logs are located in the {{site.data.keyword.Bluemix_notm}
 
 To access the Kibana dashboard, go to one of the following URLs and select the {{site.data.keyword.Bluemix_notm}} account or space where you created the cluster.
 - US-South and US-East: https://logging.ng.bluemix.net
-- UK-South: https://logging.eu-gb.bluemix.net
-- EU-Central: https://logging.eu-de.bluemix.net
+- UK-South and EU-Central: https://logging.eu-fra.bluemix.net
 
 For more information about viewing logs, see [Navigating to Kibana from a web browser](/docs/services/CloudLogAnalysis/kibana/launch.html#launch_Kibana_from_browser).
 
