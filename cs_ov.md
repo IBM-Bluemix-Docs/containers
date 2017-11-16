@@ -68,25 +68,33 @@ When you want to deploy a container from an image, you must make sure that the i
 Kubernetes was developed by Google as part of the Borg project and handed off to the open source community in 2014. Kubernetes combines more than 15 years of Google research in running a containerized infrastructure with production work loads, open source contributions, and Docker container management tools to provide an isolated and secure app platform that is portable, extensible, and self-healing in case of failovers.
 {:shortdesc}
 
-Learn about the basics of how Kubernetes works with a little terminology.
+Learn about the basics of how Kubernetes works with a little terminology as shown in the following diagram.
 
-<a href="../api/content/containers/images/cs_app_tutorial_components1.png">![Deployment setup](images/cs_app_tutorial_components1.png)</a>
+![Deployment setup](images/cs_app_tutorial_components1.png)
 
 <dl>
+<dt>Account</dt>
+<dd>Your account refers to your {{site.data.keyword.Bluemix_notm}} account.</dd>
+
 <dt>Cluster</dt>
 <dd>A Kubernetes cluster consists of one or more virtual machines that are called worker nodes. Every worker node represents a compute host where you can deploy, run, and manage containerized apps. Worker nodes are managed by a Kubernetes master that centrally controls and monitors all Kubernetes resources in the cluster. When you deploy a containerized app, the Kubernetes master decides where to deploy the app, taking into account the deployment requirements and available capacity in the cluster.</dd>
-<dt>Pod</dt>
-<dd>Every containerized app that is deployed into a Kubernetes cluster is deployed, run, and managed by a pod. Pods represent the smallest deployable units in a Kubernetes cluster and are used to group containers that must be treated as a single unit. In most cases, a container is deployed to its own pod. However, an app might require a container and other helper containers to be deployed into one pod so that those containers can be addressed by using the same private IP address.</dd>
-<dt>Deployment</dt>
-<dd>A deployment is a Kubernetes resource where you specify your containers and other Kubernetes resources that are required to run your app, such as persistent storage, services, or annotations. Deployments are documented in a Kubernetes deployment script. When you run a deployment, the Kubernetes master deploys the specified containers into pods taking into account the capacity that is available on the worker nodes of the cluster. Other Kubernetes resources are created and configured as specified in the deployment script.
 
-</br></br>
-You can use a deployment to define update strategies for your app, which includes the number of pods that you want to add during a rolling update and the number of pods that can be unavailable at a time. When you perform a rolling update, the deployment checks whether the revision is working and stops the rollout when failures are detected.</dd>
 <dt>Service</dt>
 <dd>A Kubernetes service groups a set of pods and provides network connection to these pods for other services in the cluster without exposing the actual private IP address of each pod. You can use a service to make your app available within your cluster or to the public internet.
-
 </br></br>
 To learn more about Kubernetes terminology, try the <a href="cs_tutorials.html#cs_cluster_tutorial" target="_blank">tutorial</a>.</dd>
+
+<dt>Deployment</dt>
+<dd>A deployment is a Kubernetes resource where you might specify containers and other information that is required to run your app, such as persistent storage, services, or annotations. You document a deployment in a configuration YAML file, and then apply it to the cluster. The Kubernetes master configures the resource and deploys containers into pods on worker nodes with available capacity.
+</br></br>
+Define update strategies for your app, including the number of pods that you want to add during a rolling update and the number of pods that can be unavailable at a time. When you perform a rolling update, the deployment checks whether the update is working and stops the rollout when failures are detected.</dd>
+
+<dt>Pod</dt>
+<dd>Every containerized app that is deployed into a Kubernetes cluster is deployed, run, and managed by a pod. Pods represent small deployable units in a Kubernetes cluster and are used to group containers that must be treated as a single unit. In most cases, a container is deployed to its own pod. However, an app might require a container and other helper containers to be deployed into one pod so that those containers can be addressed by using the same private IP address.</dd>
+
+<dt>App</dt>
+<dd>An app refers to a complete app or a component of an app. You might deploy components of your app in separate pods or separate worker nodes.</dd>
+
 </dl>
 
 <br />
@@ -214,14 +222,16 @@ Each worker node is set up with an {{site.data.keyword.IBM_notm}} managed Docker
 
 *Figure 1. Kubernetes architecture and networking in the {{site.data.keyword.containershort_notm}}*
 
-<a href="../api/content/containers/images/cs_org_ov.png">![{{site.data.keyword.containerlong_notm}} Kubernetes architecture](images/cs_org_ov.png)</a>
+![{{site.data.keyword.containerlong_notm}} Kubernetes architecture](images/cs_org_ov.png)
+
+The diagram outlines what you maintain and what IBM maintains in a cluster. For more details about these maintenance tasks, see [Cluster management responsibilities](cs_planning.html#responsibilities).
 
 ### {{site.data.keyword.Bluemix_dedicated_notm}}
 {: #dedicated_architecture}
 
 *Figure 2. Kubernetes architecture and networking in the {{site.data.keyword.Bluemix_dedicated_notm}}*
 
-<a href="../api/content/containers/images/cs_dedicated_arch.png">![{{site.data.keyword.containershort_notm}} Kubernetes architecture on {{site.data.keyword.Bluemix_dedicated_notm}}](images/cs_dedicated_arch.png)</a>
+![{{site.data.keyword.containershort_notm}} Kubernetes architecture on {{site.data.keyword.Bluemix_dedicated_notm}}](images/cs_dedicated_arch.png)
 
 <br />
 
