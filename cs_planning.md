@@ -57,7 +57,7 @@ Use standard clusters to increase app availability. Your users are less likely t
 
 Review these potential cluster setups that are ordered with increasing degrees of availability:
 
-[![Stages of high availability for a cluster](images/cs_cluster_ha_roadmap.png)](../api/content/containers/images/cs_cluster_ha_roadmap.png)
+![Stages of high availability for a cluster](images/cs_cluster_ha_roadmap.png)
 
 1.  One cluster with multiple worker nodes
 2.  Two clusters that run in different locations in the same region, each with multiple worker nodes
@@ -168,7 +168,7 @@ The more widely you distribute your setup across multiple worker nodes and clust
 
 Review these potential app set ups that are ordered with increasing degrees of availability:
 
-[![Stages of high availability for an app](images/cs_app_ha_roadmap.png)](../api/content/containers/images/cs_app_ha_roadmap.png)
+![Stages of high availability for an app](images/cs_app_ha_roadmap.png)
 
 1.  A deployment with n+2 pods that are managed by a replica set.
 2.  A deployment with n+2 pods that are managed by a replica set and spread across multiple nodes (anti-affinity) in the same location.
@@ -254,9 +254,9 @@ For more detail, review the options for <a href="cs_planning.html#cs_planning_cl
 A basic app deployment in a lite or standard cluster might include the following components.
 {:shortdesc}
 
-<a href="../api/content/containers/images/cs_app_tutorial_components1.png">![Deployment setup](images/cs_app_tutorial_components1.png)</a>
+![Deployment setup](images/cs_app_tutorial_components1.png)
 
-Configuration file example for a minimal app.
+To deploy the components for a minimal app as depicted in the diagram, you use a configuration file similar to the following example:
 ```
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -288,6 +288,8 @@ spec:
      port: 9080
 ```
 {: codeblock}
+
+To learn more about each component, review the [Kubernetes basics](cs_ov.html#kubernetes_basics).
 
 <br />
 
@@ -346,11 +348,13 @@ Depending on whether you created a lite or standard cluster, you can choose betw
 Expose a public port on your worker node and use the public IP address of the worker node to access your service in the cluster publicly from the internet.
 {:shortdesc}
 
-[![Expose a service by using a Kubernetes NodePort service](images/cs_nodeport.png)](../api/content/containers/images/cs_nodeport.png)
-
 When you expose your app by creating a Kubernetes service of type NodePort, a NodePort in the range of 30000 - 32767 and an internal cluster IP address is assigned to the service. The NodePort service serves as the external entry point for incoming requests for your app. The assigned NodePort is publicly exposed in the kubeproxy settings of each worker node in the cluster. Every worker node starts listening on the assigned NodePort for incoming requests for the service. To access the service from the internet, you can use the public IP address of any worker node that was assigned during cluster creation and the NodePort in the format `<ip_address>:<nodeport>`. In addition to the public IP address, a NodePort service is available over the private IP address of a worker node.
 
-When a request arrives at the NodePort service, it is automatically forwarded to the internal cluster IP of the service and further forwarded from the kubeproxy component to the private IP address of the pod where the app is deployed. The cluster IP is accessible inside the cluster only. If you have multiple replicas of your app running in different pods, the kubeproxy component load balances incoming requests across all replicas.
+The following diagram shows how communication is directed from the internet to an app when a NodePort service is configured.
+
+![Expose a service by using a Kubernetes NodePort service](images/cs_nodeport.png)
+
+As depicted in the diagram, when a request arrives at the NodePort service, it is automatically forwarded to the internal cluster IP of the service and further forwarded from the `kube-proxy` component to the private IP address of the pod where the app is deployed. The cluster IP is accessible inside the cluster only. If you have multiple replicas of your app running in different pods, the `kube-proxy` component load balances incoming requests across all replicas.
 
 **Note:** The public IP address of the worker node is not permanent. When a worker node is removed or re-created, a new public IP address is assigned to the worker node. You can use the NodePort service for testing the public access for your app or when public access is needed for a short amount of time only. When you require a stable public IP address and more availability for your service, expose your app by using a [LoadBalancer service](#cs_loadbalancer) or [Ingress](#cs_ingress).
 
@@ -361,14 +365,18 @@ For more information about how to create a service of type NodePort with {{site.
 {: #cs_loadbalancer}
 
 Expose a port and use the public or private IP address for the load balancer to access the app.
+{:shortdesc}
 
-[![Expose a service by using a Kubernetes LoadBalancer service type](images/cs_loadbalancer.png)](../api/content/containers/images/cs_loadbalancer.png)
 
 When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically requests five portable public and five private IP addresses and provisions them into your IBM Cloud infrastructure (SoftLayer) account during cluster creation. Two of the portable IP addresses, one public and one private, are used for the [Ingress controller](#cs_ingress). Four portable public and Four private IP addresses can be used to expose apps by creating a LoadBalancer service.
 
 When you create a Kubernetes LoadBalancer service in a cluster on a public VLAN, an external load balancer is created. One of the four available public IP addresses is assigned to the load balancer. If no portable public IP address is available, the creation of your LoadBalancer service fails. The LoadBalancer service serves as the external entry point for incoming requests for the app. Unlike with NodePort services, you can assign any port to your load balancer and are not bound to a certain port range. The portable public IP address that is assigned to your LoadBalancer service is permanent and does not change when a worker node is removed or re-created. Therefore, the LoadBalancer service is more available than the NodePort service. To access the LoadBalancer service from the internet, use the public IP address of your load balancer and the assigned port in the format `<ip_address>:<port>`.
 
-When a request arrives at the LoadBalancer service, the request is automatically forwarded to the internal cluster IP address that is assigned to the LoadBalancer service during service creation. The cluster IP address is accessible inside the cluster only. From the cluster IP address, incoming requests are further forwarded to the `kube-proxy` component of your worker node. Then the requests are forwarded to the private IP address of the pod where the app is deployed. If you have multiple replicas of your app that are running in different pods, the `kube-proxy` component load balances incoming requests across all replicas.
+The following diagram shows how the LoadBalancer directs communication from the internet to an app:
+
+![Expose a service by using a Kubernetes LoadBalancer service type](images/cs_loadbalancer.png)
+
+As depicted in the diagram, when a request arrives at the LoadBalancer service, the request is automatically forwarded to the internal cluster IP address that is assigned to the LoadBalancer service during service creation. The cluster IP address is accessible inside the cluster only. From the cluster IP address, incoming requests are further forwarded to the `kube-proxy` component of your worker node. Then the requests are forwarded to the private IP address of the pod where the app is deployed. If you have multiple replicas of your app that are running in different pods, the `kube-proxy` component load balances incoming requests across all replicas.
 
 If you use a LoadBalancer service, a node port is also available on each IP address of any worker node. To block access to node port while you are using a LoadBalancer service, see [Blocking incoming traffic](cs_security.html#cs_block_ingress).
 
@@ -384,14 +392,17 @@ For more information about how to create a LoadBalancer service with {{site.data
 {: #cs_ingress}
 
 Ingress allows you to expose multiple services in your cluster and make them publicly available by using a single public entry point.
-
-[![Expose a service by using the {{site.data.keyword.containershort_notm}} ingress support](images/cs_ingress.png)](../api/content/containers/images/cs_ingress.png)
+{:shortdesc}
 
 Rather than creating a load balancer service for each app that you want to expose to the public, Ingress provides a unique public route that lets you forward public requests to apps inside and outside your cluster based on their individual paths. Ingress consists of two main components. The Ingress resource defines the rules for how to route incoming requests for an app. All Ingress resources must be registered with the Ingress controller that listens for incoming HTTP or HTTPS service requests and forwards requests based on the rules defined for each Ingress resource.
 
 When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically creates a highly available Ingress controller for your cluster and assigns a unique public route with the format `<cluster_name>.<region>.containers.mybluemix.net` to it. The public route is linked to a portable public IP address that is provisioned into your IBM Cloud infrastructure (SoftLayer) account during cluster creation.
 
-To expose an app via Ingress, you must create a Kubernetes service for your app and register this service with the Ingress controller by defining an Ingress resource. The Ingress resource specifies the path that you want to append to the public route to form a unique URL for your exposed app, like for example: `mycluster.us-south.containers.mybluemix.net/myapp`. When you enter this route into your web browser, the request is sent to the linked portable public IP address of the Ingress controller. The Ingress controller checks if a routing rule for the `myapp` path in the `mycluster` cluster exists. If a matching rule is found, the request including the individual path is forwarded to the pod where the app is deployed, considering the rules that were defined in the original Ingress resource object. In order for the app to process incoming requests, make sure that your app listens on the individual path that you defined in the Ingress resource.
+The following diagram shows how Ingress directs communication from the internet to an app:
+
+![Expose a service by using the {{site.data.keyword.containershort_notm}} ingress support](images/cs_ingress.png)
+
+To expose an app via Ingress, you must create a Kubernetes service for your app and register this service with the Ingress controller by defining an Ingress resource. The Ingress resource specifies the path that you want to append to the public route to form a unique URL for your exposed app, like for example: `mycluster.us-south.containers.mybluemix.net/myapp`. When you enter this route into your web browser, as depicted in the diagram, the request is sent to the linked portable public IP address of the Ingress controller. The Ingress controller checks if a routing rule for the `myapp` path in the `mycluster` cluster exists. If a matching rule is found, the request including the individual path is forwarded to the pod where the app is deployed, considering the rules that were defined in the original Ingress resource object. In order for the app to process incoming requests, make sure that your app listens on the individual path that you defined in the Ingress resource.
 
 You can configure the Ingress controller to manage incoming network traffic for your apps for the following scenarios:
 
@@ -444,10 +455,10 @@ For more information about how to access a public or private registry and use an
 ## Persistent data storage
 {: #cs_planning_apps_storage}
 
-A container is, by design, short-lived. However, you can choose between several options to persist data for the case of a container failover and to share data between containers.
+A container is, by design, short-lived. However, as shown in the following diagram, you can choose between several options to persist data for the case of a container failover and to share data between containers.
 {:shortdesc}
 
-[![Persistent storage options for deployments in Kubernetes clusters](images/cs_planning_apps_storage.png)](../api/content/containers/images/cs_planning_apps_storage.png)
+![Persistent storage options for deployments in Kubernetes clusters](images/cs_planning_apps_storage.png)
 
 |Option|Description|
 |------|-----------|
