@@ -19,7 +19,7 @@ lastupdated: "2017-11-02"
 # About {{site.data.keyword.containerlong_notm}}
 {: #cs_ov}
 
-{{site.data.keyword.containershort}} combines Docker and Kubernetes to deliver powerful tools, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps over a cluster of independent compute hosts by using the Kubernetes APIs.
+{{site.data.keyword.containershort}} delivers powerful tools by combining Docker and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of independent compute hosts.
 {:shortdesc}
 
 
@@ -29,21 +29,21 @@ lastupdated: "2017-11-02"
 ## Docker containers
 {: #cs_ov_docker}
 
-Docker is an open source project that was released by dotCloud in 2013. Built on features of the existing Linux container technology (LXC), Docker became a software platform that you can use to build, test, deploy, and scale apps quickly. Docker packages software into standardized units that are called containers that include all of the elements that an app needs to run.
+Docker is an open source project that was released by dotCloud in 2013. Built on features of existing Linux container technology (LXC), Docker became a software platform for building, testing, deploying, and scaling apps quickly. Docker packages software into standardized units, called containers, that include all of the elements that an app needs to run.
 {:shortdesc}
 
 Review these concepts to learn about basic Docker concepts.
 
 <dl>
 <dt>Container</dt>
-<dd>A container is a standard way to package an app and all its dependencies so that the app can be moved between environments and run without changes. Unlike virtual machines, containers do not virtualize a device, its operating system, and the underlying hardware. Only the app code, run time, system tools, libraries, and settings are packaged inside the container. Containers run as isolated processes on the compute host where they are deployed to and share the host operating system and its hardware resources. This approach makes a container more lightweight, portable, and efficient than a virtual machine.</dd>
+<dd>A container is a standard way to package an app and all its dependencies so that the app can be moved between environments and run without changes. Unlike virtual machines, containers do not virtualize a device, its operating system, and the underlying hardware. Only the app code, run time, system tools, libraries, and settings are packaged inside the container. Containers run as isolated processes on compute hosts and share the host operating system and its hardware resources. This approach makes a container more lightweight, portable, and efficient than a virtual machine.</dd>
 <dt>Image</dt>
-<dd>Every container is based on a Docker image and is considered to be an instance of an image. An image is built from a Dockerfile, which is a file that contains instructions how to build the image, and any build artifacts, such as an app, the app's configuration, and its dependencies.</dd>
+<dd>Every container is based on a Docker image and is considered to be an instance of an image. An image is built from a Dockerfile, which contains instructions about how to build the image and any build artifacts, such as an app, the app's configuration, and its dependencies.</dd>
 <dt>Registry</dt>
-<dd>An image registry is a place where you store, retrieve, and share Docker images. Images that are stored in a registry can either be publicly available (public registry) or accessible by a small group of users only (private registry). {{site.data.keyword.containershort_notm}} offers public images, such as ibmliberty that you can use to get started with Docker and Kubernetes to create your first containerized app in a cluster. When it comes to enterprise applications, use a private registry like the one provided in {{site.data.keyword.Bluemix_notm}} to protect your images from being used and changed by unauthorized users.
+<dd>An image registry is a place where you store, retrieve, and share Docker images. Images that are stored in a registry can either be publicly available (public registry) or accessible by a small group of users only (private registry). {{site.data.keyword.containershort_notm}} offers public images, such as ibmliberty, that you can use to create your first containerized app. When it comes to enterprise applications, use a private registry like the one provided in {{site.data.keyword.Bluemix_notm}} to protect your images from being used and changed by unauthorized users.
 
 </br></br>
-When you want to deploy a container from an image, you must make sure that the image is stored in either a public or private image registry.</dd>
+To deploy a container from an image, make sure that the image is stored in either a public or private image registry.</dd>
 </dl>
 
 ### Key benefits of using containers
@@ -51,11 +51,11 @@ When you want to deploy a container from an image, you must make sure that the i
 
 <dl>
 <dt>Containers are agile</dt>
-<dd>Containers simplify system administration by providing standardized environments for development and production teams. The engine's lightweight run time enables rapid scale-up and scale-down in response to changes in demand. They help remove the complexity of managing different operating system platforms and underlying infrastructure. Containers help you deploy and run any app on any infrastructure, quickly and reliably.</dd>
+<dd>Containers simplify system administration by providing standardized environments for development and production teams. The engine's lightweight run time enables rapid scale-up and scale-down in response to changes in demand. They help remove the complexity of managing different operating system platforms and underlying infrastructure. Containers help you deploy and run any app on any infrastructure quickly and reliably.</dd>
 <dt>Containers are small</dt>
 <dd>You can fit more containers in the amount of space that a single virtual machine would require.</dd>
 <dt>Containers are portable</dt>
-<dd>Build an image for another container by using another image as the base. Let someone else do the bulk of the work on an image and tweak it for your use. You can also migrate app code from a staging environment to a production environment quickly. The migration process can be automated with tools such as the Delivery Pipeline or UrbanCode Deploy.</dd>
+<dd>Build an image for another container by using another image as the base. Let someone else do the bulk of the work on an image and tweak it for your use. You can also migrate app code from a staging environment to a production environment quickly. The migration process can be automated with continuous delivery tools.</dd>
 </dl>
 
 
@@ -68,7 +68,7 @@ When you want to deploy a container from an image, you must make sure that the i
 Kubernetes was developed by Google as part of the Borg project and handed off to the open source community in 2014. Kubernetes combines more than 15 years of Google research in running a containerized infrastructure with production work loads, open source contributions, and Docker container management tools to provide an isolated and secure app platform that is portable, extensible, and self-healing in case of failovers.
 {:shortdesc}
 
-Learn about the basics of how Kubernetes works with a little terminology as shown in the following diagram.
+Learn the basics of how Kubernetes works with a little terminology as shown in the following diagram.
 
 ![Deployment setup](images/cs_app_tutorial_components1.png)
 
@@ -80,9 +80,9 @@ Learn about the basics of how Kubernetes works with a little terminology as show
 <dd>A Kubernetes cluster consists of one or more virtual machines that are called worker nodes. Every worker node represents a compute host where you can deploy, run, and manage containerized apps. Worker nodes are managed by a Kubernetes master that centrally controls and monitors all Kubernetes resources in the cluster. When you deploy a containerized app, the Kubernetes master decides where to deploy the app, taking into account the deployment requirements and available capacity in the cluster.</dd>
 
 <dt>Service</dt>
-<dd>A Kubernetes service groups a set of pods and provides network connection to these pods for other services in the cluster without exposing the actual private IP address of each pod. You can use a service to make your app available within your cluster or to the public internet.
+<dd>A Kubernetes service groups a set of pods and provides network connectivity to these pods without exposing the actual private IP address of each pod. You can use a service to make your app available within your cluster or to the public internet.
 </br></br>
-To learn more about Kubernetes terminology, try the <a href="cs_tutorials.html#cs_cluster_tutorial" target="_blank">tutorial</a>.</dd>
+To learn more about Kubernetes terminology, <a href="cs_tutorials.html#cs_cluster_tutorial" target="_blank">try the tutorial</a>.</dd>
 
 <dt>Deployment</dt>
 <dd>A deployment is a Kubernetes resource where you might specify containers and other information that is required to run your app, such as persistent storage, services, or annotations. You document a deployment in a configuration YAML file, and then apply it to the cluster. The Kubernetes master configures the resource and deploys containers into pods on worker nodes with available capacity.
@@ -90,7 +90,7 @@ To learn more about Kubernetes terminology, try the <a href="cs_tutorials.html#c
 Define update strategies for your app, including the number of pods that you want to add during a rolling update and the number of pods that can be unavailable at a time. When you perform a rolling update, the deployment checks whether the update is working and stops the rollout when failures are detected.</dd>
 
 <dt>Pod</dt>
-<dd>Every containerized app that is deployed into a Kubernetes cluster is deployed, run, and managed by a pod. Pods represent small deployable units in a Kubernetes cluster and are used to group containers that must be treated as a single unit. In most cases, a container is deployed to its own pod. However, an app might require a container and other helper containers to be deployed into one pod so that those containers can be addressed by using the same private IP address.</dd>
+<dd>Every containerized app that is deployed into a Kubernetes cluster is deployed, run, and managed by a pod. Pods represent small deployable units in a Kubernetes cluster and are used to group the containers that must be treated as a single unit. In most cases, a container is deployed to its own pod. However, an app might require a container and other helper containers to be deployed into one pod so that those containers can be addressed by using the same private IP address.</dd>
 
 <dt>App</dt>
 <dd>An app refers to a complete app or a component of an app. You might deploy components of your app in separate pods or separate worker nodes.</dd>
@@ -103,7 +103,7 @@ Define update strategies for your app, including the number of pods that you wan
 ## Benefits of using clusters
 {: #cs_ov_benefits}
 
-Each cluster is deployed on shared or dedicated virtual machines that provide native Kubernetes and {{site.data.keyword.IBM_notm}} added capabilities.
+Clusters are deployed on shared or dedicated virtual machines that provide native Kubernetes and {{site.data.keyword.IBM_notm}} added capabilities.
 {:shortdesc}
 
 |Benefit|Description|

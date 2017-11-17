@@ -19,7 +19,7 @@ lastupdated: "2017-11-16"
 # Planning clusters and apps
 {: #cs_planning}
 
-{{site.data.keyword.containershort_notm}} offers several options to configure and customize your Kubernetes cluster to meet the functional and non-functional requirements of your organization. Some of these configurations cannot be changed after a cluster is created. Knowing these configurations in advance can help to ensure that all the resources, such as memory, disk space, and IP addresses are available to the development team.
+Get a feel for the decisions you can make to configure and customize Kubernetes clusters in {{site.data.keyword.containershort_notm}} and meet the requirements of your organization. Some of these configurations cannot be changed after a cluster is created. Knowing these configurations in advance can ensure that resources, such as memory, disk space, and IP addresses are available to your development teams as needed.
 {:shortdesc}
 
 <br />
@@ -28,7 +28,7 @@ lastupdated: "2017-11-16"
 ## Comparison of lite and standard clusters
 {: #cs_planning_cluster_type}
 
-You can create a lite cluster to get familiar and test Kubernetes capabilities or create a standard cluster to get started implementing your apps with the full Kubernetes capabilities.
+You can create lite or standard clusters. Create lite clusters to get familiar and test Kubernetes capabilities or create standard clusters to  use full Kubernetes capabilities to deploy apps.
 {:shortdesc}
 
 |Characteristics|Lite clusters|Standard clusters|
@@ -524,6 +524,10 @@ IBM Blockchain Platform <img src="../icons/launch-glyph.svg" alt="External link 
 <tr>
 <td>Helm</td>
 <td> <a href="https://helm.sh/" target="_blank">Helm <img src="../icons/launch-glyph.svg" alt="External link icon"></a> is a Kubernetes package manager. Create Helm Charts to define, install, and upgrade complex Kubernetes applications running in {{site.data.keyword.containerlong_notm}} clusters. Learn more about how you can <a href="https://developer.ibm.com/recipes/tutorials/increase-deployment-velocity-with-kubernetes-helm-charts/" target="_blank">increase deployment velocity with Kubernetes Helm Charts <img src="../icons/launch-glyph.svg" alt="External link icon"></a>. </td>
+</tr>
+<tr>
+<td>Instana</td>
+<td> <a href="https://www.instana.com/" target="_blank">Instana <img src="../icons/launch-glyph.svg" alt="External link icon"></a> provides infrastructure and app performance monitoring with a GUI that automatically discovers and maps your apps. In addition, Istana captures every request to your apps, which lets you troubleshoot and perform root cause analysis to prevent the problems from happening again. Check out the blog post about <a href="https://www.instana.com/blog/precise-visibility-applications-ibm-bluemix-container-service/" target="_blank">deploying Istana in {{site.data.keyword.containershort_notm}} to learn more <img src="../icons/launch-glyph.svg" alt="External link icon"></a>. </td>
 </tr>
 <tr>
 <td>Istio</td>
