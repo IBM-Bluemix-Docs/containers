@@ -19,10 +19,9 @@ lastupdated: "2017-11-02"
 # Getting started with {{site.data.keyword.containerlong_notm}}
 {: #container_index}
 
-
-
-Manage highly available apps inside Docker containers and Kubernetes clusters on the {{site.data.keyword.IBM}} cloud. A container is a standard way to package an app and all its dependencies so that the app can be moved between environments and run without changes. Unlike virtual machines, containers do not bundle the operating system. Only the app code, run time, system tools, libraries, and settings are packaged inside the container, which makes a container more lightweight, portable, and efficient than a virtual machine.
+Hit the ground running with {{site.data.keyword.Bluemix_notm}} by deploying highly available apps in Docker containers that run in Kubernetes clusters. Containers are a standard way to package apps and all their dependencies so that you can seamlessly move the apps between environments. Unlike virtual machines, containers do not bundle the operating system. Only the app code, run time, system tools, libraries, and settings are packaged inside containers. Containers are more lightweight, portable, and efficient than virtual machines.
 {:shortdesc}
+
 
 Click an option to get started:
 
@@ -37,12 +36,11 @@ Click an option to get started:
 ## Getting started with clusters
 {: #clusters}
 
-
-
-Kubernetes is an orchestration tool for scheduling app containers onto a cluster of compute machines. With Kubernetes, developers can rapidly develop highly available applications by using the power and flexibility of containers.
+So you want to deploy an app in container? Hold on! Start by creating a Kubernetes cluster first. Kubernetes is an orchestration tool for containers. With Kubernetes, developers can deploy highly available apps in a flash by using the power and flexibility of clusters.
 {:shortdesc}
 
-Before you can deploy an app by using Kubernetes, start by creating a cluster. A cluster is a set of worker nodes that are organized into a network. The purpose of the cluster is to define a set of resources, nodes, networks, and storage devices that keep applications highly available.
+And what is a cluster? A cluster is a set of resources, worker nodes, networks, and storage devices that keep apps highly available. After you have your cluster, then you can deploy your apps in containers.
+
 
 To create a lite cluster:
 
@@ -62,7 +60,7 @@ Good work! You created your first cluster!
 
 **What's next?**
 
- When the cluster is up and running, you can check out the following tasks.
+When the cluster is up and running, start doing something with your cluster.
 
 * [Install the CLIs to start working with your cluster.](cs_cli_install.html#cs_cli_install)
 * [Deploy an app in your cluster.](cs_apps.html#cs_apps_cli)
