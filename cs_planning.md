@@ -19,7 +19,7 @@ lastupdated: "2017-11-16"
 # Planning clusters and apps
 {: #cs_planning}
 
-{{site.data.keyword.containershort_notm}} offers several options to configure and customize your Kubernetes cluster to meet the functional and non-functional requirements of your organization. Some of these configurations cannot be changed after a cluster is created. Knowing these configurations in advance can help to ensure that all the resources, such as memory, disk space, and IP addresses are available to the development team.
+Get a feel for the decisions you can make to configure and customize Kubernetes clusters in {{site.data.keyword.containershort_notm}} and meet the requirements of your organization. Some of these configurations cannot be changed after a cluster is created. Knowing these configurations in advance can ensure that resources, such as memory, disk space, and IP addresses are available to your development teams as needed.
 {:shortdesc}
 
 <br />
@@ -28,7 +28,7 @@ lastupdated: "2017-11-16"
 ## Comparison of lite and standard clusters
 {: #cs_planning_cluster_type}
 
-You can create a lite cluster to get familiar and test Kubernetes capabilities or create a standard cluster to get started implementing your apps with the full Kubernetes capabilities.
+You can create lite or standard clusters. Create lite clusters to get familiar and test Kubernetes capabilities or create standard clusters to  use full Kubernetes capabilities to deploy apps.
 {:shortdesc}
 
 |Characteristics|Lite clusters|Standard clusters|

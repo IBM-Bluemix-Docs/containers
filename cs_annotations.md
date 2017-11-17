@@ -1440,7 +1440,7 @@ Use this annotation for an app that is running a TCP streams workload.
  metadata:
   name: myingress
   annotations:
-    ingress.bluemix.net/tcp-ports: "serviceName=&lt;service_name&gt;, ingressPort=&lt;ingress_port&gt;, [servicePort=&lt;service_port&gt;]"
+    ingress.bluemix.net/tcp-ports: "serviceName=&lt;service_name&gt; ingressPort=&lt;ingress_port&gt; [servicePort=&lt;service_port&gt;]"
  spec:
   tls:
   - hosts:
