@@ -43,7 +43,7 @@ You can create lite or standard clusters. Create lite clusters to get familiar a
 |[Public or private network app access by a load balancer service](#cs_loadbalancer)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 |[Public network app access by an Ingress service](#cs_ingress)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 |[Portable public IP addresses](cs_apps.html#cs_cluster_ip_subnet)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
-|[Logging and monitoring](cs_cluster#cs_logging)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
+|[Logging and monitoring](cs_cluster.html#cs_logging)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 |[Available in {{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)](cs_ov.html#dedicated_environment)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 {: caption="Table 1. Differences between lite and standard clusters" caption-side="top"}
 
