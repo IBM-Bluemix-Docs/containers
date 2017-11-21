@@ -122,7 +122,7 @@ View the status of all application load balancers (ALBs) in a cluster. An ALB is
 ### bx cs alb-configure --albID ALB_ID [--enable][--disable][--user-ip USERIP]
 {: #cs_alb_configure}
 
-Enable or disable a application load balancer (ALB), also called the Ingress controller, in your standard cluster. The public application load balancer is enabled by default.
+Enable or disable an application load balancer (ALB), also called the Ingress controller, in your standard cluster. The public application load balancer is enabled by default.
 
 **Command options**:
 
@@ -172,13 +172,13 @@ Enable or disable a application load balancer (ALB), also called the Ingress con
 ### bx cs alb-get --albID ALB_ID
 {: #cs_alb_get}
 
-View the details of an application load balancer (alb).
+View the details of an application load balancer (ALB).
 
 <strong>Command options</strong>:
 
    <dl>
    <dt><code><em>--albID </em>ALB_ID</code></dt>
-   <dd>The ID for an alb. Run <code>bx cs albs --cluster <em>CLUSTER</em></code> to view the IDs for the albs in a cluster. This value is required.</dd>
+   <dd>The ID for an ALB. Run <code>bx cs albs --cluster <em>CLUSTER</em></code> to view the IDs for the albs in a cluster. This value is required.</dd>
    </dl>
 
 **Example**:
