@@ -33,7 +33,7 @@ You can create lite or standard clusters. Create lite clusters to get familiar a
 
 |Characteristics|Lite clusters|Standard clusters|
 |---------------|-------------|-----------------|
-|[Available in {{site.data.keyword.Bluemix_notm}} Public](cs_ov.html#public_environment)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
+|[Available in {{site.data.keyword.Bluemix_notm}} Public](cs_ov.html#cs_ov)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 |[In-cluster networking](#cs_planning_private_network)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 |[Public network app access by a NodePort service](#cs_nodeport)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 |[User access management](cs_cluster.html#cs_cluster_user)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
@@ -70,18 +70,18 @@ Learn more about how you can use these techniques to increase the availability o
 <dt>Include enough worker nodes to spread out app instances</dt>
 <dd>For high availability, allow your app developers to spread their containers across multiple worker nodes per cluster. Three worker nodes allow for the downtime of one worker node to occur without interrupting the usage of the app. You can specify how many worker nodes to include when you create a cluster from the [{{site.data.keyword.Bluemix_notm}} GUI](cs_cluster.html#cs_cluster_ui) or the [CLI](cs_cluster.html#cs_cluster_cli). Kubernetes limits the maximum number of worker nodes that you can have in a cluster. Review [worker node and pod quotas ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/admin/cluster-large/) for more information.
 <pre class="codeblock">
-<code>bx cs cluster-create --location &lt;dal10&gt; --workers 3 --public-vlan &lt;my_public_vlan_id&gt; --private-vlan &lt;my_private_vlan_id&gt; --machine-type &lt;u1c.2x4&gt; --name &lt;my_cluster&gt;</code>
+<code>bx cs cluster-create --location &lt;dal10&gt; --workers 3 --public-vlan &lt;my_public_vlan_id&gt; --private-vlan &lt;my_private_vlan_id&gt; --machine-type &lt;u2c.2x4&gt; --name &lt;my_cluster&gt;</code>
 </pre>
 </dd>
 <dt>Spread apps across clusters</dt>
 <dd>Create multiple clusters, each with multiple worker nodes. If an outage occurs with one cluster, users can still access an app that is also deployed in another cluster.
 <p>Cluster 1:</p>
 <pre class="codeblock">
-<code>bx cs cluster-create --location &lt;dal10&gt; --workers 3 --public-vlan &lt;my_public_vlan_id&gt; --private-vlan &lt;my_private_vlan_id&gt; --machine-type &lt;u1c.2x4&gt; --name &lt;my_cluster1&gt;</code>
+<code>bx cs cluster-create --location &lt;dal10&gt; --workers 3 --public-vlan &lt;my_public_vlan_id&gt; --private-vlan &lt;my_private_vlan_id&gt; --machine-type &lt;u2c.2x4&gt; --name &lt;my_cluster1&gt;</code>
 </pre>
 <p>Cluster 2:</p>
 <pre class="codeblock">
-<code>bx cs cluster-create --location &lt;dal12&gt; --workers 3 --public-vlan &lt;my_public_vlan_id&gt; --private-vlan &lt;my_private_vlan_id&gt; --machine-type &lt;u1c.2x4&gt;  --name &lt;my_cluster2&gt;</code>
+<code>bx cs cluster-create --location &lt;dal12&gt; --workers 3 --public-vlan &lt;my_public_vlan_id&gt; --private-vlan &lt;my_private_vlan_id&gt; --machine-type &lt;u2c.2x4&gt;  --name &lt;my_cluster2&gt;</code>
 </pre>
 </dd>
 <dt>Spread apps across clusters in different regions</dt>
@@ -89,11 +89,11 @@ Learn more about how you can use these techniques to increase the availability o
 <p><strong>Important:</strong> After you configure your custom domain, you might use these commands to create the clusters.</p>
 <p>Location 1:</p>
 <pre class="codeblock">
-<code>bx cs cluster-create --location &lt;dal10&gt; --workers 3 --public-vlan &lt;my_public_vlan_id&gt; --private-vlan &lt;my_private_vlan_id&gt; --machine-type &lt;u1c.2x4&gt; --name &lt;my_cluster1&gt;</code>
+<code>bx cs cluster-create --location &lt;dal10&gt; --workers 3 --public-vlan &lt;my_public_vlan_id&gt; --private-vlan &lt;my_private_vlan_id&gt; --machine-type &lt;u2c.2x4&gt; --name &lt;my_cluster1&gt;</code>
 </pre>
 <p>Location 2:</p>
 <pre class="codeblock">
-<code>bx cs cluster-create --location &lt;ams03&gt; --workers 3 --public-vlan &lt;my_public_vlan_id&gt; --private-vlan &lt;my_private_vlan_id&gt; --machine-type &lt;u1c.2x4&gt; --name &lt;my_cluster2&gt;</code>
+<code>bx cs cluster-create --location &lt;ams03&gt; --workers 3 --public-vlan &lt;my_public_vlan_id&gt; --private-vlan &lt;my_private_vlan_id&gt; --machine-type &lt;u2c.2x4&gt; --name &lt;my_cluster2&gt;</code>
 </pre>
 </dd>
 </dl>
@@ -127,6 +127,26 @@ When you create a lite cluster, your worker node is automatically provisioned as
 When you create a cluster in {{site.data.keyword.Bluemix_dedicated_notm}}, a single-tenant set up only is used and all physical resources are dedicated to you only. You deploy multiple worker nodes as virtual machines on the same physical host.
 
 <br />
+
+
+### Worker node memory limits
+{: #resource_limit_node}
+
+{{site.data.keyword.containershort_notm}} sets a memory limit on each worker node. When pods that are running on the worker node exceed this memory limit, the pods are removed. In Kubernetes, this limit is called a [hard eviction threshold ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/administer-cluster/out-of-resource/#hard-eviction-thresholds).
+
+If your pods are removed frequently, add more worker nodes to your cluster or set [resource limits ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) on your pods.
+
+Each machine type has a different memory capacity. When there is less memory available on the worker node than the mininum threshold that is allowed, Kubernetes immediately removes the pod. The pod reschedules onto another worker node if a worker node is available. 
+
+|Worker node memory capacity|Minumum memory threshold a worker node|
+|---------------------------|------------|
+|4 GB  | 256 MB |
+|16 GB | 1024 MB |
+|64 GB | 4096 MB |
+|128 GB| 4096 MB |
+|242 GB| 4096 MB |
+
+To review how much memory is used on your worker node, run [`kubectl top node` ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/user-guide/kubectl/v1.8/#top).
 
 
 ## Cluster management responsibilities

@@ -136,11 +136,11 @@ To create a cluster:
         OK
         Machine Types
         Name         Cores   Memory   Network Speed   OS             Storage   Server Type
-        u1c.2x4      2       4GB      1000Mbps        UBUNTU_16_64   100GB     virtual
-        b1c.4x16     4       16GB     1000Mbps        UBUNTU_16_64   100GB     virtual
-        b1c.16x64    16      64GB     1000Mbps        UBUNTU_16_64   100GB     virtual
-        b1c.32x128   32      128GB    1000Mbps        UBUNTU_16_64   100GB     virtual
-        b1c.56x242   56      242GB    1000Mbps        UBUNTU_16_64   100GB     virtual
+        u2c.2x4      2       4GB      1000Mbps        UBUNTU_16_64   100GB     virtual
+        b2c.4x16     4       16GB     1000Mbps        UBUNTU_16_64   100GB     virtual
+        b2c.16x64    16      64GB     1000Mbps        UBUNTU_16_64   100GB     virtual
+        b2c.32x128   32      128GB    1000Mbps        UBUNTU_16_64   100GB     virtual
+        b2c.56x242   56      242GB    1000Mbps        UBUNTU_16_64   100GB     virtual
         ```
         {: screen}
 
@@ -165,7 +165,7 @@ To create a cluster:
     4.  Run the `cluster-create` command. You can choose between a lite cluster, which includes one worker node set up with 2vCPU and 4GB memory, or a standard cluster, which can include as many worker nodes as you choose in your IBM Cloud infrastructure (SoftLayer) account. When you create a standard cluster, by default, the hardware of the worker node is shared by multiple IBM customers and billed by hours of usage. </br>Example for a standard cluster:
 
         ```
-        bx cs cluster-create --location dal10 --public-vlan <public_vlan_id> --private-vlan <private_vlan_id> --machine-type u1c.2x4 --workers 3 --name <cluster_name> --kube-version <major.minor.patch>
+        bx cs cluster-create --location dal10 --public-vlan <public_vlan_id> --private-vlan <private_vlan_id> --machine-type u2c.2x4 --workers 3 --name <cluster_name> --kube-version <major.minor.patch>
         ```
         {: pre}
 
@@ -1078,7 +1078,7 @@ Choose from the following actions to proceed:
 ### Overview of required {{site.data.keyword.containershort_notm}} access policies and permissions
 {: #access_ov}
 
-Review the access policies and permissions that you can grant to users in your {{site.data.keyword.Bluemix_notm}} account. The operator and editor roles have separate permissions. If you want a user to, for example, add worker nodes and bind services, then you must assign the user both the operator and editor roles. 
+Review the access policies and permissions that you can grant to users in your {{site.data.keyword.Bluemix_notm}} account. The operator and editor roles have separate permissions. If you want a user to, for example, add worker nodes and bind services, then you must assign the user both the operator and editor roles.
 
 |Access policy|Cluster Management Permissions|Kubernetes Resource Permissions|
 |-------------|------------------------------|-------------------------------|
@@ -1219,19 +1219,19 @@ After you complete the update:
 ## Adding subnets to clusters
 {: #cs_cluster_subnet}
 
-Change the pool of available portable public IP addresses by adding subnets to your cluster.
+Change the pool of available portable public or private IP addresses by adding subnets to your cluster.
 {:shortdesc}
 
-In {{site.data.keyword.containershort_notm}}, you can add stable, portable IPs for Kubernetes services by adding network subnets to the cluster. When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically provisions a portable public subnet and 5 IP addresses. Portable public IP addresses are static and do not change when a worker node, or even the cluster, is removed.
+In {{site.data.keyword.containershort_notm}}, you can add stable, portable IPs for Kubernetes services by adding network subnets to the cluster. When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically provisions a portable public subnet with 5 public IP addresses and a portable private subnet with 5 private IP addresses. Portable public and private IP addresses are static and do not change when a worker node, or even the cluster, is removed.
 
-One of the portable public IP addresses is used for the [Ingress controller](cs_apps.html#cs_apps_public_ingress) that you can use to expose multiple apps in your cluster by using a public route. The remaining 4 portable public IP addresses can be used to expose single apps to the public by [creating a load balancer service](cs_apps.html#cs_apps_public_load_balancer).
+One of the portable public and one of the portable private IP addresses are used for [Ingress controllers](cs_apps.html#cs_apps_public_ingress) that you can use to expose multiple apps in your cluster. The remaining 4 portable public and 4 portable private IP addresses can be used to expose single apps to the public by [creating a load balancer service](cs_apps.html#cs_apps_public_load_balancer).
 
 **Note:** Portable public IP addresses are charged on a monthly basis. If you choose to remove portable public IP addresses after your cluster is provisioned, you still have to pay the monthly charge, even if you used them only for a short amount of time.
 
 ### Requesting additional subnets for your cluster
 {: #add_subnet}
 
-You can add stable, portable public IPs to the cluster by assigning subnets to the cluster.
+You can add stable, portable public or private IPs to the cluster by assigning subnets to the cluster.
 
 For {{site.data.keyword.Bluemix_dedicated_notm}} users, instead of using this task, you must [open a support ticket](/docs/support/index.html#contacting-support) to create the subnet, and then use the [`bx cs cluster-subnet-add`](cs_cli_reference.html#cs_cluster_subnet_add) command to add the subnet to the cluster.
 
@@ -1239,12 +1239,12 @@ Before you begin, make sure that you can access the IBM Cloud infrastructure (So
 
 1.  From the catalog, in the **Infrastructure** section, select **Network**.
 2.  Select **Subnet/IPs** and click **Create**.
-3.  From the **Select the type of subnet to add to this account** drop-down menu, select **Portable Public**.
+3.  From the **Select the type of subnet to add to this account** drop-down menu, select **Portable Public** or **Portable Private**.
 4.  Select the number of IP addresses that you want to add from your portable subnet.
 
-    **Note:** When you add portable public IP addresses for your subnet, three IP addresses are used to establish cluster-internal networking, so that you cannot use them for your Ingress controller or to create a load balancer service. For example, if you request eight portable public IP addresses, you can use five of them to expose your apps to the public.
+    **Note:** When you add portable IP addresses for your subnet, three IP addresses are used to establish cluster-internal networking, so that you cannot use them for your Ingress controller or to create a load balancer service. For example, if you request eight portable public IP addresses, you can use five of them to expose your apps to the public.
 
-5.  Select the public VLAN where you want to route the portable public IP addresses to. You must select the public VLAN that an existing worker node is connected to. Review the public VLAN for a worker node.
+5.  Select the public or private VLAN where you want to route the portable public or private IP addresses to. You must select the public or private VLAN that an existing worker node is connected to. Review the public or private VLAN for a worker node.
 
     ```
     bx cs worker-get <worker_id>
@@ -1273,7 +1273,7 @@ Before you begin, make sure that you can access the IBM Cloud infrastructure (So
         ```
         {: pre}
 
-    4.  Add the subnet to your cluster. When you make a subnet available to a cluster, a Kubernetes config map is created for you that includes all available portable public IP addresses that you can use. If no Ingress controller exists for your cluster, one portable public IP address is automatically used to create the Ingress controller. All other portable public IP addresses can be used to create load balancer services for your apps.
+    4.  Add the subnet to your cluster. When you make a subnet available to a cluster, a Kubernetes config map is created for you that includes all available portable public or private IP addresses that you can use. If no Ingress controller exists for your cluster, one portable public IP address is automatically used to create the public Ingress controller and one portable private IP address is automatically used to create the private Ingress controller. All other portable public and private IP addresses can be used to create load balancer services for your apps.
 
         ```
         bx cs cluster-subnet-add <cluster name or id> <subnet id>
@@ -1290,7 +1290,7 @@ Before you begin, make sure that you can access the IBM Cloud infrastructure (So
 ### Adding custom and existing subnets to Kubernetes clusters
 {: #custom_subnet}
 
-You can add existing portable public subnets to your Kubernetes cluster.
+You can add existing portable public or private subnets to your Kubernetes cluster.
 
 Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
 
@@ -1329,10 +1329,10 @@ If you have an existing subnet in your IBM Cloud infrastructure (SoftLayer) port
     ```
     {: screen}
 
-3.  Create a cluster by using the location and VLAN ID that you identified. Include the `--no-subnet` flag to prevent a new portable public IP subnet from being created automatically.
+3.  Create a cluster by using the location and VLAN ID that you identified. Include the `--no-subnet` flag to prevent a new portable public IP subnet and a new portable private IP subnet from being created automatically.
 
     ```
-    bx cs cluster-create --location dal10 --machine-type u1c.2x4 --no-subnet --public-vlan 1901230 --private-vlan 1900403 --workers 3 --name my_cluster
+    bx cs cluster-create --location dal10 --machine-type u2c.2x4 --no-subnet --public-vlan 1901230 --private-vlan 1900403 --workers 3 --name my_cluster
     ```
     {: pre}
 
@@ -1405,14 +1405,14 @@ Before you begin: Configure the routing of network traffic into and out of the e
 2. Add the external subnet to your private VLAN. The portable private IP addresses are added to the cluster's config map.
 
     ```
-    bx cs cluster-user-subnet-add <subnet_CIDR> <VLAN_ID>
+    bx cs cluster-user-subnet-add <cluster_name> <subnet_CIDR> <VLAN_ID>
     ```
     {: pre}
 
     Example:
 
     ```
-    bx cs cluster-user-subnet-add 203.0.113.0/24 1555505
+    bx cs cluster-user-subnet-add my_cluster 203.0.113.0/24 1555505
     ```
     {: pre}
 
@@ -1620,7 +1620,7 @@ To view logs for clusters and containers, you can use the standard Kubernetes an
 #### {{site.data.keyword.loganalysislong_notm}}
 {: #cs_view_logs_k8s}
 
-For standard clusters, logs are located in the {{site.data.keyword.Bluemix_notm}} account you were logged in to when you created the Kubernetes cluster. If you specified an {{site.data.keyword.Bluemix_notm}} space when you created the cluster, then logs are located in that space. Container logs are monitored and forwarded outside of the container. You can access logs for a container by using the Kibana dashboard. For more information about logging, see [Logging for the {{site.data.keyword.containershort_notm}}](/docs/services/CloudLogAnalysis/containers/logging_containers_ov.html#logging_containers_ov).
+For standard clusters, logs are located in the {{site.data.keyword.Bluemix_notm}} account you were logged in to when you created the Kubernetes cluster. If you specified an {{site.data.keyword.Bluemix_notm}} space when you created the cluster, then logs are located in that space. Container logs are monitored and forwarded outside of the container. You can access logs for a container by using the Kibana dashboard. For more information about logging, see [Logging for the {{site.data.keyword.containershort_notm}}](/docs/services/CloudLogAnalysis/containers/containers_kubernetes.html#containers_kubernetes).
 
 **Note**: If logs are located in the space that you specified at cluster creation, the account owner needs Manager, Developer, or Auditor permissions to that space to view logs. For more information about changing {{site.data.keyword.containershort_notm}} access policies and permissions, see [Managing cluster access](cs_cluster.html#cs_cluster_user). Once permissions are changed, it can take up to 24 hours for logs to start appearing.
 
@@ -2213,4 +2213,5 @@ When you delete a cluster, you are also deleting resources on the cluster, inclu
 
 When you remove a cluster, you can choose to remove the portable subnets and persistent storage associated with it:
 - Subnets are used to assign portable public IP addresses to load balancer services or your Ingress controller. If you keep them, you can reuse them in a new cluster or manually delete them later from your IBM Cloud infrastructure (SoftLayer) portfolio.
+- If you created a persistent volume claim by using an (existing file share)[#cs_cluster_volume_create], then you cannot delete the file share when you delete the cluster. You must manually delete the file share later from your IBM Cloud infrastructure (SoftLayer) portfolio.
 - Persistent storage provides high availability for your data. If you delete it, you cannot recover your data.
