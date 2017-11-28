@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-10-25"
+lastupdated: "2017-11-28"
 
 ---
 
@@ -32,41 +32,60 @@ Refer to these commands to create and manage clusters.
     <th colspan=5>Commands for creating clusters on {{site.data.keyword.Bluemix_notm}}</th>
  </thead>
  <tbody>
- <tr>
-    <td>[bx cs cluster-config](cs_cli_devtools.html#cs_cluster_config)</td>
-    <td>[bx cs cluster-create](cs_cli_devtools.html#cs_cluster_create)</td>
-    <td>[bx cs cluster-get](cs_cli_devtools.html#cs_cluster_get)</td>
-    <td>[bx cs cluster-rm](cs_cli_devtools.html#cs_cluster_rm)</td>
-    <td>[bx cs cluster-service-bind](cs_cli_devtools.html#cs_cluster_service_bind)</td>
- </tr>
- <tr>
-    <td>[bx cs cluster-service-unbind](cs_cli_devtools.html#cs_cluster_service_unbind)</td>
-    <td>[bx cs cluster-services](cs_cli_devtools.html#cs_cluster_services)</td>
-    <td>[bx cs cluster-subnet-add](cs_cli_devtools.html#cs_cluster_subnet_add)</td>
-    <td>[bx cs clusters](cs_cli_devtools.html#cs_clusters)</td>
-    <td>[bx cs credentials-set](cs_cli_devtools.html#cs_credentials_set)</td>
- </tr>
- <tr>
-   <td>[bx cs credentials-unset](cs_cli_devtools.html#cs_credentials_unset)</td>
-   <td>[bx cs help](cs_cli_devtools.html#cs_help)</td>
-   <td>[bx cs init](cs_cli_devtools.html#cs_init)</td>
-   <td>[bx cs locations](cs_cli_devtools.html#cs_datacenters)</td>
-   <td>[bx cs machine-types](cs_cli_devtools.html#cs_machine_types)</td>
-   </tr>
- <tr>
-    <td>[bx cs subnets](cs_cli_devtools.html#cs_subnets)</td>
-    <td>[bx cs vlans](cs_cli_devtools.html#cs_vlans)</td>
-    <td>[bx cs webhook-create](cs_cli_devtools.html#cs_webhook_create)</td>
-    <td>[bx cs worker-add](cs_cli_devtools.html#cs_worker_add)</td>
-    <td>[bx cs worker-get](cs_cli_devtools.html#cs_worker_get)</td>
-    </tr>
- <tr>
-   <td>[bx cs worker-reboot](cs_cli_devtools.html#cs_worker_reboot)</td>
-   <td>[bx cs worker-reload](cs_cli_devtools.html#cs_worker_reload)</td>
-   <td>[bx cs worker-rm](cs_cli_devtools.html#cs_worker_rm)</td>
-   <td>[bx cs workers](cs_cli_devtools.html#cs_workers)</td>
-   
+  <tr>
+    <td>[bx cs albs](#cs_albs)</td>
+    <td>[bx cs alb-configure](#cs_alb_configure)</td>
+    <td>[bx cs alb-get](#cs_alb_get)</td>
+    <td>[bx cs alb-types](#cs_alb_types)</td>
+    <td>[bx cs cluster-config](#cs_cluster_config)</td>
   </tr>
+ <tr>
+    <td>[bx cs cluster-create](#cs_cluster_create)</td>
+    <td>[bx cs cluster-get](#cs_cluster_get)</td>
+    <td>[bx cs cluster-rm](#cs_cluster_rm)</td>
+    <td>[bx cs cluster-service-bind](#cs_cluster_service_bind)</td>
+    <td>[bx cs cluster-service-unbind](#cs_cluster_service_unbind)</td>
+ </tr>
+ <tr>
+    <td>[bx cs cluster-services](#cs_cluster_services)</td>
+    <td>[bx cs cluster-subnet-add](#cs_cluster_subnet_add)</td>
+    <td>[bx cs cluster-subnet-create](#cs_cluster_subnet_create)</td>
+    <td>[bx cs cluster-user-subnet-add](#cs_cluster_user_subnet_add)</td>
+    <td>[bx cs cluster-user-subnet-rm](#cs_cluster_user_subnet_rm)</td>
+ </tr>
+ <tr>
+    <td>[bx cs cluster-update](#cs_cluster_update)</td>
+    <td>[bx cs clusters](#cs_clusters)</td>
+    <td>[bx cs credentials-set](#cs_credentials_set)</td>
+    <td>[bx cs credentials-unset](#cs_credentials_unset)</td>
+    <td>[bx cs help](#cs_help)</td>
+ </tr>
+ <tr>
+    <td>[bx cs init](#cs_init)</td>
+    <td>[bx cs kube-versions](#cs_kube_versions)</td>
+    <td>[bx cs locations](#cs_datacenters)</td>
+    <td>[bx cs logging-config-create](#cs_logging_create)</td>
+    <td>[bx cs logging-config-get](#cs_logging_get)</td>
+ </tr>
+ <tr>
+    <td>[bx cs logging-config-rm](#cs_logging_rm)</td>
+    <td>[bx cs logging-config-update](#cs_logging_update)</td>
+    <td>[bx cs machine-types](#cs_machine_types)</td>
+    <td>[bx cs subnets](#cs_subnets)</td>
+    <td>[bx cs vlans](#cs_vlans)</td>
+ </tr>
+ <tr>
+    <td>[bx cs webhook-create](#cs_webhook_create)</td>
+    <td>[bx cs worker-add](#cs_worker_add)</td>
+    <td>[bx cs worker-get](#cs_worker_get)</td>
+    <td>[bx cs worker-rm](#cs_worker_rm)</td>
+    <td>[bx cs worker-update](#cs_worker_update)</td>
+ </tr>
+ <tr>
+    <td>[bx cs worker-reboot](#cs_worker_reboot)</td>
+    <td>[bx cs worker-reload](#cs_worker_reload)</td>
+    <td>[bx cs workers](#cs_workers)</td>
+ </tr>
  </tbody>
  </table>
 
@@ -77,9 +96,113 @@ bx plugin list
 ```
 {: pre}
 
-
 ## bx cs commands
 {: #cs_commands}
+
+
+### bx cs albs --cluster CLUSTER
+{: #cs_albs}
+
+View the status of all application load balancers (ALBs) in a cluster. An ALB is also called an Ingress controller. If no ALB IDs are returned, then the cluster does not have a portable subnet. You can [create](#cs_cluster_subnet_create) or [add](#cs_cluster_subnet_add) subnets to a cluster.
+
+<strong>Command options</strong>:
+
+   <dl>
+   <dt><code><em>--cluster </em>CLUSTER</code></dt>
+   <dd>The name or ID of the cluster where you list available application load balancers. This value is required.</dd>
+   </dl>
+
+**Example**:
+
+  ```
+  bx cs albs --cluster mycluster
+  ```
+  {: pre}
+
+### bx cs alb-configure --albID ALB_ID [--enable][--disable][--user-ip USERIP]
+{: #cs_alb_configure}
+
+Enable or disable an application load balancer (ALB), also called the Ingress controller, in your standard cluster. The public application load balancer is enabled by default.
+
+**Command options**:
+
+   <dl>
+   <dt><code><em>--albID </em>ALB_ID</code></dt>
+   <dd>The ID for an alb. Run <code>bx cs albs <em>--cluster </em>CLUSTER</code> to view the IDs for the ALBs in a cluster. This value is required.</dd>
+
+   <dt><code>--enable</code></dt>
+   <dd>Include this flag to enable an ALB in a cluster.</dd>
+
+   <dt><code>--disable</code></dt>
+   <dd>Include this flag to disable an ALB in a cluster.</dd>
+
+   <dt><code>--user-ip <em>USER_IP</em></code></dt>
+   <dd>
+
+   <ul>
+    <li>This parameter is available for a private alb only</li>
+    <li>The private ALB is deployed with an IP address from a user-provided private subnet. If no IP address is provided, the ALB is deployed with a random IP address from a private subnet in IBM Cloud infrastructure (SoftLayer).</li>
+   </ul>
+   </dd>
+   </dl>
+
+**Examples**:
+
+  Example for enabling an ALB:
+
+  ```
+  bx cs alb-configure --albID my_alb_id --enable
+  ```
+  {: pre}
+
+  Example for disabling an ALB:
+
+  ```
+  bx cs alb-configure --albID my_alb_id --disable
+  ```
+  {: pre}
+
+  Example for enabling an ALB with a user-provided IP address:
+
+  ```
+  bx cs alb-configure --albID my_private_alb_id --enable --user-ip user_ip
+  ```
+  {: pre}
+
+### bx cs alb-get --albID ALB_ID
+{: #cs_alb_get}
+
+View the details of an application load balancer (ALB).
+
+<strong>Command options</strong>:
+
+   <dl>
+   <dt><code><em>--albID </em>ALB_ID</code></dt>
+   <dd>The ID for an ALB. Run <code>bx cs albs --cluster <em>CLUSTER</em></code> to view the IDs for the albs in a cluster. This value is required.</dd>
+   </dl>
+
+**Example**:
+
+  ```
+  bx cs alb-get --albID ALB_ID
+  ```
+  {: pre}
+
+### bx cs alb-types
+{: #cs_alb_types}
+
+View the application load balancer types that are supported in the region.
+
+<strong>Command options</strong>:
+
+   None
+
+**Example**:
+
+  ```
+  bx cs alb-types
+  ```
+  {: pre}
 
 ### bx cs cluster-config CLUSTER [--admin] [--export]
 {: #cs_cluster_config}
@@ -108,7 +231,7 @@ bx cs cluster-config my_cluster
 
 
 
-### bx cs cluster-create [--file FILE_LOCATION] [--hardware HARDWARE] --location LOCATION --machine-type MACHINE_TYPE --name NAME [--no-subnet] [--private-vlan PRIVATE_VLAN] [--public-vlan PUBLIC_VLAN] [--workers WORKER]
+### bx cs cluster-create [--file FILE_LOCATION] [--hardware HARDWARE] --location LOCATION --machine-type MACHINE_TYPE --name NAME [--kube-version MAJOR.MINOR.PATCH] [--no-subnet] [--private-vlan PRIVATE_VLAN] [--public-vlan PUBLIC_VLAN] [--workers WORKER]
 {: #cs_cluster_create}
 
 To create a cluster in your organization.
@@ -125,11 +248,14 @@ To create a cluster in your organization.
 <pre class="codeblock">
 <code>name: <em>&lt;cluster_name&gt;</em>
 location: <em>&lt;location&gt;</em>
+no-subnet: <em>&lt;no-subnet&gt;</em>
 machine-type: <em>&lt;machine_type&gt;</em>
 private-vlan: <em>&lt;private_vlan&gt;</em>
 public-vlan: <em>&lt;public_vlan&gt;</em>
 hardware: <em>&lt;shared_or_dedicated&gt;</em>
-workerNum: <em>&lt;number_workers&gt;</em></code></pre>
+workerNum: <em>&lt;number_workers&gt;</em>
+kube-version: <em>&lt;kube-version&gt;</em>
+</code></pre>
 
 
 <table>
@@ -146,6 +272,10 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
     <td><code><em>location</em></code></td>
     <td>Replace <code><em>&lt;location&gt;</em></code> with the location where you want to create your cluster. The available locations are dependent on the region that you are logged in. To list available locations, run <code>bx cs locations</code>. </td>
      </tr>
+     <tr>
+     <td><code><em>no-subnet</em></code></td>
+     <td>By default, both a public and a private portable subnets are created on the VLAN associated with the cluster. Replace <code><em>&lt;no-subnet&gt;</em></code> with <code><em>true</em></code> to avoid creating subnets with the cluster. You can [create](#cs_cluster_subnet_create) or [add](#cs_cluster_subnet_add) subnets to a cluster later.</td>
+      </tr>
      <tr>
      <td><code><em>machine-type</em></code></td>
      <td>Replace <code><em>&lt;machine_type&gt;</em></code> with the machine type that you want for your worker nodes. To list available machine types for your location, run <code>bx cs machine-types <em>&lt;location&gt;</em></code>.</td>
@@ -166,6 +296,9 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
      <td><code><em>workerNum</em></code></td>
      <td>Replace <code><em>&lt;number_workers&gt;</em></code> with the number of worker nodes that you want to deploy.</td>
      </tr>
+     <tr>
+      <td><code><em>kube-version</em></code></td>
+      <td>The Kubernetes version for the cluster master node. This value is optional. Unless specified, the cluster is created with the default of supported Kubernetes versions. To see available versions, run <code>bx cs kube-versions</code>.</td>
      </tbody></table>
     </p></dd>
 
@@ -182,13 +315,16 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 </dd>
 
 <dt><code>--machine-type <em>MACHINE_TYPE</em></code></dt>
-<dd>The machine type that you choose impacts the amount of memory and disk space that is available to the containers that are deployed to your worker node. To list available machine types, see [bx cs machine-types <em>LOCATION</em>](cs_cli_reference.html#cs_machine_types).  This value is required for standard clusters and is not available for lite clusters.</dd>
+<dd>The machine type that you choose impacts the amount of memory and disk space that is available to the containers that are deployed to your worker node. To list available machine types, see [bx cs machine-types <em>LOCATION</em>](#cs_machine_types).  This value is required for standard clusters and is not available for lite clusters.</dd>
 
 <dt><code>--name <em>NAME</em></code></dt>
 <dd>The name for the cluster.  This value is required.</dd>
 
+<dt><code>--kube-version <em>MAJOR.MINOR.PATCH</em></code></dt>
+<dd>The Kubernetes version for the cluster master node. This value is optional. Unless specified, the cluster is created with the default of supported Kubernetes versions. To see available versions, run <code>bx cs kube-versions</code>.</dd>
+
 <dt><code>--no-subnet</code></dt>
-<dd>Include the flag to create a cluster without a portable subnet. The default is to not use the flag and to create a subnet in your IBM Cloud infrastructure (SoftLayer) portfolio. This value is optional.</dd>
+<dd>By default, both a public and a private portable subnets are created on the VLAN associated with the cluster. Include the <code>--no-subnet</code> flag to avoid creating subnets with the cluster. You can [create](#cs_cluster_subnet_create) or [add](#cs_cluster_subnet_add) subnets to a cluster later.</dd>
 
 <dt><code>--private-vlan <em>PRIVATE_VLAN</em></code></dt>
 <dd>
@@ -229,7 +365,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
   {: #example_cluster_create}
 
   ```
-  bx cs cluster-create --location dal10 --public-vlan my_public_vlan_id --private-vlan my_private_vlan_id --machine-type u1c.2x4 --name my_cluster --hardware shared --workers 2
+  bx cs cluster-create --location dal10 --public-vlan my_public_vlan_id --private-vlan my_private_vlan_id --machine-type u2c.2x4 --name my_cluster --hardware shared --workers 2
   ```
   {: pre}
 
@@ -487,10 +623,10 @@ Remove your own private subnet from a specified cluster.
   {: pre}
 
 
-### bx cs cluster-update [-f] CLUSTER
+### bx cs cluster-update [-f] CLUSTER [--kube-version MAJOR.MINOR.PATCH] [--force-update]
 {: #cs_cluster_update}
 
-Update the Kubernetes master to the latest API version. During the update, you cannot access or change the cluster. Worker nodes, apps, and resources that have been deployed by the user are not modified and will continue to run.
+Update the Kubernetes master to the default API version. During the update, you cannot access or change the cluster. Worker nodes, apps, and resources that have been deployed by the user are not modified and will continue to run.
 
 You might need to change your YAML files for future deployments. Review this [release note](cs_versions.html) for details.
 
@@ -499,9 +635,15 @@ You might need to change your YAML files for future deployments. Review this [re
    <dl>
    <dt><code><em>CLUSTER</em></code></dt>
    <dd>The name or ID of the cluster. This value is required.</dd>
+   
+   <dt><code>--kube-version <em>MAJOR.MINOR.PATCH</em></code></dt>
+   <dd>The Kubernetes version of the cluster. If this flag is not specified, the Kubernetes master is update to the default API version. To see available versions, run [bx cs kube-versions](#cs_kube_versions). This value is optional.</dd>
 
    <dt><code>-f</code></dt>
    <dd>Use this option to force the update of the master with no user prompts. This value is optional.</dd>
+   
+   <dt><code>--force-update</code></dt>
+   <dd>Attempt the update even if the change is greater than two minor versions. This value is optional.</dd>
    </dl>
 
 **Example**:
@@ -540,7 +682,7 @@ Set IBM Cloud infrastructure (SoftLayer) account credentials for your {{site.dat
    <dl>
    <dt><code>--infrastructure-username <em>USERNAME</em></code></dt>
    <dd>IBM Cloud infrastructure (SoftLayer) account username. This value is required.</dd>
-   </dl>
+   
 
    <dt><code>--infrastructure-api-key <em>API_KEY</em></code></dt>
    <dd>IBM Cloud infrastructure (SoftLayer) account API key. This value is required.
@@ -561,7 +703,9 @@ Set IBM Cloud infrastructure (SoftLayer) account credentials for your {{site.dat
   <li>Select <strong>Account</strong>, and then <strong>Users</strong>.</li>
   <li>Click <strong>View</strong> to see your existing API key.</li>
   <li>Copy the API key to use in this command.</li>
-  </ol></p></dd>
+  </ol>
+  </p></dd>
+  </dl>
 
 **Example**:
 
@@ -653,7 +797,21 @@ Initialize the {{site.data.keyword.containershort_notm}} plug-in or specify the 
 
 
 
+### bx cs kube-versions
+{: #cs_kube_versions}
 
+View a list of Kubernetes versions supported in {{site.data.keyword.containershort_notm}}. Update your [cluster master](#cs_cluster_update) and [worker nodes](#cs_worker_update) to the default version for the latest, stable capabilities.
+
+**Command options**:
+
+  None
+
+**Example**:
+
+  ```
+  bx cs kube-versions
+  ```
+  {: pre}
 
 ### bx cs locations
 {: #cs_datacenters}
@@ -671,7 +829,7 @@ View a list of available locations for you to create a cluster in.
   ```
   {: pre}
 
-### bx cs logging-config-create CLUSTER [--namespace KUBERNETES_NAMESPACE] [--logsource LOG_SOURCE] [--hostname LOG_SERVER_HOSTNAME] [--port LOG_SERVER_PORT] --type LOG_TYPE
+### bx cs logging-config-create CLUSTER --logsource LOG_SOURCE [--namespace KUBERNETES_NAMESPACE] [--hostname LOG_SERVER_HOSTNAME] [--port LOG_SERVER_PORT] --type LOG_TYPE
 {: #cs_logging_create}
 
 Create a logging configuration. By default, namespace logs are forwarded to {{site.data.keyword.loganalysislong_notm}}. You can use this command to forward namespace logs to an external syslog server. You can also use this command to forward logs for applications, worker nodes, Kubernetes clusters, and Ingress controllers to {{site.data.keyword.loganalysisshort_notm}} or to an external syslog server.
@@ -682,7 +840,7 @@ Create a logging configuration. By default, namespace logs are forwarded to {{si
 <dt><code><em>CLUSTER</em></code></dt>
 <dd>The name or ID of the cluster.</dd>
 <dt><code>--logsource <em>LOG_SOURCE</em></code></dt>
-<dd>The log source for which you want to enable log forwarding. Accepted values are <code>application</code>, <code>worker</code>, <code>kubernetes</code>, and <code>ingress</code>. This value is required for log sources other than Docker container namespaces.</dd>
+<dd>The log source for which you want to enable log forwarding. Accepted values are <code>application</code>, <code>worker</code>, <code>kubernetes</code>, and <code>ingress</code>. This value is required.</dd>
 <dt><code>--namespace <em>KUBERNETES_NAMESPACE</em></code></dt>
 <dd>The Docker container namespace from which you want to forward logs to syslog. Log forwarding is not supported for the <code>ibm-system</code> and <code>kube-system</code> Kubernetes namespaces. This value is required for namespaces. If you do not specify a namespace, then all namespaces in the container use this configuration.</dd>
 <dt><code>--hostname <em>LOG_SERVER_HOSTNAME</em></code></dt>
@@ -693,17 +851,19 @@ Create a logging configuration. By default, namespace logs are forwarded to {{si
 <dd>The log forwarding protocol that you want to use. Currently, <code>syslog</code> and <code>ibm</code> are supported. This value is required.</dd>
 </dl>
 
-**Example for log source `namespace`**:
+**Examples**:
+
+Example for log source `namespace`:
 
   ```
-  bx cs logging-config-create my_cluster --namespace my_namespace --hostname localhost --port 5514 --type syslog
+  bx cs logging-config-create my_cluster --logsource namespaces --namespace my_namespace --hostname localhost --port 5514 --type syslog
   ```
   {: pre}
 
-**Example for log source `ingress`**:
+Example for log source `ingress`:
 
   ```
-  bx cs logging-config-create my_cluster f4bc77c0-ee7d-422d-aabf-a4e6b977264e --type ibm
+  bx cs logging-config-create my_cluster --logsource ingress --type ibm
   ```
   {: pre}
 
@@ -718,7 +878,7 @@ View all log forwarding configurations for a cluster, or filter logging configur
    <dt><code><em>CLUSTER</em></code></dt>
    <dd>The name or ID of the cluster. This value is required.</dd>
    <dt><code>--logsource <em>LOG_SOURCE</em></code></dt>
-   <dd>The kind of log source for which you want to filter. Only logging configurations of this log source in the cluster are returned. Accepted values are <code>namespace</code>, <code>application</code>, <code>worker</code>, <code>kubernetes</code>, and <code>ingress</code>. This value is optional.</dd>
+   <dd>The kind of log source for which you want to filter. Only logging configurations of this log source in the cluster are returned. Accepted values are <code>namespaces</code>, <code>application</code>, <code>worker</code>, <code>kubernetes</code>, and <code>ingress</code>. This value is optional.</dd>
    </dl>
 
 **Example**:
@@ -729,7 +889,7 @@ View all log forwarding configurations for a cluster, or filter logging configur
   {: pre}
 
 
-### bx cs logging-config-rm CLUSTER [--namespace KUBERNETES_NAMESPACE] [--id LOG_SOURCE_LOGGING_ID]
+### bx cs logging-config-rm CLUSTER --id LOG_CONFIG_ID
 {: #cs_logging_rm}
 
 Deletes a log forwarding configuration. For a Docker container namespace, you can stop forwarding logs to a syslog server. The namespace continues to forward logs to {{site.data.keyword.loganalysislong_notm}}. For a log source other than a Docker container namespace, you can stop forwarding logs to a syslog server or to {{site.data.keyword.loganalysisshort_notm}}.
@@ -739,21 +899,19 @@ Deletes a log forwarding configuration. For a Docker container namespace, you ca
    <dl>
    <dt><code><em>CLUSTER</em></code></dt>
    <dd>The name or ID of the cluster. This value is required.</dd>
-   <dt><code>--namespace <em>KUBERNETES_NAMESPACE</em></code></dt>
-   <dd>The Docker container namespace from which you want to stop forwarding logs to syslog. This value is required for Docker container namespaces.</dd>
-   <dt><code>--id <em>LOG_SOURCE_LOGGING_ID</em></code></dt>
-   <dd>The logging configuration ID that you want to remove from the log source. This value is required for log sources other than Docker container namespaces.</dd>
+   <dt><code>--id <em>LOG_CONFIG_ID</em></code></dt>
+   <dd>The logging configuration ID that you want to remove from the log source. This value is required.</dd>
    </dl>
 
 **Example**:
 
   ```
-  bx cs logging-config-rm my_cluster --namespace my_namespace
+  bx cs logging-config-rm my_cluster --id my_log_config_id
   ```
   {: pre}
 
 
-### bx cs logging-config-update CLUSTER [--namespace NAMESPACE] [--id LOG_SOURCE_LOGGING_ID] [--logsource LOG_SOURCE] [--hostname LOG_SERVER_HOSTNAME] [--port LOG_SERVER_PORT] --type LOG_TYPE
+### bx cs logging-config-update CLUSTER [--namespace NAMESPACE] [--id LOG_CONFIG_ID] [--hostname LOG_SERVER_HOSTNAME] [--port LOG_SERVER_PORT] --type LOG_TYPE
 {: #cs_logging_update}
 
 Update log forwarding to the logging server you want use. For a Docker container namespace, you can use this command to update details for the current syslog server or change to a different syslog server. For a logging source other than a Docker container namespace, you can use this command to change the log collector server type. Currently, 'syslog' and 'ibm' are supported as log types.
@@ -765,9 +923,7 @@ Update log forwarding to the logging server you want use. For a Docker container
    <dd>The name or ID of the cluster. This value is required.</dd>
    <dt><code>--namespace <em>NAMESPACE</em></code></dt>
    <dd>The Docker container namespace from which you want to forward logs to syslog. Log forwarding is not supported for the <code>ibm-system</code> and <code>kube-system</code> Kubernetes namespaces. This value is required for namespaces.</dd>
-   <dt><code>--logsource <em>LOG_SOURCE</em></code></dt>
-   <dd>The log source for which you want to update log forwarding. Accepted values are <code>application</code>, <code>worker</code>, <code>kubernetes</code>, and <code>ingress</code>. This value is required for log sources other than Docker container namespaces.</dd>
-   <dt><code>--id <em>LOG_SOURCE_LOGGING_ID</em></code></dt>
+   <dt><code>--id <em>LOG_CONFIG_ID</em></code></dt>
    <dd>The logging configuration ID that you want to update. This value is required for log sources other than Docker container namespaces.</dd>
    <dt><code>--hostname <em>LOG_SERVER_HOSTNAME</em></code></dt>
    <dd>The hostname or IP address of the log collector server. This value is required when the logging type is <code>syslog</code>.</dd>
@@ -791,10 +947,16 @@ Update log forwarding to the logging server you want use. For a Docker container
   ```
   {: pre}
 
+
 ### bx cs machine-types LOCATION
 {: #cs_machine_types}
 
-View a list of available machine types for your worker nodes. Each machine type includes the amount of virtual CPU, memory, and disk space for each worker node in the cluster.
+View a list of available machine types for your worker nodes. Each machine type includes the amount of virtual CPU, memory, and disk space for each worker node in the cluster. 
+- Machine types with `u2c` or `b2c` in the name use local disk instead of storage area networing (SAN) for reliability. Reliability benefits include higher throughput when serializing bytes to the local disk and reduced file system degradation due to network failures. These machine types contain 25GB local disk storage for the OS file system and 100GB local disk storage for `/var/lib/docker`, the directory that all the container data is written to. 
+- Machine types that include `encrypted` in the name encrypt the host's docker data. The `/var/lib/docker` directory, where all container data is stored, is encrypted with LUKS encryption.
+- Machine types with `u1c` or `b1c` in the name are deprecated, such as `u1c.2x4`. To start using `u2c` and `b2c` machine types, use the `bx cs worker-add` command to add  worker nodes with the updated machine type. Then, remove the worker nodes that are using the deprecated machine types by using the `bx cs worker-rm` command.
+</p>
+
 
 <strong>Command options</strong>:
 
@@ -941,7 +1103,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 <dd>The level of hardware isolation for your worker node. Use dedicated if you want to have available physical resources dedicated to you only, or shared to allow physical resources to be shared with other IBM customers. The default is shared. This value is optional.</dd>
 
 <dt><code>--machine-type <em>MACHINE_TYPE</em></code></dt>
-<dd>The machine type that you choose impacts the amount of memory and disk space that is available to the containers that are deployed to your worker node. This value is required. To list available machine types, see [bx cs machine-types LOCATION](cs_cli_reference.html#cs_machine_types).</dd>
+<dd>The machine type that you choose impacts the amount of memory and disk space that is available to the containers that are deployed to your worker node. This value is required. To list available machine types, see [bx cs machine-types LOCATION](#cs_machine_types).</dd>
 
 <dt><code>--number <em>NUMBER</em></code></dt>
 <dd>An integer that represents the number of worker nodes to create in the cluster. The default value is 1. This value is optional.</dd>
@@ -960,14 +1122,14 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 **Examples**:
 
   ```
-  bx cs worker-add --cluster my_cluster --number 3 --public-vlan my_public_vlan_id --private-vlan my_private_vlan_id --machine-type u1c.2x4 --hardware shared
+  bx cs worker-add --cluster my_cluster --number 3 --public-vlan my_public_vlan_id --private-vlan my_private_vlan_id --machine-type u2c.2x4 --hardware shared
   ```
   {: pre}
 
   Example for {{site.data.keyword.Bluemix_dedicated_notm}}:
 
   ```
-  bx cs worker-add --cluster my_cluster --number 3 --machine-type u1c.2x4
+  bx cs worker-add --cluster my_cluster --number 3 --machine-type u2c.2x4
   ```
   {: pre}
 
@@ -1071,7 +1233,7 @@ Remove one or more worker nodes from a cluster.
   ```
   {: pre}
 
-### bx cs worker-update [-f] CLUSTER WORKER [WORKER]
+### bx cs worker-update [-f] CLUSTER WORKER [WORKER] [--kube-version MAJOR.MINOR.PATCH] [--force-update]
 {: #cs_worker_update}
 
 Update worker nodes to the latest Kubernetes version. Running `bx cs worker-update` can cause downtime for your apps and services. During the update, all pods are rescheduled onto other worker nodes and data is deleted if not stored outside the pod. To avoid downtime, ensure that you have enough worker nodes to handle your workload while the selected worker nodes are updating.
@@ -1084,9 +1246,15 @@ You might need to change your YAML files for deployments before updating. Review
 
    <dt><em>CLUSTER</em></dt>
    <dd>The name or ID of the cluster where you list available worker nodes. This value is required.</dd>
+   
+   <dt><code>--kube-version <em>MAJOR.MINOR.PATCH</em></code></dt>
+   <dd>The Kubernetes version of the cluster. If this flag is not specified, the worker node is update to the default version. To see available versions, run [bx cs kube-versions](#cs_kube_versions). This value is optional.</dd>
 
    <dt><code>-f</code></dt>
    <dd>Use this option to force the update of the master with no user prompts. This value is optional.</dd>
+   
+   <dt><code>--force-update</code></dt>
+   <dd>Attempt the update even if the change is greater than two minor versions. This value is optional.</dd>
 
    <dt><code><em>WORKER</em></code></dt>
    <dd>The ID of one or more worker nodes. Use a space to list multiple worker nodes. This value is required.</dd>
