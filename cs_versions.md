@@ -229,5 +229,9 @@ Review changes you might need to make when updating to Kubernetes version 1.7.
   `kubectl taint node <node> <taint>`
   </ol>
 </tr>
+<tr>
+<td>StatefulSet pod DNS</td>
+<td>StatefulSet pods lose their Kubernetes DNS entries after updating the master. To restore the DNS entries, delete the StatefulSet pods. Kubernetes re-creates the pods and automatically restores the DNS entries. For more information, see the [Kubernetes issue ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/kubernetes/kubernetes/issues/48327).
+</tr>
 </tbody>
 </table>
