@@ -33,7 +33,7 @@ You can create lite or standard clusters. Create lite clusters to get familiar a
 
 |Characteristics|Lite clusters|Standard clusters|
 |---------------|-------------|-----------------|
-|[Available in {{site.data.keyword.Bluemix_notm}} Public](cs_ov.html#public_environment)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
+|[Available in {{site.data.keyword.Bluemix_notm}} Public](cs_ov.html#cs_ov)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 |[In-cluster networking](#cs_planning_private_network)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 |[Public network app access by a NodePort service](#cs_nodeport)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 |[User access management](cs_cluster.html#cs_cluster_user)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
@@ -127,6 +127,26 @@ When you create a lite cluster, your worker node is automatically provisioned as
 When you create a cluster in {{site.data.keyword.Bluemix_dedicated_notm}}, a single-tenant set up only is used and all physical resources are dedicated to you only. You deploy multiple worker nodes as virtual machines on the same physical host.
 
 <br />
+
+
+### Worker node memory limits
+{: #resource_limit_node}
+
+{{site.data.keyword.containershort_notm}} sets a memory limit on each worker node. When pods that are running on the worker node exceed this memory limit, the pods are removed. In Kubernetes, this limit is called a [hard eviction threshold ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/administer-cluster/out-of-resource/#hard-eviction-thresholds).
+
+If your pods are removed frequently, add more worker nodes to your cluster or set [resource limits ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#resource-requests-and-limits-of-pod-and-container) on your pods.
+
+Each machine type has a different memory capacity. When there is less memory available on the worker node than the mininum threshold that is allowed, Kubernetes immediately removes the pod. The pod reschedules onto another worker node if a worker node is available. 
+
+|Worker node memory capacity|Minumum memory threshold a worker node|
+|---------------------------|------------|
+|4 GB  | 256 MB |
+|16 GB | 1024 MB |
+|64 GB | 4096 MB |
+|128 GB| 4096 MB |
+|242 GB| 4096 MB |
+
+To review how much memory is used on your worker node, run [`kubectl top node` ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/user-guide/kubectl/v1.8/#top).
 
 
 ## Cluster management responsibilities
