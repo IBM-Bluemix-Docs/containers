@@ -122,7 +122,7 @@ View the status of all application load balancers (ALBs) in a cluster. An ALB is
 ### bx cs alb-configure --albID ALB_ID [--enable][--disable][--user-ip USERIP]
 {: #cs_alb_configure}
 
-Enable or disable a application load balancer (ALB), also called the Ingress controller, in your standard cluster. The public application load balancer is enabled by default.
+Enable or disable an application load balancer (ALB), also called the Ingress controller, in your standard cluster. The public application load balancer is enabled by default.
 
 **Command options**:
 
@@ -172,13 +172,13 @@ Enable or disable a application load balancer (ALB), also called the Ingress con
 ### bx cs alb-get --albID ALB_ID
 {: #cs_alb_get}
 
-View the details of an application load balancer (alb).
+View the details of an application load balancer (ALB).
 
 <strong>Command options</strong>:
 
    <dl>
    <dt><code><em>--albID </em>ALB_ID</code></dt>
-   <dd>The ID for an alb. Run <code>bx cs albs --cluster <em>CLUSTER</em></code> to view the IDs for the albs in a cluster. This value is required.</dd>
+   <dd>The ID for an ALB. Run <code>bx cs albs --cluster <em>CLUSTER</em></code> to view the IDs for the albs in a cluster. This value is required.</dd>
    </dl>
 
 **Example**:
@@ -365,7 +365,7 @@ kube-version: <em>&lt;kube-version&gt;</em>
   {: #example_cluster_create}
 
   ```
-  bx cs cluster-create --location dal10 --public-vlan my_public_vlan_id --private-vlan my_private_vlan_id --machine-type u1c.2x4 --name my_cluster --hardware shared --workers 2
+  bx cs cluster-create --location dal10 --public-vlan my_public_vlan_id --private-vlan my_private_vlan_id --machine-type u2c.2x4 --name my_cluster --hardware shared --workers 2
   ```
   {: pre}
 
@@ -945,10 +945,16 @@ Update log forwarding to the logging server you want use. For a Docker container
   ```
   {: pre}
 
+
 ### bx cs machine-types LOCATION
 {: #cs_machine_types}
 
-View a list of available machine types for your worker nodes. Each machine type includes the amount of virtual CPU, memory, and disk space for each worker node in the cluster.
+View a list of available machine types for your worker nodes. Each machine type includes the amount of virtual CPU, memory, and disk space for each worker node in the cluster. 
+- Machine types with `u2c` or `b2c` in the name use local disk instead of storage area networing (SAN) for reliability. Reliability benefits include higher throughput when serializing bytes to the local disk and reduced file system degradation due to network failures. These machine types contain 25GB local disk storage for the OS file system and 100GB local disk storage for `/var/lib/docker`, the directory that all the container data is written to. 
+- Machine types that include `encrypted` in the name encrypt the host's docker data. The `/var/lib/docker` directory, where all container data is stored, is encrypted with LUKS encryption.
+- Machine types with `u1c` or `b1c` in the name are deprecated, such as `u1c.2x4`.To start using `u2c` and `b2c` machine types, use the `bx cs worker-add` command to add  worker nodes with the updated machine type. Then, remove the worker nodes that are using the deprecated machine types by using the `bx cs worker-rm` command.
+</p>
+
 
 <strong>Command options</strong>:
 
@@ -1114,14 +1120,14 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 **Examples**:
 
   ```
-  bx cs worker-add --cluster my_cluster --number 3 --public-vlan my_public_vlan_id --private-vlan my_private_vlan_id --machine-type u1c.2x4 --hardware shared
+  bx cs worker-add --cluster my_cluster --number 3 --public-vlan my_public_vlan_id --private-vlan my_private_vlan_id --machine-type u2c.2x4 --hardware shared
   ```
   {: pre}
 
   Example for {{site.data.keyword.Bluemix_dedicated_notm}}:
 
   ```
-  bx cs worker-add --cluster my_cluster --number 3 --machine-type u1c.2x4
+  bx cs worker-add --cluster my_cluster --number 3 --machine-type u2c.2x4
   ```
   {: pre}
 
