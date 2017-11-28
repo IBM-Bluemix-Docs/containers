@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-11-20"
+lastupdated: "2017-11-28"
 
 ---
 
@@ -136,11 +136,11 @@ To create a cluster:
         OK
         Machine Types
         Name         Cores   Memory   Network Speed   OS             Storage   Server Type
-        u1c.2x4      2       4GB      1000Mbps        UBUNTU_16_64   100GB     virtual
-        b1c.4x16     4       16GB     1000Mbps        UBUNTU_16_64   100GB     virtual
-        b1c.16x64    16      64GB     1000Mbps        UBUNTU_16_64   100GB     virtual
-        b1c.32x128   32      128GB    1000Mbps        UBUNTU_16_64   100GB     virtual
-        b1c.56x242   56      242GB    1000Mbps        UBUNTU_16_64   100GB     virtual
+        u2c.2x4      2       4GB      1000Mbps        UBUNTU_16_64   100GB     virtual
+        b2c.4x16     4       16GB     1000Mbps        UBUNTU_16_64   100GB     virtual
+        b2c.16x64    16      64GB     1000Mbps        UBUNTU_16_64   100GB     virtual
+        b2c.32x128   32      128GB    1000Mbps        UBUNTU_16_64   100GB     virtual
+        b2c.56x242   56      242GB    1000Mbps        UBUNTU_16_64   100GB     virtual
         ```
         {: screen}
 
@@ -165,7 +165,7 @@ To create a cluster:
     4.  Run the `cluster-create` command. You can choose between a lite cluster, which includes one worker node set up with 2vCPU and 4GB memory, or a standard cluster, which can include as many worker nodes as you choose in your IBM Cloud infrastructure (SoftLayer) account. When you create a standard cluster, by default, the hardware of the worker node is shared by multiple IBM customers and billed by hours of usage. </br>Example for a standard cluster:
 
         ```
-        bx cs cluster-create --location dal10 --public-vlan <public_vlan_id> --private-vlan <private_vlan_id> --machine-type u1c.2x4 --workers 3 --name <cluster_name> --kube-version <major.minor.patch>
+        bx cs cluster-create --location dal10 --public-vlan <public_vlan_id> --private-vlan <private_vlan_id> --machine-type u2c.2x4 --workers 3 --name <cluster_name> --kube-version <major.minor.patch>
         ```
         {: pre}
 
@@ -1078,7 +1078,7 @@ Choose from the following actions to proceed:
 ### Overview of required {{site.data.keyword.containershort_notm}} access policies and permissions
 {: #access_ov}
 
-Review the access policies and permissions that you can grant to users in your {{site.data.keyword.Bluemix_notm}} account. The operator and editor roles have separate permissions. If you want a user to, for example, add worker nodes and bind services, then you must assign the user both the operator and editor roles. 
+Review the access policies and permissions that you can grant to users in your {{site.data.keyword.Bluemix_notm}} account. The operator and editor roles have separate permissions. If you want a user to, for example, add worker nodes and bind services, then you must assign the user both the operator and editor roles.
 
 |Access policy|Cluster Management Permissions|Kubernetes Resource Permissions|
 |-------------|------------------------------|-------------------------------|
@@ -1219,19 +1219,19 @@ After you complete the update:
 ## Adding subnets to clusters
 {: #cs_cluster_subnet}
 
-Change the pool of available portable public IP addresses by adding subnets to your cluster.
+Change the pool of available portable public or private IP addresses by adding subnets to your cluster.
 {:shortdesc}
 
-In {{site.data.keyword.containershort_notm}}, you can add stable, portable IPs for Kubernetes services by adding network subnets to the cluster. When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically provisions a portable public subnet and 5 IP addresses. Portable public IP addresses are static and do not change when a worker node, or even the cluster, is removed.
+In {{site.data.keyword.containershort_notm}}, you can add stable, portable IPs for Kubernetes services by adding network subnets to the cluster. When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically provisions a portable public subnet with 5 public IP addresses and a portable private subnet with 5 private IP addresses. Portable public and private IP addresses are static and do not change when a worker node, or even the cluster, is removed.
 
-One of the portable public IP addresses is used for the [Ingress controller](cs_apps.html#cs_apps_public_ingress) that you can use to expose multiple apps in your cluster by using a public route. The remaining 4 portable public IP addresses can be used to expose single apps to the public by [creating a load balancer service](cs_apps.html#cs_apps_public_load_balancer).
+One of the portable public and one of the portable private IP addresses are used for [Ingress controllers](cs_apps.html#cs_apps_public_ingress) that you can use to expose multiple apps in your cluster. The remaining 4 portable public and 4 portable private IP addresses can be used to expose single apps to the public by [creating a load balancer service](cs_apps.html#cs_apps_public_load_balancer).
 
 **Note:** Portable public IP addresses are charged on a monthly basis. If you choose to remove portable public IP addresses after your cluster is provisioned, you still have to pay the monthly charge, even if you used them only for a short amount of time.
 
 ### Requesting additional subnets for your cluster
 {: #add_subnet}
 
-You can add stable, portable public IPs to the cluster by assigning subnets to the cluster.
+You can add stable, portable public or private IPs to the cluster by assigning subnets to the cluster.
 
 For {{site.data.keyword.Bluemix_dedicated_notm}} users, instead of using this task, you must [open a support ticket](/docs/support/index.html#contacting-support) to create the subnet, and then use the [`bx cs cluster-subnet-add`](cs_cli_reference.html#cs_cluster_subnet_add) command to add the subnet to the cluster.
 
@@ -1239,12 +1239,12 @@ Before you begin, make sure that you can access the IBM Cloud infrastructure (So
 
 1.  From the catalog, in the **Infrastructure** section, select **Network**.
 2.  Select **Subnet/IPs** and click **Create**.
-3.  From the **Select the type of subnet to add to this account** drop-down menu, select **Portable Public**.
+3.  From the **Select the type of subnet to add to this account** drop-down menu, select **Portable Public** or **Portable Private**.
 4.  Select the number of IP addresses that you want to add from your portable subnet.
 
-    **Note:** When you add portable public IP addresses for your subnet, three IP addresses are used to establish cluster-internal networking, so that you cannot use them for your Ingress controller or to create a load balancer service. For example, if you request eight portable public IP addresses, you can use five of them to expose your apps to the public.
+    **Note:** When you add portable IP addresses for your subnet, three IP addresses are used to establish cluster-internal networking, so that you cannot use them for your Ingress controller or to create a load balancer service. For example, if you request eight portable public IP addresses, you can use five of them to expose your apps to the public.
 
-5.  Select the public VLAN where you want to route the portable public IP addresses to. You must select the public VLAN that an existing worker node is connected to. Review the public VLAN for a worker node.
+5.  Select the public or private VLAN where you want to route the portable public or private IP addresses to. You must select the public or private VLAN that an existing worker node is connected to. Review the public or private VLAN for a worker node.
 
     ```
     bx cs worker-get <worker_id>
@@ -1273,7 +1273,7 @@ Before you begin, make sure that you can access the IBM Cloud infrastructure (So
         ```
         {: pre}
 
-    4.  Add the subnet to your cluster. When you make a subnet available to a cluster, a Kubernetes config map is created for you that includes all available portable public IP addresses that you can use. If no Ingress controller exists for your cluster, one portable public IP address is automatically used to create the Ingress controller. All other portable public IP addresses can be used to create load balancer services for your apps.
+    4.  Add the subnet to your cluster. When you make a subnet available to a cluster, a Kubernetes config map is created for you that includes all available portable public or private IP addresses that you can use. If no Ingress controller exists for your cluster, one portable public IP address is automatically used to create the public Ingress controller and one portable private IP address is automatically used to create the private Ingress controller. All other portable public and private IP addresses can be used to create load balancer services for your apps.
 
         ```
         bx cs cluster-subnet-add <cluster name or id> <subnet id>
@@ -1290,7 +1290,7 @@ Before you begin, make sure that you can access the IBM Cloud infrastructure (So
 ### Adding custom and existing subnets to Kubernetes clusters
 {: #custom_subnet}
 
-You can add existing portable public subnets to your Kubernetes cluster.
+You can add existing portable public or private subnets to your Kubernetes cluster.
 
 Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
 
@@ -1329,10 +1329,10 @@ If you have an existing subnet in your IBM Cloud infrastructure (SoftLayer) port
     ```
     {: screen}
 
-3.  Create a cluster by using the location and VLAN ID that you identified. Include the `--no-subnet` flag to prevent a new portable public IP subnet from being created automatically.
+3.  Create a cluster by using the location and VLAN ID that you identified. Include the `--no-subnet` flag to prevent a new portable public IP subnet and a new portable private IP subnet from being created automatically.
 
     ```
-    bx cs cluster-create --location dal10 --machine-type u1c.2x4 --no-subnet --public-vlan 1901230 --private-vlan 1900403 --workers 3 --name my_cluster
+    bx cs cluster-create --location dal10 --machine-type u2c.2x4 --no-subnet --public-vlan 1901230 --private-vlan 1900403 --workers 3 --name my_cluster
     ```
     {: pre}
 
@@ -1405,14 +1405,14 @@ Before you begin: Configure the routing of network traffic into and out of the e
 2. Add the external subnet to your private VLAN. The portable private IP addresses are added to the cluster's config map.
 
     ```
-    bx cs cluster-user-subnet-add <subnet_CIDR> <VLAN_ID>
+    bx cs cluster-user-subnet-add <cluster_name> <subnet_CIDR> <VLAN_ID>
     ```
     {: pre}
 
     Example:
 
     ```
-    bx cs cluster-user-subnet-add 203.0.113.0/24 1555505
+    bx cs cluster-user-subnet-add my_cluster 203.0.113.0/24 1555505
     ```
     {: pre}
 
@@ -1620,7 +1620,7 @@ To view logs for clusters and containers, you can use the standard Kubernetes an
 #### {{site.data.keyword.loganalysislong_notm}}
 {: #cs_view_logs_k8s}
 
-For standard clusters, logs are located in the {{site.data.keyword.Bluemix_notm}} account you were logged in to when you created the Kubernetes cluster. If you specified an {{site.data.keyword.Bluemix_notm}} space when you created the cluster, then logs are located in that space. Container logs are monitored and forwarded outside of the container. You can access logs for a container by using the Kibana dashboard. For more information about logging, see [Logging for the {{site.data.keyword.containershort_notm}}](/docs/services/CloudLogAnalysis/containers/logging_containers_ov.html#logging_containers_ov).
+For standard clusters, logs are located in the {{site.data.keyword.Bluemix_notm}} account you were logged in to when you created the Kubernetes cluster. If you specified an {{site.data.keyword.Bluemix_notm}} space when you created the cluster, then logs are located in that space. Container logs are monitored and forwarded outside of the container. You can access logs for a container by using the Kibana dashboard. For more information about logging, see [Logging for the {{site.data.keyword.containershort_notm}}](/docs/services/CloudLogAnalysis/containers/containers_kubernetes.html#containers_kubernetes).
 
 **Note**: If logs are located in the space that you specified at cluster creation, the account owner needs Manager, Developer, or Auditor permissions to that space to view logs. For more information about changing {{site.data.keyword.containershort_notm}} access policies and permissions, see [Managing cluster access](cs_cluster.html#cs_cluster_user). Once permissions are changed, it can take up to 24 hours for logs to start appearing.
 
@@ -2099,6 +2099,229 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to you
     Replace <em>&lt;my_cluster&gt;</em> with the name of the cluster that the logging configuration is in and <em>&lt;log_source_id&gt;</em> with the ID of the log source configuration.
 
 
+## Configuring cluster monitoring
+{: #cs_monitoring}
+
+Metrics help you monitor the health and performance of your clusters. You can configure health monitoring for worker nodes to automatically detect and correct any workers that enter a degraded or nonoperational state. **Note**: Monitoring is supported only for standard clusters.
+{:shortdesc}
+
+### Viewing metrics
+{: #cs_view_metrics}
+
+You can use the standard Kubernetes and Docker features to monitor the health of your clusters and apps.
+{:shortdesc}
+
+<dl>
+<dt>Cluster details page in {{site.data.keyword.Bluemix_notm}}</dt>
+<dd>{{site.data.keyword.containershort_notm}} provides information about the health and capacity of your cluster and the usage of your cluster resources. You can use this GUI to scale out your cluster, work with your persistent storage, and add more capabilities to your cluster through {{site.data.keyword.Bluemix_notm}} service binding. To view the cluster details page, go to your **{{site.data.keyword.Bluemix_notm}} Dashboard** and select a cluster.</dd>
+<dt>Kubernetes dashboard</dt>
+<dd>The Kubernetes dashboard is an administrative web interface where you can review the health of your worker nodes, find Kubernetes resources, deploy containerized apps, and troubleshoot apps using logging and monitoring information. For more information about how to access your Kubernetes dashboard, see [Launching the Kubernetes dashboard for {{site.data.keyword.containershort_notm}}](cs_apps.html#cs_cli_dashboard).</dd>
+<dt>{{site.data.keyword.monitoringlong_notm}}</dt>
+<dd>Metrics for standard clusters are located in the {{site.data.keyword.Bluemix_notm}} account that was logged in to when the Kubernetes cluster was created. If you specified an {{site.data.keyword.Bluemix_notm}} space when you created the cluster, then metrics are located in that space. Container metrics are collected automatically for all containers that are deployed in a cluster. These metrics are sent and are made available through Grafana. For more information about metrics, see [Monitoring for the {{site.data.keyword.containershort_notm}}](/docs/services/cloud-monitoring/containers/monitoring_containers_ov.html#monitoring_bmx_containers_ov).<p>To access the Grafana dashboard, go to one of the following URLs and select the {{site.data.keyword.Bluemix_notm}} account or space where you created the cluster.<ul><li>US-South and US-East: https://metrics.ng.bluemix.net</li><li>UK-South: https://metrics.eu-gb.bluemix.net</li></ul></p></dd></dl>
+
+#### Other health monitoring tools
+{: #cs_health_tools}
+
+You can configure other tools for more monitoring capabilities.
+<dl>
+<dt>Prometheus</dt>
+<dd>Prometheus is an open source monitoring, logging, and alerting tool that was designed for Kubernetes. The tool retrieves detailed information about the cluster, worker nodes, and deployment health based on the Kubernetes logging information. For setup information, see [Integrating services with {{site.data.keyword.containershort_notm}}](cs_planning.html#cs_planning_integrations).</dd>
+</dl>
+
+### Configuring health monitoring for worker nodes with Autorecovery
+{: #cs_configure_worker_monitoring}
+
+The {{site.data.keyword.containerlong_notm}} Autorecovery system can be deployed into existing clusters of Kubernetes version 1.7 or later. The Autorecovery system uses various checks to query worker node health status. If Autorecovery detects an unhealthy worker node based on the configured checks, Autorecovery triggers a corrective action like an OS reload on the worker node. Only one worker node undergoes a corrective action at a time. The worker node must successfully complete the corrective action before any other worker node undergoes a corrective action.
+**NOTE**: Autorecovery requires at least one healthy node to function properly. Configure Autorecovery with active checks only in clusters with two or more worker nodes.
+
+Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster where you want to check worker node statuses.
+
+1. Create a configuration map file that defines your checks in JSON format. For example, the following YAML file defines three checks: an HTTP check and two Kubernetes API server checks.
+
+    ```
+    kind: ConfigMap
+    apiVersion: v1
+    metadata:
+      name: ibm-worker-recovery-checks
+      namespace: kube-system
+    data:
+      checkhttp.json: |
+        {
+          "Check":"HTTP",
+          "FailureThreshold":3,
+          "CorrectiveAction":"REBOOT",
+          "CooloffSeconds":1800,
+          "IntervalSeconds":180,
+          "TimeoutSeconds":10,
+          "Port":80,
+          "ExpectedStatus":200,
+          "Route":"/myhealth",
+          "Enabled":false
+        }
+      checknode.json: |
+        {
+          "Check":"KUBEAPI",
+          "Resource":"NODE",
+          "FailureThreshold":3,
+          "CorrectiveAction":"RELOAD",
+          "CooloffSeconds":1800,
+          "IntervalSeconds":180,
+          "TimeoutSeconds":10,
+          "Enabled":false
+        }
+      checkpod.json: |
+        {
+          "Check":"KUBEAPI",
+          "Resource":"POD",
+          "PodFailureThresholdPercent":50,
+          "FailureThreshold":3,
+          "CorrectiveAction":"REBOOT",
+          "CooloffSeconds":1800,
+          "IntervalSeconds":180,
+          "TimeoutSeconds":10,
+          "Enabled":false
+      }
+    ```
+    {:codeblock}
+
+    <table>
+    <caption>Table 15. Understanding the YAML file components</caption>
+    <thead>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
+    </thead>
+    <tbody>
+    <tr>
+    <td><code>name</code></td>
+    <td>The configuration name <code>ibm-worker-recovery-checks</code> is a constant and cannot be changed.</td>
+    </tr>
+    <tr>
+    <td><code>namespace</code></td>
+    <td>The <code>kube-system</code> namespace is a constant and cannot be changed.</td>
+    </tr>
+    <tr>
+    <tr>
+    <td><code>Check</code></td>
+    <td>Enter the type of check that you want Autorecovery to use. <ul><li><code>HTTP</code>: Autorecovery calls HTTP servers that run on each node to determine whether the nodes are running properly.</li><li><code>KUBEAPI</code>: Autorecovery calls the Kubernetes API server and reads the health status data reported by the worker nodes.</li></ul></td>
+    </tr>
+    <tr>
+    <td><code>Resource</code></td>
+    <td>When the check type is <code>KUBEAPI</code>, enter the type of resource that you want Autorecovery to check. Accepted values are <code>NODE</code> or <code>PODS</code>.</td>
+    <tr>
+    <td><code>FailureThreshold</code></td>
+    <td>Enter the threshold for the number of consecutive failed checks. When this threshold is met, Autorecovery triggers the specified corrective action. For example, if the value is 3 and Autorecovery fails a configured check three consecutive times, Autorecovery triggers the corrective action that is associated with the check.</td>
+    </tr>
+    <tr>
+    <td><code>PodFailureThresholdPercent</code></td>
+    <td>When the resource type is <code>PODS</code>, enter the threshold for the percentage of pods on a worker node that can be in a [NotReady ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#define-readiness-probes) state. This percentage is based on the total number of pods that are scheduled to a worker node. When a check determines that the percentage of unhealthy pods is greater than the threshold, the check counts as one failure.</td>
+    </tr>
+    <tr>
+    <td><code>CorrectiveAction</code></td>
+    <td>Enter the action to run when the failure threshold is met. A corrective action runs only while no other workers are being repaired and when this worker node is not in a cool-off period from a previous action. <ul><li><code>REBOOT</code>: Reboots the worker node.</li><li><code>RELOAD</code>: Reloads all of the necessary configurations for the worker node from a clean OS.</li></ul></td>
+    </tr>
+    <tr>
+    <td><code>CooloffSeconds</code></td>
+    <td>Enter the number of seconds Autorecovery must wait to issue another corrective action for a node that was already issued a corrective action. The cooloff period starts at the time a corrective action is issued.</td>
+    </tr>
+    <tr>
+    <td><code>IntervalSeconds</code></td>
+    <td>Enter the number of seconds in between consecutive checks. For example, if the value is 180, Autorecovery runs the check on each node every 3 minutes.</td>
+    </tr>
+    <tr>
+    <td><code>TimeoutSeconds</code></td>
+    <td>Enter the maximum number of seconds that a check call to the database takes before Autorecovery terminates the call operation. The value for <code>TimeoutSeconds</code> must be less than the value for <code>IntervalSeconds</code>.</td>
+    </tr>
+    <tr>
+    <td><code>Port</code></td>
+    <td>When the check type is <code>HTTP</code>, enter the port that the HTTP server must bind to on the worker nodes. This port must be exposed on the IP of every worker node in the cluster. Autorecovery requires a constant port number across all nodes for checking servers. Use [DaemonSets ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)when deploying a custom server into a cluster.</td>
+    </tr>
+    <tr>
+    <td><code>ExpectedStatus</code></td>
+    <td>When the check type is <code>HTTP</code>, enter the HTTP server status that you expect to be returned from the check. For example, a value of 200 indicates that you expect an <code>OK</code> response from the server.</td>
+    </tr>
+    <tr>
+    <td><code>Route</code></td>
+    <td>When the check type is <code>HTTP</code>, enter the path that is requested from the HTTP server. This value is typically the metrics path for the server that is running on all of the worker nodes.</td>
+    </tr>
+    <tr>
+    <td><code>Enabled</code></td>
+    <td>Enter <code>true</code> to enable the check or <code>false</code> to disable the check.</td>
+    </tr>
+    </tbody></table>
+
+2. Create the configuration map in your cluster.
+
+    ```
+    kubectl apply -f <my_file.yaml>
+    ```
+    {: pre}
+
+3. Verify that you created the configuration map with the name `ibm-worker-recovery-checks` in the `kube-system` namespace with the proper checks.
+
+    ```
+    kubectl -n kube-system get cm ibm-worker-recovery-checks -o yaml
+    ```
+    {: pre}
+
+4. Ensure that you created a Docker pull secret with the name `international-registry-docker-secret` in the `kube-system` namespace. Autorecovery is hosted in {{site.data.keyword.registryshort_notm}}'s international Docker registry. If you have not created a Docker registry secret that contains valid credentials for the international registry, create one to run the Autorecovery system.
+
+    1. Install the {{site.data.keyword.registryshort_notm}} plug-in.
+
+        ```
+        bx plugin install container-registry -r Bluemix
+        ```
+        {: pre}
+
+    2. Target the international registry.
+
+        ```
+        bx cr region-set international
+        ```
+        {: pre}
+
+    3. Create an international registry token.
+
+        ```
+        bx cr token-add --non-expiring --description internationalRegistryToken
+        ```
+        {: pre}
+
+    4. Set the `INTERNATIONAL_REGISTRY_TOKEN` environment variable to the token you created.
+
+        ```
+        INTERNATIONAL_REGISTRY_TOKEN=$(bx cr token-get $(bx cr tokens | grep internationalRegistryToken | awk '{print $1}') -q)
+        ```
+        {: pre}
+
+    5. Set the `DOCKER_EMAIL` environment variable to the current user. You email address is needed only to run the `kubectl` command in the next step.
+
+        ```
+        DOCKER_EMAIL=$(bx target | grep "User" | awk '{print $2}')
+        ```
+        {: pre}
+
+    6. Create the Docker pull secret.
+
+        ```
+        kubectl -n kube-system create secret docker-registry international-registry-docker-secret --docker-username=token --docker-password="$INTERNATIONAL_REGISTRY_TOKEN" --docker-server=registry.bluemix.net --docker-email="$DOCKER_EMAIL"
+        ```
+        {: pre}
+
+5. Deploy Autorecovery into your cluster by applying this YAML file.
+
+   ```
+   kubectl apply -f https://raw.githubusercontent.com/IBM-Bluemix/kube-samples/master/ibm-worker-recovery/ibm-worker-recovery.yml
+   ```
+   {: pre}
+
+6. After a few minutes, you can check the `Events` section in the output of the following command to see activity on the Autorecovery deployment.
+
+    ```
+    kubectl -n kube-system describe deployment ibm-worker-recovery
+    ```
+    {: pre}
+
+<br />
+
 
 ## Visualizing Kubernetes cluster resources
 {: #cs_weavescope}
@@ -2213,4 +2436,5 @@ When you delete a cluster, you are also deleting resources on the cluster, inclu
 
 When you remove a cluster, you can choose to remove the portable subnets and persistent storage associated with it:
 - Subnets are used to assign portable public IP addresses to load balancer services or your Ingress controller. If you keep them, you can reuse them in a new cluster or manually delete them later from your IBM Cloud infrastructure (SoftLayer) portfolio.
+- If you created a persistent volume claim by using an (existing file share)[#cs_cluster_volume_create], then you cannot delete the file share when you delete the cluster. You must manually delete the file share later from your IBM Cloud infrastructure (SoftLayer) portfolio.
 - Persistent storage provides high availability for your data. If you delete it, you cannot recover your data.
