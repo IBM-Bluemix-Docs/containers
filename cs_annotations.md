@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-11-14"
+lastupdated: "2017-11-29"
 
 ---
 
@@ -19,26 +19,27 @@ lastupdated: "2017-11-14"
 # Ingress annotations
 {: #ingress_annotation}
 
-To add capabilities to your Ingress controller, you can specify annotations as metadata in an Ingress resource.
+To add capabilities to your application load balancer, you can specify annotations as metadata in an Ingress resource.
 {: shortdesc}
 
-For general information about Ingress services and how to get started using them, see [Configuring public access to an app by using the Ingress controller](cs_apps.html#cs_apps_public_ingress).
+For general information about Ingress services and how to get started using them, see [Configuring public access to an app by using Ingress](cs_apps.html#cs_apps_public_ingress).
 
 
 |Supported annotation|Description|
 |--------------------|-----------|
 |[Additional client request or response header](#proxy-add-headers)|Add header information to a client request before forwarding the request to your back-end app or to a client response before sending the response to the client.|
-|[Client response data buffering](#proxy-buffering)|Disable the buffering of a client response on the Ingress controller while sending the response to the client.|
+|[Client response data buffering](#proxy-buffering)|Disable the buffering of a client response on the application load balancer while sending the response to the client.|
 |[Client response header removal](#response-remove-headers)|Remove header information from a client response before forwarding the response to the client.|
-|[Custom connect-timeouts and read-timeouts](#proxy-connect-timeout)|Adjust the time the Ingress controller waits to connect to and read from the back-end app before the back-end app is considered to be not available.|
+|[Custom connect-timeouts and read-timeouts](#proxy-connect-timeout)|Adjust the time the application load balancer waits to connect to and read from the back-end app before the back-end app is considered to be not available.|
 |[Custom HTTP and HTTPS ports](#custom-port)|Change the default ports for HTTP and HTTPS network traffic.|
-|[Custom maximum client request body size](#client-max-body-size)|Adjust the size of the client request body that is allowed to be sent to the Ingress controller.|
+|[Custom maximum client request body size](#client-max-body-size)|Adjust the size of the client request body that is allowed to be sent to the application load balancer.|
 |[External services](#proxy-external-service)|Adds definition of paths to external services, such as a service hosted in {{site.data.keyword.Bluemix_notm}}.|
 |[Global rate limits](#global-rate-limit)|For all services, limit the request processing rate and connections per a defined key.|
 |[HTTP redirects to HTTPS](#redirect-to-https)|Redirect insecure HTTP requests on your domain to HTTPS.|
 |[Keepalive requests](#keepalive-requests)|Configure the maximum number of requests that can be served through one keepalive connection.|
 |[Keepalive timeout](#keepalive-timeout)|Configure the time that a keepalive connection stays open on the server.|
-|[Mutual authentication](#mutual-auth)|Configure mutual authentication for the Ingress controller.|
+|[Mutual authentication](#mutual-auth)|Configure mutual authentication for the application load balancer.|
+|[Private application load balancer routing](#alb-id)|Route incoming requests to your apps with a private application load balancer.|
 |[Proxy buffers](#proxy-buffers)|Sets the number and size of the buffers that are used to read a response for a single connection from the proxied server.|
 |[Proxy busy buffers size](#proxy-busy-buffers-size)|Limits the total size of buffers that can be busy sending a response to the client while the response is not yet fully read.|
 |[Proxy buffer size](#proxy-buffer-size)|Sets the size of the buffer that is used to read the first part of the response that is received from the proxied server.|
@@ -51,9 +52,6 @@ For general information about Ingress services and how to get started using them
 
 
 
-
-
-
 ## Additional client request or response header (proxy-add-headers)
 {: #proxy-add-headers}
 
@@ -62,10 +60,10 @@ Add extra header information to a client request before sending the request to t
 
 <dl>
 <dt>Description</dt>
-<dd>The Ingress controller acts as a proxy between the client app and your back-end app. Client requests that are sent to the Ingress controller are processed (proxied) and put into a new request that is then sent from the Ingress controller to your back-end app. Proxying a request removes http header information, such as the user name, that was initially sent from the client. If your back-end app requires this information, you can use the <strong>ingress.bluemix.net/proxy-add-headers</strong> annotation to add header information to the client request before the request is forwarded from the Ingress controller to your back-end app.
+<dd>The Ingress application load balancer acts as a proxy between the client app and your back-end app. Client requests that are sent to the application load balancer are processed (proxied) and put into a new request that is then sent from the application load balancer to your back-end app. Proxying a request removes http header information, such as the user name, that was initially sent from the client. If your back-end app requires this information, you can use the <strong>ingress.bluemix.net/proxy-add-headers</strong> annotation to add header information to the client request before the request is forwarded from the application load balancer to your back-end app.
 
 </br></br>
-When a back-end app sends a response to the client, the response is proxied by the Ingress controller and http headers are removed from the response. The client web app might require this header information to successfully process the response. You can use the <strong>ingress.bluemix.net/response-add-headers</strong> annotation to add header information to the client response before the response is forwarded from the Ingress controller to client web app.</dd>
+When a back-end app sends a response to the client, the response is proxied by the application load balancer and http headers are removed from the response. The client web app might require this header information to successfully process the response. You can use the <strong>ingress.bluemix.net/response-add-headers</strong> annotation to add header information to the client response before the response is forwarded from the application load balancer to client web app.</dd>
 <dt>Sample Ingress resource YAML</dt>
 <dd>
 
@@ -131,17 +129,17 @@ spec:
  ## Client response data buffering (proxy-buffering)
  {: #proxy-buffering}
 
- Use the buffer annotation to disable the storage of response data on the Ingress controller while the data is sent to the client.
+ Use the buffer annotation to disable the storage of response data on the application load balancer while the data is sent to the client.
  {:shortdesc}
 
  <dl>
  <dt>Description</dt>
- <dd>The Ingress controller acts as a proxy between your back-end app and the client web browser. When a response is sent from the back-end app to the client, the response data is buffered on the Ingress controller by default. The Ingress controller proxies the client response and starts sending the response to the client at the client's pace. After all data from the back-end app is received by the Ingress controller, the connection to the back-end app is closed. The connection from the Ingress controller to the client remains open until the client receives all data.
+ <dd>The Ingress application load balancer acts as a proxy between your back-end app and the client web browser. When a response is sent from the back-end app to the client, the response data is buffered on the application load balancer by default. The application load balancer proxies the client response and starts sending the response to the client at the client's pace. After all data from the back-end app is received by the application load balancer, the connection to the back-end app is closed. The connection from the application load balancer to the client remains open until the client receives all data.
 
  </br></br>
- If buffering of response data on the Ingress controller is disabled, data is immediately sent from the Ingress controller to the client. The client must be able to handle incoming data at the pace of the Ingress controller. If the client is too slow, data might get lost.
+ If buffering of response data on the application load balancer is disabled, data is immediately sent from the application load balancer to the client. The client must be able to handle incoming data at the pace of the application load balancer. If the client is too slow, data might get lost.
  </br></br>
- Response data buffering on the Ingress controller is enabled by default.</dd>
+ Response data buffering on the application load balancer is enabled by default.</dd>
  <dt>Sample Ingress resource YAML</dt>
  <dd>
 
@@ -178,7 +176,7 @@ Remove header information that is included in the client response from the back-
 
  <dl>
  <dt>Description</dt>
- <dd>The Ingress controller acts as a proxy between your back-end app and the client web browser. Client responses from the back-end app that are sent to the Ingress controller are processed (proxied), and put into a new response that is then sent from the Ingress controller to the client web browser. Although proxying a response removes http header information that was initially sent from the back-end app, this process might not remove all back-end app specific headers. Remove header information from a client reponse before the response is forwarded from the Ingress controller to the client web browser.</dd>
+ <dd>The Ingress application load balancer acts as a proxy between your back-end app and the client web browser. Client responses from the back-end app that are sent to the application load balancer are processed (proxied), and put into a new response that is then sent from the application load balancer to the client web browser. Although proxying a response removes http header information that was initially sent from the back-end app, this process might not remove all back-end app specific headers. Remove header information from a client reponse before the response is forwarded from the application load balancer to the client web browser.</dd>
  <dt>Sample Infress resource YAML</dt>
  <dd>
  <pre class="codeblock">
@@ -234,21 +232,21 @@ Remove header information that is included in the client response from the back-
 ## Custom connect-timeouts and read-timeouts (proxy-connect-timeout, proxy-read-timeout)
 {: #proxy-connect-timeout}
 
-Set a custom connect-timeout and read-timeout for the Ingress controller. Adjust the time for the Ingress controller to wait while connecting and reading from the back-end app before the back-end app is considered to be unavailable.
+Set a custom connect-timeout and read-timeout for the application load balancer. Adjust the time for the application load balancer to wait while connecting and reading from the back-end app before the back-end app is considered to be unavailable.
 {:shortdesc}
 
 <dl>
 <dt>Description</dt>
-<dd>When a client request is sent to the Ingress controller, a connection to the back-end app is opened by the Ingress controller. By default, the Ingress controller waits 60 seconds to receive a reply from the back-end app. If the back-end app does not reply within 60 seconds, then the connection request is aborted and the back-end app is considered to be unavailable.
+<dd>When a client request is sent to the Ingress application load balancer, a connection to the back-end app is opened by the application load balancer. By default, the application load balancer waits 60 seconds to receive a reply from the back-end app. If the back-end app does not reply within 60 seconds, then the connection request is aborted and the back-end app is considered to be unavailable.
 
 </br></br>
-After the Ingress controller is connected to the back-end app, response data is read from the back-end app by the Ingress controller. During this read operation, the Ingress controller waits a maximum of 60 seconds between two read operations to receive data from the back-end app. If the back-end app does not send data within 60 seconds, the connection to the back-end app is closed and the app is considered to be not available.
+After the application load balancer is connected to the back-end app, response data is read from the back-end app by the application load balancer. During this read operation, the application load balancer waits a maximum of 60 seconds between two read operations to receive data from the back-end app. If the back-end app does not send data within 60 seconds, the connection to the back-end app is closed and the app is considered to be not available.
 </br></br>
 A 60 second connect-timeout and read-timeout is the default timeout on a proxy and usually should not be changed.
 </br></br>
-If the availability of your app is not steady or your app is slow to respond because of high workloads, you might want to increase the connect-timeout or read-timeout. Keep in mind that increasing the timeout impacts the performance of the Ingress controller as the connection to the back-end app must stay open until the timeout is reached.
+If the availability of your app is not steady or your app is slow to respond because of high workloads, you might want to increase the connect-timeout or read-timeout. Keep in mind that increasing the timeout impacts the performance of the application load balancer as the connection to the back-end app must stay open until the timeout is reached.
 </br></br>
-On the other hand, you can decrease the timeout to gain performance on the Ingress controller. Ensure that your back-end app is able to handle requests within the specified timeout, even during higher workloads.</dd>
+On the other hand, you can decrease the timeout to gain performance on the application load balancer. Ensure that your back-end app is able to handle requests within the specified timeout, even during higher workloads.</dd>
 <dt>Sample Ingress resource YAML</dt>
 <dd>
 
@@ -301,7 +299,7 @@ Change the default ports for HTTP (port 80) and HTTPS (port 443) network traffic
 
 <dl>
 <dt>Description</dt>
-<dd>By default, the Ingress controller is configured to listen for incoming HTTP network traffic on port 80 and for incoming HTTPS network traffic on port 443. You can change the default ports to add security to your Ingress controller domain, or to enable only an HTTPS port.
+<dd>By default, the Ingress application load balancer is configured to listen for incoming HTTP network traffic on port 80 and for incoming HTTPS network traffic on port 443. You can change the default ports to add security to your application load balancer domain, or to enable only an HTTPS port.
 </dd>
 
 
@@ -347,7 +345,7 @@ spec:
 
  </dd>
  <dt>Usage</dt>
- <dd><ol><li>Review open ports for your Ingress controller. **Note: IP address need to be generic doc IP addresses. Also need to link to targetting kubectl cli? Maybe not.**
+ <dd><ol><li>Review open ports for your application load balancer. 
 <pre class="pre">
 <code>kubectl get service -n kube-system</code></pre>
 Your CLI output looks similar to the following:
@@ -395,10 +393,10 @@ Adjust the maximum size of the body that the client can send as part of a reques
 
 <dl>
 <dt>Description</dt>
-<dd>To maintain the expected performance, the maximum client request body size is set to 1 megabyte. When a client request with a body size over the limit is sent to the Ingress controller, and the client does not allow data to be divided, the Ingress controller returns a 413 (Request Entity Too Large) http response to the client. A connection between the client and the Ingress controller is not possible until the size of the request body is reduced. When the client allows data to be split up into multiple chunks, data is divided into packages of 1 megabyte and sent to the Ingress controller.
+<dd>To maintain the expected performance, the maximum client request body size is set to 1 megabyte. When a client request with a body size over the limit is sent to the Ingress application load balancer, and the client does not allow data to be divided, the application load balancer returns a 413 (Request Entity Too Large) http response to the client. A connection between the client and the application load balancer is not possible until the size of the request body is reduced. When the client allows data to be split up into multiple chunks, data is divided into packages of 1 megabyte and sent to the application load balancer.
 
 </br></br>
-You might want to increase the maximum body size because you expect client requests with a body size that is greater than 1 megabyte. For example, you want your client to be able to upload large files. Increasing the maximum request body size might impact the performance of your Ingress controller because the connection to the client must stay open until the request is received.
+You might want to increase the maximum body size because you expect client requests with a body size that is greater than 1 megabyte. For example, you want your client to be able to upload large files. Increasing the maximum request body size might impact the performance of your application load balancer because the connection to the client must stay open until the request is received.
 </br></br>
 <strong>Note:</strong> Some client web browsers cannot display the 413 http response message properly.</dd>
 <dt>Sample Ingress resource YAML</dt>
@@ -569,7 +567,7 @@ To set the limit, zones are defined by the `ngx_http_limit_conn_module` and the 
 
  <dl>
  <dt>Description</dt>
- <dd>You set up your Ingress controller to secure your domain with the IBM-provided TLS certificate or your custom TLS certificate. Some users might try to access your apps by using an insecure http request to your Ingress controller domain, for example <code>http://www.myingress.com</code>, instead of using <code>https</code>. You can use the redirect annotation to always convert insecure http requests to https. If you do not use this annotation, insecure http requests are not converted into https requests by default and might expose unencrypted confidential information to the public.
+ <dd>You set up your Ingress application load balancer to secure your domain with the IBM-provided TLS certificate or your custom TLS certificate. Some users might try to access your apps by using an insecure http request to your application load balancer domain, for example <code>http://www.myingress.com</code>, instead of using <code>https</code>. You can use the redirect annotation to always convert insecure http requests to https. If you do not use this annotation, insecure http requests are not converted into https requests by default and might expose unencrypted confidential information to the public.
 
  </br></br>
  Redirecting http requests to https is disabled by default.</dd>
@@ -604,7 +602,7 @@ To set the limit, zones are defined by the `ngx_http_limit_conn_module` and the 
 
  <br />
 
- 
+
  ## Keepalive requests (keepalive-requests)
  {: #keepalive-requests}
 
@@ -724,13 +722,13 @@ To set the limit, zones are defined by the `ngx_http_limit_conn_module` and the 
  ## Mutual authentication (mutual-auth)
  {: #mutual-auth}
 
- Configure mutual authentication for the Ingress controller.
+ Configure mutual authentication for the application load balancer.
  {:shortdesc}
 
  <dl>
  <dt>Description</dt>
  <dd>
- Configure mutual authentication for the Ingress controller. The client authenticates the server and the server also authenticates the client by using certificates. Mutual authentication is also known as certificate-based authentication or two-way authentication.
+ Configure mutual authentication for the Ingress application load balancer. The client authenticates the server and the server also authenticates the client by using certificates. Mutual authentication is also known as certificate-based authentication or two-way authentication.
  </dd>
 
  <dt>Pre-requisites</dt>
@@ -789,10 +787,63 @@ To set the limit, zones are defined by the `ngx_http_limit_conn_module` and the 
  <br />
 
 
+## Private application load balancer routing (ALB-ID)
+{: #alb-id}
+
+Route incoming requests to your apps with a private application load balancer.
+{:shortdesc}
+
+<dl>
+<dt>Description</dt>
+<dd>
+Choose a private application load balancer to route incoming requests with instead of the public application load balancer.</dd>
+
+
+ <dt>Sample Ingress resource YAML</dt>
+ <dd>
+
+ <pre class="codeblock">
+ <code>apiVersion: extensions/v1beta1
+ kind: Ingress
+ metadata:
+  name: myingress
+  annotations:
+    ingress.bluemix.net/ALB-ID: "<private_ALB_ID>"
+ spec:
+  tls:
+  - hosts:
+    - mydomain
+    secretName: mytlssecret
+  rules:
+  - host: mydomain
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: myservice
+          servicePort: 8080</code></pre>
+
+ <table>
+  <thead>
+  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
+  </thead>
+  <tbody>
+  <tr>
+  <td><code>annotations</code></td>
+  <td>Replace <em>&lt;private_ALB_ID&gt;</em> with the ID for your private application load balancer. Run <code>bx cs albs --cluster <my_cluster></code> to find the application load balancer ID.
+  </td>
+  </tr>
+  </tbody></table>
+  </dd>
+  </dl>
+
+  <br />
+
+
  ## Proxy buffers (proxy-buffers)
  {: #proxy-buffers}
- 
- Configure proxy buffers for the Ingress controller.
+
+ Configure proxy buffers for the application load balancer.
  {:shortdesc}
 
  <dl>
@@ -849,7 +900,7 @@ spec:
  ## Proxy busy buffers size (proxy-busy-buffers-size)
  {: #proxy-busy-buffers-size}
 
- Configure proxy busy buffers size for the Ingress controller.
+ Configure proxy busy buffers size for the application load balancer.
  {:shortdesc}
 
  <dl>
@@ -907,7 +958,7 @@ spec:
  ## Proxy buffer size (proxy-buffer-size)
  {: #proxy-buffer-size}
 
- Configure the proxy buffer size for the Ingress controller.
+ Configure the proxy buffer size for the application load balancer.
  {:shortdesc}
 
  <dl>
@@ -967,12 +1018,12 @@ spec:
 ## Rewrite paths (rewrite-path)
 {: #rewrite-path}
 
-Route incoming network traffic on an Ingress controller domain path to a different path that your back-end application listens on.
+Route incoming network traffic on an application load balancer domain path to a different path that your back-end application listens on.
 {:shortdesc}
 
 <dl>
 <dt>Description</dt>
-<dd>Your Ingress controller domain routes incoming network traffic on <code>mykubecluster.us-south.containers.mybluemix.net/beans</code> to your app. Your app listens on <code>/coffee</code>, instead of <code>/beans</code>. To forward incoming network traffic to your app, add the rewrite annotation to your Ingress resource configuration file. The rewrite annotation ensures that incoming network traffic on <code>/beans</code> is forwarded to your app by using the <code>/coffee</code> path. When including multiple services, use only a semi-colon (;) to separate them.</dd>
+<dd>Your Ingress application load balancer domain routes incoming network traffic on <code>mykubecluster.us-south.containers.mybluemix.net/beans</code> to your app. Your app listens on <code>/coffee</code>, instead of <code>/beans</code>. To forward incoming network traffic to your app, add the rewrite annotation to your Ingress resource configuration file. The rewrite annotation ensures that incoming network traffic on <code>/beans</code> is forwarded to your app by using the <code>/coffee</code> path. When including multiple services, use only a semi-colon (;) to separate them.</dd>
 <dt>Sample Ingress resource YAML</dt>
 <dd>
 <pre class="codeblock">
@@ -1007,11 +1058,11 @@ spec:
 <tbody>
 <tr>
 <td><code>annotations</code></td>
-<td>Replace <em>&lt;service_name&gt;</em> with the name of the Kubernetes service that you created for your app, and <em>&lt;target-path&gt;</em> with the path that your app listens on. Incoming network traffic on the Ingress controller domain is forwarded to the Kubernetes service by using this path. Most apps do not listen on a specific path, but use the root path and a specific port. In this case, define <code>/</code> as the <em>rewrite-path</em> for your app.</td>
+<td>Replace <em>&lt;service_name&gt;</em> with the name of the Kubernetes service that you created for your app, and <em>&lt;target-path&gt;</em> with the path that your app listens on. Incoming network traffic on the application load balancer domain is forwarded to the Kubernetes service by using this path. Most apps do not listen on a specific path, but use the root path and a specific port. In this case, define <code>/</code> as the <em>rewrite-path</em> for your app.</td>
 </tr>
 <tr>
 <td><code>path</code></td>
-<td>Replace <em>&lt;domain_path&gt;</em> with the path that you want to append to your Ingress controller domain. Incoming network traffic on this path is forwarded to the rewrite path that you defined in your annotation. In the example above, set the domain path to <code>/beans</code> to include this path into the load balancing of your Ingress controller.</td>
+<td>Replace <em>&lt;domain_path&gt;</em> with the path that you want to append to your application load balancer domain. Incoming network traffic on this path is forwarded to the rewrite path that you defined in your annotation. In the example above, set the domain path to <code>/beans</code> to include this path into the load balancing of your Ingress controller.</td>
 </tr>
 <tr>
 <td><code>serviceName</code></td>
@@ -1088,15 +1139,15 @@ To set the limit, zones are applied that are defined by the `ngx_http_limit_conn
 ## Session-affinity with cookies (sticky-cookie-services)
 {: #sticky-cookie-services}
 
-Use the sticky cookie annotation to add session affinity to your Ingress controller and always route incoming network traffic to the same upstream server.
+Use the sticky cookie annotation to add session affinity to your application load balancer and always route incoming network traffic to the same upstream server.
 {:shortdesc}
 
 <dl>
 <dt>Description</dt>
-<dd>For high availability, some app setups require you to deploy multiple upstream servers that handle incoming client requests. When a client connects to you back-end app, you can use session-affinity so that a client is served by the same upstream server for the duration of a session or for the time it takes to complete a task. You can configure your Ingress controller to ensure session-affinity by always routing incoming network traffic to the same upstream server.
+<dd>For high availability, some app setups require you to deploy multiple upstream servers that handle incoming client requests. When a client connects to you back-end app, you can use session-affinity so that a client is served by the same upstream server for the duration of a session or for the time it takes to complete a task. You can configure your application load balancer to ensure session-affinity by always routing incoming network traffic to the same upstream server.
 
 </br></br>
-Every client that connects to your back-end app is assigned to one of the available upstream servers by the Ingress controller. The Ingress controller creates a session cookie that is stored in the client's app, which is included in the header information of every request between the Ingress controller and the client. The information in the cookie ensures that all requests are handled by the same upstream server throughout the session.
+Every client that connects to your back-end app is assigned to one of the available upstream servers by the application load balancer. The application load balancer creates a session cookie that is stored in the client's app, which is included in the header information of every request between the application load balancer and the client. The information in the cookie ensures that all requests are handled by the same upstream server throughout the session.
 
 </br></br>
 When you include multiple services, use a semi-colon (;) to separate them.</dd>
@@ -1139,8 +1190,8 @@ spec:
   <td>Replace the following values:<ul>
   <li><code><em>&lt;service_name&gt;</em></code>: The name of the Kubernetes service that you created for your app.</li>
   <li><code><em>&lt;cookie_name&gt;</em></code>: Choose a name of the sticky cookie that is created during a session.</li>
-  <li><code><em>&lt;expiration_time&gt;</em></code>: The time in seconds, minutes, or hours before the sticky cookie expires. This time is independent of the user activity. After the cookie is expired, the cookie is deleted by the client web browser and no longer sent to the Ingress controller. For example, to set an expiration time of 1 second, 1 minute, or 1 hour, enter <strong>1s</strong>, <strong>1m</strong>, or <strong>1h</strong>.</li>
-  <li><code><em>&lt;cookie_path&gt;</em></code>: The path that is appended to the Ingress subdomain and that indicates for which domains and subdomains the cookie is sent to the Ingress controller. For example, if your Ingress domain is <code>www.myingress.com</code> and you want to send the cookie in every client request, you must set <code>path=/</code>. If you want to send the cookie only for <code>www.myingress.com/myapp</code> and all its subdomains, then you must set <code>path=/myapp</code>.</li>
+  <li><code><em>&lt;expiration_time&gt;</em></code>: The time in seconds, minutes, or hours before the sticky cookie expires. This time is independent of the user activity. After the cookie is expired, the cookie is deleted by the client web browser and no longer sent to the application load balancer. For example, to set an expiration time of 1 second, 1 minute, or 1 hour, enter <strong>1s</strong>, <strong>1m</strong>, or <strong>1h</strong>.</li>
+  <li><code><em>&lt;cookie_path&gt;</em></code>: The path that is appended to the Ingress subdomain and that indicates for which domains and subdomains the cookie is sent to the application load balancer. For example, if your Ingress domain is <code>www.myingress.com</code> and you want to send the cookie in every client request, you must set <code>path=/</code>. If you want to send the cookie only for <code>www.myingress.com/myapp</code> and all its subdomains, then you must set <code>path=/myapp</code>.</li>
   <li><code><em>&lt;hash_algorithm&gt;</em></code>: The hash algorithm that protects the information in the cookie. Only <code>sha1</code> is supported. SHA1 creates a hash sum based on the information in the cookie and appends this hash sum to the cookie. The server can decrypt the information in the cookie and verify data integrity.
   </li></ul></td>
   </tr>
@@ -1160,7 +1211,7 @@ Allow HTTPS requests and encrypt traffic to your upstream apps.
 <dl>
 <dt>Description</dt>
 <dd>
-Encrypt traffic to your upstream apps that require HTTPS with the Ingress controllers.
+Encrypt traffic to your upstream apps that require HTTPS with the application load balancers.
 
 **Optional**: You can add [one-way authentication or mutual authentication](#ssl-services-auth) to this annotation.
 </dd>
@@ -1202,7 +1253,7 @@ spec:
   <tr>
   <td><code>annotations</code></td>
   <td>Replace the following values:<ul>
-  <li><code><em>&lt;myservice&gt;</em></code>: Enter the name of the service that represents your app. Traffic is encrypted from Ingress controller to this app.</li>
+  <li><code><em>&lt;myservice&gt;</em></code>: Enter the name of the service that represents your app. Traffic is encrypted from application load balancer to this app.</li>
   <li><code><em>&lt;ssl-secret&gt;</em></code>: Enter the secret for the service. This parameter is optional. If the parameter is provided, the value must contain the key and the certificate that your app is expecting from the client.  </li></ul>
   </td>
   </tr>
@@ -1217,7 +1268,7 @@ spec:
   <td>Replace <em>&lt;myservicepath&gt;</em> with a slash or the unique path that your app is listening on, so that network traffic can be forwarded to the app.
 
   </br>
-  For every Kubernetes service, you can define an individual path that is appended to the IBM-provided domain to create a unique path to your app, for example <code>ingress_domain/myservicepath1</code>. When you enter this route into a web browser, network traffic is routed to the Ingress controller. The Ingress controller looks up the associated service and sends network traffic to the service and to the pods where the app is running by using the same path. The app must be set up to listen on this path in order to receive incoming network traffic.
+  For every Kubernetes service, you can define an individual path that is appended to the IBM-provided domain to create a unique path to your app, for example <code>ingress_domain/myservicepath1</code>. When you enter this route into a web browser, network traffic is routed to the application load balancer. The application load balancer looks up the associated service and sends network traffic to the service and to the pods where the app is running by using the same path. The app must be set up to listen on this path in order to receive incoming network traffic.
 
   </br></br>
   Many apps do not listen on a specific path but use the root path and a specific port. In this case, define the root path as <code>/</code> and do not specify an individual path for your app.
@@ -1319,7 +1370,7 @@ spec:
   <td>Replace <em>&lt;myservicepath&gt;</em> with a slash or the unique path that your app is listening on, so that network traffic can be forwarded to the app.
 
   </br>
-  For every Kubernetes service, you can define an individual path that is appended to the IBM-provided domain to create a unique path to your app, for example <code>ingress_domain/myservicepath1</code>. When you enter this route into a web browser, network traffic is routed to the Ingress controller. The Ingress controller looks up the associated service, and sends network traffic to the service and to the pods where the app is running by using the same path. The app must be set up to listen on this path in order to receive incoming network traffic.
+  For every Kubernetes service, you can define an individual path that is appended to the IBM-provided domain to create a unique path to your app, for example <code>ingress_domain/myservicepath1</code>. When you enter this route into a web browser, network traffic is routed to the application load balancer. The application load balancer looks up the associated service, and sends network traffic to the service and to the pods where the app is running by using the same path. The app must be set up to listen on this path in order to receive incoming network traffic.
 
   </br></br>
   Many apps do not listen on a specific path, but use the root path and a specific port. In this case, define the root path as <code>/</code> and do not specify an individual path for your app.
@@ -1416,7 +1467,7 @@ data:
 
 
 
-## TCP ports for Ingress controllers (tcp-ports)
+## TCP ports for application load balancers (tcp-ports)
 {: #tcp-ports}
 
 Access an app via a non-standard TCP port.
@@ -1427,7 +1478,7 @@ Access an app via a non-standard TCP port.
 <dd>
 Use this annotation for an app that is running a TCP streams workload.
 
-<p>**Note**: The Ingress controller operates in pass-through mode and fowards traffic to backend apps. SSL termination is not supported in this case.</p>
+<p>**Note**: The application load balancer operates in pass-through mode and forwards traffic to backend apps. SSL termination is not supported in this case.</p>
 </dd>
 
 
@@ -1529,5 +1580,3 @@ Use this annotation for an app that is running a TCP streams workload.
     </tbody></table>
     </dd>
     </dl>
-
-

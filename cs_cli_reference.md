@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-11-28"
+lastupdated: "2017-11-29"
 
 ---
 
@@ -103,7 +103,7 @@ bx plugin list
 ### bx cs albs --cluster CLUSTER
 {: #cs_albs}
 
-View the status of all application load balancers (ALBs) in a cluster. An ALB is also called an Ingress controller. If no ALB IDs are returned, then the cluster does not have a portable subnet. You can [create](#cs_cluster_subnet_create) or [add](#cs_cluster_subnet_add) subnets to a cluster.
+View the status of all application load balancers in a cluster. If no application load balancer IDs are returned, then the cluster does not have a portable subnet. You can [create](#cs_cluster_subnet_create) or [add](#cs_cluster_subnet_add) subnets to a cluster.
 
 <strong>Command options</strong>:
 
@@ -122,47 +122,47 @@ View the status of all application load balancers (ALBs) in a cluster. An ALB is
 ### bx cs alb-configure --albID ALB_ID [--enable][--disable][--user-ip USERIP]
 {: #cs_alb_configure}
 
-Enable or disable an application load balancer (ALB), also called the Ingress controller, in your standard cluster. The public application load balancer is enabled by default.
+Enable or disable an application load balancer in your standard cluster. The public application load balancer is enabled by default.
 
 **Command options**:
 
    <dl>
    <dt><code><em>--albID </em>ALB_ID</code></dt>
-   <dd>The ID for an alb. Run <code>bx cs albs <em>--cluster </em>CLUSTER</code> to view the IDs for the ALBs in a cluster. This value is required.</dd>
+   <dd>The ID for an application load balancer. Run <code>bx cs albs <em>--cluster </em>CLUSTER</code> to view the IDs for the application load balancers in a cluster. This value is required.</dd>
 
    <dt><code>--enable</code></dt>
-   <dd>Include this flag to enable an ALB in a cluster.</dd>
+   <dd>Include this flag to enable an application load balancer in a cluster.</dd>
 
    <dt><code>--disable</code></dt>
-   <dd>Include this flag to disable an ALB in a cluster.</dd>
+   <dd>Include this flag to disable an application load balancer in a cluster.</dd>
 
    <dt><code>--user-ip <em>USER_IP</em></code></dt>
    <dd>
 
    <ul>
-    <li>This parameter is available for a private alb only</li>
-    <li>The private ALB is deployed with an IP address from a user-provided private subnet. If no IP address is provided, the ALB is deployed with a random IP address from a private subnet in IBM Cloud infrastructure (SoftLayer).</li>
+    <li>This parameter is available for a private application load balancer only</li>
+    <li>The private application load balancer is deployed with an IP address from a user-provided private subnet. If no IP address is provided, the application load balancer is deployed with a private IP address from the portable private subnet that was provisioned automatically when you created the cluster.</li>
    </ul>
    </dd>
    </dl>
 
 **Examples**:
 
-  Example for enabling an ALB:
+  Example for enabling an application load balancer:
 
   ```
   bx cs alb-configure --albID my_alb_id --enable
   ```
   {: pre}
 
-  Example for disabling an ALB:
+  Example for disabling an application load balancer:
 
   ```
   bx cs alb-configure --albID my_alb_id --disable
   ```
   {: pre}
 
-  Example for enabling an ALB with a user-provided IP address:
+  Example for enabling an application load balancer with a user-provided IP address:
 
   ```
   bx cs alb-configure --albID my_private_alb_id --enable --user-ip user_ip
@@ -172,13 +172,13 @@ Enable or disable an application load balancer (ALB), also called the Ingress co
 ### bx cs alb-get --albID ALB_ID
 {: #cs_alb_get}
 
-View the details of an application load balancer (ALB).
+View the details of an application load balancer.
 
 <strong>Command options</strong>:
 
    <dl>
    <dt><code><em>--albID </em>ALB_ID</code></dt>
-   <dd>The ID for an ALB. Run <code>bx cs albs --cluster <em>CLUSTER</em></code> to view the IDs for the albs in a cluster. This value is required.</dd>
+   <dd>The ID for an application load balancer. Run <code>bx cs albs --cluster <em>CLUSTER</em></code> to view the IDs for the application load balancers in a cluster. This value is required.</dd>
    </dl>
 
 **Example**:
@@ -832,7 +832,7 @@ View a list of available locations for you to create a cluster in.
 ### bx cs logging-config-create CLUSTER --logsource LOG_SOURCE [--namespace KUBERNETES_NAMESPACE] [--hostname LOG_SERVER_HOSTNAME] [--port LOG_SERVER_PORT] --type LOG_TYPE
 {: #cs_logging_create}
 
-Create a logging configuration. By default, namespace logs are forwarded to {{site.data.keyword.loganalysislong_notm}}. You can use this command to forward namespace logs to an external syslog server. You can also use this command to forward logs for applications, worker nodes, Kubernetes clusters, and Ingress controllers to {{site.data.keyword.loganalysisshort_notm}} or to an external syslog server.
+Create a logging configuration. By default, namespace logs are forwarded to {{site.data.keyword.loganalysislong_notm}}. You can use this command to forward namespace logs to an external syslog server. You can also use this command to forward logs for applications, worker nodes, Kubernetes clusters, and Ingress application load balancers to {{site.data.keyword.loganalysisshort_notm}} or to an external syslog server.
 
 <strong>Command options</strong>:
 
