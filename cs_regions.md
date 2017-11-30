@@ -99,6 +99,8 @@ By using {{site.data.keyword.containershort_notm}} regions, you can create or ac
 
 To check which {{site.data.keyword.containershort_notm}} region you are currently in, run `bx cs api` and review the **Region** field.
 
+
+
 ### Logging in to a different container service region
 {: #container_login_endpoints}
 
@@ -107,6 +109,9 @@ You might want to log in to another {{site.data.keyword.containershort_notm}} re
   * You want to access a cluster in a region that is different from the default {{site.data.keyword.Bluemix_notm}} region you are logged in to.
 
 </br>
+
+
+
 
 Example commands to log in to an {{site.data.keyword.containershort_notm}} region:
   * AP North:
