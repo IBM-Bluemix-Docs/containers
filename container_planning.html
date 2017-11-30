@@ -1,0 +1,1197 @@
+<!DOCTYPE html><html lang="en-us">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="dcterms.date" content="2017-11-10">
+<meta name="dcterms.rights" content="© Copyright IBM Corporation 2014, 2017">
+
+<meta name="description" content="IBM Cloud Container Service offers many options to configure your container development environment to meet the functional and non-functional requirements of your app and organization. Learn what the options are before you get started.">
+<meta name="keywords" content="planning, IBM Containers, containers, decisions, organization manager, administer, namespace, quota, pay, data storage, file shares, developer, dashboard, GUI, CLI, REST, API, install, plugin, private image, local image, images, Docker Hub, view images, registry, vulnerabilities, image, network delay, Dockerfile, tip, crash, shut down, private network, IP address, route, container crashes, starting a container, public network, internet, single container, docker compose, accessible, ip address, container group, services, VCAP_SERVICES, volumes, single containers, container groups, group, load balancing, anti-affinity, compute nodes, high availability, auto-recovery, recovery, auto, unhealthy group instances, auto-scaling, scale up, scale down, scale">
+<meta name="geo.country" content="ZZ">
+<script>
+    digitalData = {
+      page: {
+        pageInfo: {
+  language: "en-us",
+
+  version: "v18",
+  ibm: {
+  country: "ZZ",
+  type: "CT701"
+  
+         }
+       }
+     }
+   };
+  </script><!-- Licensed Materials - Property of IBM -->
+<!-- US Government Users Restricted Rights -->
+<!-- Use, duplication or disclosure restricted by -->
+<!-- GSA ADP Schedule Contract with IBM Corp. -->
+<link rel="stylesheet" type="text/css" href="./ibmdita.css">
+<title>Planning to use single and scalable containers</title>
+</head>
+<body><main role="main"><div><article class="nested0" role="article" aria-labelledby="d64747e6" id="container_planning"><h1 class="topictitle1" id="d64747e6">Planning to use <span class="ph">single and scalable containers</span> (Deprecated)</h1>
+<div class="body taskbody"><div class="abstract"><div class="shortdesc">IBM® Cloud
+Container Service offers many options to configure your container development environment to meet
+the functional and non-functional requirements of your app and organization. Learn what the options
+are before you get started.</div>
+
+<div class="p"><div class="note attention"><span class="attentiontitle">Attention:</span>  Single and scalable containers are deprecated. Support
+will continue in IBM Cloud Public until 5 December 2017 and in IBM Cloud Local and Dedicated until
+20 June 2018. Start using Kubernetes clusters today to deploy secure, highly available apps. <a href="https://www.ibm.com/blogs/bluemix/2017/07/deprecation-single-scalable-group-container-service-bluemix-public/" rel="external" target="_blank" title="(Opens in a new tab or window)">Learn more about Kubernetes and how to migrate your
+apps</a>.</div>
+</div>
+
+<div class="p">In this
+page:<div class="lines">&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_planning.html#roles">Understanding user roles</a> <br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_planning.html#container_planning_org_ov" title="In Cloud, you can use organizations to enable collaboration among team members and to facilitate the logical grouping of cloud resources in a project. Every organization is assigned an organization manager that is responsible for setting up the development environments (spaces), and to grant team members access to the cloud resources that are needed to successfully create containers for their apps. This set up includes the assignment of public IP addresses, data storage, and container memory. As an organization manager you can also view the current quota and usage of cloud resources, and adjust them as needed.">Manage your organization for single containers and scalable container groups</a> <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <a href="container_planning.html#container_planning_namespace" title="To store and manage private images for IBM Cloud Container Service, every organization is required to set up its own private Docker images registry in Cloud. This name of the private registry is called a namespace and must be unique within Cloud.">Set up a namespace for your private <span class="keyword">Cloud</span> registry</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <a href="container_planning.html#container_planning_quota" title="Every organization in Cloud has a preset value for container memory, public IP addresses, file shares, and the number of services that are shared among all spaces of an organization. These preset values are called quota.">Quota and available <span class="keyword">Cloud</span> account types</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <a href="container_planning.html#container_planning_fileshare" title="A file share is a persistent NFS-based (Network File System) storage system that hosts Docker volumes in a Cloud space, and allows a user to store and access container and app-related files. To store files in a file share, you must create a container volume and save the data into this volume.">Persistent storage setup</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_planning.html#container_planning_container_ov" title="To create containers that run your app with IBM Cloud Container Service in Cloud, you must have been granted developer rights for an organization space. As a developer of apps, it is important to know how container components are related and how you can change the configuration of a container to meet the functional and non-functional requirements of your app.">Create single containers and scalable container groups in IBM Cloud Container Service</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <a href="container_planning.html#container_planning_cli-ui" title="When you are planning to work with IBM Cloud Container Service, you can use the Cloud GUI, install the command line interface (CLI), or send HTTP requests against the REST API to access IBM Cloud Container Service."><span class="keyword">Cloud</span> GUI, CLI, or REST API</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <a href="container_planning.html#container_planning_images" title="A container image is the basis for every container that you create. An image is created from a Dockerfile, which is a file that contains instructions to build the image, and build artifacts, such as an app, the app's configuration, and its dependencies. Think of a container image as an executable file (.exe or .bin). As soon as you run the executable app file, you create an instance of your app. When you run a container, you create a container instance from the image. Container images are stored in your private Cloud registry and can be added from the CLI only. Every container image that you want to use must be in a registry before you can create a container from it.">IBM public, Docker Hub, and private images</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <a href="container_planning.html#container_planning_private_network" title="A container private network creates an isolated and secure environment for the single containers and container groups that run in one space. Containers that are connected to the same private network can send and receive data from other containers in the private network by using the private IP addresses. Containers are not publicly available until a public port and either a public IP address for single containers or a public route for container groups are bound.">Private container network settings</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <a href="container_planning.html#container_planning_public_network" title="By default, every single container and container group in IBM Cloud Container Service is available to the private network. However, your app might require accessibility from the internet, or you want to access containers in other spaces of your organization. In these cases, you must expose your container to the public. Depending on the type of container that you choose, different ways exist to make a container available to the public.">Public network settings</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <a href="container_planning.html#container_planning_bmx_service" title="Cloud offers various services that you can use with IBM Cloud Container Service to bring extra capabilities to your app or to simplify the implementation of your app and the management of your container.">Integration of <span class="keyword">Cloud</span> services</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <a href="container_planning.html#container_planning_volumes" title="Decide where to store the data that the app creates or the files that the app requires to run.">Persistent data storage options</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <a href="container_planning.html#container_planning_types" title="Before you create a container with IBM Cloud Container Service, decide on the type of container that you need. IBM Cloud Container Service offers different approaches to create containers in the cloud. The approach that you choose depends on the requirements and dependencies of your app that runs in your container.">Container types</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <a href="container_planning.html#container_planning_monlog" title="In Cloud, containers come with built-in monitoring and logging, so you can watch the health of your containers closely.">Monitoring and Logging options</a></div>
+</div>
+</div>
+<div class="section context"></div></div>
+<article class="topic task nested1" role="article" aria-labelledby="d64747e287" id="roles"><h2 class="topictitle2" id="d64747e287">Understanding user roles</h2>
+<div class="body taskbody"><div class="section context" id="roles__context_tc2_pxz_nz"><p data-hd-otherprops="registry_check">Containers are managed by
+organization managers and container developers. The following image shows a sample container
+configuration of an organization and highlights the components that can be set by either the
+organization manager or the container developer. <a href="../api/content/containers/images/container_planning_container_ov_bluemixify.png" rel="external" target="_blank" title="(Opens in a new tab or window)"><img id="roles__image_qlf_pxz_nz" src="images/container_planning_container_ov_bluemixify.png" width="700" alt="A diagram that displays the components of IBM Cloud Container Service that the container developer or organization manager can configure."></a></p>
+Review the sub-sections in this topic to find information about every component, and the
+decision, and configurations that you can make. Some of these configurations cannot be changed after
+a container is created. Knowing these configurations in advance can help you to assure that all the
+resources, such as memory, disk space, and IP addresses are available to the development team as
+well as to maximize the use of your organization quota.</div></div>
+</article><article class="topic task nested1" role="article" aria-labelledby="d64747e307" lang="en-us" id="container_planning_org_ov"><h2 class="topictitle2" id="d64747e307">Manage your <span class="keyword">Cloud</span> organization
+for <span class="keyword">IBM
+Cloud Container Service</span></h2>
+<div class="body taskbody"><p class="shortdesc">In <span class="keyword">Cloud</span>, you can use
+organizations to enable collaboration among team members and to facilitate the logical grouping of
+cloud resources in a project. Every organization is assigned an organization manager that is
+responsible for setting up the development environments (spaces), and to grant team members access
+to the cloud resources that are needed to successfully create containers for their apps. This set up
+includes the assignment of public IP addresses, data storage, and container memory. As an
+organization manager you can also view the current quota and usage of cloud resources, and adjust
+them as needed. </p>
+<div class="section prereq">Before you begin, <a data-hd-audience="yellow" href="../iam/users_roles.html#userroles">confirm the roles for the users</a> in the organization. <ul><li>Assign organization managers by giving a user the <dfn class="term">manager</dfn> role within the
+organization.</li>
+<li>Assign container creators by giving the user a <dfn class="term">developer</dfn> or <dfn class="term">auditor</dfn>
+role within the space.</li>
+</ul>
+</div></div>
+<article class="topic task nested2" role="article" aria-labelledby="d64747e398" id="container_planning_namespace"><h3 class="topictitle3" id="d64747e398">Setting your organization's namespace for your private <span class="keyword">Cloud</span> registry</h3>
+<div class="body taskbody"><p class="shortdesc"><span class="ph" data-hd-otherprops="registry_check" id="namespace_def">To store and manage
+private images for <span class="keyword">IBM
+Cloud Container Service</span>, every
+organization is required to set up its own private Docker images registry in <span class="keyword">Cloud</span>. This name of the private registry is
+called a <dfn class="term">namespace</dfn> and must be unique within <span class="keyword">Cloud</span>.</span></p>
+<div class="section context"><span class="ph">The namespace is used to generate a unique URL to your private image
+registry. Therefore, the namespace is appended to the <span class="keyword">Cloud</span> registry URL as follows:
+<span class="ph filepath">registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">namespace</var></span>. You must enter the full URL to your private registry
+whenever you want to work with one of your images from the CLI. If you want to use <span class="keyword">IBM
+Cloud Container Service</span> in multiple <span class="keyword">Cloud</span> regions, you must set up a namespace for
+every region. </span> All container images that are
+stored in your private registry are shared by all users of an organization.<div class="steps note"><span class="notetitle">Note:</span> Every organization
+can have one namespace per <span class="keyword">Cloud</span>
+region at a time only. Once the namespace is set for an organization, it cannot be changed, only
+deleted. </div>
+<p>Consider the following rules when you choose a namespace for your organization.</p>
+<ul data-hd-otherprops="registry_check"><li>Your namespace must be unique in <span class="keyword">Cloud</span>. </li>
+<li>Your namespace can be 4-30 characters long.</li>
+<li>Your namespace must start with at least one letter or number.</li>
+<li>Your namespace can only contain lowercase letters, numbers or underscores (_). </li>
+</ul>
+</div><p class="li stepsection"><p>From the <span class="keyword">Cloud</span> GUI follow these
+steps.</p>
+</p><ol><li class="step stepexpand"><span class="cmd"><span class="ph" data-hd-otherprops="registry_check">From the catalog, select
+<span class="ph uicontrol">Containers</span> and choose an image.</span></span></li>
+<li class="step stepexpand"><span class="cmd">If a namespace is already set for your organization, you are not prompted to create one and can
+continue with the next step. </span> If a namespace is not specified for your organization yet, you are prompted to set one for the
+image registry. </li>
+</ol><p class="li stepsection"><p>From the CLI, run the following command after logging in to <span class="keyword">IBM
+Cloud Container Service</span>:</p>
+</p><ol start="3"><li class="step stepexpand"><span class="cmd">Set a namespace for your organization. Replace <var class="keyword varname">&lt;my_namespace&gt;</var> with the
+namespace that you want to set for your organization.</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> namespace-set <var class="keyword varname">&lt;my_namespace&gt;</var></code></pre>
+
+<div class="steps note"><span class="notetitle">Note:</span> If you are not sure if a namespace was already set for your organization, follow the steps in
+the <a href="container_planning.html#namespace_get" title="If a namespace for your organization is already set, you can retrieve it from the Cloud GUI or the CLI.">Retrieving the namespace for your organization</a> topic.</div>
+</li>
+</ol></div>
+<aside role="complementary" aria-labelledby="d64747e398"></aside><article class="topic task nested3" role="article" aria-labelledby="d64747e581" id="namespace_get"><h4 class="topictitle4" id="d64747e581">Retrieving the namespace for your organization</h4>
+<div class="body taskbody"><p class="shortdesc">If a namespace for your organization is already set, you can retrieve it from the
+<span class="keyword">Cloud</span> GUI or the CLI. </p>
+<div class="section context"><div class="steps note"><span class="notetitle">Note:</span> You can identify the namespace from the <span class="keyword">Cloud</span> GUI only if a private image was already
+added to your private images registry. You cannot retrieve this information from an image that was
+provided by IBM. If there are no private images in your registry yet, choose the CLI option for
+identifying the namespace for your organization. </div>
+</div><p class="li stepsection"><p>From the <span class="keyword">Cloud</span> GUI, follow these
+steps. </p>
+</p><ol><li class="step stepexpand"><span class="cmd"><span class="ph" data-hd-otherprops="registry_check">From the catalog, select
+<span class="ph uicontrol">Containers</span> and choose an image.</span></span></li>
+<li class="step stepexpand"><span class="cmd">Under the image name, click <span class="ph uicontrol">Copy URL</span>.</span></li>
+<li class="step stepexpand"><span class="cmd">Retrieve the namespace from the copied URL, which is in the following format: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">&lt;image_name&gt;</var>:<var class="keyword varname">&lt;tag&gt;</var>.</span></li>
+</ol><p class="li stepsection"><p>From the CLI, log in to <span class="keyword">IBM
+Cloud Container Service</span>
+service and run the following command.</p>
+</p><ol start="4"><li class="step stepexpand"><span class="cmd">Retrieve your namespace information. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> namespace-get</code></pre>
+</li>
+</ol></div>
+</article></article><article class="topic task nested2" role="article" aria-labelledby="d64747e654" id="container_planning_quota"><h3 class="topictitle3" id="d64747e654">Quota and <span class="keyword">Cloud</span>
+accounts</h3>
+<div class="body taskbody"><p class="shortdesc"><span class="ph">Every organization in <span class="keyword">Cloud</span> has a preset value for container memory,
+public IP addresses, file shares, and the number of services that are shared among all spaces of an
+organization. These preset values are called quota. </span></p>
+<div class="section context"><span class="ph" id="container_planning_quota__account_def"><span class="keyword">Cloud</span>
+offers different accounts that you can use with <span class="keyword">IBM
+Cloud Container Service</span>. The type of account impacts the quota
+that is available to your organization and the way you get billed for the usage of the container
+resources. </span> Any application or service in a space of the organization contributes to the usage
+of the quota, whether they are running or not. So it is important to know what you can do to <a href="container_planning.html#maximize_quota">maximize the use of your existing quota</a>. The <a href="container_planning.html#bluemix_account">Pay-As-You-Go or Subscription plans</a> are set up with a
+<a href="container_planning.html#default_quota_paid">default quota limit</a> that you can <a href="container_planning.html#change_quota">allocate to the <span class="keyword">Cloud</span> spaces</a> to match the needs of your
+organization.</div></div>
+<article class="topic task nested3" role="article" aria-labelledby="d64747e757" id="bluemix_account"><h4 class="topictitle4" id="d64747e757"><span class="keyword">Cloud</span> account types</h4>
+<div class="body taskbody"><p class="shortdesc"></p>
+<div class="section context">The following table provides an overview of the account types that are available. For
+detailed information about each account and billing type, review the <a href="../pricing/index.html" rel="external" target="_blank" title="(Opens in a new tab or window)">Pricing</a> topic. <div class="tablenoborder"><table summary="Cloud account type overview" id="bluemix_account__table_psk_cl5_jw" class="defaultstyle"><caption><span class="tablecap">Table 1. <span class="keyword">Cloud</span> account type overview</span></caption><thead><tr><th id="d64747e786" class="thleft">Account type</th>
+<th id="d64747e788" class="thleft">Description</th>
+</tr>
+</thead>
+<tbody><tr><td headers="d64747e786 ">Free-trial</td>
+<td headers="d64747e788 ">Free trials for <span class="ph">single and scalable containers</span> are not available. <a href="cs_ov.html" title="IBM Cloud Container Service combines Docker and Kubernetes to deliver powerful tools, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps over a cluster of independent compute hosts by using the Kubernetes APIs.">Learn about cluster management and migrate to
+Kubernetes in <span class="keyword">IBM
+Cloud Container Service</span> on <span class="keyword">Cloud</span> Public.</a></td>
+</tr>
+<tr><td headers="d64747e786 ">Pay-As-You-Go</td>
+<td headers="d64747e788 ">If you sign up for a Pay-As-You-Go account, you pay only for the <span class="keyword">Cloud</span> resources that you use.</td>
+</tr>
+<tr><td headers="d64747e786 ">Subscription</td>
+<td headers="d64747e788 ">If you sign up for a Subscription account, you commit to a minimum spending amount each month
+and receive a subscription discount that is applied to that minimum charge. You also pay for any
+usage that exceeds the minimum spending amount.</td>
+</tr>
+<tr><td headers="d64747e786 "><span class="keyword">Cloud</span> Dedicated</td>
+<td headers="d64747e788 ">With <span class="keyword">Cloud</span> Dedicated, you must
+sign up for a one year minimum term. What you pay each month during that term is based on the
+dedicated services that you want, plus a subscription account that gives you access to all public
+services. </td>
+</tr>
+<tr><td headers="d64747e786 "><span class="keyword">Cloud</span> Local</td>
+<td headers="d64747e788 ">With <span class="keyword">Cloud</span> Local, you must
+sign up for a one year minimum term. What you pay each month during that term is based on the local
+services that you want, plus a subscription account that gives you access to all public services.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div></div>
+</article><article class="topic task nested3" role="article" aria-labelledby="d64747e861" id="default_quota_paid"><h4 class="topictitle4" id="d64747e861">Default quota for paid accounts</h4>
+<div class="body taskbody"><div class="section context">Every paid account is set up with default quota limits that can be reviewed in the
+following table. If you require more resources, you can request to add extra quota by opening a
+<a href="../support/index.html#contacting-support"><span class="keyword">Cloud</span> support ticket</a>.<div class="tablenoborder"><table summary="Quota overview for paid accounts" id="default_quota_paid__table_eq1_ccd_bx" class="defaultstyle"><caption><span class="tablecap">Table 2. Quota overview for paid accounts</span></caption><thead><tr><th id="d64747e883" class="thleft">Resource</th>
+<th id="d64747e885" class="thleft">Paid accounts quota limits</th>
+</tr>
+</thead>
+<tbody><tr><td headers="d64747e883 ">Public IP addresses</td>
+<td headers="d64747e885 ">64</td>
+</tr>
+<tr><td headers="d64747e883 ">Container memory</td>
+<td headers="d64747e885 ">64 GB <div class="steps note"><span class="notetitle">Note:</span> Every container in your space contributes to the usage of the quota, whether the
+container is running or not. To free up memory, you must remove unused containers. </div>
+</td>
+</tr>
+<tr><td headers="d64747e883 ">File shares</td>
+<td headers="d64747e885 ">10 file shares</td>
+</tr>
+<tr><td headers="d64747e883 ">Containers and container groups</td>
+<td headers="d64747e885 ">unlimited number<div class="steps note"><span class="notetitle">Note:</span> The size of your container and container groups counts towards your
+container memory limit, but you are not limited to a specific number of containers.</div>
+</td>
+</tr>
+<tr><td headers="d64747e883 ">Images</td>
+<td headers="d64747e885 ">25<div class="steps note"><span class="notetitle">Note:</span> The IBM images do not count towards your image limit in your private <span class="keyword">Cloud</span> registry.</div>
+</td>
+</tr>
+<tr><td headers="d64747e883 ">Spaces</td>
+<td headers="d64747e885 ">unlimited number<div class="steps note"><span class="notetitle">Note:</span> Every space requires at least 2 public IP addresses and 2 GB container
+memory which are automatically allocated when you log
+into a new space and attempt to use it with the <span class="keyword">IBM
+Cloud Container Service</span>. These resources count towards your
+quota, but you are not limited to a specific number of spaces. </div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div></div>
+</article><article class="topic task nested3" role="article" aria-labelledby="d64747e939" id="change_quota"><h4 class="topictitle4" id="d64747e939">Allocating quota to a space</h4>
+<div class="body taskbody"><div class="section context">With the pay-as-you-go or subscription plans, you can adjust your quota allocation for
+memory, number of file shares, and number of public IP addresses for each space until your quota
+limit is reached. To increase or decrease your space quota for containers, follow these
+steps.</div><ol class="steps"><li class="step"><span class="cmd"><span class="ph" id="change_quota__view_quota_1">From your account details, in manage organizations, select an
+organization.</span></span></li>
+<li class="step"><span class="cmd"><span class="ph" id="change_quota__view_quota_2">In the quota section, view the details for containers.</span></span></li>
+<li class="step"><span class="cmd">In the <span class="ph uicontrol">Quota Allocation</span> table, change the quota that is allocated per
+space by clicking the <span class="ph uicontrol">Edit</span> button.</span></li>
+<li class="step"><span class="cmd">Save your changes by clicking the <span class="ph uicontrol">Save</span> button.</span></li>
+</ol>
+<div class="section postreq"><div class="note tip"><span class="tiptitle">Tip:</span> If your maximum quota is reached, you can request to add extra quota by opening a
+<a href="../support/index.html#contacting-support"><span class="keyword">Cloud</span> support ticket</a>.</div>
+</div></div>
+</article><article class="topic task nested3" role="article" aria-labelledby="d64747e978" id="maximize_quota"><h4 class="topictitle4" id="d64747e978">Tips to maximize the use of your quota</h4>
+<div class="body taskbody"><div class="section context">Consider the following tips to release container resources when they are not needed and
+maximize the use of your quota. <ul><li>Make sure to remove containers that are not in use so that their configurations are not counted
+toward your quota. For more information, see <a href="container_single_ui.html#container_single_remove" title="To maximize the use of your quota, remove containers that are not in use occasionally.">Removing single containers</a>, <a href="container_ha.html#container_group_remove" title="To maximize the use of your quota, remove container groups that are not in use occasionally.">Removing container groups</a>, and <a href="container_single_ui.html#container_compose_remove" title="As a final step, remove the multi-container deployment to release used resources and maximize the use of your quota.">Remove a
+multi-container app</a>.</li>
+<li>Do not bind a public IP address to your container when your container must not be accessible
+from the internet.</li>
+<li>To reduce the public IP address usage, consider using container groups in place of a single
+container. Container groups use a route for public access that is not subject to the IP address
+quota. For more information , see <a href="container_ha.html#container_group_ui" title="Create and deploy a scalable group container from the Cloud GUI. A container group includes two or more containers that run the same image. Use container groups for running long-term services with workloads that require scalability and reliability or for testing at the required scale.">Running long-term services as container groups from the Cloud GUI</a>.</li>
+</ul>
+</div></div>
+</article></article><article class="topic task nested2" role="article" aria-labelledby="d64747e1020" id="container_planning_fileshare"><h3 class="topictitle3" id="d64747e1020">Persistent data storage</h3>
+<div class="body taskbody"><p class="shortdesc"><span class="ph" id="fileshare_def">A file share is a persistent NFS-based (Network File System)
+storage system that hosts Docker volumes in a <span class="keyword">Cloud</span> space, and allows a user to store and
+access container and app-related files. To store files in a file share, you must create a container
+volume and save the data into this volume.</span></p>
+<div class="section context"><span class="ph">As soon as you create your first volume in a space, a default file
+share with 20 GB at 4 IOPS (Input Output operations Per Second) is created at no cost. The size of
+the volume is relative to the size of your file share. When adding more volumes, each volume is
+assigned an equal amount of the file share storage.</span><p><span class="ph">The
+organization manager can create file shares with specific storage size and IOPS to meet the storage
+needs of the space. File shares can be provisioned in sizes from 20 GB to 12 TB and at IOPS per GB
+of 0.25, 2 or 4. The file share size in relation to the number of IOPS impacts the speed that data
+can be read and written from and to the container volume. </span></p>
+<div class="p">To create a file share, see: <ul><li><a href="container_volumes_ov.html#container_fileshares_adding_ui" title="A file share is a persistent NFS-based (Network File System) storage system that hosts Docker volumes in a Cloud space, and allows a user to store and access container and app-related files. To store files in a file share, you must create a container volume and save the data into this volume.">Adding file shares for volumes with the Cloud GUI</a></li>
+<li><a href="container_volumes_ov.html#container_fileshares_adding_cli" title="Create a file share by using the bx ic volume-fs-create command.">Adding file shares with the command line interface (CLI)</a></li>
+</ul>
+</div>
+</div></div>
+</article></article><article class="topic task nested1" role="article" aria-labelledby="d64747e1109" lang="en-us" id="container_planning_container_ov"><h2 class="topictitle2" id="d64747e1109">Creating your containers with <span class="keyword">IBM
+Cloud Container Service</span> in <span class="keyword">Cloud</span></h2>
+<div class="body taskbody"><p class="shortdesc">To create containers that run your app with <span class="keyword">IBM
+Cloud Container Service</span> in <span class="keyword">Cloud</span>, you must have been granted developer
+rights for an organization space. As a developer of apps, it is important to know how container
+components are related and how you can change the configuration of a container to meet the
+functional and non-functional requirements of your app. </p>
+<div class="section prereq">Before you begin, make sure that you are assigned the <dfn class="term">developer</dfn> or
+<dfn class="term">auditor</dfn> role for the space. The organization manager or owner can grant you access to a
+space.</div></div>
+<article class="topic task nested2" role="article" aria-labelledby="d64747e1198" id="container_planning_cli-ui"><h3 class="topictitle3" id="d64747e1198"><span class="keyword">Cloud</span> GUI, the command line,
+and the REST API </h3>
+<div class="body taskbody"><p class="shortdesc"><span class="ph" id="cli_def">When you are planning to work with <span class="keyword">IBM
+Cloud Container Service</span>, you can use the <span class="keyword">Cloud</span> GUI, install the command line interface
+(CLI), or send HTTP requests against the REST API to access <span class="keyword">IBM
+Cloud Container Service</span>.</span></p>
+<div class="section context"><p>The <span class="keyword">Cloud</span> GUI and the
+<a href="container_planning.html#install" title="Install and configure your IBM Cloud Container Service CLI to manage your containers from the CLI.">CLI</a> can be used to complete the majority of tasks in <span class="keyword">IBM
+Cloud Container Service</span>. However, there are tasks that can be
+performed by either the <span class="keyword">Cloud</span> GUI or
+the CLI only. So be prepared to use both to manage your containers. </p>
+<p>If you neither want to
+use the <span class="keyword">Cloud</span> GUI nor the CLI, you
+can send HTTP requests directly to the <a href="container_planning.html#use_api" title="Use the IBM Cloud Container Service API to work with your single containers and container groups using REST."><span class="keyword">IBM
+Cloud Container Service</span> API</a> server to manage your
+containers with REST. </p>
+The following table shows all container-related tasks that either require
+the <span class="keyword">Cloud</span> GUI, the <span class="keyword">IBM
+Cloud Container Service</span> CLI, or the REST API. Tasks that are not
+listed here can be performed by all methods. <div class="tablenoborder"><table summary="Container-related tasks that require either the Cloud GUI, IBM Cloud Container Service CLI , or REST API" id="container_planning_cli-ui__table_egk_dh3_rx" class="defaultstyle"><caption><span class="tablecap">Table 3. Container-related tasks that require either the <span class="keyword">Cloud</span> GUI, <span class="keyword">IBM
+Cloud Container Service</span> CLI , or REST API</span></caption><thead><tr><th style="width: 25%" id="d64747e1393" class="thleft">Task</th>
+<th style="width: 25%" id="d64747e1395" class="thleft">GUI</th>
+<th style="width: 25%" id="d64747e1397" class="thleft">CLI</th>
+<th style="width: 25%" id="d64747e1399" class="thleft">API</th>
+</tr>
+</thead>
+<tbody><tr><td style="width: 25%" headers="d64747e1393 ">Review image vulnerabilities</td>
+<td style="width: 25%" headers="d64747e1395 "><img src="images/healthy.png" style="width: 3" alt="Supported icon"></td>
+<td style="width: 25%" headers="d64747e1397 "><img src="images/close.png" style="width: 1" alt="Not supported icon"></td>
+<td style="width: 25%" headers="d64747e1399 "><img src="images/close.png" style="width: 1" alt="Not supported icon"></td>
+</tr>
+<tr><td style="width: 25%" headers="d64747e1393 ">Push images to registry</td>
+<td style="width: 25%" headers="d64747e1395 "><img src="images/close.png" style="width: 1" alt="Not supported icon"></td>
+<td style="width: 25%" headers="d64747e1397 "><img src="images/healthy.png" style="width: 3" alt="Supported icon"></td>
+<td style="width: 25%" headers="d64747e1399 "><img src="images/healthy.png" style="width: 3" alt="Supported icon"></td>
+</tr>
+<tr><td style="width: 25%" headers="d64747e1393 ">Pull images from registry</td>
+<td style="width: 25%" headers="d64747e1395 "><img src="images/close.png" style="width: 1" alt="Not supported icon"></td>
+<td style="width: 25%" headers="d64747e1397 "><img src="images/healthy.png" style="width: 3" alt="Supported icon"></td>
+<td style="width: 25%" headers="d64747e1399 "><img src="images/close.png" style="width: 1" alt="Not supported icon"></td>
+</tr>
+<tr><td style="width: 25%" headers="d64747e1393 ">Copy images from Docker Hub</td>
+<td style="width: 25%" headers="d64747e1395 "><img src="images/close.png" style="width: 1" alt="Not supported icon"></td>
+<td style="width: 25%" headers="d64747e1397 "><img src="images/healthy.png" style="width: 3" alt="Supported icon"></td>
+<td style="width: 25%" headers="d64747e1399 "><img src="images/close.png" style="width: 1" alt="Not supported icon"></td>
+</tr>
+<tr><td style="width: 25%" headers="d64747e1393 ">Change quota allocation</td>
+<td style="width: 25%" headers="d64747e1395 "><img src="images/healthy.png" style="width: 3" alt="Supported icon"></td>
+<td style="width: 25%" headers="d64747e1397 "><img src="images/close.png" style="width: 1" alt="Not supported icon"></td>
+<td style="width: 25%" headers="d64747e1399 "><img src="images/close.png" style="width: 1" alt="Not supported icon"></td>
+</tr>
+<tr><td style="width: 25%" headers="d64747e1393 ">Retrieve organization and space specific quota</td>
+<td style="width: 25%" headers="d64747e1395 "><img src="images/healthy.png" style="width: 3" alt="Supported icon"></td>
+<td style="width: 25%" headers="d64747e1397 "><img src="images/close.png" style="width: 1" alt="Not supported icon"></td>
+<td style="width: 25%" headers="d64747e1399 "><img src="images/close.png" style="width: 1" alt="Not supported icon"></td>
+</tr>
+<tr><td style="width: 25%" headers="d64747e1393 ">View detailed log information</td>
+<td style="width: 25%" headers="d64747e1395 "><img src="images/healthy.png" style="width: 3" alt="Supported icon"></td>
+<td style="width: 25%" headers="d64747e1397 "><img src="images/close.png" style="width: 1" alt="Not supported icon"></td>
+<td style="width: 25%" headers="d64747e1399 "><img src="images/close.png" style="width: 1" alt="Not supported icon"></td>
+</tr>
+<tr><td style="width: 25%" headers="d64747e1393 ">Specify more logs</td>
+<td style="width: 25%" headers="d64747e1395 "><img src="images/healthy.png" style="width: 3" alt="Supported icon"></td>
+<td style="width: 25%" headers="d64747e1397 "><img src="images/close.png" style="width: 1" alt="Not supported icon"></td>
+<td style="width: 25%" headers="d64747e1399 "><img src="images/close.png" style="width: 1" alt="Not supported icon"></td>
+</tr>
+<tr><td style="width: 25%" headers="d64747e1393 ">Customize logs</td>
+<td style="width: 25%" headers="d64747e1395 "><img src="images/healthy.png" style="width: 3" alt="Supported icon"></td>
+<td style="width: 25%" headers="d64747e1397 "><img src="images/close.png" style="width: 1" alt="Not supported icon"></td>
+<td style="width: 25%" headers="d64747e1399 "><img src="images/close.png" style="width: 1" alt="Not supported icon"></td>
+</tr>
+<tr><td style="width: 25%" headers="d64747e1393 ">Log into a running container</td>
+<td style="width: 25%" headers="d64747e1395 "><img src="images/close.png" style="width: 1" alt="Not supported icon"></td>
+<td style="width: 25%" headers="d64747e1397 "><img src="images/healthy.png" style="width: 3" alt="Supported icon"></td>
+<td style="width: 25%" headers="d64747e1399 "><img src="images/close.png" style="width: 1" alt="Not supported icon"></td>
+</tr>
+<tr><td style="width: 25%" headers="d64747e1393 ">Use Docker Compose</td>
+<td style="width: 25%" headers="d64747e1395 "><img src="images/close.png" style="width: 1" alt="Not supported icon"></td>
+<td style="width: 25%" headers="d64747e1397 "><img src="images/healthy.png" style="width: 3" alt="Supported icon"></td>
+<td style="width: 25%" headers="d64747e1399 "><img src="images/close.png" style="width: 1" alt="Not supported icon"></td>
+</tr>
+<tr><td style="width: 25%" headers="d64747e1393 ">List volumes of a space</td>
+<td style="width: 25%" headers="d64747e1395 "><img src="images/close.png" style="width: 1" alt="Not supported icon"></td>
+<td style="width: 25%" headers="d64747e1397 "><img src="images/healthy.png" style="width: 3" alt="Supported icon"></td>
+<td style="width: 25%" headers="d64747e1399 "><img src="images/healthy.png" style="width: 3" alt="Supported icon"></td>
+</tr>
+<tr><td style="width: 25%" headers="d64747e1393 ">Write files to a volume</td>
+<td style="width: 25%" headers="d64747e1395 "><img src="images/close.png" style="width: 1" alt="Not supported icon"></td>
+<td style="width: 25%" headers="d64747e1397 "><img src="images/healthy.png" style="width: 3" alt="Supported icon"></td>
+<td style="width: 25%" headers="d64747e1399 "><img src="images/close.png" style="width: 1" alt="Not supported icon"></td>
+</tr>
+<tr><td style="width: 25%" headers="d64747e1393 ">Delete a volume</td>
+<td style="width: 25%" headers="d64747e1395 "><img src="images/close.png" style="width: 1" alt="Not supported icon"></td>
+<td style="width: 25%" headers="d64747e1397 "><img src="images/healthy.png" style="width: 3" alt="Supported icon"></td>
+<td style="width: 25%" headers="d64747e1399 "><img src="images/healthy.png" style="width: 3" alt="Supported icon"></td>
+</tr>
+<tr><td style="width: 25%" headers="d64747e1393 ">Retrieve system messages</td>
+<td style="width: 25%" headers="d64747e1395 "><img src="images/close.png" style="width: 1" alt="Not supported icon"></td>
+<td style="width: 25%" headers="d64747e1397 "><img src="images/close.png" style="width: 1" alt="Not supported icon"></td>
+<td style="width: 25%" headers="d64747e1399 "><img src="images/healthy.png" style="width: 3" alt="Supported icon"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div></div>
+<article class="topic task nested3" role="article" aria-labelledby="d64747e1540" id="install"><h4 class="topictitle4" id="d64747e1540">Installing the CLI</h4>
+<div class="body taskbody"><p class="shortdesc">Install and configure your <span class="keyword">IBM
+Cloud Container Service</span> CLI to manage your containers from the
+CLI. </p>
+<ol class="steps"><li class="step stepexpand"><span class="cmd">Install the <a href="container_cli_cfic_install.html#container_cli_cfic_install" title="Install the IBM Cloud Container Service plug-in (bx ic) to run native Docker CLI commands to manage your containers."><span class="keyword">IBM
+Cloud Container Service</span> CLI</a> and its prerequisites. </span> To work with <span class="keyword">IBM
+Cloud Container Service</span> from the
+CLI, you must install the Cloud Foundry CLI (<samp class="ph codeph">cf</samp>), the <span class="keyword">IBM
+Cloud</span> CLI (<samp class="ph codeph">bx</samp>) and the <span class="keyword">IBM
+Cloud Container Service</span> plug-in (<span class="ph"><samp class="ph codeph">bx ic</samp></span>).</li>
+<li class="step stepexpand">Optional: <span class="cmd">Install <a href="container_cli_cfic_install.html#container_cli_compose_install" title="To start and stop multiple single containers at one time, you can install the Docker Compose CLI.">Docker
+Compose</a>.</span> If you want to run Docker Compose commands with <span class="keyword">IBM
+Cloud Container Service</span>, additional software packages are
+necessary.</li>
+<li class="step stepexpand"><span class="cmd">Log into the <span class="keyword">IBM
+Cloud Container Service</span> CLI.</span></li>
+<li class="step stepexpand"><span class="cmd">Choose to run <span class="keyword">IBM
+Cloud Container Service</span> (<span class="ph"><samp class="ph codeph">bx ic</samp></span>) or native Docker commands.</span> <ul><li><span class="ph uicontrol">Option 1</span> (Default)<p>A simple shell for <span class="keyword">IBM
+Cloud Container Service</span> wrappers Docker. The local Docker daemon
+is unaffected by <span class="keyword">IBM
+Cloud Container Service</span>. <span class="ph"><samp class="ph codeph">bx ic</samp></span> commands are used to manage containers in your
+<span class="keyword">Cloud</span> space and
+<samp class="ph codeph">docker</samp> commands are used to manage containers locally. <samp class="ph codeph">docker</samp>
+commands are always required for local image development though. </p>
+<p>For example, with Option 1,
+the <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> run</samp> command creates a
+container in your <span class="keyword">Cloud</span> space and
+<samp class="ph codeph">docker run</samp> creates a container locally. You might prefer this option if you are new
+to both Docker and <span class="keyword">IBM
+Cloud Container Service</span> or if you
+like to test containers locally.</p>
+</li>
+<li><span class="ph uicontrol">Option 2</span><p>Redirect your local Docker daemon for the current CLI session to
+<span class="keyword">IBM
+Cloud Container Service</span> so that <samp class="ph codeph">docker</samp>
+commands can be used in place of <span class="ph"><samp class="ph codeph">bx ic</samp></span> commands
+whenever they are available to manage containers in your <span class="keyword">Cloud</span> space. </p>
+<p>For example, with Option
+2, either the <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> run</samp> or the
+<samp class="ph codeph">docker run</samp> command can be used to create a container in your space. You might
+prefer this option if you are an experienced Docker user who is more comfortable with the
+<samp class="ph codeph">docker</samp> commands or if you are adapting automated scripts to work with <span class="keyword">IBM
+Cloud Container Service</span>.</p>
+<p>Some exceptions still require the
+use of <span class="ph"><samp class="ph codeph">bx ic</samp></span> commands to perform tasks specific
+to <span class="keyword">IBM
+Cloud Container Service</span>. For example, to set a
+namespace, you must use the command <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> namespace-set</samp>. <samp class="ph codeph">docker namespace-set</samp> is not a valid command. For a
+list of <samp class="ph codeph">docker</samp> commands that are supported with this configuration, see <a href="container_cli_reference_cfic.html#container_cli_reference_native-docker" title="With the IBM Cloud Container Service plug-in (bx ic), some docker commands are supported for use in place of bx ic commands. When you log in to the plug-in, configure the environment variables to use the Docker CLI commands. Then, you can run docker commands instead of bx ic commands whenever possible. For example, instead of using bx ic images to see the images in your private Cloud registry, run docker images.">Supported Docker commands for IBM Cloud Container Service plug-in (bx ic)</a>.</p>
+<div class="p">To configure
+this option, copy and paste the environment variables that are provided in the terminal during log in.<ul><li><samp class="ph codeph">DOCKER_HOST</samp> sets the Docker host to <span class="keyword">IBM
+Cloud Container Service</span>.</li>
+<li><samp class="ph codeph">DOCKER_CERT_PATH</samp> sets the location of the authentication keys for the <span class="keyword">IBM
+Cloud Container Service</span> plug in for Cloud Foundry.</li>
+<li><samp class="ph codeph">DOCKER_TLS_VERIFY</samp> uses TLS and verifies the remote server.</li>
+</ul>
+</div>
+<div class="p"><div class="note tip"><span class="tiptitle">Tip:</span> When you are completing the tasks in the <span class="keyword">IBM
+Cloud Container Service</span> documentation, you can run
+<samp class="ph codeph">docker</samp> commands in all steps that are marked with an asterisk (*).</div>
+</div>
+</li>
+</ul>
+</li>
+</ol>
+</div>
+</article><article class="topic task nested3" role="article" aria-labelledby="d64747e1896" id="use_api"><h4 class="topictitle4" id="d64747e1896">Managing containers via the REST API</h4>
+<div class="body taskbody"><p class="shortdesc">Use the <span class="keyword">IBM
+Cloud Container Service</span> API to work
+with your single containers and container groups using REST.</p>
+<div class="section context"> To log into the <span class="keyword">IBM
+Cloud Container Service</span>
+service, you must log into <span class="keyword">Cloud</span>
+first. Follow these steps to retrieve your <span class="keyword">Cloud</span> access token and to get the ID of the
+space in which you want to work with your containers. </div><ol class="steps"><li class="step stepexpand"><span class="cmd">Run a GET HTTP request against the <span class="keyword">Cloud</span> API to retrieve the current
+authentication endpoint information. </span> <pre class="codeblock"><code>GET <samp class="ph codeph">http://api.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/info</samp></code></pre>
+Your
+output looks similar to the following.
+<pre class="pre screen"><code>{
+  "name": "Cloud",
+  "build": "235011",
+  "support": "http://ibm.biz/ibmcloud-supportinfo",
+  "version": 0,
+  "description": "IBM Cloud",
+  "authorization_endpoint": "https://login.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/UAALoginServerWAR",
+  "token_endpoint": "https://uaa.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>",
+  "allow_debug": true
+}</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Authenticate with the authorization endpoint to retrieve your <span class="keyword">Cloud</span> access token.</span> <ol type="a" class="ol substeps"><li class="li substep substepexpand"><span class="cmd">Locate the <span class="ph uicontrol">authorization_endpoint</span> in the API output of the previous
+step.</span></li>
+<li class="li substep substepexpand"><span class="cmd">Add <span class="ph uicontrol">/oauth/token</span> at the end of the authorization endpoint URL.</span></li>
+<li class="li substep substepexpand"><span class="cmd">Submit a <samp class="ph codeph">POST</samp> request to the authorization endpoint to retrieve your <span class="keyword">Cloud</span> access token.</span> <pre class="codeblock"><code>POST <samp class="ph codeph">https://login.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/UAALoginServerWAR/oauth/token</samp> </code></pre>
+<div class="tablenoborder"><table summary="" id="use_api__table_u5w_tf3_rx" class="defaultstyle"><caption><span class="tablecap">Table 4. Request input parameters to authenticate with <span class="keyword">Cloud</span></span></caption><thead><tr><th id="d64747e2025" class="thleft">Request input parameter</th>
+<th id="d64747e2027" class="thleft">Values</th>
+</tr>
+</thead>
+<tbody><tr><td headers="d64747e2025 ">Header</td>
+<td headers="d64747e2027 "><ul><li>Accept: <samp class="ph codeph">application/json;charset=utf-8</samp></li>
+<li>Authorization: <samp class="ph codeph">Basic Y2Y6</samp></li>
+<li>Content-Type: <samp class="ph codeph">application/x-www-form-urlencoded;charset=utf</samp></li>
+</ul>
+</td>
+</tr>
+<tr><td headers="d64747e2025 ">Body</td>
+<td headers="d64747e2027 "><samp class="ph codeph">grant_type=password&amp;username=<var class="keyword varname">&lt;username&gt;</var>
+&amp;password=<var class="keyword varname">&lt;password&gt;</var></samp><div class="p"><div class="steps note"><span class="notetitle">Note:</span> Replace <var class="keyword varname">&lt;username&gt;</var> and <var class="keyword varname">&lt;password&gt;</var> with your
+<span class="keyword">Cloud</span> user name and password. </div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+Your output looks similar to the following.
+<pre class="pre screen"><code>{
+  "access_token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJkMzhlZGZiZS0wOTJiLTQ4MmYtOTBhYi05ZGMyNzhlNGYyMmQiLCJzdWIiOiIyNjRmNjI1ZS0xNzliLTQ0NzYtYTJjNi1jZWZmMGM4YTFkNDUiLCJzY29wZSI6WyJvcGVuaWQiLCJjbG91ZF9jb250cm9sbGVyLnJlYWQiLCJwYXNzd29yZC53cml0ZSIsImNsb3VkX2NvbnRyb2xsZXIud3JpdGUiXSwiY2xpZW50X2lkIjoiY2YiLCJjaWQiOiJjZiIsImF6cCI6ImNmIiwiZ3JhbnRfdHlwZSI6InBhc3N3b3JkIiwidXNlcl9pZCI6IjI2NGY2MjVlLTE3OWItNDQ3Ni1hMmM2LWNlZmYwYzhhMWQ0NSIsIm9yaWdpbiI6InVhYSIsInVzZXJfbmFtZSI6Im5zcGllc0B1cy5pYm0uY29tIiwiZW1haWwiOiJuc3BpZXNAdXMuaWJtLmNvbSIsImF1dGhfdGltZSI6MTQ3MjU4NTUwNiwicmV2X3NpZyI6Ijc0MDA2OGI3IiwiaWF0IjoxNDcyNTg1NTA2LCJleHAiOjE0NzM3OTUxMDYsImlzcyI6Imh0dHBzOi8vdWFhLm5nLmJsdWVtaXgubmV0L29hdXRoL3Rva2VuIiwiemlkIjoidWFhIiwiYXVkIjpbImNmIiwib3BlbmlkIiwiY2xvdWRfY29udHJvbGxlciIsInBhc3N3b3JkIl19.B0jSzjrglzCv4EfAPmKCH-ZKsLOTXpsk5qrYTTL-GPI",
+  "token_type": "bearer",
+  "refresh_token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4YWE3MmI0Yy02MGE4LTQwZmEtOGIxZi04NTllYWE1ZDBmMWUtciIsInN1YiI6IjI2NGY2MjVlLTE3OWItNDQ3Ni1hMmM2LWNlZmYwYzhhMWQ0NSIsInNjb3BlIjpbIm9wZW5pZCIsImNsb3VkX2NvbnRyb2xsZXIucmVhZCIsInBhc3N3b3JkLndyaXRlIiwiY2xvdWRfY29udHJvbGxlci53cml0ZSJdLCJpYXQiOjE0NzI1ODU1MDYsImV4cCI6MTQ3NTE3NzUwNiwiY2lkIjoiY2YiLCJjbGllbnRfaWQiOiJjZiIsImlzcyI6Imh0dHBzOi8vdWFhLm5nLmJsdWVtaXgubmV0L29hdXRoL3Rva2VuIiwiemlkIjoidWFhIiwiZ3JhbnRfdHlwZSI6InBhc3N3b3JkIiwidXNlcl9uYW1lIjoibnNwaWVzQHVzLmlibS5jb20iLCJvcmlnaW4iOiJ1YWEiLCJ1c2VyX2lkIjoiMjY0ZjYyNWUtMTc5Yi00NDc2LWEyYzYtY2VmZjBjOGExZDQ1IiwicmV2X3NpZyI6Ijc0MDA2OGI3IiwiYXVkIjpbImNmIiwib3BlbmlkIiwiY2xvdWRfY29udHJvbGxlciIsInBhc3N3b3JkIl19.9TOrq_sg2CFIktjVLBNTc-yfnCRrSQyNV-lZt7N9FrM",
+  "expires_in": 1209599,
+  "scope": "openid cloud_controller.read password.write cloud_controller.write",
+  "jti": "d38edfbe-092b-482f-90ab-9dc278e4f22d"
+}</code></pre>
+</li>
+<li class="li substep substepexpand"><span class="cmd">Note the <span class="ph uicontrol">access_token</span> from your CLI response to use it in the next
+step.</span></li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">Retrieve the ID of the <span class="keyword">Cloud</span>
+space. </span> To authenticate with the <span class="keyword">IBM
+Cloud Container Service</span>
+service, you must have the <span class="keyword">Cloud</span>
+access token that you got in the previous step as well as the space ID of your organization, in
+which you want to work with your containers. <p>If you have your space ID, then you can skip this
+step and go to the next step. If you are unsure what your space ID is, follow these steps to
+retrieve it. </p>
+<ol type="a" class="ol substeps"><li class="li substep substepexpand"><span class="cmd">Retrieve the ID of your <span class="keyword">Cloud</span>
+organization. </span> <pre class="codeblock"><code>GET http://api.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/v2/organizations</code></pre>
+<div class="tablenoborder"><table summary="" id="use_api__table_v5w_tf3_rx" class="defaultstyle"><caption><span class="tablecap">Table 5. Request input parameters to retrieve a <span class="keyword">Cloud</span> organization and space</span></caption><thead><tr><th id="d64747e2129" class="thleft">Request input parameter</th>
+<th id="d64747e2131" class="thleft">Values</th>
+</tr>
+</thead>
+<tbody><tr><td headers="d64747e2129 ">Header</td>
+<td headers="d64747e2131 "><ul><li>Accept: <samp class="ph codeph">application/json;charset=utf-8</samp></li>
+<li>Authorization: <samp class="ph codeph">bearer <var class="keyword varname">&lt;access_token&gt;</var></samp></li>
+<li>Content-Type: <samp class="ph codeph">application/x-www-form-urlencoded;charset=utf</samp></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+Your output looks similar to the following. The ID for your organization can be found as
+<span class="ph uicontrol">guid</span> in the <span class="ph uicontrol">metadata</span> section.
+<pre class="pre screen"><code>"metadata": {
+        "guid": "31eb6110-5935-446f-ac94-f97f5852b19b",
+        "url": "/v2/organizations/31eb6110-5935-446f-ac94-f97f5852b19b",
+        "created_at": "2016-01-07T18:55:19Z",
+        "updated_at": "2016-02-09T15:56:22Z"
+      },
+      "entity": {
+        "name": "org@us.ibm.com",
+        "billing_enabled": false,
+        "quota_definition_guid": "7f66aaf3-9e9b-49f4-83d9-40d92d318ff3",
+        "status": "active",
+        "quota_definition_url": "/v2/quota_definitions/7f66aaf3-9e9b-49f4-83d9-40d92d318ff3",
+        "spaces_url": "/v2/organizations/31eb6110-5935-446f-ac94-f97f5852b19b/spaces",
+        "domains_url": "/v2/organizations/31eb6110-5935-446f-ac94-f97f5852b19b/domains",
+        "private_domains_url": "/v2/organizations/31eb6110-5935-446f-ac94-f97f5852b19b/private_domains",
+        "users_url": "/v2/organizations/31eb6110-5935-446f-ac94-f97f5852b19b/users",
+        "managers_url": "/v2/organizations/31eb6110-5935-446f-ac94-f97f5852b19b/managers",
+        "billing_managers_url": "/v2/organizations/31eb6110-5935-446f-ac94-f97f5852b19b/billing_managers",
+        "auditors_url": "/v2/organizations/31eb6110-5935-446f-ac94-f97f5852b19b/auditors",
+        "app_events_url": "/v2/organizations/31eb6110-5935-446f-ac94-f97f5852b19b/app_events",
+        "space_quota_definitions_url": "/v2/organizations/31eb6110-5935-446f-ac94-f97f5852b19b/space_quota_definitions"
+      }</code></pre>
+</li>
+<li class="li substep substepexpand"><span class="cmd">Locate the <span class="ph uicontrol">spaces_url</span> field in the <span class="ph uicontrol">entity</span> section
+of your API output from the previous step. Retrieve a list of all the spaces of that organization by
+running a GET API call against the <span class="ph uicontrol">spaces_url</span>.</span> To run the API call, use the same header information as you did in the previous step.
+<pre class="codeblock"><code>GET http://api.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/v2/organizations/31eb6110-5935-446f-ac94-f97f5852b19b/spaces</code></pre>
+Your
+output looks similar to the following. The ID for your space can be found as
+<span class="ph uicontrol">guid</span> in the <span class="ph uicontrol">metadata</span> section.
+<pre class="pre screen"><code>"metadata": {
+        "guid": "0e65c436-9413-46e2-8b42-ff06aa74ac21",
+        "url": "/v2/spaces/0e65c436-9413-46e2-8b42-ff06aa74ac21",
+        "created_at": "2016-01-07T18:55:22Z",
+        "updated_at": null
+      },
+      "entity": {
+        "name": "dev",
+...</code></pre>
+</li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">Work with your containers in <span class="keyword">IBM
+Cloud Container Service</span> by using REST.</span> Find all supported <span class="keyword">IBM
+Cloud Container Service</span> API
+calls in the <a href="http://ccsapi-doc.mybluemix.net/" rel="external" target="_blank" title="(Opens in a new tab or window)">API
+documentation.</a>
+<p>Every API call requires the access token and space ID to be part of the header information as
+shown in the following table. </p>
+<div class="tablenoborder"><table summary="" id="use_api__table_w5w_tf3_rx" class="defaultstyle"><caption><span class="tablecap">Table 6. Request input parameters to work with the <span class="keyword">IBM
+Cloud Container Service</span> API</span></caption><thead><tr><th id="d64747e2232" class="thleft">Request input parameter</th>
+<th id="d64747e2234" class="thleft">Values</th>
+</tr>
+</thead>
+<tbody><tr><td headers="d64747e2232 "><span class="keyword">IBM
+Cloud Container Service</span> base URL</td>
+<td headers="d64747e2234 "><span class="ph filepath">https://containers-api.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/v3</span></td>
+</tr>
+<tr><td headers="d64747e2232 ">Header</td>
+<td headers="d64747e2234 "><ul><li>X-Auth-Token: <samp class="ph codeph">bearer <var class="keyword varname">&lt;access_token&gt;</var></samp></li>
+<li>X-Auth-Project-Id: <samp class="ph codeph"><var class="keyword varname">&lt;space_ID&gt;</var></samp></li>
+<li>Content-Type: <samp class="ph codeph">application/json</samp></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</article></article><article class="topic task nested2" role="article" aria-labelledby="d64747e2274" id="container_planning_images"><h3 class="topictitle3" id="d64747e2274">IBM public, Docker Hub, and private images</h3>
+<div class="body taskbody"><p class="shortdesc"><span class="ph" data-hd-otherprops="registry_check" id="image_def">A container image is the basis for every
+container that you create. An image is created from a Dockerfile, which is a file that contains
+instructions to build the image, and build artifacts, such as an app, the app's configuration, and
+its dependencies. Think of a container image as an executable file (<span class="ph filepath">.exe</span> or
+<span class="ph filepath">.bin</span>). As soon as you run the executable app file, you create an instance of
+your app. When you run a container, you create a container instance from the image. </span><span class="ph" data-hd-otherprops="registry_check">Container images are stored in your private <span class="keyword">Cloud</span> registry and can be added from the CLI
+only. Every container image that you want to use must be in a registry before you can create a
+container from it.</span></p>
+<div class="section context">When you plan to work with <span class="keyword">IBM
+Cloud Container Service</span>, you must decide on the container image
+that you want to use. There are several ways to create, build and use images in your private
+<span class="keyword">Cloud</span> registry. <div class="note important" id="container_planning_images__max_size"><span class="importanttitle">Important:</span> Each image can have a maximum size of 10 GB to run as single
+containers or scalable container groups in <span class="keyword">IBM
+Cloud Container Service</span>. </div>
+<dl id="container_planning_images__available_images"><dt class="dlterm">IBM public images</dt>
+<dd>Start with one of the <a href="../services/RegistryImages/index.html" rel="external" target="_blank" title="(Opens in a new tab or window)">IBM public images</a> that are provided by <span class="keyword">IBM
+Cloud Container Service</span>, such as the IBM Liberty and IBM Node
+images to test the features of <span class="keyword">IBM
+Cloud Container Service</span>.
+Then, you can use one of these images as a parent image, modify the Dockerfile and build your own
+image with your own app code on it. </dd>
+<dt class="dlterm">Images from Docker Hub</dt>
+<dd><a href="container_images_copying.html" title="You can copy an image into your organization's private Cloud registry from one of the following locations.">Copy images directly from
+Docker Hub</a> into your private <span class="keyword">Cloud</span> registry or <a href="container_images_pulling.html" title="You can pull an image from Docker Hub or your private registry, modify it locally, and push it to your organization's private Cloud registry.">pull an image from Docker Hub</a>, modify it
+locally, and then build it directly in your registry. </dd>
+<dt class="dlterm">Create your own image</dt>
+<dd>If you have container images that you already use in your local Docker environment, you can
+<a href="container_images_pulling.html" title="You can pull an image from Docker Hub or your private registry, modify it locally, and push it to your organization's private Cloud registry.">push them to your private <span class="keyword">Cloud</span> registry</a> to use them in <span class="keyword">IBM
+Cloud Container Service</span>. You can also create your own
+Dockerfile, build, test it locally, and then push it to your private images registry. </dd>
+</dl>
+</div></div>
+<article class="topic task nested3" role="article" aria-labelledby="d64747e2444" id="viewing_images"><h4 class="topictitle4" id="d64747e2444">Viewing the images in your private images registry </h4>
+<div class="body taskbody"><p class="shortdesc">You can view all container images that are available in your private <span class="keyword">Cloud</span> images registry by using the <span class="keyword">Cloud</span> GUI or the CLI. </p>
+<div class="step"><span class="cmd">View images that are provided by IBM and images that you previously pushed to your private
+registry.</span> <ul class="ul choices"><li class="li choice">From the <span class="keyword">Cloud</span> GUI, select
+the catalog and then <span class="ph uicontrol">Containers</span>. You can see images that are provided by IBM
+and images that you previously pushed to your private <span class="keyword">Cloud</span> registry. </li>
+<li class="li choice">From the CLI, run <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span>
+images</samp>.</li>
+</ul>
+</div>
+</div>
+</article><article class="topic task nested3" role="article" aria-labelledby="d64747e2504" id="vulnerability_advisor"><h4 class="topictitle4" id="d64747e2504">Reviewing image vulnerabilities</h4>
+<div class="body taskbody"><p class="shortdesc">When you add images to your private <span class="keyword">Cloud</span> registry, they are automatically scanned
+by the Vulnerability Advisor against standard policies set by the organization manager and a
+database of known Ubuntu issues. The Vulnerability Advisor checks on inventory packages,
+configurations, ports opened, and Docker metadata. When the scan is complete, you can review a list
+of potential vulnerabilities and address them as necessary before you use the image in a container.
+Depending on the policies that are set by the organization manager, the deployment of a container
+from that image can be blocked, or a warning is shown to the user.</p>
+<div class="section context"></div></div>
+</article><article class="topic task nested3" role="article" aria-labelledby="d64747e2533" id="tips"><h4 class="topictitle4" id="d64747e2533">Dockerfile tips to prevent a container from shutting down</h4>
+<div class="body taskbody"><p class="shortdesc"><span class="keyword">IBM
+Cloud Container Service</span> offers a lot of
+features to keep containers secure and manage cloud resources for the user. Depending on your app,
+it might be necessary to add extra configurations to your Dockerfile to ensure that your local
+containers can successfully run in <span class="keyword">Cloud</span>. </p>
+<div class="section context"><dl><dt class="dlterm">Prepare for network delays</dt>
+<dd>When a container starts, <span class="keyword">IBM
+Cloud Container Service</span>
+sets up the private container network, and assigns a private IP address to the container. This
+process might take a few seconds. If your app requires an active network connection at the time the
+app starts, <a href="container_planning.html#network_delay" title="When a container starts, IBM Cloud Container Service sets up the private container network, exposes container ports, and assigns a private IP address to the container. This process might take a few seconds. If your app requires an active network connection at the time the app starts, the container private network might not yet be set up, which can cause the app to crash. To assure that the IBM Cloud Container Service networking is finished before the app starts, consider to implement one of the following solutions to handle network delays.">assure that the
+<span class="keyword">IBM
+Cloud Container Service</span> networking is finished</a>
+beforehand by adding a sleep command to your Dockerfile. </dd>
+<dt class="dlterm">Use long-running commands</dt>
+<dd>To keep a container up and running at least one long-running process is required to be included
+in the container image. For example, <samp class="ph codeph">echo "Hello world"</samp> is a short running process.
+If no other command is specified in the image, the container shuts down after the command is
+executed. To transform the <samp class="ph codeph">echo "Hello world"</samp> command into a long running process,
+you can, for example, loop it multiple times, or include the <samp class="ph codeph">echo</samp> command into
+another long running process inside your app. </dd>
+</dl>
+</div></div>
+</article></article><article class="topic task nested2" role="article" aria-labelledby="d64747e2624" id="container_planning_private_network"><h3 class="topictitle3" id="d64747e2624">Private container network settings in <span class="keyword">IBM
+Cloud Container Service</span></h3>
+<div class="body taskbody"><p class="shortdesc"><span class="ph" id="private_network_def">A container private network creates an isolated and secure
+environment for the single containers and container groups that run in one space. Containers that
+are connected to the same private network can send and receive data from other containers in the
+private network by using the private IP addresses. Containers are not publicly available until a
+public port and either a public IP address for single containers or a public route for container
+groups are bound. </span></p>
+<div class="section context">You can choose to use the <span class="keyword">IBM
+Cloud Container Service</span> default private network settings or to connect your containers to a
+corporate data center through VPN. <dl><dt class="dlterm"><span class="keyword">IBM
+Cloud Container Service</span> default private network
+settings</dt>
+<dd><span class="ph">In <span class="keyword">Cloud</span>, every space is already provided with a
+container private network that applies the default <span class="keyword">IBM
+Cloud Container Service</span> network settings. These settings include
+the automatic set up of a default Private Network Security Group that allows private network
+communication between containers and container groups by using a private IP addresses. When you
+create a container or container group in a space, they are automatically connected to the default
+<span class="keyword">IBM
+Cloud Container Service</span> private network and assigned a
+private IP address from the subnet 172.31.0.0/16. After a private IP address is assigned, all
+containers in the same network can securely communicate on all container ports by using the private
+IP address of the single container, or, if using a container group, the private IP address of the
+group's load balancer. No mapping of container ports to a host port is necessary.</span></dd>
+<dt class="dlterm">Virtual Private Network to connect your containers to a corporate data center</dt>
+<dd><span class="ph" id="container_planning_private_network__vpn_def">Securely connect the single containers and container groups in a private
+container network in <span class="keyword">Cloud</span> to a
+corporate data center by using the IBM® Virtual Private Network (VPN) service. <span class="keyword">IBM
+VPN</span> provides a secure end-to-end communication
+channel over the internet that is based on the industry-standard Internet Protocol Security (IPsec)
+protocol suite. The IPsec protocol offers network-level peer authentication, data integrity, and
+data confidentiality by encrypting the packages that are exchanged between the VPN endpoints. To set
+up a secure connection between the containers in <span class="keyword">Cloud</span> and a corporate data center, you must
+have an IPsec VPN gateway or SoftLayer server installed in your on-premise data center. With the
+<span class="keyword">IBM
+VPN</span> service, you can configure one VPN
+gateway per space, and define up to 16 connections to different destinations.</span><p>To set up a secure VPN connection to
+your containers in <span class="keyword">Cloud</span>, see <a href="container_security.html#container_vpn" title="Securely connect the single containers and container groups in a private container network in Cloud to a corporate data center by using the IBM® Virtual Private Network (VPN) service. IBM VPN provides a secure end-to-end communication channel over the internet that is based on the industry-standard Internet Protocol Security (IPsec) protocol suite. The IPsec protocol offers network-level peer authentication, data integrity, and data confidentiality by encrypting the packages that are exchanged between the VPN endpoints. To set up a secure connection between the containers in Cloud and a corporate data center, you must have an IPsec VPN gateway or SoftLayer server installed in your on-premise data center. With the IBM VPN service, you can configure one VPN gateway per space, and define up to 16 connections to different destinations."><span class="keyword">IBM
+VPN</span></a>.</p>
+</dd>
+</dl>
+</div></div>
+<article class="topic task nested3" role="article" aria-labelledby="d64747e2787" id="network_delay"><h4 class="topictitle4" id="d64747e2787">Tips to handle network delays when starting a container</h4>
+<div class="body taskbody"><p class="shortdesc">When a container starts, <span class="keyword">IBM
+Cloud Container Service</span> sets up the private container network,
+exposes container ports, and assigns a private IP address to the container. This process might take
+a few seconds. If your app requires an active network connection at the time the app starts, the
+container private network might not yet be set up, which can cause the app to crash. To assure that
+the <span class="keyword">IBM
+Cloud Container Service</span> networking is finished
+before the app starts, consider to implement one of the following solutions to handle network
+delays. </p>
+<div class="step"><span class="cmd">Choose between the following options to handle network delays.</span> <ul class="ul choices"><li class="li choice">Add a sleep command to your Dockerfile that is executed when the container starts.<p>In the
+following sample Dockerfile, the container waits 60 seconds before the app is started.</p>
+<pre class="codeblock"><code>FROM sdelements/lets-chat:latest
+CMD (sleep 60; npm start)</code></pre>
+</li>
+<li class="li choice">Adjust your app code to check for an active network connectivity by, for example, pinging a
+public IP address before the app starts. If you cannot ping the IP address, sleep for a few seconds
+and then try again. If the IP address can be resolved, start the app. </li>
+</ul>
+</div>
+</div>
+</article></article><article class="topic task nested2" role="article" aria-labelledby="d64747e2845" id="container_planning_public_network"><h3 class="topictitle3" id="d64747e2845">Determining public network settings</h3>
+<div class="body taskbody"><p class="shortdesc"><span class="ph">By default, every single container and container group in
+<span class="keyword">IBM
+Cloud Container Service</span> is available to the private
+network. However, your app might require accessibility from the internet, or you want to access
+containers in other spaces of your organization. In these cases, you must expose your container to
+the public.</span> Depending on the type of container that you choose, different ways
+exist to make a container available to the public. </p>
+<div class="section context"></div></div>
+<article class="topic task nested3" role="article" aria-labelledby="d64747e2910" id="public_single_compose"><h4 class="topictitle4" id="d64747e2910">Single containers and Docker Compose public network settings</h4>
+<div class="body taskbody"><p class="shortdesc">All single containers that you create in your space are assigned a private IP address
+that you can use to access the containers from the private network only. The private network
+communication is secured by the default Private Network Security Group that does not allow any
+network traffic to and from a public network. If you want to make your app available to the public
+network, you must expose a public port, and bind a public IP address to your container.</p>
+<div class="section context"><p>Public IP addresses must be requested for a space to be bound to a container. When requesting a
+public IP address, a random one from the public IP address pool is allocated to the space. While
+allocated to a space, the IP address does not change. To bind a public IP address to a container,
+you must also expose a HTTP port by using the <samp class="ph codeph">-p</samp> option in the <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> run</samp> command. Exposing a port, creates
+a Public Network Security Group for your container that allows you to send and receive public data
+on the exposed port only. All other public ports are closed and cannot be used to access your app
+from the internet. </p>
+
+<div class="steps note"><span class="notetitle">Note:</span> Binding a public IP address does not include a SSL certificate which encrypts the data that
+are sent to and from your single container. If your app requires SSL encryption, you can either
+implement your own SSL solution or use a container group instead of a single container. Container
+groups are bound to a public route that already includes a SSL certificate, so you can access your
+container group with HTTPS without any additional configuration. </div>
+
+<p>The number of public IP addresses that are available to a space depends on your organization's
+<a href="container_planning.html#container_planning_quota" title="Every organization in Cloud has a preset value for container memory, public IP addresses, file shares, and the number of services that are shared among all spaces of an organization. These preset values are called quota.">quota</a>.</p>
+
+<div class="p">To review the list of available public IP addresses in your space, run the following command.
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ips</code></pre>
+The list that is returned
+can either show no available public IP addresses, public IP addresses that are bound to a container,
+or public IP addresses that are unbound. </div>
+
+<div class="p"><dl><dt class="dlterm">No public IP address is available in the space</dt>
+<dd><ul><li>CLI output:<pre class="codeblock"><code>IP Address      Container ID</code></pre>
+</li>
+<li>My options:<div class="p">Request a new public IP address and bind it to your
+container.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-request</code></pre>
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind <var class="keyword varname">&lt;IP_ADDRESS&gt;</var> <var class="keyword varname">&lt;CONTAINER&gt;</var></code></pre>
+</div>
+</li>
+</ul>
+</dd>
+<dt class="dlterm">A public IP address is available in the space and it is not bound to a container</dt>
+<dd><ul><li>CLI output:<pre class="codeblock"><code>IP Address      Container ID   
+192.0.2.56</code></pre>
+</li>
+<li>My options:<div class="p">Bind the public IP address to your container.
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind <var class="keyword varname">&lt;IP_ADDRESS&gt;</var> <var class="keyword varname">&lt;CONTAINER&gt;</var></code></pre>
+</div>
+</li>
+</ul>
+</dd>
+<dt class="dlterm">A public IP address is available in the space but it is already bound to a container</dt>
+<dd><ul><li>CLI
+output:<pre class="codeblock"><code>IP Address      Container ID   
+192.0.2.56   d7b4a167-8e51-4b16-b591-1a17cb7ee41f </code></pre>
+</li>
+<li>My options:<ul><li>Unbind an already bound IP address from a container and bind it to a new
+container.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-unbind <var class="keyword varname">&lt;IP_ADDRESS&gt;</var> <var class="keyword varname">&lt;CONTAINER&gt;</var></code></pre>
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind <var class="keyword varname">&lt;IP_ADDRESS&gt;</var> <var class="keyword varname">&lt;CONTAINER&gt;</var></code></pre>
+</li>
+<li><div class="p">Request a new public IP address and bind it to your
+container.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-request</code></pre>
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind <var class="keyword varname">&lt;IP_ADDRESS&gt;</var> <var class="keyword varname">&lt;CONTAINER&gt;</var></code></pre>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div></div>
+</article><article class="topic task nested3" role="article" aria-labelledby="d64747e3086" id="public_container_groups"><h4 class="topictitle4" id="d64747e3086">Container group public network settings</h4>
+<div class="body taskbody"><p class="shortdesc">To make your container group accessible from the internet, you must expose a port and
+either bind a public route or a public IP address to it. </p>
+<div class="section context"><div class="p"><dl><dt class="dlterm">Public route with default domain</dt>
+<dd>A public route consists of a host and domain name and composes the full public URL that you
+enter into your web browser to access the container group. Every route must be unique in <span class="keyword">Cloud</span>. <p>You can choose a host name for your
+route, such as <var class="keyword varname">mycontainerhost</var> during container creation. The default system
+domain is <span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span> and already provides
+a SSL certificate, so you can access your container group with HTTPS without any additional
+configuration.</p>
+<p>Example: <span class="ph filepath">https://<var class="keyword varname">mycontainerhost</var>.<span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span></span></p>
+<div class="steps note"><span class="notetitle">Note:</span> To use a public
+route, you must expose a HTTP port for your container group during creation. Non-HTTP ports cannot
+be exposed publicly. You can expose one public port per container group only. Multiple public ports
+for a container group are not supported. </div>
+</dd>
+<dt class="dlterm">Public route with custom domain</dt>
+<dd>If you want to use your own custom domain instead of the default domain <span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span>, you must register the custom domain on
+a public DNS server, configure the custom domain in <span class="keyword">IBM
+Cloud</span>, and then map the custom domain to the
+<span class="keyword">IBM
+Cloud</span> system domain on the public DNS
+server. After your custom domain is mapped to the <span class="keyword">IBM
+Cloud</span> system domain, requests for your custom domain
+are routed to your application in <span class="keyword">IBM
+Cloud</span>.
+When you create a custom domain, do not include underscores (_) in the domain name. <p>To create a
+custom domains, see <a href="../manageapps/updapps.html#domain">Creating and using a custom domain</a>. </p>
+<p>To make your custom domain secure, <a href="../manageapps/secapps.html#ssl_certificate">upload a SSL
+certificate</a>, so your container groups can be accessed with HTTPS. </p>
+</dd>
+<dt class="dlterm">Public IP address</dt>
+<dd>You can also bind an IP address when creating a container group with the command line. You can
+only bind a public route or a floating IP address to a container, not both. To remove an IP address
+from a container group, you must remove the container group and create the group again.<div class="p">Example of
+creating a container group with a public IP
+address:<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create -p <var class="keyword varname">9080</var> --ip <var class="keyword varname">192.0.2.56</var>  --name <var class="keyword varname">my_container_group</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">ibmliberty</var></code></pre>
+</div>
+</dd>
+</dl>
+</div>
+</div></div>
+</article></article><article class="topic task nested2" role="article" aria-labelledby="d64747e3221" id="container_planning_bmx_service"><h3 class="topictitle3" id="d64747e3221">Integrating <span class="keyword">Cloud</span> services to
+use with containers</h3>
+<div class="body taskbody"><p class="shortdesc"><span class="ph" id="service_def"><span class="keyword">Cloud</span> offers various services that you can use
+with <span class="keyword">IBM
+Cloud Container Service</span> to bring extra
+capabilities to your app or to simplify the implementation of your app and the management of your
+container. </span></p>
+<div class="section context"><div class="p">You can see all the services that are available in <span class="keyword">Cloud</span> in the following ways: <ul><li>From the <span class="keyword">Cloud</span> user interface,
+select the <span class="keyword">Cloud</span>
+<span class="keyword wintitle">Catalog</span>.</li>
+<li>From the CLI, run the <samp class="ph codeph">cf marketplace</samp> command.</li>
+</ul>
+</div>
+To use a <span class="keyword">Cloud</span> service with
+<span class="keyword">IBM
+Cloud Container Service</span>, you must <a href="../services/reqnsi.html#req_instance">create an instance of this
+service</a> in your space before you can create a container. After a service instance is created
+in your space, you must <a href="container_integrations.html#container_integrations_binding" title="IBM Cloud has a list of services and manages them on behalf of app developers. To add a Cloud service for your container to use, you must request an instance of this service and bind the service to the container.">bind the service to your container</a> so that the container can access the environment
+variables that define the service. These environment variables are called VCAP_SERVICES. When you
+bind a service to a container, the service injects the VCAP_SERVICES as environment variables in the
+container. In this way, the container can use the VCAP_SERVICES to look up information from the
+service, such as the endpoint, the user name, and password. <p>To find information about services
+that help you manage your containers, see <a href="container_integrations.html#container_integrations" title="You can use various services in the catalog with IBM Cloud Container Service. Many of the Cloud services help you to bring extra capabilities to the apps that you deploy in containers. Additionally, some Cloud services can be used to help you manage your containers.">Integrating services with single and scalable containers (Deprecated)</a>.</p>
+</div></div>
+</article><article class="topic task nested2" role="article" aria-labelledby="d64747e3382" id="container_planning_volumes"><h3 class="topictitle3" id="d64747e3382">Persistent data storage options</h3>
+<div class="body taskbody"><p class="shortdesc">Decide where to store the data that the app creates or the files that the app requires to
+run. </p>
+<div class="section context">A single container is, by design, short-lived. However, there are several options that you
+can choose from to persist data between container restarts, to share data between containers in a
+space, and to share data between container instances in a group. <p><a href="../api/content/containers/images/data_options.png" rel="external" target="_blank" title="(Opens in a new tab or window)"><img src="images/data_options.png" width="400" alt="Options for where to store data or files."></a></p>
+<div class="tablenoborder"><table summary="Options for storing app files" id="container_planning_volumes__table_pvn_fks_bw" class="defaultstyle"><caption><span class="tablecap">Table 7. Options for storing app files</span></caption><thead><tr><th style="width: 33.33333333333333%" id="d64747e3451" class="thleft">Data storage options</th>
+<th style="width: 33.33333333333333%" id="d64747e3453" class="thleft">Description</th>
+<th style="width: 33.33333333333333%" id="d64747e3455" class="thleft">Amount of data that can be stored is limited by</th>
+</tr>
+</thead>
+<tbody><tr><td style="width: 33.33333333333333%" headers="d64747e3451 ">Option 1: Store the data inside a container during runtime</td>
+<td style="width: 33.33333333333333%" headers="d64747e3453 ">With this option, you do not persist app data. Data are available to the container during
+runtime only. When a container is re-created, all the data is lost.</td>
+<td style="width: 33.33333333333333%" headers="d64747e3455 ">Size of the container</td>
+</tr>
+<tr><td style="width: 33.33333333333333%" headers="d64747e3451 ">Option 2: Store the data in a container volume</td>
+<td style="width: 33.33333333333333%" headers="d64747e3453 ">When you mount a volume in Docker, the volume is mounted to your local file system. In
+<span class="keyword">IBM
+Cloud Container Service</span>, the access to the compute host
+is restricted, so you cannot mount host directories to a container. Instead, organization-scoped
+volumes are used to persist data between container restarts. Volumes are hosted on isolated file
+shares that securely store app data and manage the access and permission to the files. Due to this
+isolation, non-root users inside the container must be <a href="container_planning.html#nonroot_image">granted write permission to the mounted
+volume</a>. <p>With this option, you can persist and access data between container restarts, and
+share data between containers in a space. When a container is deleted, the associated volume is not
+removed.</p>
+<div class="steps note"><span class="notetitle">Note:</span> To mount a volume to a container, you must create one first, see <a href="container_volumes_ov.html#container_volumes_ui" title="A volume is a persistent storage location for the data that an app creates or the files that the app requires to run. You can create a volume for your container from the Cloud GUI.">Create a volume with the <span class="keyword">Cloud</span> GUI</a>.</div>
+</td>
+<td style="width: 33.33333333333333%" headers="d64747e3455 ">Size of the file share that hosts the volume</td>
+</tr>
+<tr><td style="width: 33.33333333333333%" headers="d64747e3451 ">Option 3: Connect your container to an on-premise database</td>
+<td style="width: 33.33333333333333%" headers="d64747e3453 ">With this option, you can persist and access data in an existing on-premise database by using
+a <a href="container_security.html#container_vpn" title="Securely connect the single containers and container groups in a private container network in Cloud to a corporate data center by using the IBM® Virtual Private Network (VPN) service. IBM VPN provides a secure end-to-end communication channel over the internet that is based on the industry-standard Internet Protocol Security (IPsec) protocol suite. The IPsec protocol offers network-level peer authentication, data integrity, and data confidentiality by encrypting the packages that are exchanged between the VPN endpoints. To set up a secure connection between the containers in Cloud and a corporate data center, you must have an IPsec VPN gateway or SoftLayer server installed in your on-premise data center. With the IBM VPN service, you can configure one VPN gateway per space, and define up to 16 connections to different destinations.">secured VPN connection</a> between your
+containers in the Cloud and your local environment. </td>
+<td style="width: 33.33333333333333%" headers="d64747e3455 ">Disk space that is available to the on-premise database</td>
+</tr>
+<tr><td style="width: 33.33333333333333%" headers="d64747e3451 ">Option 4: Bind a <span class="keyword">Cloud</span>
+database service to your container.</td>
+<td style="width: 33.33333333333333%" headers="d64747e3453 ">With this option, you can persist and access data by using a database service that is linked
+to your container in the Cloud. Most <span class="keyword">Cloud</span> database services provide disk space for
+a small amount of data at no cost, so you can test its features.</td>
+<td style="width: 33.33333333333333%" headers="d64747e3455 ">Database service and plan that you choose</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div></div>
+<article class="topic task nested3" role="article" aria-labelledby="d64747e3550" id="nonroot_image"><h4 class="topictitle4" id="d64747e3550">Non-root user access to container volumes in <span class="keyword">Cloud</span></h4>
+<div class="body taskbody"><div class="section context">If you decide to use organization-scoped container volumes to persist app data, ensure that
+the user inside the container has write access to files and folders on the volume mount path. <p>For
+<span class="keyword">IBM
+Cloud Container Service</span>, the user namespace feature is
+enabled for Docker Engine. User namespaces provide isolation so that the container root user cannot
+gain access to other containers or the compute host. However, volumes are on NFS file shares that
+are external to the container compute hosts. The volumes are set up to recognize the root user in
+the container, but because volumes are external to the container they are not aware of user
+namespaces.</p>
+<p>For some applications, the only user inside a container is the root user. However,
+many applications specify a non-root user that writes to the container mount path. If you are
+designing an application with a non-root user that requires write permission to the volume, you must
+add the following processes to your Dockerfile and entrypoint script:</p>
+<ul><li>Create a non-root user.</li>
+<li>Temporarily add the user to the root group.</li>
+<li>Create a directory in the volume mount path with the correct user permissions.</li>
+</ul>
+<p></p>
+<p>For more information, see <a href="container_volumes_ov.html#container_volumes_write" title="Non-root users do not have write permission on the volume mount path. To grant write permission, you must edit the Dockerfile of the image to create a directory on the mount path with the correct permission.">create your own Dockerfile with the appropriate
+non-root permissions</a>.</p>
+</div></div>
+</article></article><article class="topic task nested2" role="article" aria-labelledby="d64747e3586" id="container_planning_types"><h3 class="topictitle3" id="d64747e3586">Container types</h3>
+<div class="body taskbody"><p class="shortdesc">Before you create a container with <span class="keyword">IBM
+Cloud Container Service</span>, decide on the type of container that
+you need. <span class="keyword">IBM
+Cloud Container Service</span> offers different
+approaches to create containers in the cloud. The approach that you choose depends on the
+requirements and dependencies of your app that runs in your container.</p>
+<div class="section context"></div></div>
+<article class="topic task nested3" role="article" aria-labelledby="d64747e3657" id="single_container_type"><h4 class="topictitle4" id="d64747e3657">Single container</h4>
+<div class="body taskbody"><p class="shortdesc"><span class="ph">A single container in <span class="keyword">IBM
+Cloud Container Service</span> is similar to a container that you
+create in your local Docker environment. Single containers are a good way to start with <span class="keyword">IBM
+Cloud Container Service</span> and to learn about how containers work
+in the IBM cloud and the features that <span class="keyword">IBM
+Cloud Container Service</span> provides. You can also use single
+containers to run simple app tests or during the development process of an app. Because a single
+container can be restarted and is not intended for for hosting a long-running program, you must use
+a container group for any application that requires high availability.</span></p>
+<div class="section context"><div class="p">Deployment speed considerations for single containers:<ul><li>The size of the image has a significant impact. The smaller the image, the quicker the
+deployment.</li>
+<li>After the first few times an image is deployed, deployment speeds improve. Initially, the image
+must be downloaded to the registry on the host. Subsequent deployments are faster. </li>
+<li>The networking setup might take a few minutes.</li>
+<li>A single container deploys faster than a container group because of the routing setup for
+groups. </li>
+<li>Deployments with linked containers might not be as quick as other deployments because of the
+connections that must be made.</li>
+</ul>
+</div>
+
+<p>To create a single container from the <span class="keyword">Cloud</span> GUI, see <a href="container_single_ui.html#container_single_ui" title="Use a single container to run simple tests as you develop an app or service or for short-term processes that do not require high availability. To use your own networking front end, you can assign a public IP address to the container.">Running short-term tasks as single containers (Deprecated)</a>. </p>
+
+<p>To create a single container from the CLI, see <a href="container_single_ui.html#container_single_cli" title="Create a container by using the run command. A container must include an image in it. If you do not have one yet, you can use one of the default IBM certified images that are available by default in your organization's private images registry.">Running short-term tasks as single containers with the command line interface (CLI)</a>. </p>
+</div></div>
+</article><article class="topic task nested3" role="article" aria-labelledby="d64747e3748" id="container_groups_type"><h4 class="topictitle4" id="d64747e3748">Container groups</h4>
+<div class="body taskbody"><p class="shortdesc">A container group consists of multiple single containers that are all created from the
+same container image and as a consequence are configured in the same way.</p>
+<div class="section context"><span class="ph">The number of container group instances that your app requires depends
+on the expected workload and the time in which a request can be processed by the app. For example,
+multi-tasking or network connectivity affects how many instances might be required for your app.</span>
+<span class="ph">To determine the number of desired instances, deploy a single
+container in <span class="keyword">Cloud</span> that runs your app
+and perform a load test on this container. If the app can handle, for example, 100 requests per
+second, but you are expecting an average workload of 300 requests per second, then the desired
+number of instances for the container group is 3.</span>
+<span class="ph">To make your
+container group highly available and more resilient to failure, consider including extra instances
+than the minimum to handle the expected workload. Extra instances can handle the workload in case
+another instance crashes. To ensure automatic recovery of a failed instance without affecting the
+workload, include one extra instance. For protection against two simultaneous failures, include two
+extra instances. This set up is an <var class="keyword varname">N+2</var> pattern, where <var class="keyword varname">N</var> is the
+number of instances to handle the requests and <var class="keyword varname">+2</var> is an extra two instances.</span><p>A container group offers further options
+at no cost to make your app highly available. </p>
+<ul><li><a href="container_planning.html#group_loadbalancing" title="Container groups provide in-built load balancing that routes incoming traffic evenly (round-robin) to the container instances in the group. When a container group is created or instances are added to an existing group, whether you add instances yourself or an instance is re-created during auto-recovery, load balancing is enabled.">Built-in load balancing</a></li>
+<li><a href="container_planning.html#group_anti-affinity" title="You can choose whether to enable the anti-affinity feature when you create a container group by using the --anti option in the bx ic group-create command.">Anti-affinity</a> to spread container group
+instances across multiple physical compute nodes</li>
+<li><a href="container_planning.html#group_autorecovery" title="You can choose whether to enable auto-recovery when you create a container group by using the --auto option in the bx ic group-create command.">Auto-recovery</a> of unhealthy container group
+instances</li>
+<li><a href="container_planning.html#group_autoscaling" title="Container groups offer the possibility to auto-scale container group instances based on the CPU and memory that is used by the app.">Auto-scaling</a> of container group instances
+based on CPU and memory usage</li>
+</ul>
+To increase the availability of a container group even more, you can create another container
+group that is based on the same image and is mapped to the same route. When the first container
+group crashes, the second one can take over the entire workload. Choose between the following
+options to spread the second container group across the <span class="keyword">IBM
+Cloud Container Service</span> architecture. <ul><li><a href="container_ha.html#container_ha_space" title="You can create two container groups from the same image in the same Cloud space and map the same route to both groups. With this setup, if a container group or the load balancer for a group goes down, traffic is routed to the other container group.">Create a second container group
+within the same space</a>. </li>
+<li><a href="container_ha.html#container_ha_regions" title="If you configure your app's domain name with a Domain Name System (DNS) that provides global load balancing, you can create two container groups from the same image in different Cloud regions that use the same host name in the route. With this setup, you can allow load balancing to occur based on the region the user is in. If the container group, or hardware, or even an entire data center in one region goes down, traffic is routed to the container group that is deployed in another region.">Spread container groups
+across multiple <span class="keyword">Cloud</span> regions</a>. </li>
+</ul>
+<div class="p">Deployment speed considerations for container groups:<ul><li>The size of the image has a significant impact. The smaller the image, the quicker the
+deployment.</li>
+<li>After the first few times an image is deployed, deployment speeds improve. Initially, the image
+must be downloaded to the registry on the host. Subsequent deployments are faster. </li>
+<li>The networking setup might take a few minutes.</li>
+<li>A single container deploys faster than a container group because of the routing setup.</li>
+<li>A container group that is not bound to a route deploys quicker than one without a route.</li>
+<li>Container groups that do not have anti-affinity enabled are faster than container groups with
+anti-affinity. With anti-affinity, the number of hosts that is specified must each download the
+image layers.</li>
+</ul>
+</div>
+<p>To create a container group from the <span class="keyword">Cloud</span> GUI, review the <a href="container_ha.html#container_group_ui" title="Create and deploy a scalable group container from the Cloud GUI. A container group includes two or more containers that run the same image. Use container groups for running long-term services with workloads that require scalability and reliability or for testing at the required scale.">Run a container group from the <span class="keyword">Cloud</span> GUI</a> topic. </p>
+<p>To create a
+container group from the CLI, see <a href="container_ha.html#container_group_cli" title="Create and deploy a scalable group container from the IBM Cloud Container Service CLI. A container group includes two or more containers that run the same image. Use container groups for running long-term services with workloads that require scalability and reliability or for testing at the required scale.">Run a
+container group from the CLI</a>. </p>
+</div></div>
+<article class="topic task nested4" role="article" aria-labelledby="d64747e3925" id="group_loadbalancing"><h5 class="topictitle5" id="d64747e3925">Load balancing for a container group</h5>
+<div class="body taskbody"><p class="shortdesc">Container groups provide in-built load balancing that routes incoming traffic evenly
+(round-robin) to the container instances in the group. When a container group is created or
+instances are added to an existing group, whether you add instances yourself or an instance is
+re-created during auto-recovery, load balancing is enabled. </p>
+<div class="section context"><div class="p"><img id="group_loadbalancing__loadbalancing_gif" src="images/container_group_loadbalancing.gif" longdesc="transcript_loadbalancing.html" alt="Users are routed to group instances to evenly distribute the workload.">
+<a href="../api/content/containers/images/container_group_loadbalancing_infinite.gif" rel="external" target="_blank" title="Watch again? Reload this animation in a new tab to see it again. (Opens in a new tab or window)"><img src="images/refresh.png" alt="Reload icon"></a><ul><li><span class="keyword calloutlabel">&nbsp;A&nbsp;</span>: Container group with three instances</li>
+<li><span class="keyword calloutlabel">&nbsp;B&nbsp;</span>: Load balancer for the container group</li>
+<li><span class="keyword calloutlabel">&nbsp;1, 2, 3&nbsp;</span>: Instances in the container group</li>
+</ul>
+</div>
+
+<p>After a new instance is added to the container group, the load balancer makes a TCP socket
+connection to determine when to start sending traffic to the new container instance. As soon as the
+container instance starts listening on its defined port, the load balancer starts sending traffic to
+that instance. The load balancer assigns the group a private IP address so that the group can be
+accessible to the other containers or services in the same space. </p>
+
+<p>Because this private IP address is assigned to the group and not to individual instances, the
+private IP address does not change when you add instances to the group or an instance is re-created
+during auto-recovery. You can find this private IP address by running <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-inspect.</samp></p>
+</div></div>
+</article><article class="topic task nested4" role="article" aria-labelledby="d64747e3984" id="group_anti-affinity"><h5 class="topictitle5" id="d64747e3984">Anti-affinity for a container group</h5>
+<div class="body taskbody"><p class="shortdesc">You can choose whether to enable the anti-affinity feature when you create a container
+group by using the <samp class="ph codeph">--anti</samp> option in the <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create</samp> command.</p>
+<div class="section context"><p><span class="ph">When anti-affinity is enabled, the container instances are
+spread across separate physical compute nodes, which reduces the likelihood of containers crashing
+due to hardware failures.</span></p>
+
+<p>To use the <samp class="ph codeph">--anti</samp> option from the CLI, you must have installed the <span class="keyword">IBM
+Cloud Container Service</span> plug-in (<samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span></samp>) version 0.8.934 or later. You might
+not be able to use this option with larger group sizes because each <span class="keyword">Cloud</span> region and organization has a limited
+set of compute nodes available for deployment. If your deployment does not succeed, either reduce
+the number of container instances in the group or remove the <samp class="ph codeph">--anti</samp> option.</p>
+</div></div>
+</article><article class="topic task nested4" role="article" aria-labelledby="d64747e4050" id="group_autorecovery"><h5 class="topictitle5" id="d64747e4050">Auto-recovery for a container group</h5>
+<div class="body taskbody"><p class="shortdesc">You can choose whether to enable auto-recovery when you create a container group by using
+the <samp class="ph codeph">--auto</samp> option in the <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create</samp> command. </p>
+<div class="section context"><p><img id="group_autorecovery__autorecovery_gif" src="images/container_group_autorecovery.gif" longdesc="transcript_autorecovery.html" alt="When an instance in a group fails, it is removed and a new instance is started. A link to a text description follows.">
+<a href="../api/content/containers/images/container_group_autorecovery_infinite.gif" rel="external" target="_blank" title="Watch again? Reload this animation in a new tab to see it again. (Opens in a new tab or window)"><img src="images/refresh.png" alt="Reload icon"></a></p>
+
+<p><span class="ph" id="group_autorecovery__auto-recovery">When automatic recovery is enabled for a container group and the group has
+been running for 10 minutes, the group's load balancer starts to regularly check the health of each
+container instance in the group via HTTP requests. If a container instance does not respond within
+100 seconds, it is marked as inactive. Inactive container instances are removed from the group and
+re-created by auto-recovery. Auto-recovery attempts to recover container instances in a group 3
+times. After the third attempt, auto-recovery does not recover any container instances in the group
+for 60 minutes. After 60 minutes, the auto-recovery process starts again.</span></p>
+</div></div>
+</article><article class="topic task nested4" role="article" aria-labelledby="d64747e4102" id="group_autoscaling"><h5 class="topictitle5" id="d64747e4102">Auto-scaling for a container group</h5>
+<div class="body taskbody"><p class="shortdesc">Container groups offer the possibility to auto-scale container group instances based on
+the CPU and memory that is used by the app.</p>
+<div class="section context">You can define auto-scale policies that determine when a container instance is added to, or
+removed from the group. In this way, you can automatically scale your container group based on your
+app's workload. To learn more about auto-scaling of container group instances, see <a href="container_ha.html#container_group_ui_as" title="The Auto-Scaling for Containers capability is being deprecated. You can replace the functions by using IBM Cloud Container Service. For details, see Auto-Scaling Retirement.">Automatically scaling container groups (deprecated)</a>.</div></div>
+</article></article><article class="topic task nested3" role="article" aria-labelledby="d64747e4152" id="docker_compose_type"><h4 class="topictitle4" id="d64747e4152">Docker Compose</h4>
+<div class="body taskbody"><p class="shortdesc"><span class="ph">Some apps consist of multiple components, such as database, services
+and caches, where each component must run in its own container. As orchestrating all containers to
+start up, link and shut down together can be very difficult, you can use Docker Compose to configure
+your multi-container deployment and to run it with one command only. Think of Docker Compose as a
+collection of single container instances where every container is based on its own image and
+configuration.</span> You configure your
+multi-container deployment one time and deploy it in <span class="keyword">Cloud</span>. </p>
+<div class="section context"><div class="steps note"><span class="notetitle">Note:</span> Docker Compose does not support the <span class="keyword">IBM
+Cloud Container Service</span> group concept, which is why you must use
+your own tools to address load balancing, auto-recovery and auto-scaling for your app. </div>
+
+<div class="p">Deployment speed considerations for Docker Compose:<ul><li>A Docker Compose deployments might not be as quick as other deployments because coordinated
+deployments are being set-up.</li>
+<li>The size of the image has a significant impact. The smaller the image, the quicker the
+deployment.</li>
+<li>After the first few times an image is deployed, deployment speeds improve. Initially, the image
+must be downloaded to the registry on the host. Subsequent deployments are faster. </li>
+<li>The networking setup might take a few minutes.</li>
+</ul>
+</div>
+
+<p>To configure a multi-container deployment with Docker Compose, see <a href="container_single_ui.html#container_compose_intro" title="If you have apps with multiple components, such as databases, services and caches, orchestrating all containers to start up and shut down together, can be a hard thing to do. In this tutorial, you learn how to deploy and run your app as a multi-container deployment in a microservices architecture by using a single Docker Compose command. Each container that is part of this system, is based on a Docker Compose service definition, and runs in its own isolated environment.">Tutorial: Creating a multi-container deployment with Docker Compose and IBM Cloud Container Service</a>. </p>
+</div></div>
+</article></article><article class="topic concept nested2" role="article" aria-labelledby="d64747e4215" lang="en-us" id="container_planning_monlog"><h3 class="topictitle3" id="d64747e4215">Monitoring and Logging</h3>
+<div class="body conbody"><p class="shortdesc">In <span class="keyword">Cloud</span>,
+containers come with built-in monitoring and logging, so you can watch the health of your containers
+closely.</p>
+<div class="note important"><span class="importanttitle">Important:</span> This service is not intended for processing sensitive data.</div>
+<p><span class="keyword">IBM
+Cloud</span> offers platform-based
+monitoring and logging capabilities. Metric and log data can be collected from compute instances,
+like containers, that are running in the cloud and from other sources. Aggregated data from multiple
+sources can then be visualized for analysis, insights, and action.</p>
+<img src="images/architecture_logmet.png" alt="Architecture of the Monitoring and Logging services" width="700"/>
+<dl><dt class="dlterm">Monitoring</dt>
+<dd><span class="ph" id="container_planning_monlog__monitoring">Container metrics are collected from outside of the container, without
+having to install and maintain agents inside of the container. In-container agents can have
+significant overheads and setup times for short-lived, lightweight cloud instances and auto-scaling
+groups, where containers can be rapidly created and destroyed. This out-of-band data collection
+approach eliminates these challenges and removes the burden of monitoring from the users.</span></dd>
+<dd class="ddexpand" id="container_planning_monlog__default_metrics"><p>A process that is running in the host performs agentless monitoring for metrics. This process,
+which is also called the <dfn class="term">crawler</dfn>, constantly collects the following information from
+all of the containers.</p>
+
+<div class="p"><ul><li>CPU</li>
+<li>Memory </li>
+<li>Network information</li>
+</ul>
+</div>
+
+<p>This metric data is collected in Graphite and is displayed in both the <span class="keyword">Cloud</span> user interface and the Advanced
+monitoring view. Docker conventions and groups accounting information are used as the basic
+mechanism for the collection of monitoring data.</p>
+
+<p>You can see a list of plug-ins that are installed to collect the data in
+<span class="ph filepath">/etc/collectd/collectd.conf</span>. To learn more about what those plug-ins do, see
+the <a href="https://collectd.org/documentation/manpages/collectd.conf.5.shtml" rel="external" target="_blank" title="(Opens in a new tab or window)">collectd documentation</a>.</p>
+</dd>
+</dl>
+<dl><dt class="dlterm">Logging</dt>
+<dd><span class="ph" id="container_planning_monlog__logging">Similar to metrics, container logs are monitored and forwarded from outside of
+the container by using crawlers. The data is sent by the crawlers to a multi-tenant <a href="https://www.elastic.co/products/elasticsearch" rel="external" target="_blank" title="(Opens in a new tab or window)">Elasticsearch</a> in <span class="keyword">IBM
+Cloud</span>, just like
+logs that are collected by other in-container agents, but without the hassle of having to install
+the agents inside the container.</span></dd>
+<dd class="ddexpand"><p>The crawlers retrieve information from these locations by default.</p>
+<ul id="container_planning_monlog__default_logs"><li><span class="ph filepath">/var/log/messages</span>: System messages.</li>
+<li><span class="ph filepath">/docker.log</span>: The Docker logs. <p>The Docker log file is not stored as a
+file inside of the container, but it is collected anyway. This log file is collected by default as
+it is the standard Docker convention for exposing the <samp class="ph codeph">stdout</samp> (standard output) and
+<samp class="ph codeph">stderr</samp> (standard error) information for the container. If any container process
+prints to <samp class="ph codeph">stdout</samp> or <samp class="ph codeph">stderr</samp>, that information is collected.</p>
+</li>
+</ul>
+To collect additional logs, add the <samp class="ph codeph">LOG_LOCATIONS</samp> environment variable with a
+path to the log file when creating your container in the <a href="container_single_ui.html#gui__env_keys_group">GUI</a> or the
+<a href="container_single_ui.html#container_single_cli" title="Create a container by using the run command. A container must include an image in it. If you do not have one yet, you can use one of the default IBM certified images that are available by default in your organization's private images registry.">CLI</a>.</dd>
+</dl>
+<p>To see more on how to collect logs and metrics, as well as how to create custom dashboards, see
+<a href="../services/cloud-monitoring/containers/analyzing_metrics_bmx_ui.html#analyzing_metrics_bmx_ui">Monitoring and logging containers</a></p>
+</div>
+<aside role="complementary" aria-labelledby="d64747e4215"></aside></article></article></article></div></main></body></html>

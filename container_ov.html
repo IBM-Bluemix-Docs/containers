@@ -1,0 +1,330 @@
+<!DOCTYPE html><html lang="en-us">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="dcterms.date" content="2017-11-10">
+<meta name="dcterms.rights" content="© Copyright IBM Corporation 2014, 2017">
+
+<meta name="description" content="IBM Cloud provides the IBM Cloud Container Service infrastructure in select regions as a feature for app development. With containers, you can build your app in any language, with any programming tools. Each container is an isolated and secure app platform. A container can run anywhere: from a development workstation that is running OS X or Windows, a server that is running Ubuntu, a production data center virtual machine that is running Red Hat, or a cloud platform like Cloud.">
+<meta name="keywords" content="IBM Containers, container, Bluemix, Docker, overview, about, containers, docker, dedicated, local, tutorials, resources">
+<meta name="geo.country" content="ZZ">
+<script>
+    digitalData = {
+      page: {
+        pageInfo: {
+  language: "en-us",
+
+  version: "v18",
+  ibm: {
+  country: "ZZ",
+  type: "CT701"
+  
+         }
+       }
+     }
+   };
+  </script><!-- Licensed Materials - Property of IBM -->
+<!-- US Government Users Restricted Rights -->
+<!-- Use, duplication or disclosure restricted by -->
+<!-- GSA ADP Schedule Contract with IBM Corp. -->
+<link rel="stylesheet" type="text/css" href="./ibmdita.css">
+<title>About single and scalable containers</title>
+</head>
+<body><main role="main"><div><article class="nested0" role="article" aria-labelledby="d63452e6" id="container_ov"><h1 class="topictitle1" id="d63452e6">About <span class="ph">single and scalable containers</span> (Deprecated)</h1>
+<div class="body conbody"><div class="abstract"><div class="shortdesc">IBM® Cloud
+provides the IBM Cloud
+Container Service infrastructure in select regions as a feature for app development. With
+containers, you can build your app in any language, with any programming tools. Each container is an
+isolated and secure app platform. A container can run anywhere: from a development workstation that
+is running OS X or Windows, a server that is running
+Ubuntu, a production data center virtual machine that is running Red Hat, or a cloud platform like
+<span class="keyword">IBM Cloud</span>. </div>
+
+<div class="p"><div class="note attention"><span class="attentiontitle">Attention:</span>  Single and scalable containers are deprecated. Support
+will continue in IBM Cloud Public until 5 December 2017 and in IBM Cloud Local and Dedicated until
+20 June 2018. Start using Kubernetes clusters today to deploy secure, highly available apps. <a href="https://www.ibm.com/blogs/bluemix/2017/07/deprecation-single-scalable-group-container-service-bluemix-public/" rel="external" target="_blank" title="(Opens in a new tab or window)">Learn more about Kubernetes and how to migrate your
+apps</a>.</div>
+</div>
+
+<div class="p">In this
+page:<div class="lines">&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_ov.html#container_ov__whatis">What is a container?</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_ov.html#container_docker_ov" title="IBM Cloud Container Service is a Cloud runtime that leverages Docker technology. Existing Docker users, and users who are new to Docker, can look forward to the following capabilities with IBM Cloud Container Service.">Differences between Docker and IBM Cloud Container Service</a> <br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_ov.html#container_dl" title="IBM Cloud Container Service is available in Cloud Dedicated and Cloud Local.">IBM Cloud Container Service in IBM Cloud&nbsp;&nbsp;Dedicated and Local</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_ov.html#container_tutorials" title="As a supplement to the IBM Cloud Container Service documentation, try out these tutorials and other resources.">Tutorials and other resources for learning about IBM Cloud Container Service</a></div>
+</div>
+</div>
+<section role="region" aria-labelledby="d63452e154" id="container_ov__whatis"><h2 class="sectiontitle" id="d63452e154">What is a container?</h2>
+<p>Containers are virtual software objects that include all of the elements that an app needs to
+run. A container is built from an image, which is a read-only template for creating the container.
+Each image includes just the app and its dependencies, running as an isolated process on the host
+operating system. Therefore, a container has the benefits of resource isolation and allocation, but
+is more portable and efficient than, for example, a virtual machine. Containers help you build
+high-quality apps, fast.</p>
+</section><div id="container_ov__benefits"><div class="p"><dl><dt class="dlterm">Containers are agile</dt>
+<dd><p>Containers simplify system administration by providing standardized environments for development
+and production teams. The engine's lightweight run time enables rapid scale-up and scale-down in
+response to changes in demand. They help remove the complexity of managing different operating
+system platforms and underlying infrastructure. Containers help you deploy and run any app on any
+infrastructure, quickly and reliably. </p>
+</dd>
+<dt class="dlterm">Containers are small</dt>
+<dd><p>You can fit more containers in the amount of space that a single virtual machine would require.
+The size of a container can be selected so that you use the amount of space the app requires
+only.</p>
+</dd>
+<dt class="dlterm">Containers are portable</dt>
+<dd><p>Build an image for another container by using another image as the base. Let someone else do the bulk of the work on an image and tweak it for your use. You can also migrate app code from a staging environment to a production environment quickly. The migration process can be automated with tools such as the Delivery Pipeline or UrbanCode™ Deploy.</p>
+</dd>
+</dl>
+</div>
+</div><div id="container_ov__architecture"><p>The following figure shows the architecture for <span class="keyword">IBM
+Cloud Container Service</span> to run containers in <span class="keyword">Cloud</span>.</p>
+
+<figure class="fignone" data-hd-otherprops="registry_check" id="container_ov__fig_architecture"><figcaption>Figure 1. Architecture overview of IBM Containers </figcaption><div class="image"><object data="images/utd_architecture.svg"><img src="images/utd_architecture.jpg" alt="Architecture diagram for IBM Cloud Container Service."></object></div></figure>
+</div></div>
+<aside role="complementary" aria-labelledby="d63452e6"></aside><article class="topic concept nested1" role="article" aria-labelledby="d63452e219" lang="en-us" id="container_docker_ov"><h2 class="topictitle2" id="d63452e219">Docker and <span class="keyword">IBM
+Cloud Container Service</span></h2>
+<div class="body conbody"><p class="shortdesc"><span class="keyword">IBM
+Cloud Container Service</span> is a <span class="keyword">Cloud</span> runtime that leverages Docker
+technology. Existing Docker users, and users who are new to Docker, can look forward to the
+following capabilities with <span class="keyword">IBM
+Cloud Container Service</span>.</p>
+<div><div class="p"><ul><li>Add your existing Docker Hub images to a private registry hosted by IBM. </li>
+<li>Validate images for potential vulnerabilities.</li>
+<li>Configure the command-line interface (CLI) for <span class="keyword">IBM
+Cloud Container Service</span> to use the Docker CLI commands that you
+are comfortable using already. </li>
+<li>See logging and monitoring data for your containers without additional configuration.</li>
+</ul>
+</div>
+</div><div><p>If you have used Docker in the past, you might find the answers to these common questions helpful
+as you get started with <span class="keyword">IBM
+Cloud Container Service</span>.</p>
+
+<div class="p"><dl><dt class="dlterm">How do I use an image from Docker Hub in <span class="keyword">IBM
+Cloud Container Service</span>?</dt>
+<dd>By using the <span class="keyword">IBM
+Cloud Container Service</span> CLI, you can
+<a href="container_images_copying.html" title="You can copy an image into your organization's private Cloud registry from one of the following locations.">copy an image from Docker
+Hub</a> to your private <span class="keyword">Cloud</span>
+registry. After the image is copied, you can use it to create a container. </dd>
+<dt class="dlterm">How do I create a highly available container?</dt>
+<dd><span class="keyword">IBM
+Cloud Container Service</span> provides single containers
+that are similar to Docker containers. In addition, <span class="keyword">IBM
+Cloud Container Service</span> provides scalable container groups, that
+can be used to make your application highly available. Container groups provide a built-in load
+balancer to ensure that the workload is routed and balanced between the container instances. To
+increase the availability of your group, spread your container group instances across multiple
+physical compute hosts with anti-affinity and enable auto-recovery of unhealthy instances. Also, you
+can set policies to auto-scale container group instances based on CPU and memory usage. For more
+information, see <a href="container_ha.html#container_ha" title="Highly available containers means less downtime for your app. The more widely you distribute your container setup, the less likely your users are to experience downtime with your app. You can achieve higher availability by using IBM Cloud Container Service built-in capabilities to increase resiliency against potential failure conditions, such as host failures, network failures, or application software failures.">Running highly available processes as container groups (Deprecated)</a>.</dd>
+<dt class="dlterm">How do I map container ports to a host port?</dt>
+<dd><span class="keyword">IBM
+Cloud Container Service</span> differentiates between the
+private container network and the public network. On the private container network, all container
+ports are exposed by default without additional configuration. Single containers and container
+groups that are connected to the same private container network, can communicate by using their
+assigned private IP addresses. No port mapping is necessary. <p>To make your app
+available to the public network, you must expose a public port, and bind either a public IP address
+to your single container, or a public route to your container group. Exposing a public port allows
+you to send and receive public data on the exposed port only. All other public ports are closed.</p>
+</dd>
+<dt class="dlterm">How do I make a container publicly available on the Internet? </dt>
+<dd><ul><li>For <a href="container_single_ui.html#container_single_ui" title="Use a single container to run simple tests as you develop an app or service or for short-term processes that do not require high availability. To use your own networking front end, you can assign a public IP address to the container.">single containers</a>,
+expose one or more ports and assign a floating IP address to the container.</li>
+<li>For <a href="container_ha.html#container_group_ui" title="Create and deploy a scalable group container from the Cloud GUI. A container group includes two or more containers that run the same image. Use container groups for running long-term services with workloads that require scalability and reliability or for testing at the required scale.">container groups</a>,
+expose a single HTTP port and assign a route.</li>
+</ul>
+</dd>
+<dt class="dlterm">What makes the amount of time to build a container different between local Docker and <span class="keyword">Cloud</span>?</dt>
+<dd>You might notice that containers build more quickly with your local Docker installation than in
+<span class="keyword">Cloud</span>. With the first deployment, the
+container image must be downloaded to the registry on the host. Subsequent deployments of the image
+are faster. For more information about how deployment speeds are impacted by the different container
+configurations, see <a href="container_planning.html#container_planning_types" title="Before you create a container with IBM Cloud Container Service, decide on the type of container that you need. IBM Cloud Container Service offers different approaches to create containers in the cloud. The approach that you choose depends on the requirements and dependencies of your app that runs in your container.">Container types</a>.</dd>
+<dt class="dlterm">How do I create a container on a private network and not expose it publicly?</dt>
+<dd>When you create a container, it is connected to the <span class="keyword">IBM
+Cloud Container Service</span> default container private network and a
+private IP address is assigned to your container. On this private network, all container ports are
+exposed by default. No mapping of host ports to container ports is necessary. To prevent a container
+from being accessible from the Internet, do not bind an IP address or expose a port when you create
+the container.</dd>
+<dt class="dlterm">How do I mount a volume to a container?</dt>
+<dd>A single container is, by design, short-lived. However, you can use a volume to persist data
+between container restarts. When you mount a volume in Docker, the volume is mounted to your local
+file system. In <span class="keyword">IBM
+Cloud Container Service</span>, the access to
+the compute host is restricted, so you cannot mount host directories to a container. Instead,
+organization-scoped volumes are used to persist data between container restarts. Volumes are hosted
+on isolated file shares that securely store app data and manage the access and permission to the
+files. To mount a volume to a container, you must <a href="container_volumes_ov.html#container_volumes_ui" title="A volume is a persistent storage location for the data that an app creates or the files that the app requires to run. You can create a volume for your container from the Cloud GUI.">create a volume</a> first. When you create a container from the CLI, mount an
+existing volume by using the <samp class="ph codeph">--volume</samp> option. From the <span class="keyword">Cloud</span> GUI select the <span class="ph uicontrol">Advanced
+options</span> and assign an existing volume. For more information, see <a href="container_volumes_ov.html#container_volumes_mount" title="After you create a volume, you can mount the volume to a container and add files that are accessible by any container the volume is mounted to.">Adding files to volumes with the command line interface (CLI)</a>.</dd>
+<dt class="dlterm">How do I use Docker Compose with <span class="keyword">IBM
+Cloud Container Service</span>? </dt>
+<dd>You can execute Docker Compose commands to create and manage multi-container deployments with
+<span class="keyword">IBM
+Cloud Container Service</span>. For more information, see
+<a href="container_single_ui.html#container_compose_intro" title="If you have apps with multiple components, such as databases, services and caches, orchestrating all containers to start up and shut down together, can be a hard thing to do. In this tutorial, you learn how to deploy and run your app as a multi-container deployment in a microservices architecture by using a single Docker Compose command. Each container that is part of this system, is based on a Docker Compose service definition, and runs in its own isolated environment.">Tutorial: Creating a multi-container deployment with Docker Compose and IBM Cloud Container Service</a>.</dd>
+<dt class="dlterm">How do I set up my Docker compose client so that it points to the IBM Containers service?</dt>
+<dd>When you log into the <span class="keyword">IBM
+Cloud Container Service</span> CLI,
+configure your CLI run native Docker commands. For more information, see <a href="container_cli_cfic_install.html#container_cli_login" title="After you install the CLI, log in to use it.">Logging in to the <span class="ph">bx ic</span> plug-in</a>.</dd>
+<dt class="dlterm">How do I log into my running container? SSH into it?</dt>
+<dd>You can use <samp class="ph codeph"><span class="ph">bx ic</span>
+exec</samp> to <a href="container_security.html#container_cli_login_exec" title="If you must log in to your running container, you can use bx ic exec.">log into a container</a>.</dd>
+<dt class="dlterm">Why are my containers running in detached mode?</dt>
+<dd>By default, containers in <span class="keyword">Cloud</span>
+run in detached mode to allow containers with running processes to run in the background without
+exiting. Containers running in detached mode is the standard model for a cloud environment. You can
+still attach to your container by running <a href="container_cli_reference_cfic.html#container_cli_reference_cfic__attach">bx ic attach [--no-stdin] [--sig-proxy] CONTAINER</a>.</dd>
+</dl>
+</div>
+</div></div>
+<aside role="complementary" aria-labelledby="d63452e219"></aside></article><article class="topic concept nested1" role="article" aria-labelledby="d63452e603" lang="en-us" id="container_dl"><h2 class="topictitle2" id="d63452e603"><span class="keyword">IBM
+Cloud Container Service</span> in <span class="keyword">Cloud</span> Dedicated and <span class="keyword">Cloud</span> Local</h2>
+<div class="body conbody"><p class="shortdesc"><span class="keyword">IBM
+Cloud Container Service</span> is available in
+<span class="keyword">Cloud</span> Dedicated and <span class="keyword">Cloud</span> Local. </p>
+</div>
+<aside role="complementary" aria-labelledby="d63452e603"></aside><article class="topic concept nested2" role="article" aria-labelledby="d63452e691" id="service_hardware_req"><h3 class="topictitle3" id="d63452e691">Hardware requirements for <span class="keyword">IBM
+Cloud Container Service</span> in <span class="keyword">Cloud</span> Local</h3>
+<div class="body conbody"><p class="shortdesc"></p>
+<div class="p"><dl><dt class="dlterm">Base hardware requirements</dt>
+<dd>The base setup is configured with 64GB memory of container compute capacity by default.<ol><li>Your environment must meet the <a href="../local/index.html#local"><span class="keyword">Cloud</span> Local hardware
+requirements</a>. </li>
+<li>To use <span class="keyword">IBM
+Cloud Container Service</span>, each setup requires
+a control plane that meets the following requirements. Two instances
+are also required for monitoring and logging, meeting the same hardware requirements.<ul><li>VMware: 3 ESX servers, each with 256GB memory and 32 physical cores (64 vCore with
+Hyperthreading enabled). Across the 3 servers, 4TB of cluster shared storage is required.</li>
+</ul>
+</li>
+</ol>
+</dd>
+<dt class="dlterm">Requirements for additional hardware increases</dt>
+<dd>You can increase container compute capacity in 16GB increments up to 256GB without additional
+hardware by adding up to 12 expansion VMs. Each VM must have 20GB memory, 4 vCPU, and 200GB disk
+space. However, for each 10 expansion VMs deployed on the cluster, 1 additional VM is required for
+to handle networking. This networking VM requires 4vCPU, 16GB memory, and 250GB disk space.</dd>
+</dl>
+</div>
+</div>
+</article><article class="topic concept nested2" role="article" aria-labelledby="d63452e742" id="rellinks"><h3 class="topictitle3" id="d63452e742">Related links</h3>
+<aside role="complementary" aria-labelledby="d63452e742">
+<div class="linklist" id="general"><h4 class="linklistlabel">Related Links</h4>
+<ul><li><a href="../dedicated/index.html#dedicated"><span class="keyword">Cloud</span> Dedicated</a></li>
+<li><a href="../local/index.html#local"><span class="keyword">Cloud</span> Local</a></li>
+</ul></div>
+</aside></article></article><article class="topic reference nested1" role="article" aria-labelledby="d63452e761" lang="en-us" id="container_tutorials"><h2 class="topictitle2" id="d63452e761"> Tutorials and other resources for learning about <span class="keyword">IBM
+Cloud Container Service</span></h2>
+<div class="body refbody"><p class="shortdesc">As a supplement to the <span class="keyword">IBM
+Cloud Container Service</span> documentation, try out these tutorials and other resources.</p>
+<section role="region" aria-labelledby="d63452e828" id="container_tutorials__new2docker"><h3 class="sectiontitle" id="d63452e828">New to Docker</h3><p><div class="imagecenter"><img id="container_tutorials__image_r2j_d1y_tz" src="images/container-service_new-docker.png" alt="Container icon"></div></p>
+
+
+<p>If you never used Docker before, review the Docker user guide. The fundamentals of Docker apply
+to using containers and images in IBM Containers. On the <span class="keyword wintitle">Docker</span> page, select
+<span class="ph uicontrol">Get Started</span> to install Docker and learn basic Docker and container
+capabilities.</p>
+
+<p><a href="http://docs.docker.com/" rel="external" target="_blank" title="(Opens in a new tab or window)">Docker user guide</a></p>
+
+<div class="p"><dl><dt class="dlterm">Audience</dt>
+<dd>Beginners who want to become container developers</dd>
+<dt class="dlterm">Time required</dt>
+<dd>20 minutes</dd>
+<dt class="dlterm">Learning Objective</dt>
+<dd>To learn the basics about Docker so that you can apply them to IBM Containers.</dd>
+</dl>
+</div>
+</section><section role="region" aria-labelledby="d63452e865" id="container_tutorials__e2e"><h3 class="sectiontitle" id="d63452e865">End to end scenarios</h3><p><div class="imagecenter"><img id="container_tutorials__image_nnq_d1y_tz" src="images/container-service_e2e.png" alt="Container icon"></div></p>
+
+
+<p>Learn containers from installation to deployment with a sample app.</p>
+
+<p><a href="container_single_ui.html#container_gettingstarted_tutorial" title="IBM Cloud gives you the ability to run Docker containers in the public cloud. Use containers to deploy self-contained, secure web apps that run independently of the host operating system. Containers are lightweight and do not require a lot of system resources because containers use the same system kernel and so can be run more efficiently than a virtual machine. This tutorial showcases how to build a messaging web app using Docker containers in Cloud. In the process, you will write a Dockerfile, add Docker images to your private Cloud images registry and link containers together.">Tutorial: Creating a single container web application</a></p>
+
+<div class="p"><dl><dt class="dlterm">Audience</dt>
+<dd>Container developers and architects</dd>
+<dt class="dlterm">Time required</dt>
+<dd>35 minutes</dd>
+<dt class="dlterm">Learning objective</dt>
+<dd>To create and deploy a container in <span class="keyword">Cloud</span>, update a Docker image and deploy a
+scalable container, and add a <span class="keyword">Cloud</span>
+service to a container.</dd>
+</dl>
+</div>
+
+<p><a href="https://github.com/osowski/ibm-containers-codemotion/blob/master/1-ibm-containers-introduction.md" rel="external" target="_blank" title="(Opens in a new tab or window)">Docker-based Web Apps, running on <span class="keyword">IBM
+Cloud Container Service</span>, Part 1</a> and <a href="https://github.com/osowski/ibm-containers-codemotion/blob/master/2-docker-web-apps.md" rel="external" target="_blank" title="(Opens in a new tab or window)">Part 2</a></p>
+
+<div class="p"><dl><dt class="dlterm">Audience</dt>
+<dd>Developers, admins, and ops managers who are new to <span class="keyword">IBM
+Cloud Container Service</span></dd>
+<dt class="dlterm"> Time required </dt>
+<dd>Part 1 takes 25 minutes, Part 2 takes 35 minutes</dd>
+<dt class="dlterm"> Learning objective</dt>
+<dd>To learn about <span class="keyword">IBM
+Cloud Container Service</span> and the
+<span class="keyword">IBM
+Cloud</span> architecture and see sample code in
+<span class="keyword">IBM
+Cloud Continuous Delivery</span>.</dd>
+</dl>
+</div>
+
+<p><a href="http://www.ibm.com/developerworks/library/mw-1608-tost-trs/index.html" rel="external" target="_blank" title="(Opens in a new tab or window)">Build and extend Docker container images with middleware functions</a></p>
+
+<div class="p"><dl><dt class="dlterm">Audience</dt>
+<dd>Container developers and architects</dd>
+<dt class="dlterm">Time required</dt>
+<dd>60 minutes</dd>
+<dt class="dlterm">Learning objective</dt>
+<dd>To learn how to transition middleware process into Docker containers.</dd>
+</dl>
+</div>
+
+<p><a href="container_single_ui.html#container_compose_intro" title="If you have apps with multiple components, such as databases, services and caches, orchestrating all containers to start up and shut down together, can be a hard thing to do. In this tutorial, you learn how to deploy and run your app as a multi-container deployment in a microservices architecture by using a single Docker Compose command. Each container that is part of this system, is based on a Docker Compose service definition, and runs in its own isolated environment.">Tutorial: Creating a multi-container deployment with Docker Compose and IBM Cloud Container Service</a></p>
+
+<div class="p"><dl><dt class="dlterm">Audience</dt>
+<dd>Container developers and architects</dd>
+<dt class="dlterm">Time required</dt>
+<dd>60 minutes</dd>
+<dt class="dlterm">Learning objective</dt>
+<dd>To create and deploy a multiple single containers that can be started and stopped at the same
+time with Docker Compose.</dd>
+</dl>
+</div>
+</section><section role="region" aria-labelledby="d63452e1032" id="container_tutorials__continuous"><h3 class="sectiontitle" id="d63452e1032">Continuous delivery</h3><p><div class="imagecenter"><img id="container_tutorials__image_sty_d1y_tz" src="images/container-service_continuous.png" alt="Container icon"></div></p>
+
+
+<p>Learn how to use <span class="keyword">IBM
+Cloud Continuous Delivery</span> to keep
+your app and container updated.</p>
+
+<p><a href="https://www.ibm.com/devops/method/tutorials/tutorial_toolchain_secure_container" rel="external" target="_blank" title="(Opens in a new tab or window)">Create and use a secure container toolchain</a></p>
+
+<div class="p"><dl><dt class="dlterm">Audience</dt>
+<dd>Container developers</dd>
+<dt class="dlterm">Time required</dt>
+<dd>5 minutes</dd>
+<dt class="dlterm">Learning objective</dt>
+<dd>To create an open toolchain from a template and use the toolchain to continuously deliver a
+“Hello World” app to a secure Docker container.</dd>
+</dl>
+</div>
+
+<p><a href="https://www.ibm.com/devops/method/tutorials/tutorial_toolchain_container" rel="external" target="_blank" title="(Opens in a new tab or window)">Create and use a simple container toolchain</a></p>
+
+<div class="p"><dl><dt class="dlterm">Audience</dt>
+<dd>Container developers</dd>
+<dt class="dlterm">Time required</dt>
+<dd>5 minutes</dd>
+<dt class="dlterm">Learning objective</dt>
+<dd>To create an open toolchain from a template and use the toolchain to continuously deliver a
+“Hello World” app to a Docker container.</dd>
+</dl>
+</div>
+</section></div>
+<aside role="complementary" aria-labelledby="d63452e761"></aside></article></article></div></main></body></html>
