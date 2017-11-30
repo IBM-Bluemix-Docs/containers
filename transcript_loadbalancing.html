@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="en-us">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="dcterms.date" content="2017-11-10">
+<meta name="dcterms.rights" content="© Copyright IBM Corporation 2014, 2017">
+
+<meta name="description" content="">
+
+<meta name="geo.country" content="ZZ">
+<script>
+    digitalData = {
+      page: {
+        pageInfo: {
+  language: "en-us",
+
+  version: "v18",
+  ibm: {
+  country: "ZZ",
+  type: "CT701"
+  
+         }
+       }
+     }
+   };
+  </script><!-- Licensed Materials - Property of IBM -->
+<!-- US Government Users Restricted Rights -->
+<!-- Use, duplication or disclosure restricted by -->
+<!-- GSA ADP Schedule Contract with IBM Corp. -->
+<link rel="stylesheet" type="text/css" href="./ibmdita.css">
+<title>Transcript for container_group_loadbalancing.gif</title>
+</head>
+<body><main role="main"><div><article class="nested0" role="article" aria-labelledby="d93313e6" id="transcript_loadblancing"><h1 class="topictitle1" id="d93313e6">Transcript for container_group_loadbalancing.gif</h1>
+<div class="body conbody"><p class="shortdesc"></p>
+<p>A person is displayed alongside a grey box labeled A. The person represents a user and box A
+represents a container group.</p>
+<p>Inside box A, a blue box is displayed and labeled B, which represents the load balancer for the
+container group.</p>
+<p>Also inside box A, three boxes are displayed, which represents three instances within the
+container group.</p>
+<p>A request is sent from the user through the load balancer, and then to the first container group
+instance. This request spins and when it completes, it fades.</p>
+<p>A communication is sent from the user through the load balancer, and then to the second instance.
+This request spins and does not complete. The request continues to spin.</p>
+<p>A communication is sent from the user through the load balancer, and then to the third instance.
+This request spins and when it completes, it fades.</p>
+<p>A request is sent from the user through the load balancer, and then to the first instance. This
+request spins and when it completes, it fades.</p>
+<p>A communication is sent from the user through the load balancer, and then to the second instance.
+This request spins and waits for the stuck request to complete. When the stuck request completes and
+fades, the next request spins and when it completes, it fades.</p>
+<p>A communication is sent from the user through the load balancer, and then to the third instance.
+This request spins and when it completes, it fades.</p>
+<p>[The animation repeats.]</p>
+<p><a href="container_planning.html#group_loadbalancing__loadbalancing_gif"><img src="images/previous_button.png" alt="Go back icon"> Return to the documentation</a></p>
+</div>
+</article></div></main></body></html>
