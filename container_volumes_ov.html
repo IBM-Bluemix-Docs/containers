@@ -1,0 +1,656 @@
+<!DOCTYPE html><html lang="en-us">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="dcterms.date" content="2017-11-10">
+<meta name="dcterms.rights" content="© Copyright IBM Corporation 2014, 2017">
+
+<meta name="description" content="A storage volume is used to persist or share data between containers in an organization's space.">
+<meta name="keywords" content="IBM Containers, containers, persistent storage, volume, creating, CLI, adding files, mount, exec, docker cp, data backup, writing, removing, file shares, storage, dashboard, gui, add, cli, fs, remove">
+<meta name="geo.country" content="ZZ">
+<script>
+    digitalData = {
+      page: {
+        pageInfo: {
+  language: "en-us",
+
+  version: "v18",
+  ibm: {
+  country: "ZZ",
+  type: "CT701"
+  
+         }
+       }
+     }
+   };
+  </script><!-- Licensed Materials - Property of IBM -->
+<!-- US Government Users Restricted Rights -->
+<!-- Use, duplication or disclosure restricted by -->
+<!-- GSA ADP Schedule Contract with IBM Corp. -->
+<link rel="stylesheet" type="text/css" href="./ibmdita.css">
+<title>Storing persistent data in the IBM Cloud Container Service for single and scalable containers</title>
+</head>
+<body><main role="main"><div><article class="nested0" role="article" aria-labelledby="d87435e6" id="container_volumes_ov"><h1 class="topictitle1" id="d87435e6">Storing persistent data in a volume for <span class="ph">single and scalable containers</span>
+(Deprecated)</h1>
+<div class="abstract"><div class="shortdesc">A storage volume is used to persist or share data between containers in an organization's
+space.</div>
+
+<div class="p"><div class="note attention"><span class="attentiontitle">Attention:</span>  Single and scalable containers are deprecated. Support
+will continue in IBM Cloud Public until 5 December 2017 and in IBM Cloud Local and Dedicated until
+20 June 2018. Start using Kubernetes clusters today to deploy secure, highly available apps. <a href="https://www.ibm.com/blogs/bluemix/2017/07/deprecation-single-scalable-group-container-service-bluemix-public/" rel="external" target="_blank" title="(Opens in a new tab or window)">Learn more about Kubernetes and how to migrate your
+apps</a>.</div>
+</div>
+
+<div class="p">In this
+page:<div class="lines">&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_volumes_ov.html#about_volumes">About volumes</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; • Creating volumes with the <a href="container_volumes_ov.html#container_volumes_ui" title="A volume is a persistent storage location for the data that an app creates or the files that the app requires to run. You can create a volume for your container from the Cloud GUI.">GUI</a> or the <a href="container_volumes_ov.html#container_volumes_cli" title="A volume is a persistent storage location for the data that an app creates or the files that the app requires to run. You can create a volume for your container from the command line.">CLI</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_volumes_ov.html#container_volumes_mount" title="After you create a volume, you can mount the volume to a container and add files that are accessible by any container the volume is mounted to.">Adding files</a> to volumes<br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_volumes_ov.html#container_volumes_backup" title="Container volumes are hosted on persistent storage but do not have backups. If you require a backup of your volume data, you can use bx ic cp to create a manual backup.">Backing up and restoring</a> volumes<br>
+&nbsp;&nbsp;&nbsp;&nbsp; • Adding <a href="container_volumes_ov.html#container_volumes_write" title="Non-root users do not have write permission on the volume mount path. To grant write permission, you must edit the Dockerfile of the image to create a directory on the mount path with the correct permission.">non-root user access</a> to volumes<br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_volumes_ov.html#container_volume_different_dc" title="If you plan on moving your current Cloud space to a new data center, ensure that your volumes are backed up, so that you can restore and use the data in your new data center.">Migrating data</a> to a different data center<br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_volumes_ov.html#container_volumes_remove" title="If you no longer need a volume to store data for your containers, you can remove the volume.">Removing volumes</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_volumes_ov.html#container_fileshares_adding_ui" title="A file share is a persistent NFS-based (Network File System) storage system that hosts Docker volumes in a Cloud space, and allows a user to store and access container and app-related files. To store files in a file share, you must create a container volume and save the data into this volume.">Adding and removing file shares</a></div>
+</div>
+</div>
+<aside role="complementary" aria-labelledby="d87435e6"></aside><article class="topic task nested1" role="article" aria-labelledby="d87435e124" id="about_volumes"><h2 class="topictitle2" id="d87435e124">About volumes</h2>
+<div class="body taskbody"><div class="section context" id="about_volumes__context_kjv_lg1_4z"><figure class="fignone" id="about_volumes__file_share"><figcaption>Figure 1. File share and volume structure in an organization.</figcaption><object id="about_volumes__volume_organization" width="500" data="images/utd_volumes.svg"><img width="500" src="images/utd_volumes.jpg" alt="File shares contain volumes, which contain files."></object></figure>
+
+<p><span class="ph" id="about_volumes__volume_intro">A container is ephemeral, and you cannot persist application data in it.
+However, you can use a volume to persist data between container restarts, to share data between
+containers in a space, and to have access to your application data when your container is not
+available. If you delete a container, the storage volume is not deleted. The lifecycle of a storage
+volume is independent from the lifecycle of a container. Since Docker containers in <span class="keyword">Cloud</span> do not have access to the local host,
+volumes are mounted on provisioned <a href="container_volumes_ov.html#container_fileshares_adding_ui" title="A file share is a persistent NFS-based (Network File System) storage system that hosts Docker volumes in a Cloud space, and allows a user to store and access container and app-related files. To store files in a file share, you must create a container volume and save the data into this volume.">file
+shares</a>.</span></p>
+
+<p>Here are the tasks in the persistent storage lifecycle:</p>
+</div><ol class="steps" id="about_volumes__steps_ljv_lg1_4z"><li class="step">Optional: <span class="cmd">Create a custom file share that hosts your volumes by using either the <a href="container_volumes_ov.html#container_fileshares_adding_ui" title="A file share is a persistent NFS-based (Network File System) storage system that hosts Docker volumes in a Cloud space, and allows a user to store and access container and app-related files. To store files in a file share, you must create a container volume and save the data into this volume.">GUI</a> or the <a href="container_volumes_ov.html#container_fileshares_adding_ui" title="A file share is a persistent NFS-based (Network File System) storage system that hosts Docker volumes in a Cloud space, and allows a user to store and access container and app-related files. To store files in a file share, you must create a container volume and save the data into this volume.">CLI</a>.</span> You must have an organization manager role to create a file share. If you are not an
+organization manager, proceed to creating a volume. One default 20 GB file share is provided for
+each organization.</li>
+<li class="step"><span class="cmd">Create a volume by using either the <a href="container_volumes_ov.html#container_volumes_ui" title="A volume is a persistent storage location for the data that an app creates or the files that the app requires to run. You can create a volume for your container from the Cloud GUI.">GUI</a> or the <a href="container_volumes_ov.html#container_volumes_cli" title="A volume is a persistent storage location for the data that an app creates or the files that the app requires to run. You can create a volume for your container from the command line.">CLI</a>.</span></li>
+<li class="step"><span class="cmd">Create an automatic backup of your volume by using the <a href="../images/docker_image_ibmbackup_restore/ibmbackup_restore_starter.html#ibmbackup_restore_starter">ibm-backup-restore image</a>.</span></li>
+<li class="step"><span class="cmd">Delete a <a href="container_volumes_ov.html#container_volumes_remove" title="If you no longer need a volume to store data for your containers, you can remove the volume.">volume</a>.</span></li>
+<li class="step"><span class="cmd">Delete a <a href="container_volumes_ov.html#container_filestorage_managing" title="An organization manager can remove existing file shares and view which volumes are mounted on a file share.">file
+share</a>.</span></li>
+</ol>
+</div>
+</article><article class="topic task nested1" role="article" aria-labelledby="d87435e235" lang="en-us" id="container_volumes_ui"><h2 class="topictitle2" id="d87435e235">Creating volumes with the <span class="keyword">Cloud</span> GUI</h2>
+<div class="body taskbody"><p class="shortdesc"><span class="ph">A volume is a persistent storage location for the data that an app
+creates or the files that the app requires to run.</span> You can create a volume for
+your container from the <span class="keyword">Cloud</span>
+GUI.</p>
+<div class="section prereq"></div><div class="section context"><figure class="fignone" id="container_volumes_ui__file_share"><figcaption>Figure 2. File share and volume structure in an organization.</figcaption><object id="container_volumes_ui__volume_organization" width="500" data="images/utd_volumes.svg"><img width="500" src="images/utd_volumes.jpg" alt="File shares contain volumes, which contain files."></object></figure>
+
+<p><span class="ph" id="container_volumes_ui__volume_intro">A single container is, by design, short-lived. However, you can use a
+volume to persist data between container restarts, to share data between containers in a space, and
+to share data between container instances in a group. When you mount a volume in Docker, the volume
+is mounted to your local file system. In <span class="keyword">IBM®
+Cloud Container Service</span>, the access to the compute host is
+restricted, so you cannot mount host directories to a container. Instead, organization-scoped
+volumes are used to persist data between container restarts. Volumes are hosted on isolated <a href="container_volumes_ov.html#container_fileshares_adding_ui" title="A file share is a persistent NFS-based (Network File System) storage system that hosts Docker volumes in a Cloud space, and allows a user to store and access container and app-related files. To store files in a file share, you must create a container volume and save the data into this volume.">file shares</a> that
+securely store app data and manage the access and permission to the files. A volume is not affected
+by any update you make to a container or image. If you delete a container, the storage volume is not
+deleted. </span></p>
+</div><ol class="steps"><li class="step"><span class="cmd"><span class="ph" data-hd-otherprops="registry_check">From the catalog, select
+<span class="ph uicontrol">Containers</span> and choose an image.</span></span></li>
+<li class="step"><span class="cmd">Select <span class="ph uicontrol">Advanced Options</span> to expand the volume creation fields.</span></li>
+<li class="step"><span class="cmd">Click <span class="ph uicontrol">Create a volume</span>.</span></li>
+<li class="step"><span class="cmd">In the <span class="ph uicontrol">Volume name</span> field, enter a name.</span> Volumes are unique per space, so volume names cannot be reused within a space. The volume name
+can contain uppercase letters, lowercase letters, numbers, underscores (_), and hyphens (-).</li>
+<li class="step"><span class="cmd">If a file share exists, select an existing file share from the <span class="ph uicontrol">File
+share</span> drop-down menu.</span> If no file share exists, a default file share of 20 GB is created
+automatically. The organization manager can allocate files shares with specific storage size and
+IOPS. See <a href="container_volumes_ov.html#container_fileshares_adding_ui" title="A file share is a persistent NFS-based (Network File System) storage system that hosts Docker volumes in a Cloud space, and allows a user to store and access container and app-related files. To store files in a file share, you must create a container volume and save the data into this volume.">Adding
+file shares for volumes</a> for more information. There is no size limit for a volume. Volumes can scale to the size of the file share they are
+hosted on.</li>
+<li class="step"><span class="cmd">Click <span class="ph uicontrol">Create</span>.</span> It can take several minutes to create the volume.</li>
+</ol>
+<div class="section result">The volume is available in your space and can be mounted to your <a href="container_single_ui.html#gui__volume">single container</a> or
+<a href="container_ha.html#container_group_ui__volume">container
+group</a> by selecting it from the drop down menu in <span class="ph uicontrol">Assign an existing
+volume</span> in <span class="ph uicontrol">Advanced options</span>. Once you select the volume, assign
+the file path that the volume is mounted to inside the container, such as
+<span class="ph filepath">/var/lib/my_volume</span>. If you require a backup of your container, see <a href="container_volumes_ov.html#container_volumes_remove" title="If you no longer need a volume to store data for your containers, you can remove the volume.">backing up and restoring
+data</a>.</div></div>
+<aside role="complementary" aria-labelledby="d87435e235"></aside></article><article class="topic task nested1" role="article" aria-labelledby="d87435e409" lang="en-us" id="container_volumes_cli"><h2 class="topictitle2" id="d87435e409">Creating volumes with the command line (CLI)</h2>
+<div class="body taskbody"><p class="shortdesc"><span class="ph">A volume is a persistent storage location for the data that an app
+creates or the files that the app requires to run.</span> You can create a volume for
+your container from the command line.</p>
+<div class="section prereq"></div><div class="section context"><p><span class="ph">A single container is, by design, short-lived. However, you can use a
+volume to persist data between container restarts, to share data between containers in a space, and
+to share data between container instances in a group. When you mount a volume in Docker, the volume
+is mounted to your local file system. In <span class="keyword">IBM
+Cloud Container Service</span>, the access to the compute host is
+restricted, so you cannot mount host directories to a container. Instead, organization-scoped
+volumes are used to persist data between container restarts. Volumes are hosted on isolated <a href="container_volumes_ov.html#container_fileshares_adding_ui" title="A file share is a persistent NFS-based (Network File System) storage system that hosts Docker volumes in a Cloud space, and allows a user to store and access container and app-related files. To store files in a file share, you must create a container volume and save the data into this volume.">file shares</a> that
+securely store app data and manage the access and permission to the files. A volume is not affected
+by any update you make to a container or image. If you delete a container, the storage volume is not
+deleted. </span></p>
+</div><ol class="steps"><li class="step stepexpand"><span class="cmd">Create a volume by running the following command.</span> Volumes can scale to the size of the file share they are hosted on. Specifying a file share is
+optional. You can view existing file shares by running <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> volume-fs</samp>. If no file share exists, a default file share of 20 GB is created
+automatically. The organization manager can allocate files shares with specific storage size and
+IOPS. See <a href="container_volumes_ov.html#container_fileshares_adding_ui" title="A file share is a persistent NFS-based (Network File System) storage system that hosts Docker volumes in a Cloud space, and allows a user to store and access container and app-related files. To store files in a file share, you must create a container volume and save the data into this volume.">Adding
+file shares for volumes</a> for more information. <div class="p"><pre class="codeblock"><code><samp class="ph codeph"><span class="ph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> volume-create VOLNAME [FSNAME] </span></samp></code></pre>
+</div>
+
+<div class="p"><dl><dt class="dlterm"><samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> volume-create</samp>
+parameters </dt>
+<dd><dl class="parml"><dt class="pt dlterm"><var class="keyword varname">FSNAME</var></dt>
+<dd class="pd">(Optional) The file share name. If no file share is available or named the volume will be built
+on the space's default file share.</dd>
+</dl>
+
+<dl class="parml"><dt class="pt dlterm"><var class="keyword varname">VOLNAME</var></dt>
+<dd class="pd">(Required) The volume name. <span class="ph" id="container_volumes_cli__d44215e4830">The name can contain uppercase letters, lowercase
+letters, numbers, underscores (_), and hyphens (-).</span></dd>
+</dl>
+</dd>
+</dl>
+</div>
+</li>
+<li class="step stepexpand">Optional: <span class="cmd">Verify that the volume was created correctly by running the following command.</span> <div class="p"><pre class="codeblock"><code><span class="ph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> volumes [--table]</span></code></pre>
+</div>
+</li>
+</ol>
+<div class="section postreq"><p>Next, assign the volume to your <a href="container_single_ui.html#container_single_cli" title="Create a container by using the run command. A container must include an image in it. If you do not have one yet, you can use one of the default IBM certified images that are available by default in your organization's private images registry.">single container</a> or your <a href="container_ha.html#container_group_cli" title="Create and deploy a scalable group container from the IBM Cloud Container Service CLI. A container group includes two or more containers that run the same image. Use container groups for running long-term services with workloads that require scalability and reliability or for testing at the required scale.">container group</a>. Volumes are assigned using the <samp class="ph codeph">--volume</samp> option in the
+<samp class="ph codeph">run</samp> command and the <samp class="ph codeph">group-create</samp> command, respectively. <span class="ph"> If
+you require a backup of your container, see <a href="container_volumes_ov.html#container_volumes_remove" title="If you no longer need a volume to store data for your containers, you can remove the volume.">backing up and restoring
+data</a>.</span></p>
+</div></div>
+<aside role="complementary" aria-labelledby="d87435e409"></aside></article><article class="topic task nested1" role="article" aria-labelledby="d87435e606" lang="en-us" id="container_volumes_mount"><h2 class="topictitle2" id="d87435e606">Adding files to volumes with the command line interface (CLI)</h2>
+<div class="body taskbody"><p class="shortdesc">After you create a volume, you can mount the volume to a container and add files that are
+accessible by any container the volume is mounted to.</p>
+<div class="section prereq">Before you begin, create a volume <a href="container_volumes_ov.html#container_volumes_ui" title="A volume is a persistent storage location for the data that an app creates or the files that the app requires to run. You can create a volume for your container from the Cloud GUI.">using the <span class="keyword">Cloud</span> GUI</a> or <a href="container_volumes_ov.html#container_volumes_cli" title="A volume is a persistent storage location for the data that an app creates or the files that the app requires to run. You can create a volume for your container from the command line.">using the
+CLI</a>. </div><div class="section context"></div><ol class="steps"><li class="step stepexpand"><span class="cmd">Create a container with a mounted volume.*</span> Replace <samp class="ph codeph"><var class="keyword varname">my_volume</var></samp> with the name of your volume, the
+<samp class="ph codeph"><var class="keyword varname">container_path</var></samp> with the mount path of the volume,
+<samp class="ph codeph"><var class="keyword varname">my_container</var></samp> with the name of your container, and
+registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">my_namespace</var>/<var class="keyword varname">my_image</var> with the image. <pre class="codeblock"><code><span class="ph">bx ic</span> run --volume <var class="keyword varname">my_volume</var>:/<var class="keyword varname">container_path</var> --name <var class="keyword varname">my_container</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">my_image</var></code></pre>
+
+<div class="note tip"><span class="tiptitle">Tip:</span> <span class="ph">Run <samp class="ph codeph"><span class="ph">bx ic</span> namespace-get</samp> to retrieve
+your namespace and replace <var class="keyword varname">&lt;my_namespace&gt;</var> with your namespace information.</span></div>
+
+<div class="steps note"><span class="notetitle">Note:</span> <span class="ph" id="container_volumes_mount__d44378e180">*In this command, you can replace <samp class="ph codeph"><span class="ph">bx ic</span></samp> with <samp class="ph codeph">docker</samp>
+when you <a href="container_cli_cfic_install.html#container_cli_login" title="After you install the CLI, log in to use it.">logged in to <span class="keyword">IBM
+Cloud Container Service</span></a> and set your environment
+variables to use native Docker commands.</span><span class="ph" id="container_volumes_mount__d44378e192">You can use native Docker
+commands in all steps that are marked with an asterisk (*) in this topic. </span></div>
+</li>
+<li class="step stepexpand"><span class="cmd">Copy files from a local directory to the volume by using the <samp class="ph codeph"><span class="ph">bx ic</span> cp</samp> command.*</span> <p>In this example, you are copying a <var class="keyword varname">config.txt</var> file to your volume that is
+mounted to the <var class="keyword varname">/src/usr/tmp</var> path inside the container. Replace the file with your
+own file or directory that you are copying and change the container path to point to your volume. In
+the command, the source file or path is first and the destination path is second. When copying to or
+from a container, <span class="ph">you must include the name of the container, the delimiter <span class="q">":"</span>, and the
+path to the destination file or folder. The path must be relative to the root directory of the
+container. </span>See the
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__cp"><span class="ph">bx ic</span> cp</a> documentation for more
+information.</p>
+
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> cp <span class="ph filepath"><var class="keyword varname">./config.txt</var></span> <var class="keyword varname">my_container</var>:<span class="ph filepath"><var class="keyword varname">/src/usr/tmp</var></span></code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Confirm that your files were copied to your volume by logging in to your running container with
+the <samp class="ph codeph"><span class="ph">bx ic</span> exec</samp>
+command.*</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> exec -it <var class="keyword varname">my_container</var> bash</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Navigate to the directory that you mounted your volume to and list the files.</span> Your file is listed in the output. Any container this volume is mounted to has access to this
+file.<pre class="codeblock"><code># cd <var class="keyword varname">container_path</var>
+# ls
+config.txt  </code></pre>
+</li>
+</ol>
+</div>
+<aside role="complementary" aria-labelledby="d87435e606"></aside></article><article class="topic task nested1" role="article" aria-labelledby="d87435e848" lang="en-us" id="container_volumes_backup"><h2 class="topictitle2" id="d87435e848">Backing up and restoring data with the command line interface (CLI)</h2>
+<div class="body taskbody"><p class="shortdesc">Container volumes are hosted on persistent storage but do not have backups. If you
+require a backup of your volume data, you can use <samp class="ph codeph"><span class="ph">bx ic</span> cp</samp> to create a manual
+backup.</p>
+<ol class="steps"><li class="step stepexpand"><span class="cmd">Identify the volume mount path on the running or stopped container that you are backing
+up.*</span>  <div class="p"><pre class="codeblock"><code><span class="ph">bx ic</span> inspect <var class="keyword varname">my_container</var></code></pre>
+</div>
+
+<p>The output contains a section similar to this example with the volume name and the container
+mount point. In this example, the mount point is the folder <span class="ph filepath">/mnt/data</span>.</p>
+
+<pre class="codeblock"><code>        "Mounts": [
+            {
+                "Destination": "<span class="ph filepath">/mnt/data</span>",
+                "Driver": "",
+                "Mode": "rw",
+                "Name": "",
+                "RW": true,
+                "Source": "/vol/<var class="keyword varname">fa277ff4-8a64-435b-9b75-0f11d59a3ae4</var>/<var class="keyword varname">example_container_id</var>"
+            }</code></pre>
+
+<div class="steps note"><span class="notetitle">Note:</span> <span class="ph" id="container_volumes_backup__d43994e180">*In this command, you can replace <samp class="ph codeph"><span class="ph">bx ic</span></samp> with <samp class="ph codeph">docker</samp>
+when you <a href="container_cli_cfic_install.html#container_cli_login" title="After you install the CLI, log in to use it.">logged in to <span class="keyword">IBM
+Cloud Container Service</span></a> and set your environment
+variables to use native Docker commands.</span><span class="ph" id="container_volumes_backup__d43994e192">You can use native Docker
+commands in all steps that are marked with an asterisk (*) in this topic. </span></div>
+</li>
+<li class="step stepexpand">Optional: <span class="cmd">Stop all running containers that are writing to the volume.*</span> By stopping the containers, you avoid copying data that is being written. <div class="p"><pre class="codeblock"><code><span class="ph">bx ic</span> stop <var class="keyword varname">my_container</var></code></pre>
+</div>
+</li>
+<li class="step stepexpand"><span class="cmd">Copy the files from the single container to your local computer.*</span> When you want to back up a volume for a container group, it is sufficient to execute this
+command on one instance of the group as all instances share the same mount point to the
+volume.<p>You now have a local back-up of your volume data.</p>
+<pre class="codeblock"><code><span class="ph">bx ic</span> cp <var class="keyword varname">my_container</var>:<var class="keyword varname">/mnt/data</var> <var class="keyword varname">my_local_folder</var></code></pre>
+<div class="tablenoborder"><table summary="" id="container_volumes_backup__table_wrq_nbl_nw" class="defaultstyle"><caption><span class="tablecap">Table 1. The elements of the <span class="ph">bx ic</span> cp command</span></caption><thead><tr><th colspan="2" id="d87435e1001" class="thleft">Understanding this command</th>
+</tr>
+</thead>
+<tbody><tr><td style="width: 50%" headers="d87435e1001 "><samp class="ph codeph">cp</samp></td>
+<td style="width: 50%" headers="d87435e1001 "><a href="container_cli_reference_cfic.html#container_cli_reference_cfic__cp">The copy
+command</a>.</td>
+</tr>
+<tr><td style="width: 50%" headers="d87435e1001 "><var class="keyword varname">my_container</var>:<var class="keyword varname">/mnt/data</var></td>
+<td style="width: 50%" headers="d87435e1001 ">The source path is first. In this case, you are copying your container's data to a local
+destination, so the container file path is the source. You must include the container name, colon,
+and the file path from within the container. In this example, you selected the volume mount point
+from the prior step so that you can copy all included files.</td>
+</tr>
+<tr><td style="width: 50%" headers="d87435e1001 "><var class="keyword varname">my_local_folder</var></td>
+<td style="width: 50%" headers="d87435e1001 ">The destination path is second. The local path can be absolute or relative. In this example,
+you are copying your container data to the relative path <var class="keyword varname">my_local_folder</var>.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+<li class="step stepexpand">Optional: <span class="cmd">Copy your data from the local folder to a new volume.*</span> This command restores your data to a new container or a new volume. One reason for
+transferring data to a new volume is that volume is mounted on a newly created file share that has
+more storage or a higher IOPS than the old file share. See <a href="container_volumes_ov.html#container_fileshares_adding_cli" title="Create a file share by using the bx ic volume-fs-create command.">Adding file shares with the command line interface (CLI)</a> for creating a new
+file share and <a href="container_volumes_ov.html#container_volumes_cli" title="A volume is a persistent storage location for the data that an app creates or the files that the app requires to run. You can create a volume for your container from the command line.">Creating volumes with the command line (CLI)</a> for creating a new
+volume.<pre class="codeblock"><code><span class="ph">bx ic</span> cp <var class="keyword varname">my_local_folder</var> <var class="keyword varname">my_new_container</var>:<var class="keyword varname">/mnt/data</var> </code></pre>
+</li>
+</ol>
+<div class="section result">Your data is now copied to your local folder and you have a manual backup. In addition, you
+copied the data to a volume on a new container.</div></div>
+<aside role="complementary" aria-labelledby="d87435e848"></aside></article><article class="topic task nested1" role="article" aria-labelledby="d87435e1074" lang="en-us" id="container_volumes_write"><h2 class="topictitle2" id="d87435e1074">Adding non-root user access to volumes with the command line interface (CLI)</h2>
+<div class="body taskbody"><p class="shortdesc">Non-root users do not have write permission on the volume mount path. To grant write
+permission, you must edit the Dockerfile of the image to create a directory on the mount path with
+the correct permission.</p>
+<div class="section context"><p>For <span class="keyword">IBM
+Cloud Container Service</span>, the user
+namespace feature is enabled for Docker Engine. User namespaces provide isolation so that the
+container root user cannot gain access to other containers or the compute host. However, volumes are
+on NFS file shares that are external to the container compute hosts. The volumes are set up to
+recognize the root user in the container, but because volumes are external to the container they are
+not aware of user namespaces.</p>
+<p>For some applications, the only user inside a container is the
+root user. However, many applications specify a non-root user that writes to the container mount
+path. If you are designing an application with a non-root user that requires write permission to the
+volume, you must add the following processes to your Dockerfile and entrypoint script:</p>
+<ul><li>Create a non-root user.</li>
+<li>Temporarily add the user to the root group.</li>
+<li>Create a directory in the volume mount path with the correct user permissions.</li>
+</ul>
+<p></p>
+</div><ol class="steps"><li class="step stepexpand"><span class="cmd">Create a Dockerfile in a local directory.</span> This example Dockerfile is creating a non-root user named <var class="keyword varname">myguest</var>.  <pre class="codeblock"><code>FROM registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/ibmnode:latest
+
+# Create group and user with GID &amp; UID <var class="keyword varname">1010</var>.
+# In this case your are creating a group and user named <var class="keyword varname">myguest</var>. 
+# The GUID and UID <var class="keyword varname">1010</var> is unlikely to create a conflict with any existing user GUIDs or UIDs in the image.
+# The GUID and UID must be between 0 and 65536. Otherwise, container creation fails.
+RUN groupadd --gid <var class="keyword varname">1010</var> <var class="keyword varname">myguest</var>
+RUN useradd --uid <var class="keyword varname">1010</var> --gid <var class="keyword varname">1010</var> -m --shell /bin/bash <var class="keyword varname">myguest</var>
+
+ENV MY_USER=myguest
+
+COPY entrypoint.sh /sbin/entrypoint.sh
+RUN chmod 755 /sbin/entrypoint.sh
+
+EXPOSE 22
+ENTRYPOINT ["/sbin/entrypoint.sh"]</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Create the entrypoint script in the same local folder as the Dockerfile.</span>  This example entrypoint script is specifying
+<span class="ph filepath"><var class="keyword varname">/mnt/myvol</var></span> as the volume mount
+path.<pre class="codeblock"><code>#!/bin/bash
+set -e
+
+# This is the mount point for the shared volume.
+# Use this mount point with the <span class="ph"><samp class="ph codeph">bx ic</samp></span> run command.
+# By default the mount point is owned by the root user.
+MOUNTPATH="/<span class="ph filepath">mnt</span>/<span class="ph filepath">myvol</span>"
+MY_USER=${MY_USER:-"myguest"}
+
+# This function creates a subdirectory that is owned by 
+# the non-root user under the shared volume mount path.
+create_data_dir() {
+  #Add the non-root user to primary group of root user.
+  usermod -aG root $MY_USER
+
+  # Provide read-write-execute permission to the group for the shared volume mount path.
+  chmod 775 $MOUNTPATH
+
+  # Create a directory under the shared path owned by non-root user <var class="keyword varname">myguest</var>.
+  su -c "mkdir -p ${MOUNTPATH}/mydata" -l $MY_USER
+  su -c "chmod 700 ${MOUNTPATH}/mydata" -l $MY_USER
+  ls -al ${MOUNTPATH}
+
+  # For security, remove the non-root user from root user group.
+  deluser $MY_USER root
+
+  # Change the shared volume mount path back to its original read-write-execute permission.
+  chmod 755 $MOUNTPATH
+  echo "Created Data directory..."
+}
+
+create_data_dir
+
+# This command creates a long-running process for the purpose of this example.
+tail -F /dev/null</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Log in to <span class="keyword">IBM
+Cloud</span>.</span> <pre class="codeblock"><code>bx login [-a api.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>] [-sso]</code></pre>
+
+<span class="ph">The single-sign-on parameter <span class="keyword option">--sso</span> is required when you log in
+with a federated ID. If this option is used, open <a href="https://login.ng.bluemix.net/UAALoginServerWAR/passcode" rel="external" target="_blank" title="(Opens in a new tab or window)">https://login.ng.bluemix.net/UAALoginServerWAR/passcode</a> to obtain a one-time passcode. If
+you do not include the <span class="keyword option">--sso</span> option, complete these substeps.</span><ol type="a" class="ol substeps"><li class="li substep"><span class="cmd">For <span class="ph uicontrol">Email</span>, enter your IBMId for
+<span class="keyword">Cloud</span>.</span></li>
+<li class="li substep"><span class="cmd">For <span class="ph uicontrol">Password</span>, enter the password for the IBMId.</span> Your <span class="keyword">Cloud</span> organizations and
+spaces are retrieved. </li>
+<li class="li substep"><span class="cmd">Enter the number that represents one of your <span class="keyword">Cloud</span> organizations. </span></li>
+<li class="li substep"><span class="cmd">Enter the number that represents one of your existing <span class="keyword">Cloud</span> spaces. </span></li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">Initialize the <span class="keyword">IBM
+Cloud Container Service</span> CLI.</span> <pre class="codeblock"><code><span class="ph">bx ic</span> init</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Add the image to your registry.*</span> Remember to replace <var class="keyword varname">&lt;my_namespace&gt;</var> with the namespace to your private
+images registry. Run <samp class="ph codeph"><span class="ph">bx ic</span> namespace-get</samp> if you need to find your namespace. <pre class="codeblock"><code><span class="ph">bx ic</span> build -t registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/&lt;my_namespace&gt;/nonroot .</code></pre>
+
+<div class="steps note"><span class="notetitle">Note:</span> <span class="ph" id="container_volumes_write__d45106e180">*In this command, you can replace <samp class="ph codeph"><span class="ph">bx ic</span></samp> with <samp class="ph codeph">docker</samp>
+when you <a href="container_cli_cfic_install.html#container_cli_login" title="After you install the CLI, log in to use it.">logged in to <span class="keyword">IBM
+Cloud Container Service</span></a> and set your environment
+variables to use native Docker commands.</span><span class="ph" id="container_volumes_write__d45106e192">You can use native Docker
+commands in all steps that are marked with an asterisk (*) in this topic. </span></div>
+</li>
+<li class="step stepexpand"><span class="cmd">Create a volume.</span> <pre class="codeblock"><code><span class="ph">bx ic</span> volume-create <var class="keyword varname">my_volume</var></code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Mount the volume and run the container from the <var class="keyword varname">nonroot</var> image.*</span>  The volume mount path <samp class="ph codeph">/<span class="ph filepath">mnt</span>/<span class="ph filepath">myvol</span></samp>
+matches the mount path that is specified in the
+Dockerfile.<pre class="codeblock"><code><span class="ph">bx ic</span> run --name <var class="keyword varname">my_container</var> --volume <var class="keyword varname">my_volume</var>:/<span class="ph filepath">mnt</span>/<span class="ph filepath">myvol</span> registry.ng.bluemix.net/&lt;my_namespace&gt;/nonroot</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Confirm that <var class="keyword varname">my_container</var> is running.*</span> If the container has a <samp class="ph codeph">BUILDING</samp> status, then you cannot log in to it
+yet. <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ps</code></pre>
+
+<pre class="pre screen"><code>$ <span class="ph"><samp class="ph codeph">bx ic</samp></span> ps
+CONTAINER ID        IMAGE                                         COMMAND             CREATED             STATUS                    PORTS      NAMES
+d92ee43d-2af        registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">nonroot</var>:latest   ""                  41 seconds ago      Running 29 seconds ago               <var class="keyword varname">my_container</var></code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Log in to the container after the container is running.*</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> exec -it <var class="keyword varname">my_container</var> /bin/bash</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">View permissions of your volume mount path.</span> <pre class="codeblock"><code>ls -al <span class="ph filepath">/mnt/myvol/</span></code></pre>
+
+<pre class="pre screen"><code>root@instance-006ff76b:/# ls -al /mnt/myvol/                                                                                                                                                             
+total 12
+drwxr-xr-x 3 root    root    4096 Jul 13 19:03 .
+drwxr-xr-x 3 root    root    4096 Jul 13 19:03 ..
+drwx------ 2 myguest myguest 4096 Jul 13 19:03 mydata</code></pre>
+
+<p>This output shows that root has read, write, and execute permissions on the volume mount path
+<var class="keyword varname">mnt/myvol/</var>, but the non-root <var class="keyword varname">myguest</var> user has permission to
+read and write to the <var class="keyword varname">mnt/myvol/mydata</var> folder. Because of these updated
+permissions, the non-root user can now write data to the persistent volume.</p>
+</li>
+</ol>
+</div>
+<aside role="complementary" aria-labelledby="d87435e1074"></aside></article><article class="topic task nested1" role="article" aria-labelledby="d87435e1457" lang="en-us" id="container_volume_different_dc"><h2 class="topictitle2" id="d87435e1457">Migrating volume data to a different data center</h2>
+<div class="body taskbody"><p class="shortdesc">If you plan on moving your current <span class="keyword">Cloud</span> space to a new data center, ensure that
+your volumes are backed up, so that you can restore and use the data in your new data center.  </p>
+<div class="section context"><div class="p"><div class="note attention"><span class="attentiontitle">Attention:</span> When you move your space to a new data center by using the <samp class="ph codeph"><span class="ph">bx ic</span> reprovision</samp> command,
+all containers, public IP addresses, and volumes that you have in this space will be permanently
+removed and not migrated to the new data center. To ensure that data is not lost after moving to the
+new data center, you must back up all your volumes and restore the data after your space is
+reprovisioned in the new data center. </div>
+</div>
+</div><ol class="steps"><li class="step stepexpand"><span class="cmd">List all the volumes that exist in the <span class="keyword">Cloud</span> space that you want to reprovision. </span> <pre class="codeblock"><code><span class="ph">bx ic</span> volumes</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Back up every volume that you want to use in the new data center. Choose between the following
+options.</span> <ul class="ul choices"><li class="li choice">Use the <a href="container_volumes_ov.html#container_volumes_backup" title="Container volumes are hosted on persistent storage but do not have backups. If you require a backup of your volume data, you can use bx ic cp to create a manual backup."><span class="ph">bx ic</span> cp command</a> to back up
+the volume to your local machine. </li>
+<li class="li choice">Create a backup container from the <a href="../images/docker_image_ibmbackup_restore/ibmbackup_restore_starter.html">IBM Backup and Restore image</a> to save data in an <span class="keyword">IBM Object
+Storage for IBM Cloud</span> instance.</li>
+</ul>
+<div class="note attention"><span class="attentiontitle">Attention:</span> If you do not back up your volume and you reprovision your space to the new
+data center, data is lost and cannot be recovered. </div>
+</li>
+<li class="step stepexpand"><span class="cmd"><a href="container_volumes_ov.html#container_volumes_remove" title="If you no longer need a volume to store data for your containers, you can remove the volume.">Remove all volumes in your
+space</a>.</span></li>
+<li class="step stepexpand"><span class="cmd"><a href="container_volumes_ov.html#container_filestorage_managing" title="An organization manager can remove existing file shares and view which volumes are mounted on a file share.">Remove all file shares in your
+space</a>. </span></li>
+<li class="step stepexpand"><span class="cmd">Reprovision your space to the new data center. Replace <var class="keyword varname">&lt;data_center&gt;</var> with
+the <a href="container_cli_reference_cfic.html#container_cli_reference_cfic__reprovision">data center</a> where you want to create your new space. </span> <pre class="codeblock"><code><span class="ph">bx ic</span> reprovision <var class="keyword varname">&lt;data_center&gt;</var></code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd"><a href="container_volumes_ov.html#container_fileshares_adding_cli" title="Create a file share by using the bx ic volume-fs-create command.">Create a file share in the new
+space</a>. </span></li>
+<li class="step stepexpand"><span class="cmd"><a href="container_volumes_ov.html#container_volumes_cli" title="A volume is a persistent storage location for the data that an app creates or the files that the app requires to run. You can create a volume for your container from the command line.">Create a volume</a> that you can use
+to restore the backed up data.</span></li>
+<li class="step stepexpand"><span class="cmd">Restore the data into your new volume. Depending on the way that you used to back up your
+volume, choose between the following options. </span> <ul class="ul choices"><li class="li choice">Use the <a href="container_volumes_ov.html#container_volumes_backup" title="Container volumes are hosted on persistent storage but do not have backups. If you require a backup of your volume data, you can use bx ic cp to create a manual backup."><span class="ph">bx ic</span> cp command</a> to restore
+the data from your local machine.</li>
+<li class="li choice">Create a restore container from the <a href="../images/docker_image_ibmbackup_restore/ibmbackup_restore_starter.html">IBM Backup and Restore image</a> to restore data from your <span class="keyword">IBM Object
+Storage for IBM Cloud</span> instance.</li>
+</ul>
+</li>
+</ol>
+</div>
+<aside role="complementary" aria-labelledby="d87435e1457"></aside></article><article class="topic task nested1" role="article" aria-labelledby="d87435e1626" lang="en-us" id="container_volumes_remove"><h2 class="topictitle2" id="d87435e1626">Removing volumes with the command line interface (CLI)</h2>
+<div class="body taskbody"><p class="shortdesc">If you no longer need a volume to store data for your containers, you can remove the
+volume.</p>
+<div class="section prereq"><ul><li><div class="note important"><span class="importanttitle">Important:</span> Removing a volume permanently removes any persistent data or files that are
+stored on the volume. Volumes are not backed up automatically, so <a href="container_volumes_ov.html#container_volumes_backup" title="Container volumes are hosted on persistent storage but do not have backups. If you require a backup of your volume data, you can use bx ic cp to create a manual backup.">back up your volume</a> before you remove it. </div>
+</li>
+</ul>
+</div><ol class="steps"><li class="step stepexpand"><span class="cmd">Identify the volume name.</span> <pre class="codeblock"><code><span class="ph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> volumes [--table]</span></code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Inspect your volume to review which containers the volume is mounted on.</span> <pre class="codeblock"><code><span class="ph">bx ic</span> volume-inspect <var class="keyword varname">example_volume</var></code></pre>
+
+<p>The output contains a section that is named <span class="ph uicontrol">mounted_on_containers</span> that
+lists containers that the volume is mounted on.</p>
+
+<pre class="codeblock"><code>    "mounted_on_containers": [
+        "<var class="keyword varname">example_container</var>"
+    ],</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">If the volume is mounted to a container, remove any confidential data before you delete the
+volume. </span> <ol type="a" class="ol substeps"><li class="li substep substepexpand">Optional: <span class="cmd">Inspect your container to find the mount path that the volume is mounted on.</span> <pre class="codeblock"><code><span class="ph">bx ic</span> inspect <var class="keyword varname">example_container</var></code></pre>
+You
+can find the mount path in the <span class="ph uicontrol">Volumes</span> section of your CLI response.
+<pre class="pre screen"><code>"Volumes": {
+        "/mount_path": "/vol/0e65c452-62413-46f2-8b22-ff06ab74ac21/<var class="keyword varname">example_volume</var>"</code></pre>
+</li>
+<li class="li substep substepexpand"><span class="cmd">Log in to the container.</span> <pre class="codeblock"><code><span class="ph">bx ic</span> exec -it <var class="keyword varname">example_container</var> bash</code></pre>
+</li>
+<li class="li substep substepexpand"><span class="cmd">Navigate to your mount path. </span> <pre class="codeblock"><code>cd /<var class="keyword varname">mount_path</var></code></pre>
+</li>
+<li class="li substep substepexpand"><span class="cmd">Remove all confidential data from your volume. </span> <pre class="codeblock"><code>rm -rf *</code></pre>
+</li>
+<li class="li substep substepexpand"><span class="cmd">Verify that all data is removed.</span> <pre class="codeblock"><code>ls</code></pre>
+If no directories or files are displayed, data is successfully removed from the
+volume mount path. </li>
+<li class="li substep substepexpand"><span class="cmd">Repeat steps a-e for all containers that are mounted to the volume and that contain
+confidential data in their volume mount path. </span></li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">Stop all the containers that are mounted to your volume prior to removing the volume.*</span> <pre class="codeblock"><code><span class="ph">bx ic</span> stop <var class="keyword varname">example_container</var></code></pre>
+
+<div class="steps note"><span class="notetitle">Note:</span> <span class="ph" id="container_volumes_remove__d44716e180">*In this command, you can replace <samp class="ph codeph"><span class="ph">bx ic</span></samp> with <samp class="ph codeph">docker</samp>
+when you <a href="container_cli_cfic_install.html#container_cli_login" title="After you install the CLI, log in to use it.">logged in to <span class="keyword">IBM
+Cloud Container Service</span></a> and set your environment
+variables to use native Docker commands.</span><span class="ph" id="container_volumes_remove__d44716e192">You can use native Docker
+commands in all steps that are marked with an asterisk (*) in this topic. </span></div>
+</li>
+<li class="step stepexpand"><span class="cmd">If the container is no longer needed, remove it.*</span> <pre class="codeblock"><code><span class="ph">bx ic</span> rm <var class="keyword varname">example_container</var></code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">When all of the containers with the volume mounted are stopped, remove the volume.</span> <div class="p"><pre class="codeblock"><code><samp class="ph codeph"><span class="ph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> volume-remove VOLNAME </span></samp></code></pre>
+</div>
+
+<div class="p"><dl><dt class="dlterm"><samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> volume-remove</samp>
+parameters </dt>
+<dd><dl class="parml"><dt class="pt dlterm"><var class="keyword varname">VOLNAME</var></dt>
+<dd class="pd">(Required) The volume name.</dd>
+</dl>
+</dd>
+</dl>
+</div>
+</li>
+<li class="step stepexpand">Optional: <span class="cmd">Verify that your volume is removed.</span> <pre class="codeblock"><code><span class="ph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> volumes [--table]</span></code></pre>
+</li>
+</ol>
+</div>
+<aside role="complementary" aria-labelledby="d87435e1626"></aside></article><article class="topic task nested1" role="article" aria-labelledby="d87435e1869" lang="en-us" id="container_fileshares_adding_ui"><h2 class="topictitle2" id="d87435e1869">Adding file shares for volumes with the <span class="keyword">Cloud</span> GUI</h2>
+<div class="body taskbody"><div class="abstract"><span class="shortdesc"><span class="ph">A file share is a persistent NFS-based (Network File System)
+storage system that hosts Docker volumes in a <span class="keyword">Cloud</span> space, and allows a user to store and
+access container and app-related files. To store files in a file share, you must create a container
+volume and save the data into this volume.</span></span>
+</div>
+<div class="section prereq"><div class="p"><div class="steps note"><span class="notetitle">Note:</span> If you have already reached your maximum quota limits, you can
+request to add extra quota by opening a <a href="../support/index.html#contacting-support"><span class="keyword">Cloud</span> support
+ticket</a>.</div>
+</div>
+</div><div class="section context"><p>Since containers in <span class="keyword">Cloud</span> do not
+have access to the local host, volumes are mounted on provisioned NFS file shares. The volumes on a
+file share are similar to directories on a host computer. Both file shares and volumes are unique
+per space, so a container must be created in the same space to access the persistent data on the
+volume. For more on setting up organizations and spaces, see <a href="../admin/orgs_spaces.html">Managing IBM Cloud Public</a>. Upon the first creation of a volume in
+an organization, a file share of 20 GB and 4 IOPS is provisioned automatically to host the volume.
+To meet the performance needs for the data, the organization manager can create new <a href="http://knowledgelayer.softlayer.com/learning/introduction-endurance-storage" rel="external" target="_blank" title="(Opens in a new tab or window)">file shares sizes</a> from 20 GB to 12 TB and at IOPS per GB of 0.25, 2 or
+4.</p>
+
+<figure class="fignone" id="container_fileshares_adding_ui__fig_ac1_lzt_q5"><figcaption>Figure 3. File share and volume structure in an organization.</figcaption><object id="container_fileshares_adding_ui__d27783e48" width="500" data="images/utd_volumes.svg"><img width="500" src="images/utd_volumes.jpg" alt="File shares contain volumes, which contain files."></object></figure>
+</div><ol class="steps"><li class="step stepexpand"><span class="cmd"><span class="ph">From your account details, in
+manage organizations, select an organization.</span></span></li>
+<li class="step stepexpand"><span class="cmd"><span class="ph">In the quota section, view
+the details for containers.</span></span></li>
+<li class="step stepexpand"><span class="cmd"><span class="ph">Create a file share. A row is created at the end of the table.</span></span></li>
+<li class="step stepexpand"><span class="cmd">Select an existing space for the file share to be created in.</span></li>
+<li class="step stepexpand"><span class="cmd">Enter a name for the file share.</span> <span class="ph">The name can contain uppercase letters, lowercase
+letters, numbers, underscores (_), and hyphens (-).</span></li>
+<li class="step stepexpand"><span class="cmd">Determine the capacity your file share needs.</span> The file share size and IOPS per GB (input/output operations per second) multiply together to
+create the total IOPS. The table illustrates the relationship between file share size and
+IOPS.<div class="tablenoborder"><table summary="" id="container_fileshares_adding_ui__file_share_ex" class="defaultstyle"><caption><span class="tablecap">Table 2. Examples of file share sizes and IOPS per GB</span></caption><thead><tr><th id="d87435e2002" class="thleft"> File share sizes</th>
+<th id="d87435e2004" class="thleft">IOPS per GB</th>
+<th id="d87435e2006" class="thleft">Total IOPS</th>
+</tr>
+</thead>
+<tbody><tr><td headers="d87435e2002 ">20 GB</td>
+<td headers="d87435e2004 ">4</td>
+<td headers="d87435e2006 ">80</td>
+</tr>
+<tr><td headers="d87435e2002 ">100 GB</td>
+<td headers="d87435e2004 ">4</td>
+<td headers="d87435e2006 ">400</td>
+</tr>
+<tr><td headers="d87435e2002 ">1,000 GB</td>
+<td headers="d87435e2004 ">4</td>
+<td headers="d87435e2006 ">4,000</td>
+</tr>
+<tr><td headers="d87435e2002 ">4,000 GB</td>
+<td headers="d87435e2004 ">4</td>
+<td headers="d87435e2006 ">16,000</td>
+</tr>
+</tbody>
+</table>
+</div>
+Apps with higher workloads require a greater total IOPS, so consider the apps that
+write to your volumes when you choose the file share configuration.<ol type="a" class="ol substeps"><li class="li substep"><span class="cmd">For the <span class="ph uicontrol">Size</span>, select a value in gigabytes.</span></li>
+<li class="li substep"><span class="cmd">For the <span class="ph uicontrol">IOPS</span>, select a value in IOPS per gigabyte.</span> Based on the inputs for <span class="ph uicontrol">Size</span> and <span class="ph uicontrol">IOPS</span>, a monthly
+price is calculated for you. Before you continue, you can adjust the values for <span class="ph uicontrol">Size</span> and <span class="ph uicontrol">IOPS</span> to change the monthly price calculation. </li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">Click <span class="ph uicontrol">Save</span>.</span></li>
+</ol>
+<div class="section result"><p><span class="ph" id="container_fileshares_adding_ui__fs_results"> It can take several minutes for the file share creation to complete. After
+the file share is finished building, the status icon displays a check mark. You now have a file
+share available in the specified space in your organization. You can create more file shares to host
+more volumes or you can host multiple volumes on one file share. Every volume shares the resources
+of the file share it is hosted on so hosting multiple volumes on one file share can reduce
+performance.</span></p>
+</div><div class="section postreq">Next, if you are an organization manager you can view your organization's file share
+billing.<div class="p"><ol><li>Click on the user avatar.</li>
+<li>Click on <span class="ph uicontrol">Account</span>.</li>
+<li>Expand your organization by clicking the <span class="ph uicontrol">+</span> button.</li>
+<li>Select <span class="ph uicontrol">Usage Dashboard</span> and review the usage and billing details. </li>
+</ol>
+<span class="ph">For more information, go to <span class="ph"><a href="../admin/account.html">Managing your account</a></span>.</span></div>
+</div></div>
+<aside role="complementary" aria-labelledby="d87435e1869"></aside><article class="topic task nested2" role="article" aria-labelledby="d87435e2106" lang="en-us" id="container_fileshares_adding_cli"><h3 class="topictitle3" id="d87435e2106">Adding file shares with the command line interface (CLI)</h3>
+<div class="body taskbody"><div class="abstract"><p></p>
+
+<div class="shortdesc">Create a file share by using the <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> volume-fs-create</samp> command.</div>
+</div>
+<div class="section prereq"></div><ol class="steps"><li class="step stepexpand">Optional: <span class="cmd">List the valid file share sizes by running the following command.</span> <pre class="codeblock"><code><span class="ph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> volume-fs-flavors </span></code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Create a file share by running the following command.</span> To view calculated costs of the file share before creating the file share, see <a href="container_volumes_ov.html#container_fileshares_adding_ui" title="A file share is a persistent NFS-based (Network File System) storage system that hosts Docker volumes in a Cloud space, and allows a user to store and access container and app-related files. To store files in a file share, you must create a container volume and save the data into this volume.">Adding file shares for volumes with the Cloud GUI</a> <pre class="codeblock"><code><span class="ph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> volume-fs-create FSNAME FSSIZE FSIOPS </span></code></pre>
+
+<div class="p"><dl><dt class="dlterm"><samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> volume-fs-create</samp>
+parameters </dt>
+<dd><dl class="parml"><dt class="pt dlterm"><var class="keyword varname">FSIOPS</var></dt>
+<dd class="pd">(Required) The file share IOPS. Valid values are 0.25, 2 or 4 IOPS per GB.</dd>
+<dt class="pt dlterm"><var class="keyword varname">FSNAME</var></dt>
+<dd class="pd">(Required) The file share name. <span class="ph">The name can contain uppercase letters, lowercase
+letters, numbers, underscores (_), and hyphens (-).</span></dd>
+<dt class="pt dlterm"><var class="keyword varname">FSSIZE</var></dt>
+<dd class="pd">(Required) The file share system size in GB. Use <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> volume-fs-flavors</samp> to list all valid
+sizes</dd>
+</dl>
+</dd>
+</dl>
+</div>
+</li>
+<li class="step stepexpand">Optional: <span class="cmd">Verify that the file share was created correctly by running the following command.</span> <pre class="codeblock"><code><span class="ph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> volume-fs</span></code></pre>
+</li>
+</ol>
+<div class="section result"><span class="ph"> It can take several minutes for the file share creation to complete. After
+the file share is finished building, the status icon displays a check mark. You now have a file
+share available in the specified space in your organization. You can create more file shares to host
+more volumes or you can host multiple volumes on one file share. Every volume shares the resources
+of the file share it is hosted on so hosting multiple volumes on one file share can reduce
+performance.</span></div><div class="section postreq">Next, if you are an organization manager you can view your organization's file share
+billing.<div class="p"><ol><li>Click on the user avatar.</li>
+<li>Click on <span class="ph uicontrol">Account</span>.</li>
+<li>Expand your organization by clicking the <span class="ph uicontrol">+</span> button.</li>
+<li>Select <span class="ph uicontrol">Usage Dashboard</span> and review the usage and billing details. </li>
+</ol>
+<span class="ph">For more information, go to <span class="ph"><a href="../admin/account.html">Managing your account</a></span>.</span></div>
+</div></div>
+<aside role="complementary" aria-labelledby="d87435e2106"></aside></article><article class="topic task nested2" role="article" aria-labelledby="d87435e2284" lang="en-us" id="container_filestorage_managing"><h3 class="topictitle3" id="d87435e2284"> Removing file shares</h3>
+<div class="body taskbody"><p class="shortdesc">An organization manager can remove existing file shares and view which volumes are
+mounted on a file share.</p>
+<div class="section context">The organization manager can review file shares by using both the <span class="keyword">Cloud</span> GUI and the CLI to see which volumes are
+mounted on them and to remove the file shares. Organization managers can opt to remove file shares
+that are not currently being used in development or in production.<div class="steps note"><span class="notetitle">Note:</span> File shares cannot be
+deleted at the end of the month due to the bill processing cycle. If you receive an error message at
+the end of the month when deleting a file share, wait until the first day of the upcoming month to
+delete the file share.</div>
+</div></div>
+<article class="topic task nested3" role="article" aria-labelledby="d87435e2348" id="task_ets_khp_y5"><h4 class="topictitle4" id="d87435e2348">Using the <span class="keyword">Cloud</span> GUI</h4>
+<div class="body taskbody"><ol class="steps"><li class="step"><span class="cmd"><span class="ph">From your account details, in
+manage organizations, select an organization.</span></span></li>
+<li class="step"><span class="cmd"><span class="ph">In the quota section, view
+the details for containers.</span></span></li>
+</ol>
+<div class="section result">In the File Storage table, you can find an <span class="ph uicontrol">ACTION</span> column and a
+<span class="ph uicontrol">NAME</span> column.<ul><li>Click the name of the file share to view the volumes attached to it.</li>
+<li>Click <span class="ph uicontrol">Delete</span> to delete the file share. You must first remove any attached
+volumes in order to delete a file share. Once a file share is deleted, it is permanently removed
+from your account. To remove a volume, see <a href="container_volumes_ov.html#container_volumes_remove" title="If you no longer need a volume to store data for your containers, you can remove the volume.">Removing volumes with the command line interface (CLI)</a>.</li>
+</ul>
+</div></div>
+</article><article class="topic task nested3" role="article" aria-labelledby="d87435e2387" id="task_uvm_chp_y5"><h4 class="topictitle4" id="d87435e2387">Using the command line</h4>
+<div class="body taskbody"><div class="section result">To remove a file share by using the CLI, issue the following commands.<div class="p"><ol><li>Identify the file share
+name.<pre class="codeblock"><code><span class="ph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> volume-fs</span></code></pre>
+</li>
+<li>Inspect the file share to determine whether any volumes exist on
+it.<pre class="codeblock"><code><span class="ph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> volume-fs-inspect FSNAME </span></code></pre>
+</li>
+<li>If needed, remove an existing
+volume.<pre class="codeblock"><code><span class="ph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> volume-remove VOLNAME </span></code></pre>
+</li>
+<li>Remove an existing file share.
+<pre class="codeblock"><code><span class="ph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> volume-fs-remove FSNAME </span></code></pre>
+</li>
+<li>List the existing file shares to confirm that the file share is
+removed.<pre class="codeblock"><code><span class="ph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> volume-fs</span></code></pre>
+</li>
+</ol>
+</div>
+</div></div>
+</article></article></article></article></div></main></body></html>
