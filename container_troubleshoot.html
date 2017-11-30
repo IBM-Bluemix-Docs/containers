@@ -1,0 +1,1138 @@
+<!DOCTYPE html><html lang="en-us">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="dcterms.date" content="2017-11-10">
+<meta name="dcterms.rights" content="© Copyright IBM Corporation 2014, 2017">
+
+<meta name="description" content="If you have problems or questions when you are using IBM Cloud Container Service, you can get help by searching for information or by asking questions through a forum. You can also open a support ticket.">
+<meta name="keywords" content="troubleshoot, support, IBM Containers, containers, debug, fail, troubleshooting, cli, quota, images, Delivery pipeline, container, liberty, image, single containers, container groups, auto-recovery, group instances fail, group instances crash, delete, network_degraded, docker compose, data storage, volumes">
+<meta name="geo.country" content="ZZ">
+<script>
+    digitalData = {
+      page: {
+        pageInfo: {
+  language: "en-us",
+
+  version: "v18",
+  ibm: {
+  country: "ZZ",
+  type: "CT701"
+  
+         }
+       }
+     }
+   };
+  </script><!-- Licensed Materials - Property of IBM -->
+<!-- US Government Users Restricted Rights -->
+<!-- Use, duplication or disclosure restricted by -->
+<!-- GSA ADP Schedule Contract with IBM Corp. -->
+<link rel="stylesheet" type="text/css" href="./ibmdita.css">
+<title>Troubleshooting single and scalable containers</title>
+</head>
+<body><main role="main"><div><article class="nested0" role="article" aria-labelledby="d81670e6" id="container_troubleshoot"><h1 class="topictitle1" id="d81670e6">Troubleshooting <span class="ph">single and scalable containers</span> (Deprecated)</h1>
+<div class="body taskbody"><div class="abstract"><div class="shortdesc"> If you have problems or questions when you are using IBM® Cloud Container Service, you can get help by searching
+for information or by asking questions through a forum. You can also open a support ticket. </div>
+
+<div class="p"><div class="note attention"><span class="attentiontitle">Attention:</span>  Single and scalable containers are deprecated. Support
+will continue in IBM Cloud Public until 5 December 2017 and in IBM Cloud Local and Dedicated until
+20 June 2018. Start using Kubernetes clusters today to deploy secure, highly available apps. <a href="https://www.ibm.com/blogs/bluemix/2017/07/deprecation-single-scalable-group-container-service-bluemix-public/" rel="external" target="_blank" title="(Opens in a new tab or window)">Learn more about Kubernetes and how to migrate your
+apps</a>.</div>
+</div>
+
+<div class="p">In this
+page:<div class="lines">&nbsp;&nbsp;&nbsp;&nbsp;• <a href="container_troubleshoot.html#ts_debug_containers" title="Review the options that you have to debug your containers and find the root causes for failures.">Debugging containers and reviewing logs</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;• <a href="container_troubleshoot.html#ts_ov_cli">Troubleshooting the CLI setup</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;• <a href="container_troubleshoot.html#ts_ov_orgs">Troubleshooting quota</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;• <a href="container_troubleshoot.html#ts_ov_images">Troubleshooting images</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;• <a href="container_troubleshoot.html#ts_ov_containers">Troubleshooting containers</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;• <a href="container_troubleshoot.html#ts_ov_compose">Troubleshooting Docker Compose</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;• <a href="container_troubleshoot.html#ts_ov_volumes">Troubleshooting data storage</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;• <a href="container_troubleshoot.html#ts_known_issues" title="Learn about the known issues that occur in IBM Containers.">Known issues</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;• <a href="container_troubleshoot.html#ts_getting_help" title="Where do you start troubleshooting a container?">Getting help and support for IBM Cloud Container Service</a></div>
+</div>
+</div>
+</div>
+<article class="topic task nested1" role="article" aria-labelledby="d81670e127" lang="en-us" id="ts_debug_containers"><h2 class="topictitle2" id="d81670e127">Debugging containers and reviewing logs</h2>
+<div class="body taskbody"><p class="shortdesc">Review the options that you have to debug your containers and find the root causes for
+failures. </p>
+<ol class="steps"><li class="step stepexpand"><span class="cmd">List your containers and review the current status.</span> <ul><li><span class="keyword option">Single
+container</span><pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ps -a</code></pre>
+</li>
+<li><span class="keyword option">Container
+group</span><pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> groups</code></pre>
+</li>
+</ul>
+</li>
+<li class="step stepexpand">Optional: <span class="cmd">See <a href="container_cli_reference_cfic.html#container_cli_reference_cfic_states" title="You can view the current container state by running the bx ic inspect command and locating the Status field. The container state can give you additional information about the availability of the container instances and problems that might have occurred.">what
+each status means</a> and review tips to prevent a container from failing. </span></li>
+<li class="step stepexpand"><span class="cmd">If your container failed or crashed, inspect your containers to find the root cause for the
+failure. </span> The error message can be found in the <span class="ph uicontrol">Failure</span> section of your response. <ul><li><span class="keyword option">Single
+container</span><pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> inspect <var class="keyword varname">CONTAINER</var></code></pre>
+</li>
+<li><span class="keyword option">Container group</span><ol type="a"><li>Inspect the container
+group.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-inspect <var class="keyword varname">GROUP</var></code></pre>
+</li>
+<li>For further information, list the instances of a container group and inspect each instance.
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-instances <var class="keyword varname">GROUP</var></code></pre>
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> inspect <var class="keyword varname">GROUP_INSTANCE</var></code></pre>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li class="step stepexpand"><span class="cmd">If the app exited with a failure, retrieve the logs for the app. </span> <div class="steps note"><span class="notetitle">Note:</span> This command can be used only if the app writes logs to the standard STDOUT and STDERR output
+streams. Writing to these standard output streams allows you to view container logs even if the
+container shuts down or crashes.</div>
+
+<ul><li><span class="keyword option">Single
+container</span><pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> logs <var class="keyword varname">CONTAINER</var></code></pre>
+</li>
+<li><span class="keyword option">Container group</span><ol type="a"><li>List the container instances of a container
+group.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-instances <var class="keyword varname">GROUP</var></code></pre>
+</li>
+<li>Retrieve the logs for each instance.
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> logs <var class="keyword varname">GROUP_INSTANCE</var></code></pre>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li class="step stepexpand"><span class="cmd">If you need to access logs of a container that is no longer available, such as an instance of a
+container group that has been re-created with autorecovery, use Kibana to view your logs.</span> <p><samp class="ph codeph"><span class="ph filepath">https://logmet.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/</span></samp></p>
+
+<p>Logs are available for up to 7 days in Kibana.</p>
+</li>
+<li class="step stepexpand"><span class="cmd">If the logs were saved into a file inside the container, you must log into the container to
+review it. </span> <div class="note important"><span class="importanttitle">Important:</span> You can only log into a running container. If your container crashed and
+cannot be started again, you might not be able to access the logs of your container. Consider to
+change your app to write to the standard STDOUT and STDERR output streams so that you can access the
+log files even if the container is not accessible anymore.</div>
+
+<ol type="a"><li>If your container is not running, start your container.
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> start <var class="keyword varname">CONTAINER</var></code></pre>
+</li>
+<li>Log into your running container.
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> exec -it <var class="keyword varname">CONTAINER</var> bash</code></pre>
+</li>
+<li>Navigate to your log file and review the logs. </li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">If the logs were saved to a volume and your container cannot be started anymore, create a new
+container to access the volume. </span> <ol type="a"><li>Create a new container that is mounted to the volume where the log files are stored.
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run --name logcontainer -m 64 --volume <var class="keyword varname">MOUNT_PATH_TO_VOLUME</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/ibmliberty</code></pre>
+</li>
+<li>Log into the running container.
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> exec -it logcontainer bash</code></pre>
+</li>
+<li>Navigate to the volume mount path and review your log files. </li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">If you need further support with debugging your containers, open a <a href="../support/index.html#contacting-support" rel="external" target="_blank" title="(Opens in a new tab or window)">support ticket</a>. </span></li>
+</ol>
+</div>
+<aside role="complementary" aria-labelledby="d81670e127"></aside></article><article class="topic concept nested1" role="article" aria-labelledby="d81670e391" lang="en-us" id="ts_ov_cli"><h2 class="topictitle2" id="d81670e391">Troubleshooting the CLI setup</h2>
+<div class="body conbody"><p class="shortdesc"></p>
+<p></p>
+</div>
+<aside role="complementary" aria-labelledby="d81670e391"></aside><article class="topic tsTroubleshooting nested2" role="article" aria-labelledby="d81670e452" lang="en-us" id="ts_cf_ic_rpc"><h3 class="topictitle3" id="d81670e452">Method error <samp class="ph codeph">(rpc)</samp> during init</h3>
+<div class="body tsBody"><p class="shortdesc"></p>
+<div class="section tsSymptoms">When you try to run <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span>
+init</samp>, you get one of the following messages.<ul><li><samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> rpc: can't find method
+CliRpcCmd.IsLoggedIn</samp></li>
+<li><samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> rpc: can't find method
+CliRpcCmd.IsMinCliVersion</samp></li>
+</ul>
+</div><div class="section tsCauses">The
+installed version of the Cloud Foundry is an earlier version than
+what is supported
+for <span class="keyword">IBM
+Cloud Container Service</span>.</div><div class="section tsResolve"><ol><li>Run <samp class="ph codeph">cf -v</samp> to see which version of the Cloud
+Foundry CLI is installed.</li>
+<li>If the installed version is earlier than <span class="ph">6.14.0</span>, <a href="https://github.com/cloudfoundry/cli/releases" rel="external" target="_blank" title="(Opens in a new tab or window)">update your Cloud
+Foundry CLI</a>.</li>
+</ol>
+</div></div>
+</article><article class="topic tsTroubleshooting nested2" role="article" aria-labelledby="d81670e557" lang="en-us" id="ts_cf_ic_registry_error"><h3 class="topictitle3" id="d81670e557">Registry authentication error received during <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> init</samp></h3>
+<div class="body tsBody"><p class="shortdesc"></p>
+<div class="section tsSymptoms">When you run <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span>
+init</samp>, you see one of the following authentication error messages.<div class="p"><ul><li><pre class="codeblock"><code>Could not authenticate with IBM Containers registry at registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>
+****exit status 1
+****time="2015-07-31T08:58:32-04:00" level=fatal msg="Post http:///var/run/docker.sock/v1.18/auth: dial 
+unix /var/run/docker.sock: no such file or directory. Are you trying to connect to a TLS-enabled daemon without TLS?”</code></pre>
+</li>
+<li><pre class="codeblock"><code>** Retrieving client certificates from IBM Containers
+Authentication failure. Check your username and password
+Invalid token format. Please generate new token.</code></pre>
+</li>
+</ul>
+</div>
+</div><div class="section tsCauses">Either one of the <span class="ph"><samp class="ph codeph">bx ic</samp></span> prerequisites
+is not met or <span class="keyword">IBM
+Cloud Container Service</span> is not
+available.</div><div class="section tsResolve"><ol><li>Verify that the Docker daemon is running. If it is not, start it and run <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> init</samp> again.</li>
+<li>Verify that you are logged in to the Cloud Foundry CLI by running <samp class="ph codeph">bx login</samp>.
+Then, log in to the plug-in again by running <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> init</samp>.</li>
+<li>Verify the availability of <span class="keyword">IBM
+Cloud Container Service</span>.
+<a href="https://developer.ibm.com/bluemix/support/#status" rel="external" target="_blank" title="(Opens in a new tab or window)">Check
+the <span class="keyword">Cloud</span> status page for
+information.</a></li>
+</ol>
+</div></div>
+</article><article class="topic tsTroubleshooting nested2" role="article" aria-labelledby="d81670e688" lang="en-us" id="ts_sudo"><h3 class="topictitle3" id="d81670e688">Sudo is required with <span class="ph"><samp class="ph codeph">bx ic</samp></span>
+commands</h3>
+<div class="body tsBody"><p class="shortdesc"></p>
+<div class="section tsSymptoms"> When you run <span class="ph"><samp class="ph codeph">bx ic</samp></span> commands, you
+are required to use the <samp class="ph codeph">sudo</samp> prefix with all of your commands.</div><div class="section tsCauses">By default, the <span class="ph"><samp class="ph codeph">bx ic</samp></span> commands must be
+run with root authentication and therefore, might require the prefix <samp class="ph codeph">sudo</samp>,
+depending on your operating system.</div><div class="section tsResolve">To run <samp class="ph codeph">docker</samp> and <span class="ph"><samp class="ph codeph">bx ic</samp></span> commands without <samp class="ph codeph">sudo</samp>, run
+the following command, then, if you are on Linux, you must log out then log back in again.
+<pre class="codeblock"><code>sudo usermod -a -G docker <var class="keyword varname">&lt;CURRENT_USER&gt;</var></code></pre>
+</div></div>
+</article></article><article class="topic concept nested1" role="article" aria-labelledby="d81670e780" lang="en-us" id="ts_ov_orgs"><h2 class="topictitle2" id="d81670e780">Troubleshooting quota </h2>
+<div class="body conbody"><p class="shortdesc"></p>
+<p></p>
+</div>
+<aside role="complementary" aria-labelledby="d81670e780"></aside><article class="topic tsTroubleshooting nested2" role="article" aria-labelledby="d81670e841" lang="en-us" id="ts_quota_space"><h3 class="topictitle3" id="d81670e841">A container cannot be created because of insufficient org quota</h3>
+<div class="body tsBody"><div class="section tsSymptoms">When you create a container, you receive a message that you do not have sufficient quota
+in your
+space.<pre class="pre msgblock"><code>BXNUI0110E: Could not allocate IBM Containers resources. Insufficient ORG quota to allocate 
+to new SPACE. Cannot exceed your organization '<var class="keyword varname">organization</var>' floating IPs. Use IBM
+    <span class="keyword">Cloud</span> Manage Organizations to 
+adjust quota allocation.</code></pre>
+</div><div class="section tsCauses">This message might be displayed when you try to create containers in a space that does not
+have enough quota allocated. By default, every space requires 2 IP addresses and 2 GB of memory to
+be allocated to that space to work with the container service.</div><div class="section tsResolve"><div class="p">To distribute the memory and IP quota across multiple spaces:<ol><li><span class="ph">From your account details, in
+manage organizations, select an organization.</span></li>
+<li><span class="ph">In the quota section, view
+the details for containers.</span></li>
+<li>Click <span class="ph uicontrol">Edit</span> and allocate the memory and IP addresses across the spaces in
+the organization.</li>
+<li>Create a container in any space in the organization.</li>
+</ol>
+</div>
+
+</div></div>
+</article><article class="topic tsTroubleshooting nested2" role="article" aria-labelledby="d81670e923" lang="en-us" id="ts_trial_upgrade"><h3 class="topictitle3" id="d81670e923">Quota cannot be edited though you have a pay account</h3>
+<div class="body tsBody"><div class="section tsSymptoms">You are not able to modify your container quota.</div><div class="section tsCauses">There might be inconsistencies between the organization's manager and the billing
+information.</div><div class="section tsResolve"><div class="p">The logged in user must be the manager of the organization. To verify the owner, complete these steps.<ol><li><span class="ph">From your account details, in
+manage organizations, select an organization.</span></li>
+<li>In the user list, verify that the manager of the organization is the same as the ID that you are
+logging in with.</li>
+<li>Log out of the account and log back in.</li>
+</ol>
+If you complete these steps and you still cannot edit container quota, contact IBM Support.</div>
+</div></div>
+</article></article><article class="topic concept nested1" role="article" aria-labelledby="d81670e988" lang="en-us" id="ts_ov_images"><h2 class="topictitle2" id="d81670e988">Troubleshooting images</h2>
+<div class="body conbody"><p class="shortdesc"></p>
+<p></p>
+</div>
+<aside role="complementary" aria-labelledby="d81670e988"></aside><article class="topic tsTroubleshooting nested2" role="article" aria-labelledby="d81670e1049" lang="en-us" id="ts_firewall_images"><h3 class="topictitle3" id="d81670e1049">Internal proxy blocks requests to push images</h3>
+<div class="body tsBody"><p class="shortdesc"></p>
+<div class="section tsSymptoms">To create a container within a specific <span class="keyword">Cloud</span> region, you must push the image to
+create the container to a registry within that region. When you try to push an image to that
+registry, the connection fails with one of the following error messages.
+<pre class="pre screen"><code>Connection refused</code></pre>
+<pre class="pre screen"><code>Connection timed out</code></pre>
+</div><div class="section tsCauses">You might have firewall settings that are preventing communication from your computer to
+the <span class="keyword">Cloud</span> registry. Often, internal
+proxy settings are configured to allow only permissible communication for security reasons. </div><div class="section tsResolve">In your firewall, open communication from your computer to the registry for the
+region-specific IP addresses: <ul id="ts_firewall_images__ul_on4_rfj_wz"><li>US South:
+<pre class="codeblock"><code>169.55.39.122
+169.55.39.124
+169.55.39.126
+169.55.211.14
+169.46.9.2
+169.46.9.3
+169.46.9.20
+169.46.9.21</code></pre>
+</li>
+<li>United
+Kingdom:<pre class="codeblock"><code>159.8.188.168
+159.8.188.169
+159.8.188.174
+159.8.188.179
+169.50.153.69
+169.50.153.76
+169.50.153.81
+169.50.153.85</code></pre>
+</li>
+</ul>
+</div></div>
+</article><article class="topic tsTroubleshooting nested2" role="article" aria-labelledby="d81670e1114" lang="en-us" id="ts_liberty_image"><h3 class="topictitle3" id="d81670e1114">Problems with the IBM
+WebSphere Application Server Liberty images</h3>
+<div class="body tsBody"><p class="shortdesc"></p>
+<div class="section tsSymptoms">You are having problems with using one of the IBM
+WebSphere® Application Server Liberty images in <span class="keyword">IBM
+Cloud Container Service</span>.</div><div class="section tsCauses"><p>The image might not be set up correctly.</p>
+</div><div class="section tsResolve"><p>If you have issues that relate specifically to this <span class="ph filepath">Dockerfile</span> image, use
+the <a href="https://github.com/WASdev/ci.docker/issues" rel="external" target="_blank" title="(Opens in a new tab or window)">GitHub
+issue tracker</a>. For more general issues that relate to IBM
+WebSphere Application Server Liberty, you can get help
+by going to the <a href="https://developer.ibm.com/wasdev/help/" rel="external" target="_blank" title="(Opens in a new tab or window)">WASdev community</a>.</p>
+
+<p>For more information about the IBM
+WebSphere Application Server Liberty images in <span class="keyword">IBM
+Cloud Container Service</span>, see <a href="../images/docker_image_ibmliberty/ibmliberty_starter.html">IBM
+WebSphere Application Server Liberty images</a>.</p>
+</div></div>
+</article><article class="topic tsTroubleshooting nested2" role="article" aria-labelledby="d81670e1243" lang="en-us" id="ts_image_baduserid"><h3 class="topictitle3" id="d81670e1243">Image cannot be pulled from your private <span class="keyword">Cloud</span> images registry</h3>
+<div class="body tsBody"><div class="section tsSymptoms">You created a container from a container image in your private <span class="keyword">Cloud</span> registry, but the container gets stuck
+in a <span class="ph uicontrol">BUILDING</span> state. When you run the <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> inspect</samp> command, the following error
+message is shown in the <span class="ph uicontrol">Env</span> section of your CLI response.
+<pre class="codeblock"><code>"Env": [
+            "metadata_exit_code=-1",
+            "logging_password=",
+            "space_id=0e65c436-9413-46e2-8b42-ff06aa74ac21",
+            "logstash_target=logmet.opvis.bluemix.net:9091",
+            "metadata_err_msg=Cannot pull image from registry: Pull failed with error message failed 
+             to register layer: ApplyLayer exit status 1 stdout:  stderr: Container ID 1234567890 
+             cannot be mapped to a host ID",
+            "metrics_target=logmet.opvis.bluemix.net:9095",
+            "metadata_running=1"</code></pre>
+</div><div class="section tsCauses">In the <span class="keyword">IBM
+Cloud Container Service</span>, the <a href="https://docs.docker.com/engine/security/security/" rel="external" target="_blank" title="(Opens in a new tab or window)">Docker user
+namespace feature</a> is enabled in the Docker Engine. The user namespace feature was first
+introduced with Docker version 1.10 and provides the possibility to map a root user in the container
+to a non-root user outside the container. In this way, the permissions of a user that can perform
+root actions inside the container, can be restricted outside the container, so files on the host and
+in other containers cannot be accessed, altered, or removed. <div class="steps note"><span class="notetitle">Note:</span> The Docker user namespace is
+different to the namespace that you set up in <span class="keyword">Cloud</span> to identify your <a href="container_planning.html#container_planning_namespace" title="To store and manage private images for IBM Cloud Container Service, every organization is required to set up its own private Docker images registry in Cloud. This name of the private registry is called a namespace and must be unique within Cloud.">private images registry</a>.</div>
+<p>When you create a container from a container image with the <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> run</samp> command, the image is loaded from
+your private <span class="keyword">Cloud</span> images registry
+into the IBM Cloud Docker Engine. The Docker Engine then starts to create the respective container
+layers. Depending on what is specified in the container image, app files from your local machine
+might be added to the container. All these files are created by a user ID (UID) and group ID (GID)
+on your local machine. The UID and GID indicate the user's permission on the local machine. When you
+want to add these files to the container, the respective UID and GID is mapped to a UID and GID
+inside the container. The mapped UID and GID might have different permissions inside the container
+than on the local machine. For example, the local machine's non-root UID and GID is mapped to a root
+user inside the container. In this way, the user can act like a root user inside the container and
+access, alter, and remove container files. As the container is running in an isolated environment,
+the UID and GID cannot access any files on the host as it is assigned non-root permissions outside
+the container. </p>
+<p>To map a local machine's UID and GID to one inside a container, the user
+namespace feature requires that all files are created with a UID and GID between 0 and 65536.</p>
+<p>The error that is shown occurs when a file is created from a UID or GID outside this range
+and when this file is included in one of the container image layers. When you create a container
+from the image, the Docker Engine builds each layer of the image. When a file with a UID or GID
+outside the range is found, the Docker Engine fails because this UID or GID could not be mapped to a
+valid one inside the container. The Docker Engine also fails when a file is used in one image layer
+and removed in the next image layer. </p>
+</div><div class="section tsResolve"><dl><dt class="dlterm">Enable the user namespace on your local Docker Engine</dt>
+<dd>When you build your container images locally, be sure to enable the user namespace feature in
+your local Docker Engine. In this way, all UID, and GID on your local machine that are out of the
+valid user namespace range are automatically mapped to a valid ID within the range. Test your
+container image locally before you push it to your private <span class="keyword">Cloud</span> images registry and use it with <span class="keyword">IBM
+Cloud Container Service</span>. For more information about how to
+enable the user namespace feature, see <a href="https://docs.docker.com/engine/security/userns-remap/#enable-userns-remap-on-the-daemon" rel="external" target="_blank" title="(Opens in a new tab or window)">Starting the daemon with user namespaces enabled</a>. </dd>
+<dt class="dlterm">Comment out the affected image layer and change the ownership of the affected files</dt>
+<dd>If you cannot find the file that causes the issue, try to comment out the image layers in your
+Dockerfile and uncomment one layer after another. Build your image and create a container to find
+the affected image layer. <p>Run <samp class="ph codeph">chown [-R] root:root
+<var class="keyword varname">&lt;file_or_folder&gt;</var></samp> to change the ownership of the affected file that is
+stored on your local machine or add this command to the affected image layer in the Dockerfile.</p>
+<p>Example
+Dockerfile</p>
+<pre class="codeblock"><code>RUN curl -fsSL "https://www.kernel.org/pub/software/scm/git/git-${GIT_VERSION}.tar.gz" \
+        | tar -xzC /tmp \
+  &amp;&amp; cd /tmp/git-${GIT_VERSION} \
+  &amp;&amp; ./configure \
+  &amp;&amp; make all \
+  &amp;&amp; make install \
+  &amp;&amp; chown -R root:root /tmp</code></pre>
+</dd>
+</dl>
+</div></div>
+</article><article class="topic tsTroubleshooting nested2" role="article" aria-labelledby="d81670e1418" lang="en-us" id="ts_image_export"><h3 class="topictitle3" id="d81670e1418">Image cannot be exported from your private <span class="keyword">Cloud</span> images registry</h3>
+<div class="body tsBody"><div class="section tsSymptoms">You are logged in to the <span class="keyword">IBM
+Cloud Container Service</span> and want to pull an image from your
+private <span class="keyword">Cloud</span> registry to your local
+machine by using the <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> pull</samp>
+command. The command fails stating that <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> pull</samp> is not supported. </div><div class="section tsCauses">The <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> pull</samp>
+command is not supported to pull an image from your private <span class="keyword">Cloud</span> registry to your local machine. </div><div class="section tsResolve">To export an image from your private <span class="keyword">Cloud</span> registry, follow these steps. <ol><li><a href="container_cli_cfic_install.html#container_cli_login" title="After you install the CLI, log in to use it.">Log in to the <span class="keyword">IBM
+Cloud Container Service</span></a>. If you are already logged in,
+make sure your environment variables are not set to use native Docker commands against the <span class="keyword">IBM
+Cloud Container Service</span>. </li>
+<li>List your images.
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> images</code></pre>
+</li>
+<li>Pull an image from your private <span class="keyword">Cloud</span> registry to your local machine. Use the
+name or id of the image that was returned in the previous step.
+<pre class="codeblock"><code>docker pull <var class="keyword varname">&lt;image_name_or_id&gt;</var></code></pre>
+</li>
+<li>Verify that the image was pulled to your local machine. <pre class="codeblock"><code>docker images</code></pre>
+</li>
+<li>Save your image into a <span class="ph filepath">.tar</span> file.
+<pre class="codeblock"><code>docker export <var class="keyword varname">&lt;image_name_or_id&gt;</var> &gt; <var class="keyword varname">&lt;exported_image_name&gt;</var>.tar</code></pre>
+</li>
+</ol>
+</div></div>
+</article><article class="topic tsTroubleshooting nested2" role="article" aria-labelledby="d81670e1575" lang="en-us" id="ts_namespace_change"><h3 class="topictitle3" id="d81670e1575">The namespace for an organization cannot be changed</h3>
+<div class="body tsBody"><p class="shortdesc"></p>
+<div class="section tsSymptoms">You cannot find a method for changing the namespace.</div><div class="section tsCauses">The namespace for an organization cannot be changed after it is created.</div><div class="section tsResolve">You can create another organization and set the namespace for that new organization to
+the desired name.</div></div>
+</article><article class="topic tsTroubleshooting nested2" role="article" aria-labelledby="d81670e1632" lang="en-us" data-hd-audience="" id="ts_image_push_login"><h3 class="topictitle3" id="d81670e1632">Prompted for login during <samp class="ph codeph">docker push</samp></h3>
+<div class="body tsBody"><p class="shortdesc"></p>
+<div class="section tsSymptoms">When you try to run <samp class="ph codeph">docker push</samp> to add an image to your private
+<span class="keyword">Cloud</span> images registry, you are
+prompted for login credentials. When you enter Docker or <span class="keyword">Cloud</span> credentials, the authentication
+fails.</div><div class="section tsCauses">The authentication might fail due to
+the following reasons. <ul><li>The bearer token, which contains Cloud
+Foundry authentication information, is expired.</li>
+<li>The <span class="keyword">Cloud</span> authorization
+service
+is not available.</li>
+</ul>
+</div><div class="section tsResolve"><div class="p"><ul><li>If you are using the <span class="keyword">IBM
+Cloud Container Service</span> plug-in:<ol><li>Log in to the Cloud Foundry CLI by running the command to refresh the bearer token on your
+computer.<pre class="codeblock"><code>bx login [-a api.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>] [-sso]</code></pre>
+<span class="ph">The single-sign-on parameter <span class="keyword option">--sso</span> is required when you log in
+with a federated ID. If this option is used, open <a href="https://login.ng.bluemix.net/UAALoginServerWAR/passcode" rel="external" target="_blank" title="(Opens in a new tab or window)">https://login.ng.bluemix.net/UAALoginServerWAR/passcode</a> to obtain a one-time passcode. If
+you do not include the <span class="keyword option">--sso</span> option, complete these substeps.</span><ol type="a"><li>For <span class="ph uicontrol">Email</span>, enter the IBMId that you
+use to log in to <span class="keyword">Cloud</span>.</li>
+<li>For <span class="ph uicontrol">Password</span>, enter the password for the IBMId that you use to log in to <span class="keyword">Cloud</span>. By entering your user name and
+password, your organization and space are
+retrieved.</li>
+<li>Enter the number that represents one of your <span class="keyword">Cloud</span> organizations. </li>
+<li>Enter the number that represents one of your existing <span class="keyword">Cloud</span> spaces.</li>
+</ol>
+</li>
+<li>Initialize the <span class="keyword">IBM
+Cloud Container Service</span> CLI to
+re-create your bearer
+token.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> init</code></pre>
+</li>
+</ol>
+</li>
+</ul>
+</div>
+
+<p>If the prompt still occurs after you logged in again, the <span class="keyword">Cloud</span> authorization
+service is not available.
+Try again later.</p>
+</div></div>
+</article></article><article class="topic concept nested1" role="article" aria-labelledby="d81670e1804" lang="en-us" id="ts_ov_containers"><h2 class="topictitle2" id="d81670e1804">Troubleshooting containers</h2>
+<div class="body conbody"><p class="shortdesc"></p>
+<p></p>
+</div>
+<aside role="complementary" aria-labelledby="d81670e1804"></aside><article class="topic tsTroubleshooting nested2" role="article" aria-labelledby="d81670e1867" lang="en-us" id="ts_group_502"><h3 class="topictitle3" id="d81670e1867"><samp class="ph codeph">502 Bad Gateway</samp> error when accessing an app</h3>
+<div class="body tsBody"><p class="shortdesc"></p>
+<div class="section tsSymptoms"><div class="p">You deployed a container group successfully, but when you open the URL for the app, the following
+error is
+displayed.<pre class="codeblock"><code>502 Bad Gateway: Registered endpoint failed to handle the request.</code></pre>
+</div>
+</div><div class="section tsCauses"><div class="p"><ol><li>The routing might still be setting up.</li>
+<li>The container might not be responding.</li>
+<li>There might be an error with the routing though the container group is running
+successfully.</li>
+</ol>
+</div>
+</div><div class="section tsResolve"><ol><li>Wait a few more minutes to allow enough time for the routing to complete. There might be a
+5-minute wait after running the container process before the container group can connect to the
+specified route. </li>
+<li>If you have waited 5 minutes and suspect that an error occurred, see if the container is
+responding by binding an IP address to the running container and then run a curl command to that IP
+address and port.<ol type="a"><li>Run the following command to get the ID of one of the container instances in the group. Note the
+container ID and the
+port.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ps</code></pre>
+</li>
+<li>Request an IP address by running the following
+command.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-request</code></pre>
+</li>
+<li>Bind the IP address to the container instance by running the following
+command.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind <var class="keyword varname">IP_address</var> <var class="keyword varname">container_ID</var></code></pre>
+</li>
+<li>In a browser, enter the URL to the application with the IP address and the port. Example:
+<span class="ph filepath">http://<var class="keyword varname">IP_address</var>:<var class="keyword varname">port</var></span><p>If you cannot
+access the application, then there is a problem with the container group and the group must be
+re-created. If you can access the application, the container is running successfully, but there is
+an error with the routing. Contact <span class="keyword">IBM
+Cloud</span>
+Support.</p>
+</li>
+</ol>
+</li>
+</ol>
+</div></div>
+</article><article class="topic tsTroubleshooting nested2" role="article" aria-labelledby="d81670e1984" lang="en-us" id="ts_firewall"><h3 class="topictitle3" id="d81670e1984">Internal proxy blocks requests to the service</h3>
+<div class="body tsBody"><p class="shortdesc"></p>
+<div class="section tsSymptoms">When you try to access <span class="keyword">IBM
+Cloud Container Service</span>, the connection fails with one
+of the following error messages.
+<pre class="pre screen"><code>Connection refused</code></pre>
+<pre class="pre screen"><code>Connection timed out</code></pre>
+</div><div class="section tsCauses">You might have firewall settings that are preventing communication from your computer to
+<span class="keyword">IBM
+Cloud Container Service</span>. Often, internal
+proxy settings are configured to allow only permissible communication for security reasons. </div><div class="section tsResolve">In your firewall, open communication from your computer to <span class="keyword">IBM
+Cloud Container Service</span> for the region-specific IP
+addresses:  <ul id="ts_firewall__ul_fn5_p4l_wz"><li>US South:
+<pre class="codeblock"><code>169.46.9.7
+169.46.9.19
+169.46.9.24
+169.46.9.28
+169.55.211.15
+169.55.211.17
+169.55.211.21
+169.55.211.28</code></pre>
+</li>
+<li>London:<pre class="codeblock"><code>159.8.188.181
+159.8.188.182
+159.8.188.184
+159.8.188.188
+169.50.153.66
+169.50.153.77
+169.50.153.91
+169.50.153.94</code></pre>
+</li>
+</ul>
+</div></div>
+</article><article class="topic tsTroubleshooting nested2" role="article" aria-labelledby="d81670e2065" lang="en-us" id="ts_group_auto_recreate_instance"><h3 class="topictitle3" id="d81670e2065">Container group instances are repeatedly re-created during startup by the <span class="keyword">IBM
+Cloud Container Service</span> auto-recovery mode</h3>
+<div class="body tsBody"><p class="shortdesc"></p>
+<div class="section tsSymptoms">You created a container group and enabled the auto-recovery. During the startup of the
+container group, unresponsive group instances are removed and re-created repeatedly.</div><div class="section tsCauses"><p>The app that is running in your container group takes too long to start listening on the exposed
+port. If you enabled auto-recovery for your container group, <span class="keyword">IBM
+Cloud Container Service</span> checks the health of each instance with
+an HTTP request on the exposed TCP port after the group is created. If an instance is not listening
+on the exposed port within 3 minutes, the instance is marked unresponsive and is removed,
+re-created, and restarted. This process repeats until the maximum number of re-created instances is
+reached. Then, auto-recovery is disabled. </p>
+</div><div class="section tsResolve"><p>To run an app in a container group with auto-recovery enabled, make sure that the app starts and
+listens on the exposed port in less than 2 minutes. Depending on the type of app, different methods
+exist to ensure a quick startup of your app.</p>
+</div></div>
+</article><article class="topic tsTroubleshooting nested2" role="article" aria-labelledby="d81670e2148" lang="en-us" id="ts_bridge_app"><h3 class="topictitle3" id="d81670e2148"><span class="keyword">Cloud</span> service does not bind
+directly to a container</h3>
+<div class="body tsBody"><div class="section tsSymptoms">Your <span class="keyword">Cloud</span> service does
+not bind directly to a container by using service binding.</div><div class="section tsCauses">Some <span class="keyword">Cloud</span> services do not
+support direct service binding to a container and lead to a failure during container creation. For
+these services, service binding does not pass along the environment variable
+<samp class="ph codeph">VCAP_SERVICES</samp> to the container. To work around this problem, you can use the CLI to
+create a Cloud Foundry app that acts as a bridge for sending <samp class="ph codeph">VCAP_SERVICES</samp> from the
+service to a container. </div><div class="section tsResolve"><ol><li>Select a space in which to deploy a container, such as <samp class="ph codeph">dev</samp>.</li>
+<li id="ts_bridge_app__create_cfapp">Identify an existing app or create a Cloud Foundry app to bind the <span class="keyword">Cloud</span> service to. This app is used for the
+passing of the <samp class="ph codeph">VCAP_SERVICES</samp> information, so it is referred to as a bridge app.
+<div class="p">To create a Cloud Foundry app:<div class="note tip"><span class="tiptitle">Tip:</span> The app that you create by completing these steps
+is a placeholder for storing the <samp class="ph codeph">VCAP_SERVICES</samp> services. To incur fewer costs than
+a running app, this app does not start or run. The app is not required to run to provide the
+<samp class="ph codeph">VCAP_SERVICES</samp> to the container.</div>
+</div>
+<ol type="a"><li>Create a directory and a text file in your working app directory. Example:
+<span class="ph filepath"><var class="keyword varname">&lt;directory&gt;</var>/<var class="keyword varname">&lt;empty_file.txt&gt;</var></span>. This
+file serves as the source file for the app, though it does not need to contain any content.<ul><li>Windows example:
+<span class="ph filepath">C:\Users\<var class="keyword varname">User</var>\<var class="keyword varname">containerbridge</var>\<var class="keyword varname">empty_file.txt</var></span></li>
+<li>Linux example:
+<span class="ph filepath">/<var class="keyword varname">user_home_directory</var>/<var class="keyword varname">containerbridge</var>/<var class="keyword varname">empty_file.txt</var></span></li>
+<li>OS X example:
+<span class="ph filepath">/Users/<var class="keyword varname">user_home_directory</var>/<var class="keyword varname">containerbridge</var>/<var class="keyword varname">empty_file.txt</var></span></li>
+</ul>
+</li>
+<li>Run this command to create a zero-runtime app at no costs. The app can be named anything though
+<var class="keyword varname">containerbridge</var> is a common name since the app acts a bridge from the container
+to a
+service.<p></p>
+<pre class="codeblock" id="ts_bridge_app__containerbridgecode"><code>cf push <var class="keyword varname">&lt;appname&gt;</var> -p <var class="keyword varname">&lt;directory&gt;</var> -i 1 -d <span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span> -k 1M -m 64M --no-hostname --no-manifest --no-route --no-start</code></pre>
+Example:
+<pre class="codeblock"><code>cf push <var class="keyword varname">containerbridge</var> -p <var class="keyword varname">containerbridge</var> -i 1 -d <span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span> -k 1M -m 64M --no-hostname --no-manifest --no-route --no-start</code></pre>
+</li>
+</ol>
+</li>
+<li>If the <span class="keyword">Cloud</span> service you want to
+bind isn't already added, add the service to the <span class="keyword">Cloud</span> space.<ol type="a"><li>To get a list of the available <span class="keyword">Cloud</span> services, run the <samp class="ph codeph">cf
+marketplace</samp> command. The resulting list includes the name of the <span class="keyword">Cloud</span> service, its plan type, and a
+description of what the service is.</li>
+<li>Run the <samp class="ph codeph">create-service</samp> command and include the service name and plan from the
+<samp class="ph codeph">cf marketplace</samp> list. Also, include your own instance name for the
+service.<pre class="codeblock"><code>cf create-service <var class="keyword varname">&lt;service&gt;</var> <var class="keyword varname">&lt;plan&gt;</var> <var class="keyword varname">&lt;service_instance&gt;</var></code></pre>
+Example<pre class="codeblock"><code>cf create-service <var class="keyword varname">cleardb</var> <var class="keyword varname">spark</var> <var class="keyword varname">my-clear-db</var></code></pre>
+</li>
+</ol>
+</li>
+<li>Bind the <span class="keyword">Cloud</span> service to the app
+by running the bind-service command. Repeat to bind other <span class="keyword">Cloud</span> services to the bridge
+app.<pre class="codeblock"><code>cf bind-service <var class="keyword varname">&lt;appname&gt;</var> <var class="keyword varname">&lt;service_instance&gt;</var></code></pre>
+Example<pre class="codeblock"><code>cf bind-service <var class="keyword varname">containerbridge</var> <var class="keyword varname">my-clear-db</var></code></pre>
+</li>
+<li>If you are prompted to restage the app, run the following
+command.<pre class="codeblock"><code>cf restage <var class="keyword varname">containerbridge</var></code></pre>
+</li>
+<li>Review the information for the <span class="keyword">Cloud</span> service that is passed through the
+<var class="keyword varname">containerbridge</var> app by running the following
+command.<pre class="codeblock"><code>cf env <var class="keyword varname">&lt;appname&gt;</var> </code></pre>
+Example<pre class="codeblock"><code>cf env <var class="keyword varname">containerbridge</var> </code></pre>
+<p>The
+results include the injected <span class="keyword">Cloud</span>
+service parameters by using the <samp class="ph codeph">VCAP_SERVICES</samp> environment variable. </p>
+<div class="p">For
+example:
+<pre class="codeblock"><code>{
+ "VCAP_SERVICES": {
+  "&lt;service_name&gt;": [
+   {
+    "credentials": {
+     "hostname": "&lt;hostname_id&gt;",
+     "jdbcUrl": "&lt;jdbc_URL&gt;",
+     "name": "&lt;encoded_name&gt;",
+     "password": "&lt;encoded_password&gt;",
+     "port": "&lt;port_number&gt;",
+     "uri": "&lt;service_URI&gt;",
+     "username": "&lt;encoded_username&gt;"
+    },
+    "label": "&lt;service_name&gt;",
+    "name": "&lt;service_instance&gt;",
+    "plan": "&lt;plan_name&gt;",
+    "tags": [
+     "&lt;tag1&gt;",
+     "&lt;tag2&gt;",
+     "&lt;tag3&gt;"
+    ]
+   } </code></pre>
+</div>
+</li>
+</ol>
+
+<div class="p">After you create the binding between the <span class="keyword">Cloud</span> services and the
+<var class="keyword varname">containerbridge</var> app, create a container and bind the
+<var class="keyword varname">containerbridge</var> app to it. For more information, see the
+<samp class="ph codeph">CCS_BIND_APP</samp> flag in the environment variables in <a href="container_single_ui.html#container_single_cli" title="Create a container by using the run command. A container must include an image in it. If you do not have one yet, you can use one of the default IBM certified images that are available by default in your organization's private images registry.">Creating a single container</a> or <a href="container_ha.html#container_group_cli" title="Create and deploy a scalable group container from the IBM Cloud Container Service CLI. A container group includes two or more containers that run the same image. Use container groups for running long-term services with workloads that require scalability and reliability or for testing at the required scale.">Creating a container
+group</a>.<div class="note tip" id="ts_bridge_app__delete_bound_app"><span class="tiptitle">Tip:</span> After the bridge app is bound to a container, do
+not delete the bridge app. If you delete a bound bridge app, the container hangs. If you no longer
+require the bridge app, delete the container and any other containers that are using the bridge app
+before you delete the bridge app.</div>
+</div>
+</div></div>
+</article><article class="topic tsTroubleshooting nested2" role="article" aria-labelledby="d81670e2490" lang="en-us" id="su_error"><h3 class="topictitle3" id="d81670e2490"><samp class="ph codeph">Cannot create child process</samp> with <samp class="ph codeph">su</samp> command</h3>
+<div class="body tsBody"><p class="shortdesc"></p>
+<div class="section tsSymptoms"><p>When using the substitute user (<samp class="ph codeph">su</samp>) Linux command to edit the users
+for a container, you receive the message <samp class="ph codeph">su: cannot create child process: Resource
+temporarily unavailable</samp>, even though the <samp class="ph codeph">su</samp> command worked in the local
+Docker environment. You might experience this issue when you log into a container or when the
+<samp class="ph codeph">su</samp> command is run as part of a script within the container. </p>
+<p>Example:</p>
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> exec -it <var class="keyword varname">my_container</var> bash</code></pre>
+<pre class="codeblock"><code>adduser <var class="keyword varname">user</var></code></pre>
+<pre class="codeblock"><code>su - <var class="keyword varname">user</var></code></pre>
+Result:<pre class="codeblock"><code>su: cannot create child process: Resource temporarily unavailable</code></pre>
+</div><div class="section tsCauses"><p>This issue often occurs in containers that are built with Centos 7 images, though it might occur
+with other image types as well. </p>
+</div><div class="section tsResolve">You can resolve the issue by editing the Dockerfile and re-creating the image or by
+logging in to the running container.<div class="p">To resolve the issue by editing the Dockerfile:<ol><li>In the local directory you are creating your image from, create an <span class="ph filepath">etc</span>
+folder, if one does not exist already.<pre class="codeblock"><code>mkdir etc</code></pre>
+</li>
+<li>Navigate to the <samp class="ph codeph">etc</samp> directory.<pre class="codeblock"><code>cd etc</code></pre>
+</li>
+<li>In the <span class="ph filepath">etc</span> folder, create a <span class="ph filepath">pam.d</span>
+directory.<pre class="codeblock"><code>mkdir pam.d</code></pre>
+</li>
+<li>Navigate to the <samp class="ph codeph">pam.d</samp> directory.<pre class="codeblock"><code>cd pam.d</code></pre>
+</li>
+<li>In the <span class="ph filepath">pam.d</span> directory, create a file named <span class="ph filepath">su</span> and
+open it with a text editor.</li>
+<li>In the <span class="ph filepath">su</span> file, copy in the following text where all of the
+<samp class="ph codeph">session</samp> variables are set to <samp class="ph codeph">optional</samp> and save the changes to the
+file.
+<pre class="codeblock"><code>#%PAM-1.0
+auth            sufficient      pam_rootok.so
+# Uncomment the following line to implicitly trust users in the "wheel" group.
+#auth           sufficient      pam_wheel.so trust use_uid
+# Uncomment the following line to require a user to be in the "wheel" group.
+#auth           required        pam_wheel.so use_uid
+auth            substack        system-auth
+auth            include         postlogin
+account         sufficient      pam_succeed_if.so uid = 0 use_uid quiet
+account         include         system-auth
+password        include         system-auth
+session         optional        system-auth
+session         optional        postlogin
+session         optional        pam_xauth.so</code></pre>
+</li>
+<li>In the Dockerfile for the image, include the following
+information.<pre class="codeblock"><code>RUN sed -i 's/session.*include/session        optional/' /etc/pam.d/su</code></pre>
+</li>
+<li>Re-create the image. For more information, see <a href="container_images_building.html" title="Create a Dockerfile to build an image. A Dockerfile is a file that includes specifications for building a Docker image, which is the basis for a container. After you create the Dockerfile, you can build the image locally or directly into the private Cloud registry by using the command-line interface. Then, the image is available through the Catalog view in Cloud.">Building an image</a>.</li>
+<li>Re-create the single container or container group. For more information, see <a href="container_single_ui.html#container_single_cli" title="Create a container by using the run command. A container must include an image in it. If you do not have one yet, you can use one of the default IBM certified images that are available by default in your organization's private images registry.">Creating a single container</a> or <a href="container_ha.html#container_group_cli" title="Create and deploy a scalable group container from the IBM Cloud Container Service CLI. A container group includes two or more containers that run the same image. Use container groups for running long-term services with workloads that require scalability and reliability or for testing at the required scale.">Creating a container
+group</a>.</li>
+<li>To verify, run the following
+command.<pre class="codeblock"><code><span class="ph">bx ic</span> logs <var class="keyword varname">container_name</var></code></pre>
+Result:<pre class="codeblock"><code>%Changing password for user <var class="keyword varname">user_name</var>.
+passwd: all authentication tokens updated successfully.</code></pre>
+</li>
+</ol>
+</div>
+<div class="p">To resolve the issue by logging in to the running container:<ol><li>Create the container.</li>
+<li>Log into the
+container.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> exec -it <var class="keyword varname">my_container</var> bash</code></pre>
+</li>
+<li>Navigate to the <samp class="ph codeph">etc</samp> directory.<pre class="codeblock"><code>cd etc</code></pre>
+</li>
+<li>Navigate to the <samp class="ph codeph">pam.d</samp> directory.<pre class="codeblock"><code>cd pam.d</code></pre>
+</li>
+<li>Open the visual editor by using the Linux <samp class="ph codeph">vi</samp>
+command.<pre class="codeblock"><code>vi su</code></pre>
+</li>
+<li>In the <span class="ph filepath">su</span> file, change all of the session variables to
+<samp class="ph codeph">optional</samp> and save the changes to the file. For more information about using the
+<samp class="ph codeph">vi</samp> editor, see <a href="https://www.washington.edu/computing/unix/vi.html" rel="external" target="_blank" title="(Opens in a new tab or window)">How to Use the vi
+Editor</a>.<pre class="codeblock"><code>#%PAM-1.0
+auth            sufficient      pam_rootok.so
+# Uncomment the following line to implicitly trust users in the "wheel" group.
+#auth           sufficient      pam_wheel.so trust use_uid
+# Uncomment the following line to require a user to be in the "wheel" group.
+#auth           required        pam_wheel.so use_uid
+auth            substack        system-auth
+auth            include         postlogin
+account         sufficient      pam_succeed_if.so uid = 0 use_uid quiet
+account         include         system-auth
+password        include         system-auth
+session         optional        system-auth
+session         optional        postlogin
+session         optional        pam_xauth.so</code></pre>
+</li>
+<li>Log in as the user.<pre class="codeblock"><code>su - <var class="keyword varname">user</var></code></pre>
+</li>
+<li>Run the <samp class="ph codeph">id</samp> Linux command to see the configuration information for the
+user.<pre class="codeblock"><code>id</code></pre>
+Result:<pre class="codeblock"><code>uid=1000(<var class="keyword varname">user</var>) gid=1000(<var class="keyword varname">user</var>) groups=1000(<var class="keyword varname">user</var>)</code></pre>
+</li>
+</ol>
+</div>
+</div></div>
+</article><article class="topic tsTroubleshooting nested2" role="article" aria-labelledby="d81670e2786" lang="en-us" id="ts_container_shutdown"><h3 class="topictitle3" id="d81670e2786">Container stops and shuts down after  creation</h3>
+<div class="body tsBody"><p class="shortdesc">You created a container, but it shut down immediately.</p>
+<div class="section tsSymptoms">You ran a container locally and it ran successfully, but when you ran the container in
+<span class="keyword">Cloud</span>, you see one of the following situations.<ul><li>From the <span class="keyword">Cloud</span> dashboard, the
+container state changes from <samp class="ph codeph">Running</samp> to <samp class="ph codeph">Stopped</samp>.</li>
+<li>From the CLI, when you run <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span>
+inspect container</samp>, you see that the state status is <samp class="ph codeph">Shutdown</samp>. </li>
+</ul>
+You also tried running <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span>
+logs</samp>, but did not find any issues with the container.</div><div class="section tsCauses"><p>When you run a container in <span class="keyword">Cloud</span>,
+the container is always run detached mode, similar to running <samp class="ph codeph">docker run -d</samp> when a
+container is run locally. As a result, even containers that start locally do not run continuously in
+<span class="keyword">Cloud</span>.</p>
+</div><div class="section tsResolve"><div class="p">You must make the container a long-running application by editing the Dockerfile. For example, if
+you added a command to output the phrase "hello world" every ten seconds, that continuous action
+makes your container a long-running
+application.<pre class="codeblock"><code>ENTRYPOINT ["/bin/sh"]
+CMD ["-c","while true; do echo hello world; sleep 10;done"]</code></pre>
+</div>
+</div></div>
+</article><article class="topic tsTroubleshooting nested2" role="article" aria-labelledby="d81670e2895" lang="en-us" id="ts_incomplete_deletion"><h3 class="topictitle3" id="d81670e2895">Deleted container continues to show in the <span class="keyword">Cloud</span> GUI</h3>
+<div class="body tsBody"><p class="shortdesc"></p>
+<div class="section tsSymptoms">From the <span class="keyword">Cloud</span> GUI, you
+deleted a container, but the container continues to be displayed in the <span class="keyword">Cloud</span> GUI and uses quota.</div><div class="section tsCauses"><p>From the <span class="keyword">Cloud</span> GUI, the deletion
+could not be completed.</p>
+</div><div class="section tsResolve"><p>Delete the container from the command line.</p>
+
+<div class="p">For single containers, follow these steps.<ol><li>Delete the container by running one of the following command line options.<ul><li><span class="ph"><a href="container_cli_cfic_install.html#container_cli_login__option1_li" rel="external" target="_blank" title="During bx ic login, you selected Option 1 to use bx ic commands to manage containers. Docker commands are used only for local container development. (Opens in a new tab or window)"><img src="images/option1.png" alt="BX IC plugin configuration option 1"></a>
+<span class="keyword">IBM
+Cloud Container Service</span> plug-in with <span class="ph"><samp class="ph codeph">bx ic</samp></span> commands </span><pre class="codeblock"><code><span class="ph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> rm [-f] CONTAINER [CONTAINER] </span></code></pre>
+</li>
+<li><div class="p"><span class="ph"><a href="container_cli_cfic_install.html#container_cli_login__option2_li" rel="external" target="_blank" title="During bx ic login, you selected Option 2 by configuring environment variables to use docker commands whenever possible to manage containers. bx ic commands are used only when no supported Docker alternative exists. (Opens in a new tab or window)"><img src="images/option2.png" alt="BX IC plugin configuration option 2"></a>
+<span class="keyword">IBM
+Cloud Container Service</span> plug-in with
+<samp class="ph codeph">docker</samp> commands</span>
+<pre class="codeblock"><code>docker rm [-f] CONTAINER</code></pre>
+</div>
+</li>
+</ul>
+</li>
+<li>Verify that the container was removed by running one of the following commands to list all of
+the containers in your space:<ul><li><span class="ph"><a href="container_cli_cfic_install.html#container_cli_login__option1_li" rel="external" target="_blank" title="During bx ic login, you selected Option 1 to use bx ic commands to manage containers. Docker commands are used only for local container development. (Opens in a new tab or window)"><img src="images/option1.png" alt="BX IC plugin configuration option 1"></a>
+<span class="keyword">IBM
+Cloud Container Service</span> plug-in with <span class="ph"><samp class="ph codeph">bx ic</samp></span> commands </span><pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ps -a</code></pre>
+</li>
+<li><span class="ph"><a href="container_cli_cfic_install.html#container_cli_login__option2_li" rel="external" target="_blank" title="During bx ic login, you selected Option 2 by configuring environment variables to use docker commands whenever possible to manage containers. bx ic commands are used only when no supported Docker alternative exists. (Opens in a new tab or window)"><img src="images/option2.png" alt="BX IC plugin configuration option 2"></a>
+<span class="keyword">IBM
+Cloud Container Service</span> plug-in with
+<samp class="ph codeph">docker</samp> commands</span>
+<pre class="codeblock"><code>docker ps -a</code></pre>
+</li>
+</ul>
+</li>
+</ol>
+</div>
+
+<div class="p">For container groups, follow these steps. <ol><li>Delete the container group by running the following command.<ul><li><span class="ph"><a href="container_cli_cfic_install.html#container_cli_login__option1_li" rel="external" target="_blank" title="During bx ic login, you selected Option 1 to use bx ic commands to manage containers. Docker commands are used only for local container development. (Opens in a new tab or window)"><img src="images/option1.png" alt="BX IC plugin configuration option 1"></a>
+<a href="container_cli_cfic_install.html#container_cli_login__option2_li" rel="external" target="_blank" title="During bx ic login, you selected Option 2 by configuring environment variables to use docker commands whenever possible to manage containers. bx ic commands are used only when no supported Docker alternative exists. (Opens in a new tab or window)"><img src="images/option2.png" alt="BX IC plugin configuration option 2"></a>
+<span class="keyword">IBM
+Cloud Container Service</span> plug-in</span><pre class="codeblock"><code><span class="ph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-remove [-f] GROUP [GROUP]</span></code></pre>
+</li>
+</ul>
+</li>
+<li>Verify that the container was removed by running the command to list all of the containers in
+your space.<ul><li><span class="ph"><a href="container_cli_cfic_install.html#container_cli_login__option1_li" rel="external" target="_blank" title="During bx ic login, you selected Option 1 to use bx ic commands to manage containers. Docker commands are used only for local container development. (Opens in a new tab or window)"><img src="images/option1.png" alt="BX IC plugin configuration option 1"></a>
+<a href="container_cli_cfic_install.html#container_cli_login__option2_li" rel="external" target="_blank" title="During bx ic login, you selected Option 2 by configuring environment variables to use docker commands whenever possible to manage containers. bx ic commands are used only when no supported Docker alternative exists. (Opens in a new tab or window)"><img src="images/option2.png" alt="BX IC plugin configuration option 2"></a>
+<span class="keyword">IBM
+Cloud Container Service</span> plug-in</span><pre class="codeblock"><code><span class="ph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> groups [-q] </span></code></pre>
+</li>
+</ul>
+</li>
+</ol>
+</div>
+
+<p>If you run the commands and the container continues to display in your <span class="keyword">Cloud</span> GUI, wait to see whether it gets removed
+later. </p>
+</div></div>
+</article><article class="topic tsTroubleshooting nested2" role="article" aria-labelledby="d81670e3231" lang="en-us" id="ts_group_network_failure"><h3 class="topictitle3" id="d81670e3231">Container group is showing a HAS_INACTIVE_INSTANCES status</h3>
+<div class="body tsBody"><p class="shortdesc"></p>
+<div class="section tsSymptoms">When you run <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span>
+group-inspect</samp>, the container group is displaying a HAS_INACTIVE_INSTANCES
+status.</div><div class="section tsCauses"><p>If the networking fails to be configured when the group is created or fails the health check for
+one or more instances, the instance state is change to <samp class="ph codeph">INACTIVE</samp>. If any instance in
+a group is inactive, the group state is changed to HAS_INACTIVE_INSTANCES.</p>
+</div><div class="section tsResolve"><p>If the issue occurs when the health check fails for an instance, the issue can resolve without
+any action required. If the issue occurs when the group is first created, you might try re-creating
+the group. If the issue occurs again after re-creating, networking might not be configurable for the
+app when it is deployed as a group. Try deploying the app as a single container instead.</p>
+</div></div>
+</article></article><article class="topic concept nested1" role="article" aria-labelledby="d81670e3304" lang="en-us" id="ts_ov_compose"><h2 class="topictitle2" id="d81670e3304">Troubleshooting Docker Compose</h2>
+<div class="body conbody"><p class="shortdesc"></p>
+<p></p>
+</div>
+<aside role="complementary" aria-labelledby="d81670e3304"></aside><article class="topic tsTroubleshooting nested2" role="article" aria-labelledby="d81670e3365" lang="en-us" id="ts_compose_insecure_connection"><h3 class="topictitle3" id="d81670e3365">Insecure HTTPS connection warning is displayed when executing Docker Compose commands</h3>
+<div class="body tsBody"><p class="shortdesc"></p>
+<div class="section tsSymptoms">When you run Docker Compose commands in the CLI, a warning similar to one of the
+following examples is displayed. Other related error messages can be found in the <a href="https://urllib3.readthedocs.org/en/latest/security.html" rel="external" target="_blank" title="(Opens in a new tab or window)">urlib3
+development documentation</a>.<div class="p"><pre class="pre msgblock"><code>/.../requests/packages/urllib3/util/ssl_.py:315: SNIMissingWarning: An HTTPS request 
+has been made, but the SNI (Subject Name Indication) extension to TLS is not available on this 
+platform. This may cause the server to present an incorrect TLS certificate, which can cause 
+validation failures. For more information, see 
+https://urllib3.readthedocs.org/en/latest/security.html#snimissingwarning. SNIMissingWarning</code></pre>
+
+<pre class="pre msgblock"><code>/.../requests/packages/urllib3/util/ssl_.py:120: InsecurePlatformWarning: A true 
+SSLContext object is not available. This prevents urllib3 from configuring SSL appropriately 
+and may cause certain SSL connections to fail. For more information, see 
+https://urllib3.readthedocs.org/en/latest/security.html#insecureplatformwarning. InsecurePlatformWarning</code></pre>
+</div>
+</div><div class="section tsCauses">This error message is typical for Linux operating systems and is caused by a missing
+verification of HTTPS requests. </div><div class="section tsResolve"><ul><li>Option 1: Install the <samp class="ph codeph">ndg-httpsclient</samp> to avoid SSL related error messages and
+warnings.<pre class="codeblock"><code>pip install ndg-httpsclient==0.4.0</code></pre>
+</li>
+<li>Option 2: If the <samp class="ph codeph">ndg-httpsclient</samp> is already installed on your computer, upgrade
+the package to the latest version. <pre class="codeblock"><code>pip install --upgrade ndg-httpsclient</code></pre>
+</li>
+</ul>
+</div></div>
+</article><article class="topic tsTroubleshooting nested2" role="article" aria-labelledby="d81670e3446" lang="en-us" id="ts_compose_commands_failed"><h3 class="topictitle3" id="d81670e3446">No module named queue error is displayed when executing Docker Compose commands</h3>
+<div class="body tsBody"><p class="shortdesc"></p>
+<div class="section tsSymptoms">As soon as you run Docker Compose commands in your CLI, an error message similar to the
+following example is displayed. <div class="p"><pre class="pre msgblock"><code>File "/usr/local/bin/docker-compose", line 9, in &lt;module&gt; 
+load_entry_point('docker-compose==1.6.2', 'console_scripts', 'docker-compose')() File 
+"/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/pkg_resources.py", line 357, 
+in load_entry_point return get_distribution(dist).load_entry_point(group, name) File 
+"/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/pkg_resources.py", line 2394, 
+in load_entry_point return ep.load() File "/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/pkg_resources.py", 
+line 2108, in load entry = __import__(self.module_name, globals(),globals(), ['__name__']) 
+File "/Library/Python/2.7/site-packages/compose/cli/main.py", line 26, in &lt;module&gt; from ..project import NoSuchService 
+File "/Library/Python/2.7/site-packages/compose/project.py", line 10, in &lt;module&gt; from . import parallel 
+File "/Library/Python/2.7/site-packages/compose/parallel.py", line 9, in &lt;module&gt; from six.moves.queue import Empty ImportError: 
+No module named queue</code></pre>
+</div>
+</div><div class="section tsCauses">The Python path is pointing to the wrong directory. The Docker Compose Python package
+cannot be found. </div><div class="section tsResolve">Change the Python path to the correct directory.
+<pre class="codeblock"><code>export PYTHONPATH=/Library/Python/2.7/site-packages/:$PYTHONPATH</code></pre>
+</div></div>
+</article></article><article class="topic concept nested1" role="article" aria-labelledby="d81670e3509" lang="en-us" id="ts_ov_volumes"><h2 class="topictitle2" id="d81670e3509">Troubleshooting data storage</h2>
+<div class="body conbody"><p class="shortdesc"></p>
+<p></p>
+</div>
+<aside role="complementary" aria-labelledby="d81670e3509"></aside><article class="topic tsTroubleshooting nested2" role="article" aria-labelledby="d81670e3572" lang="en-us" id="ts_vol_owner"><h3 class="topictitle3" id="d81670e3572">Permission error changing the owner of a mounted volume directory in a container</h3>
+<div class="body tsBody"><p class="shortdesc"></p>
+<div class="section tsSymptoms">You get a permission error when you try to change the ownership of a file or directory
+for a volume that is mounted in a container.</div><div class="section tsCauses"><span class="ph" id="ts_vol_owner__containers_namespace">For <span class="keyword">IBM
+Cloud Container Service</span>, the <a href="https://docs.docker.com/engine/security/security/#kernel-namespaces" rel="external" target="_blank" title="(Opens in a new tab or window)">user namespace feature</a> is enabled for Docker Engine.</span> The effective root
+inside the container is mapped to a non-root user on the compute host. The source of the mounted
+volume is a network file system (NFS). Since the NFS is not aware of user namespaces, all non-user
+checks are performed for the operations on mounted files and directories inside the container. </div><div class="section tsResolve"><p></p>
+<ol><li>In the Dockerfile for an image, add the following lines to create a user with an available user
+ID (UID). For example, you can name the user <var class="keyword varname">volumeeditor</var>.<pre class="codeblock"><code>RUN groupadd --gid <var class="keyword varname">1010</var> <var class="keyword varname">volumeeditor</var>
+RUN useradd --uid <var class="keyword varname">1010</var> --gid <var class="keyword varname">1010</var> -m --shell /bin/bash <var class="keyword varname">volumeeditor</var></code></pre>
+</li>
+<li>Build and push the image to your private <span class="keyword">Cloud</span> images registry.</li>
+<li>Create a container with the image where the volume path is mounted.<div class="note tip"><span class="tiptitle">Tip:</span> <span class="ph">Run <samp class="ph codeph"><span class="ph">bx ic</span> namespace-get</samp> to retrieve
+your namespace and replace <var class="keyword varname">&lt;my_namespace&gt;</var> with your namespace information.</span></div>
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run --volume <var class="keyword varname">volume_name</var>:<var class="keyword varname">/path/to/files</var> --name <var class="keyword varname">fixVolumePermissions</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">image</var></code></pre>
+</li>
+<li>Log in to the
+container.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> exec -it <var class="keyword varname">container_name</var> bash</code></pre>
+</li>
+<li>Define an environment variable that is named <kbd class="ph userinput">MOUNTPATH</kbd> for the mount
+path.<pre class="codeblock"><code>MOUNTPATH="<var class="keyword varname">/path/to/files</var>"</code></pre>
+</li>
+<li>Add the user to the group
+<samp class="ph codeph">root</samp>.<pre class="codeblock"><code>adduser <var class="keyword varname">volumeeditor</var> root</code></pre>
+</li>
+<li>Set permissions so that all group members have read and write access to the volume mount.
+<pre class="codeblock"><code>chmod 775 $MOUNTPATH</code></pre>
+</li>
+<li>Create a folder in the mountpath and set the read and write permissions. In this example the
+folder is named
+<var class="keyword varname">data</var>.<pre class="codeblock"><code>su -c "mkdir -p $MOUNTPATH/<var class="keyword varname">data</var>" <var class="keyword varname">volumeeditor</var></code></pre>
+<pre class="codeblock"><code>su -c "chmod 700 $MOUNTPATH/<var class="keyword varname">data</var>" <var class="keyword varname">volumeeditor</var></code></pre>
+</li>
+<li>Verify that the user <var class="keyword varname">volumeeditor</var> can access the files and directories in the
+mount path.<pre class="codeblock"><code>sudo -u <var class="keyword varname">volumeeditor</var> ls -al $MOUNTPATH</code></pre>
+</li>
+<li>Optional: Link a folder in the container to the <var class="keyword varname">data</var> folder in the volume.
+This link associates the write permissions of $MOUNTPATH/<var class="keyword varname">data</var> with any folder in
+the
+container.<pre class="codeblock"><code>ln -sf $MOUNTPATH/<var class="keyword varname">data</var> <var class="keyword varname">/folder/in/container/</var></code></pre>
+</li>
+<li> If the edits can be made without a permission error, remove the <var class="keyword varname">volumeeditor</var>
+group root user.<pre class="codeblock"><code>deluser <var class="keyword varname">volumeeditor</var> root</code></pre>
+</li>
+</ol>
+</div></div>
+</article><article class="topic tsTroubleshooting nested2" role="article" aria-labelledby="d81670e3795" lang="en-us" id="ts_vol_group_overwrite"><h3 class="topictitle3" id="d81670e3795">Logs from container group instances are overwritten in a volume</h3>
+<div class="body tsBody"><p class="shortdesc"></p>
+<div class="section tsSymptoms">When you created a container group, you mounted a volume and have logs outputted from
+each container group instance to the volume. Each container group instance writes to the same files
+and the files are overwritten by each of the instances.
+<div class="p">Example:<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create –p 9080 –m <var class="keyword varname">64</var> -v log_vol:/opt/ibm/logs -e LOG_LOCATIONS=/opt/ibm/logs/messages.log,/opt/ibm/logs/debug.log,/opt/ibm/logs/trace.log -–name <var class="keyword varname">my_container_group</var> registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/ibmliberty:latest</code></pre>
+</div>
+</div><div class="section tsCauses">Each container instance is writing a file to the volume as if it were the sole writer.
+Each instance has a local cache in memory. The files in the volume are repeatedly replaced by the
+cached data from each container instance.</div><div class="section tsResolve">Adjust the name of the log file to include an identifier so that the files are different
+for each instance.  For example, include the <samp class="ph codeph">$HOSTNAME</samp> variable in the log file
+name that is generated by the app and specified when the container group is
+created.<div class="p">Example:<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create –p 9080 –m <var class="keyword varname">64</var> -v log_vol:/opt/ibm/logs -e LOG_LOCATIONS=/opt/ibm/logs/messages.$HOSTNAME.log,/opt/ibm/logs/debug.$HOSTNAME.log,/opt/ibm/logs/trace.$HOSTNAME.log -–name <var class="keyword varname">my_container_group</var> registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/ibmliberty:latest</code></pre>
+</div>
+</div></div>
+</article><article class="topic tsTroubleshooting nested2" role="article" aria-labelledby="d81670e3886" lang="en-us" id="ts_vol_performance"><h3 class="topictitle3" id="d81670e3886">Transferring data to or from a volume takes longer than expected</h3>
+<div class="body tsBody"><p class="shortdesc"></p>
+<div class="section tsSymptoms">Reading to or writing from a volume takes longer than expected.</div><div class="section tsCauses">In <span class="keyword">IBM
+Cloud Container Service</span>, volumes do not
+have access to the local host. Therefore, all volumes are mounted on a NFS file share. The
+performance of the volume is dictated by the size and IOPS (input/output per second) of your file
+share, along with the work load of your application. The file share your volume is hosted on may not
+be suited for the workload of your volumes and containers. In addition, multiple volumes on one file
+share can compete for the file share's resources.<p>To create a new file share, you must have the
+organization manager role. For detailed information, see <a href="../iam/users_roles.html">Users and roles</a>.</p>
+</div><div class="section tsResolve"><ol><li>Determine the ID of the file share that your volume is hosted
+on.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> volume-inspect <var class="keyword varname">my_volume</var></code></pre>
+<pre class="codeblock"><code>{
+    "fsId": "<var class="keyword varname">fa277ff4-8a64-435b-9b75-0f11d59a3ae4</var>", 
+    "hostPath": "<span class="ph filepath">/vol/fa277ff4-8a64-435b-9b75-0f11d59a3ae4/my_volume</span>", 
+    "otherSpaceVisibility": [], 
+    "spaceGuid": "fa277ff4-8a64-435b-9b75-0f11d59a3ae4", 
+    "volName": "<var class="keyword varname">my_volume</var>"
+}</code></pre>
+</li>
+<li>View your file share to determine its size and
+IOPS.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> volume-fs</code></pre>
+<pre class="codeblock"><code>Name                                   Size   IOPS/GB   Created               State   
+<var class="keyword varname">fa277ff4-8a64-435b-9b75-0f11d59a3ae4</var>   20     4.00      2016-05-20 13:48:10   READY   </code></pre>
+</li>
+<li>View the available sizes in GB for your file
+shares.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> volume fs-flavor</code></pre>
+<pre class="codeblock"><code>[
+    20, 
+    40, 
+    80, 
+    100, 
+    250, 
+    500, 
+    1000, 
+    2000, 
+    4000, 
+    8000, 
+    12000
+]</code></pre>
+</li>
+<li>Determine the size and IOPS that you need for your apps' workload. Valid IOPS values are 0.25, 2
+or 4 IOPS per GB. The file share size and IOPS per GB multiply together to determine the file
+share's total IOPS. This table includes examples of how different file share sizes at 4 IOPS per GB
+scale. <div class="tablenoborder"><table summary="" id="ts_vol_performance__table_zw1_2f3_kw" class="defaultstyle"><caption><span class="tablecap">Table 1. Examples of file share sizes and IOPS per GB</span></caption><thead><tr><th id="d81670e4005" class="thleft"> File share sizes</th>
+<th id="d81670e4007" class="thleft">IOPS per GB</th>
+<th id="d81670e4009" class="thleft">Total IOPS</th>
+</tr>
+</thead>
+<tbody><tr><td headers="d81670e4005 ">20 GB</td>
+<td headers="d81670e4007 ">4</td>
+<td headers="d81670e4009 ">80</td>
+</tr>
+<tr><td headers="d81670e4005 ">100 GB</td>
+<td headers="d81670e4007 ">4</td>
+<td headers="d81670e4009 ">400</td>
+</tr>
+<tr><td headers="d81670e4005 ">1,000 GB</td>
+<td headers="d81670e4007 ">4</td>
+<td headers="d81670e4009 ">4,000</td>
+</tr>
+<tr><td headers="d81670e4005 ">4,000 GB</td>
+<td headers="d81670e4007 ">4</td>
+<td headers="d81670e4009 ">16,000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+<li>Create a new file share. The first number is the size in GB. The second numbers is the file
+share
+IOPS.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> volume-fs-create <var class="keyword varname">my_new_fs</var> <var class="keyword varname">1000</var> <var class="keyword varname">4</var></code></pre>
+</li>
+<li>Verify the new file share and wait for the status to show as
+ready.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> volume-fs</code></pre>
+</li>
+<li>Create your volume on the new file
+share.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> volume-create <var class="keyword varname">my_new_volume</var> <var class="keyword varname">my_new_fs</var></code></pre>
+</li>
+<li>Run a container or container group from your image with the new volume mounted.</li>
+<li>Back up data from <var class="keyword varname">my_volume</var> and copy the data to
+<var class="keyword varname">my_new_volume</var>. See <a href="container_volumes_ov.html#container_volumes_backup" title="Container volumes are hosted on persistent storage but do not have backups. If you require a backup of your volume data, you can use bx ic cp to create a manual backup.">Backing up and restoring data</a> for more information.</li>
+</ol>
+</div></div>
+</article><article class="topic tsTroubleshooting nested2" role="article" aria-labelledby="d81670e4096" lang="en-us" id="ts_vol_mount_option"><h3 class="topictitle3" id="d81670e4096">Parsing error when creating a container with a volume from the CLI</h3>
+<div class="body tsBody"><p class="shortdesc"></p>
+<div class="section tsSymptoms">When you create a single container or container group from the CLI, you receive a failed
+message.<div class="p">Example<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create --name my_container -n my_host -d <span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span> -m 2048 --min 1 --max 2 --desired 1 -p 9080 --auto -v my_volume:/my/path registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/ibmliberty</code></pre>
+</div>
+<div class="p">Result<pre class="codeblock"><code>docker: Error parsing reference: “my_volume:/my/path” is not a valid repository/tag.</code></pre>
+</div>
+</div><div class="section tsCauses">The CLI for Cloud Foundry version 6.17 and later uses the <span class="keyword option">-v</span> parameter
+for another purpose.</div><div class="section tsResolve">In your command, change the <span class="keyword option">-v</span> option to the <span class="keyword option">--volume</span>
+option.<div class="p">Example<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create --name my_container -n my_host -d <span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span> -m 2048 --min 1 --max 2 --desired 1 -p 9080 --auto --volume my_volume:/my/path registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/ibmliberty</code></pre>
+</div>
+</div></div>
+</article></article><article class="topic concept nested1" role="article" aria-labelledby="d81670e4191" lang="en-us" id="ts_known_issues"><h2 class="topictitle2" id="d81670e4191">Known issues</h2>
+<div class="body conbody"><p class="shortdesc">Learn about the known issues that occur in IBM
+Containers.</p>
+</div>
+<aside role="complementary" aria-labelledby="d81670e4191"></aside><article class="topic concept nested2" role="article" aria-labelledby="d81670e4243" id="ki_docker"><h3 class="topictitle3" id="d81670e4243">Docker and  <span class="keyword">IBM
+Cloud Container Service</span></h3>
+<div class="body conbody"><dl><dt class="dlterm">Some Docker commands are not supported in <span class="keyword">IBM
+Cloud Container Service</span> plug-in (<span class="ph"><samp class="ph codeph">bx ic</samp></span>)</dt>
+<dd><p>Only certain Docker commands are supported in <samp class="ph codeph">(<span class="ph"><samp class="ph codeph">bx ic</samp></span>)</samp>. You can view a full list of
+supported commands in the <a href="../containers/container_cli_reference_cfic.html#container_cli_reference_native-docker">docker command reference</a>. For example, <samp class="ph codeph">tag</samp> is not
+available in <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span></samp>, but
+<samp class="ph codeph">docker tag</samp> can be used locally and then the updated image can be pushed to the
+<span class="keyword">Cloud</span> registry.</p>
+</dd>
+<dt class="dlterm">Common issues between Docker and Windows</dt>
+<dd><p>Common issues for installing and configuring Docker on Windows computers exist. For more
+information about these common issues, review <a href="https://developer.ibm.com/bluemix/2015/04/16/installing-docker-windows-fixes-common-problems/" rel="external" target="_blank" title="(Opens in a new tab or window)">Blog: Installing Docker for Windows: Fixes for common problems</a> and <a href="http://stackoverflow.com/questions/tagged/boot2docker" rel="external" target="_blank" title="(Opens in a new tab or window)">Stack
+Overflow posts tagged with boot2docker</a>.</p>
+</dd>
+</dl>
+</div>
+</article><article class="topic concept nested2" role="article" aria-labelledby="d81670e4311" id="ki_images"><h3 class="topictitle3" id="d81670e4311">Images</h3>
+<div class="body conbody"><dl><dt class="dlterm">The pushing and pulling of large images fails</dt>
+<dd><p>When you run a Docker command to push or pull a large image from your organization's private
+<span class="keyword">Cloud</span> registry, the request fails. To
+determine whether an issue with the image exists, first verify that the image can be pushed to
+DockerHub. If no issue exists with the image, if possible, reduce the size of the image.</p>
+</dd>
+<dt class="dlterm"><a name="ki_images__image_size"><!-- --></a>An image's size in <span class="keyword">Cloud</span> does
+match its size locally</dt>
+<dd><p><span class="ph" id="ki_images__image_size_ph">When you push an image to your private <span class="keyword">Cloud</span> registry, the size reported for the
+image is smaller than the size of the same image in your local Docker engine. The difference between
+the sizes does not indicate that an issue occurred when the image was pushed. The compressed size of
+the image is reported in <span class="keyword">IBM
+Cloud Container Service</span>.</span></p>
+</dd>
+</dl>
+</div>
+</article><article class="topic concept nested2" role="article" aria-labelledby="d81670e4349" id="ki_logmet"><h3 class="topictitle3" id="d81670e4349">Monitoring and logging</h3>
+<div class="body conbody"><dl><dt class="dlterm">Extra characters in the output for <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> logs</samp></dt>
+<dd>When you run <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> logs</samp>,
+extra characters, such as <samp class="ph codeph">&amp;</samp>, are displayed at the beginning of each line. This
+issue occurs when incoming docker logs are parsed by NGINX.</dd>
+<dt class="dlterm">Log file additions cannot be specified with expressions</dt>
+<dd><p>You cannot use filters or wildcard expressions for specifying the log files that are to be
+collected. For example, you cannot specify <samp class="ph codeph">/var/log/*.log</samp>. Instead, list each log
+file individually.</p>
+</dd>
+</dl>
+</div>
+</article><article class="topic concept nested2" role="article" aria-labelledby="d81670e4382" id="ki_containers"><h3 class="topictitle3" id="d81670e4382">Single containers and container groups</h3>
+<div class="body conbody"><dl><dt class="dlterm">Failed connection after you created a container</dt>
+<dd><p>Due to a limitation in the Docker networking architecture of <span class="keyword">IBM
+Cloud Container Service</span>, outbound network access might not work
+at initial start up of the container. If your container attempts to make an outbound network
+connection to return an error code or to throw an exception if the network is not available, the
+container exits and a "Crashed" state is displayed. </p>
+
+<p>To allow the networking to initialize and to enable the container deployment to proceed, you must
+have a sleep statement before you start any processes that require outbound connectivity. Create a
+custom Dockerfile to wrap any existing server startup commands in the base Dockerfile. For an
+example, see the <a href="https://github.com/IBM-Bluemix/lets-chat-bluemix/tree/master/lets-chat" rel="external" target="_blank" title="(Opens in a new tab or window)">Let's
+Chat sample application</a>.</p>
+</dd>
+<dt class="dlterm">Inbound connectivity is not immediate</dt>
+<dd><p>Inbound connectivity is not immediate for both container groups and single containers, including
+routes and external apps. Wait for the connectivity to become available, which can take up to 5
+minutes.</p>
+</dd>
+<dt class="dlterm">Different default units of measurement used in <samp class="ph codeph">docker run -m</samp> and <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> run -m</samp></dt>
+<dd>When no unit of measurement is specified with <samp class="ph codeph">docker run -m</samp>, bytes is used as
+the default unit of measurement. When no unit of measurement is specified with <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> run -m</samp>, MB is used as the default
+unit of measurement.</dd>
+<dt class="dlterm">User data limit prevents a container from being created</dt>
+<dd>If you have too many services bound to a container, it cannot be created. Each service injects
+data into the container and is counted toward a 64KB limit. When you create a container that exceeds
+this limit, you receive a message, <samp class="ph systemoutput">Resource CREATE failed... User data too
+large</samp>. If you see this message, remove a service from your container.</dd>
+<dt class="dlterm"><a name="ki_containers__port25"><!-- --></a>Port 25 is not available to expose in a container</dt>
+<dd>Port 25 is blocked from use by SoftLayer, which is part of the <span class="keyword">IBM
+Cloud Container Service</span> architecture. This issue affects the
+usage of some SMTP services in containers. For more information about why this port is blocked, see
+the article <a href="http://knowledgelayer.softlayer.com/content/outbound-email-port-25" rel="external" target="_blank" title="(Opens in a new tab or window)">Outbound Email on Port 25 </a> in the SoftLayer
+documentation.</dd>
+<dt class="dlterm"><a name="ki_containers__containerbuildingprocess"><!-- --></a>Container building or networking process does not complete</dt>
+<dd><div class="p">If a container remains in the building or networking state too long, you might need to remove the
+container and create a new container from the same image. You can use the following CLI <span class="ph"><samp class="ph codeph">bx ic</samp></span> commands:<ol><li><span class="ph">Retrieve a list of containers that are running in the space. By default,
+only running containers are displayed.</span> For
+more information, review the <a href="../containers/container_cli_reference_cfic.html#container_cli_reference_cfic__ps">CLI <span class="ph">bx ic</span> ps
+reference</a>.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ps -a</code></pre>
+</li>
+<li><span class="ph">Remove one or more containers.</span> For
+more information, review the <a href="../containers/container_cli_reference_cfic.html#container_cli_reference_cfic__rm">CLI <span class="ph">bx ic</span> rm
+reference</a>.
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> rm -f <var class="keyword varname">container_ID</var></code></pre>
+</li>
+<li><span class="ph">Start a new container in the container cloud service from an image
+name.</span> For
+more information, review the <a href="../containers/container_cli_reference_cfic.html#container_cli_reference_cfic__run">CLI <span class="ph">bx ic</span>
+run reference</a>.
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run</code></pre>
+</li>
+</ol>
+</div>
+</dd>
+<dt class="dlterm">Auto-recovery is not immediate for container groups</dt>
+<dd><p>Auto-recovery for container groups might take more than 15 minutes for new systems to come
+online. Wait for auto-recovery to become available, which can take more than 15 minutes.</p>
+</dd>
+<dt class="dlterm"><samp class="ph codeph">cf delete-orphaned-routes</samp> command deletes routes from container groups</dt>
+<dd><p>Cloud Foundry does not recognize routes that are mapped to container groups in the same way that
+it recognizes routes as bound to applications. Do not run the <samp class="ph codeph">cf
+delete-orphaned-routes</samp> command when you use container groups.</p>
+</dd>
+</dl>
+</div>
+</article></article><article class="topic concept nested1" role="article" aria-labelledby="d81670e4534" lang="en-us" id="ts_getting_help"><h2 class="topictitle2" id="d81670e4534">Getting help and support for <span class="keyword">IBM
+Cloud Container Service</span></h2>
+<div class="body conbody"><p class="shortdesc">Where do you start troubleshooting a container? </p>
+<div class="p"><ul><li>To see whether <span class="keyword">Cloud</span> is
+available, <a href="https://developer.ibm.com/bluemix/support/#status" rel="external" target="_blank" title="(Opens in a new tab or window)">check the <span class="keyword">Cloud</span>
+status page</a>.</li>
+<li>Review the forums to see whether other users ran into the same issue. When you use the forums to
+ask a question, tag your question so that it is seen by the<span class="keyword">Cloud</span> development teams.<ul><li>If you have technical questions about developing or deploying an app with <span class="keyword">IBM
+Cloud Container Service</span>, post your question on <a href="http://stackoverflow.com/search?q=bluemix+containers" rel="external" target="_blank" title="(Opens in a new tab or window)">Stack
+Overflow</a> and tag your question with <samp class="ph codeph">ibm-bluemix</samp> and
+<samp class="ph codeph">containers</samp>.</li>
+<li>For questions about the service and getting started instructions, use the <a href="https://developer.ibm.com/answers/topics/containers/?smartspace=bluemix" rel="external" target="_blank" title="(Opens in a new tab or window)">IBM developerWorks dW Answers</a> forum. Include the <samp class="ph codeph">bluemix</samp>
+and <samp class="ph codeph">containers</samp> tags.</li>
+</ul>
+See <a href="../support/index.html#getting-help" rel="external" target="_blank" title="(Opens in a new tab or window)">Getting
+help</a> for more details about using the forums.</li>
+<li>Contact IBM Support. For information about opening an IBM
+support ticket, or about support levels and ticket severities, see <a href="../support/index.html#contacting-support" rel="external" target="_blank" title="(Opens in a new tab or window)">Contacting
+support</a>.</li>
+</ul>
+</div>
+</div>
+<aside role="complementary" aria-labelledby="d81670e4534"></aside></article></article></div></main></body></html>
