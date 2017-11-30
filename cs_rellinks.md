@@ -27,6 +27,7 @@ lastupdated: "2017-11-02"
 - [developerWorks container orchestration journeys ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/code/journey/category/container-orchestration/)
 - [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/)
 - [Docker documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.docker.com/engine/)
+- [Istio ![External link icon](../icons/launch-glyph.svg "External link icon")](https://istio.io/)
 - [Weave Scope ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.weave.works/oss/scope/)
 
 <br />
