@@ -1,0 +1,1060 @@
+<!DOCTYPE html><html lang="en-us">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="dcterms.date" content="2017-11-10">
+<meta name="dcterms.rights" content="© Copyright IBM Corporation 2014, 2017">
+
+<meta name="description" content="Highly available containers means less downtime for your app. The more widely you distribute your container setup, the less likely your users are to experience downtime with your app. You can achieve higher availability by using IBM Cloud Container Service built-in capabilities to increase resiliency against potential failure conditions, such as host failures, network failures, or application software failures.">
+<meta name="keywords" content="container group, containers, IBM Containers, high availability, dashboard, gui, cli, bx ic, group-create, autoscaling, auto scaling, auto-scaling, scaling, load balancing, route, share, updating, regions, container groups, ip address, private, load balancer, remove, group-remove">
+<meta name="geo.country" content="ZZ">
+<script>
+    digitalData = {
+      page: {
+        pageInfo: {
+  language: "en-us",
+
+  version: "v18",
+  ibm: {
+  country: "ZZ",
+  type: "CT701"
+  
+         }
+       }
+     }
+   };
+  </script><!-- Licensed Materials - Property of IBM -->
+<!-- US Government Users Restricted Rights -->
+<!-- Use, duplication or disclosure restricted by -->
+<!-- GSA ADP Schedule Contract with IBM Corp. -->
+<link rel="stylesheet" type="text/css" href="./ibmdita.css">
+<title>Running highly available processes as container groups with IBM Cloud Container Service</title>
+</head>
+<body><main role="main"><div><article class="nested0" role="article" aria-labelledby="d49620e6" id="container_ha"><h1 class="topictitle1" id="d49620e6">Running highly available processes as container groups (Deprecated)</h1>
+<div class="abstract"><div class="shortdesc">Highly available containers means less downtime for your app. The more widely you
+distribute your container setup, the less likely your users are to experience downtime with your
+app. You can achieve higher availability by using IBM® Cloud Container Service built-in capabilities to increase resiliency
+against potential failure conditions, such as host failures, network failures, or application
+software failures.</div>
+
+<div class="p"><div class="note attention"><span class="attentiontitle">Attention:</span>  Single and scalable containers are deprecated. Support
+will continue in IBM Cloud Public until 5 December 2017 and in IBM Cloud Local and Dedicated until
+20 June 2018. Start using Kubernetes clusters today to deploy secure, highly available apps. <a href="https://www.ibm.com/blogs/bluemix/2017/07/deprecation-single-scalable-group-container-service-bluemix-public/" rel="external" target="_blank" title="(Opens in a new tab or window)">Learn more about Kubernetes and how to migrate your
+apps</a>.</div>
+</div>
+
+<div class="p">In this
+page:<div class="lines">&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_ha.html#ha_groups">Options for setting up container groups</a> by availability<br>
+&nbsp;&nbsp;&nbsp;&nbsp; • Running long-term services as container groups from the <a href="container_ha.html#container_group_ui" title="Create and deploy a scalable group container from the Cloud GUI. A container group includes two or more containers that run the same image. Use container groups for running long-term services with workloads that require scalability and reliability or for testing at the required scale.">GUI</a> or the <a href="container_ha.html#container_group_cli" title="Create and deploy a scalable group container from the IBM Cloud Container Service CLI. A container group includes two or more containers that run the same image. Use container groups for running long-term services with workloads that require scalability and reliability or for testing at the required scale.">CLI</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; • Automatically <a href="container_ha.html#container_group_ui_as" title="The Auto-Scaling for Containers capability is being deprecated. You can replace the functions by using IBM Cloud Container Service. For details, see Auto-Scaling Retirement.">scaling groups</a> (deprecated)<br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_ha.html#container_group_migrate" title="If you must move a container group to another space in the same organization, you can create a second container group with the same route. Then, you can remove the first group without causing any downtime for your app.">Moving groups</a> to another space<br>
+&nbsp;&nbsp;&nbsp;&nbsp; • Updating an app that runs in your container group by using the <a href="container_ha.html#container_group_update_ui" title="To update an app that is running in a container group, you must update your image and deploy a new container group from it. During the update process, you are not required to stop the old running container group. You can create a new container group, map the existing route information to it, and then unmap the route from the outdated container group. Your new app is deployed without any downtime.">GUI</a> or the <a href="container_ha.html#container_group_update_cli" title="To update an app that is running in a container group, you must update your image and deploy a new container group from it. During the update process, you are not required to stop the old running container group. You can create a new container group, map the existing route information to it, and then unmap the route from the outdated container group. Your new app is deployed without any downtime.">CLI</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; • Running highly available groups <a href="container_ha.html#container_ha_space" title="You can create two container groups from the same image in the same Cloud space and map the same route to both groups. With this setup, if a container group or the load balancer for a group goes down, traffic is routed to the other container group.">in the same space</a> or <a href="container_ha.html#container_ha_regions" title="If you configure your app's domain name with a Domain Name System (DNS) that provides global load balancing, you can create two container groups from the same image in different Cloud regions that use the same host name in the route. With this setup, you can allow load balancing to occur based on the region the user is in. If the container group, or hardware, or even an entire data center in one region goes down, traffic is routed to the container group that is deployed in another region."> different regions</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; • Connecting to a <a href="container_ha.html#container_group_private_ip" title="Identify the load balancer IP address for a container group in order to access the group without exposing the group to the public.">private group</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_ha.html#container_group_remove" title="To maximize the use of your quota, remove container groups that are not in use occasionally.">Removing</a> groups</div>
+</div>
+</div>
+<aside role="complementary" aria-labelledby="d49620e6"></aside><article class="topic task nested1" role="article" aria-labelledby="d49620e165" id="ha_groups"><h2 class="topictitle2" id="d49620e165">Options for setting up container groups by availability</h2>
+<div class="body taskbody"><div class="section context" id="ha_groups__context_nwq_pf1_4z"><p>Review these potential container group set ups that are ordered with increasing degrees of
+availability:</p>
+
+<div class="image"><img id="ha_groups__image_owq_pf1_4z" src="images/container_ha_roadmap.png" alt="High availability roadmap"></div>
+<ol id="ha_groups__ol_pwq_pf1_4z"><li>One container group with auto-recovery and n+1 instance pattern</li>
+<li>One container group with auto-recovery, n+2 instances pattern, and anti-affinity</li>
+<li>Two container groups with auto-recovery, n+2 instances pattern, and anti-affinity that run in
+the same space and share the same route</li>
+<li>Two container groups with auto-recovery, n+2 instances pattern, and anti-affinity that run in
+different spaces and share the same route</li>
+<li>Two container groups with auto-recovery, n+2 instances pattern, and anti-affinity that run in
+different <span class="keyword">IBM
+Cloud Container Service</span> availability zones
+and share the same route</li>
+<li>Two container groups with auto-recovery, n+2 instances pattern, and anti-affinity that run in
+different regions and share the same route</li>
+</ol>
+
+<div class="p">Learn more about how you can use these techniques to increase the availability of your app:<dl><dt class="dlterm">Deploy apps in container groups rather than single containers</dt>
+<dd><span class="ph">A container group includes two or more containers that run the same
+image. Use container groups for running long-term services with workloads that require scalability
+and reliability or for testing at the required scale.</span> You can create container groups from
+either the <a href="container_ha.html#container_group_ui" title="Create and deploy a scalable group container from the Cloud GUI. A container group includes two or more containers that run the same image. Use container groups for running long-term services with workloads that require scalability and reliability or for testing at the required scale."><span class="keyword">Cloud</span> GUI</a> or the <a href="container_ha.html#container_group_cli" title="Create and deploy a scalable group container from the IBM Cloud Container Service CLI. A container group includes two or more containers that run the same image. Use container groups for running long-term services with workloads that require scalability and reliability or for testing at the required scale.">CLI</a>.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create -p 9080 -n <var class="keyword varname">mylibertyhost</var> -d <span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span> --name <var class="keyword varname">mylibertyimage</var> --volume myvolume:/mydata/path registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">my_namespace</var>/<var class="keyword varname">mylibertyimage</var></code></pre>
+</dd>
+<dt class="dlterm">Enable automatic recovery in the container group</dt>
+<dd><span class="ph">When automatic recovery is enabled for a container group and
+the group has been running for 10 minutes, the group's load balancer starts to regularly check the
+health of each container instance in the group via HTTP requests. If a container instance does not
+respond within 100 seconds, it is marked as inactive. Inactive container instances are removed from
+the group and re-created by auto-recovery. Auto-recovery attempts to recover container instances in
+a group 3 times. After the third attempt, auto-recovery does not recover any container instances in
+the group for 60 minutes. After 60 minutes, the auto-recovery process starts again.</span> You can create container
+groups with automatic recovery from the <a href="container_ha.html#container_group_ui" title="Create and deploy a scalable group container from the Cloud GUI. A container group includes two or more containers that run the same image. Use container groups for running long-term services with workloads that require scalability and reliability or for testing at the required scale."><span class="keyword">Cloud</span> GUI</a> or the
+<a href="container_ha.html#container_group_cli" title="Create and deploy a scalable group container from the IBM Cloud Container Service CLI. A container group includes two or more containers that run the same image. Use container groups for running long-term services with workloads that require scalability and reliability or for testing at the required scale.">CLI</a>.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create -p 9080 --auto -n <var class="keyword varname">mylibertyhost</var> -d <span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span> --name <var class="keyword varname">mylibertyimage</var> --volume myvolume:/mydata/path registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">my_namespace</var>/<var class="keyword varname">mylibertyimage</var></code></pre>
+</dd>
+<dt class="dlterm">Include enough instances for your app's workload, plus two</dt>
+<dd><span class="ph">To make your
+container group highly available and more resilient to failure, consider including extra instances
+than the minimum to handle the expected workload. Extra instances can handle the workload in case
+another instance crashes. To ensure automatic recovery of a failed instance without affecting the
+workload, include one extra instance. For protection against two simultaneous failures, include two
+extra instances. This set up is an <var class="keyword varname">N+2</var> pattern, where <var class="keyword varname">N</var> is the
+number of instances to handle the requests and <var class="keyword varname">+2</var> is an extra two instances.</span> You can specify how many instances to
+include when you create a container group from the <a href="container_ha.html#container_group_ui" title="Create and deploy a scalable group container from the Cloud GUI. A container group includes two or more containers that run the same image. Use container groups for running long-term services with workloads that require scalability and reliability or for testing at the required scale."><span class="keyword">Cloud</span>
+GUI</a> or the <a href="container_ha.html#container_group_cli" title="Create and deploy a scalable group container from the IBM Cloud Container Service CLI. A container group includes two or more containers that run the same image. Use container groups for running long-term services with workloads that require scalability and reliability or for testing at the required scale.">CLI</a>.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create -p 9080 --desired 5 --auto -n <var class="keyword varname">mylibertyhost</var> -d <span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span> --name <var class="keyword varname">mylibertyimage</var> --volume myvolume:/mydata/path registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">my_namespace</var>/<var class="keyword varname">mylibertyimage</var></code></pre>
+</dd>
+<dt class="dlterm">Spread container instances across compute nodes</dt>
+<dd>When you create a container group, each instance in the group might be deployed to the same
+physical compute node. This setup where container instances exist on the same compute node is known
+as affinity or co-location. When you create the container group from the <a href="container_ha.html#container_group_cli" title="Create and deploy a scalable group container from the IBM Cloud Container Service CLI. A container group includes two or more containers that run the same image. Use container groups for running long-term services with workloads that require scalability and reliability or for testing at the required scale.">CLI</a>, you can spread the container
+instances across different physical compute nodes to increase your app's availability by using the
+anti-affinity option (<samp class="ph codeph">--anti</samp>). <div class="p"><div class="steps note"><span class="notetitle">Note:</span> To use the <samp class="ph codeph">--anti</samp> option from the CLI, you must have installed the <span class="keyword">IBM
+Cloud Container Service</span> plug-in (<samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span></samp>) version 0.8.934 or later.</div>
+</div>
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create -p 9080 --anti --desired 5 --auto -n <var class="keyword varname">mylibertyhost</var> -d <span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span> --name <var class="keyword varname">mylibertyimage</var> --volume myvolume:/mydata/path registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">my_namespace</var>/<var class="keyword varname">mylibertyimage</var></code></pre>
+</dd>
+<dt class="dlterm">Create multiple container groups that use the same route</dt>
+<dd>You can create two container groups from the same image in the same <span class="keyword">Cloud</span> space that use the same route. If an error occurs where the instances in one container group are not
+reachable, user traffic is routed automatically to the second container group. For more information
+about sharing a route between container groups, see <a href="container_ha.html#container_ha_space" title="You can create two container groups from the same image in the same Cloud space and map the same route to both groups. With this setup, if a container group or the load balancer for a group goes down, traffic is routed to the other container group.">Running highly available container groups in the same space</a>.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create -p 9080 --anti --desired 5 --auto -n <var class="keyword varname">mylibertyhost</var> -d <span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span> --name <var class="keyword varname">mylibertyimage1</var> --volume myvolume:/mydata/path registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">my_namespace</var>/<var class="keyword varname">mylibertyimage</var></code></pre>
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create -p 9080 --anti --desired 5 --auto -n <var class="keyword varname">mylibertyhost</var> -d <span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span> --name <var class="keyword varname">mylibertyimage2</var> --volume myvolume:/mydata/path registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">my_namespace</var>/<var class="keyword varname">mylibertyimage</var></code></pre>
+</dd>
+<dt class="dlterm">Spread container groups across <span class="keyword">IBM
+Cloud Container Service</span> availability zones</dt>
+<dd><span class="ph">An <span class="keyword">IBM
+Cloud Container Service</span>
+availability zone is a location within a region that <span class="keyword">IBM
+Cloud Container Service</span> runs in. When <span class="keyword">IBM
+Cloud Container Service</span> is used for the first time in a <span class="keyword">Cloud</span> space, containers are created in the
+default <span class="keyword">IBM
+Cloud Container Service</span> availability zone for
+that region.</span>
+<div class="tablenoborder"><table summary="IBM Cloud Container Service availability zones" id="ha_groups__table_qwq_pf1_4z" class="defaultstyle"><caption><span class="tablecap">Table 1. <span class="keyword">IBM
+Cloud Container Service</span> availability
+zones</span></caption><thead><tr><th id="d49620e592" class="thleft">Region</th>
+<th id="d49620e594" class="thleft">Data center location</th>
+<th id="d49620e596" class="thleft"><span class="keyword">IBM
+Cloud Container Service</span> availability zone
+names</th>
+</tr>
+</thead>
+<tbody><tr><td headers="d49620e592 ">US South</td>
+<td headers="d49620e594 ">Dallas 1</td>
+<td headers="d49620e596 ">dal09-01</td>
+</tr>
+<tr><td headers="d49620e592 ">US South</td>
+<td headers="d49620e594 ">Dallas 2</td>
+<td headers="d49620e596 ">dal09-02</td>
+</tr>
+<tr><td headers="d49620e592 ">US South</td>
+<td headers="d49620e594 ">Dallas 3</td>
+<td headers="d49620e596 ">dal10-03</td>
+</tr>
+<tr><td headers="d49620e592 ">United Kingdom</td>
+<td headers="d49620e594 ">London</td>
+<td headers="d49620e596 ">lon02-01</td>
+</tr>
+<tr><td headers="d49620e592 ">United Kingdom</td>
+<td headers="d49620e594 ">Amsterdam</td>
+<td headers="d49620e596 ">ams03-01</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p"><div class="note important"><span class="importanttitle">Important:</span> After
+configuring your spaces with different <span class="keyword">IBM
+Cloud Container Service</span> availability zones, you might use these
+commands to create the container groups.</div>
+<span class="keyword">IBM
+Cloud Container Service</span> availability zone
+1:<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create -p 9080 --anti --desired 5 --auto -n <var class="keyword varname">mylibertyhost</var> -d <span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span> --name <var class="keyword varname">mylibertyimage1</var> --volume myvolume:/mydata/path registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">my_namespace</var>/<var class="keyword varname">mylibertyimage</var></code></pre>
+</div>
+<div class="p"><span class="keyword">IBM
+Cloud Container Service</span> availability zone
+2:<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create -p 9080 --anti --desired 5 --auto -n <var class="keyword varname">mylibertyhost</var> -d <span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span> --name <var class="keyword varname">mylibertyimage2</var> --volume myvolume:/mydata/path registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">my_namespace</var>/<var class="keyword varname">mylibertyimage</var></code></pre>
+</div>
+</dd>
+<dt class="dlterm">Spread container groups across regions</dt>
+<dd>When you spread container groups across <span class="keyword">Cloud</span> regions, you can allow load balancing to
+occur based on the region the user is in. If the container group, or hardware, or even an entire
+datacenter in one region goes down, traffic is routed to the container group that is deployed in
+another region. <p>To deploy container groups in multiple regions, see <a href="container_ha.html#container_ha_regions" title="If you configure your app's domain name with a Domain Name System (DNS) that provides global load balancing, you can create two container groups from the same image in different Cloud regions that use the same host name in the route. With this setup, you can allow load balancing to occur based on the region the user is in. If the container group, or hardware, or even an entire data center in one region goes down, traffic is routed to the container group that is deployed in another region.">Running highly available container groups in different Cloud regions</a>.</p>
+<div class="p"><div class="note important"><span class="importanttitle">Important:</span> After
+configuring your custom domain, you might use these commands to create the container groups.</div>
+
+Region
+1:<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create -p 9080 --anti --desired 5 --auto -n <var class="keyword varname">mylibertyhost</var> -d mydomain.net --name <var class="keyword varname">mylibertyimage1</var> --volume myvolume:/mydata/path registry.ng.bluemix.net/<var class="keyword varname">my_namespace</var>/<var class="keyword varname">mylibertyimage</var></code></pre>
+</div>
+<div class="p">Region
+2:<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create -p 9080 --anti --desired 5 --auto -n <var class="keyword varname">mylibertyhost</var> -d eu-gb.mydomain.net --name <var class="keyword varname">mylibertyimage2</var> --volume myvolume:/mydata/path registry.eu-gb.bluemix.net/<var class="keyword varname">my_namespace</var>/<var class="keyword varname">mylibertyimage</var></code></pre>
+</div>
+</dd>
+</dl>
+</div>
+</div></div>
+</article><article class="topic task nested1" role="article" aria-labelledby="d49620e775" lang="en-us" id="container_group_ui"><h2 class="topictitle2" id="d49620e775">Running long-term services as container groups from the <span class="keyword">Cloud</span> GUI</h2>
+<div class="body taskbody"><p class="shortdesc">Create and deploy a scalable group container from the <span class="keyword">Cloud</span> GUI. <span class="ph">A container group includes two or more containers that run the same
+image. Use container groups for running long-term services with workloads that require scalability
+and reliability or for testing at the required scale.</span></p>
+<div class="section prereq"><div class="p">Before you begin, consider the following prerequisites. <ul><li>You must have a Developer role for the <span class="keyword">Cloud</span> space to create a container in it. For
+more information on the permissions of each roles and how to edit roles, see <span class="ph"><a href="../iam/users_roles.html">Users and roles</a></span>.</li>
+<li>From the <span class="keyword">Cloud</span>
+GUI, you create a container from either the IBM-provided public images, or from an existing image in
+your organizations private <span class="keyword">Cloud</span>
+registry. For more information about adding an image to your <span class="keyword wintitle">Catalog</span>, see <a href="container_images_adding_ov.html" title="A container image is the basis for every container that you create. An image is created from a Dockerfile, which is a file that contains instructions to build the image, and build artifacts, such as an app, the app's configuration, and its dependencies. Think of a container image as an executable file (.exe or .bin). As soon as you run the executable app file, you create an instance of your app. When you run a container, you create a container instance from the image.">Adding Docker images to your organization's private Cloud images registry (Deprecated)</a>.</li>
+<li>If you know that you want to bind a <span class="keyword">Cloud</span> service to the container, add the
+<span class="keyword">Cloud</span> service to your space. For more
+information, see <a href="container_integrations.html#container_integrations_binding" title="IBM Cloud has a list of services and manages them on behalf of app developers. To add a Cloud service for your container to use, you must request an instance of this service and bind the service to the container.">Binding a service from the Cloud GUI</a>.</li>
+<li>(Optional) If you know that you want a shared disk that allows files to be accessible from
+within a container group, create a volume before you create the container group. For more
+information, see <a href="container_volumes_ov.html#container_volumes_cli" title="A volume is a persistent storage location for the data that an app creates or the files that the app requires to run. You can create a volume for your container from the command line.">Creating volumes with the command line (CLI)</a>.</li>
+</ul>
+</div>
+</div><div class="section context"></div><p class="li stepsection">To create and deploy a container group:</p><ol class="steps"><li class="step stepexpand" data-hd-audience="yellow"><span class="cmd"><span class="ph" data-hd-otherprops="registry_check">From the catalog, select
+<span class="ph uicontrol">Containers</span> and choose an image.</span></span> Both images that are provided by IBM and images that are stored in your private <span class="keyword">Cloud</span> registry are displayed. </li>
+<li class="step stepexpand" data-hd-audience="yellow"><span class="cmd">If a namespace is already set for your organization, you are not prompted to create one and can
+continue with the next step. </span> If a namespace is not specified for your organization yet, you are prompted to set one for the
+image registry.  A namespace is a unique name to identify your private registry in <span class="keyword">Cloud</span>. The namespace is assigned one time for
+an organization and cannot be changed after it is created. If you want to use <span class="keyword">IBM
+Cloud Container Service</span> in multiple <span class="keyword">Cloud</span> regions, you must set up a namespace for
+each region. <div class="note tip" id="container_group_ui__d31133e139"><span class="tiptitle">Tip:</span> Observe the following rules for the
+namespace:<ul id="container_group_ui__d31133e141"><li>It can contain only lowercase letters, numbers, or underscores (_).</li>
+<li>It can be 4 - 30 characters. If you plan to manage containers from the command line, you might
+prefer to have a short namespace that can be typed quickly.</li>
+<li>Its name must be unique in <span class="keyword">Cloud</span>.</li>
+</ul>
+</div>
+</li>
+<li class="step stepexpand" data-hd-audience="yellow"><span class="cmd">Select one of the <span class="keyword">Cloud</span> spaces
+in your organization.</span></li>
+<li class="step stepexpand" data-hd-audience="yellow" id="container_group_ui__group_not_single"><span class="cmd">Next, start defining your container group.</span> The window opens to the <span class="ph uicontrol">Single</span> tab, by default, so select the
+<span class="ph uicontrol">Scalable</span> tab to create a container group.</li>
+<li class="step stepexpand" data-hd-audience="yellow">Optional: <span class="cmd">Under the image name, select the tag or version of the image to use.</span></li>
+<li class="step stepexpand" data-hd-audience="yellow" id="container_group_ui__enter_name"><span class="cmd">In the <span class="ph uicontrol">Container group name</span> field, enter a name for the container.</span> <div class="note tip"><span class="tiptitle">Tip:</span> The container name must start with a letter, and then can include
+uppercase letters, lowercase letters, numbers, periods (.), underscores (_), or hyphens
+(-).</div>
+</li>
+<li class="step stepexpand" data-hd-audience="yellow" id="container_group_ui__enter_instances"><span class="cmd">In the <span class="ph uicontrol">Instances</span> field, specify the number of instances in the
+group.</span> The default is <span class="ph uicontrol">2</span>. Each instance is the same size and must use the same
+image. <span class="ph">The number of container group instances that your app requires depends
+on the expected workload and the time in which a request can be processed by the app. For example,
+multi-tasking or network connectivity affects how many instances might be required for your app.</span>
+<p><span class="ph">To determine the number of desired instances, deploy a single
+container in <span class="keyword">Cloud</span> that runs your app
+and perform a load test on this container. If the app can handle, for example, 100 requests per
+second, but you are expecting an average workload of 300 requests per second, then the desired
+number of instances for the container group is 3.</span></p>
+<p><span class="ph">To make your
+container group highly available and more resilient to failure, consider including extra instances
+than the minimum to handle the expected workload. Extra instances can handle the workload in case
+another instance crashes. To ensure automatic recovery of a failed instance without affecting the
+workload, include one extra instance. For protection against two simultaneous failures, include two
+extra instances. This set up is an <var class="keyword varname">N+2</var> pattern, where <var class="keyword varname">N</var> is the
+number of instances to handle the requests and <var class="keyword varname">+2</var> is an extra two instances.</span> If you find you need more instances
+after the group is deployed, you can add more instances without having to re-create the group.</p>
+<div class="note important"><span class="importanttitle">Important:</span> A container group should include at least 2 container
+instances. If you include only 1 instance in the group and that instance becomes unavailable, your
+users can experience downtime for the app.</div>
+</li>
+<li class="step stepexpand" data-hd-audience="yellow"><span class="cmd">In the <span class="ph uicontrol">Size</span> field, select a container size.</span> The default size is <span class="ph uicontrol" data-hd-audience="yellow">Micro (256 MB Memory, 16 GB
+Storage)</span>. The size that you choose impacts the amount of memory and disk space the
+container gets on the compute host during runtime, and cannot be changed after the container is
+created. Other available sizes are<ul data-hd-audience="yellow" id="container_group_ui__d31133e185"><li>Pico (64 MB memory, 4 GB disk space)</li>
+<li>Nano (128 MB memory, 8 GB disk space)</li>
+<li>Tiny (512 MB memory, 32 GB disk space)</li>
+<li>Small (1 GB memory, 64 GB disk space)</li>
+<li>Medium (2 GB memory, 128 GB disk space)</li>
+<li>Large (4 GB memory, 256 GB disk space)</li>
+<li>X-Large (8 GB memory, 512 GB disk space)</li>
+<li>2X-Large (16 GB memory, 1 TB disk space)</li>
+</ul>
+</li>
+<li class="step stepexpand" data-hd-audience="yellow" id="container_group_ui__route"><span class="cmd">Select the full public URL.</span> This URL is also called a route. By using a host and domain for the container group rather
+than an IP address for a single container instance, you are providing load balancing for your app.
+Your container group might not be immediately available at the public URL upon building as network
+connectivity can take up to 5 minutes to resolve.<ol type="a" class="ol substeps"><li class="li substep substepexpand"><span class="cmd">In the <span class="ph uicontrol">Host</span> field, specify the host name, such as
+<span class="ph filepath"><var class="keyword varname">mycontainerhost</var></span>.</span> Do not include underscores (_) in the host name. </li>
+<li class="li substep substepexpand"><span class="cmd">For the system <span class="ph uicontrol">Domain</span>, select <samp class="ph codeph"><span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span></samp>.</span> The system domain already provides an SSL certificate, so you can access your container group
+with HTTPS without any additional configuration. You can also select a custom domain that you
+created for your organization. To create a custom domain, you must register the custom domain on a
+public DNS server, configure the custom domain in <span class="keyword">Cloud</span>, and then map the custom domain to the
+<span class="keyword">Cloud</span> system domain on the public DNS
+server. After your custom domain is mapped to the <span class="keyword">Cloud</span> system domain, requests for your custom
+domain are routed to your application in <span class="keyword">Cloud</span>. When you create a custom domain, do not
+include underscores (_) in the domain name. For more information about custom domains, see <a href="../manageapps/updapps.html#domain">Creating and using a custom
+domain</a>. To make your custom domain secure, <a href="../manageapps/secapps.html#ssl_certificate">upload a SSL
+certificate</a>, so your container groups can be accessed with HTTPS.  <p>The route domain and the host combined form the full public route URL, such as
+<samp class="ph codeph">http://<var class="keyword varname">mycontainerhost</var>.<span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span></samp> and must be unique within
+<span class="keyword">Cloud</span>.</p>
+</li>
+</ol>
+</li>
+<li class="step stepexpand" data-hd-audience="yellow"><span class="cmd">In the <span class="ph uicontrol">HTTP port</span> field, specify a public port to publish. </span> You can type a port or select a port from drop-down list. When you type a port, you can choose
+between UDP and TCP to indicate the IP protocol that you want to use. If you do not specify a
+protocol, your port is automatically exposed for TCP traffic. The drop-down list was pre-populated
+with the ports that were specified in the Dockerfile for the image when the image was built. For
+container groups, you cannot include multiple ports. <span class="ph">When you bind a route, containers in your group must
+listen for HTTP traffic on the group's exposed port. Non-HTTP ports cannot be exposed publicly. When
+HTTPS traffic arrives on the exposed port, the (Go)Router completes the HTTPS termination. Then, the
+HTTP protocol is used on the private virtual network between the (Go)Router and the containers. </span> <div class="p" id="container_group_ui__d31133e229">If a port is specified in the Dockerfile for the image that you are using, include
+that port.<div class="note tip"><span class="tiptitle">Tip:</span> <ul id="container_group_ui__d31133e232"><li>For the IBM certified Liberty Server image or a modified
+version of this image, enter the port <kbd class="ph userinput">9080</kbd>.</li>
+<li>For the IBM certified Node.js image or a modified version
+of this image, enter any port, such as port <kbd class="ph userinput">8000</kbd>.</li>
+</ul>
+</div>
+</div>
+</li>
+<li class="step stepexpand" id="container_group_ui__auto-recovery">Optional: <span class="cmd">Enable auto-recovery. Select <span class="ph uicontrol">Enable automatic recovery</span>.</span> Automatic recovery removes unavailable container instances and replaces them with new
+container instances.  <p><span class="ph">When automatic recovery is enabled for a container group and the group has
+been running for 10 minutes, the group's load balancer starts to regularly check the health of each
+container instance in the group via HTTP requests. If a container instance does not respond within
+100 seconds, it is marked as inactive. Inactive container instances are removed from the group and
+re-created by auto-recovery. Auto-recovery attempts to recover container instances in a group 3
+times. After the third attempt, auto-recovery does not recover any container instances in the group
+for 60 minutes. After 60 minutes, the auto-recovery process starts again.</span></p>
+</li>
+<li class="step stepexpand" id="container_group_ui__volume">Optional: <span class="cmd">Define data or file storage. Associate an existing volume with a container or container
+group.</span> A volume is a shared disk that allows files to be accessible from within a container. The path
+in the container indicates where in the container’s file system the volume is mounted. <div class="note restriction"><span class="restrictiontitle">Restriction:</span> You can delete volumes from your <span class="keyword">Cloud</span> space by using the command line
+only.</div>
+<ol type="a" class="ol substeps" id="container_group_ui__d31133e267"><li class="li substep"><span class="cmd">Click <span class="ph uicontrol">Assign an existing volume</span>.</span></li>
+<li class="li substep"><span class="cmd">Select the volume from the drop-down list.</span></li>
+<li class="li substep"><span class="cmd">In the next field, specify a path on the container to map the volume. </span> For example, <span class="ph filepath">/var/lib/my_volume</span></li>
+<li class="li substep"><span class="cmd">To specify that a volume is read-only, select <span class="ph uicontrol">Read-only</span>.</span> By default, volumes are read/write.</li>
+<li class="li substep"><span class="cmd">To add multiple volumes, click <span class="ph uicontrol">Assign an existing volume</span> and repeat
+these steps.</span></li>
+</ol>
+</li>
+<li class="step stepexpand" id="container_group_ui__env_var">Optional: <span class="cmd">Define environment variables. </span> <ol type="a" class="ol substeps" id="container_group_ui__d31133e301"><li class="li substep substepexpand"><span class="cmd">Click <span class="ph uicontrol">Add a new environment variable</span>.</span></li>
+<li class="li substep substepexpand"><span class="cmd">Enter a name for the environment variable.</span></li>
+<li class="li substep substepexpand"><span class="cmd">In the next field, specify a value for the environment variable.</span></li>
+<li class="li substep substepexpand"><span class="cmd">To add multiple environment variables, click <span class="ph uicontrol">Add a new environment
+variable</span> and repeat these steps.</span> <div class="tablenoborder"><table summary="" id="container_group_ui__d31133e321" class="defaultstyle"><caption><span class="tablecap">Table 2. Suggested environment variables</span></caption><thead><tr><th id="d49620e1256" class="thleft">Environment variable</th>
+<th id="d49620e1258" class="thleft">Description</th>
+</tr>
+</thead>
+<tbody><tr><td headers="d49620e1256 "><div class="lines"><samp class="ph codeph">CCS_BIND_APP=</samp><br>
+<samp class="ph codeph"><var class="keyword varname">&lt;appname&gt;</var></samp></div>
+</td>
+<td headers="d49620e1258 ">Some <span class="keyword">Cloud</span> services do not
+support direct binding to a container. In this case, you need to create a Cloud Foundry app and bind
+the <span class="keyword">Cloud</span> service to it. Then, you
+bind the app to your container by using <samp class="ph codeph">CCS_BIND_APP</samp>. The Cloud Foundry app acts as
+a bridge and allows <span class="keyword">Cloud</span> to inject
+your bridge app’s VCAP_SERVICES information into the running container instance. </td>
+</tr>
+<tr><td headers="d49620e1256 "><div class="lines"><samp class="ph codeph">CCS_BIND_SRV=</samp><br>
+<samp class="ph codeph"><var class="keyword varname">&lt;service_instance_name1&gt;,</var></samp><br>
+<samp class="ph codeph"><var class="keyword varname">&lt;service_instance_name2&gt;</var></samp></div>
+
+<div class="steps note"><span class="notetitle">Note:</span>  When a service does not support the use of the <samp class="ph codeph">CCS_BIND_SRV=</samp> environment
+variable, use <samp class="ph codeph">CCS_BIND_APP=</samp> instead.</div>
+</td>
+<td headers="d49620e1258 ">To bind a <span class="keyword">Cloud</span> service
+directly to a container without using a bridge app, use <samp class="ph codeph">CCS_BIND_SRV</samp>. This binding
+allows <span class="keyword">Cloud</span> to inject the
+VCAP_SERVICES information into the running container instance. To list multiple <span class="keyword">Cloud</span> services, include them as part of the
+same environment variable.</td>
+</tr>
+<tr><td headers="d49620e1256 "><div class="lines">(Deprecated) <samp class="ph codeph">CCS_SSH_KEY=</samp><br>
+<samp class="ph codeph"><var class="keyword varname">&lt;public_ssh_key&gt; </var></samp></div>
+</td>
+<td headers="d49620e1258 "><div class="note note" data-hd-status="deprecated"><span class="notetitle">This environment variable has been deprecated:</span> Use <span class="ph"><samp class="ph codeph">bx ic</samp></span>
+<samp class="ph codeph">exec</samp> or <span class="ph"><samp class="ph codeph">bx ic</samp></span>
+<samp class="ph codeph">attach</samp> for external access to your containers instead. For more information, see
+<a href="container_security.html#container_cli_login_exec" title="If you must log in to your running container, you can use bx ic exec.">Logging in to a container with exec</a>.</div>
+<span class="ph">To add an SSH
+key to a container when you create it, you can use <samp class="ph codeph">CCS_API_KEY</samp>.</span></td>
+</tr>
+<tr><td headers="d49620e1256 "><div class="lines"><samp class="ph codeph">LOG_LOCATIONS=</samp><br>
+<samp class="ph codeph"><var class="keyword varname">&lt;path_to_file&gt; </var></samp></div>
+</td>
+<td headers="d49620e1258 "><span class="ph" id="container_group_ui__d31214e1424">To add a log file to be monitored in the container, include the
+<samp class="ph codeph">LOG_LOCATIONS</samp> environment variable with a path to the log file.</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+</ol>
+</li>
+<li class="step stepexpand" id="container_group_ui__service">Optional: <span class="cmd">Define other services for the app. Bind a <span class="keyword">Cloud</span> service from your <span class="keyword">Cloud</span> space to your container. In the
+<span class="ph uicontrol">Service binding</span> section, select a <span class="keyword">Cloud</span> service instance and click
+<span class="ph uicontrol">Add</span> to bind the service to your container.</span> If you do not have any <span class="keyword">Cloud</span>
+services added to the space yet, no services are displayed in the menu.</li>
+<li class="step stepexpand" id="container_group_ui__create"><span class="cmd">Deploy the container and wait for it to complete. Click <span class="ph uicontrol">CREATE</span>.</span> As the container is created, which might take a few moments, the container is also
+started in <span class="keyword">Cloud</span>. Look in the
+<span class="ph uicontrol">CONTAINER HEALTH</span> section for the container’s status. When the creation is
+complete, the status is <span class="ph uicontrol">Running</span>.</li>
+</ol>
+<div class="section result"><p id="container_group_ui__wait"><span class="ph" id="container_group_ui__buildroute">If you are connecting to an external application from the
+container, there is up to a 5-minute wait after running the container process before it can connect
+to the specified route. Then, you can verify that the app is running in the container group by
+opening <span class="ph filepath">https://<var class="keyword varname">&lt;host&gt;</var>.<span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span></span> in a browser.</span></p>
+</div><div class="section postreq"><div class="p" id="container_group_ui__ha_setup">The more widely you distribute your container setup, the less likely your users are
+to experience downtime with your app. After you create a container group, create another with the
+same image in the same space, another space in the same organization, or in another region to make
+your app more widely distributed. For more information, see the following topics.<ul><li><a href="container_ha.html#container_ha" title="Highly available containers means less downtime for your app. The more widely you distribute your container setup, the less likely your users are to experience downtime with your app. You can achieve higher availability by using IBM Cloud Container Service built-in capabilities to increase resiliency against potential failure conditions, such as host failures, network failures, or application software failures.">Running highly available processes as container groups (Deprecated)</a></li>
+<li><a href="container_ha.html#container_ha_regions" title="If you configure your app's domain name with a Domain Name System (DNS) that provides global load balancing, you can create two container groups from the same image in different Cloud regions that use the same host name in the route. With this setup, you can allow load balancing to occur based on the region the user is in. If the container group, or hardware, or even an entire data center in one region goes down, traffic is routed to the container group that is deployed in another region.">Running highly available container groups in different Cloud regions</a></li>
+</ul>
+</div>
+
+<p>To increase or decrease the number of container instances that run in your container group, open
+the container group in the <span class="keyword">Cloud</span> GUI.
+To increase the number of instances, click the <span class="ph uicontrol">+</span> button, to decrease the
+number, click the <span class="ph uicontrol">-</span> button. Then, click <span class="ph uicontrol">Save</span>.</p>
+</div></div>
+<aside role="complementary" aria-labelledby="d49620e775"></aside></article><article class="topic task nested1" role="article" aria-labelledby="d49620e1486" lang="en-us" id="container_group_cli"><h2 class="topictitle2" id="d49620e1486">Running long-term services as container groups with the command line interface (CLI)</h2>
+<div class="body taskbody"><p class="shortdesc">Create and deploy a scalable group container from the <span class="keyword">IBM
+Cloud Container Service</span> CLI. <span class="ph">A container group includes two or more containers that run the same
+image. Use container groups for running long-term services with workloads that require scalability
+and reliability or for testing at the required scale.</span></p>
+<div class="section prereq"><div class="p" id="container_group_cli__prereq">Before you begin, consider the following steps. <ul><li>You must have a Developer role for the <span class="keyword">Cloud</span> space to create a container in it. For
+more information on the permissions of each roles and how to edit roles, see <span class="ph"><a href="../iam/users_roles.html">Users and roles</a></span>.</li>
+<li>Identify an existing image from your organization's private images registry
+to use in your container by running the <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> images</samp> command. To add an image to
+your registry, see <a href="container_images_adding_ov.html" title="A container image is the basis for every container that you create. An image is created from a Dockerfile, which is a file that contains instructions to build the image, and build artifacts, such as an app, the app's configuration, and its dependencies. Think of a container image as an executable file (.exe or .bin). As soon as you run the executable app file, you create an instance of your app. When you run a container, you create a container instance from the image.">Adding Docker images to your organization's private Cloud images registry (Deprecated)</a>.</li>
+<li>If you know that you want to bind a <span class="keyword">Cloud</span> service to the container, add the
+<span class="keyword">Cloud</span> service to your space. For more
+information, see <a href="container_integrations.html#container_integrations_binding" title="IBM Cloud has a list of services and manages them on behalf of app developers. To add a Cloud service for your container to use, you must request an instance of this service and bind the service to the container.">Binding a service from the Cloud GUI</a>.</li>
+<li>If you know that you want a shared disk that
+allows files to be accessible from multiple containers, create a volume before you create the
+container. For more information, see <a href="container_volumes_ov.html#container_volumes_cli" title="A volume is a persistent storage location for the data that an app creates or the files that the app requires to run. You can create a volume for your container from the command line.">Creating volumes with the command line (CLI)</a>.</li>
+</ul>
+</div>
+</div><div class="section context"></div><p class="li stepsection">Create a scalable
+container group.</p><ol class="steps"><li class="step stepexpand"><span class="cmd">Create a container group with an existing image in your organization's private images registry
+by running one of the following <samp class="ph codeph">group-create</samp> commands. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create --anti --auto --desired <var class="keyword varname">&lt;instances&gt;</var> -e "LOG_LOCATIONS=<var class="keyword varname">&lt;file_path&gt;</var>" -m <var class="keyword varname">&lt;size&gt;</var> --name <var class="keyword varname">&lt;name&gt;</var> -p <var class="keyword varname">&lt;public_port&gt;</var> -n <var class="keyword varname">&lt;hostname&gt;</var> -d <span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span> --volume <var class="keyword varname">&lt;volume_name&gt;:&lt;mount_path&gt;</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;namespace&gt;</var>/<var class="keyword varname">&lt;image_name_or_id&gt;</var></code></pre>
+Example<p>The
+following example creates a container group with 3 instances that is named
+<var class="keyword varname">my_group</var> from the <span class="ph uicontrol">ibmliberty</span> image. The anti-affinity and
+auto-recovery feature is enabled for the group to assure higher availability for the app. To access
+the group from the internet, the public port 9080 is exposed and the route <span class="ph filepath">myhost.<span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span></span> is mapped to the group. The
+volume <var class="keyword varname">myvol</var> is mounted to the group to persist container data and the standard
+Ubuntu log file is added as a custom log file location. Logs from custom log file locations can be
+viewed in Kibana after the group is
+created.</p>
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create --anti --auto --desired 3 -e <span class="q">"LOG_LOCATIONS=/var/log/dpkg.log"</span> -m 64 --name my_group -p 9080 -n <var class="keyword varname">myhost</var> -d <span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span> --volume myvol:/var/tmp registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/ibmliberty</code></pre>
+
+As the container group is created, it is also started. The container group is deployed when the ID
+for the group is displayed.</li>
+<li class="step stepexpand">Optional: <span class="cmd">List your running container groups.</span> <pre class="codeblock"><code><span class="ph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> groups [-q] </span> </code></pre>
+
+<p><span class="ph" id="container_group_cli__d29581e200">If you are connecting to an external application from the
+container, there is up to a 5-minute wait after running the container process before it can connect
+to the specified route. Then, you can verify that the app is running in the container group by
+opening <span class="ph filepath">https://<var class="keyword varname">&lt;host&gt;</var>.<span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span></span> in a browser.</span></p>
+</li>
+</ol>
+<div class="section postreq"><div class="p">The more widely you distribute your container setup, the less likely your users are
+to experience downtime with your app. After you create a container group, create another with the
+same image in the same space, another space in the same organization, or in another region to make
+your app more widely distributed. For more information, see the following topics.<ul><li><a href="container_ha.html#container_ha" title="Highly available containers means less downtime for your app. The more widely you distribute your container setup, the less likely your users are to experience downtime with your app. You can achieve higher availability by using IBM Cloud Container Service built-in capabilities to increase resiliency against potential failure conditions, such as host failures, network failures, or application software failures.">Running highly available processes as container groups (Deprecated)</a></li>
+<li><a href="container_ha.html#container_ha_regions" title="If you configure your app's domain name with a Domain Name System (DNS) that provides global load balancing, you can create two container groups from the same image in different Cloud regions that use the same host name in the route. With this setup, you can allow load balancing to occur based on the region the user is in. If the container group, or hardware, or even an entire data center in one region goes down, traffic is routed to the container group that is deployed in another region.">Running highly available container groups in different Cloud regions</a></li>
+</ul>
+</div>
+
+<p>After the container group is created, you can increase and decrease the number of instances that
+run in the container group as well as add further environment variables. For further information,
+review the <a href="container_cli_reference_cfic.html#container_cli_reference_cfic__group_update"><samp class="ph codeph"><span class="ph">bx ic</span> group-update</samp></a>
+command.</p>
+</div></div>
+<aside role="complementary" aria-labelledby="d49620e1486"></aside></article><article class="topic task nested1" role="article" aria-labelledby="d49620e1764" lang="en-us" id="container_group_ui_as"><h2 class="topictitle2" id="d49620e1764">Automatically scaling container groups (deprecated)</h2>
+<div class="body taskbody"><p class="shortdesc">The Auto-Scaling for Containers capability is being deprecated. You can replace the
+functions by using <span class="keyword">IBM
+Cloud Container Service</span>. <span class="ph">For
+details, see <a href="https://www.ibm.com/blogs/bluemix/2017/03/retirement-ibm-container-autoscaling-beta-capability" rel="external" target="_blank" title="(Opens in a new tab or window)">Auto-Scaling Retirement</a>.</span></p>
+<div class="section context">Are you looking for information about scaling Cloud Foundry applications? Check out <a href="https://www.ng.bluemix.net/docs/services/Auto-Scaling/index.html" rel="external" target="_blank" title="(Opens in a new tab or window)"><span class="keyword">IBM Auto-Scaling for IBM Cloud</span></a>.</div></div>
+<article class="topic task nested2" role="article" aria-labelledby="d49620e1845" id="migrating_autoscaling"><h3 class="topictitle3" id="d49620e1845">Migrating to Kubernetes Autoscaling</h3>
+<div class="body taskbody"><p class="li stepsection"><p>With <a href="cs_ov.html">Kubernetes</a>, you can enable <a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/" rel="external" target="_blank" title="(Opens in a new tab or window)">Horizontal Pod Autoscaling</a> to scale your apps based on CPU. </p>
+</p><ol class="steps"><li class="step stepexpand"><span class="cmd">Install the required <a href="cs_cli_install.html#cs_cli_install_steps">CLIs</a>.</span></li>
+<li class="step stepexpand"><span class="cmd">Create a cluster by following the steps in <a href="container_index.html#clusters">Getting started with Kubernetes clusters in IBM Cloud</a>. Be sure to
+set up your cluster to replicate your current container group, including logging, monitoring,
+vulnerability advisor, and any other customizations you have in place.</span></li>
+<li class="step stepexpand"><span class="cmd"><a href="cs_cli_install.html#cs_cli_configure">Set the
+context</a> for your cluster.</span></li>
+<li class="step stepexpand"><span class="cmd">Deploy your existing app to your cluster <a href="cs_apps.html#cs_apps_cli">from the CLI</a>.</span> When you deploy your app, you must request CPU.
+<pre class="codeblock"><code>kubectl run &lt;name&gt; --image=&lt;image&gt; --requests=cpu=&lt;cpu&gt; --expose --port=&lt;port_number&gt;</code></pre>
+<div class="tablenoborder"><table summary="" id="migrating_autoscaling__table_px1_qsx_yy" class="defaultstyle"><thead><tr><th colspan="2" id="d49620e1891" class="thleft"><span class="ph"><img src="images/idea.png" alt="This icon indicates there is more information to learn about this step of the task."></span> Understanding
+this command's components</th>
+</tr>
+</thead>
+<tbody><tr><td style="width: 50%" headers="d49620e1891 "><samp class="ph codeph">--image</samp></td>
+<td style="width: 50%" headers="d49620e1891 ">The application that you want to deploy.</td>
+</tr>
+<tr><td style="width: 50%" headers="d49620e1891 "><samp class="ph codeph">--requests=cpu</samp></td>
+<td style="width: 50%" headers="d49620e1891 ">The required CPU for your container, which is specified in milli-cores. As an example,
+<samp class="ph codeph">--requests=200m</samp>.</td>
+</tr>
+<tr><td style="width: 50%" headers="d49620e1891 "><samp class="ph codeph">--expose</samp></td>
+<td style="width: 50%" headers="d49620e1891 ">When true, creates an external service.</td>
+</tr>
+<tr><td style="width: 50%" headers="d49620e1891 "><samp class="ph codeph">--port</samp></td>
+<td style="width: 50%" headers="d49620e1891 ">The port where your app is available externally.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="steps note"><span class="notetitle">Note:</span> For more complex deployments, you may need to create a <a href="cs_apps.html#cs_apps_cli">deployment script</a>.</div>
+</li>
+<li class="step stepexpand"><span class="cmd">Create a Horizontal Pod Autoscaler and define your policy.</span>  For more information about working with the <samp class="ph codeph">kubetcl autoscale</samp> command, see
+<a href="https://kubernetes.io/docs/user-guide/kubectl/v1.5/#autoscale" rel="external" target="_blank" title="(Opens in a new tab or window)">the Kubernetes documentation</a>.<pre class="codeblock"><code>kubectl autoscale deployment &lt;deployment_name&gt; --cpu-percent=&lt;percentage&gt; --min=&lt;min_value&gt; --max=&lt;max_value&gt;</code></pre>
+
+<div class="tablenoborder"><table summary="" id="migrating_autoscaling__table_pgd_btx_yy" class="defaultstyle"><thead><tr><th colspan="2" id="d49620e1948" class="thleft"><span class="ph"><img src="images/idea.png" alt="This icon indicates there is more information to learn about this step of the task."></span> Understanding
+this command's components</th>
+</tr>
+</thead>
+<tbody><tr><td style="width: 50%" headers="d49620e1948 "><samp class="ph codeph">--cpu-percent</samp></td>
+<td style="width: 50%" headers="d49620e1948 ">The average CPU utilization that is maintained by the Horizontal Pod Autoscaler, which is
+specified as a percentage.</td>
+</tr>
+<tr><td style="width: 50%" headers="d49620e1948 "><samp class="ph codeph">--min</samp></td>
+<td style="width: 50%" headers="d49620e1948 ">The minimum number of deployed pods that are used to maintain the specified CPU utilization
+percentage.</td>
+</tr>
+<tr><td style="width: 50%" headers="d49620e1948 "><samp class="ph codeph">--max</samp></td>
+<td style="width: 50%" headers="d49620e1948 ">The maximum number of deployed pods that are used to maintain the specified CPU utilization
+percentage.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+<li class="step stepexpand"><span class="cmd">Verify that your application is working correctly.</span> <ul><li>Check your service dashboard to ensure that your app is running.</li>
+<li>Check your app to be sure that key changes were implemented.</li>
+</ul>
+</li>
+<li class="step stepexpand"><span class="cmd"><a href="container_ha.html#container_group_remove" title="To maximize the use of your quota, remove container groups that are not in use occasionally.">Deprovision and
+remove</a> your original instance of Containers.</span></li>
+</ol>
+</div>
+</article></article><article class="topic task nested1" role="article" aria-labelledby="d49620e1988" lang="en-us" id="container_group_migrate"><h2 class="topictitle2" id="d49620e1988">Moving container groups to other <span class="keyword">Cloud</span> spaces</h2>
+<div class="body taskbody"><p class="shortdesc">If you must move a container group to another space in the same organization, you can
+create a second container group with the same route. Then, you can remove the first group without
+causing any downtime for your app. </p>
+<div class="section context"> When you map an existing route to a new container group, the references of the container
+instances are added to the load balancer for the space. As a consequence, the load balancer
+considers the new container group when it routes incoming traffic. If you delete a container group,
+the load balancer automatically removes the related container instance references.</div><ol class="steps"><li class="step stepexpand"><span class="cmd">Log in to the Cloud Foundry CLI. Enter your <span class="keyword">Cloud</span> user name and password when
+prompted.</span> <pre class="codeblock"><code>bx login [-a api.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>] [-sso]</code></pre>
+
+<p><span class="ph">The single-sign-on parameter <span class="keyword option">--sso</span> is required when you log in
+with a federated ID. If this option is used, open <a href="https://login.ng.bluemix.net/UAALoginServerWAR/passcode" rel="external" target="_blank" title="(Opens in a new tab or window)">https://login.ng.bluemix.net/UAALoginServerWAR/passcode</a> to obtain a one-time passcode. If
+you do not include the <span class="keyword option">--sso</span> option, complete these substeps.</span></p>
+<ol type="a" class="ol substeps"><li class="li substep"><span class="cmd">For <span class="ph uicontrol">Email</span>, enter your IBMId for
+<span class="keyword">Cloud</span>.</span></li>
+<li class="li substep"><span class="cmd">For <span class="ph uicontrol">Password</span>, enter the password for the IBMId.</span> Your <span class="keyword">Cloud</span> organizations and
+spaces are retrieved. </li>
+<li class="li substep"><span class="cmd">Enter the number that represents one of your <span class="keyword">Cloud</span> organizations. </span></li>
+<li class="li substep"><span class="cmd">Enter the number that represents one of your existing <span class="keyword">Cloud</span> spaces. </span></li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">Initialize <span class="keyword">IBM
+Cloud Container Service</span>. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> init</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Create a container group and map a route to it. </span> The following command creates a container group that is named <var class="keyword varname">my_group_1</var>
+from the <span class="ph uicontrol">ibmliberty</span> image. The container group is accessible by using the
+public route <span class="ph filepath">myhost.<span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span></span>. <div class="steps note"><span class="notetitle">Note:</span> The host name, in this example <var class="keyword varname">myhost</var>, needs to be unique
+across all organizations in <span class="keyword">Cloud</span>. As
+a consequence, you need to select a new name for <var class="keyword varname">myhost</var> to move
+forward.</div>
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create -p 9080 -n <var class="keyword varname">myhost</var> -d <span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span> --name <var class="keyword varname">my_group_1</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/ibmliberty</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Verify that your container group was created. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> groups</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Change your organization space. Replace <var class="keyword varname">SPACE</var> with the name of the space
+where you want to move your container group to. </span> <pre class="codeblock"><code>cf target -s <var class="keyword varname">SPACE</var></code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Reinitialize your <span class="keyword">IBM
+Cloud Container Service</span> to point to the new space. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> init</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Create another container group in the new space and map the existing route to it. </span> The following command creates a container group that is named <var class="keyword varname">my_group_2</var>
+from the <span class="ph uicontrol">ibmliberty</span> image. It is mapped to the same public route as the first
+container group you created. <div class="steps note"><span class="notetitle">Note:</span> The name of a container group needs to be unique within an
+organization space. You can reuse the name when you create a new container group in another space of
+your organization.</div>
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create -p 9080 -n <var class="keyword varname">myhost</var> -d <span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span> --name <var class="keyword varname">my_group_2</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/ibmliberty</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Verify that your container group was created. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> groups</code></pre>
+Now, that you created a
+new container group in your new space and mapped the existing route to it, you can go ahead and
+remove the first container group.</li>
+<li class="step stepexpand"><span class="cmd">Change to the organization space where you created the first container group. Replace
+<var class="keyword varname">SPACE</var> with the name of your space. </span> <pre class="codeblock"><code>cf target -s <var class="keyword varname">SPACE</var></code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Reinitialize your <span class="keyword">IBM
+Cloud Container Service</span> to point to the selected space. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> init</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Unmap the route from the container group. Replace <var class="keyword varname">myhost</var> with the name of
+the host you selected. </span> When you unmap the route from your container group, all container references are deleted from
+the load balancer and not considered when incoming traffic is
+routed.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> route-unmap -n <var class="keyword varname">myhost</var> -d <span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span> <var class="keyword varname">my_group_1</var>  </code></pre>
+</li>
+<li class="step stepexpand">Optional: <span class="cmd">Remove the container group. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-remove <var class="keyword varname">my_group_1</var></code></pre>
+</li>
+<li class="step stepexpand">Optional: <span class="cmd">Verify that your container group was removed. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> groups</code></pre>
+</li>
+</ol>
+</div>
+<aside role="complementary" aria-labelledby="d49620e1988"></aside></article><article class="topic task nested1" role="article" aria-labelledby="d49620e2332" lang="en-us" id="container_group_update_ui"><h2 class="topictitle2" id="d49620e2332">Updating an app that runs in your container group by using the <span class="keyword">Cloud</span> GUI</h2>
+<div class="body taskbody"><p class="shortdesc">To update an app that is running in a container group, you must update your image and
+deploy a new container group from it. During the update process, you are not required to stop the
+old running container group. You can create a new container group, map the existing route
+information to it, and then unmap the route from the outdated container group. Your new app is
+deployed without any downtime. </p>
+<div class="section context"><div class="tablenoborder"><table summary="" id="container_group_update_ui__update_options_ui" class="defaultstyle"><caption><span class="tablecap">Table 3. Optional tools for updating an app</span></caption><thead><tr><th id="d49620e2405" class="thleft">Update tools</th>
+<th id="d49620e2407" class="thleft">Description</th>
+</tr>
+</thead>
+<tbody><tr><td headers="d49620e2405 "><span class="keyword">Delivery Pipeline</span></td>
+<td headers="d49620e2407 ">Automate your app builds and container deployments to <span class="keyword">Cloud</span> by using the <span class="keyword">Delivery Pipeline</span>, which is a <span class="keyword">Cloud</span> service that is available to you. For
+more information, see <a href="container_integrations.html#container_group_pipeline_ov" title="Automate the building and deploying of your container groups by using the Delivery Pipeline.">Creating container groups by using the Delivery Pipeline</a>.</td>
+</tr>
+<tr><td headers="d49620e2405 ">UrbanCode Deploy</td>
+<td headers="d49620e2407 ">Automate your app builds and container deployments to <span class="keyword">Cloud</span> by using UrbanCode Deploy. For more
+information about purchasing UrbanCode Deploy, see the <a href="http://www.ibm.com/software/products/en/ucdep" rel="external" target="_blank" title="(Opens in a new tab or window)">IBM UrbanCode
+Deploy</a> product page.</td>
+</tr>
+<tr><td headers="d49620e2405 ">Update the app yourself by using a combination of the <span class="keyword">IBM
+Cloud Container Service</span> CLI and the <span class="keyword">Cloud</span> GUI</td>
+<td headers="d49620e2407 ">Complete the steps in this task to update the app yourself.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div><p class="li stepsection">To update your app yourself by using the <span class="keyword">IBM
+Cloud Container Service</span> CLI and the <span class="keyword">Cloud</span> GUI:</p><ol class="steps"><li class="step stepexpand"><span class="cmd">Change to the directory where your Dockerfile and app code is saved.</span></li>
+<li class="step stepexpand"><span class="cmd">Update your app locally.</span></li>
+<li class="step stepexpand"><span class="cmd">Choose to either build your image directly in <span class="keyword">Cloud</span> or build and test your image locally
+before you push it to <span class="keyword">Cloud</span>. </span> <ul><li>To build the image directly in <span class="keyword">Cloud</span>, run the following command.*<div class="note tip"><span class="tiptitle">Tip:</span> <span class="ph">Run <samp class="ph codeph"><span class="ph">bx ic</span> namespace-get</samp> to retrieve
+your namespace and replace <var class="keyword varname">&lt;my_namespace&gt;</var> with your namespace information.</span></div>
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> build -t registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">&lt;image_name&gt;</var>:<var class="keyword varname">&lt;tag&gt;</var> <var class="keyword varname">&lt;dockerfile_location&gt;</var></code></pre>
+Example<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> build -t registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">my_namespace</var>/<var class="keyword varname">my_image</var>:<var class="keyword varname">v1</var> .</code></pre>
+<div class="steps note"><span class="notetitle">Note:</span> <span class="ph" id="container_group_update_ui__d32579e180">*In this command, you can replace <samp class="ph codeph"><span class="ph">bx ic</span></samp> with <samp class="ph codeph">docker</samp>
+when you <a href="container_cli_cfic_install.html#container_cli_login" title="After you install the CLI, log in to use it.">logged in to <span class="keyword">IBM
+Cloud Container Service</span></a> and set your environment
+variables to use native Docker commands.</span><span class="ph" id="container_group_update_ui__d32579e192">You can use native Docker
+commands in all steps that are marked with an asterisk (*) in this topic. </span></div>
+</li>
+<li>To build the image locally and then push the image to <span class="keyword">Cloud</span>, follow these steps.<div class="p"><ol type="a"><li>If you are using the plug-in for <span class="keyword">IBM
+Cloud Container Service</span>, log in again. Do not set the
+environment variables for option 2, so that <samp class="ph codeph">docker</samp> commands will be sent to the
+Docker engine on your local machine.<div class="p"><pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> init</code></pre>
+</div>
+</li>
+<li>Build the image locally from your Dockerfile.<div class="p"><pre class="codeblock"><code>docker build -t <var class="keyword varname">&lt;image_name&gt;</var>:<var class="keyword varname">&lt;tag&gt;</var> <var class="keyword varname">&lt;dockerfile_location&gt;</var></code></pre>
+</div>
+<div class="p">Example<pre class="codeblock"><code>docker build -t <var class="keyword varname">my_ibmliberty_image</var>:<var class="keyword varname">v1</var> .</code></pre>
+</div>
+</li>
+<li>Run a container from the image to test that your new app runs locally by using the following
+command, where <var class="keyword varname">Port</var> is the port for HTTP traffic.<div class="p"><pre class="codeblock"><code>docker run -d --name <var class="keyword varname">&lt;container_name&gt;</var> <var class="keyword varname">&lt;image_name&gt;</var></code></pre>
+</div>
+<div class="p">Example<pre class="codeblock"><code>docker run -d --name <var class="keyword varname">my_container</var> <var class="keyword varname">my_ibmliberty_image</var></code></pre>
+</div>
+<p>If
+the app is running correctly, the container ID is displayed in the CLI output. To review the logs
+for the container, run <samp class="ph codeph">docker logs
+<var class="keyword varname">&lt;container_name_or_id&gt;</var>.</samp></p>
+</li>
+<li id="container_group_update_ui__d32562e248">Tag the local image with your private <span class="keyword">Cloud</span> registry and a new name. <span class="ph">Use lowercase alphanumeric characters or underscores (_) only
+in the image name. Other symbols, such as hyphens (-) or slashes (/), might prevent the image from
+being pushed to the image registry.</span><div class="p"><pre class="codeblock"><code>docker tag <var class="keyword varname">&lt;current_image_name_or_ID&gt;</var>:<var class="keyword varname">&lt;optional_tag&gt;</var>  registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">&lt;new_image_name&gt;</var>:<var class="keyword varname">&lt;optional_tag&gt;</var> </code></pre>
+</div>
+<p>Example</p>
+<div class="p"><pre class="codeblock"><code>docker tag <var class="keyword varname">my_ibmliberty_image</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">my_ibmliberty_image</var></code></pre>
+</div>
+</li>
+<li>Push the image to your private <span class="keyword">Cloud</span> registry by using the following command.<div class="p"><pre class="codeblock"><code>docker push registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">&lt;image_name&gt;</var></code></pre>
+</div>
+<div class="p">Example<pre class="codeblock"><code>docker push registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">my_namespace</var>/<var class="keyword varname">my_ibmliberty_image</var></code></pre>
+</div>
+</li>
+</ol>
+</div>
+<div class="note important"><span class="importanttitle">Important:</span> <span class="ph">When you push an image to your private <span class="keyword">Cloud</span> registry, the size reported for the
+image is smaller than the size of the same image in your local Docker engine. The difference between
+the sizes does not indicate that an issue occurred when the image was pushed. The compressed size of
+the image is reported in <span class="keyword">IBM
+Cloud Container Service</span>.</span></div>
+</li>
+</ul>
+</li>
+<li class="step stepexpand"><span class="cmd">Verify that the image was pushed to your <span class="keyword">Cloud</span> registry.*</span> <div class="p"><pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> images</code></pre>
+</div>
+</li>
+<li class="step stepexpand">Optional: <span class="cmd">Review image vulnerabilities. </span> <ol type="a" class="ol substeps"><li class="li substep substepexpand"><span class="cmd">From the <span class="keyword">Cloud</span> GUI, go to the
+catalog and select <span class="ph uicontrol">Containers</span>. </span></li>
+<li class="li substep substepexpand"><span class="cmd">Click the image that you added. </span></li>
+<li class="li substep substepexpand"><span class="cmd">In the <span class="ph uicontrol">Vulnerability Assessment</span> section, review the status of
+your vulnerability assessment.</span> The status is displayed as one of the following conditions:<ul><li><span class="keyword wintitle">Safe to Deploy</span> - No significant vulnerabilities were found.</li>
+<li><span class="keyword wintitle">Deploy with Caution</span> - Significant vulnerabilities were found to be
+addressed.</li>
+<li><span class="keyword wintitle">Deployment Blocked</span> - Significant vulnerabilities were found and must be
+addressed before the image can be deployed.</li>
+<li><span class="keyword wintitle">Incomplete</span> - The scan is not complete. The scan might still be running or
+the image’s operating system might not be compatible. Wait and try the scan again. If the scan still
+does not complete, push the image again to start a new scan. Images with incomplete scans are not
+blocked for deployment.</li>
+</ul>
+</li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">Note the route information that is mapped to the running container group. </span> <ol type="a"><li>From the <span class="keyword">Cloud</span> GUI, select the
+container group. </li>
+<li>Note the route. The host and the domain combine to form the full public route URL, such as
+<samp class="ph codeph">http://mycontainerhost.<span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span></samp>.</li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">Create another scalable container group and include the route.</span> <ol type="a"><li><span class="ph" data-hd-otherprops="registry_check">From the catalog, select
+<span class="ph uicontrol">Containers</span> and choose an image.</span></li>
+<li>Next, start defining your container group. By default, the window opens to the
+<span class="ph uicontrol">Single</span> tab. So select the <span class="ph uicontrol">Scalable</span> tab to create a
+container group. As you define your container group, enter the hostname and domain that you
+retrieved from the previous step in the <kbd class="ph userinput">Host</kbd> and
+<kbd class="ph userinput">Domain</kbd> fields. <p>Review the <a href="container_ha.html#container_group_ui" title="Create and deploy a scalable group container from the Cloud GUI. A container group includes two or more containers that run the same image. Use container groups for running long-term services with workloads that require scalability and reliability or for testing at the required scale.">Running long-term services as container groups from the Cloud GUI</a> topic for more
+information about how to create a container group. </p>
+</li>
+<li>Click <span class="ph uicontrol">CREATE</span> to deploy your container group from the updated image.
+During the deployment process, the container group is also started. <p><span class="ph" id="container_group_update_ui__d32708e607">If you are connecting to an external application from the
+container, there is up to a 5-minute wait after running the container process before it can connect
+to the specified route. Then, you can verify that the app is running in the container group by
+opening <span class="ph filepath">https://<var class="keyword varname">&lt;host&gt;</var>.<span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span></span> in a browser.</span></p>
+</li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">Unmap route from the outdated container group. </span> <ol type="a"><li>From the <span class="keyword">Cloud</span> GUI, select the
+outdated container group. </li>
+<li>In the <span class="ph uicontrol">Group details</span> section, edit the route.</li>
+<li>Change the host name. If you have multiple domain names, you can also select a new domain name
+for your container group.  </li>
+<li>Click <span class="ph uicontrol">SAVE</span> to save your changes.<div class="steps note"><span class="notetitle">Note:</span> The route unmapping might take up
+to five minutes to occur.</div>
+</li>
+</ol>
+</li>
+<li class="step stepexpand">Optional: <span class="cmd">Delete the outdated container group.</span> <ol type="a"><li>From the <span class="keyword">Cloud</span> GUI, select the
+outdated container group. </li>
+<li>From the <span class="ph uicontrol">More actions...</span> menu, click <span class="ph uicontrol">Delete</span> to
+remove the container group.</li>
+</ol>
+</li>
+</ol>
+</div>
+<aside role="complementary" aria-labelledby="d49620e2332"></aside></article><article class="topic task nested1" role="article" aria-labelledby="d49620e2922" lang="en-us" id="container_group_update_cli"><h2 class="topictitle2" id="d49620e2922">Updating an app that runs in your container group by using the command line</h2>
+<div class="body taskbody"><p class="shortdesc">To update an app that is running in a container group, you must update your image and
+deploy a new container group from it. During the update process, you are not required to stop the
+old running container group. You can create a new container group, map the existing route
+information to it, and then unmap the route from the outdated container group. Your new app is
+deployed without any downtime. </p>
+<div class="section context"><div class="tablenoborder"><table summary="" id="container_group_update_cli__updating_group_cli_table" class="defaultstyle"><caption><span class="tablecap">Table 4. Optional tools for updating an app</span></caption><thead><tr><th id="d49620e2981" class="thleft">Update tools</th>
+<th id="d49620e2983" class="thleft">Description</th>
+</tr>
+</thead>
+<tbody><tr><td headers="d49620e2981 "><span class="keyword">Delivery Pipeline</span></td>
+<td headers="d49620e2983 ">Automate your app builds and container deployments to <span class="keyword">Cloud</span> by using the <span class="keyword">Delivery Pipeline</span>, which is a <span class="keyword">Cloud</span> service that is available to you. For
+more information, see <a href="container_integrations.html#container_group_pipeline_ov" title="Automate the building and deploying of your container groups by using the Delivery Pipeline.">Creating container groups by using the Delivery Pipeline</a>.</td>
+</tr>
+<tr><td headers="d49620e2981 ">UrbanCode Deploy</td>
+<td headers="d49620e2983 ">Automate your app builds and container deployments to <span class="keyword">Cloud</span> by using UrbanCode Deploy. For more
+information about purchasing UrbanCode Deploy, see the <a href="http://www.ibm.com/software/products/en/ucdep" rel="external" target="_blank" title="(Opens in a new tab or window)">IBM UrbanCode
+Deploy</a> product page.</td>
+</tr>
+<tr><td headers="d49620e2981 ">Update the app yourself by using the <span class="keyword">IBM
+Cloud Container Service</span> CLI</td>
+<td headers="d49620e2983 ">Complete the steps in this task to update the app yourself.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div><p class="li stepsection">To update your app yourself by using the <span class="keyword">IBM
+Cloud Container Service</span> CLI:</p><ol class="steps"><li class="step stepexpand"><span class="cmd">Update your app locally.</span></li>
+<li class="step stepexpand"><span class="cmd">Choose to either build your image directly in <span class="keyword">Cloud</span> or build and test your image locally
+before you push it to <span class="keyword">Cloud</span>. </span> <ul><li>To build the image directly in <span class="keyword">Cloud</span>, run the following command.*<div class="note tip"><span class="tiptitle">Tip:</span> <span class="ph">Run <samp class="ph codeph"><span class="ph">bx ic</span> namespace-get</samp> to retrieve
+your namespace and replace <var class="keyword varname">&lt;my_namespace&gt;</var> with your namespace information.</span></div>
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> build -t registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">&lt;image_name&gt;</var>:<var class="keyword varname">&lt;tag&gt;</var> <var class="keyword varname">&lt;dockerfile_location&gt;</var></code></pre>
+Example<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> build -t registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">my_namespace</var>/<var class="keyword varname">my_image</var>:<var class="keyword varname">v1</var> .</code></pre>
+<div class="steps note"><span class="notetitle">Note:</span> <span class="ph" id="container_group_update_cli__d32023e180">*In this command, you can replace <samp class="ph codeph"><span class="ph">bx ic</span></samp> with <samp class="ph codeph">docker</samp>
+when you <a href="container_cli_cfic_install.html#container_cli_login" title="After you install the CLI, log in to use it.">logged in to <span class="keyword">IBM
+Cloud Container Service</span></a> and set your environment
+variables to use native Docker commands.</span><span class="ph" id="container_group_update_cli__d32023e192">You can use native Docker
+commands in all steps that are marked with an asterisk (*) in this topic. </span></div>
+</li>
+<li>To build the image locally and then push the image to <span class="keyword">Cloud</span>, follow these steps.<div class="p"><ol type="a"><li>If you are using the plug-in for <span class="keyword">IBM
+Cloud Container Service</span>, log in again. Do not set the
+environment variables for option 2, so that <samp class="ph codeph">docker</samp> commands will be sent to the
+Docker engine on your local machine.<div class="p"><pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> init</code></pre>
+</div>
+</li>
+<li>Build the image locally from your Dockerfile.<div class="p"><pre class="codeblock"><code>docker build -t <var class="keyword varname">&lt;image_name&gt;</var>:<var class="keyword varname">&lt;tag&gt;</var> <var class="keyword varname">&lt;dockerfile_location&gt;</var></code></pre>
+</div>
+<div class="p">Example<pre class="codeblock"><code>docker build -t <var class="keyword varname">my_ibmliberty_image</var>:<var class="keyword varname">v1</var> .</code></pre>
+</div>
+</li>
+<li>Run a container from the image to test that your new app runs locally by using the following
+command, where <var class="keyword varname">Port</var> is the port for HTTP traffic.<div class="p"><pre class="codeblock"><code>docker run -d --name <var class="keyword varname">&lt;container_name&gt;</var> <var class="keyword varname">&lt;image_name&gt;</var></code></pre>
+</div>
+<div class="p">Example<pre class="codeblock"><code>docker run -d --name <var class="keyword varname">my_container</var> <var class="keyword varname">my_ibmliberty_image</var></code></pre>
+</div>
+<p>If
+the app is running correctly, the container ID is displayed in the CLI output. To review the logs
+for the container, run <samp class="ph codeph">docker logs
+<var class="keyword varname">&lt;container_name_or_id&gt;</var>.</samp></p>
+</li>
+<li id="container_group_update_cli__d32006e248">Tag the local image with your private <span class="keyword">Cloud</span> registry and a new name. <span class="ph">Use lowercase alphanumeric characters or underscores (_) only
+in the image name. Other symbols, such as hyphens (-) or slashes (/), might prevent the image from
+being pushed to the image registry.</span><div class="p"><pre class="codeblock"><code>docker tag <var class="keyword varname">&lt;current_image_name_or_ID&gt;</var>:<var class="keyword varname">&lt;optional_tag&gt;</var>  registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">&lt;new_image_name&gt;</var>:<var class="keyword varname">&lt;optional_tag&gt;</var> </code></pre>
+</div>
+<p>Example</p>
+<div class="p"><pre class="codeblock"><code>docker tag <var class="keyword varname">my_ibmliberty_image</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">my_ibmliberty_image</var></code></pre>
+</div>
+</li>
+<li>Push the image to your private <span class="keyword">Cloud</span> registry by using the following command.<div class="p"><pre class="codeblock"><code>docker push registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">&lt;image_name&gt;</var></code></pre>
+</div>
+<div class="p">Example<pre class="codeblock"><code>docker push registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">my_namespace</var>/<var class="keyword varname">my_ibmliberty_image</var></code></pre>
+</div>
+</li>
+</ol>
+</div>
+<div class="note important"><span class="importanttitle">Important:</span> <span class="ph">When you push an image to your private <span class="keyword">Cloud</span> registry, the size reported for the
+image is smaller than the size of the same image in your local Docker engine. The difference between
+the sizes does not indicate that an issue occurred when the image was pushed. The compressed size of
+the image is reported in <span class="keyword">IBM
+Cloud Container Service</span>.</span></div>
+</li>
+</ul>
+</li>
+<li class="step stepexpand"><span class="cmd">Note the route information that is mapped to the running container group. </span> <ol type="a"><li>Run the following command to get the name or ID for the container group.<div class="p"><pre class="codeblock"><code><span class="ph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> groups [-q] </span></code></pre>
+</div>
+</li>
+<li>Run the following command with the group ID or name to retrieve the route. <div class="p"><pre class="codeblock"><code><span class="ph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-inspect GROUP </span></code></pre>
+</div>
+ The route can be found in the <samp class="ph codeph">"Routes"</samp> section. The host and the domain
+combine to form the full public route URL, such as <samp class="ph codeph">http://mycontainerhost.<span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span></samp>.</li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">Create another scalable container group and include the route. </span> <pre class="codeblock"><code><span class="ph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create [--anti] [--auto] [-d DOMAIN] [--desired DESIRED] [-e ENV] [--env-file
+ENVFILE]<span class="ph"> [--http_monitor_enabled] [--http_monitor_path] [--http_monitor_rc_list] [--ip
+IP_ADDRESS]</span> [-m MEMORY] [--max MAX] [--min MIN] [-n HOST] --name NAME [-p PORT] [--session-affinity] [--volume VOLUME:/DIRECTORY_PATH] IMAGE [CMD] </span></code></pre>
+Include
+the hostname and domain to map the new container group to the route. <p>For more information about
+creating container groups, see <a href="container_ha.html#container_group_cli" title="Create and deploy a scalable group container from the IBM Cloud Container Service CLI. A container group includes two or more containers that run the same image. Use container groups for running long-term services with workloads that require scalability and reliability or for testing at the required scale.">Running long-term services as container groups with the command line interface (CLI)</a>.</p>
+</li>
+<li class="step stepexpand"><span class="cmd">Unmap route from the old container group.</span> <pre class="codeblock"><code><span class="ph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> route-unmap [-d DOMAIN] [-n HOST] GROUP </span></code></pre>
+ <div class="steps note"><span class="notetitle">Note:</span> The route unmapping might take up to five minutes to occur.</div>
+</li>
+<li class="step stepexpand">Optional: <span class="cmd">Delete the old container group.</span> <pre class="codeblock"><code><span class="ph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-remove [-f] GROUP [GROUP]</span></code></pre>
+</li>
+<li class="step stepexpand">Optional: <span class="cmd">List all your container groups to verify that the container group was removed.</span> <pre class="codeblock"><code><span class="ph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> groups [-q] </span></code></pre>
+</li>
+</ol>
+</div>
+<aside role="complementary" aria-labelledby="d49620e2922"></aside></article><article class="topic task nested1" role="article" aria-labelledby="d49620e3410" lang="en-us" id="container_ha_space"><h2 class="topictitle2" id="d49620e3410">Running highly available container groups in the same space</h2>
+<div class="body taskbody"><p class="shortdesc">You can create two container groups from the same image in the same <span class="keyword">Cloud</span> space and map the same route to both
+groups. With this setup, if a container group or the load balancer for a group goes down, traffic is
+routed to the other container group.</p>
+<div class="section prereq">
+<p><object data="images/container_ha_space.svg"><img src="images/container_ha_space.jpg" alt="Creating highly available container groups in the same space"></object></p>
+
+<p><span class="ph" id="container_ha_space__create_intro">Before you begin, if you need detailed information about creating container
+groups, review the information on creating them by using the <a href="container_ha.html#container_group_cli" title="Create and deploy a scalable group container from the IBM Cloud Container Service CLI. A container group includes two or more containers that run the same image. Use container groups for running long-term services with workloads that require scalability and reliability or for testing at the required scale.">CLI</a> or the <a href="container_ha.html#container_group_ui" title="Create and deploy a scalable group container from the Cloud GUI. A container group includes two or more containers that run the same image. Use container groups for running long-term services with workloads that require scalability and reliability or for testing at the required scale."><span class="keyword">Cloud</span>
+GUI</a>.</span></p>
+</div><p class="li stepsection">To create highly available container groups in the same <span class="keyword">Cloud</span> space:</p><ol class="steps"><li class="step stepexpand"><span class="cmd">Create a container group that meets the following requirements.</span> <ul><li id="container_ha_space__at_least_2">The number of instances in the container group must support the expected
+workload on your app. <span class="ph">To determine the number of desired instances, deploy a single
+container in <span class="keyword">Cloud</span> that runs your app
+and perform a load test on this container. If the app can handle, for example, 100 requests per
+second, but you are expecting an average workload of 300 requests per second, then the desired
+number of instances for the container group is 3.</span>
+<span class="ph">To make your
+container group highly available and more resilient to failure, consider including extra instances
+than the minimum to handle the expected workload. Extra instances can handle the workload in case
+another instance crashes. To ensure automatic recovery of a failed instance without affecting the
+workload, include one extra instance. For protection against two simultaneous failures, include two
+extra instances. This set up is an <var class="keyword varname">N+2</var> pattern, where <var class="keyword varname">N</var> is the
+number of instances to handle the requests and <var class="keyword varname">+2</var> is an extra two instances.</span></li>
+<li id="container_ha_space__ha_autorecovery">Enable auto-recovery for the container group to ensure that crashed
+containers are recovered automatically.</li>
+<li id="container_ha_space__ha_antiaffinity">Enable anti-affinity. <span class="ph">When anti-affinity is enabled, the container instances are
+spread across separate physical compute nodes, which reduces the likelihood of containers crashing
+due to hardware failures.</span> Anti-affinity requires using the
+<a href="container_ha.html#container_group_cli" title="Create and deploy a scalable group container from the IBM Cloud Container Service CLI. A container group includes two or more containers that run the same image. Use container groups for running long-term services with workloads that require scalability and reliability or for testing at the required scale.">CLI</a> and including the
+<samp class="ph codeph">--anti</samp> option in the <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create</samp> command. To use the
+<samp class="ph codeph">--anti</samp> option from the CLI, you must have installed the <span class="keyword">IBM
+Cloud Container Service</span> plug-in (<span class="ph"><samp class="ph codeph">bx ic</samp></span>) version 0.8.934 or later. <span class="ph">You might not be able to use this option with
+larger group sizes because each <span class="keyword">Cloud</span>
+region and organization has a limited set of compute nodes available for deployment. If your
+deployment does not succeed, either reduce the number of container instances in the group or remove
+the <samp class="ph codeph">--anti</samp> option.</span></li>
+<li>You can store files on a volume and mount the volume to the container or, preferably, store the
+data off in an external data store, such as a Cloudant®
+database. Do not include persistent files in the local container file system. Volumes must be
+created prior to creating a container group.</li>
+<li id="container_ha_space__single">Do not create a single container instead of a container group. Single containers are
+generally to be used for short-term processes and do not have built-in high availability
+capabilities like container groups.</li>
+</ul>
+Example CLI command that includes these
+suggestions.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create --min 3 --max 5 --desired 3 --auto --anti --volume <var class="keyword varname">my_volume</var>:/<var class="keyword varname">directory</var>/<var class="keyword varname">path</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">my_namespace</var>/<var class="keyword varname">my_image</var></code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Create a second group that meets the following requirements in the same space as the first
+container group.</span> <ul><li>The container group must have a different name, but use the same host name as the previous
+container group that you created.</li>
+<li id="container_ha_space__at_least_2_abbrev">To support the expected workload of the app, use the
+<var class="keyword varname">N+2</var> pattern as described to determine the number of instances for the container
+group.</li>
+<li>Enable auto-recovery for the container group to ensure that crashed
+containers are recovered automatically.</li>
+<li id="container_ha_space__ha_antiaffinity_abbrev">Enable anti-affinity to spread the container instances across
+separate physical compute nodes.</li>
+<li>The container group must be mapped to the same route as the first container group you created in
+the previous step.</li>
+<li>Do not include persistent files in the container. You can mount the same volume to this
+container that you mounted to the first container or you can use the same Cloudant database.</li>
+</ul>
+</li>
+</ol>
+</div>
+<aside role="complementary" aria-labelledby="d49620e3410"></aside></article><article class="topic task nested1" role="article" aria-labelledby="d49620e3647" id="container_ha_regions"><h2 class="topictitle2" id="d49620e3647">Running highly available container groups in different <span class="keyword">Cloud</span> regions</h2>
+<div class="body taskbody"><p class="shortdesc">If you configure your app's domain name with a Domain Name System (DNS) that provides
+global load balancing, you can create two container groups from the same image in different <span class="keyword">Cloud</span> regions that use the same host name in
+the route. With this setup, you can allow load balancing to occur based on the region the user is
+in. If the container group, or hardware, or even an entire data center in one region goes down,
+traffic is routed to the container group that is deployed in another region.</p>
+<div class="section prereq"><div class="note important"><span class="importanttitle">Important:</span> You must have a custom domain. You cannot use <span class="ph filepath">mybluemix.net</span>.</div>
+
+<p><object data="images/container_ha_region.svg"><img src="images/container_ha_region.jpg" alt="Creating highly available container groups in multiple regions"></object></p>
+
+<p><span class="ph">Before you begin, if you need detailed information about creating container
+groups, review the information on creating them by using the <a href="container_ha.html#container_group_cli" title="Create and deploy a scalable group container from the IBM Cloud Container Service CLI. A container group includes two or more containers that run the same image. Use container groups for running long-term services with workloads that require scalability and reliability or for testing at the required scale.">CLI</a> or the <a href="container_ha.html#container_group_ui" title="Create and deploy a scalable group container from the Cloud GUI. A container group includes two or more containers that run the same image. Use container groups for running long-term services with workloads that require scalability and reliability or for testing at the required scale."><span class="keyword">Cloud</span>
+GUI</a>.</span></p>
+</div><p class="li stepsection">To create highly available container groups in different <span class="keyword">Cloud</span> regions:</p><ol class="steps"><li class="step stepexpand"><span class="cmd">Register your custom domain with any certified domain registrar that is capable of global DNS
+load balancing.</span></li>
+<li class="step stepexpand"><span class="cmd">In <span class="keyword">Cloud</span>, repeat the following
+steps in all of the regions you want to use.</span> <div class="note remember"><span class="remembertitle">Remember:</span> If any restrictions exist that prevent you from hosting data in a specific
+country, do not select a region in that country.</div>
+<ol type="a" class="ol substeps"><li class="li substep"><span class="cmd"><span class="ph">From your account details, in
+manage organizations, select an organization.</span></span></li>
+<li class="li substep"><span class="cmd">In the <span class="ph uicontrol">DOMAIN</span> section, click <span class="ph uicontrol">ADD DOMAIN</span> and enter
+a name for your custom domain.</span></li>
+<li class="li substep"><span class="cmd">To allow both HTTPS and HTTP traffic, instead of just HTTP traffic, upload and SSL certificate
+to <span class="keyword">Cloud</span>.</span> For more information, see <a href="../manageapps/secapps.html">Securing apps</a>.</li>
+<li class="li substep"><span class="cmd">Click <span class="ph uicontrol">SAVE</span>.</span></li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">Create a container group that meets the following requirements.</span> <ul><li>The number of instances in the container group must support the expected
+workload on your app. <span class="ph">To determine the number of desired instances, deploy a single
+container in <span class="keyword">Cloud</span> that runs your app
+and perform a load test on this container. If the app can handle, for example, 100 requests per
+second, but you are expecting an average workload of 300 requests per second, then the desired
+number of instances for the container group is 3.</span>
+<span class="ph">To make your
+container group highly available and more resilient to failure, consider including extra instances
+than the minimum to handle the expected workload. Extra instances can handle the workload in case
+another instance crashes. To ensure automatic recovery of a failed instance without affecting the
+workload, include one extra instance. For protection against two simultaneous failures, include two
+extra instances. This set up is an <var class="keyword varname">N+2</var> pattern, where <var class="keyword varname">N</var> is the
+number of instances to handle the requests and <var class="keyword varname">+2</var> is an extra two instances.</span></li>
+<li>Enable auto-recovery for the container group to ensure that crashed
+containers are recovered automatically.</li>
+<li>Enable anti-affinity. <span class="ph">When anti-affinity is enabled, the container instances are
+spread across separate physical compute nodes, which reduces the likelihood of containers crashing
+due to hardware failures.</span> Anti-affinity requires using the
+<a href="container_ha.html#container_group_cli" title="Create and deploy a scalable group container from the IBM Cloud Container Service CLI. A container group includes two or more containers that run the same image. Use container groups for running long-term services with workloads that require scalability and reliability or for testing at the required scale.">CLI</a> and including the
+<samp class="ph codeph">--anti</samp> option in the <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create</samp> command. To use the
+<samp class="ph codeph">--anti</samp> option from the CLI, you must have installed the <span class="keyword">IBM
+Cloud Container Service</span> plug-in (<span class="ph"><samp class="ph codeph">bx ic</samp></span>) version 0.8.934 or later. <span class="ph">You might not be able to use this option with
+larger group sizes because each <span class="keyword">Cloud</span>
+region and organization has a limited set of compute nodes available for deployment. If your
+deployment does not succeed, either reduce the number of container instances in the group or remove
+the <samp class="ph codeph">--anti</samp> option.</span></li>
+<li>Do not include persistent files in the container. You can store files in a Cloudant database that replicates across regions. You can
+automate the configuration of the database replication by using the <a href="https://github.com/ibmjstart/bluemix-cloudant-replicator" rel="external" target="_blank" title="(Opens in a new tab or window)">command-line utililty</a> that was created by the IBM
+jStart® team.</li>
+<li>Do not create a single container instead of a container group. Single containers are
+generally to be used for short-term processes and do not have built-in high availability
+capabilities like container groups.</li>
+</ul>
+</li>
+<li class="step stepexpand"><span class="cmd">Create a second group in a different region.</span> Repeat for any additional regions. <ul><li>To support the expected workload of the app, use the
+<var class="keyword varname">N+2</var> pattern as described to determine the number of instances for the container
+group.</li>
+<li>Enable auto-recovery for the container group to ensure that crashed
+containers are recovered automatically.</li>
+<li>Enable anti-affinity to spread the container instances across
+separate physical compute nodes.</li>
+<li>The container group must be mapped to the same route as the first container group you created in
+the previous step.</li>
+<li>Do not include persistent files in the container. You can store files in another instance of a
+Cloudant database.</li>
+</ul>
+</li>
+<li class="step stepexpand"><span class="cmd">Configure the DNS to resolve the route to <span class="keyword">Cloud</span>. </span>  <ol type="a" class="ol substeps"><li class="li substep"><span class="cmd">Note the name servers that were assigned to you by the DNS registrar. You must add these
+servers as NS records in your DNS registrar.</span></li>
+<li class="li substep"><span class="cmd">Within your DNS registrar, delegate the domain by providing the name servers.</span></li>
+<li class="li substep"><span class="cmd">Configure load balancing and failover for your node.</span></li>
+</ol>
+</li>
+</ol>
+<div class="section postreq">For a detailed example of setting up highly available CF apps, see <a href="http://www.ibm.com/developerworks/cloud/library/cl-multi-region-bluemix-apps-with-cloudant-and-dyn-trs/index.html" rel="external" target="_blank" title="(Opens in a new tab or window)">Configure and run a multiregion <span class="keyword">Cloud</span> application with IBM
+Cloudant and Dyn</a>. The sections that describe how
+to use Dyn also apply to container groups. </div></div>
+<aside role="complementary" aria-labelledby="d49620e3647"></aside></article><article class="topic task nested1" role="article" aria-labelledby="d49620e3959" lang="en-us" id="container_group_private_ip"><h2 class="topictitle2" id="d49620e3959">Connecting to a private container group</h2>
+<div class="body taskbody"><p class="shortdesc">Identify the load balancer IP address for a container group in order to access the group
+without exposing the group to the public.</p>
+<div class="section context">Every container group is deployed with a built-in <a href="container_planning.html#group_loadbalancing" title="Container groups provide in-built load balancing that routes incoming traffic evenly (round-robin) to the container instances in the group. When a container group is created or instances are added to an existing group, whether you add instances yourself or an instance is re-created during auto-recovery, load balancing is enabled.">load
+balancer</a> that balances requests to the individual containers within a group. Often the
+container group is exposed publicly with a URL that is mapped to the group. In situations when the
+group is not public, the container group can be accessed by a private IP address that is
+automatically assigned to the load balancer. This private IP address also allows apps that
+communicate over TCP as well as HTTPS to access the container group. In order to determine the
+private IP address of the load balancer, complete the following steps.</div><ol class="steps"><li class="step stepexpand"><span class="cmd">List the container groups that are running in the space.</span> Note the exposed port for the container group, in this case <var class="keyword varname">9080</var> If the
+container group does not have an exposed port, you must create a new container group and expose a
+port. The container group's load balancer is accessible only on the port that is exposed.  <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> groups</code></pre>
+
+<pre class="pre screen"><code>Group ID                               Name                      Status            Created                         Updated   Port   
+cb628ddd-a1e7-4944-9a42-02abc80ea6ee   container_group_example   CREATE_COMPLETE   2016-09-26 15:43:00 -0400 EDT             9080   </code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Inspect the container group.</span>  Replace <var class="keyword varname">container_group_example</var> with the name of your container group.
+Review the <span class="ph uicontrol">private_ip_address</span> field in the
+<span class="ph uicontrol">Loadbalancer</span> section. <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-inspect <var class="keyword varname">container_group_example</var></code></pre>
+
+<pre class="pre screen"><code>    "Loadbalancer": {
+        "intermediate_ip_address": "192.0.2.1", 
+        "private_ip_address": "198.51.100.27"
+    }, </code></pre>
+
+<div class="note important"><span class="importanttitle">Important:</span> The <span class="ph uicontrol">intermediate_ip_address</span> is used by the GoRouter to
+securely route traffic from the public network to the container group when the container group is
+exposed to the public. Do not use the <span class="ph uicontrol">intermediate_ip_address</span> of the load
+balancer to access your container group on the private network because it requires additional
+routing table lookups and can cause network latency. </div>
+</li>
+<li class="step stepexpand"><span class="cmd">Identify the load balancer private IP address.</span> An app in the same space can use this private IP address to privately communicate with the
+container group. You must include the exposed port in the following format to access the load
+balancer: <samp class="ph codeph">198.51.100.27:9080</samp>.</li>
+</ol>
+</div>
+<aside role="complementary" aria-labelledby="d49620e3959"></aside></article><article class="topic task nested1" role="article" aria-labelledby="d49620e4081" lang="en-us" id="container_group_remove"><h2 class="topictitle2" id="d49620e4081">Removing container groups</h2>
+<div class="body taskbody"><p class="shortdesc">To maximize the use of your quota, remove container groups that are not in use
+occasionally.</p>
+<div class="section prereq"><div class="note important"><span class="importanttitle">Important:</span>  Remove the route from the container group
+by running one of the following
+commands before you remove a container group or before you delete
+a route by using the <samp class="ph codeph">cf
+delete-route</samp> command.<div class="p"><ul><li><pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> route-unmap -n <var class="keyword varname">host</var> -d <var class="keyword varname">domain</var> <var class="keyword varname">group_name_or_ID</var></code></pre>
+</li>
+</ul>
+</div>
+</div>
+</div><ol class="steps"><li class="step stepexpand"><span class="cmd">Remove a container group by using one of the following methods.</span> <ul class="ul choices"><li class="li choice">From the <span class="keyword">Cloud</span> GUI, select
+your container group and click <span class="ph uicontrol">Delete</span> from the <span class="ph uicontrol">More
+actions...</span> menu. </li>
+<li class="li choice"><pre class="codeblock"><code><span class="ph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-remove [-f] GROUP [GROUP]</span></code></pre>
+</li>
+</ul>
+</li>
+<li class="step stepexpand">Optional: <span class="cmd">Verify that the container
+group was removed by running the following command and confirming
+that the container group does not appear in the list.</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> groups</code></pre>
+</li>
+</ol>
+</div>
+<aside role="complementary" aria-labelledby="d49620e4081"></aside></article></article></div></main></body></html>
