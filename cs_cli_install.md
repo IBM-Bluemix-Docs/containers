@@ -678,7 +678,7 @@ Use the following steps if you want to refresh your IAM token.
 1.  Generate a new IAM access token. Replace _&lt;iam_refresh_token&gt;_ with the IAM refresh token that you received when you authenticated with {{site.data.keyword.Bluemix_notm}}.
 
     ```
-    POST https://iam.ng.bluemix.net/oidc/token
+    POST POST https://iam.bluemix.net/identity/token
     ```
     {: codeblock}
 
