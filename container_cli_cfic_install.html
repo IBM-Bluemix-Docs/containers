@@ -1,0 +1,413 @@
+<!DOCTYPE html><html lang="en-us">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="dcterms.date" content="2017-11-10">
+<meta name="dcterms.rights" content="© Copyright IBM Corporation 2014, 2017">
+
+<meta name="description" content="Install the IBM Cloud Container Service plug-in (bx ic) to run native Docker CLI commands to manage your containers.">
+<meta name="keywords" content="containers, cli, plug-in, cloud foundry, cf, bx ic, install, IBM Containers, log in, upgrade, uninstall, docker compose">
+<meta name="geo.country" content="ZZ">
+<script>
+    digitalData = {
+      page: {
+        pageInfo: {
+  language: "en-us",
+
+  version: "v18",
+  ibm: {
+  country: "ZZ",
+  type: "CT701"
+  
+         }
+       }
+     }
+   };
+  </script><!-- Licensed Materials - Property of IBM -->
+<!-- US Government Users Restricted Rights -->
+<!-- Use, duplication or disclosure restricted by -->
+<!-- GSA ADP Schedule Contract with IBM Corp. -->
+<link rel="stylesheet" type="text/css" href="./ibmdita.css">
+<title>Setting up the IBM Cloud Container Service plug-in (bx ic) to use the native Docker CLI with single and scalable containers</title>
+</head>
+<body><main role="main"><div><article class="nested0" role="article" aria-labelledby="d12957e6" id="container_cli_cfic_install"><h1 class="topictitle1" id="d12957e6">Setting up the <span class="keyword">IBM
+Cloud Container Service</span> plug-in
+(<span class="ph"><samp class="ph codeph">bx ic</samp></span>) to use the native Docker CLI with <span class="ph">single and scalable containers</span> (Deprecated)</h1>
+<div class="abstract"><div class="shortdesc">Install the IBM® Cloud Container Service plug-in (<span class="ph"><samp class="ph codeph">bx ic</samp></span>)
+to run native Docker CLI commands to manage your containers.</div>
+
+<div class="p"><div class="note attention"><span class="attentiontitle">Attention:</span>  Single and scalable containers are deprecated. Support
+will continue in IBM Cloud Public until 5 December 2017 and in IBM Cloud Local and Dedicated until
+20 June 2018. Start using Kubernetes clusters today to deploy secure, highly available apps. <a href="https://www.ibm.com/blogs/bluemix/2017/07/deprecation-single-scalable-group-container-service-bluemix-public/" rel="external" target="_blank" title="(Opens in a new tab or window)">Learn more about Kubernetes and how to migrate your
+apps</a>.</div>
+</div>
+
+<div class="p">In this
+page:<div class="lines">&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_cli_cfic_install.html#install_plugin">Installing the IBM Cloud Container Service plug-in (bx ic)</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_cli_cfic_install.html#container_cli_login" title="After you install the CLI, log in to use it.">Logging in to the <span class="keyword">IBM Cloud Container Service</span> CLI plug-in (bx ic) </a> <br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_cli_cfic_install.html#container_cli_cfic_upgrade" title="You might want to update the plug-in periodically to use new features.">Upgrading the IBM Cloud Container Service plug-in (bx ic)</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_cli_cfic_install.html#container_cli_cfic_uninstall" title="If you no longer need the IBM Cloud Container Service plug-in, you can uninstall it with a bx command.">Uninstalling the IBM Cloud Container Service plug-in (bx ic)</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_cli_cfic_install.html#container_cli_compose_install" title="To start and stop multiple single containers at one time, you can install the Docker Compose CLI.">Installing Docker Compose and its dependencies</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_cli_cfic_install.html#container_cli_compose_upgrade" title="You might need to upgrade the version of your Docker Compose package to use the latest features.">Upgrading Docker Compose</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_cli_cfic_install.html#container_cli_compose_uninstall" title="If you no longer need the Docker Compose software package, you can uninstall it with the following command.">Uninstalling Docker Compose</a></div>
+</div>
+</div>
+<aside role="complementary" aria-labelledby="d12957e6"></aside><article class="topic task nested1" role="article" aria-labelledby="d12957e188" id="install_plugin"><h2 class="topictitle2" id="d12957e188">Installing the <span class="keyword">IBM
+Cloud Container Service</span> plug-in
+(<span class="ph"><samp class="ph codeph">bx ic</samp></span>)</h2>
+<div class="body taskbody"><div class="section context" id="install_plugin__context_e5s_szz_nz"><p>To run commands, your operating system must meet these requirements. This task includes the
+information for installing these requirements. Earlier versions of these tools are not supported for
+use with the <span class="keyword">IBM
+Cloud Container Service</span> plug-in (<span class="ph"><samp class="ph codeph">bx ic</samp></span>). </p>
+
+<div class="p"><ul id="install_plugin__ul_f5s_szz_nz"><li><span class="ph">Docker version
+1.8 to <span class="ph" id="install_plugin__d1147e267">1.12</span></span></li>
+<li><span class="ph">Cloud Foundry CLI version <span class="ph" id="install_plugin__d1147e311">6.14.0</span> - 6.22.0</span><div class="steps note"><span class="notetitle">Note:</span> MacOS Sierra users must install
+Cloud Foundry CLI version 6.22.0 or later. </div>
+</li>
+<li><span class="keyword">Cloud</span> CLI</li>
+<li><span class="keyword">IBM
+Cloud Container Service</span> plug-in</li>
+</ul>
+</div>
+</div><p class="li stepsection">To install the CLIs:</p><ol class="steps" id="install_plugin__steps_g5s_szz_nz"><li class="step stepexpand" id="install_plugin__docker_install"><span class="cmd">Install Docker <span class="ph">1.12</span>. </span> For Windows and OS X operating systems, Docker is installed along with the Docker Toolbox,
+which includes the Docker Machine, Docker Engine, and Kitematic. For Linux operating systems,
+installation mechanisms vary depending on the type of Linux distribution you use. Refer to the
+following links to install or, if you already installed Docker, to upgrade to Docker <span class="ph">1.12</span>. <div class="steps note"><span class="notetitle">Note:</span> If you already installed
+Docker on your computer and you do not want to upgrade your current version, you can skip this step
+and continue with installing the Cloud Foundry CLI. </div>
+<ul id="install_plugin__ul_h5s_szz_nz"><li>OS X<p><a href="https://github.com/docker/toolbox/releases/download/v1.12.0/DockerToolbox-1.12.0.pkg" rel="external" target="_blank" title="(Opens in a new tab or window)">https://github.com/docker/toolbox/releases/download/v<span class="ph">1.12</span>/DockerToolbox-<span class="ph">1.12</span>.pkg</a></p>
+</li>
+<li>Windows<p><a href="https://github.com/docker/toolbox/releases/download/v1.12.0/DockerToolbox-1.12.0.exe" rel="external" target="_blank" title="(Opens in a new tab or window)">https://github.com/docker/toolbox/releases/download/v<span class="ph">1.12</span>/DockerToolbox-<span class="ph">1.12</span>.exe</a></p>
+</li>
+<li>Linux<p>Refer to the <a href="https://docs.docker.com/engine/installation/" rel="external" target="_blank" title="(Opens in a new tab or window)">Docker installation documentation</a> to find instructions on how to install
+Docker version <span class="ph">1.12</span> on the Linux
+distribution you use.</p>
+</li>
+</ul>
+</li>
+<li class="step stepexpand"><span class="cmd">Start Docker.</span> <ul class="ul choices" id="install_plugin__choices_i5s_szz_nz"><li class="li choice" id="install_plugin__start_qst">For OS X and Windows, double-click the <span class="ph uicontrol">Docker Quickstart
+Terminal</span> icon. The Docker daemon is started and environment variables are set for
+you.</li>
+<li class="li choice">For Linux, in a command line utility, verify that the Docker daemon is running. Also, set up
+the Docker daemon to restart automatically. For more information, <a href="https://docs.docker.com/installation/" rel="external" target="_blank" title="(Opens in a new tab or window)">see the Docker documentation for your
+operating system</a>.</li>
+</ul>
+</li>
+<li class="step stepexpand"><span class="cmd">Verify that your Docker installation is set up correctly by running <samp class="ph codeph">docker run
+hello-word</samp> in your terminal. </span> <pre class="codeblock"><code>docker run hello-world</code></pre>
+ Docker looks for the <samp class="ph codeph">hello-world</samp> image locally to run a container from, so if
+this is your first time running the command, you receive the following message.
+<pre class="codeblock"><code>Unable to find image 'hello-world:latest' locally</code></pre>
+The image is pulled from
+Docker Hub, a public repository of images, and after the command completes, your output looks like
+the
+following:<pre class="codeblock"><code>$ docker run hello-world
+
+Hello from Docker.
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker Hub account:
+ https://hub.docker.com
+
+For more examples and ideas, visit:
+ https://docs.docker.com/userguide/</code></pre>
+ If the command is not completed properly, run <samp class="ph codeph">docker version</samp> to see if Docker
+is installed correctly. </li>
+<li class="step stepexpand" id="install_plugin__install_cf"><span class="cmd">Install Cloud Foundry CLI version <span class="ph">Cloud Foundry CLI version <span class="ph" id="install_plugin__d1147e311-d1138e281a1310">6.14.0</span> - 6.22.0</span>
+from the <a href="https://github.com/cloudfoundry/cli/releases" rel="external" target="_blank" title="(Opens in a new tab or window)">GitHub repository</a>.</span> You must install the Cloud Foundry CLI in the default location for your operating system,
+otherwise the PATH environment variable does not match your installation directory. <div class="steps note"><span class="notetitle">Note:</span> MacOS Sierra users must install Cloud Foundry CLI version 6.22.0 or later. </div>
+
+<div class="p">To verify that the Cloud Foundry CLI is installed properly or, if you already installed the Cloud
+Foundry CLI, to check which version you installed, run the following
+command:<pre class="codeblock"><code>cf -v</code></pre>
+</div>
+</li>
+<li class="step stepexpand" id="install_plugin__install_bx"><span class="cmd">Install the <a href="https://clis.ng.bluemix.net/ui/home.html" rel="external" target="_blank" title="(Opens in a new tab or window)"><span class="keyword">Cloud</span>
+CLI</a>.</span></li>
+<li class="step stepexpand" id="install_plugin__bx_login"><span class="cmd">Log in to the <span class="keyword">Cloud</span> CLI.</span> <pre class="codeblock"><code><span class="ph">bx</span> login -a https://api.ng.bluemix.net</code></pre>
+</li>
+<li class="step stepexpand" id="install_plugin__install"><span class="cmd" id="install_plugin__install_bx_ic">Install the <span class="keyword">IBM
+Cloud Container Service</span> plug-in. </span> <pre class="codeblock" id="install_plugin__bx_cs_install"><code><span class="ph">bx</span> plugin install IBM-Containers -r <span class="ph" data-hd-audience="yellow"><var class="keyword varname">Bluemix</var></span></code></pre>
+ <div class="p">To verify that the plug-in is installed properly, run the following
+command:<pre class="codeblock"><code><span class="ph">bx</span> plugin list</code></pre>
+</div>
+
+<p>The plug-in is displayed in the results as IBM-Containers.</p>
+</li>
+</ol>
+<div class="section result" id="install_plugin__result_j5s_szz_nz"><p>You are ready to log in and begin managing containers.</p>
+</div></div>
+</article><article class="topic task nested1" role="article" aria-labelledby="d12957e411" lang="en-us" id="container_cli_login"><h2 class="topictitle2" id="d12957e411">Logging in to the <span class="keyword">IBM
+Cloud Container Service</span> CLI
+plug-in (<span class="ph"><samp class="ph codeph">bx ic</samp></span>) </h2>
+<div class="body taskbody"><p class="shortdesc">After you install the CLI, log in to use it.</p>
+<div class="section prereq"><div class="p">Before you begin, complete the following tasks.<ul><li><a href="container_cli_cfic_install.html#install_plugin">Install
+the <span class="keyword">IBM
+Cloud Container Service</span> (<span class="ph"><samp class="ph codeph">bx ic</samp></span>) plug-in.</a></li>
+<li>Decide which <span class="keyword">Cloud</span> organization
+and space to use when you log in to Cloud Foundry. For more information about organizations and
+spaces, see <span class="ph"><a href="../admin/orgs_spaces.html">Orgs and spaces</a></span>.</li>
+<li>For more information about the options you can specify with the Cloud Foundry
+<samp class="ph codeph">login</samp> command, see <a href="https://docs.cloudfoundry.org/devguide/installcf/whats-new-v6.html#login" rel="external" target="_blank" title="(Opens in a new tab or window)">the
+Login command</a> in the Cloud Foundry documentation.</li>
+</ul>
+</div>
+</div><ol class="steps"><li class="step stepexpand"><span class="cmd">Open a command line utility. </span> <ul class="ul choices"><li class="li choice">For OS X and Windows, double-click the <span class="ph uicontrol">Docker Quickstart
+Terminal</span> icon. The Docker daemon is started and environment variables are set for
+you.</li>
+<li class="li choice">For Linux, open any command line utility.</li>
+</ul>
+</li>
+<li class="step stepexpand"><span class="cmd">Log in to <span class="keyword">Cloud</span> through
+the
+Cloud Foundry CLI.</span> To specify a specific region, include
+the <samp class="ph codeph">-a</samp> option with the API endpoint for
+the region. If it is your first time you are using the CLI and you
+do not include the option, you
+are prompted to enter an API endpoint. After the API endpoint is specified,
+you do not need to enter
+one during subsequent logins. <div class="p"><pre class="codeblock"><code>bx login [-a api.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>] [-sso]</code></pre>
+</div>
+ <div class="p">To log in to a specific region, include the API endpoint for that region when you log in to the
+Cloud Foundry CLI.<ul><li>US South<pre class="codeblock"><code>bx login -a api.ng.bluemix.net</code></pre>
+</li>
+<li>United Kingdom<pre class="codeblock"><code>bx login -a api.eu-gb.bluemix.net</code></pre>
+</li>
+</ul>
+</div>
+
+<span class="ph">The single-sign-on parameter <span class="keyword option">--sso</span> is required when you log in
+with a federated ID. If this option is used, open <a href="https://login.ng.bluemix.net/UAALoginServerWAR/passcode" rel="external" target="_blank" title="(Opens in a new tab or window)">https://login.ng.bluemix.net/UAALoginServerWAR/passcode</a> to obtain a one-time passcode. If
+you do not include the <span class="keyword option">--sso</span> option, complete these substeps.</span><ol type="a" class="ol substeps"><li class="li substep"><span class="cmd">For <span class="ph uicontrol">Email</span>, enter your IBMId for
+<span class="keyword">Cloud</span>.</span></li>
+<li class="li substep"><span class="cmd">For <span class="ph uicontrol">Password</span>, enter the password for the IBMId.</span> Your <span class="keyword">Cloud</span> organizations and
+spaces are retrieved. </li>
+<li class="li substep"><span class="cmd">Enter the number that represents one of your <span class="keyword">Cloud</span> organizations. </span></li>
+<li class="li substep"><span class="cmd">Enter the number that represents one of your existing <span class="keyword">Cloud</span> spaces. </span></li>
+</ol>
+</li>
+<li class="step stepexpand" id="container_cli_login__namespace"><span class="cmd"><span class="ph">Set a <dfn class="term">namespace</dfn> for your organization.</span></span> A namespace is a unique name to identify your private <span class="keyword">Cloud</span> images registry. When you create a
+container, you must specify an image's location by including the namespace with the image name. <div class="p"><div class="steps note" id="container_cli_login__namespace_warning"><span class="notetitle">Note:</span> When you create a namespace, it cannot be changed after it is created,
+only deleted. If users in your <span class="keyword">Cloud</span>
+organization already deployed containers and set a <dfn class="term">namespace</dfn>, a message is shown
+displaying the namespace for your organization. In this case, you can continue with the next
+step.</div>
+</div>
+
+<div class="p"><pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> namespace-set <var class="keyword varname">&lt;my_namespace&gt;</var></code></pre>
+
+<div class="note tip"><span class="tiptitle">Tip:</span> Observe the following rules for the
+namespace:<ul id="container_cli_login__d9193e141"><li>It can contain only lowercase letters, numbers, or underscores (_).</li>
+<li>It can be 4 - 30 characters. If you plan to manage containers from the command line, you might
+prefer to have a short namespace that can be typed quickly.</li>
+<li>Its name must be unique in <span class="keyword">Cloud</span>.</li>
+</ul>
+</div>
+</div>
+</li>
+<li class="step stepexpand" id="container_cli_login__login"><span class="cmd">Initialize <span class="keyword">IBM
+Cloud Container Service</span>.</span> <div class="p"><pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> init</code></pre>
+</div>
+</li>
+<li class="step stepexpand"><span class="cmd">Decide if you want to run <span class="ph"><samp class="ph codeph">bx ic</samp></span> or native
+Docker commands. </span> You can select one of these options every time you log in to the plug-in or you can use the
+<samp class="ph codeph">shellinit</samp> command to always select Option 2 for you. <div class="p"><ul><li id="container_cli_login__option1_li"><span class="ph uicontrol">Option 1</span> (Default)<p>A simple shell for <span class="keyword">IBM
+Cloud Container Service</span> wrappers Docker. The local Docker daemon
+is unaffected by <span class="keyword">IBM
+Cloud Container Service</span>. <span class="ph"><samp class="ph codeph">bx ic</samp></span> commands are used to manage containers in your
+<span class="keyword">Cloud</span> space and
+<samp class="ph codeph">docker</samp> commands are used to manage containers locally. <samp class="ph codeph">docker</samp>
+commands are always required for local image development though. </p>
+<p>For example, with Option 1,
+the <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> run</samp> command creates a
+container in your <span class="keyword">Cloud</span> space and
+<samp class="ph codeph">docker run</samp> creates a container locally. You might prefer this option if you are new
+to both Docker and <span class="keyword">IBM
+Cloud Container Service</span> or if you
+like to test containers locally.</p>
+</li>
+<li id="container_cli_login__option2_li"><span class="ph uicontrol">Option 2</span><p>Redirect your local Docker daemon for the current CLI session to
+<span class="keyword">IBM
+Cloud Container Service</span> so that <samp class="ph codeph">docker</samp>
+commands can be used in place of <span class="ph"><samp class="ph codeph">bx ic</samp></span> commands
+whenever they are available to manage containers in your <span class="keyword">Cloud</span> space. </p>
+<p>For example, with Option
+2, either the <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> run</samp> or the
+<samp class="ph codeph">docker run</samp> command can be used to create a container in your space. You might
+prefer this option if you are an experienced Docker user who is more comfortable with the
+<samp class="ph codeph">docker</samp> commands or if you are adapting automated scripts to work with <span class="keyword">IBM
+Cloud Container Service</span>.</p>
+<p>Some exceptions still require the
+use of <span class="ph"><samp class="ph codeph">bx ic</samp></span> commands to perform tasks specific
+to <span class="keyword">IBM
+Cloud Container Service</span>. For example, to set a
+namespace, you must use the command <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> namespace-set</samp>. <samp class="ph codeph">docker namespace-set</samp> is not a valid command. For a
+list of <samp class="ph codeph">docker</samp> commands that are supported with this configuration, see <a href="container_cli_reference_cfic.html#container_cli_reference_native-docker" title="With the IBM Cloud Container Service plug-in (bx ic), some docker commands are supported for use in place of bx ic commands. When you log in to the plug-in, configure the environment variables to use the Docker CLI commands. Then, you can run docker commands instead of bx ic commands whenever possible. For example, instead of using bx ic images to see the images in your private Cloud registry, run docker images.">Supported Docker commands for IBM Cloud Container Service plug-in (bx ic)</a>.</p>
+<div class="p">To configure
+this option, copy and paste the environment variables that are provided in the terminal during log in.<ul><li><samp class="ph codeph">DOCKER_HOST</samp> sets the Docker host to <span class="keyword">IBM
+Cloud Container Service</span>.</li>
+<li><samp class="ph codeph">DOCKER_CERT_PATH</samp> sets the location of the authentication keys for the <span class="keyword">IBM
+Cloud Container Service</span> plug in for Cloud Foundry.</li>
+<li><samp class="ph codeph">DOCKER_TLS_VERIFY</samp> uses TLS and verifies the remote server.</li>
+</ul>
+</div>
+<div class="p"><div class="note tip"><span class="tiptitle">Tip:</span> When you are completing the tasks in the <span class="keyword">IBM
+Cloud Container Service</span> documentation, you can run
+<samp class="ph codeph">docker</samp> commands in all steps that are marked with an asterisk (*).</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<aside role="complementary" aria-labelledby="d12957e411"></aside></article><article class="topic task nested1" role="article" aria-labelledby="d12957e945" lang="en-us" id="container_cli_cfic_upgrade"><h2 class="topictitle2" id="d12957e945">Upgrading the <span class="keyword">IBM
+Cloud Container Service</span> plug-in
+(<span class="ph"><samp class="ph codeph">bx ic</samp></span>)</h2>
+<div class="body taskbody"><p class="shortdesc">You might want to update the plug-in
+periodically to use new features. </p>
+<div class="section context"><div class="tablenoborder"><table summary="Current version of the IBM Cloud Container Service plug-in" id="container_cli_cfic_upgrade__version_history" class="defaultstyle"><caption><span class="tablecap">Table 1. Current version of the <span class="keyword">IBM
+Cloud Container Service</span>
+plug-in</span></caption><thead><tr><th id="d12957e1072" class="thleft thbot">Release date</th>
+<th id="d12957e1074" class="thleft thbot">Version</th>
+<th id="d12957e1076" class="thleft thbot">Updates</th>
+</tr>
+</thead>
+<tbody><tr id="container_cli_cfic_upgrade__current"><td headers="d12957e1072 ">November 16, 2016</td>
+<td headers="d12957e1074 ">0.8.964</td>
+<td headers="d12957e1076 "><ul><li>Added support for managing the health check for container groups through the <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create</samp> command by using the
+<samp class="ph codeph">--http_monitor_enabled</samp>, <samp class="ph codeph">--http_monitor_path</samp>, and
+<samp class="ph codeph">--http_monitor_rs_list</samp> options</li>
+<li>Added support for the <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span>
+group-create --session_affinity</samp> option</li>
+<li>Defect fixes</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div><p class="li stepsection">To update the plug-in, follow these
+steps.</p><ol class="steps"><li class="step stepexpand"><span class="cmd">Install the update from the plug-in repository that you configured when you first installed the
+plug-in.</span> <pre class="codeblock"><code><span class="ph">bx</span> plugin update IBM-Containers -r <span class="ph" data-hd-audience="yellow"><var class="keyword varname">Bluemix</var></span></code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Verify the plug-in installation by running the following command and checking the list of the
+plug-ins that are installed.</span> <div class="p"><pre class="codeblock"><code><span class="ph">bx</span> plugin list</code></pre>
+</div>
+
+<p>The plug-in is displayed in the results as IBM-Containers.</p>
+</li>
+</ol>
+</div>
+<aside role="complementary" aria-labelledby="d12957e945"></aside></article><article class="topic task nested1" role="article" aria-labelledby="d12957e1142" lang="en-us" id="container_cli_cfic_uninstall"><h2 class="topictitle2" id="d12957e1142">Uninstalling the <span class="keyword">IBM
+Cloud Container Service</span> plug-in
+(<span class="ph"><samp class="ph codeph">bx ic</samp></span>)</h2>
+<div class="body taskbody"><p class="shortdesc">If you no longer need the <span class="keyword">IBM
+Cloud Container Service</span> plug-in, you can uninstall it with a <span class="ph">bx</span> command.</p>
+<div class="section prereq"><div class="steps note"><span class="notetitle">Note:</span> To uninstall the <span class="keyword">IBM
+Cloud Container Service</span> Cloud
+Foundry plug-in, run the following
+command.<pre class="codeblock"><code>cf uninstall-plugin IBM-Containers</code></pre>
+</div>
+</div><ol class="steps"><li class="step stepexpand"><span class="cmd">To uninstall the <span class="keyword">IBM
+Cloud Container Service</span> plug-in
+for the <span class="keyword">Cloud</span> CLI, run the following
+command. </span> <pre class="codeblock"><code><span class="ph">bx</span> plugin uninstall IBM-Containers</code></pre>
+</li>
+<li class="step stepexpand" id="container_cli_cfic_uninstall__verify"><span class="cmd">Verify the plug-in was uninstalled by running the following command and checking the list of
+the plug-ins that are installed.</span> <div class="p"><pre class="codeblock"><code><span class="ph">bx</span> plugin list</code></pre>
+</div>
+
+<p>The <span class="keyword">IBM
+Cloud Container Service</span> plug-in is not displayed
+in the results.</p>
+</li>
+</ol>
+</div>
+<aside role="complementary" aria-labelledby="d12957e1142"></aside></article><article class="topic task nested1" role="article" aria-labelledby="d12957e1303" lang="en-us" id="container_cli_compose_install"><h2 class="topictitle2" id="d12957e1303">Installing Docker Compose and its dependencies</h2>
+<div class="body taskbody"><p class="shortdesc">To start and stop multiple single containers at one time, you can install the Docker
+Compose CLI. </p>
+<div class="section context">To run Docker Compose commands with <span class="keyword">IBM
+Cloud Container Service</span>, you must have the following software
+installed. <ul><li>Docker version <span class="ph">1.10.0</span></li>
+<li>Cloud Foundry CLI version <span class="ph">6.14.0 -
+6.22.0</span></li>
+<li><span class="keyword">IBM
+Cloud</span> CLI</li>
+<li><span class="keyword">IBM
+Cloud Container Service</span> plug-in</li>
+<li>Docker Compose version <span class="ph">1.6.0</span>
+or later</li>
+</ul>
+This task includes the information for installing these requirements. Earlier versions of these
+tools are not supported for use with the <span class="keyword">IBM
+Cloud Container Service</span> plug-in (<samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span></samp>).</div><ol class="steps"><li class="step stepexpand"><span class="cmd"><a href="container_cli_cfic_install.html#install_plugin">Install
+Docker, the Cloud Foundry CLI, the <span class="keyword">IBM
+Cloud</span>
+CLI, and the <span class="keyword">IBM
+Cloud Container Service</span>
+plug-in.</a></span> <div class="steps note"><span class="notetitle">Note:</span> If you use a Mac or Windows operating system, Docker Compose is automatically installed with
+the Docker Engine, Machine, and Kitematic as part of the Docker Toolbox installation. You can skip
+the next step and continue to verify your Docker Compose version. </div>
+</li>
+<li class="step stepexpand"><span class="cmd">If you are using Linux, install the latest version of Docker Compose. </span> <ol type="a" class="ol substeps"><li class="li substep substepexpand"><span class="cmd">Install <samp class="ph codeph">pip</samp>.</span>  The package manager <samp class="ph codeph">pip</samp> includes all tools to install, upgrade, and remove
+software packages that are written in Python on your computer. You can use the following command to
+install <samp class="ph codeph">pip</samp> or you can download the software package directly to your computer from
+the <a href="https://pypi.python.org/pypi/pip" rel="external" target="_blank" title="(Opens in a new tab or window)">Python Package
+Index</a>. <div class="steps note"><span class="notetitle">Note:</span> If you already installed <samp class="ph codeph">pip</samp> on your computer, you can continue
+with installing the latest version of Docker Compose. </div>
+<pre class="codeblock"><code>easy_install pip</code></pre>
+</li>
+<li class="li substep substepexpand"><span class="cmd">Install Docker Compose</span> <pre class="codeblock"><code>pip install docker-compose==<span class="ph">1.6.2</span></code></pre>
+</li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">Verify the Docker Compose version that is installed on your computer. </span> <ol type="a" class="ol substeps"><li class="li substep substepexpand"><span class="cmd"><a href="container_cli_cfic_install.html#container_cli_login__option2_li">Log in to the <span class="keyword">IBM
+Cloud Container Service</span>
+CLI.</a></span>  Set the environment variables for <span class="ph uicontrol">Option 2</span> when you log in to the
+plug-in to run native Docker commands. </li>
+<li class="li substep substepexpand"><span class="cmd">Verify the version of your Docker Compose package.</span> <pre class="codeblock"><code>docker-compose version</code></pre>
+If <samp class="ph codeph">docker-compose version 1.6.0</samp> or later is
+displayed, start creating your own multi-container app. If not, <a href="container_cli_cfic_install.html#container_cli_compose_upgrade" title="You might need to upgrade the version of your Docker Compose package to use the latest features.">upgrade your Docker Compose version</a>.
+<div class="steps note"><span class="notetitle">Note:</span> If you experience problems with executing Docker Compose commands, review the <a href="container_troubleshoot.html#ts_compose_commands_failed">No module named queue</a> and
+<a href="container_troubleshoot.html#ts_compose_insecure_connection">Insecure HTTPS connection
+warning</a> topic to check whether you need to change system settings or install additional
+software packages. </div>
+</li>
+</ol>
+</li>
+</ol>
+</div>
+<article class="topic task nested2" role="article" aria-labelledby="d12957e1514" lang="en-us" id="container_cli_compose_upgrade"><h3 class="topictitle3" id="d12957e1514">Upgrading Docker Compose</h3>
+<div class="body taskbody"><p class="shortdesc">You might need to upgrade the version of your Docker Compose package to use the latest
+features. </p>
+<div class="section context"><p></p>
+</div><ol class="steps"><li class="step stepexpand"><span class="cmd">Upgrade Docker Compose. </span> <pre class="codeblock"><code>pip install docker-compose --upgrade</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Verify the version of your Docker Compose package. </span> <pre class="codeblock"><code>docker-compose version</code></pre>
+</li>
+</ol>
+</div>
+</article><article class="topic task nested2" role="article" aria-labelledby="d12957e1580" lang="en-us" id="container_cli_compose_uninstall"><h3 class="topictitle3" id="d12957e1580">Uninstalling Docker Compose</h3>
+<div class="body taskbody"><p class="shortdesc">If you no longer need the Docker Compose software package, you can uninstall it with the
+following command. </p>
+<div class="section context"><p></p>
+</div><ol class="steps"><li class="step stepexpand"><span class="cmd">Uninstall Docker Compose. </span> <pre class="codeblock"><code>pip uninstall docker-compose</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Verify the Docker Compose package was uninstalled. </span> If Docker Compose was uninstalled successfully, it is not listed in the CLI output when you
+run the following command. <pre class="codeblock"><code>pip freeze</code></pre>
+</li>
+</ol>
+</div>
+</article></article></article></div></main></body></html>

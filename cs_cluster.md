@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-11-28"
+lastupdated: "2017-11-29"
 
 ---
 
@@ -110,9 +110,7 @@ To create a cluster:
 
 3. If you have multiple {{site.data.keyword.Bluemix_notm}} accounts, select the account where you want to create your Kubernetes cluster.
 
-4.  If you want to create or access Kubernetes clusters in a region other than the {{site.data.keyword.Bluemix_notm}} region that you selected earlier, [specify the {{site.data.keyword.containershort_notm}} region API endpoint](cs_regions.html#container_login_endpoints).
-
-    **Note**: If you want to create a cluster in US East, you must specify the US East container region API endpoint using the `bx cs init --host https://us-east.containers.bluemix.net` command.
+4.  If you want to create or access Kubernetes clusters in a region other than the {{site.data.keyword.Bluemix_notm}} region that you selected earlier, run `bx cs region-set`.
 
 6.  Create a cluster.
     1.  Review the locations that are available. The locations that are shown depend on the {{site.data.keyword.containershort_notm}} region that you are logged in.
@@ -1224,7 +1222,7 @@ Change the pool of available portable public or private IP addresses by adding s
 
 In {{site.data.keyword.containershort_notm}}, you can add stable, portable IPs for Kubernetes services by adding network subnets to the cluster. When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically provisions a portable public subnet with 5 public IP addresses and a portable private subnet with 5 private IP addresses. Portable public and private IP addresses are static and do not change when a worker node, or even the cluster, is removed.
 
-One of the portable public and one of the portable private IP addresses are used for [Ingress controllers](cs_apps.html#cs_apps_public_ingress) that you can use to expose multiple apps in your cluster. The remaining 4 portable public and 4 portable private IP addresses can be used to expose single apps to the public by [creating a load balancer service](cs_apps.html#cs_apps_public_load_balancer).
+One of the portable public and one of the portable private IP addresses are used for [application load balancers](cs_apps.html#cs_apps_public_ingress) that you can use to expose multiple apps in your cluster. The remaining 4 portable public and 4 portable private IP addresses can be used to expose single apps to the public by [creating a load balancer service](cs_apps.html#cs_apps_public_load_balancer).
 
 **Note:** Portable public IP addresses are charged on a monthly basis. If you choose to remove portable public IP addresses after your cluster is provisioned, you still have to pay the monthly charge, even if you used them only for a short amount of time.
 
@@ -1242,7 +1240,7 @@ Before you begin, make sure that you can access the IBM Cloud infrastructure (So
 3.  From the **Select the type of subnet to add to this account** drop-down menu, select **Portable Public** or **Portable Private**.
 4.  Select the number of IP addresses that you want to add from your portable subnet.
 
-    **Note:** When you add portable IP addresses for your subnet, three IP addresses are used to establish cluster-internal networking, so that you cannot use them for your Ingress controller or to create a load balancer service. For example, if you request eight portable public IP addresses, you can use five of them to expose your apps to the public.
+    **Note:** When you add portable IP addresses for your subnet, three IP addresses are used to establish cluster-internal networking, so that you cannot use them for your application load balancer or to create a load balancer service. For example, if you request eight portable public IP addresses, you can use five of them to expose your apps to the public.
 
 5.  Select the public or private VLAN where you want to route the portable public or private IP addresses to. You must select the public or private VLAN that an existing worker node is connected to. Review the public or private VLAN for a worker node.
 
@@ -1273,7 +1271,7 @@ Before you begin, make sure that you can access the IBM Cloud infrastructure (So
         ```
         {: pre}
 
-    4.  Add the subnet to your cluster. When you make a subnet available to a cluster, a Kubernetes config map is created for you that includes all available portable public or private IP addresses that you can use. If no Ingress controller exists for your cluster, one portable public IP address is automatically used to create the public Ingress controller and one portable private IP address is automatically used to create the private Ingress controller. All other portable public and private IP addresses can be used to create load balancer services for your apps.
+    4.  Add the subnet to your cluster. When you make a subnet available to a cluster, a Kubernetes config map is created for you that includes all available portable public or private IP addresses that you can use. If no application load balancer exists for your cluster, one portable public IP address is automatically used to create the public application load balancer and one portable private IP address is automatically used to create the private application load balancer. All other portable public and private IP addresses can be used to create load balancer services for your apps.
 
         ```
         bx cs cluster-subnet-add <cluster name or id> <subnet id>
@@ -1368,7 +1366,7 @@ If you have an existing subnet in your IBM Cloud infrastructure (SoftLayer) port
     ```
     {: screen}
 
-6.  Add the subnet to your cluster by specifying the subnet ID. When you make a subnet available to a cluster, a Kubernetes config map is created for you that includes all available portable public IP addresses that you can use. If no Ingress controller already exists for your cluster, one portable public IP address is automatically used to create the Ingress controller. All other portable public IP addresses can be used to create load balancer services for your apps.
+6.  Add the subnet to your cluster by specifying the subnet ID. When you make a subnet available to a cluster, a Kubernetes config map is created for you that includes all available portable public IP addresses that you can use. If no application load balancers already exist for your cluster, one portable public and one portable private IP address is automatically used to create the public and private application load balancers. All other portable public and private IP addresses can be used to create load balancer services for your apps.
 
     ```
     bx cs cluster-subnet-add mycluster 807861
@@ -1475,12 +1473,15 @@ Before you begin, make sure that you have an existing NFS file share that you ca
 
 To create a persistent volume and matching persistent volume claim, follow these steps.
 
-1.  In your IBM Cloud infrastructure (SoftLayer) account, look up the ID and path of the NFS file share where you want to create your persistent volume object.
+1.  In your IBM Cloud infrastructure (SoftLayer) account, look up the ID and path of the NFS file share where you want to create your persistent volume object. In addition, authorize the file storage to the subnets in the cluster. This authorization gives your cluster access to the storage.
     1.  Log in to your IBM Cloud infrastructure (SoftLayer) account.
     2.  Click **Storage**.
-    3.  Click **File Storage** and note the ID and path of the NFS file share that you want to use.
-2.  Open your preferred editor.
-3.  Create a storage configuration file for your persistent volume.
+    3.  Click **File Storage** and from the **Actions** menu, select **Authorize Host**.
+    4.  Click **Subnets**. After you authorize, every worker node on the subnet has access to the file storage.
+    5.  Select the subnet of your cluster's public VLAN from the menu and click **Submit**. If you need to find the subnet, run `bx cs cluster-get <cluster_name> --showResources`.
+    6.  Click the name of the file storage.
+    7.  Make note the **Mount Point** field. The field is displayed as `<server>:/<path>`.
+2.  Create a storage configuration file for your persistent volume. Include the server and path from the file storage **Mount Point** field.
 
     ```
     apiVersion: v1
@@ -1493,7 +1494,7 @@ To create a persistent volume and matching persistent volume claim, follow these
      accessModes:
        - ReadWriteMany
      nfs:
-       server: "nfslon0410b-fz.service.softlayer.com"
+       server: "nfslon0410b-fz.service.networklayer.com"
        path: "/IBM01SEV8491247_0908"
     ```
     {: codeblock}
@@ -1526,7 +1527,7 @@ To create a persistent volume and matching persistent volume claim, follow these
     </tr>
     </tbody></table>
 
-4.  Create the persistent volume object in your cluster.
+3.  Create the persistent volume object in your cluster.
 
     ```
     kubectl apply -f <yaml_path>
@@ -1540,14 +1541,14 @@ To create a persistent volume and matching persistent volume claim, follow these
     ```
     {: pre}
 
-5.  Verify that the persistent volume is created.
+4.  Verify that the persistent volume is created.
 
     ```
     kubectl get pv
     ```
     {: pre}
 
-6.  Create another configuration file to create your persistent volume claim. In order for the persistent volume claim to match the persistent volume object that you created earlier, you must choose the same value for `storage` and `accessMode`. The `storage-class` field must be empty. If any of these fields do not match the persistent volume, then a new persistent volume is created automatically instead.
+5.  Create another configuration file to create your persistent volume claim. In order for the persistent volume claim to match the persistent volume object that you created earlier, you must choose the same value for `storage` and `accessMode`. The `storage-class` field must be empty. If any of these fields do not match the persistent volume, then a new persistent volume is created automatically instead.
 
     ```
     kind: PersistentVolumeClaim
@@ -1565,14 +1566,14 @@ To create a persistent volume and matching persistent volume claim, follow these
     ```
     {: codeblock}
 
-7.  Create your persistent volume claim.
+6.  Create your persistent volume claim.
 
     ```
     kubectl apply -f deploy/kube-config/mypvc.yaml
     ```
     {: pre}
 
-8.  Verify that your persistent volume claim is created and bound to the persistent volume object. This process can take a few minutes.
+7.  Verify that your persistent volume claim is created and bound to the persistent volume object. This process can take a few minutes.
 
     ```
     kubectl describe pvc mypvc
@@ -1814,10 +1815,10 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to you
     {: pre}
     Replace <em>&lt;my_cluster&gt;</em> with the name of the cluster that the logging configuration is in and <em>&lt;my_namespace&gt;</em> with the name of the namespace.
 
-### Configuring log forwarding for applications, worker nodes, the Kubernetes system component, and the Ingress controller
+### Configuring log forwarding for applications, worker nodes, the Kubernetes system component, and application load balancers
 {: #cs_configure_log_source_logs}
 
-By default, the {{site.data.keyword.containershort_notm}} forwards Docker container namespace logs to {{site.data.keyword.loganalysislong_notm}}. You can also configure log forwarding for other log sources, such as applications, worker nodes, Kubernetes clusters, and Ingress controllers.
+By default, the {{site.data.keyword.containershort_notm}} forwards Docker container namespace logs to {{site.data.keyword.loganalysislong_notm}}. You can also configure log forwarding for other log sources, such as applications, worker nodes, Kubernetes clusters, and application load balancers.
 {:shortdesc}
 
 Review the following options for information about each log source.
@@ -1827,7 +1828,7 @@ Review the following options for information about each log source.
 |`application`|Logs for your own application that runs in a Kubernetes cluster.|`/var/log/apps/**/*.log`, `/var/log/apps/**/*.err`
 |`worker`|Logs for virtual machine worker nodes within a Kubernetes cluster.|`/var/log/syslog`, `/var/log/auth.log`
 |`kubernetes`|Logs for the Kubernetes system component.|`/var/log/kubelet.log`, `/var/log/kube-proxy.log`
-|`ingress`|Logs for an Ingress controller that manages network traffic coming into a Kubernetes cluster.|`/var/log/alb/ids/*.log`, `/var/log/alb/ids/*.err`, `/var/log/alb/customerlogs/*.log`, `/var/log/alb/customerlogs/*.err`
+|`ingress`|Logs for an application load balancer, managed by the Ingress controller, that manages network traffic coming into a Kubernetes cluster.|`/var/log/alb/ids/*.log`, `/var/log/alb/ids/*.err`, `/var/log/alb/customerlogs/*.log`, `/var/log/alb/customerlogs/*.err`
 {: caption="Table 11. Log source characteristics." caption-side="top"}
 
 #### Enabling log forwarding for applications
@@ -1874,9 +1875,9 @@ Before you start, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
     ```
     {:pre}
 
-3. To create a log forwarding configuration, follow the steps in [Enabling log forwarding for worker nodes, the Kubernetes system component, and the Ingress controller](cs_cluster.html#cs_log_sources_enable).
+3. To create a log forwarding configuration, follow the steps in [Enabling log forwarding for worker nodes, the Kubernetes system component, and application load balancers](cs_cluster.html#cs_log_sources_enable).
 
-#### Enabling log forwarding for worker nodes, the Kubernetes system component, and the Ingress controller
+#### Enabling log forwarding for worker nodes, the Kubernetes system component, and application load balancers
 {: #cs_log_sources_enable}
 
 You can forward logs to {{site.data.keyword.loganalysislong_notm}} or to an external syslog server. If you forward logs to {{site.data.keyword.loganalysisshort_notm}}, they are forwarded to the same space in which you created the cluster. If you want to forward logs from one log source to both log collector servers, then you must create two logging configurations.
@@ -1891,7 +1892,7 @@ Before you begin:
 
 2. [Target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster where the log source is located.
 
-To enable log forwarding for worker nodes, the Kubernetes system component, or an Ingress controller:
+To enable log forwarding for worker nodes, the Kubernetes system component, or an application load balancer:
 
 1. Create a log forwarding configuration.
 
@@ -1985,7 +1986,7 @@ To enable log forwarding for worker nodes, the Kubernetes system component, or a
 #### Updating the log collector server
 {: #cs_log_sources_update}
 
-You can update a logging configuration for an application, worker nodes, the Kubernetes system component, and the Ingress controller by changing the log collector server, or the log type.
+You can update a logging configuration for an application, worker nodes, the Kubernetes system component, and an application load balancer by changing the log collector server, or the log type.
 {: shortdesc}
 
 **Note**: To view logs in the Sydney location, you must forward logs to an external syslog server.
