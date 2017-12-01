@@ -1,0 +1,208 @@
+<!DOCTYPE html><html lang="en-us">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="dcterms.date" content="2017-11-10">
+<meta name="dcterms.rights" content="© Copyright IBM Corporation 2014, 2017">
+
+<meta name="description" content="">
+
+<meta name="geo.country" content="ZZ">
+<script>
+    digitalData = {
+      page: {
+        pageInfo: {
+  language: "en-us",
+
+  version: "v18",
+  ibm: {
+  country: "ZZ",
+  type: "CT701"
+  
+         }
+       }
+     }
+   };
+  </script><!-- Licensed Materials - Property of IBM -->
+<!-- US Government Users Restricted Rights -->
+<!-- Use, duplication or disclosure restricted by -->
+<!-- GSA ADP Schedule Contract with IBM Corp. -->
+<link rel="stylesheet" type="text/css" href="./ibmdita.css">
+<title>IBM Cloud Container Service plug-in (bx ic) command quick reference</title>
+</head>
+<body id="container_cli_reference_cfic_quick"><main role="main"><article role="article" aria-labelledby="d48549e2"><h1 class="topictitle1" id="d48549e2"><span class="keyword">IBM®
+Cloud Container Service</span> plug-in (<span class="ph"><samp class="ph codeph">bx ic</samp></span>) command quick reference</h1>
+<div class="body conbody"><p class="shortdesc"></p>
+<p>View a <a href="../api/content/containers/container_cli_reference_cfic_quick.html" rel="external" target="_blank" title="(Opens in a new tab or window)">printable
+version</a> of this page.</p>
+<div class="p"><div class="tablenoborder"><table summary="bx ic group command quick reference" id="container_cli_reference_cfic_quick__quick_group" class="defaultstyle"><caption><span class="tablecap">Table 1. <span class="ph"><samp class="ph codeph">bx ic</samp></span> group command quick
+reference</span></caption><thead><tr><th id="d48549e97" class="thleft">Container groups</th>
+</tr>
+</thead>
+<tbody><tr><td headers="d48549e97 "><div class="p">Group
+processes<div class="lines"><a href="container_cli_reference_cfic.html#container_cli_reference_cfic__group_create">bx ic group-create [--anti] [--auto] [-d DOMAIN] [--desired DESIRED] [-e ENV] [--env-file ENVFILE] [--http_monitor_enabled] [--http_monitor_path] [--http_monitor_rc_list] [--ip IP_ADDRESS] [-m MEMORY] [--max MAX] [--min MIN] [-n HOST] --name NAME [-p PORT] [--session-affinity] [--volume VOLUME:/DIRECTORY_PATH] IMAGE [CMD]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__group_rm">bx ic group-remove [-f] GROUP [GROUP]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__group_update">bx ic group-update [--desired DESIRED] [-e "KEY=VALUE"] [--max MAX] [--min MIN] GROUP</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__port">bx ic port CONTAINER [PRIVATE_PORT[/PROTOCOL]]</a><br>
+</div>
+</div>
+
+<div class="p">Information
+gathering<div class="lines"><a href="container_cli_reference_cfic.html#container_cli_reference_cfic__group_inspect">bx ic group-inspect GROUP</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__group_instances">bx ic group-instances GROUP</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__groups">bx ic groups [-q]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__ps">bx ic ps [-a] [--filter env=SEARCH_CRITERIA] [-l NUM] [-q] [-s]</a><br>
+</div>
+</div>
+
+<div class="p">Instance
+management<div class="lines"><a href="container_cli_reference_cfic.html#container_cli_reference_cfic__attach">bx ic attach [--no-stdin] [--sig-proxy] CONTAINER</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__exec">bx ic exec [-d] [-it] [-u USER] CONTAINER CMD</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__inspect">bx ic inspect [IMAGE | images | CONTAINER]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__kill">bx ic kill [-s CMD] CONTAINER [CONTAINER]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__logs">bx ic logs [-f | --since TIMESTAMP | --tail STRING | -t] CONTAINER</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__pause">bx ic pause CONTAINER [CONTAINER]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__port">bx ic port CONTAINER [PRIVATE_PORT[/PROTOCOL]]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__restart">bx ic restart CONTAINER [CONTAINER] [-t SECS]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__rename">bx ic rename OLD_NAME NEW_NAME</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__rm">bx ic rm [-f] CONTAINER [CONTAINER]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__start">bx ic start CONTAINER [CONTAINER]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__stats">bx ic stats --no-stream CONTAINER [CONTAINER]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__stop">bx ic stop CONTAINER [CONTAINER] [-t SECS]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__top">bx ic top CONTAINER [CONTAINER] [ps options]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__unpause">bx ic unpause CONTAINER [CONTAINER]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__wait">bx ic wait CONTAINER [CONTAINER]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__wait-status">bx ic wait-status CONTAINER</a><br>
+</div>
+</div>
+
+<div class="p">Routes<div class="lines"><a href="container_cli_reference_cfic.html#container_cli_reference_cfic__route_map">bx ic route-map [-d DOMAIN] [-n HOST] GROUP</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__route_unmap">bx ic route-unmap [-d DOMAIN] [-n HOST] GROUP</a><br>
+</div>
+</div>
+
+<div class="p">Service
+binding<div class="lines"><a href="container_cli_reference_cfic.html#container_cli_reference_cfic__service-bind">bx ic service-bind GROUP SERVICE_INSTANCE</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__service-unbind">bx ic service-unbind GROUP SERVICE_INSTANCE</a><br>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="tablenoborder"><table summary="bx ic single container command quick reference" id="container_cli_reference_cfic_quick__quick_single" class="defaultstyle"><caption><span class="tablecap">Table 2. <span class="ph"><samp class="ph codeph">bx ic</samp></span> single container command quick
+reference</span></caption><thead><tr><th id="d48549e256" class="thleft">Single containers</th>
+</tr>
+</thead>
+<tbody><tr><td headers="d48549e256 "><div class="p">Processes<div class="lines"><a href="container_cli_reference_cfic.html#container_cli_reference_cfic__attach">bx ic attach [--no-stdin] [--sig-proxy] CONTAINER</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__exec">bx ic exec [-d] [-it] [-u USER] CONTAINER CMD</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__kill">bx ic kill [-s CMD] CONTAINER [CONTAINER]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__rename">bx ic rename OLD_NAME NEW_NAME</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__rm">bx ic rm [-f] CONTAINER [CONTAINER]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__run">bx ic run [-p PORT] [-P] [-d] [-e ENV] [--env-file ENVFILE] [-it] [--link NAME:ALIAS] [-m MEMORY] --name NAME [--volume VOLUME:/DIRECTORY_PATH] IMAGE [CMD [CMD ...]]</a><br>
+</div>
+</div>
+
+<div class="p">Information
+gathering<div class="lines"><a href="container_cli_reference_cfic.html#container_cli_reference_cfic__attach">bx ic attach [--no-stdin] [--sig-proxy] CONTAINER</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__inspect">bx ic inspect [IMAGE | images | CONTAINER]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__logs">bx ic logs [-f | --since TIMESTAMP | --tail STRING | -t] CONTAINER</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__port">bx ic port CONTAINER [PRIVATE_PORT[/PROTOCOL]]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__ps">bx ic ps [-a] [--filter env=SEARCH_CRITERIA] [-l NUM] [-q] [-s]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__stats">bx ic stats --no-stream CONTAINER [CONTAINER]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__top">bx ic top CONTAINER [CONTAINER] [ps options]</a><br>
+</div>
+</div>
+
+<div class="p">IP
+addresses<div class="lines"><a href="container_cli_reference_cfic.html#container_cli_reference_cfic__ip_bind">bx ic ip-bind ADDRESS CONTAINER</a><br>
+<br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__ip_release">bx ic ip-release ADDRESS</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__ip_request">bx ic ip-request [-q]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__ip_unbind">bx ic ip-unbind ADDRESS CONTAINER</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__ips">bx ic ips [-q]</a><br>
+</div>
+</div>
+
+<div class="p">Status
+changes<div class="lines"><a href="container_cli_reference_cfic.html#container_cli_reference_cfic__pause">bx ic pause CONTAINER [CONTAINER]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__restart">bx ic restart CONTAINER [CONTAINER] [-t SECS]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__start">bx ic start CONTAINER [CONTAINER]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__stop">bx ic stop CONTAINER [CONTAINER] [-t SECS]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__unpause">bx ic unpause CONTAINER [CONTAINER]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__wait">bx ic wait CONTAINER [CONTAINER]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__wait-status">bx ic wait-status CONTAINER</a><br>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="tablenoborder"><table summary="bx ic image command quick reference" id="container_cli_reference_cfic_quick__quick_image" class="defaultstyle"><caption><span class="tablecap">Table 3. <span class="ph"><samp class="ph codeph">bx ic</samp></span> image command quick
+reference</span></caption><thead><tr><th id="d48549e395" class="thleft">Images</th>
+</tr>
+</thead>
+<tbody><tr><td headers="d48549e395 "><div class="lines"><a href="container_cli_reference_cfic.html#container_cli_reference_cfic__build">bx ic build -t TAG [--no-cache] [--pull] [-q] DOCKERFILE_LOCATION</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__cp">bx ic cp SRC_PATH CONTAINER:DEST_PATH | bx ic cp CONTAINER:SRC_PATH DEST_PATH</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__cpi">bx ic cpi SRC DST</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__images">bx ic images [-a] [-f CONDITION] [--no-trunc] [q]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__inspect">bx ic inspect [IMAGE | images | CONTAINER]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__namespace">bx ic namespace-[get | set] NAME</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__rmi">bx ic rmi [-R REGISTRY] IMAGE [IMAGE]</a><br>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="tablenoborder"><table summary="bx ic storage command quick reference" id="container_cli_reference_cfic_quick__quick_storage" class="defaultstyle"><caption><span class="tablecap">Table 4. <span class="ph"><samp class="ph codeph">bx ic</samp></span> storage command quick
+reference</span></caption><thead><tr><th id="d48549e447" class="thleft">Data storage</th>
+</tr>
+</thead>
+<tbody><tr><td headers="d48549e447 "><div class="p">File
+shares<div class="lines"><a href="container_cli_reference_cfic.html#container_cli_reference_cfic__volume_fslist">bx ic volume-fs</a><a href="container_cli_reference_cfic.html#container_cli_reference_cfic__volume_fscreate">bx ic volume-fs-create FSNAME FSSIZE FSIOPS</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__volume_fsflavorlist">bx ic volume-fs-flavors</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__volume_fsinspect">bx ic volume-fs-inspect FSNAME</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__volume_fsrm">bx ic volume-fs-remove FSNAME</a><br>
+</div>
+</div>
+
+<p>Volumes</p>
+
+<div class="lines"><a href="container_cli_reference_cfic.html#container_cli_reference_cfic__volume_create">bx ic volume-create VOLNAME [FSNAME]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__volume_inspect">bx ic volume-inspect VOLNAME</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__volume_rm">bx ic volume-remove VOLNAME</a><br>
+<br>
+<br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__volume_list">bx ic volumes [--table]</a><br>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+<div class="tablenoborder"><table summary="bx ic CLI and service management command quick reference" id="container_cli_reference_cfic_quick__quick_cli_service" class="defaultstyle"><caption><span class="tablecap">Table 5. <span class="ph"><samp class="ph codeph">bx ic</samp></span> CLI and service management command
+quick reference</span></caption><thead><tr><th id="d48549e512" class="thleft">CLI and service management</th>
+</tr>
+</thead>
+<tbody><tr><td headers="d48549e512 "><div class="lines"><a href="container_cli_reference_cfic.html#container_cli_reference_cfic__info">bx ic info [--json]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__init">bx ic init</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__reprovision">bx ic reprovision [-f] [AVAILABILITY_ZONE]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__unprovision">bx ic unprovision [-f]</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__upgrade">bx ic update</a><br>
+<a href="container_cli_reference_cfic.html#container_cli_reference_cfic__version">bx ic version</a><br>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<aside role="complementary" aria-labelledby="d48549e2"></aside></article></main></body></html>
