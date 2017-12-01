@@ -134,7 +134,7 @@ For reference information about these CLIs, see the documentation for those tool
 
 -   [`bx` commands](/docs/cli/reference/bluemix_cli/bx_cli.html)
 -   [`bx cs` commands](cs_cli_reference.html#cs_cli_reference)
--   [`kubectl` commands ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/user-guide/kubectl/v1.7/)
+-   [`kubectl` commands ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands)
 -   [`bx cr` commands](/docs/cli/plugins/registry/index.html)
 
 <br />
@@ -159,9 +159,7 @@ Before you can run `kubectl` commands, [install the required CLIs](#cs_cli_insta
 
   2.  Select an {{site.data.keyword.Bluemix_notm}} account. If you are assigned to multiple {{site.data.keyword.Bluemix_notm}} organizations, select the organization where the cluster was created. Clusters are specific to an organization, but are independent from an {{site.data.keyword.Bluemix_notm}} space. Therefore, you are not required to select a space.
 
-  3.  If you want to create or access Kubernetes clusters in a region other than the {{site.data.keyword.Bluemix_notm}} region that you selected earlier, [specify the {{site.data.keyword.containershort_notm}} region API endpoint](cs_regions.html#container_login_endpoints).
-
-      **Note**: If you want to create a cluster in US East, you must specify the US East container region API endpoint using the `bx cs init --host https://us-east.containers.bluemix.net` command.
+  3.  If you want to create or access Kubernetes clusters in a region other than the {{site.data.keyword.Bluemix_notm}} region that you selected earlier, run `bx cs region-set`.
 
   4.  List all of the clusters in the account to get the name of the cluster.
 
@@ -218,7 +216,7 @@ Before you can run `kubectl` commands, [install the required CLIs](#cs_cli_insta
       ```
       {: screen}
 
-Now, you can run `kubectl` commands to manage your clusters in {{site.data.keyword.Bluemix_notm}}. For a full list of commands, see the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/user-guide/kubectl/v1.7/).
+Now, you can run `kubectl` commands to manage your clusters in {{site.data.keyword.Bluemix_notm}}. For a full list of commands, see the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands).
 
 **Tip:** If you are using Windows and the Kubernetes CLI is not installed in the same directory as the {{site.data.keyword.Bluemix_notm}} CLI, you must change directories to the path where the Kubernetes CLI is installed to run `kubectl` commands successfully.
 
@@ -678,7 +676,7 @@ Use the following steps if you want to refresh your IAM token.
 1.  Generate a new IAM access token. Replace _&lt;iam_refresh_token&gt;_ with the IAM refresh token that you received when you authenticated with {{site.data.keyword.Bluemix_notm}}.
 
     ```
-    POST https://iam.ng.bluemix.net/oidc/token
+    POST POST https://iam.bluemix.net/identity/token
     ```
     {: codeblock}
 

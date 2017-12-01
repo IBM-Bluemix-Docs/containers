@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-11-28"
+lastupdated: "2017-11-29"
 
 ---
 
@@ -22,7 +22,7 @@ lastupdated: "2017-11-28"
 Refer to these commands to create and manage clusters.
 {:shortdesc}
 
-**Tip:** Looking for `bx cr` commands? See the [{{site.data.keyword.registryshort_notm}} CLI reference](/docs/cli/plugins/registry/index.html). Looking for `kubectl` commands? See the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/user-guide/kubectl/v1.5/).
+**Tip:** Looking for `bx cr` commands? See the [{{site.data.keyword.registryshort_notm}} CLI reference](/docs/cli/plugins/registry/index.html). Looking for `kubectl` commands? See the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands).
 
 
 <!--[https://github.ibm.com/alchemy-containers/armada-cli ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.ibm.com/alchemy-containers/armada-cli)-->
@@ -71,19 +71,24 @@ Refer to these commands to create and manage clusters.
     <td>[bx cs logging-config-rm](#cs_logging_rm)</td>
     <td>[bx cs logging-config-update](#cs_logging_update)</td>
     <td>[bx cs machine-types](#cs_machine_types)</td>
-    <td>[bx cs subnets](#cs_subnets)</td>
-    <td>[bx cs vlans](#cs_vlans)</td>
+    <td>[bx cs region](#cs_region)</td>
+    <td>[bx cs region-set](#cs_region-set)</td>
  </tr>
  <tr>
+    <td>[bx cs regions](#cs_regions)</td>
+    <td>[bx cs subnets](#cs_subnets)</td>
+    <td>[bx cs vlans](#cs_vlans)</td>
     <td>[bx cs webhook-create](#cs_webhook_create)</td>
     <td>[bx cs worker-add](#cs_worker_add)</td>
+ </tr>
+ <tr>
     <td>[bx cs worker-get](#cs_worker_get)</td>
     <td>[bx cs worker-rm](#cs_worker_rm)</td>
     <td>[bx cs worker-update](#cs_worker_update)</td>
- </tr>
- <tr>
     <td>[bx cs worker-reboot](#cs_worker_reboot)</td>
     <td>[bx cs worker-reload](#cs_worker_reload)</td>
+ </tr>
+ <tr>
     <td>[bx cs workers](#cs_workers)</td>
  </tr>
  </tbody>
@@ -103,7 +108,7 @@ bx plugin list
 ### bx cs albs --cluster CLUSTER
 {: #cs_albs}
 
-View the status of all application load balancers (ALBs) in a cluster. An ALB is also called an Ingress controller. If no ALB IDs are returned, then the cluster does not have a portable subnet. You can [create](#cs_cluster_subnet_create) or [add](#cs_cluster_subnet_add) subnets to a cluster.
+View the status of all application load balancers in a cluster. If no application load balancer IDs are returned, then the cluster does not have a portable subnet. You can [create](#cs_cluster_subnet_create) or [add](#cs_cluster_subnet_add) subnets to a cluster.
 
 <strong>Command options</strong>:
 
@@ -122,47 +127,47 @@ View the status of all application load balancers (ALBs) in a cluster. An ALB is
 ### bx cs alb-configure --albID ALB_ID [--enable][--disable][--user-ip USERIP]
 {: #cs_alb_configure}
 
-Enable or disable an application load balancer (ALB), also called the Ingress controller, in your standard cluster. The public application load balancer is enabled by default.
+Enable or disable an application load balancer in your standard cluster. The public application load balancer is enabled by default.
 
 **Command options**:
 
    <dl>
    <dt><code><em>--albID </em>ALB_ID</code></dt>
-   <dd>The ID for an alb. Run <code>bx cs albs <em>--cluster </em>CLUSTER</code> to view the IDs for the ALBs in a cluster. This value is required.</dd>
+   <dd>The ID for an application load balancer. Run <code>bx cs albs <em>--cluster </em>CLUSTER</code> to view the IDs for the application load balancers in a cluster. This value is required.</dd>
 
    <dt><code>--enable</code></dt>
-   <dd>Include this flag to enable an ALB in a cluster.</dd>
+   <dd>Include this flag to enable an application load balancer in a cluster.</dd>
 
    <dt><code>--disable</code></dt>
-   <dd>Include this flag to disable an ALB in a cluster.</dd>
+   <dd>Include this flag to disable an application load balancer in a cluster.</dd>
 
    <dt><code>--user-ip <em>USER_IP</em></code></dt>
    <dd>
 
    <ul>
-    <li>This parameter is available for a private alb only</li>
-    <li>The private ALB is deployed with an IP address from a user-provided private subnet. If no IP address is provided, the ALB is deployed with a random IP address from a private subnet in IBM Cloud infrastructure (SoftLayer).</li>
+    <li>This parameter is available for a private application load balancer only</li>
+    <li>The private application load balancer is deployed with an IP address from a user-provided private subnet. If no IP address is provided, the application load balancer is deployed with a private IP address from the portable private subnet that was provisioned automatically when you created the cluster.</li>
    </ul>
    </dd>
    </dl>
 
 **Examples**:
 
-  Example for enabling an ALB:
+  Example for enabling an application load balancer:
 
   ```
   bx cs alb-configure --albID my_alb_id --enable
   ```
   {: pre}
 
-  Example for disabling an ALB:
+  Example for disabling an application load balancer:
 
   ```
   bx cs alb-configure --albID my_alb_id --disable
   ```
   {: pre}
 
-  Example for enabling an ALB with a user-provided IP address:
+  Example for enabling an application load balancer with a user-provided IP address:
 
   ```
   bx cs alb-configure --albID my_private_alb_id --enable --user-ip user_ip
@@ -172,13 +177,13 @@ Enable or disable an application load balancer (ALB), also called the Ingress co
 ### bx cs alb-get --albID ALB_ID
 {: #cs_alb_get}
 
-View the details of an application load balancer (ALB).
+View the details of an application load balancer.
 
 <strong>Command options</strong>:
 
    <dl>
    <dt><code><em>--albID </em>ALB_ID</code></dt>
-   <dd>The ID for an ALB. Run <code>bx cs albs --cluster <em>CLUSTER</em></code> to view the IDs for the albs in a cluster. This value is required.</dd>
+   <dd>The ID for an application load balancer. Run <code>bx cs albs --cluster <em>CLUSTER</em></code> to view the IDs for the application load balancers in a cluster. This value is required.</dd>
    </dl>
 
 **Example**:
@@ -635,13 +640,13 @@ You might need to change your YAML files for future deployments. Review this [re
    <dl>
    <dt><code><em>CLUSTER</em></code></dt>
    <dd>The name or ID of the cluster. This value is required.</dd>
-   
+
    <dt><code>--kube-version <em>MAJOR.MINOR.PATCH</em></code></dt>
    <dd>The Kubernetes version of the cluster. If this flag is not specified, the Kubernetes master is update to the default API version. To see available versions, run [bx cs kube-versions](#cs_kube_versions). This value is optional.</dd>
 
    <dt><code>-f</code></dt>
    <dd>Use this option to force the update of the master with no user prompts. This value is optional.</dd>
-   
+
    <dt><code>--force-update</code></dt>
    <dd>Attempt the update even if the change is greater than two minor versions. This value is optional.</dd>
    </dl>
@@ -682,7 +687,7 @@ Set IBM Cloud infrastructure (SoftLayer) account credentials for your {{site.dat
    <dl>
    <dt><code>--infrastructure-username <em>USERNAME</em></code></dt>
    <dd>IBM Cloud infrastructure (SoftLayer) account username. This value is required.</dd>
-   
+
 
    <dt><code>--infrastructure-api-key <em>API_KEY</em></code></dt>
    <dd>IBM Cloud infrastructure (SoftLayer) account API key. This value is required.
@@ -832,7 +837,7 @@ View a list of available locations for you to create a cluster in.
 ### bx cs logging-config-create CLUSTER --logsource LOG_SOURCE [--namespace KUBERNETES_NAMESPACE] [--hostname LOG_SERVER_HOSTNAME] [--port LOG_SERVER_PORT] --type LOG_TYPE
 {: #cs_logging_create}
 
-Create a logging configuration. By default, namespace logs are forwarded to {{site.data.keyword.loganalysislong_notm}}. You can use this command to forward namespace logs to an external syslog server. You can also use this command to forward logs for applications, worker nodes, Kubernetes clusters, and Ingress controllers to {{site.data.keyword.loganalysisshort_notm}} or to an external syslog server.
+Create a logging configuration. By default, namespace logs are forwarded to {{site.data.keyword.loganalysislong_notm}}. You can use this command to forward namespace logs to an external syslog server. You can also use this command to forward logs for applications, worker nodes, Kubernetes clusters, and Ingress application load balancers to {{site.data.keyword.loganalysisshort_notm}} or to an external syslog server.
 
 <strong>Command options</strong>:
 
@@ -951,8 +956,8 @@ Update log forwarding to the logging server you want use. For a Docker container
 ### bx cs machine-types LOCATION
 {: #cs_machine_types}
 
-View a list of available machine types for your worker nodes. Each machine type includes the amount of virtual CPU, memory, and disk space for each worker node in the cluster. 
-- Machine types with `u2c` or `b2c` in the name use local disk instead of storage area networing (SAN) for reliability. Reliability benefits include higher throughput when serializing bytes to the local disk and reduced file system degradation due to network failures. These machine types contain 25GB local disk storage for the OS file system and 100GB local disk storage for `/var/lib/docker`, the directory that all the container data is written to. 
+View a list of available machine types for your worker nodes. Each machine type includes the amount of virtual CPU, memory, and disk space for each worker node in the cluster.
+- Machine types with `u2c` or `b2c` in the name use local disk instead of storage area networing (SAN) for reliability. Reliability benefits include higher throughput when serializing bytes to the local disk and reduced file system degradation due to network failures. These machine types contain 25GB local disk storage for the OS file system and 100GB local disk storage for `/var/lib/docker`, the directory that all the container data is written to.
 - Machine types that include `encrypted` in the name encrypt the host's docker data. The `/var/lib/docker` directory, where all container data is stored, is encrypted with LUKS encryption.
 - Machine types with `u1c` or `b1c` in the name are deprecated, such as `u1c.2x4`. To start using `u2c` and `b2c` machine types, use the `bx cs worker-add` command to add  worker nodes with the updated machine type. Then, remove the worker nodes that are using the deprecated machine types by using the `bx cs worker-rm` command.
 </p>
@@ -971,6 +976,83 @@ View a list of available machine types for your worker nodes. Each machine type 
   ```
   {: pre}
 
+### bx cs region
+{: #cs_region}
+
+Find the {{site.data.keyword.containershort_notm}} region that you are currently in. You create and manage clusters specific to the region. Use the `bx cs region-set` command to change regions.
+
+**Example**:
+
+```
+bx cs region
+```
+{: pre}
+
+**Output**:
+```
+Region: us-south
+```
+{: screen}
+
+### bx cs region-set [REGION]
+{: #cs_region-set}
+
+Set the region for {{site.data.keyword.containershort_notm}}. You create and manage clusters specific to the region, and you might want clusters in multiple regions for high availability.
+
+For example, you can log in to {{site.data.keyword.Bluemix_notm}} in the US South region and create a cluster. Next, you can use `bx cs region-set eu-central` to target the EU Central region and create another cluster. Finally, you can use `bx cs region-set us-south` to return to US South to manage your cluster in that region.
+
+**Command options**:
+
+<dl>
+<dt><code><em>REGION</em></code></dt>
+<dd>Enter the region that you want to target. This value is optional. If you do not provide the region, you can select it from the list in the output.
+
+For a list of available regions, review [regions and locations](cs_regions.html) or use the `bx cs regions` [command](#cs_regions).</dd></dl>
+
+**Example**:
+
+```
+bx cs region-set [REGION]
+```
+{: pre}
+
+**Output**:
+```
+Choose a region:
+1. ap-north
+2. ap-south
+3. eu-central
+4. uk-south
+5. us-east
+6. us-south
+Enter a number> 3
+OK
+```
+{: screen}
+
+### bx cs regions
+{: #cs_regions}
+
+Lists the available regions. The `Region Name` is the {{site.data.keyword.containershort_notm}} name, and the `Region Alias` is the general {{site.data.keyword.Bluemix_notm}} name for the region.
+
+**Example**:
+
+```
+bx cs regions
+```
+{: pre}
+
+**Output**:
+```
+Region Name   Region Alias
+ap-north      jp-tok
+ap-south      au-syd
+eu-central    eu-de
+uk-south      eu-gb
+us-east       us-east
+us-south      us-south
+```
+{: screen}
 
 ### bx cs subnets
 {: #cs_subnets}
@@ -1246,13 +1328,13 @@ You might need to change your YAML files for deployments before updating. Review
 
    <dt><em>CLUSTER</em></dt>
    <dd>The name or ID of the cluster where you list available worker nodes. This value is required.</dd>
-   
+
    <dt><code>--kube-version <em>MAJOR.MINOR.PATCH</em></code></dt>
    <dd>The Kubernetes version of the cluster. If this flag is not specified, the worker node is update to the default version. To see available versions, run [bx cs kube-versions](#cs_kube_versions). This value is optional.</dd>
 
    <dt><code>-f</code></dt>
    <dd>Use this option to force the update of the master with no user prompts. This value is optional.</dd>
-   
+
    <dt><code>--force-update</code></dt>
    <dd>Attempt the update even if the change is greater than two minor versions. This value is optional.</dd>
 
