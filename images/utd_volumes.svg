@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   x="0px"
+   y="0px"
+   viewBox="0 0 569.64802 246.85447"
+   xml:space="preserve"
+   id="svg2"
+   inkscape:version="0.48.4 r9939"
+   width="100%"
+   height="100%"
+   sodipodi:docname="utd_volumes.svg"><title
+   id="title3028">Volume structure</title><metadata
+   id="metadata51"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title>Volume structure</dc:title><dc:description>This diagram shows how volumes are structured in an organization. Files are contained in a volume. One or more volumes are contained in a file share. One or more file shares are contained in an organization.</dc:description></cc:Work></rdf:RDF></metadata><defs
+   id="defs49" /><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="1680"
+   inkscape:window-height="1023"
+   id="namedview47"
+   showgrid="false"
+   inkscape:zoom="1.1477626"
+   inkscape:cx="339.04032"
+   inkscape:cy="123.59734"
+   inkscape:window-x="-9"
+   inkscape:window-y="-9"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="layer2"
+   fit-margin-top="0"
+   fit-margin-left="0"
+   fit-margin-right="0"
+   fit-margin-bottom="0"
+   inkscape:snap-global="false"><inkscape:grid
+     type="xygrid"
+     id="grid3372"
+     empspacing="5"
+     visible="true"
+     enabled="true"
+     snapvisiblegridlinesonly="true"
+     originx="-15.79246px"
+     originy="-17.165693px" /></sodipodi:namedview>
+<style
+   type="text/css"
+   id="style4">
+	.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;stroke:#FFFFFF;stroke-width:1.0001;stroke-miterlimit:22.9256;}
+	
+		.st1{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;stroke:#0097D6;stroke-width:2.126;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:22.9256;}
+	.st2{fill-rule:evenodd;clip-rule:evenodd;fill:#0097D6;stroke:#0097D6;stroke-width:1.0001;stroke-miterlimit:22.9256;}
+	.st3{fill-rule:evenodd;clip-rule:evenodd;fill:#4AC7E9;stroke:#4AC7E9;stroke-width:1.0001;stroke-miterlimit:22.9256;}
+	.st4{fill-rule:evenodd;clip-rule:evenodd;fill:#8ED8F8;stroke:#8ED8F8;stroke-width:1.0001;stroke-miterlimit:22.9256;}
+	.st5{fill-rule:evenodd;clip-rule:evenodd;fill:#A7A9AC;stroke:#A7A9AC;stroke-width:1.0001;stroke-miterlimit:22.9256;}
+	.st6{fill-rule:evenodd;clip-rule:evenodd;fill:#D1D3D4;stroke:#D1D3D4;stroke-width:1.0001;stroke-miterlimit:22.9256;}
+	.st7{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;stroke:#8ED8F8;stroke-width:1.0001;stroke-miterlimit:22.9256;}
+	.st8{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;}
+	.st9{font-family:'HelvNeueBoldforIBM';}
+	.st10{font-size:13.9997px;}
+	.st11{font-family:'HelvNeueMediumforIBM';}
+	.st12{font-size:11.9996px;}
+	.st13{font-size:11.9999px;}
+</style>
+
+<g
+   inkscape:groupmode="layer"
+   id="layer1"
+   inkscape:label="Graphics"
+   style="display:inline"
+   transform="translate(259.17061,14.157134)"><rect
+     x="-256.96103"
+     y="-11.947558"
+     class="st1"
+     width="565.22888"
+     height="242.43532"
+     id="rect10-4-6"
+     style="fill:#ffffff;fill-rule:evenodd;stroke:#0097d6;stroke-width:4.41915989;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:22.92560005;display:inline"><title
+       id="title3217-8-8">Organization</title></rect><g
+     id="Base_Area"><rect
+       x="0.5"
+       y="0.5"
+       class="st0"
+       width="211.2"
+       height="217.2"
+       id="rect7"
+       style="fill:#ffffff;fill-rule:evenodd;stroke:#ffffff;stroke-width:1.00010002;stroke-miterlimit:22.92560005" /></g><rect
+     x="115.8"
+     y="153.2"
+     class="st8"
+     width="4.9000001"
+     height="11.7"
+     id="rect30"
+     style="fill:#ffffff;fill-rule:evenodd" /><g
+     transform="translate(-191.1,1.1000031)"
+     id="Artwork-4" /><g
+     transform="translate(-191.1,1.1000031)"
+     style="display:inline"
+     id="Base_Area-0"><rect
+       x="0.5"
+       y="0.5"
+       class="st0"
+       width="211.2"
+       height="217.2"
+       id="rect7-9"
+       style="fill:#ffffff;fill-rule:evenodd;stroke:#ffffff;stroke-width:1.00010002;stroke-miterlimit:22.92560005" /></g><rect
+     x="-75.29998"
+     y="154.3"
+     class="st8"
+     width="4.9000001"
+     height="11.7"
+     id="rect30-1"
+     style="fill:#ffffff;fill-rule:evenodd;display:inline" /><g
+     id="g3269"
+     transform="translate(-11.650216,1.6331689)"><rect
+   style="fill:#ffffff;fill-rule:evenodd;stroke:#0097d6;stroke-width:2.12599993;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:22.92560005;display:inline"
+   id="rect10-5"
+   height="187"
+   width="169.60001"
+   class="st1"
+   y="14.800055"
+   x="-47.900047"><title
+     id="title3217-7">Organization</title></rect><path
+   style="fill:#0097d6;fill-rule:evenodd;stroke:#0097d6;stroke-width:1.00010002;stroke-miterlimit:22.92560005;display:inline"
+   inkscape:connector-curvature="0"
+   id="path12-6"
+   d="M -24.500049,56.400055 H 78.499954 c 5.300001,0 9.700001,6.1 9.700001,13.5 v 79.999995 c 0,7.4 -4.3,13.5 -9.700001,13.5 H -24.500049 c -5.3,0 -9.7,-6.1 -9.7,-13.5 V 69.900055 c 0,-7.4 4.4,-13.5 9.7,-13.5 z"
+   class="st2" /><path
+   style="fill:#4ac7e9;fill-rule:evenodd;stroke:#4ac7e9;stroke-width:1.00010002;stroke-miterlimit:22.92560005;display:inline"
+   inkscape:connector-curvature="0"
+   id="path14-1"
+   d="M -15.400049,69.700055 H 87.599955 c 5.3,0 9.7,6.1 9.7,13.500001 v 79.999994 c 0,7.4 -4.3,13.5 -9.7,13.5 H -15.400049 c -5.3,0 -9.7,-6.1 -9.7,-13.5 V 83.200056 c 0,-7.400001 4.3,-13.500001 9.7,-13.500001 z"
+   class="st3" /><path
+   style="fill:#8ed8f8;fill-rule:evenodd;stroke:#8ed8f8;stroke-width:1.00010002;stroke-miterlimit:22.92560005;display:inline"
+   id="path16-8"
+   d="M -6.4000488,82.100056 H 96.599955 c 5.300005,0 9.700005,6.1 9.700005,13.5 v 79.999994 c 0,7.4 -4.3,13.5 -9.700005,13.5 H -6.4000488 c -5.3000002,0 -9.7000002,-6.1 -9.7000002,-13.5 V 95.600056 c 0.1,-7.4 4.4,-13.5 9.7000002,-13.5 z"
+   class="st4"
+   inkscape:connector-curvature="0"><title
+     id="title3219-9">File share</title></path><path
+   style="fill:#a7a9ac;fill-rule:evenodd;stroke:#a7a9ac;stroke-width:1.00010002;stroke-miterlimit:22.92560005;display:inline"
+   inkscape:connector-curvature="0"
+   id="path18-2"
+   d="M 3.0999512,110.60005 H 79.599954 c 3.2,0 5.800001,2.6 5.800001,5.8 v 52.4 c 0,3.2 -2.600001,5.8 -5.800001,5.8 H 3.0999512 c -3.20000004,0 -5.8,-2.6 -5.8,-5.8 v -52.3 c 0,-3.2 2.59999996,-5.9 5.8,-5.9 z"
+   class="st5" /><path
+   style="fill:#d1d3d4;fill-rule:evenodd;stroke:#d1d3d4;stroke-width:1.00010002;stroke-miterlimit:22.92560005;display:inline"
+   id="path20-7"
+   d="m 10.099951,119.60005 h 77.200004 c 3,0 5.5,2.5 5.5,5.5 v 49.2 c 0,3 -2.5,5.5 -5.5,5.5 H 10.099951 c -2.9999998,0 -5.4999998,-2.5 -5.4999998,-5.5 v -49.2 c 0,-3 2.5,-5.5 5.4999998,-5.5 z"
+   class="st6"
+   inkscape:connector-curvature="0"><title
+     id="title3221-9">Volume</title></path><g
+   id="g3223-5"
+   style="display:inline"
+   transform="translate(-69.300049,-0.19994834)"><title
+     id="title3229-4">Files</title><path
+     inkscape:connector-curvature="0"
+     class="st7"
+     d="m 84.800001,147.3 h 12.3 c 1.2,0 2.3,1 2.3,2.3 v 19.5 c 0,1.2 -1,2.3 -2.3,2.3 h -12.3 c -1.2,0 -2.3,-1 -2.3,-2.3 v -19.5 c 0,-1.2 1.1,-2.3 2.3,-2.3 z"
+     id="path22-3"
+     style="fill:#ffffff;fill-rule:evenodd;stroke:#8ed8f8;stroke-width:1.00010002;stroke-miterlimit:22.92560005" /><path
+     inkscape:connector-curvature="0"
+     class="st7"
+     d="m 102.9,147.3 h 12.3 c 1.2,0 2.3,1 2.3,2.3 v 19.5 c 0,1.2 -1,2.3 -2.3,2.3 h -12.3 c -1.2,0 -2.3,-1 -2.3,-2.3 v -19.5 c 0.1,-1.2 1.1,-2.3 2.3,-2.3 z"
+     id="path24-1"
+     style="fill:#ffffff;fill-rule:evenodd;stroke:#8ed8f8;stroke-width:1.00010002;stroke-miterlimit:22.92560005" /><path
+     inkscape:connector-curvature="0"
+     class="st7"
+     d="m 121.1,147.3 h 12.3 c 1.2,0 2.3,1 2.3,2.3 v 19.5 c 0,1.2 -1,2.3 -2.3,2.3 h -12.3 c -1.2,0 -2.3,-1 -2.3,-2.3 v -19.5 c 0,-1.2 1,-2.3 2.3,-2.3 z"
+     id="path26-2"
+     style="fill:#ffffff;fill-rule:evenodd;stroke:#8ed8f8;stroke-width:1.00010002;stroke-miterlimit:22.92560005" /><path
+     inkscape:connector-curvature="0"
+     class="st7"
+     d="m 139.2,147.3 h 12.3 c 1.2,0 2.3,1 2.3,2.3 v 19.5 c 0,1.2 -1,2.3 -2.3,2.3 h -12.3 c -1.2,0 -2.3,-1 -2.3,-2.3 v -19.5 c 0.1,-1.2 1.1,-2.3 2.3,-2.3 z"
+     id="path28-3"
+     style="fill:#ffffff;fill-rule:evenodd;stroke:#8ed8f8;stroke-width:1.00010002;stroke-miterlimit:22.92560005" /></g><text
+   sodipodi:linespacing="125%"
+   style="font-size:12.66639996px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;display:inline;font-family:Helvetica Neue for IBM;-inkscape-font-specification:Helvetica Neue for IBM"
+   id="text33-3"
+   class="st9 st10"
+   x="-33.312843"
+   y="38.229855"><tspan
+     style="-inkscape-font-specification:HelvNeue Roman for IBM;font-family:HelvNeue Roman for IBM"
+     id="tspan3078">Space</tspan></text>
+
+<text
+   sodipodi:linespacing="125%"
+   style="font-size:12.66639996px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;display:inline;font-family:Helvetica Neue for IBM;-inkscape-font-specification:Helvetica Neue for IBM"
+   y="99.008659"
+   x="20.055857"
+   id="text39-4"
+   class="st11 st12"><tspan
+     style="-inkscape-font-specification:HelvNeue Roman for IBM;font-family:HelvNeue Roman for IBM"
+     id="tspan3080">File share</tspan></text>
+
+<text
+   sodipodi:linespacing="125%"
+   style="font-size:12.66639996px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;display:inline;font-family:Helvetica Neue for IBM;-inkscape-font-specification:Helvetica Neue for IBM"
+   y="135.86417"
+   x="29.25116"
+   id="text43-1"
+   class="st11 st13"><tspan
+     style="-inkscape-font-specification:HelvNeue Roman for IBM;font-family:HelvNeue Roman for IBM"
+     id="tspan3082">Volume</tspan></text>
+
+<g
+   id="Text-1"
+   transform="translate(-69.300039,-0.19995034)"
+   style="display:inline"><text
+   style="font-size:11.99989986px;font-family:HelvNeueMediumforIBM"
+   id="text45-3"
+   class="st11 st13"
+   transform="translate(106.3197,163.4332)"><tspan
+     id="tspan3009-8"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:HelvNeue Roman for IBM;-inkscape-font-specification:HelvNeue Roman for IBM">Files</tspan></text>
+
+</g></g></g><g
+   id="Artwork"
+   transform="translate(259.17061,14.157134)">
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</g><g
+   inkscape:groupmode="layer"
+   id="layer2"
+   inkscape:label="Text"
+   style="display:inline"
+   transform="translate(259.17061,14.157134)">
+
+
+
+
+
+<g
+   id="g3345"
+   transform="translate(-26.950249,4.4332215)"><rect
+   style="fill:#ffffff;fill-rule:evenodd;stroke:#0097d6;stroke-width:2.12599993;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:22.92560005;display:inline"
+   id="rect10"
+   height="187"
+   width="169.60001"
+   class="st1"
+   y="12"
+   x="147.40001"
+   transform="translate(-4.9515592e-6,0)"><title
+     id="title3217">Organization</title></rect><path
+   style="fill:#0097d6;fill-rule:evenodd;stroke:#0097d6;stroke-width:1.00010002;stroke-miterlimit:22.92560005;display:inline"
+   inkscape:connector-curvature="0"
+   id="path12"
+   d="m 170.8,53.600001 h 103 c 5.3,0 9.7,6.1 9.7,13.5 V 147.1 c 0,7.4 -4.3,13.5 -9.7,13.5 h -103 c -5.3,0 -9.7,-6.1 -9.7,-13.5 V 67.100001 c 0,-7.4 4.4,-13.5 9.7,-13.5 z"
+   class="st2"
+   transform="translate(-4.9515592e-6,0)" /><path
+   style="fill:#4ac7e9;fill-rule:evenodd;stroke:#4ac7e9;stroke-width:1.00010002;stroke-miterlimit:22.92560005;display:inline"
+   inkscape:connector-curvature="0"
+   id="path14"
+   d="m 179.9,66.900001 h 103 c 5.3,0 9.7,6.1 9.7,13.5 V 160.4 c 0,7.4 -4.3,13.5 -9.7,13.5 h -103 c -5.3,0 -9.7,-6.1 -9.7,-13.5 V 80.400001 c 0,-7.4 4.3,-13.5 9.7,-13.5 z"
+   class="st3"
+   transform="translate(-4.9515592e-6,0)" /><path
+   style="fill:#8ed8f8;fill-rule:evenodd;stroke:#8ed8f8;stroke-width:1.00010002;stroke-miterlimit:22.92560005;display:inline"
+   id="path16"
+   d="m 188.9,79.300001 h 103 c 5.3,0 9.7,6.1 9.7,13.5 V 172.8 c 0,7.4 -4.3,13.5 -9.7,13.5 h -103 c -5.3,0 -9.7,-6.1 -9.7,-13.5 V 92.800001 c 0.1,-7.4 4.4,-13.5 9.7,-13.5 z"
+   class="st4"
+   inkscape:connector-curvature="0"
+   transform="translate(-4.9515592e-6,0)"><title
+     id="title3219">File share</title></path><path
+   style="fill:#a7a9ac;fill-rule:evenodd;stroke:#a7a9ac;stroke-width:1.00010002;stroke-miterlimit:22.92560005;display:inline"
+   inkscape:connector-curvature="0"
+   id="path18"
+   d="m 198.4,107.8 h 76.5 c 3.2,0 5.8,2.6 5.8,5.8 V 166 c 0,3.2 -2.6,5.8 -5.8,5.8 h -76.5 c -3.2,0 -5.8,-2.6 -5.8,-5.8 v -52.3 c 0,-3.2 2.6,-5.9 5.8,-5.9 z"
+   class="st5"
+   transform="translate(-4.9515592e-6,0)" /><path
+   style="fill:#d1d3d4;fill-rule:evenodd;stroke:#d1d3d4;stroke-width:1.00010002;stroke-miterlimit:22.92560005;display:inline"
+   id="path20"
+   d="m 205.4,116.8 h 77.2 c 3,0 5.5,2.5 5.5,5.5 v 49.2 c 0,3 -2.5,5.5 -5.5,5.5 h -77.2 c -3,0 -5.5,-2.5 -5.5,-5.5 v -49.2 c 0,-3 2.5,-5.5 5.5,-5.5 z"
+   class="st6"
+   inkscape:connector-curvature="0"
+   transform="translate(-4.9515592e-6,0)"><title
+     id="title3221">Volume</title></path><g
+   transform="translate(126,-3.0000001)"
+   id="g3223"
+   style="display:inline"><title
+     id="title3229">Files</title><path
+     inkscape:connector-curvature="0"
+     class="st7"
+     d="m 84.800001,147.3 h 12.3 c 1.2,0 2.3,1 2.3,2.3 v 19.5 c 0,1.2 -1,2.3 -2.3,2.3 h -12.3 c -1.2,0 -2.3,-1 -2.3,-2.3 v -19.5 c 0,-1.2 1.1,-2.3 2.3,-2.3 z"
+     id="path22"
+     style="fill:#ffffff;fill-rule:evenodd;stroke:#8ed8f8;stroke-width:1.00010002;stroke-miterlimit:22.92560005" /><path
+     inkscape:connector-curvature="0"
+     class="st7"
+     d="m 102.9,147.3 h 12.3 c 1.2,0 2.3,1 2.3,2.3 v 19.5 c 0,1.2 -1,2.3 -2.3,2.3 h -12.3 c -1.2,0 -2.3,-1 -2.3,-2.3 v -19.5 c 0.1,-1.2 1.1,-2.3 2.3,-2.3 z"
+     id="path24"
+     style="fill:#ffffff;fill-rule:evenodd;stroke:#8ed8f8;stroke-width:1.00010002;stroke-miterlimit:22.92560005" /><path
+     inkscape:connector-curvature="0"
+     class="st7"
+     d="m 121.1,147.3 h 12.3 c 1.2,0 2.3,1 2.3,2.3 v 19.5 c 0,1.2 -1,2.3 -2.3,2.3 h -12.3 c -1.2,0 -2.3,-1 -2.3,-2.3 v -19.5 c 0,-1.2 1,-2.3 2.3,-2.3 z"
+     id="path26"
+     style="fill:#ffffff;fill-rule:evenodd;stroke:#8ed8f8;stroke-width:1.00010002;stroke-miterlimit:22.92560005" /><path
+     inkscape:connector-curvature="0"
+     class="st7"
+     d="m 139.2,147.3 h 12.3 c 1.2,0 2.3,1 2.3,2.3 v 19.5 c 0,1.2 -1,2.3 -2.3,2.3 h -12.3 c -1.2,0 -2.3,-1 -2.3,-2.3 v -19.5 c 0.1,-1.2 1.1,-2.3 2.3,-2.3 z"
+     id="path28"
+     style="fill:#ffffff;fill-rule:evenodd;stroke:#8ed8f8;stroke-width:1.00010002;stroke-miterlimit:22.92560005" /></g><text
+   sodipodi:linespacing="125%"
+   style="font-size:12.66639996px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#000000;font-family:Helvetica Neue for IBM;-inkscape-font-specification:Helvetica Neue for IBM"
+   id="text33"
+   class="st9 st10"
+   x="161.9872"
+   y="35.429802"><tspan
+     style="-inkscape-font-specification:HelvNeue Roman for IBM;font-family:HelvNeue Roman for IBM"
+     id="tspan3084">Space</tspan></text>
+
+<text
+   sodipodi:linespacing="125%"
+   style="font-size:12.66639996px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Helvetica Neue for IBM;-inkscape-font-specification:Helvetica Neue for IBM"
+   y="96.208595"
+   x="215.35591"
+   id="text39"
+   class="st11 st12"><tspan
+     style="-inkscape-font-specification:HelvNeue Roman for IBM;font-family:HelvNeue Roman for IBM"
+     id="tspan3086">File share</tspan></text>
+
+<text
+   sodipodi:linespacing="125%"
+   style="font-size:12.66639996px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Helvetica Neue for IBM;-inkscape-font-specification:Helvetica Neue for IBM"
+   y="133.0641"
+   x="224.55121"
+   id="text43"
+   class="st11 st13"><tspan
+     style="-inkscape-font-specification:HelvNeue Roman for IBM;font-family:HelvNeue Roman for IBM"
+     id="tspan3088">Volume</tspan></text>
+
+<g
+   id="Text"
+   transform="translate(126.00001,-3.0000021)"><text
+   style="font-size:11.99989986px;font-family:HelvNeueMediumforIBM"
+   id="text45"
+   class="st11 st13"
+   transform="translate(106.3197,163.4332)"><tspan
+     id="tspan3009"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:HelvNeue Roman for IBM;-inkscape-font-specification:HelvNeue Roman for IBM">Files</tspan></text>
+
+
+
+</g></g><g
+   id="g3307"
+   transform="translate(-23.85029,0.33321926)"><rect
+   style="fill:#ffffff;fill-rule:evenodd;stroke:#0097d6;stroke-width:2.12599993;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:22.92560005;display:inline"
+   id="rect10-4"
+   height="187"
+   width="169.60001"
+   class="st1"
+   y="16.100004"
+   x="-215.7"
+   transform="translate(-4.9515592e-6,0)"><title
+     id="title3217-8">Organization</title></rect><path
+   style="fill:#0097d6;fill-rule:evenodd;stroke:#0097d6;stroke-width:1.00010002;stroke-miterlimit:22.92560005;display:inline"
+   inkscape:connector-curvature="0"
+   id="path12-8"
+   d="m -192.3,57.700005 h 102.999997 c 5.3,0 9.7,6.1 9.7,13.5 V 151.2 c 0,7.4 -4.3,13.5 -9.7,13.5 H -192.3 c -5.3,0 -9.7,-6.1 -9.7,-13.5 V 71.200005 c 0,-7.4 4.4,-13.5 9.7,-13.5 z"
+   class="st2"
+   transform="translate(-4.9515592e-6,0)" /><path
+   style="fill:#4ac7e9;fill-rule:evenodd;stroke:#4ac7e9;stroke-width:1.00010002;stroke-miterlimit:22.92560005;display:inline"
+   inkscape:connector-curvature="0"
+   id="path14-2"
+   d="m -183.2,71.000005 h 102.999997 c 5.3,0 9.7,6.1 9.7,13.5 V 164.5 c 0,7.4 -4.3,13.5 -9.7,13.5 H -183.2 c -5.3,0 -9.7,-6.1 -9.7,-13.5 V 84.500005 c 0,-7.4 4.3,-13.5 9.7,-13.5 z"
+   class="st3"
+   transform="translate(-4.9515592e-6,0)" /><path
+   style="fill:#8ed8f8;fill-rule:evenodd;stroke:#8ed8f8;stroke-width:1.00010002;stroke-miterlimit:22.92560005;display:inline"
+   id="path16-4"
+   d="m -174.2,83.400005 h 102.999997 c 5.3,0 9.7,6.1 9.7,13.5 V 176.9 c 0,7.4 -4.3,13.5 -9.7,13.5 H -174.2 c -5.3,0 -9.7,-6.1 -9.7,-13.5 V 96.900005 c 0.1,-7.4 4.4,-13.5 9.7,-13.5 z"
+   class="st4"
+   inkscape:connector-curvature="0"
+   transform="translate(-4.9515592e-6,0)"><title
+     id="title3219-5">File share</title></path><path
+   style="fill:#a7a9ac;fill-rule:evenodd;stroke:#a7a9ac;stroke-width:1.00010002;stroke-miterlimit:22.92560005;display:inline"
+   inkscape:connector-curvature="0"
+   id="path18-5"
+   d="m -164.7,111.9 h 76.499997 c 3.2,0 5.8,2.6 5.8,5.8 v 52.4 c 0,3.2 -2.6,5.8 -5.8,5.8 H -164.7 c -3.2,0 -5.8,-2.6 -5.8,-5.8 v -52.3 c 0,-3.2 2.6,-5.9 5.8,-5.9 z"
+   class="st5"
+   transform="translate(-4.9515592e-6,0)" /><path
+   style="fill:#d1d3d4;fill-rule:evenodd;stroke:#d1d3d4;stroke-width:1.00010002;stroke-miterlimit:22.92560005;display:inline"
+   id="path20-1"
+   d="m -157.7,120.9 h 77.199997 c 3,0 5.5,2.5 5.5,5.5 v 49.2 c 0,3 -2.5,5.5 -5.5,5.5 H -157.7 c -3,0 -5.5,-2.5 -5.5,-5.5 v -49.2 c 0,-3 2.5,-5.5 5.5,-5.5 z"
+   class="st6"
+   inkscape:connector-curvature="0"
+   transform="translate(-4.9515592e-6,0)"><title
+     id="title3221-7">Volume</title></path><g
+   id="g3223-1"
+   style="display:inline"
+   transform="translate(-237.1,1.1000031)"><title
+     id="title3229-1">Files</title><path
+     inkscape:connector-curvature="0"
+     class="st7"
+     d="m 84.800001,147.3 h 12.3 c 1.2,0 2.3,1 2.3,2.3 v 19.5 c 0,1.2 -1,2.3 -2.3,2.3 h -12.3 c -1.2,0 -2.3,-1 -2.3,-2.3 v -19.5 c 0,-1.2 1.1,-2.3 2.3,-2.3 z"
+     id="path22-5"
+     style="fill:#ffffff;fill-rule:evenodd;stroke:#8ed8f8;stroke-width:1.00010002;stroke-miterlimit:22.92560005" /><path
+     inkscape:connector-curvature="0"
+     class="st7"
+     d="m 102.9,147.3 h 12.3 c 1.2,0 2.3,1 2.3,2.3 v 19.5 c 0,1.2 -1,2.3 -2.3,2.3 h -12.3 c -1.2,0 -2.3,-1 -2.3,-2.3 v -19.5 c 0.1,-1.2 1.1,-2.3 2.3,-2.3 z"
+     id="path24-2"
+     style="fill:#ffffff;fill-rule:evenodd;stroke:#8ed8f8;stroke-width:1.00010002;stroke-miterlimit:22.92560005" /><path
+     inkscape:connector-curvature="0"
+     class="st7"
+     d="m 121.1,147.3 h 12.3 c 1.2,0 2.3,1 2.3,2.3 v 19.5 c 0,1.2 -1,2.3 -2.3,2.3 h -12.3 c -1.2,0 -2.3,-1 -2.3,-2.3 v -19.5 c 0,-1.2 1,-2.3 2.3,-2.3 z"
+     id="path26-7"
+     style="fill:#ffffff;fill-rule:evenodd;stroke:#8ed8f8;stroke-width:1.00010002;stroke-miterlimit:22.92560005" /><path
+     inkscape:connector-curvature="0"
+     class="st7"
+     d="m 139.2,147.3 h 12.3 c 1.2,0 2.3,1 2.3,2.3 v 19.5 c 0,1.2 -1,2.3 -2.3,2.3 h -12.3 c -1.2,0 -2.3,-1 -2.3,-2.3 v -19.5 c 0.1,-1.2 1.1,-2.3 2.3,-2.3 z"
+     id="path28-6"
+     style="fill:#ffffff;fill-rule:evenodd;stroke:#8ed8f8;stroke-width:1.00010002;stroke-miterlimit:22.92560005" /></g><text
+   sodipodi:linespacing="125%"
+   style="font-size:12.66639996px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;display:inline;font-family:Helvetica Neue for IBM;-inkscape-font-specification:Helvetica Neue for IBM"
+   id="text33-4"
+   class="st9 st10"
+   x="-201.11278"
+   y="39.529804"><tspan
+     style="-inkscape-font-specification:HelvNeue Roman for IBM;font-family:HelvNeue Roman for IBM"
+     id="tspan3072">Space</tspan></text>
+
+<text
+   sodipodi:linespacing="125%"
+   style="font-size:12.66639996px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;display:inline;font-family:Helvetica Neue for IBM;-inkscape-font-specification:Helvetica Neue for IBM"
+   y="100.3086"
+   x="-147.74408"
+   id="text39-2"
+   class="st11 st12"><tspan
+     style="-inkscape-font-specification:HelvNeue Roman for IBM;font-family:HelvNeue Roman for IBM"
+     id="tspan3074">File share</tspan></text>
+
+<text
+   sodipodi:linespacing="125%"
+   style="font-size:12.66639996px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;display:inline;font-family:Helvetica Neue for IBM;-inkscape-font-specification:Helvetica Neue for IBM"
+   y="137.16411"
+   x="-138.54883"
+   id="text43-3"
+   class="st11 st13"><tspan
+     style="-inkscape-font-specification:HelvNeue Roman for IBM;font-family:HelvNeue Roman for IBM"
+     id="tspan3076">Volume</tspan></text>
+
+<g
+   id="Text-2"
+   transform="translate(-237.09999,1.1000011)"
+   style="display:inline"><text
+   style="font-size:11.99989986px;font-family:HelvNeueMediumforIBM"
+   id="text45-2"
+   class="st11 st13"
+   transform="translate(106.3197,163.4332)"><tspan
+     id="tspan3009-1"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:HelvNeue Roman for IBM;-inkscape-font-specification:HelvNeue Roman for IBM">Files</tspan></text>
+
+</g></g><text
+   xml:space="preserve"
+   style="font-size:16px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:HelvNeue Bold for IBM;-inkscape-font-specification:HelvNeue Bold for IBM Bold"
+   x="-22.216547"
+   y="9.1763935"
+   id="text3368"
+   sodipodi:linespacing="125%"><tspan
+     sodipodi:role="line"
+     id="tspan3370"
+     x="-22.216547"
+     y="9.1763935"
+     style="-inkscape-font-specification:HelvNeue Bold for IBM Bold;font-family:HelvNeue Bold for IBM;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal">Organization</tspan></text>
+
+</g>
+
+</svg>
