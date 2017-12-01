@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-11-17"
+lastupdated: "2017-12-01"
 
 ---
 
@@ -97,7 +97,7 @@ By using {{site.data.keyword.containershort_notm}} regions, you can create or ac
   * US East: `https://us-east.containers.bluemix.net`
   * US South: `https://us-south.containers.bluemix.net`
 
-To check which {{site.data.keyword.containershort_notm}} region you are currently in, run `bx cs api` and review the **Region** field.
+To check which {{site.data.keyword.containershort_notm}} region you are currently in, run `bx cs region`.
 
 ### Logging in to a different container service region
 {: #container_login_endpoints}
@@ -108,43 +108,7 @@ You might want to log in to another {{site.data.keyword.containershort_notm}} re
 
 </br>
 
-Example commands to log in to an {{site.data.keyword.containershort_notm}} region:
-  * AP North:
-    ```
-    bx cs init --host https://ap-north.containers.bluemix.net
-    ```
-  {: pre}
-
-  * AP South:
-    ```
-    bx cs init --host https://ap-south.containers.bluemix.net
-    ```
-    {: pre}
-
-  * EU Central:
-    ```
-    bx cs init --host https://eu-central.containers.bluemix.net
-    ```
-    {: pre}
-
-  * UK South:
-    ```
-    bx cs init --host https://uk-south.containers.bluemix.net
-    ```
-    {: pre}
-
-  * US East:
-    ```
-    bx cs init --host https://us-east.containers.bluemix.net
-    ```
-    {: pre}
-
-  * US South:
-    ```
-    bx cs init --host https://us-south.containers.bluemix.net
-    ```
-    {: pre}
-
+To quickly switch regions, run `bx cs region-set`.
 
 ### Locations available for the container service
 {: #locations}
