@@ -1,0 +1,1119 @@
+<!DOCTYPE html><html lang="en-us">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="dcterms.date" content="2017-11-10">
+<meta name="dcterms.rights" content="© Copyright IBM Corporation 2014, 2017">
+
+<meta name="description" content="You can use various services in the catalog with IBM Cloud Container Service. Many of the Cloud services help you to bring extra capabilities to the apps that you deploy in containers. Additionally, some Cloud services can be used to help you manage your containers.">
+<meta name="keywords" content="IBM Containers, containers, services, Bluemix, integrations, binding, alert notification, policies, notifications, Delivery Pipeline, pipeline, continuous delivery, single container, delivery pipeline, image, build, Vulnerability Advisor, security, service, image cleanup, environment properties, bind, container group, Devops Services, container, deploy">
+<meta name="geo.country" content="ZZ">
+<script>
+    digitalData = {
+      page: {
+        pageInfo: {
+  language: "en-us",
+
+  version: "v18",
+  ibm: {
+  country: "ZZ",
+  type: "CT701"
+  
+         }
+       }
+     }
+   };
+  </script><!-- Licensed Materials - Property of IBM -->
+<!-- US Government Users Restricted Rights -->
+<!-- Use, duplication or disclosure restricted by -->
+<!-- GSA ADP Schedule Contract with IBM Corp. -->
+<link rel="stylesheet" type="text/css" href="./ibmdita.css">
+<title>Integrating services to use with single and scalable containers</title>
+</head>
+<body><main role="main"><div><article class="nested0" role="article" aria-labelledby="d56424e6" id="container_integrations"><h1 class="topictitle1" id="d56424e6"><span class="ph" id="title">Integrating services with <span class="ph">single and scalable containers</span></span>
+(Deprecated)</h1>
+<div class="body conbody"><div class="abstract"><div class="shortdesc"><span class="ph" id="shortdesc">You can use various services in the <span class="keyword wintitle">catalog</span> with
+<span class="keyword">IBM®
+Cloud® Container Service</span>. Many of the <span class="keyword">Cloud</span> services help you to bring extra
+capabilities to the apps that you deploy in containers. Additionally, some <span class="keyword">Cloud</span> services can be used to help you manage
+your containers. </span></div>
+
+<div class="p"><div class="note attention"><span class="attentiontitle">Attention:</span>  Single and scalable containers are deprecated. Support
+will continue in IBM Cloud Public until 5 December 2017 and in IBM Cloud Local and Dedicated until
+20 June 2018. Start using Kubernetes clusters today to deploy secure, highly available apps. <a href="https://www.ibm.com/blogs/bluemix/2017/07/deprecation-single-scalable-group-container-service-bluemix-public/" rel="external" target="_blank" title="(Opens in a new tab or window)">Learn more about Kubernetes and how to migrate your
+apps</a>.</div>
+</div>
+
+<div class="p">In this
+page:<div class="lines">&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_integrations.html#container_integrations__data">Data analytics and Storage services</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_integrations.html#container_integrations__devops">DevOps services</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_integrations.html#container_integrations__integrate">Integrate services</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_integrations.html#container_integrations__network">Network services</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_integrations.html#container_integrations_binding" title="IBM Cloud has a list of services and manages them on behalf of app developers. To add a Cloud service for your container to use, you must request an instance of this service and bind the service to the container.">Binding a service from the Cloud GUI</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_integrations.html#container_integrations_binding_cli" title="IBM Cloud has a list of services and manages them on behalf of app developers. To add a Cloud service for your container to use, you must request an instance of this service and bind the service to the container.">Binding a service to a container from the CLI</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_integrations.html#container_alertnotification" title="Configure your app to send notifications when a certain condition or criteria is met and use the Alert Notification service to manage your alert notifications. With the Alert Notification service you can create custom notification policies that filters the alerts that you are interested in. You can refine the policy filters as needed to specify individuals or groups as recipients of alerts, as well as preferred notification methods and frequency.">Configuring alerts for apps that are deployed in containers by using Alert Notification</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_integrations.html#container_pipeline_ov" title="Automate your app builds and container deployments to Cloud by using the Delivery Pipeline, which is part of IBM Cloud Continuous Delivery.">Automating your container deployments by using the Delivery Pipeline in the Continuous Delivery service</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_integrations.html#container_cfapp_tutorial_intro" title="You can take an app that you deployed previously by using Cloud Foundry and deploy it in a container by using IBM Cloud Container Service.">Tutorial: Deploying a Cloud Foundry Node.js app in a container</a></div>
+</div>
+</div>
+<section role="region" aria-labelledby="d56424e186" id="container_integrations__data"><h2 class="sectiontitle" id="d56424e186">Data analytics and Storage services</h2>
+<div class="p"><dl><dt class="dlterm"><span class="keyword">Object Storage</span></dt>
+<dd><p>Store persistent data that is replicated across multiple storage nodes to back it up.</p>
+
+<div class="p"><ul><li>For general information about the <span class="keyword">Object Storage</span> service, see <a href="../services/ObjectStorage/index.html">Getting started with the
+<span class="keyword">Object Storage</span>
+service</a>.</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+</section><section role="region" aria-labelledby="d56424e213" id="container_integrations__devops"><h2 class="sectiontitle" id="d56424e213">DevOps services</h2>
+<div class="p"><dl><dt class="dlterm"><span class="keyword">Alert Notification</span></dt>
+<dd><p>Set notification policies to filter only the alerts that you are interested in getting from your
+application. You can refine the policy filters as needed to specify individuals or groups as
+recipients of alerts, as well as preferred notification methods and frequency. </p>
+
+<div class="p"><ul><li>For more information about using containers with <span class="keyword">Alert Notification</span>, see <a href="container_integrations.html#container_alertnotification" title="Configure your app to send notifications when a certain condition or criteria is met and use the Alert Notification service to manage your alert notifications. With the Alert Notification service you can create custom notification policies that filters the alerts that you are interested in. You can refine the policy filters as needed to specify individuals or groups as recipients of alerts, as well as preferred notification methods and frequency.">Configuring alerts for apps that are deployed in containers by using Alert Notification</a>.</li>
+<li>For general information about the <span class="keyword">Alert Notification</span> service, see <a href="../services/AlertNotification/index.html">Getting started with
+<span class="keyword">Alert Notification</span></a>.</li>
+</ul>
+</div>
+</dd>
+<dt class="dlterm"><span class="keyword">Delivery Pipeline</span></dt>
+<dd><p>Automate your app builds and container deployments to <span class="keyword">Cloud</span> by using <span class="keyword">Delivery Pipeline</span>, which is part
+of <span class="keyword">IBM
+Cloud Continuous Delivery</span>. </p>
+
+<div class="p"><ul><li>For more information about using containers with the pipeline, see <a href="container_integrations.html#container_pipeline_ov" title="Automate your app builds and container deployments to Cloud by using the Delivery Pipeline, which is part of IBM Cloud Continuous Delivery.">Automating your container deployments by using the Delivery Pipeline in the Continuous Delivery service</a>.</li>
+<li>For general information about the <span class="keyword">Delivery Pipeline</span> service, see <a href="../services/ContinuousDelivery/pipeline_about.html">Getting started with Delivery
+Pipeline</a>.</li>
+</ul>
+</div>
+</dd>
+<dt class="dlterm">UrbanCode Deploy</dt>
+<dd><p>Manage your releases and automate container deployments with IBM UrbanCode Deploy. This service
+provides you with tools that can be used to have visibility into your deployments across every
+environment. You can use this service as an alternative to the <span class="keyword">Delivery Pipeline</span> service.</p>
+
+<ul><li>For purchasing information, see the product page for <a href="http://www.ibm.com/software/products/en/ucdep" rel="external" target="_blank" title="(Opens in a new tab or window)">IBM UrbanCode
+Deploy</a>.</li>
+<li>For general information about UrbanCode Deploy, see the <a href="http://www.ibm.com/support/knowledgecenter/SS4GSP/ucd_welcome.html" rel="external" target="_blank" title="(Opens in a new tab or window)">IBM Knowledge
+Center</a>.</li>
+</ul>
+</dd>
+</dl>
+</div>
+</section><section role="region" aria-labelledby="d56424e333" id="container_integrations__integrate"><h2 class="sectiontitle" id="d56424e333">Integrate services</h2>
+<div class="p"><dl><dt class="dlterm">Istio</dt>
+<dd><p>Manage your microservices in <span class="keyword">IBM
+Cloud Container Service</span>
+for an application or service. <span class="ph">For information or to get involved in the Istio open source
+project, see <a href="https://istio.io/" rel="external" target="_blank" title="(Opens in a new tab or window)">https://istio.io/</a>.</span></p>
+</dd>
+<dt class="dlterm"><span class="keyword">Secure Gateway</span></dt>
+<dd><p>Securely connect <span class="keyword">Cloud</span>
+applications to remote locations on-premises or in the cloud.</p>
+
+<div class="p"><ul><li>For general information about the <span class="keyword">Secure Gateway</span> service, see <a href="../services/SecureGateway/secure_gateway.html">Getting started with
+the <span class="keyword">Secure Gateway</span>
+service</a>.</li>
+</ul>
+</div>
+
+</dd>
+</dl>
+</div>
+</section><section role="region" aria-labelledby="d56424e385" id="container_integrations__network"><h2 class="sectiontitle" id="d56424e385">Network services</h2>
+<div class="p"><dl><dt class="dlterm">VPN</dt>
+<dd><p>Allow containers to communicate to one another between a <span class="keyword">Cloud</span> space and an intranet server.</p>
+
+<div class="p"><ul><li>For general information about the <span class="keyword">IBM
+VPN</span> service, see <a href="../services/vpn/index.html">Getting started
+with the <span class="keyword">IBM
+VPN</span> service</a>.</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+</section></div>
+<article class="topic concept nested1" role="article" aria-labelledby="d56424e419" id="rellinks"><h2 class="topictitle2" id="d56424e419">Related links</h2>
+<aside role="complementary" aria-labelledby="d56424e419">
+<div class="linklist" id="general"><h3 class="linklistlabel">Related Links</h3>
+<ul><li><img src="./sout.gif" alt=""><a href="https://wiki.eclipse.org/Linux_Tools_Project/Docker_Tooling" rel="external" target="_blank" title="(Opens in a new tab or window)">Docker Tooling for Eclipse</a></li>
+</ul></div>
+</aside></article><article class="topic task nested1" role="article" aria-labelledby="d56424e429" lang="en-us" id="container_integrations_binding"><h2 class="topictitle2" id="d56424e429">Binding a service from the <span class="keyword">Cloud</span> GUI</h2>
+<div class="body taskbody"><p class="shortdesc"><span class="keyword">IBM
+Cloud</span> has a list of services and
+manages them on behalf of app developers. To add a <span class="keyword">Cloud</span> service for your container to use, you
+must request an instance of this service and bind the service to the container.</p>
+<div class="section prereq">Before you begin, add the service to your <span class="keyword">Cloud</span> space. For more information, see <a href="../services/reqnsi.html#req_instance">Requesting a new service
+instance</a>.</div><div class="section context"><div class="note restriction" id="container_integrations_binding__restriction"><span class="restrictiontitle">Restriction:</span> Some <span class="keyword">Cloud</span> services do not support the binding
+directly to a container and lead to a failure during container creation. In this case, bind the
+<span class="keyword">Cloud</span> service to a Cloud Foundry app
+first, and then bind the app to the container. The app acts as a bridge between the service and the
+container. For more information, see <a href="container_troubleshoot.html#ts_bridge_app">Cloud service does not bind directly to a container</a>.</div>
+</div><ol class="steps"><li class="step"><span class="cmd">In the <span class="keyword">Cloud</span>
+<span class="keyword wintitle">Catalog</span>, click <span class="ph uicontrol">Containers</span>.</span></li>
+<li class="step"><span class="cmd">Click a container image.</span></li>
+<li class="step"><span class="cmd">Expand <span class="ph uicontrol">Advanced Options</span> and for <span class="ph uicontrol">Select a service</span>,
+select an available <span class="keyword">Cloud</span>
+service.</span></li>
+<li class="step"><span class="cmd">Click <span class="ph uicontrol">Add</span>.</span> The <span class="keyword">Cloud</span> service is displayed
+in the <span class="ph uicontrol">Already bound to your container</span> field.</li>
+<li class="step"><span class="cmd">Complete the other fields, and then click <span class="ph uicontrol">CREATE</span>.</span></li>
+<li class="step"><span class="cmd">When the container is created, verify that the VCAP_SERVICES information is displayed.</span> In the Overview tab for the container, locate the bound service and click <span class="ph uicontrol">View
+Credentials</span>. The information that is displayed is the VCAP_SERVICES.</li>
+</ol>
+</div>
+</article><article class="topic task nested1" role="article" aria-labelledby="d56424e588" lang="en-us" id="container_integrations_binding_cli"><h2 class="topictitle2" id="d56424e588">Binding a service to a container from the CLI</h2>
+<div class="body taskbody"><p class="shortdesc"><span class="keyword">IBM
+Cloud</span> has a list of services and
+manages them on behalf of app developers. To add a <span class="keyword">Cloud</span> service for your container to use, you
+must request an instance of this service and bind the service to the container.</p>
+<div class="section prereq">Before you begin, add the service to your <span class="keyword">Cloud</span> space. For more information, see <a href="../services/reqnsi.html#req_instance">Requesting a new service
+instance</a>.</div><div class="section context"><div class="note restriction" id="container_integrations_binding_cli__restriction"><span class="restrictiontitle">Restriction:</span> Some <span class="keyword">Cloud</span> services do not support the binding
+directly to a container and lead to a failure during container creation. In this case, bind the
+<span class="keyword">Cloud</span> service to a Cloud Foundry app
+first, and then bind the app to the container. The app acts as a bridge between the service and the
+container. For more information, see <a href="container_troubleshoot.html#ts_bridge_app">Cloud service does not bind directly to a container</a>.</div>
+</div><ol class="steps"><li class="step stepexpand"><span class="cmd">Use one of the following commands to bind the <span class="keyword">Cloud</span> service instance to a new
+container.</span> <div class="note tip"><span class="tiptitle">Tip:</span> <span class="ph">Run <samp class="ph codeph"><span class="ph">bx ic</span> namespace-get</samp> to retrieve
+your namespace and replace <var class="keyword varname">&lt;my_namespace&gt;</var> with your namespace information.</span></div>
+<ul class="ul choices"><li class="li choice">If you are creating a single container, use the following
+command.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run --name <var class="keyword varname">container_name</var> -e "<var class="keyword varname">CCS_BIND_SRV</var>=<var class="keyword varname">service_instance1</var>,<var class="keyword varname">service_instance2</var>" registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">image_name</var></code></pre>
+</li>
+<li class="li choice">If you are creating a container group, use the following
+command.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create --name <var class="keyword varname">container_group_name</var> -e "<var class="keyword varname">CCS_BIND_SRV</var>=<var class="keyword varname">service_instance1</var>,<var class="keyword varname">service_instance2</var>" registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">image_name</var></code></pre>
+</li>
+<li class="li choice">If you are binding a service to container group that is already running, use the following
+command. This command is available for container groups only. Only one service can be bound at a
+time.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> service-bind <var class="keyword varname">container_group_name</var> <var class="keyword varname">service_instance</var></code></pre>
+</li>
+</ul>
+</li>
+<li class="step stepexpand"><span class="cmd">Use one of the following commands to verify that the service instance is bound to the
+container.</span> <ul class="ul choices"><li class="li choice">For a single container, use the following
+command.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> inspect CONTAINER</code></pre>
+</li>
+<li class="li choice">For a container group, use the following
+command.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-inspect GROUP</code></pre>
+</li>
+</ul>
+Verify that the VCAP_SERVICES information for the service is
+displayed.<pre class="codeblock"><code>{
+ "VCAP_SERVICES": {
+  "&lt;service_name&gt;": [
+   {
+    "credentials": {
+     "hostname": "&lt;hostname_id&gt;",
+     "jdbcUrl": "&lt;jdbc_URL&gt;",
+     "name": "&lt;encoded_name&gt;",
+     "password": "&lt;encoded_password&gt;",
+     "port": "&lt;port_number&gt;",
+     "uri": "&lt;service_URI&gt;",
+     "username": "&lt;encoded_username&gt;"
+    },
+    "label": "&lt;service_name&gt;",
+    "name": "&lt;service_instance&gt;",
+    "plan": "&lt;plan_name&gt;",
+    "tags": [
+     "&lt;tag1&gt;",
+     "&lt;tag2&gt;",
+     "&lt;tag3&gt;"
+    ]
+   } </code></pre>
+</li>
+</ol>
+</div>
+</article><article class="topic task nested1" role="article" aria-labelledby="d56424e787" lang="en-us" id="container_alertnotification"><h2 class="topictitle2" id="d56424e787">Configuring alerts for apps that are deployed in containers by using <span class="keyword">Alert Notification</span></h2>
+<div class="body taskbody"><p class="shortdesc">Configure your app to send notifications when a certain condition or criteria is met and
+use the <span class="keyword">Alert Notification</span> service to
+manage your alert notifications. With the <span class="keyword">Alert Notification</span> service you can create custom
+notification policies that filters the alerts that you are interested in. You can refine the policy
+filters as needed to specify individuals or groups as recipients of alerts, as well as preferred
+notification methods and frequency.</p>
+<div class="section prereq">Before you begin, review the <a href="../services/reqnsi.html#req_instance">Requesting a new service instance</a> topic and create an instance of the <span class="keyword">Alert Notification</span> service in your <span class="keyword">Cloud</span> space. </div><div class="section context"><p>The following steps showcase how to create a container that runs a sample <span class="keyword">Alert Notification</span> node app. You can send test
+alerts to the <span class="keyword">Alert Notification</span> service
+and review them in the Alert Viewer tool. </p>
+</div><ol class="steps"><li class="step stepexpand"><span class="cmd">Download and clone the sample <a href="https://github.com/IBM-Bluemix/alert-notification-helloworld" rel="external" target="_blank" title="(Opens in a new tab or window)">Alert Notification app</a> to your local machine. </span> <pre class="codeblock"><code>git clone <span class="ph filepath">https://github.com/IBM-Bluemix/alert-notification-helloworld.git</span></code></pre>
+
+<div class="steps note"><span class="notetitle">Note:</span> When you clone the Git project, a new folder named
+<span class="ph filepath">alert-notification-helloworld</span> is created on your local machine. </div>
+</li>
+<li class="step stepexpand"><span class="cmd">Build a container image that includes the sample Alert Notification app and push it to your
+private <span class="keyword">Cloud</span> images registry. </span> <ol type="a" class="ol substeps"><li class="li substep substepexpand"><span class="cmd"><a href="container_cli_cfic_install.html#container_cli_login" title="After you install the CLI, log in to use it.">Log into the <span class="keyword">IBM
+Cloud Container Service</span> CLI</a>.</span></li>
+<li class="li substep substepexpand"><span class="cmd">Navigate to the <span class="ph filepath">alert-notification-helloworld</span> directory. </span></li>
+<li class="li substep substepexpand"><span class="cmd">Create your container image and push it to your private <span class="keyword">Cloud</span> images registry. Run <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> namespace-get</samp> to retrieve your
+namespace information and replace <var class="keyword varname">&lt;my_namespace&gt;</var> with your namespace.</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> build -t registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/alert .</code></pre>
+</li>
+<li class="li substep substepexpand"><span class="cmd">Verify that your container image is successfully created and pushed. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> images</code></pre>
+</li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">Create a container from the image and bind the <span class="keyword">Alert Notification</span> service to it. Replace
+<var class="keyword varname">&lt;my_namespace&gt;</var> with your namespace information and
+<var class="keyword varname">&lt;my_alert&gt;</var> with the name of the Alert Notification service instance that you
+created in the beginning. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run --name alertcontainer -p 8080 -e "CCS_BIND_SRV=<var class="keyword varname">&lt;my_alert&gt;</var>" registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/alert</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Verify that your container is running.</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ps</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Bind a public IP address to your container. </span> <ol type="a" class="ol substeps"><li class="li substep substepexpand"><span class="cmd">List the public IP addresses that are available in your space and note the IP address you want
+to use. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ips</code></pre>
+
+<div class="note tip"><span class="tiptitle">Tip:</span> If no public IP addresses are available in your space, run <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-request</samp> to request a new IP
+address. You can also unbind an used IP address from a container by running the <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> unbind <var class="keyword varname">&lt;IP_ADDRESS&gt;</var>
+<var class="keyword varname">&lt;CONTAINER&gt;</var></samp> command.</div>
+</li>
+<li class="li substep substepexpand"><span class="cmd">Bind the public IP address to your container. Replace <var class="keyword varname">&lt;IP_ADDRESS&gt;</var> with
+the IP address you noted in the previous step. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind <var class="keyword varname">&lt;IP_ADDRESS&gt;</var> alertcontainer</code></pre>
+</li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">Create a test alert.</span> <ol type="a" class="ol substeps"><li class="li substep substepexpand"><span class="cmd">Open your web browser.</span></li>
+<li class="li substep substepexpand"><span class="cmd">Enter the IP address and port in your web browser as follows:
+<samp class="ph codeph"><var class="keyword varname">&lt;IP_ADDRESS&gt;</var>:8080</samp>. </span> The welcome page of your <span class="keyword">Alert Notification</span> web app opens.<p><img src="images/alertapp.png" width="400" alt="Test your Alert Notification web app"></p>
+</li>
+<li class="li substep substepexpand"><span class="cmd">Click on the <span class="ph uicontrol">Send Sample Alert</span> button to send a test alert to the Alert
+Viewer.</span></li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">Open the <span class="keyword wintitle">Alert Viewer</span> and review your test alert.</span> <ol type="a" class="ol substeps"><li class="li substep"><span class="cmd">From the <span class="keyword">Cloud</span> GUI, select your
+running container instance. </span></li>
+<li class="li substep"><span class="cmd">Click on the <span class="keyword">Alert Notification</span>
+service under your <span class="ph uicontrol">Bound services</span>.</span></li>
+<li class="li substep"><span class="cmd">Click on <span class="ph uicontrol">Launch</span> to open the Alert Viewer.</span></li>
+<li class="li substep"><span class="cmd">Review your test alert. </span></li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">Explore the capabilities of the <span class="keyword">Alert Notification</span> service.</span> Review the <span class="keyword">Alert Notification</span>
+documentation to find more information about how to <a href="../services/AlertNotification/alert_configuring.html" rel="external" target="_blank" title="(Opens in a new tab or window)">create
+notification policies</a> and <a href="../services/AlertNotification/alert_viewer.html" rel="external" target="_blank" title="(Opens in a new tab or window)">manage your alerts</a>.</li>
+</ol>
+</div>
+</article><article class="topic concept nested1" role="article" aria-labelledby="d56424e1115" lang="en-us" id="container_pipeline_ov"><h2 class="topictitle2" id="d56424e1115">Automating your container deployments by using the <span class="keyword">Delivery Pipeline</span> in the <span class="keyword">Continuous Delivery</span> service</h2>
+<div class="body conbody"><p class="shortdesc">Automate your app builds and container deployments to <span class="keyword">Cloud</span> by using the <span class="keyword">Delivery Pipeline</span>, which is part of <span class="keyword">IBM
+Cloud Continuous Delivery</span>.</p>
+<div class="p">The <span class="keyword">Delivery Pipeline</span> supports:<ul><li>Building Docker images</li>
+<li>Deploying images in containers to <span class="keyword">Cloud</span></li>
+</ul>
+</div>
+<div><p>Quick start guide for deploying containers by using the <span class="keyword">Delivery Pipeline</span>:</p>
+
+<ol><li>Create a Git repository that contains your code.</li>
+<li>Include a <samp class="ph codeph">Dockerfile</samp> in the root directory of your repo. </li>
+<li>From the menu, click
+<span class="ph menucascade"><span class="ph uicontrol">Services</span> &gt; <span class="ph uicontrol">DevOps</span></span>, and then
+click <span class="ph uicontrol">Pipelines</span>.</li>
+<li>Click <span class="ph menucascade"><span class="ph uicontrol">Create Pipeline</span> &gt; <span class="ph uicontrol"><span class="keyword">Delivery Pipeline</span></span></span>.</li>
+<li>Click <span class="ph uicontrol">Create</span>.</li>
+<li>Add your Git repo to the toolchain.<ol type="a" id="container_pipeline_ov__ol_mvk_s3v_vz"><li>Click <span class="ph uicontrol">Add a Tool</span>.</li>
+<li>Click the type of Git service that hosts your repo.</li>
+<li>Provide the configuration details for your repo.</li>
+<li>Click <span class="ph uicontrol">Create Integration</span>.</li>
+</ol>
+</li>
+<li>From the toolchain's Overview page, click <span class="ph uicontrol"><span class="keyword">Delivery Pipeline</span></span>.</li>
+<li>Create a build stage that includes a build job.<ol type="a" id="container_pipeline_ov__ol_pds_x3v_vz"><li>Click <span class="ph uicontrol">Add Stage</span>.</li>
+<li>On the <span class="ph uicontrol">INPUT</span> tab, for the <span class="ph uicontrol">Input type</span>, select
+<span class="ph uicontrol">Git Repository</span>.</li>
+<li>On the <span class="ph uicontrol">JOBS</span> tab, add a build job. For the <span class="ph uicontrol">Builder
+type</span>, select <span class="ph uicontrol">IBM Containers on <span class="keyword">Cloud</span></span>.</li>
+</ol>
+</li>
+<li>Create a deployment stage that includes a deployment job.<ol type="a" id="container_pipeline_ov__ol_ahk_djv_vz"><li>On the <span class="ph uicontrol">INPUT</span> tab, for the <span class="ph uicontrol">Input type</span>, select
+<span class="ph uicontrol">Build Artifacts</span>.</li>
+<li>On the <span class="ph uicontrol">JOBS</span> tab, for the <span class="ph uicontrol">Deployer type</span>, select
+<span class="ph uicontrol">IBM Container Service</span>.</li>
+</ol>
+</li>
+<li>Run a deployment by either pushing a code change or by clicking the Run Stage icon on the build
+stage of the <span class="keyword">Delivery Pipeline</span>.</li>
+</ol>
+</div><div>Need more information? Look at the following topics.<ul><li><a href="container_integrations.html#container_single_pipeline_ov" title="Automate the building and deploying of your single containers with the Delivery Pipeline.">Creating a single container by using the Delivery Pipeline</a></li>
+<li><a href="container_integrations.html#container_group_pipeline_ov" title="Automate the building and deploying of your container groups by using the Delivery Pipeline.">Creating container groups by using the Delivery Pipeline</a></li>
+</ul>
+</div></div>
+<article class="topic task nested2" role="article" aria-labelledby="d56424e1350" lang="en-us" id="container_single_pipeline_ov"><h3 class="topictitle3" id="d56424e1350">Creating a single container by using the <span class="keyword">Delivery Pipeline</span></h3>
+<div class="body taskbody"><p class="shortdesc">Automate the building and deploying of your single containers with the <span class="keyword">Delivery Pipeline</span>.</p>
+</div>
+<article class="topic task nested3" role="article" aria-labelledby="d56424e1410" lang="en-us" id="container_single_pipeline_build"><h4 class="topictitle4" id="d56424e1410">Creating build stages for containers by using the <span class="keyword">Delivery Pipeline</span></h4>
+<div class="body taskbody"><p class="shortdesc"><span class="keyword">IBM
+Cloud Container Service</span>
+includes a build service that takes in source code and then builds and publishes a Docker image to
+the container registry. <span class="keyword">Delivery Pipeline</span>,
+which is part of <span class="keyword">IBM
+Cloud Continuous Delivery</span>, provides
+a build job that uses the container build service. This build job takes the source code from a
+repository, builds a Docker image from that code, versions (tags) that image to match the build
+number, then pushes the resulting image to the organization's <span class="keyword">IBM
+Cloud Container Service</span> registry on <span class="keyword">Cloud</span>. Then, members of the organization can
+deploy the resulting image to spaces within the organization.</p>
+<div class="section prereq" id="container_single_pipeline_build__prereq"> <div class="p">Before you begin, consider the following information. <ul><li>To learn more about builds, stages, and basic pipeline functionality, see the <a href="../services/ContinuousDelivery/pipeline_about.html">About <span class="keyword">Delivery Pipeline</span></a> topic in the <span class="keyword">Continuous Delivery</span> documentation.</li>
+<li>Identify an existing image from your organization's private images registry to use in your
+container by checking the <span class="keyword">Cloud</span>
+<span class="keyword wintitle">Catalog</span>.</li>
+<li>If you know that you want to bind a service to the container, create an app to use as a bridge.
+For more information, see <a href="container_integrations.html#unique_1677878852" title="Services cannot be directly bound to a container. As an alternative, you can bind the service to an app, and then bind that app to the container by configuring an environment property in a pipeline stage. The app serves as a bridge between the service and the container.">Binding a service to a container by using the <span class="keyword">Delivery Pipeline</span></a>.</li>
+</ul>
+</div>
+ </div><p class="li stepsection">Build a Docker image from <span class="keyword">Delivery Pipeline</span>.</p><ol class="steps" id="container_single_pipeline_build__steps"><li class="step stepexpand"><span class="cmd">Create a Dockerfile in the root directory of the Git repository that is associated with your
+toolchain and commit it to your repository.</span></li>
+<li class="step stepexpand"><span class="cmd">From the toolchain's Overview page, click <span class="ph uicontrol"><span class="keyword">Delivery Pipeline</span></span>.</span></li>
+<li class="step stepexpand"><span class="cmd">Create
+a build stage.</span> <ol type="a" class="ol substeps"><li class="li substep"><span class="cmd">Click <span class="ph uicontrol">Add Stage</span>.</span></li>
+<li class="li substep"><span class="cmd">Name the stage. </span> For example, <samp class="ph codeph"><var class="keyword varname">Build</var></samp>.</li>
+<li class="li substep"><span class="cmd">For the <span class="ph uicontrol">Input type</span>, select <span class="ph uicontrol">Git
+Repository</span>.</span></li>
+<li class="li substep"><span class="cmd">For the other fields, verify the values and update, if necessary.</span></li>
+<li class="li substep"><span class="cmd">Click the <span class="ph uicontrol">JOBS</span> tab.</span></li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">In the build
+stage, create a build job.</span> <ol type="a" class="ol substeps"><li class="li substep substepexpand"><span class="cmd">In the <span class="ph uicontrol">JOBS</span> tab,
+click <span class="ph uicontrol">ADD
+JOB</span>.</span></li>
+<li class="li substep substepexpand"><span class="cmd">Select the <span class="ph uicontrol">Build</span> job
+type.</span></li>
+<li class="li substep substepexpand"><span class="cmd">For the <span class="ph uicontrol">Builder type</span>, select <span class="ph uicontrol">IBM Containers on
+<span class="keyword">Cloud</span></span>.</span></li>
+<li class="li substep substepexpand"><span class="cmd">If necessary, update the <span class="keyword">Cloud</span>
+target, organization, and space. </span></li>
+<li class="li substep substepexpand"><span class="cmd">For <span class="ph uicontrol">Use cached layers</span>, clear the field when you must force a refresh of
+layers that dynamically pulls content from other sources. </span> <p>For example, if the <samp class="ph codeph">Dockerfile</samp> includes an <samp class="ph codeph">apt-get install</samp> or
+<samp class="ph codeph">wget</samp> command, ensure that these dynamic dependencies are gathered each build by
+clearing the <span class="ph uicontrol">Use cached layers</span> check box. </p>
+ <div class="steps note"><span class="notetitle">Note:</span> When the <span class="ph uicontrol">Use cached layers</span> field is cleared, build times are longer
+because cached layers are not used when the image is building.</div>
+</li>
+<li class="li substep substepexpand"><span class="cmd">In the <span class="ph uicontrol">Image Name</span> field, enter a name for the image to build. To meet
+Docker naming conventions, use lowercase letters, numbers, and hyphens (-) only. </span> When the image is built, it is tagged with the image name and a build number.  For example, if you enter the image name <samp class="ph codeph">myappimage</samp>, the resulting image
+for build number 4 is called <samp class="ph codeph">myappimage:4</samp>. </li>
+<li class="li substep substepexpand"><span class="cmd">If your Dockerfile is not located in the root
+directory of the project, in the Build Script
+section, add the path to the Dockerfile in the following locations.</span> <ol type="i"><li>Before the Run unit tests section, add the folder name with
+a change directory command.<div class="p"><pre class="codeblock"><code>cd <var class="keyword varname">&lt;folder&gt;</var></code></pre>
+</div>
+</li>
+<li>Wherever the <var class="keyword varname">${WORKSPACE}</var> variable is displayed, append the folder name. The
+<var class="keyword varname">${WORKSPACE}</var> variable automatically detects the root directory of the project for
+you.<div class="p">Example<pre class="codeblock"><code>BUILD_COMMAND="build --pull --tag ${FULL_REPOSITORY_NAME} ${WORKSPACE}/<var class="keyword varname">&lt;folder&gt;</var>"</code></pre>
+</div>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">Click <span class="ph uicontrol">SAVE</span>.</span></li>
+<li class="step stepexpand"><span class="cmd">Click the <span class="ph uicontrol">Run Stage</span> icon to verify that the stage builds without
+errors.</span> If the build fails, review the logs and correct the errors. If the stage passes, check your
+organization's image registry and verify the image was built.</li>
+</ol>
+</div>
+</article><article class="topic task nested3" role="article" aria-labelledby="d56424e1710" lang="en-us" id="container_pipeline_vulnerability"><h4 class="topictitle4" id="d56424e1710">(Optional) Checking image security as part of the pipeline</h4>
+<div class="body taskbody"><div class="abstract"><span class="shortdesc">Find security or configuration issues in your image before the container is deployed by
+using Vulnerability Advisor.</span>
+</div>
+<div class="section context"><div class="p">Common pipeline setup that includes this scan:<ul><li>Build stage to build the source files</li>
+<li>Processing stage, which includes the following jobs: <ul><li>A build job to run a container build</li>
+<li>A test job to run Vulnerability Advisor on an image</li>
+</ul>
+</li>
+<li>Deploy stage to deploy the container</li>
+</ul>
+</div>
+
+<div class="note tip"><span class="tiptitle">Tip:</span> This task outlines how to create a test job for Vulnerability Advisor in a
+different stage than the job that builds the container image. Alternatively, you can use the same
+stage. If you decide to create a separate stage, you are not required to set the environment
+variable. </div>
+</div><p class="li stepsection">Create the Vulnerability Advisor scan.</p><ol class="steps" id="container_pipeline_vulnerability__steps"><li class="step stepexpand"><span class="cmd">Create a processing stage.</span> <ol type="a" class="ol substeps"><li class="li substep"><span class="cmd">Click <span class="ph uicontrol">Add Stage</span>.</span></li>
+<li class="li substep"><span class="cmd">Name the stage. </span> For example, <samp class="ph codeph"><var class="keyword varname">Processing</var></samp>. </li>
+<li class="li substep"><span class="cmd">For the input type, select <span class="ph uicontrol">Build Artifacts</span>.</span></li>
+<li class="li substep"><span class="cmd">For the stage and job, verify the values and update, if necessary.</span></li>
+<li class="li substep"><span class="cmd">Click the <span class="ph uicontrol">JOBS</span> tab.</span></li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">In the processing stage, add a test job to run the code scan.</span> <ol type="a" class="ol substeps"><li class="li substep substepexpand"><span class="cmd">On the <span class="ph uicontrol">JOBS</span> tab, click <span class="ph uicontrol">ADD JOB</span>.</span></li>
+<li class="li substep substepexpand"><span class="cmd">For the job type, select <span class="ph uicontrol">Test</span>.</span></li>
+<li class="li substep substepexpand"><span class="cmd">For the <span class="ph uicontrol">Tester type</span>, select <span class="ph uicontrol">IBM Vulnerability
+Advisor</span>.</span></li>
+<li class="li substep substepexpand"><span class="cmd">If necessary, update the <span class="keyword">Cloud</span>
+target, organization, and space. </span></li>
+<li class="li substep substepexpand"><span class="cmd">For <span class="ph uicontrol">Minutes to wait for analysis to complete</span>, enter a value 0 - 59
+minutes.</span> The default value is <var class="keyword varname">5</var> minutes. A URL to the dashboard is provided in the
+console logs at the end of the job. <p>If the scan is not complete before this time ends, the job
+fails, but the scan analysis continues to run and can be viewed on the dashboard. After the scan is
+complete, if you rerun the job, the scan request is not resubmitted and the pipeline job can
+complete successfully. Alternatively, you can configure the pipeline not to be blocked on a
+successful scan result, which is described in the next step. </p>
+</li>
+<li class="li substep substepexpand"><span class="cmd">To determine the behavior on timeout, select or clear the <span class="ph uicontrol">Stop running this stage if
+this job fails</span> check box.</span> <p>You can configure the job to block both later jobs in the stage and later stages from running if
+this job fails, or you can configure the stage to continue without blocking later jobs and stages.
+The state of the job is determined by the existence of major security issues. </p>
+
+<p>Major security issues cause the job to fail. Depending on the selection for <span class="ph uicontrol">Stop
+running this stage if this job fails</span>, a failed job either stops the stage and pipeline
+from progressing or allows them to continue. If you know that the report includes many issues to
+process, you might configure the stage to continue because the scan can take a long time. In this
+scenario, you might not want the rest of your jobs and stages to stop only because the scan is
+taking too long.</p>
+</li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">If the job is in the same stage as the build job, set an environment variable for the
+repository name.</span> <ol type="a" class="ol substeps"><li class="li substep"><span class="cmd">Click the <span class="ph uicontrol">ENVIRONMENT PROPERTIES</span> tab.</span></li>
+<li class="li substep"><span class="cmd">Click <span class="ph uicontrol">ADD PROPERTY</span> and select <span class="ph uicontrol">Text
+Property</span>.</span></li>
+<li class="li substep"><span class="cmd">In the <span class="ph uicontrol">Name</span> field, enter <samp class="ph codeph">FULL_REPOSITORY_NAME</samp></span></li>
+<li class="li substep"><span class="cmd">In the <span class="ph uicontrol">Value</span> field, do not enter anything.</span> The image name that is specified in the container build job is passed through this environment
+variable.</li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">Click <span class="ph uicontrol">SAVE</span>.</span></li>
+<li class="step stepexpand"><span class="cmd">Click the <span class="ph uicontrol">Run Stage</span> icon to verify that the stage builds without
+errors.</span></li>
+</ol>
+<div class="section result"><div class="p">To view the results of a Vulnerability Advisor scan, after the job completes, click
+<span class="ph uicontrol">View results and history</span>. On the <span class="ph uicontrol">LOGS</span> tab, look for
+the following
+section:<pre class="pre msgblock"><code>image registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">namespace</var>/<var class="keyword varname">image</var> vulnerability results found</code></pre>
+</div>
+</div></div>
+</article><article class="topic task nested3" role="article" aria-labelledby="d56424e1979" lang="en-us" id="container_pipeline_cleanup"><h4 class="topictitle4" id="d56424e1979">(Optional) Cleaning up images with the <span class="keyword">Delivery Pipeline</span></h4>
+<div class="body taskbody"><p class="shortdesc">The <span class="keyword">IBM
+Cloud Container Service</span> build job cleans
+up unused image versions automatically. Images that are in use are not removed. You can specify a
+number of image versions to keep or you can disable the image cleanup.</p>
+<p class="li stepsection">To change the number of image versions that are kept for a project:</p><ol class="steps"><li class="step"><span class="cmd">In the pipeline,
+open the configuration for the build stage.</span></li>
+<li class="step"><span class="cmd">On the <span class="ph uicontrol">ENVIRONMENT PROPERTIES</span> tab, click <span class="ph uicontrol">ADD
+PROPERTY</span>.</span></li>
+<li class="step"><span class="cmd">Select <span class="ph uicontrol">Text
+property</span>.</span></li>
+<li class="step"><span class="cmd">In the <span class="ph uicontrol">Name</span> field, enter the <samp class="ph codeph">IMAGE_LIMIT</samp> command.</span></li>
+<li class="step"><span class="cmd">In the <span class="ph uicontrol">Value</span> field, enter the number of image versions for this project
+to keep in the registry. By default, the five most recent image versions for a project are kept. To
+disable the image cleanup and keep all of the image versions, set the value to
+<samp class="ph codeph">-1</samp>.</span></li>
+<li class="step"><span class="cmd">Click <span class="ph uicontrol">SAVE</span>.</span></li>
+</ol>
+</div>
+</article><article class="topic task nested3" role="article" aria-labelledby="d56424e2114" lang="en-us" id="container_binding_pipeline"><h4 class="topictitle4" id="d56424e2114">(Optional) Binding a service to a container by using the <span class="keyword">Delivery Pipeline</span></h4>
+<div class="body taskbody"><p class="shortdesc">Services cannot be directly bound to a container. As an alternative, you can bind the
+service to an app, and then bind that app to the container by configuring an environment property in
+a pipeline stage. The app serves as a bridge between the service and the container.</p>
+<div class="section prereq"><p id="container_binding_pipeline__context"><span class="keyword">Cloud</span> provides a set
+of environment variables that define the names and details of the services that are bound to an app,
+such as ClearDB MySQL database or Question and Answer. These environment variables are called
+<samp class="ph codeph">VCAP_SERVICES</samp>. When a container is bound to a service, the
+<samp class="ph codeph">VCAP_SERVICES</samp> are passed into the container as an environment variable through an
+app that acts as a bridge between the container and the service. Then, the container can look up
+information from the service, such as the endpoint, user, and password.</p>
+
+<p>Before you configure the environment property, identify an existing app that has services that
+are bound to it already or create an app by using the <span class="keyword">Cloud</span> GUI or the command line. For more
+information, see <a href="container_troubleshoot.html#ts_bridge_app">Cloud service does not bind directly to a container</a>.</p>
+</div><p class="li stepsection">Bind the bridge app to the container.</p><ol class="steps"><li class="step"><span class="cmd">From the toolchain's overview page, click <span class="ph uicontrol"><span class="keyword">Delivery Pipeline</span></span>.</span></li>
+<li class="step"><span class="cmd">Open a pipeline stage and click the <span class="ph uicontrol">ENVIRONMENT PROPERTIES</span> tab.</span></li>
+<li class="step"><span class="cmd">Click <span class="ph uicontrol">ADD PROPERTY</span> and select <span class="ph uicontrol">Text
+property</span>.</span></li>
+<li class="step"><span class="cmd">In the <span class="ph uicontrol">Name</span> field, enter the command
+<kbd class="ph userinput">BIND_TO</kbd>.</span></li>
+<li class="step"><span class="cmd">In the <span class="ph uicontrol">Value</span> field, enter the name of the bridge app, such as
+<var class="keyword varname">pipeline_bridge_app</var>.</span></li>
+<li class="step"><span class="cmd">Click <span class="ph uicontrol">SAVE</span>.</span></li>
+<li class="step"><span class="cmd">Test the configuration by running your pipeline.</span></li>
+</ol>
+<div class="section postreq"><div class="note tip"><span class="tiptitle">Tip:</span> After the bridge app is bound to a container, do not delete the bridge app. If you
+delete a bound bridge app, the container hangs. Delete the container, and any other containers that
+are using the bridge app, before you delete the bridge app.</div>
+</div></div>
+</article><article class="topic task nested3" role="article" aria-labelledby="d56424e2273" lang="en-us" id="container_single_pipeline_deploy"><h4 class="topictitle4" id="d56424e2273">Creating deployment stages for containers with the <span class="keyword">Delivery Pipeline</span></h4>
+<div class="body taskbody"><p class="shortdesc">You can create a deployment stage for your container by using the <span class="keyword">Delivery Pipeline</span>.</p>
+<div class="section prereq"><div class="p">Before you begin:<ul><li><a href="container_integrations.html#container_single_pipeline_build" title="IBM Cloud Container Service includes a build service that takes in source code and then builds and publishes a Docker image to the container registry. Delivery Pipeline, which is part of IBM Cloud Continuous Delivery, provides a build job that uses the container build service. This build job takes the source code from a repository, builds a Docker image from that code, versions (tags) that image to match the build number, then pushes the resulting image to the organization's IBM Cloud Container Service registry on Cloud. Then, members of the organization can deploy the resulting image to spaces within the organization.">Create
+a build stage</a>.</li>
+<li><a href="https://github.com/Osthanes/deployscripts/blob/master/deploycontainer.sh" rel="external" target="_blank" title="(Opens in a new tab or window)">Review the default deployment script for single containers</a>.
+You can fork the default script and edit it or create your own script to use instead.</li>
+<li><a href="../services/ContinuousDelivery/pipeline_deploy_var.html">Review a list of available environment variables that are provided by the <span class="keyword">Delivery Pipeline</span> service</a>.</li>
+</ul>
+</div>
+</div><ol class="steps"><li class="step stepexpand"><span class="cmd">From the toolchain's Overview page, click <span class="ph uicontrol"><span class="keyword">Delivery Pipeline</span></span>.</span></li>
+<li class="step stepexpand" id="container_single_pipeline_deploy__deploy_stage"><span class="cmd">Create a deployment stage.</span> <ol type="a" class="ol substeps"><li class="li substep"><span class="cmd">Click <span class="ph uicontrol">ADD STAGE</span>.</span></li>
+<li class="li substep"><span class="cmd">Name the stage. </span> For example, <samp class="ph codeph"><var class="keyword varname">Deploy</var></samp>.</li>
+<li class="li substep"><span class="cmd">For the input type, select <span class="ph uicontrol">Build Artifacts</span>.</span></li>
+</ol>
+</li>
+<li class="step stepexpand" id="container_single_pipeline_deploy__deployment_job"><span class="cmd">In the stage, create a deployment job.</span> <ol type="a" class="ol substeps"><li class="li substep substepexpand"><span class="cmd">On the <span class="ph uicontrol">JOBS</span> tab, click <span class="ph uicontrol">ADD JOB</span>.</span></li>
+<li class="li substep substepexpand"><span class="cmd">For the job type, select <span class="ph uicontrol">Deploy</span>.</span></li>
+<li class="li substep substepexpand"><span class="cmd">For the deployer type, select <span class="ph uicontrol">IBM Container service on <span class="keyword">Cloud</span></span>.</span></li>
+<li class="li substep substepexpand"><span class="cmd">For the organization and space, verify the values and update, if necessary.</span></li>
+<li class="li substep substepexpand"><span class="cmd">In the <span class="ph uicontrol">Deployment strategy</span> field, enter one of the following
+values.</span> <ul><li><span class="ph uicontrol">red_black</span> - Deploys a new version of the app. If the deployment is
+successful, the previous deployment of the app is removed and the IP address or route is mapped to
+the new version.</li>
+<li><span class="ph uicontrol">clean</span> - Removes all previous deployments of the application. </li>
+</ul>
+ <div class="note tip"><span class="tiptitle">Tip:</span> The <samp class="ph codeph">CONCURRENT_VERSIONS</samp> environment property sets the number of
+versions of the app deployments to keep active. The default value is one version. For example, if
+<samp class="ph codeph">CONCURRENT_VERSIONS</samp> is set to 2, and you are using an IP address, the most recent
+deployment is bound to the IP address, but the previous version is still deployed for a quick
+standby. <p>To always remove all deployments of the app, in the <span class="ph uicontrol">ENVIRONMENT
+PROPERTIES</span> tab, you can set <samp class="ph codeph">CONCURRENT_VERSIONS</samp> to
+<samp class="ph codeph">0</samp>.</p>
+</div>
+</li>
+<li class="li substep substepexpand"><span class="cmd">In the <span class="ph uicontrol">Name</span> field, enter the name of the container to deploy.</span></li>
+<li class="li substep substepexpand"><span class="cmd">For the port, enter the published port for the container.</span> Separate multiple ports with a comma (,).<div class="note tip" id="container_single_pipeline_deploy__private_container"><span class="tiptitle">Tip:</span> If no port is
+specified and you are using the default deployment script, port 80 is automatically published. To
+make a container private with the default deployment script, complete the following steps.<ol type="i"><li>For deployment strategy, enter <kbd class="ph userinput">simple</kbd>.</li>
+<li> Leave the <span class="ph uicontrol">Port</span> field blank.</li>
+<li>Because simple deployments do not clean up previous deployments, you can
+create another deployment stage to clean them up. Set the <span class="ph uicontrol">Deployment strategy</span>
+in the second deployment stage to <kbd class="ph userinput">clean</kbd>.</li>
+</ol>
+</div>
+</li>
+<li class="li substep substepexpand"><span class="cmd">If you have any optional deployment arguments, enter them.</span> For example, if your app requires an environment variable for the location of your back-end
+database, you might include this line:
+<pre class="codeblock"><code>--env MY_DB_HOSTNAME_PROPERTY=<var class="keyword varname">mydbhostname</var></code></pre>
+</li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">If you created your own deployment script, edit the <span class="ph uicontrol">Deployer script</span>section to use it.</span> <ol type="a" class="ol substeps"><li class="li substep substepexpand"><span class="cmd">Copy the following line and update it to use your repository.</span> <pre class="pre screen"><code>git_retry clone https://github.com/Osthanes/deployscripts.git deployscripts</code></pre>
+</li>
+<li class="li substep substepexpand"><span class="cmd">Edit the following line to use your script.</span> <pre class="pre screen"><code>/bin/bash deployscripts/deploycontainer.sh</code></pre>
+</li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">Click <span class="ph uicontrol">SAVE</span>.</span></li>
+</ol>
+</div>
+</article></article><article class="topic task nested2" role="article" aria-labelledby="d56424e2550" lang="en-us" id="container_group_pipeline_ov"><h3 class="topictitle3" id="d56424e2550">Creating container groups by using the <span class="keyword">Delivery Pipeline</span></h3>
+<div class="body taskbody"><p class="shortdesc">Automate the building and deploying of your container groups by using the <span class="keyword">Delivery Pipeline</span>.</p>
+</div>
+<article class="topic task nested3" role="article" aria-labelledby="d56424e2614" lang="en-us" id="container_group_pipeline_build"><h4 class="topictitle4" id="d56424e2614">Creating build stages for container groups by using the <span class="keyword">Delivery Pipeline</span></h4>
+<div class="body taskbody"><p class="shortdesc"><span class="keyword">IBM
+Cloud Container Service</span>
+includes a build service that takes in source code and then builds and publishes a Docker image to
+the container registry. <span class="keyword">Delivery Pipeline</span>,
+which is part of <span class="keyword">IBM
+Cloud Continuous Delivery</span>, provides
+a build job that uses the container build service. This build job takes the source code from a
+repository, builds a Docker image from that code, versions (tags) that image to match the build
+number, then pushes the resulting image to the organization's <span class="keyword">IBM
+Cloud Container Service</span> registry on <span class="keyword">Cloud</span>. Then, members of the organization can
+deploy the resulting image to spaces within the organization.</p>
+<div class="section prereq"> <div class="p">Before you begin, consider the following information. <ul><li>To learn more about builds, stages, and basic pipeline functionality, see the <a href="../services/ContinuousDelivery/pipeline_about.html">About <span class="keyword">Delivery Pipeline</span></a> topic in the <span class="keyword">Continuous Delivery</span> documentation.</li>
+<li>Identify an existing image from your organization's private images registry to use in your
+container by checking the <span class="keyword">Cloud</span>
+<span class="keyword wintitle">Catalog</span>.</li>
+<li>If you know that you want to bind a service to the container, create an app to use as a bridge.
+For more information, see <a href="container_integrations.html#unique_1677878852" title="Services cannot be directly bound to a container. As an alternative, you can bind the service to an app, and then bind that app to the container by configuring an environment property in a pipeline stage. The app serves as a bridge between the service and the container.">Binding a service to a container by using the <span class="keyword">Delivery Pipeline</span></a>.</li>
+</ul>
+</div>
+ </div><p class="li stepsection">Build a Docker image from <span class="keyword">Delivery Pipeline</span>.</p><ol class="steps"><li class="step stepexpand"><span class="cmd">Create a Dockerfile in the root directory of the Git repository that is associated with your
+toolchain and commit it to your repository.</span></li>
+<li class="step stepexpand"><span class="cmd">From the toolchain's Overview page, click <span class="ph uicontrol"><span class="keyword">Delivery Pipeline</span></span>.</span></li>
+<li class="step stepexpand"><span class="cmd">Create
+a build stage.</span> <ol type="a" class="ol substeps"><li class="li substep"><span class="cmd">Click <span class="ph uicontrol">Add Stage</span>.</span></li>
+<li class="li substep"><span class="cmd">Name the stage. </span> For example, <samp class="ph codeph"><var class="keyword varname">Build</var></samp>.</li>
+<li class="li substep"><span class="cmd">For the <span class="ph uicontrol">Input type</span>, select <span class="ph uicontrol">Git
+Repository</span>.</span></li>
+<li class="li substep"><span class="cmd">For the other fields, verify the values and update, if necessary.</span></li>
+<li class="li substep"><span class="cmd">Click the <span class="ph uicontrol">JOBS</span> tab.</span></li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">In the build
+stage, create a build job.</span> <ol type="a" class="ol substeps"><li class="li substep substepexpand"><span class="cmd">In the <span class="ph uicontrol">JOBS</span> tab,
+click <span class="ph uicontrol">ADD
+JOB</span>.</span></li>
+<li class="li substep substepexpand"><span class="cmd">Select the <span class="ph uicontrol">Build</span> job
+type.</span></li>
+<li class="li substep substepexpand"><span class="cmd">For the <span class="ph uicontrol">Builder type</span>, select <span class="ph uicontrol">IBM Containers on
+<span class="keyword">Cloud</span></span>.</span></li>
+<li class="li substep substepexpand"><span class="cmd">If necessary, update the <span class="keyword">Cloud</span>
+target, organization, and space. </span></li>
+<li class="li substep substepexpand"><span class="cmd">For <span class="ph uicontrol">Use cached layers</span>, clear the field when you must force a refresh of
+layers that dynamically pulls content from other sources. </span> <p>For example, if the <samp class="ph codeph">Dockerfile</samp> includes an <samp class="ph codeph">apt-get install</samp> or
+<samp class="ph codeph">wget</samp> command, ensure that these dynamic dependencies are gathered each build by
+clearing the <span class="ph uicontrol">Use cached layers</span> check box. </p>
+ <div class="steps note"><span class="notetitle">Note:</span> When the <span class="ph uicontrol">Use cached layers</span> field is cleared, build times are longer
+because cached layers are not used when the image is building.</div>
+</li>
+<li class="li substep substepexpand"><span class="cmd">In the <span class="ph uicontrol">Image Name</span> field, enter a name for the image to build. To meet
+Docker naming conventions, use lowercase letters, numbers, and hyphens (-) only. </span> When the image is built, it is tagged with the image name and a build number.  For example, if you enter the image name <samp class="ph codeph">myappimage</samp>, the resulting image
+for build number 4 is called <samp class="ph codeph">myappimage:4</samp>. </li>
+<li class="li substep substepexpand"><span class="cmd">If your Dockerfile is not located in the root
+directory of the project, in the Build Script
+section, add the path to the Dockerfile in the following locations.</span> <ol type="i"><li>Before the Run unit tests section, add the folder name with
+a change directory command.<div class="p"><pre class="codeblock"><code>cd <var class="keyword varname">&lt;folder&gt;</var></code></pre>
+</div>
+</li>
+<li>Wherever the <var class="keyword varname">${WORKSPACE}</var> variable is displayed, append the folder name. The
+<var class="keyword varname">${WORKSPACE}</var> variable automatically detects the root directory of the project for
+you.<div class="p">Example<pre class="codeblock"><code>BUILD_COMMAND="build --pull --tag ${FULL_REPOSITORY_NAME} ${WORKSPACE}/<var class="keyword varname">&lt;folder&gt;</var>"</code></pre>
+</div>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">Click <span class="ph uicontrol">SAVE</span>.</span></li>
+<li class="step stepexpand"><span class="cmd">Click the <span class="ph uicontrol">Run Stage</span> icon to verify that the stage builds without
+errors.</span> If the build fails, review the logs and correct the errors. If the stage passes, check your
+organization's image registry and verify the image was built.</li>
+</ol>
+</div>
+</article><article class="topic task nested3" role="article" aria-labelledby="d56424e2916" lang="en-us" id="unique_808630913"><h4 class="topictitle4" id="d56424e2916">(Optional) Checking image security as part of the pipeline</h4>
+<div class="body taskbody"><div class="abstract"><span class="shortdesc">Find security or configuration issues in your image before the container is deployed by
+using Vulnerability Advisor.</span>
+</div>
+<div class="section context"><div class="p">Common pipeline setup that includes this scan:<ul><li>Build stage to build the source files</li>
+<li>Processing stage, which includes the following jobs: <ul><li>A build job to run a container build</li>
+<li>A test job to run Vulnerability Advisor on an image</li>
+</ul>
+</li>
+<li>Deploy stage to deploy the container</li>
+</ul>
+</div>
+
+<div class="note tip"><span class="tiptitle">Tip:</span> This task outlines how to create a test job for Vulnerability Advisor in a
+different stage than the job that builds the container image. Alternatively, you can use the same
+stage. If you decide to create a separate stage, you are not required to set the environment
+variable. </div>
+</div><p class="li stepsection">Create the Vulnerability Advisor scan.</p><ol class="steps" id="unique_808630913__steps"><li class="step stepexpand"><span class="cmd">Create a processing stage.</span> <ol type="a" class="ol substeps"><li class="li substep"><span class="cmd">Click <span class="ph uicontrol">Add Stage</span>.</span></li>
+<li class="li substep"><span class="cmd">Name the stage. </span> For example, <samp class="ph codeph"><var class="keyword varname">Processing</var></samp>. </li>
+<li class="li substep"><span class="cmd">For the input type, select <span class="ph uicontrol">Build Artifacts</span>.</span></li>
+<li class="li substep"><span class="cmd">For the stage and job, verify the values and update, if necessary.</span></li>
+<li class="li substep"><span class="cmd">Click the <span class="ph uicontrol">JOBS</span> tab.</span></li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">In the processing stage, add a test job to run the code scan.</span> <ol type="a" class="ol substeps"><li class="li substep substepexpand"><span class="cmd">On the <span class="ph uicontrol">JOBS</span> tab, click <span class="ph uicontrol">ADD JOB</span>.</span></li>
+<li class="li substep substepexpand"><span class="cmd">For the job type, select <span class="ph uicontrol">Test</span>.</span></li>
+<li class="li substep substepexpand"><span class="cmd">For the <span class="ph uicontrol">Tester type</span>, select <span class="ph uicontrol">IBM Vulnerability
+Advisor</span>.</span></li>
+<li class="li substep substepexpand"><span class="cmd">If necessary, update the <span class="keyword">Cloud</span>
+target, organization, and space. </span></li>
+<li class="li substep substepexpand"><span class="cmd">For <span class="ph uicontrol">Minutes to wait for analysis to complete</span>, enter a value 0 - 59
+minutes.</span> The default value is <var class="keyword varname">5</var> minutes. A URL to the dashboard is provided in the
+console logs at the end of the job. <p>If the scan is not complete before this time ends, the job
+fails, but the scan analysis continues to run and can be viewed on the dashboard. After the scan is
+complete, if you rerun the job, the scan request is not resubmitted and the pipeline job can
+complete successfully. Alternatively, you can configure the pipeline not to be blocked on a
+successful scan result, which is described in the next step. </p>
+</li>
+<li class="li substep substepexpand"><span class="cmd">To determine the behavior on timeout, select or clear the <span class="ph uicontrol">Stop running this stage if
+this job fails</span> check box.</span> <p>You can configure the job to block both later jobs in the stage and later stages from running if
+this job fails, or you can configure the stage to continue without blocking later jobs and stages.
+The state of the job is determined by the existence of major security issues. </p>
+
+<p>Major security issues cause the job to fail. Depending on the selection for <span class="ph uicontrol">Stop
+running this stage if this job fails</span>, a failed job either stops the stage and pipeline
+from progressing or allows them to continue. If you know that the report includes many issues to
+process, you might configure the stage to continue because the scan can take a long time. In this
+scenario, you might not want the rest of your jobs and stages to stop only because the scan is
+taking too long.</p>
+</li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">If the job is in the same stage as the build job, set an environment variable for the
+repository name.</span> <ol type="a" class="ol substeps"><li class="li substep"><span class="cmd">Click the <span class="ph uicontrol">ENVIRONMENT PROPERTIES</span> tab.</span></li>
+<li class="li substep"><span class="cmd">Click <span class="ph uicontrol">ADD PROPERTY</span> and select <span class="ph uicontrol">Text
+Property</span>.</span></li>
+<li class="li substep"><span class="cmd">In the <span class="ph uicontrol">Name</span> field, enter <samp class="ph codeph">FULL_REPOSITORY_NAME</samp></span></li>
+<li class="li substep"><span class="cmd">In the <span class="ph uicontrol">Value</span> field, do not enter anything.</span> The image name that is specified in the container build job is passed through this environment
+variable.</li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">Click <span class="ph uicontrol">SAVE</span>.</span></li>
+<li class="step stepexpand"><span class="cmd">Click the <span class="ph uicontrol">Run Stage</span> icon to verify that the stage builds without
+errors.</span></li>
+</ol>
+<div class="section result"><div class="p">To view the results of a Vulnerability Advisor scan, after the job completes, click
+<span class="ph uicontrol">View results and history</span>. On the <span class="ph uicontrol">LOGS</span> tab, look for
+the following
+section:<pre class="pre msgblock"><code>image registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">namespace</var>/<var class="keyword varname">image</var> vulnerability results found</code></pre>
+</div>
+</div></div>
+</article><article class="topic task nested3" role="article" aria-labelledby="d56424e3185" lang="en-us" id="unique_1474436302"><h4 class="topictitle4" id="d56424e3185">(Optional) Cleaning up images with the <span class="keyword">Delivery Pipeline</span></h4>
+<div class="body taskbody"><p class="shortdesc">The <span class="keyword">IBM
+Cloud Container Service</span> build job cleans
+up unused image versions automatically. Images that are in use are not removed. You can specify a
+number of image versions to keep or you can disable the image cleanup.</p>
+<p class="li stepsection">To change the number of image versions that are kept for a project:</p><ol class="steps"><li class="step"><span class="cmd">In the pipeline,
+open the configuration for the build stage.</span></li>
+<li class="step"><span class="cmd">On the <span class="ph uicontrol">ENVIRONMENT PROPERTIES</span> tab, click <span class="ph uicontrol">ADD
+PROPERTY</span>.</span></li>
+<li class="step"><span class="cmd">Select <span class="ph uicontrol">Text
+property</span>.</span></li>
+<li class="step"><span class="cmd">In the <span class="ph uicontrol">Name</span> field, enter the <samp class="ph codeph">IMAGE_LIMIT</samp> command.</span></li>
+<li class="step"><span class="cmd">In the <span class="ph uicontrol">Value</span> field, enter the number of image versions for this project
+to keep in the registry. By default, the five most recent image versions for a project are kept. To
+disable the image cleanup and keep all of the image versions, set the value to
+<samp class="ph codeph">-1</samp>.</span></li>
+<li class="step"><span class="cmd">Click <span class="ph uicontrol">SAVE</span>.</span></li>
+</ol>
+</div>
+</article><article class="topic task nested3" role="article" aria-labelledby="d56424e3320" lang="en-us" id="unique_1677878852"><h4 class="topictitle4" id="d56424e3320">(Optional) Binding a service to a container by using the <span class="keyword">Delivery Pipeline</span></h4>
+<div class="body taskbody"><p class="shortdesc">Services cannot be directly bound to a container. As an alternative, you can bind the
+service to an app, and then bind that app to the container by configuring an environment property in
+a pipeline stage. The app serves as a bridge between the service and the container.</p>
+<div class="section prereq"><p id="unique_1677878852__context"><span class="keyword">Cloud</span> provides a set
+of environment variables that define the names and details of the services that are bound to an app,
+such as ClearDB MySQL database or Question and Answer. These environment variables are called
+<samp class="ph codeph">VCAP_SERVICES</samp>. When a container is bound to a service, the
+<samp class="ph codeph">VCAP_SERVICES</samp> are passed into the container as an environment variable through an
+app that acts as a bridge between the container and the service. Then, the container can look up
+information from the service, such as the endpoint, user, and password.</p>
+
+<p>Before you configure the environment property, identify an existing app that has services that
+are bound to it already or create an app by using the <span class="keyword">Cloud</span> GUI or the command line. For more
+information, see <a href="container_troubleshoot.html#ts_bridge_app">Cloud service does not bind directly to a container</a>.</p>
+</div><p class="li stepsection">Bind the bridge app to the container.</p><ol class="steps"><li class="step"><span class="cmd">From the toolchain's overview page, click <span class="ph uicontrol"><span class="keyword">Delivery Pipeline</span></span>.</span></li>
+<li class="step"><span class="cmd">Open a pipeline stage and click the <span class="ph uicontrol">ENVIRONMENT PROPERTIES</span> tab.</span></li>
+<li class="step"><span class="cmd">Click <span class="ph uicontrol">ADD PROPERTY</span> and select <span class="ph uicontrol">Text
+property</span>.</span></li>
+<li class="step"><span class="cmd">In the <span class="ph uicontrol">Name</span> field, enter the command
+<kbd class="ph userinput">BIND_TO</kbd>.</span></li>
+<li class="step"><span class="cmd">In the <span class="ph uicontrol">Value</span> field, enter the name of the bridge app, such as
+<var class="keyword varname">pipeline_bridge_app</var>.</span></li>
+<li class="step"><span class="cmd">Click <span class="ph uicontrol">SAVE</span>.</span></li>
+<li class="step"><span class="cmd">Test the configuration by running your pipeline.</span></li>
+</ol>
+<div class="section postreq"><div class="note tip"><span class="tiptitle">Tip:</span> After the bridge app is bound to a container, do not delete the bridge app. If you
+delete a bound bridge app, the container hangs. Delete the container, and any other containers that
+are using the bridge app, before you delete the bridge app.</div>
+</div></div>
+</article><article class="topic task nested3" role="article" aria-labelledby="d56424e3479" lang="en-us" id="container_group_pipeline_deploy"><h4 class="topictitle4" id="d56424e3479">Creating deployment stages for container groups by using <span class="keyword">Delivery Pipeline</span></h4>
+<div class="body taskbody"><p class="shortdesc">You can create a deployment stage for your container group by using the <span class="keyword">Delivery Pipeline</span>.</p>
+<div class="section prereq"><div class="p">Before you begin:<ul><li><a href="container_integrations.html#container_group_pipeline_build" title="IBM Cloud Container Service includes a build service that takes in source code and then builds and publishes a Docker image to the container registry. Delivery Pipeline, which is part of IBM Cloud Continuous Delivery, provides a build job that uses the container build service. This build job takes the source code from a repository, builds a Docker image from that code, versions (tags) that image to match the build number, then pushes the resulting image to the organization's IBM Cloud Container Service registry on Cloud. Then, members of the organization can deploy the resulting image to spaces within the organization.">Create
+a build stage</a>.</li>
+<li><a href="https://github.com/Osthanes/deployscripts/blob/master/deploygroup.sh" rel="external" target="_blank" title="(Opens in a new tab or window)">Review the default deployment script for container groups</a>. You can fork the
+default script and edit it or create your own script to use instead.</li>
+<li><a href="../services/ContinuousDelivery/pipeline_deploy_var.html">Review a list of available environment variables that are provided by the <span class="keyword">Delivery Pipeline</span> service</a>.</li>
+</ul>
+</div>
+</div><ol class="steps"><li class="step stepexpand"><span class="cmd">Create a deployment stage.</span> <ol type="a" class="ol substeps"><li class="li substep"><span class="cmd">Click <span class="ph uicontrol">ADD STAGE</span>.</span></li>
+<li class="li substep"><span class="cmd">Name the stage. </span> For example, <samp class="ph codeph"><var class="keyword varname">Deploy</var></samp>.</li>
+<li class="li substep"><span class="cmd">For the input type, select <span class="ph uicontrol">Build Artifacts</span>.</span></li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">On the stage, create a deployment job.</span> <ol type="a" class="ol substeps"><li class="li substep substepexpand"><span class="cmd">On the <span class="ph uicontrol">JOBS</span> tab, click <span class="ph uicontrol">ADD JOB</span>.</span></li>
+<li class="li substep substepexpand"><span class="cmd">For the job type, select <span class="ph uicontrol">Deploy</span>.</span></li>
+<li class="li substep substepexpand"><span class="cmd">For the deployer type, select <span class="ph uicontrol">IBM Container service on <span class="keyword">Cloud</span></span>.</span></li>
+<li class="li substep substepexpand"><span class="cmd">Select the organization and space.</span></li>
+<li class="li substep substepexpand"><span class="cmd">For the deployment strategy, enter one of the following values.</span> <ul><li><span class="ph uicontrol">red_black</span> - Deploys a new version of the app. If the deployment is
+successful, the previous deployment of the app is removed and the IP address or route is mapped to
+the new version.</li>
+<li><span class="ph uicontrol">clean</span> - Removes all previous deployments of the application. </li>
+</ul>
+</li>
+<li class="li substep substepexpand"><span class="cmd">For the name, enter the name of the container to deploy.</span></li>
+<li class="li substep substepexpand"><span class="cmd">For the port, enter the published port for the container.</span> For container groups, you can only specify one port.<div class="note tip"><span class="tiptitle">Tip:</span> If no port is
+specified and you are using the default deployment script, port 80 is automatically published. To
+make a container private with the default deployment script, complete the following steps.<ol type="i"><li>For deployment strategy, enter <kbd class="ph userinput">simple</kbd>.</li>
+<li> Leave the <span class="ph uicontrol">Port</span> field blank.</li>
+<li>Because simple deployments do not clean up previous deployments, you can
+create another deployment stage to clean them up. Set the <span class="ph uicontrol">Deployment strategy</span>
+in the second deployment stage to <kbd class="ph userinput">clean</kbd>.</li>
+</ol>
+</div>
+</li>
+<li class="li substep substepexpand"><span class="cmd">If you have any optional deployment arguments, enter them.</span> For example, if your app requires an environment variable for the location of your back end
+database, you might include this line:
+<pre class="codeblock"><code>--env MY_DB_HOSTNAME_PROPERTY=<var class="keyword varname">mydbhostname</var></code></pre>
+</li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">Set up a container group deployment instead of a single container deployment. In the "Deployer
+script" section, remove the # to uncomment the container group script:</span> <pre class="pre screen"><code>/bin/bash deployscripts/deploygroup.sh</code></pre>
+Add a # to comment out the single
+container script:<pre class="pre screen"><code>#/bin/bash deployscripts/deploycontainer.sh</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">If you created your own deployment script, edit the <span class="ph uicontrol">Deployer script</span>
+section to use it.</span> <ol type="a" class="ol substeps"><li class="li substep substepexpand"><span class="cmd">Copy the following line and update it to use your repository.</span> <pre class="pre screen"><code>git_retry clone https://github.com/Osthanes/deployscripts.git deployscripts</code></pre>
+</li>
+<li class="li substep substepexpand"><span class="cmd">Edit the following line to use your script.</span> <pre class="pre screen"><code>/bin/bash deployscripts/deploygroup.sh</code></pre>
+</li>
+</ol>
+</li>
+<li class="step stepexpand">Optional: <span class="cmd">To configure a basic container group, set each of the environment variables in the table.</span> These properties allow you to set some of the options that you might set when you are
+deploying containers from the command line or the <span class="keyword">Cloud</span> user interface. For other properties,
+see the comments in the Deployer script section of the user interface.<ol type="a" class="ol substeps"><li class="li substep substepexpand"><span class="cmd">Click the <span class="ph uicontrol">ENVIRONMENT PROPERTIES</span> tab and click <span class="ph uicontrol">ADD
+PROPERTY</span>. </span></li>
+<li class="li substep substepexpand"><span class="cmd">Select <span class="ph uicontrol">Text property</span>.</span></li>
+<li class="li substep substepexpand"><span class="cmd">Enter the name and value of an environment property.</span> <div class="tablenoborder"><table summary="" id="container_group_pipeline_deploy__common_properties" class="defaultstyle"><thead><tr><th id="d56424e3767" class="thleft">Property</th>
+<th id="d56424e3769" class="thleft">Description</th>
+</tr>
+</thead>
+<tbody><tr><td headers="d56424e3767 "><span class="ph uicontrol">AUTO_RECOVERY</span></td>
+<td headers="d56424e3769 "><kbd class="ph userinput">true</kbd> or <kbd class="ph userinput">false</kbd><p><span class="ph">When automatic recovery is enabled for a container group and
+the group has been running for 10 minutes, the group's load balancer starts to regularly check the
+health of each container instance in the group via HTTP requests. If a container instance does not
+respond within 100 seconds, it is marked as inactive. Inactive container instances are removed from
+the group and re-created by auto-recovery. Auto-recovery attempts to recover container instances in
+a group 3 times. After the third attempt, auto-recovery does not recover any container instances in
+the group for 60 minutes. After 60 minutes, the auto-recovery process starts again.</span></p>
+</td>
+</tr>
+<tr><td headers="d56424e3767 "><span class="ph uicontrol">CONCURRENT_VERSIONS</span></td>
+<td headers="d56424e3769 ">A number<p>The <samp class="ph systemoutput">CONCURRENT_VERSIONS</samp> environment property sets the
+number of versions of the app deployments to keep active. The default value is one version. For
+example, if <samp class="ph systemoutput">CONCURRENT_VERSIONS</samp> is set to 2 and you are deploying a
+container group, two groups are mapped to the route and receive traffic.</p>
+
+<p>To always remove all deployments of the app, in the ENVIRONMENT PROPERTIES tab, you can set
+<samp class="ph systemoutput">CONCURRENT_VERSIONS</samp> to <samp class="ph systemoutput">0</samp>.</p>
+</td>
+</tr>
+<tr><td headers="d56424e3767 "><span class="ph uicontrol">DESIRED_INSTANCES</span></td>
+<td headers="d56424e3769 ">A number<p>Example: <samp class="ph codeph">4</samp></p>
+<span class="ph">The number of container group instances that your app requires depends
+on the expected workload and the time in which a request can be processed by the app. For example,
+multi-tasking or network connectivity affects how many instances might be required for your app.</span><p><span class="ph">To make your
+container group highly available and more resilient to failure, consider including extra instances
+than the minimum to handle the expected workload. Extra instances can handle the workload in case
+another instance crashes. To ensure automatic recovery of a failed instance without affecting the
+workload, include one extra instance. For protection against two simultaneous failures, include two
+extra instances. This set up is an <var class="keyword varname">N+2</var> pattern, where <var class="keyword varname">N</var> is the
+number of instances to handle the requests and <var class="keyword varname">+2</var> is an extra two instances.</span></p>
+</td>
+</tr>
+<tr><td headers="d56424e3767 "><span class="ph uicontrol">ROUTE_DOMAIN</span></td>
+<td headers="d56424e3769 ">A string or <samp class="ph codeph">none</samp><p>Example: <samp class="ph codeph">mycustomdomain.com</samp></p>
+<p>The
+default system domain is <samp class="ph codeph"><span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span></samp> and already provides a SSL certificate, so you can access your container groups with
+HTTPS without any additional configuration. To use a custom domain, you must register the custom
+domain on a public DNS server, configure the custom domain in <span class="keyword">Cloud</span>, and then map the custom domain to the
+<span class="keyword">Cloud</span> system domain on the public DNS
+server.</p>
+<p>If a domain is not specified, <samp class="ph codeph"><span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span></samp> is used. If
+<samp class="ph codeph">none</samp> is specified, no domain is created.</p>
+<p>If <samp class="ph codeph">none</samp> is
+specified for host name and domain, the group is accessible by other containers in the same space,
+but is not publicly accessible.</p>
+</td>
+</tr>
+<tr><td headers="d56424e3767 "><span class="ph uicontrol">ROUTE_HOSTNAME</span></td>
+<td headers="d56424e3769 ">A string or <samp class="ph codeph">none</samp><p>Example: <samp class="ph codeph">myapp</samp></p>
+<p>The host name, such
+as <var class="keyword varname">mycontainerhost</var>. Do not include underscores (_) in the host name. The host and
+the domain combined form the full public route URL, such as <samp class="ph codeph">http://mycontainerhost.<span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span></samp>. </p>
+<p>If a host name is not
+specified, a host name is created for you. If <samp class="ph codeph">none</samp> is specified, no host name is
+created.</p>
+<p>If <samp class="ph codeph">none</samp> is specified for host name and domain, the group is
+accessible by other containers in the same space, but is not publicly accessible.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">Click <span class="ph uicontrol">SAVE</span>.</span></li>
+</ol>
+</div>
+</article></article></article><article class="topic tutorial tutorialIntro nested1" role="article" aria-labelledby="d56424e3911" lang="en-us" id="container_cfapp_tutorial_intro"><h2 class="topictitle2" id="d56424e3911">Tutorial: Deploying a Cloud Foundry Node.js app in a container</h2>
+<div class="body  tutorialIntroBody"><p class="shortdesc">You can take an app that you deployed previously by using Cloud Foundry and deploy it in
+a container by using <span class="keyword">IBM
+Cloud Container Service</span>.</p>
+<div class="section tutorialDesc longDesc"></div><section class="section learningObjectives tutorialLearningObjectives" role="region" aria-labelledby="d56424e3960"><h3 class="sectiontitle" id="d56424e3960">Objectives</h3>
+<ul><li>Learn the general process of deploying containers</li>
+<li>Learn what must be included in a Dockerfile to build an image</li>
+</ul>
+</section>
+<section class="section timeRequired tutorialTimeRequired" role="region" aria-labelledby="d56424e3969"><h3 class="sectiontitle" id="d56424e3969">Time required</h3>30 minutes</section>
+<section role="region" aria-labelledby="d56424e3973" class="section section audienceDesc"><h3 class="sectiontitle" id="d56424e3973">Audience</h3>Cloud Foundry app developers</section><section role="region" aria-labelledby="d56424e3977" class="section section prerequisites"><h3 class="sectiontitle" id="d56424e3977">Prerequisites</h3>
+<ul><li><a href="container_cli_cfic_install.html#container_cli_cfic_install" title="Install the IBM Cloud Container Service plug-in (bx ic) to run native Docker CLI commands to manage your containers.">Install the <span class="keyword">IBM
+Cloud Container Service</span> CLI</a></li>
+<li><a href="container_cli_cfic_install.html#container_cli_login" title="After you install the CLI, log in to use it.">Log in to the <span class="keyword">IBM
+Cloud Container Service</span> CLI</a></li>
+</ul>
+</section></div>
+<article class="topic task tutorialLesson nested2" role="article" aria-labelledby="d56424e4017" lang="en-us" id="container_cfapp_tutorial_lesson1"><h3 class="topictitle3" id="d56424e4017">Lesson 1: Download Cloud Foundry Node.js app code</h3>
+<div class="body taskbody"><p class="shortdesc">Get your Node.js code ready to go. Don't have any code yet? You can download starter code
+from <span class="keyword">Cloud</span> to use in this
+tutorial.</p>
+<div class="section prereq">Before you begin, <a href="container_cli_cfic_install.html#container_cli_cfic_install" title="Install the IBM Cloud Container Service plug-in (bx ic) to run native Docker CLI commands to manage your containers.">install the <span class="keyword">IBM
+Cloud Container Service</span> CLI</a> and
+<a href="container_cli_cfic_install.html#container_cli_login" title="After you install the CLI, log in to use it.">log in</a>.</div><p class="li stepsection">To get and organize the app code:</p><ol class="steps"><li class="step stepexpand"><span class="cmd">Create a directory that is named <kbd class="ph userinput"><var class="keyword varname">cf-pi-myinitials</var></kbd> and
+navigate into it.</span> In this directory, you save all the files that are required to build the Docker image and to
+run your Node.js app. You can use any name for the directory. If you use the name from the example,
+replace <var class="keyword varname">myinitials</var> with your initials, such as
+<var class="keyword varname">cf-pi-ms</var>.<pre class="codeblock"><code>mkdir <var class="keyword varname">cf-pi-myinitials</var> &amp;&amp; cd <var class="keyword varname">cf-pi-myinitials</var></code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Copy your Node.js app code and all related files into the directory.</span> You can use your own Node.js app code or download the Personal Insights app from <span class="keyword">Cloud</span>. <p>To download the Personal Insights
+app code from <span class="keyword">Cloud</span>, follow these
+steps.</p>
+<ol type="a" class="ol substeps"><li class="li substep substepexpand"><span class="cmd">In the <span class="keyword">Cloud</span>
+<span class="keyword wintitle">Catalog</span>, in <span class="ph uicontrol">Boilerplates</span>, click <span class="ph uicontrol">Personality
+Insights Node.js Web Starter</span>.</span> This boilerplate includes a Node.js app that uses the <span class="keyword">IBM Watson™ Personality Insights</span> service to extract a spectrum
+of cognitive and social characteristics from a text that a person generates through blogs, tweets,
+or forum posts.</li>
+<li class="li substep substepexpand"><span class="cmd">Enter the app name <kbd class="ph userinput"><var class="keyword varname">cf-pi-myinitials</var></kbd> and click
+<span class="ph uicontrol">CREATE</span>.</span> To access the app code for the boilerplate, you must deploy the CF app to <span class="keyword">Cloud</span> first. You can use any name for the app.
+If you use the name from the example, replace <var class="keyword varname">myinitials</var> with your initials, such
+as <var class="keyword varname">cf-pi-ms</var>, to ensure that it is unique. <p>This deployment creates an app that
+is named <var class="keyword varname">cf-pi-myinitials</var> as well as an instance of the <span class="keyword">IBM
+Watson Personality Insights</span> service that is named
+<var class="keyword varname">cf-pi-myinitials-personality_insights</var>. </p>
+<p>As the app is deployed,
+instructions for <strong>Deploying your app with the command line interface</strong> are displayed.</p>
+</li>
+<li class="li substep substepexpand"><span class="cmd">From step 1, click <span class="ph uicontrol">DOWNLOAD STARTER CODE</span>.</span></li>
+<li class="li substep substepexpand"><span class="cmd">Extract the .zip file and save the app files to your directory. </span></li>
+</ol>
+</li>
+</ol>
+<div class="section result">Your Cloud Foundry app code is ready to be containerized!</div></div>
+</article><article class="topic task tutorialLesson nested2" role="article" aria-labelledby="d56424e4209" lang="en-us" id="container_cfapp_tutorial_lesson2"><h3 class="topictitle3" id="d56424e4209">Lesson 2: Creating a Docker image with your CF app code</h3>
+<div class="body taskbody"><p class="shortdesc">Create a Dockerfile that includes your Node.js app code and the necessary configurations
+for your container. Then, build a Docker image from that Dockerfile and push it to your private
+<span class="keyword">Cloud</span> registry.</p>
+<p class="li stepsection">To create a Docker image with your app code, follow these steps.</p><ol class="steps"><li class="step stepexpand"><span class="cmd">Create a <span class="ph filepath">Dockerfile</span>, which is the basis for creating a container. </span> You can create the Dockerfile by using your preferred CLI editor or a text editor on your
+computer. The following example shows how to create a Dockerfile file with the <a href="https://www.nano-editor.org/dist/v2.2/nano.html" rel="external" target="_blank" title="(Opens in a new tab or window)">nano
+editor</a>. <pre class="codeblock"><code>nano Dockerfile</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Copy the following script into the Dockerfile.</span> <pre class="codeblock"><code>#Use the IBM Node image as a base image
+FROM registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/ibmnode:latest
+
+#Expose the port for your Personal Insights app, and set 
+#it as an environment variable as expected by cf apps
+ENV PORT=3000
+EXPOSE 3000
+ENV NODE_ENV production
+
+#Copy all app files from the current directory into the app 
+#directory in your container. Set the app directory
+#as the working directory
+ADD . /app
+WORKDIR /app
+
+#Install any necessary requirements from package.json
+RUN npm install
+
+#Sleep before the app starts. This command ensures that the
+#IBM Containers networking is finished before the app starts. 
+CMD (sleep 60; npm start)
+
+#Start the Personal Insight app. 
+CMD ["node", "/app/app.js"]</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Save your changes by pressing <span class="ph uicontrol">ctrl + o</span>. Confirm your changes by pressing
+<span class="ph uicontrol">ENTER</span>. Exit the nano editor by pressing <span class="ph uicontrol">ctrl +
+x</span>.</span></li>
+<li class="step stepexpand"><span class="cmd">Build the Docker image with your app code and push it to your private <span class="keyword">Cloud</span> registry.</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> build -t registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">namespace</var>/<var class="keyword varname">cf-pi-myinitials</var> .</code></pre>
+
+<div class="tablenoborder"><table summary="" id="container_cfapp_tutorial_lesson2__table_build" class="defaultstyle"><thead><tr><th colspan="2" id="d56424e4318" class="thleft"><span class="ph"><img src="images/idea.png" alt="This icon indicates there is more information to learn about this step of the task."></span> Understanding
+this command's components</th>
+</tr>
+</thead>
+<tbody><tr><td style="width: 50%" headers="d56424e4318 "><samp class="ph codeph">build</samp></td>
+<td style="width: 50%" headers="d56424e4318 ">The <samp class="ph codeph">build</samp> command.</td>
+</tr>
+<tr><td style="width: 50%" headers="d56424e4318 "><samp class="ph codeph">registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">namespace</var>/<var class="keyword varname">cf-pi-myinitials</var></samp></td>
+<td style="width: 50%" headers="d56424e4318 ">Your private <span class="keyword">Cloud</span> registry
+path, which includes your unique namespace and the name of the image. For this example, the same
+name is used for the image as the CF node app <var class="keyword varname">cf-pi-myinitials</var>, but you can
+choose any name for the image in your private registry. If you are unsure what your namespace is,
+run the following command to find it.
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> namespace-get</code></pre>
+</td>
+</tr>
+<tr><td style="width: 50%" headers="d56424e4318 "><samp class="ph codeph">.</samp></td>
+<td style="width: 50%" headers="d56424e4318 ">The location of the Dockerfile. If you are running the build command from the directory that
+includes the Dockerfile, enter a period (.). Otherwise, use a relative path to the
+Dockerfile.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+</ol>
+<div class="section result">The image is created in your registry. You can run the <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> images</samp> command to verify that the
+image was
+created.<pre class="pre screen"><code>$ <span class="ph"><samp class="ph codeph">bx ic</samp></span> images
+REPOSITORY                                   TAG     IMAGE ID      CREATED         SIZE
+registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">namespace</var>/<var class="keyword varname">cf-pi-myinitials</var>  latest  b02b7a24c35f  48 seconds ago  251.3 MB</code></pre>
+</div></div>
+</article><article class="topic task tutorialLesson nested2" role="article" aria-labelledby="d56424e4388" lang="en-us" id="container_cfapp_tutorial_lesson3"><h3 class="topictitle3" id="d56424e4388">Lesson 3: Deploying a container from your image</h3>
+<div class="body taskbody"><p class="shortdesc">Deploy your app as a container group in <span class="keyword">Cloud</span>.</p>
+<p class="li stepsection">To deploy your app in a container group, follow these steps.</p><ol class="steps"><li class="step stepexpand"><span class="cmd"> Create a container group from the image that you created in the previous lesson by running the
+following command.</span>  <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create --name <var class="keyword varname">cf-pi-myinitials</var> -m 64 -n <var class="keyword varname">pi-app-myinitials</var> -d <span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span> -p 3000 -e CCS_BIND_SRV=<var class="keyword varname">cf-pi-myinitials-personal_insights</var> --desired 3 --auto --anti registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">namespace</var>/<var class="keyword varname">cf-pi-myinitials</var>:latest</code></pre>
+
+<div class="p"><div class="tablenoborder"><table summary="" id="container_cfapp_tutorial_lesson3__table_group_create" class="defaultstyle"><thead><tr><th colspan="2" id="d56424e4474" class="thleft"><span class="ph"><img src="images/idea.png" alt="This icon indicates there is more information to learn about this step of the task."></span> Understanding
+this command's components</th>
+</tr>
+</thead>
+<tbody><tr><td style="width: 50%" headers="d56424e4474 "><samp class="ph codeph">group-create</samp></td>
+<td style="width: 50%" headers="d56424e4474 ">The <samp class="ph codeph">group-create</samp> command.</td>
+</tr>
+<tr><td style="width: 50%" headers="d56424e4474 "><samp class="ph codeph">--name <var class="keyword varname">cf-pi-myinitials</var></samp></td>
+<td style="width: 50%" headers="d56424e4474 ">The name of the container as you want it to display from the <span class="keyword">Cloud</span> GUI. </td>
+</tr>
+<tr><td style="width: 50%" headers="d56424e4474 "><samp class="ph codeph">-m 64</samp></td>
+<td style="width: 50%" headers="d56424e4474 ">Each instance in the group is assigned 64 MB of memory. </td>
+</tr>
+<tr><td style="width: 50%" headers="d56424e4474 "><samp class="ph codeph">-n <var class="keyword varname">pi-app-myinitials</var></samp></td>
+<td style="width: 50%" headers="d56424e4474 ">The host name in the route URL.<div class="note tip"><span class="tiptitle">Tip:</span> If you are using the starter code, use a
+different name for the host name than what you used in the previous lesson to deploy the Cloud
+Foundry app. If the same host is used and the CF app is still running, load balancing occurs between
+the container group and app. </div>
+</td>
+</tr>
+<tr><td style="width: 50%" headers="d56424e4474 "><samp class="ph codeph">-d <span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span></samp></td>
+<td style="width: 50%" headers="d56424e4474 ">The domain name in the route URL. Unless you have a custom domain, use  <span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span>.</td>
+</tr>
+<tr><td style="width: 50%" headers="d56424e4474 "><samp class="ph codeph">-p 3000</samp></td>
+<td style="width: 50%" headers="d56424e4474 ">The port number to expose. Connections to the route URL are forwarded to port 3000 on the
+container. </td>
+</tr>
+<tr><td style="width: 50%" headers="d56424e4474 "><samp class="ph codeph">-e
+CCS_BIND_SRV=<var class="keyword varname">cf-pi-myinitials-personal_insights</var></samp></td>
+<td style="width: 50%" headers="d56424e4474 ">Bind the <span class="keyword">IBM
+Watson Personality Insights</span>
+service instance to the container, so you can analyze cognitive and social characteristics from the
+text that you enter in the Personal Insights app. The service instance was created as part of the CF
+app deployment in lesson 1. <div class="p">If you are unsure what the name of your service instance is, run the
+following command. <pre class="codeblock"><code>bx service list</code></pre>
+</div>
+</td>
+</tr>
+<tr><td style="width: 50%" headers="d56424e4474 "><samp class="ph codeph">--desired 3</samp></td>
+<td style="width: 50%" headers="d56424e4474 ">The number of single container instances to create in the container group. All of the
+instances are the same.</td>
+</tr>
+<tr><td style="width: 50%" headers="d56424e4474 "><samp class="ph codeph">--auto</samp></td>
+<td style="width: 50%" headers="d56424e4474 ">Enable automatic recovery for the container group. If one of the instances in the group
+becomes unavailable, another instance is automatically created that replaces the unresponsive one. </td>
+</tr>
+<tr><td style="width: 50%" headers="d56424e4474 "><samp class="ph codeph">--anti</samp></td>
+<td style="width: 50%" headers="d56424e4474 ">Enable anti-affinity for the container group. Each instance of the group is placed on a
+separate physical compute node, which reduces the odds of all containers in a group crashing due to
+a hardware failure.</td>
+</tr>
+<tr><td style="width: 50%" headers="d56424e4474 "><samp class="ph codeph">registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">namespace</var>/<var class="keyword varname">cf-pi-myinitials</var>:latest</samp></td>
+<td style="width: 50%" headers="d56424e4474 ">The destination repository path, which includes your unique namespace and the name of the
+destination image. For this example, the same name is used for the image as the CF node app
+<var class="keyword varname">cf-pi-myinitials</var>. </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</li>
+<li class="step stepexpand"><span class="cmd">Wait a few minutes for the container to deploy and for the networking to be set up. When the
+container is deployed, you can view your Personal Insights app in a browser by entering the
+following URL <span class="ph filepath">http://<var class="keyword varname">pi-app-myinitials</var>.<span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span>/</span>.</span></li>
+<li class="step stepexpand"><span class="cmd">Remove the CF app. </span> Now that your CF app code is deployed in a container, you can remove the CF app to maximize
+the use of your quota. <pre class="codeblock"><code>cf delete <var class="keyword varname">cf-pi-myinitials</var></code></pre>
+Confirm the deletion
+by entering <span class="ph uicontrol">y</span>. </li>
+</ol>
+<div class="section result">Your app is deployed in a container!</div></div>
+</article></article></article></div></main></body></html>

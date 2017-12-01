@@ -1,0 +1,264 @@
+<!DOCTYPE html><html lang="en-us">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="dcterms.date" content="2017-11-10">
+<meta name="dcterms.rights" content="© Copyright IBM Corporation 2014, 2017">
+
+<meta name="description" content="IBM Cloud Container Service provides a trusted and secured cloud platform that optimizes Linux and Docker security capabilities. When you build and run containers with IBM Cloud Container Service, your app benefits from container and network isolation, limited access to host data and resources, and secure container deployments.">
+<meta name="keywords" content="security, IBM Containers, containers, Virtual Private Network, VPN, data center, on-prem, service">
+<meta name="geo.country" content="ZZ">
+<script>
+    digitalData = {
+      page: {
+        pageInfo: {
+  language: "en-us",
+
+  version: "v18",
+  ibm: {
+  country: "ZZ",
+  type: "CT701"
+  
+         }
+       }
+     }
+   };
+  </script><!-- Licensed Materials - Property of IBM -->
+<!-- US Government Users Restricted Rights -->
+<!-- Use, duplication or disclosure restricted by -->
+<!-- GSA ADP Schedule Contract with IBM Corp. -->
+<link rel="stylesheet" type="text/css" href="./ibmdita.css">
+<title>Security for single and scalable containers</title>
+</head>
+<body><main role="main"><div><article class="nested0" role="article" aria-labelledby="d71797e6" id="container_security"><h1 class="topictitle1" id="d71797e6">Security for <span class="ph">single and scalable containers</span> (Deprecated)</h1>
+<div class="abstract"><div class="shortdesc">IBM® Cloud
+Container Service provides a trusted and secured cloud platform that optimizes Linux and Docker
+security capabilities. When you build and run containers with <span class="keyword">IBM
+Cloud Container Service</span>, your app benefits from container and
+network isolation, limited access to host data and resources, and secure container deployments. </div>
+
+<div class="p"><div class="note attention"><span class="attentiontitle">Attention:</span>  Single and scalable containers are deprecated. Support
+will continue in IBM Cloud Public until 5 December 2017 and in IBM Cloud Local and Dedicated until
+20 June 2018. Start using Kubernetes clusters today to deploy secure, highly available apps. <a href="https://www.ibm.com/blogs/bluemix/2017/07/deprecation-single-scalable-group-container-service-bluemix-public/" rel="external" target="_blank" title="(Opens in a new tab or window)">Learn more about Kubernetes and how to migrate your
+apps</a>.</div>
+</div>
+
+<div class="p">In this page: <div class="lines">&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_security.html#builtin">Built-in security settings</a> <br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_security.html#container_security_host" title="IBM Cloud Container Service optimizes the Linux kernel and Docker security capabilities to ensure container isolation and to restrict access to compute host resources.">Compute host security settings</a> <br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_security.html#container_security_network" title="Review the list of integrated IBM Cloud Container Service features that ensure secure communication between containers in the same private network, between containers in different Cloud spaces, and between your Cloud space and a remote network.">Private container network security settings</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <a href="container_security.html#container_cli_login_exec" title="If you must log in to your running container, you can use bx ic exec.">Logging into a container using <samp class="ph codeph">exec</samp></a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <a href="container_security.html#container_vpn" title="Securely connect the single containers and container groups in a private container network in Cloud to a corporate data center by using the IBM® Virtual Private Network (VPN) service. IBM VPN provides a secure end-to-end communication channel over the internet that is based on the industry-standard Internet Protocol Security (IPsec) protocol suite. The IPsec protocol offers network-level peer authentication, data integrity, and data confidentiality by encrypting the packages that are exchanged between the VPN endpoints. To set up a secure connection between the containers in Cloud and a corporate data center, you must have an IPsec VPN gateway or SoftLayer server installed in your on-premise data center. With the IBM VPN service, you can configure one VPN gateway per space, and define up to 16 connections to different destinations.">Connecting containers in <span class="keyword">Cloud</span> to a corporate data center via VPN</a></div>
+</div>
+</div>
+<aside role="complementary" aria-labelledby="d71797e6"></aside><article class="topic concept nested1" role="article" aria-labelledby="d71797e157" id="builtin"><h2 class="topictitle2" id="d71797e157">Built-in security settings</h2>
+<div class="body conbody"><p><a href="../api/content/containers/images/container_security.png" rel="external" target="_blank" title="(Opens in a new tab or window)"><img id="builtin__image_tdd_lyz_nz" src="images/container_security.png" width="500" alt="IBM Containers security"></a></p>
+<div class="tablenoborder"><table summary="" id="builtin__table_y15_trz_zw" class="defaultstyle"><caption><span class="tablecap">Table 1. Built-in <span class="keyword">IBM
+Cloud Container Service</span> security settings</span></caption><thead><tr><th id="d71797e179" class="thleft">Level</th>
+<th id="d71797e181" class="thleft">Description</th>
+</tr>
+</thead>
+<tbody><tr><td headers="d71797e179 ">Compute host</td>
+<td headers="d71797e181 ">All containers run as independent and isolated processes on the compute hosts and have
+restricted access to its resources. Without additional configuration, built-in security settings
+help to protect the Linux kernel and Docker daemon from Denial-of-Service (DOS) attacks. <p>For more
+information, see <a href="container_security.html#container_security_host" title="IBM Cloud Container Service optimizes the Linux kernel and Docker security capabilities to ensure container isolation and to restrict access to compute host resources.">Compute host
+security</a>.</p>
+</td>
+</tr>
+<tr><td headers="d71797e179 ">Private container network</td>
+<td headers="d71797e181 ">Every container runs in an isolated and secured private network where inbound and outbound
+network traffic is monitored to detect and remediate malicious activity. You can set up your app
+without public network access or selectively expose services to the public. <p>To securely connect
+containers to a corporate data center or to other <span class="keyword">Cloud</span> spaces, <a href="container_security.html#container_security_network" title="Review the list of integrated IBM Cloud Container Service features that ensure secure communication between containers in the same private network, between containers in different Cloud spaces, and between your Cloud space and a remote network.">you can set up a Virtual Private Network by using the IBM VPN
+service</a>.</p>
+</td>
+</tr>
+<tr><td headers="d71797e179 ">Docker image</td>
+<td headers="d71797e181 ">Every organization is assigned a secured Docker v2 private image registry where images are
+stored and shared by all users in the organization. <p>When logging in to the <span class="keyword">IBM
+Cloud Container Service</span> for the first time, every organization
+is required to set a namespace. The namespace is used to create a unique URL that identifies the
+organization's private registry in the following format: <span class="ph filepath">registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">namespace</var></span>.</p>
+<p>To add images to your private registry, you can create your own image, add an existing local
+image, or copy an image directly from Docker Hub. </p>
+<p>To ensure safe container deployments, every
+image is scanned by Vulnerability Advisor. Vulnerability Advisor scans for potential
+vulnerabilities, makes recommendations, and provides instructions to resolve
+vulnerabilities.</p>
+</td>
+</tr>
+<tr><td headers="d71797e179 ">Docker container</td>
+<td headers="d71797e181 ">Vulnerability Advisor checks the status of running containers in your organization to ensure
+containers continue to be secure and compliant with an organization's policy. Vulnerability Advisor
+scans for potential vulnerabilities, makes recommendations, and provides instructions to resolve
+vulnerabilities.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</article><article class="topic concept nested1" role="article" aria-labelledby="d71797e269" lang="en-us" id="container_security_host"><h2 class="topictitle2" id="d71797e269">Security settings on the <span class="keyword">IBM
+Cloud Container Service</span>
+compute host</h2>
+<div class="body conbody"><p class="shortdesc"><span class="keyword">IBM
+Cloud Container Service</span> optimizes the Linux
+kernel and Docker security capabilities to ensure container isolation and to restrict access to
+compute host resources. </p>
+<dl><dt class="dlterm">Fully managed and secured Docker daemons</dt>
+<dd>The Docker daemons that run on the IBM compute hosts are set up without direct user access
+and can be configured only by IBM. All Docker daemon sockets are secured with TLS certificates.</dd>
+<dt class="dlterm">Enabled Docker user namespaces</dt>
+<dd>The <a href="https://docs.docker.com/engine/security/security/">Docker user
+namespace</a> feature is enabled in the Docker Engine on the compute hosts. The user namespace
+feature isolates processes that run inside a container from all other processes and containers that
+run on the same compute host. The effective root user inside the container is mapped to a non-root
+user on the compute host. Even if a root user managed to break out of the container, the user does
+not have any permissions to manipulate files, processes, or other containers that run on the compute
+host.</dd>
+<dt class="dlterm">No privileged containers allowed</dt>
+<dd>The <samp class="ph codeph">--privileged</samp> option in the <samp class="ph codeph">run</samp> command is not supported.
+Containers do not have access to devices and hard disks on the compute host.</dd>
+<dt class="dlterm">Managed control groups (cgroups) for memory, CPU, and disk space</dt>
+<dd>Containers that run on the same compute host share memory, CPU, and disk space. To prevent a
+container from either consuming all available resources or bringing down applications or host
+systems, the maximum amount of memory, CPU, and disk space that can be assigned to a container is
+limited. <p>The amount of memory, CPU, and disk space that is available to the container during
+runtime is determined by the container size that you select during container creation. This
+limitation ensures that every container on the compute host gets its fair share of the available
+host resources. If a container misbehaves, the resource capping ensures a consistent performance and
+behavior for other containers on the compute host. </p>
+</dd>
+<dt class="dlterm">Compute host kernel optimization</dt>
+<dd>Compute host kernels limit the total number of threads and processes that can run on the compute
+host by a specific user or group. This optimization ensures that the host is not overloaded and does
+not run out of process slots until the user's maximum is reached.</dd>
+<dt class="dlterm">Continuous compute host monitoring</dt>
+<dd>Every compute host is continuously monitored by IBM to control and
+remediate fork-bombs and other process level Denial-Of-Service (DOS) attacks. </dd>
+<dt class="dlterm">Enabled AppArmor profile for Docker containers</dt>
+<dd>Every compute host applies the IBM-specific <a href="http://wiki.apparmor.net/index.php/Documentation" rel="external" target="_blank" title="(Opens in a new tab or window)">AppArmor</a> profile to secure the environment and restrict the capabilities of a
+container on the compute host. AppArmor is a Linux kernel security module that controls the access
+to folders, files, network domains, and permissions to create and change data.</dd>
+<dt class="dlterm">Disabled local volume mount on compute hosts</dt>
+<dd><span class="keyword">IBM
+Cloud Container Service</span> does not support the
+mounting of local volumes or local/host directories to a container. Instead, organization-scoped
+volumes are used to persist data between container restarts and to make data available to multiple
+containers. Volumes are hosted on isolated file shares that securely store app data and manage the
+access and permission to the files.<p>Organization-scoped volumes must be created before you can
+mount them to your container. You can create a volume from the <a href="container_volumes_ov.html#container_volumes_ui" title="A volume is a persistent storage location for the data that an app creates or the files that the app requires to run. You can create a volume for your container from the Cloud GUI."><span class="keyword">Cloud</span> GUI</a> or the <a href="container_volumes_ov.html#container_volumes_cli" title="A volume is a persistent storage location for the data that an app creates or the files that the app requires to run. You can create a volume for your container from the command line.">CLI</a>. </p>
+</dd>
+</dl>
+</div>
+</article><article class="topic concept nested1" role="article" aria-labelledby="d71797e400" lang="en-us" id="container_security_network"><h2 class="topictitle2" id="d71797e400">Security settings on the <span class="keyword">IBM
+Cloud Container Service</span>
+private container network</h2>
+<div class="body conbody"><p class="shortdesc">Review the list of integrated <span class="keyword">IBM
+Cloud Container Service</span> features that ensure secure
+communication between containers in the same private network, between containers in different
+<span class="keyword">Cloud</span> spaces, and between your
+<span class="keyword">Cloud</span> space and a remote
+network.</p>
+<dl><dt class="dlterm">Private L2 isolated container network per space</dt>
+<dd><span class="ph">A container private network creates an isolated and secure
+environment for the single containers and container groups that run in one space. Containers that
+are connected to the same private network can send and receive data from other containers in the
+private network by using the private IP addresses. Containers are not publicly available until a
+public port and either a public IP address for single containers or a public route for container
+groups are bound. </span><p>In <span class="keyword">Cloud</span>, every space is provided with a
+container private network where the default <span class="keyword">IBM
+Cloud Container Service</span> network settings are applied. When you
+create containers, they are automatically connected to the default private network for the space and
+assigned a private IP address. </p>
+</dd>
+<dt class="dlterm">Keep containers private or selectively expose public facing services through Network Security
+Groups</dt>
+<dd>Every container is protected by IBM-specific Network Security Groups that control the inbound
+network traffic and serve as a software firewall on the private network gateway level. Data that is
+sent through the private network gateway is checked for compliance against the Network Security
+Group rules and can either be passed to the recipient container or blocked. <p>When you create a
+container and do not expose it publicly, it is set up with the default Private Network Security
+Group. This security group allows private network communication between containers by using the
+private IP addresses. By default, all container ports are automatically exposed on the private
+network. You do not have to map the container ports to a host port.</p>
+<p>To make your app available publicly, you must expose a public port and bind either a
+public IP address to your single container, or a public route to your container group. <span class="ph" id="container_security_network__public_nsg">When you expose a public port by using the <samp class="ph codeph">-p</samp> option in the
+<samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> run</samp> command, you create a
+Public Network Security Group for your container that allows public data to be sent and received on
+the exposed port only. All other public ports are closed and cannot be used to access your app from
+the internet. </span></p>
+</dd>
+<dt class="dlterm">Continuous enterprise network monitoring</dt>
+<dd>All network traffic in <span class="keyword">IBM
+Cloud Container Service</span> is
+monitored by IBM to detect and remediate malicious activities. </dd>
+<dt class="dlterm">Full support for the Docker <samp class="ph codeph">exec</samp>, <samp class="ph codeph">attach</samp>, and
+<samp class="ph codeph">logs</samp> commands</dt>
+<dd>You can log in to your container or view its detailed output during runtime by leveraging the
+<samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> exec</samp>, <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> attach</samp>, or <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> logs</samp> commands. With these commands,
+you can avoid running a non-secure SSH daemon to access and monitor the container during runtime.
+<p>For more information about how to securely log in to your container by using <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> exec</samp>, see <a href="container_security.html#container_cli_login_exec" title="If you must log in to your running container, you can use bx ic exec.">Logging in to a container with exec</a>.</p>
+</dd>
+<dt class="dlterm">VPN for secure private network access to services in other spaces and in any remote network </dt>
+<dd>Containers in a private container network can be securely connected to corporate
+data centers by using the IBM® Virtual Private Network service.<p data-hd-audience="yellow">For more
+information, see <a href="container_security.html#container_vpn" title="Securely connect the single containers and container groups in a private container network in Cloud to a corporate data center by using the IBM® Virtual Private Network (VPN) service. IBM VPN provides a secure end-to-end communication channel over the internet that is based on the industry-standard Internet Protocol Security (IPsec) protocol suite. The IPsec protocol offers network-level peer authentication, data integrity, and data confidentiality by encrypting the packages that are exchanged between the VPN endpoints. To set up a secure connection between the containers in Cloud and a corporate data center, you must have an IPsec VPN gateway or SoftLayer server installed in your on-premise data center. With the IBM VPN service, you can configure one VPN gateway per space, and define up to 16 connections to different destinations.">Setting up a VPN connection between
+your containers and a corporate data center</a></p>
+</dd>
+</dl>
+</div>
+<article class="topic concept nested2" role="article" aria-labelledby="d71797e595" lang="en-us" id="container_cli_login_exec"><h3 class="topictitle3" id="d71797e595">Logging in to a container with <samp class="ph codeph">exec</samp></h3>
+<div class="body conbody"><p class="shortdesc">If you must log in to your running container, you can use <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> exec</samp>. </p>
+<p>Common uses of the <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span>
+exec</samp> command include opening a bash window and viewing files of a volume assigned to a
+container. The <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> exec</samp>
+command only runs on a container that is in a running state. To keep a container up and running, the
+container must be started with a long-running command. If a container is paused or stopped, it must
+be restarted with a long-running command before you can log into it.</p>
+<section role="region" aria-labelledby="d71797e660"><h4 class="sectiontitle" id="d71797e660">Command and parameters</h4>
+<pre class="codeblock"><code><span class="ph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> exec [-d] [-it] [-u USER] CONTAINER CMD </span></code></pre>
+
+<div class="steps note"><span class="notetitle">Note:</span> <span class="ph">*In this command, you can replace <samp class="ph codeph"><span class="ph">bx ic</span></samp> with <samp class="ph codeph">docker</samp>
+when you <a href="container_cli_cfic_install.html#container_cli_login" title="After you install the CLI, log in to use it.">logged in to <span class="keyword">IBM
+Cloud Container Service</span></a> and set your environment
+variables to use native Docker commands.</span></div>
+</section><section role="region" aria-labelledby="d71797e693"><h4 class="sectiontitle" id="d71797e693">Examples</h4>
+<div class="p"><span class="ph">This example command runs an interactive bash terminal in the container
+<var class="keyword varname">my_container</var>.</span><pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> exec -it <var class="keyword varname">my_container</var> bash</code></pre>
+</div>
+
+<div class="p"><span class="ph">This example command runs the date command in the container
+<var class="keyword varname">my_container</var>. </span><pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> exec <var class="keyword varname">my_container</var> date</code></pre>
+</div>
+</section></div>
+</article><article class="topic task nested2" role="article" aria-labelledby="d71797e726" id="container_vpn"><h3 class="topictitle3" id="d71797e726">Connecting containers to a corporate data center by setting up a Virtual Private
+Network</h3>
+<div class="body taskbody"><p class="shortdesc"><span class="ph" id="vpn_def">Securely connect the single containers and container groups in a private
+container network in <span class="keyword">Cloud</span> to a
+corporate data center by using the IBM® Virtual Private Network (VPN) service. <span class="keyword">IBM
+VPN</span> provides a secure end-to-end communication
+channel over the internet that is based on the industry-standard Internet Protocol Security (IPsec)
+protocol suite. The IPsec protocol offers network-level peer authentication, data integrity, and
+data confidentiality by encrypting the packages that are exchanged between the VPN endpoints. To set
+up a secure connection between the containers in <span class="keyword">Cloud</span> and a corporate data center, you must
+have an IPsec VPN gateway or SoftLayer server installed in your on-premise data center. With the
+<span class="keyword">IBM
+VPN</span> service, you can configure one VPN
+gateway per space, and define up to 16 connections to different destinations.</span></p>
+<div class="section context"><p>To connect containers to a corporate data center, follow these steps. </p>
+</div><ol class="steps" id="container_vpn__vpn_steps"><li class="step stepexpand"><span class="cmd">Create at least one <a href="container_single_ui.html#container_single_ui" title="Use a single container to run simple tests as you develop an app or service or for short-term processes that do not require high availability. To use your own networking front end, you can assign a public IP address to the container.">single container</a>
+or <a href="container_ha.html#container_group_ui" title="Create and deploy a scalable group container from the Cloud GUI. A container group includes two or more containers that run the same image. Use container groups for running long-term services with workloads that require scalability and reliability or for testing at the required scale.">container group</a> in your space that you
+want to connect to your corporate data center. </span></li>
+<li class="step stepexpand"><span class="cmd">Create an instance of the <span class="keyword">IBM
+VPN</span>
+service in your space by following step 1-5 of the <a href="container_integrations.html#container_integrations_binding" title="IBM Cloud has a list of services and manages them on behalf of app developers. To add a Cloud service for your container to use, you must request an instance of this service and bind the service to the container.">Binding a service</a> topic.</span> <div class="steps note"><span class="notetitle">Note:</span> The <span class="keyword">IBM
+VPN</span> service instance must be
+created in the same space where you created the containers that you want to connect to the corporate
+data center. </div>
+</li>
+<li class="step stepexpand"><span class="cmd">Follow the instructions in the <a href="../services/vpn/index.html" rel="external" target="_blank" title="(Opens in a new tab or window)"><span class="keyword">IBM
+VPN</span> getting
+started</a> topic to configure the VPN gateway and set up connections to your corporate data
+center. </span></li>
+</ol>
+</div>
+</article></article></article></div></main></body></html>

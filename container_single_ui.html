@@ -1,0 +1,1661 @@
+<!DOCTYPE html><html lang="en-us">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="dcterms.date" content="2017-11-10">
+<meta name="dcterms.rights" content="© Copyright IBM Corporation 2014, 2017">
+
+<meta name="description" content="Use a single container to run simple tests as you develop an app or service or for short-term processes that do not require high availability. To use your own networking front end, you can assign a public IP address to the container.">
+<meta name="keywords" content="single container, dashboard, GUI, IBM Containers, containers, CLI, docker run, bx ic, run, updating, command line, container, links, linking, --link, ip address, public, ip-bind, ip-request, ips, ip-unbind, remove, release, docker rm, rm, removing, tutorial, getting started, cli, install, plug-in, images, deploy, docker compose, multi-container deployment, multi-container app, docker-compose.yml, scaling, load balancer, nginx, workload, yml, supported options, faq">
+<meta name="geo.country" content="ZZ">
+<script>
+    digitalData = {
+      page: {
+        pageInfo: {
+  language: "en-us",
+
+  version: "v18",
+  ibm: {
+  country: "ZZ",
+  type: "CT701"
+  
+         }
+       }
+     }
+   };
+  </script><!-- Licensed Materials - Property of IBM -->
+<!-- US Government Users Restricted Rights -->
+<!-- Use, duplication or disclosure restricted by -->
+<!-- GSA ADP Schedule Contract with IBM Corp. -->
+<link rel="stylesheet" type="text/css" href="./ibmdita.css">
+<title>Running short-term tasks as single containers in IBM Cloud Container Service</title>
+</head>
+<body><main role="main"><div><article class="nested0" role="article" aria-labelledby="d72924e6" id="container_single_ui"><h1 class="topictitle1" id="d72924e6">Running short-term tasks as single containers (Deprecated)</h1>
+<div class="abstract"><div class="shortdesc"><span class="ph">Use a single container to run simple tests as you develop an app or
+service or for short-term processes that do not require high availability. To use your own
+networking front end, you can assign a public IP address to the container.</span></div>
+
+<div class="p"><div class="note attention"><span class="attentiontitle">Attention:</span>  Single and scalable containers are deprecated. Support
+will continue in IBM Cloud Public until 5 December 2017 and in IBM Cloud Local and Dedicated until
+20 June 2018. Start using Kubernetes clusters today to deploy secure, highly available apps. <a href="https://www.ibm.com/blogs/bluemix/2017/07/deprecation-single-scalable-group-container-service-bluemix-public/" rel="external" target="_blank" title="(Opens in a new tab or window)">Learn more about Kubernetes and how to migrate your
+apps</a>.</div>
+</div>
+
+<div class="p">In this
+page:<div class="lines">&nbsp;&nbsp;&nbsp;&nbsp; • Running short-term tasks as single containers from the <a href="container_single_ui.html#gui" title="Create and deploy containers from the Cloud GUI.">GUI</a> or the <a href="container_single_ui.html#container_single_cli" title="Create a container by using the run command. A container must include an image in it. If you do not have one yet, you can use one of the default IBM certified images that are available by default in your organization's private images registry.">CLI</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_single_ui.html#container_single_updating" title="To update an app, you must deploy a new container. If you push a new image, the container is not restarted automatically.">Updating containers</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_single_ui.html#container_linking" title="When a container is linked to another container in the same space, IBM Cloud Container Service creates a host entry on the recipient container for the source container. You can use an alias to refer to the source container, rather than a specific IP address that might change frequently.">Linking containers</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_single_ui.html#container_cli_ips" title="Request and bind a public IP address to a container in Cloud.">Requesting and binding IP addresses</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_single_ui.html#container_single_remove" title="To maximize the use of your quota, remove containers that are not in use occasionally.">Removing single containers</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; • Tutorial: <a href="container_single_ui.html#container_gettingstarted_tutorial" title="IBM Cloud gives you the ability to run Docker containers in the public cloud. Use containers to deploy self-contained, secure web apps that run independently of the host operating system. Containers are lightweight and do not require a lot of system resources because containers use the same system kernel and so can be run more efficiently than a virtual machine. This tutorial showcases how to build a messaging web app using Docker containers in Cloud. In the process, you will write a Dockerfile, add Docker images to your private Cloud images registry and link containers together.">Creating a single container web application</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp; • Tutorial: <a href="container_single_ui.html#container_compose_intro" title="If you have apps with multiple components, such as databases, services and caches, orchestrating all containers to start up and shut down together, can be a hard thing to do. In this tutorial, you learn how to deploy and run your app as a multi-container deployment in a microservices architecture by using a single Docker Compose command. Each container that is part of this system, is based on a Docker Compose service definition, and runs in its own isolated environment.">Creating a multi-container deployment</a></div>
+</div>
+</div>
+<aside role="complementary" aria-labelledby="d72924e6"></aside><article class="topic task nested1" role="article" aria-labelledby="d72924e149" id="gui"><h2 class="topictitle2" id="d72924e149">Running short-term tasks as single containers from the <span class="keyword">Cloud</span> GUI</h2>
+<div class="body taskbody"><p class="shortdesc">Create and deploy containers from the <span class="keyword">Cloud</span> GUI. </p>
+<div class="section prereq" id="gui__prereq_oh5_421_4z"><div class="p">Before you begin, consider the following information. <ul id="gui__ul_ph5_421_4z"><li id="gui__role">You must have a Developer role for the <span class="keyword">Cloud</span> space to create a container in it. For
+more information on the permissions of each roles and how to edit roles, see <span class="ph"><a href="../iam/users_roles.html">Users and roles</a></span>.</li>
+<li id="gui__add_image">From the <span class="keyword">Cloud</span>
+GUI, you create a container from either the IBM-provided public images, or from an existing image in
+your organizations private <span class="keyword">Cloud</span>
+registry. For more information about adding an image to your <span class="keyword wintitle">Catalog</span>, see <a href="container_images_adding_ov.html" title="A container image is the basis for every container that you create. An image is created from a Dockerfile, which is a file that contains instructions to build the image, and build artifacts, such as an app, the app's configuration, and its dependencies. Think of a container image as an executable file (.exe or .bin). As soon as you run the executable app file, you create an instance of your app. When you run a container, you create a container instance from the image.">Adding Docker images to your organization's private Cloud images registry (Deprecated)</a>.</li>
+<li id="gui__existing_ip">Check to see whether an IP address for the space exists that you can use
+instead of creating a new one. For more information, see <a href="container_single_ui.html#container_cli_ips_list" title="To make single containers accessible from the Internet, you must bind a public IP address to it. Before you request an IP address, review the list of public IP addresses already assigned to your organization and see whether one of those existing IP addresses are available.">Finding existing public IP addresses for your organization with the command line interface (CLI)</a>.</li>
+<li id="gui__bind_service">If you know that you want to bind a <span class="keyword">Cloud</span> service to the container, add the
+<span class="keyword">Cloud</span> service to your space. For more
+information, see <a href="container_integrations.html#container_integrations_binding" title="IBM Cloud has a list of services and manages them on behalf of app developers. To add a Cloud service for your container to use, you must request an instance of this service and bind the service to the container.">Binding a service from the Cloud GUI</a>.</li>
+<li>If you know that you want a shared disk that allows files to be accessible
+from within a container, create a volume before you create the container. For more information, see
+<a href="container_volumes_ov.html#container_volumes_cli" title="A volume is a persistent storage location for the data that an app creates or the files that the app requires to run. You can create a volume for your container from the command line.">Creating volumes with the command line (CLI)</a>.</li>
+</ul>
+</div>
+</div><p class="li stepsection">To create and deploy a container with an image:</p><ol class="steps" id="gui__steps_qh5_421_4z"><li class="step stepexpand" id="gui__start"><span class="cmd"><span class="ph" data-hd-otherprops="registry_check">From the catalog, select
+<span class="ph uicontrol">Containers</span> and choose an image.</span></span> Both images that are provided by IBM and images that are stored in your private <span class="keyword">Cloud</span> registry are displayed. </li>
+<li class="step stepexpand" id="gui__namespace"><span class="cmd">If a namespace is already set for your organization, you are not prompted to create one and can
+continue with the next step. </span> If a namespace is not specified for your organization yet, you are prompted to set one for the
+image registry.  A namespace is a unique name to identify your private registry in <span class="keyword">Cloud</span>. The namespace is assigned one time for
+an organization and cannot be changed after it is created. If you want to use <span class="keyword">IBM
+Cloud Container Service</span> in multiple <span class="keyword">Cloud</span> regions, you must set up a namespace for
+each region. <div class="note tip" id="gui__namespace_naming"><span class="tiptitle">Tip:</span> Observe the following rules for the
+namespace:<ul id="gui__ul_rh5_421_4z"><li>It can contain only lowercase letters, numbers, or underscores (_).</li>
+<li>It can be 4 - 30 characters. If you plan to manage containers from the command line, you might
+prefer to have a short namespace that can be typed quickly.</li>
+<li>Its name must be unique in <span class="keyword">Cloud</span>.</li>
+</ul>
+</div>
+</li>
+<li class="step stepexpand"><span class="cmd">Next, start defining your container.</span> The window opens to the <span class="ph uicontrol">Single</span> container tab, by default.</li>
+<li class="step stepexpand" id="gui__tag">Optional: <span class="cmd">Under the image name, select the tag or version of the image to use.</span></li>
+<li class="step stepexpand" id="gui__space"><span class="cmd">Select one of the <span class="keyword">Cloud</span> spaces
+in your organization.</span></li>
+<li class="step stepexpand"><span class="cmd">In the <span class="ph uicontrol">Container name</span> field, enter the name for the container.</span> <div class="note tip"><span class="tiptitle">Tip:</span> The container name must start with a letter, and then can include
+uppercase letters, lowercase letters, numbers, periods (.), underscores (_), or hyphens
+(-).</div>
+</li>
+<li class="step stepexpand" id="gui__size"><span class="cmd">In the <span class="ph uicontrol">Size</span> field, select a container size.</span> The default size is <span class="ph uicontrol" data-hd-audience="yellow">Micro (256 MB Memory, 16 GB
+Storage)</span>. The size that you choose impacts the amount of memory and disk space the
+container gets on the compute host during runtime, and cannot be changed after the container is
+created. Other available sizes are<ul data-hd-audience="yellow" id="gui__ul_sh5_421_4z"><li>Pico (64 MB memory, 4 GB disk space)</li>
+<li>Nano (128 MB memory, 8 GB disk space)</li>
+<li>Tiny (512 MB memory, 32 GB disk space)</li>
+<li>Small (1 GB memory, 64 GB disk space)</li>
+<li>Medium (2 GB memory, 128 GB disk space)</li>
+<li>Large (4 GB memory, 256 GB disk space)</li>
+<li>X-Large (8 GB memory, 512 GB disk space)</li>
+<li>2X-Large (16 GB memory, 1 TB disk space)</li>
+</ul>
+</li>
+<li class="step stepexpand"><span class="cmd">In the <span class="ph uicontrol">Public IP address</span> field, choose whether to request and assign a
+new public IP address. </span> Public IP addresses allow a public connection with the container. One instance when you might
+not want a public IP address is when you are using a database that is visible to the user's app only
+inside the private network.<div class="steps note"><span class="notetitle">Note:</span> Binding a public IP address does not include a SSL certificate
+which encrypts the data that are sent to and from your single container. If your app requires SSL
+encryption, you can either implement your own SSL solution or use a container group instead of a
+single container. Container groups are bound to a public route that already includes a SSL
+certificate, so you can access your container group with HTTPS without any additional configuration.
+For more information, see <a href="container_ha.html#container_group_ui" title="Create and deploy a scalable group container from the Cloud GUI. A container group includes two or more containers that run the same image. Use container groups for running long-term services with workloads that require scalability and reliability or for testing at the required scale.">Creating a
+container group with the GUI</a>.</div>
+<p>If you have an IP address you can use, select
+<span class="ph uicontrol">Leave unassigned</span> and bind it to the container after the container is
+created.</p>
+</li>
+<li class="step stepexpand"><span class="cmd">In the <span class="ph uicontrol">Public ports</span> field, specify any public ports to publish. </span> The field is pre-populated with the ports that were specified in the Dockerfile for the image
+when the image was built. When you specify a public port, you can choose between UDP and TCP to
+indicate the IP protocol that you want to use. If you do not specify a protocol, your port is
+automatically exposed for TCP traffic. When you expose a public port, you create a Public Network
+Security Group for your container that allows you to send and receive public data on the exposed
+port only. All other public ports are closed and cannot be used to access your app from the
+internet. You can include multiple ports by separating each port with a comma (,). <div class="p" id="gui__ports_p">If a port is specified in the Dockerfile for the image that you are using, include
+that port.<div class="note tip"><span class="tiptitle">Tip:</span> <ul id="gui__ul_uh5_421_4z"><li>For the IBM certified Liberty Server image or a modified
+version of this image, enter the port <kbd class="ph userinput">9080</kbd>.</li>
+<li>For the IBM certified Node.js image or a modified version
+of this image, enter any port, such as port <kbd class="ph userinput">8000</kbd>.</li>
+</ul>
+</div>
+</div>
+</li>
+<li class="step stepexpand">Optional: <span class="cmd">If you want to add a volume, add environment variables, or bind a <span class="keyword">Cloud</span> service, expand <span class="ph uicontrol">Advanced
+Options</span>.</span></li>
+<li class="step stepexpand" id="gui__volume">Optional: <span class="cmd">Define data or file storage. Associate an existing volume with a container or container
+group.</span> A volume is a shared disk that allows files to be accessible from within a container. The path
+in the container indicates where in the container’s file system the volume is mounted. <div class="note restriction"><span class="restrictiontitle">Restriction:</span> You can delete volumes from your <span class="keyword">Cloud</span> space by using the command line
+only.</div>
+<ol type="a" class="ol substeps" id="gui__substeps_vh5_421_4z"><li class="li substep"><span class="cmd">Click <span class="ph uicontrol">Assign an existing volume</span>.</span></li>
+<li class="li substep"><span class="cmd">Select the volume from the drop-down list.</span></li>
+<li class="li substep"><span class="cmd">In the next field, specify a path on the container to map the volume. </span> For example, <span class="ph filepath">/var/lib/my_volume</span></li>
+<li class="li substep"><span class="cmd">To specify that a volume is read-only, select <span class="ph uicontrol">Read-only</span>.</span> By default, volumes are read/write.</li>
+<li class="li substep"><span class="cmd">To add multiple volumes, click <span class="ph uicontrol">Assign an existing volume</span> and repeat
+these steps.</span></li>
+</ol>
+</li>
+<li class="step stepexpand" id="gui__env_var">Optional: <span class="cmd">Define environment variables. </span> <ol type="a" class="ol substeps" id="gui__substeps_wh5_421_4z"><li class="li substep substepexpand"><span class="cmd">Click <span class="ph uicontrol">Add a new environment variable</span>.</span></li>
+<li class="li substep substepexpand"><span class="cmd">Enter a name for the environment variable.</span></li>
+<li class="li substep substepexpand"><span class="cmd">In the next field, specify a value for the environment variable.</span></li>
+<li class="li substep substepexpand"><span class="cmd">To add multiple environment variables, click <span class="ph uicontrol">Add a new environment
+variable</span> and repeat these steps.</span> <div class="tablenoborder"><table summary="" id="gui__env_keys_group" class="defaultstyle"><caption><span class="tablecap">Table 1. Suggested environment variables</span></caption><thead><tr><th id="d72924e493" class="thleft">Environment variable</th>
+<th id="d72924e495" class="thleft">Description</th>
+</tr>
+</thead>
+<tbody><tr><td headers="d72924e493 "><div class="lines"><samp class="ph codeph">CCS_BIND_APP=</samp><br>
+<samp class="ph codeph"><var class="keyword varname">&lt;appname&gt;</var></samp></div>
+</td>
+<td headers="d72924e495 ">Some <span class="keyword">Cloud</span> services do not
+support direct binding to a container. In this case, you need to create a Cloud Foundry app and bind
+the <span class="keyword">Cloud</span> service to it. Then, you
+bind the app to your container by using <samp class="ph codeph">CCS_BIND_APP</samp>. The Cloud Foundry app acts as
+a bridge and allows <span class="keyword">Cloud</span> to inject
+your bridge app’s VCAP_SERVICES information into the running container instance. </td>
+</tr>
+<tr><td headers="d72924e493 "><div class="lines"><samp class="ph codeph">CCS_BIND_SRV=</samp><br>
+<samp class="ph codeph"><var class="keyword varname">&lt;service_instance_name1&gt;,</var></samp><br>
+<samp class="ph codeph"><var class="keyword varname">&lt;service_instance_name2&gt;</var></samp></div>
+
+<div class="steps note"><span class="notetitle">Note:</span>  When a service does not support the use of the <samp class="ph codeph">CCS_BIND_SRV=</samp> environment
+variable, use <samp class="ph codeph">CCS_BIND_APP=</samp> instead.</div>
+</td>
+<td headers="d72924e495 ">To bind a <span class="keyword">Cloud</span> service
+directly to a container without using a bridge app, use <samp class="ph codeph">CCS_BIND_SRV</samp>. This binding
+allows <span class="keyword">Cloud</span> to inject the
+VCAP_SERVICES information into the running container instance. To list multiple <span class="keyword">Cloud</span> services, include them as part of the
+same environment variable.</td>
+</tr>
+<tr><td headers="d72924e493 "><div class="lines">(Deprecated) <samp class="ph codeph">CCS_SSH_KEY=</samp><br>
+<samp class="ph codeph"><var class="keyword varname">&lt;public_ssh_key&gt; </var></samp></div>
+</td>
+<td headers="d72924e495 "><div class="note note" data-hd-status="deprecated"><span class="notetitle">This environment variable has been deprecated:</span> Use <span class="ph"><samp class="ph codeph">bx ic</samp></span>
+<samp class="ph codeph">exec</samp> or <span class="ph"><samp class="ph codeph">bx ic</samp></span>
+<samp class="ph codeph">attach</samp> for external access to your containers instead. For more information, see
+<a href="container_security.html#container_cli_login_exec" title="If you must log in to your running container, you can use bx ic exec.">Logging in to a container with exec</a>.</div>
+<span class="ph">To add an SSH
+key to a container when you create it, you can use <samp class="ph codeph">CCS_API_KEY</samp>.</span></td>
+</tr>
+<tr><td headers="d72924e493 "><div class="lines"><samp class="ph codeph">LOG_LOCATIONS=</samp><br>
+<samp class="ph codeph"><var class="keyword varname">&lt;path_to_file&gt; </var></samp></div>
+</td>
+<td headers="d72924e495 "><span class="ph" id="gui__d42700e1424">To add a log file to be monitored in the container, include the
+<samp class="ph codeph">LOG_LOCATIONS</samp> environment variable with a path to the log file.</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+</ol>
+</li>
+<li class="step stepexpand" id="gui__bind_service_step">Optional: <span class="cmd">Define other services for the app. Bind a <span class="keyword">Cloud</span> service from your <span class="keyword">Cloud</span> space to your container. In the
+<span class="ph uicontrol">Service binding</span> section, select a <span class="keyword">Cloud</span> service instance and click
+<span class="ph uicontrol">Add</span> to bind the service to your container.</span> If you do not have any <span class="keyword">Cloud</span>
+services added to the space yet, no services are displayed in the menu.</li>
+<li class="step stepexpand" id="gui__deploy"><span class="cmd">Deploy the container and wait for it to complete. Click <span class="ph uicontrol">CREATE</span>.</span> As the container is created, which might take a few moments, the container is also
+started in <span class="keyword">Cloud</span>. Look in the
+<span class="ph uicontrol">CONTAINER HEALTH</span> section for the container’s status. When the creation is
+complete, the status is <span class="ph uicontrol">Running</span>.</li>
+</ol>
+<div class="section result" id="gui__result_xh5_421_4z"><p>If you selected <span class="ph uicontrol">Leave unassigned</span> for the <span class="ph uicontrol">Public IP
+Address</span> because you have an existing IP address to use, bind the IP address to the
+container. For more information, see <a href="container_single_ui.html#container_cli_ips" title="Request and bind a public IP address to a container in Cloud.">Requesting and binding public IP addresses to containers</a>.</p>
+
+<div class="p" id="gui__wait">If you are connecting to an external app from the container, there is up to a 5-minute
+wait after you started the container process before it can connect to the specified IP address.
+Then, you can verify that the app is functioning in the container by doing one of the following
+options: <ul id="gui__ul_yh5_421_4z"><li>You can open the app in a browser by creating a URL with the public IP address and the port.
+<p>Example</p>
+<span class="ph filepath">http://<var class="keyword varname">public_IP</var>:<var class="keyword varname">public_port</var></span>
+<div class="steps note"><span class="notetitle">Note:</span> If a service in the app exists that does not expose an HTTP endpoint, this option might not
+display the app in the browser.</div>
+</li>
+<li>From the Linux or UNIX command line, you can run <span class="ph filepath">nc -zv
+<var class="keyword varname">&lt;public_IP&gt;</var>
+<var class="keyword varname">&lt;public_port&gt;</var></span> to verify that a server is listening on the port that
+was specified.</li>
+</ul>
+</div>
+</div><div class="section postreq" id="gui__postreq_zh5_421_4z"><p>Next, if you are an organization manager you can view your organization's container billing.</p>
+
+<ol id="gui__ol_a35_421_4z"><li><span class="ph">From your account details, in
+manage organizations, select an organization.</span></li>
+<li>Select <span class="ph uicontrol">Usage Dashboard</span> and review the usage and billing details. </li>
+</ol>
+</div></div>
+</article><article class="topic task nested1" role="article" aria-labelledby="d72924e728" lang="en-us" id="container_single_cli"><h2 class="topictitle2" id="d72924e728">Running short-term tasks as single containers with the command line interface (CLI)</h2>
+<div class="body taskbody"><p class="shortdesc">Create a container by using the <samp class="ph codeph">run</samp> command. A container must include an
+image in it. If you do not have one yet, you can use one of the default IBM certified images that are available by default in your organization's
+private images registry.</p>
+<div class="section prereq"><div class="p" id="container_single_cli__prereq">Before you begin, consider the following steps. <ul><li>You must have a Developer role for the <span class="keyword">Cloud</span> space to create a container in it. For
+more information on the permissions of each roles and how to edit roles, see <span class="ph"><a href="../iam/users_roles.html">Users and roles</a></span>.</li>
+<li id="container_single_cli__identify_images">Identify an existing image from your organization's private images registry
+to use in your container by running the <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> images</samp> command. To add an image to
+your registry, see <a href="container_images_adding_ov.html" title="A container image is the basis for every container that you create. An image is created from a Dockerfile, which is a file that contains instructions to build the image, and build artifacts, such as an app, the app's configuration, and its dependencies. Think of a container image as an executable file (.exe or .bin). As soon as you run the executable app file, you create an instance of your app. When you run a container, you create a container instance from the image.">Adding Docker images to your organization's private Cloud images registry (Deprecated)</a>.</li>
+<li>Check to see whether an IP address for the space exists that you can use
+instead of creating a new one. For more information, see <a href="container_single_ui.html#container_cli_ips_list" title="To make single containers accessible from the Internet, you must bind a public IP address to it. Before you request an IP address, review the list of public IP addresses already assigned to your organization and see whether one of those existing IP addresses are available.">Finding existing public IP addresses for your organization with the command line interface (CLI)</a>.</li>
+<li>If you know that you want to bind a <span class="keyword">Cloud</span> service to the container, add the
+<span class="keyword">Cloud</span> service to your space. For more
+information, see <a href="container_integrations.html#container_integrations_binding" title="IBM Cloud has a list of services and manages them on behalf of app developers. To add a Cloud service for your container to use, you must request an instance of this service and bind the service to the container.">Binding a service from the Cloud GUI</a>.</li>
+<li id="container_single_cli__create_shared_volume">If you know that you want a shared disk that
+allows files to be accessible from multiple containers, create a volume before you create the
+container. For more information, see <a href="container_volumes_ov.html#container_volumes_cli" title="A volume is a persistent storage location for the data that an app creates or the files that the app requires to run. You can create a volume for your container from the command line.">Creating volumes with the command line (CLI)</a>.</li>
+</ul>
+</div>
+</div><p class="li stepsection">Create a container.</p><ol class="steps"><li class="step stepexpand"><span class="cmd">Create a container with an existing IP address and an existing image in your organization's
+private images registry.*</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run -p <var class="keyword varname">&lt;ip-address&gt;</var>:<var class="keyword varname">&lt;port_on_IP&gt;</var>:<var class="keyword varname">&lt;public_port&gt;</var> -e <var class="keyword varname">&lt;env_variable&gt;</var> -m <var class="keyword varname">&lt;container_size&gt;</var> --name <var class="keyword varname">&lt;container_name&gt;</var> --volume <var class="keyword varname">&lt;volname:mount_path&gt;</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;namespace&gt;</var>/<var class="keyword varname">&lt;image_name_or_id&gt;</var></code></pre>
+<div class="steps note"><span class="notetitle">Note:</span> <span class="ph" id="container_single_cli__d41670e180">*In this command, you can replace <samp class="ph codeph"><span class="ph">bx ic</span></samp> with <samp class="ph codeph">docker</samp>
+when you <a href="container_cli_cfic_install.html#container_cli_login" title="After you install the CLI, log in to use it.">logged in to <span class="keyword">IBM
+Cloud Container Service</span></a> and set your environment
+variables to use native Docker commands.</span><span class="ph" id="container_single_cli__d41670e192">You can use native Docker
+commands in all steps that are marked with an asterisk (*) in this topic. </span></div>
+<p>Example</p>
+<div class="p">The following example creates a
+single container with these details.<ul><li>Name: <var class="keyword varname">my_container</var></li>
+<li>Size: <var class="keyword varname">64 MB</var></li>
+<li>Image: <var class="keyword varname">ibmliberty</var></li>
+<li>Mounted volume: <var class="keyword varname">myvol</var></li>
+<li>Exposed public port: <var class="keyword varname">9080</var></li>
+<li>Bound IP address: <var class="keyword varname">192.0.2.23</var></li>
+<li>Custom log file location: Standard Ubuntu log file. Logs from custom log file locations can be
+viewed in Kibana after the container is created.</li>
+</ul>
+</div>
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run -p 192.0.2.23:9080:9080 -e <span class="q">"LOG_LOCATION=/var/log/dpkg.log"</span> -m 64 --name my_container --volume myvol:/var/tmp registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/ibmliberty </code></pre>
+
+As the container is created, it is also started. The container is deployed when the ID for the
+container is displayed.</li>
+<li class="step stepexpand">Optional: <span class="cmd">List your running containers.*</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ps</code></pre>
+</li>
+</ol>
+<div class="section postreq"><div class="p">If you are connecting to an external app from the container, there is up to a 5-minute
+wait after you started the container process before it can connect to the specified IP address.
+Then, you can verify that the app is functioning in the container by doing one of the following
+options: <ul id="container_single_cli__d41675e375"><li>You can open the app in a browser by creating a URL with the public IP address and the port.
+<p>Example</p>
+<span class="ph filepath">http://<var class="keyword varname">public_IP</var>:<var class="keyword varname">public_port</var></span>
+<div class="steps note"><span class="notetitle">Note:</span> If a service in the app exists that does not expose an HTTP endpoint, this option might not
+display the app in the browser.</div>
+</li>
+<li>From the Linux or UNIX command line, you can run <span class="ph filepath">nc -zv
+<var class="keyword varname">&lt;public_IP&gt;</var>
+<var class="keyword varname">&lt;public_port&gt;</var></span> to verify that a server is listening on the port that
+was specified.</li>
+</ul>
+</div>
+
+<p>Next, if you are an organization manager you can view your organization's container billing.</p>
+
+<div class="p"><ol><li>Click on the user avatar.</li>
+<li>Click on <span class="ph uicontrol">Account</span>.</li>
+<li>Expand your organization by clicking the <span class="ph uicontrol">+</span> button.</li>
+<li>Select <span class="ph uicontrol">Usage Dashboard</span> and review the usage and billing details. </li>
+</ol>
+<span class="ph">For more information, go to <span class="ph"><a href="../admin/account.html">Managing your account</a></span>.</span></div>
+</div></div>
+<aside role="complementary" aria-labelledby="d72924e728"></aside></article><article class="topic task nested1" role="article" aria-labelledby="d72924e1046" lang="en-us" id="container_single_updating"><h2 class="topictitle2" id="d72924e1046">Updating short-term tasks in single containers with the command line interface (CLI)</h2>
+<div class="body taskbody"><p class="shortdesc">To update an app, you must deploy a new container. If you
+push a new image, the container
+is not restarted automatically.</p>
+<div class="section context"><div class="tablenoborder"><table summary="" id="container_single_updating__updating_group_cli_table" class="defaultstyle"><caption><span class="tablecap">Table 2. Optional tools for updating an app</span></caption><thead><tr><th id="d72924e1111" class="thleft">Update tools</th>
+<th id="d72924e1113" class="thleft">Description</th>
+</tr>
+</thead>
+<tbody><tr><td headers="d72924e1111 "><span class="keyword">Delivery Pipeline</span></td>
+<td headers="d72924e1113 ">Automate your app builds and container deployments to <span class="keyword">Cloud</span> by using the <span class="keyword">Delivery Pipeline</span>, which is a <span class="keyword">Cloud</span> service that is available to you. For
+more information, see <a href="container_integrations.html#container_single_pipeline_ov" title="Automate the building and deploying of your single containers with the Delivery Pipeline.">Creating a single container by using the Delivery Pipeline</a>.</td>
+</tr>
+<tr><td headers="d72924e1111 ">UrbanCode Deploy</td>
+<td headers="d72924e1113 ">Automate your app builds and container deployments to <span class="keyword">Cloud</span> by using UrbanCode Deploy. For more
+information about purchasing UrbanCode Deploy, see the <a href="http://www.ibm.com/software/products/en/ucdep" rel="external" target="_blank" title="(Opens in a new tab or window)">IBM UrbanCode
+Deploy</a> product page.</td>
+</tr>
+<tr><td headers="d72924e1111 ">Update the app yourself by using the <span class="keyword">IBM
+Cloud Container Service</span> CLI</td>
+<td headers="d72924e1113 ">Complete the steps in this task to update the app yourself.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div><p class="li stepsection">To update a container yourself by using the <span class="keyword">IBM
+Cloud Container Service</span> CLI:</p><ol class="steps"><li class="step stepexpand"><span class="cmd">Update the app locally.</span></li>
+<li class="step stepexpand"><span class="cmd">Choose to either build your image directly in <span class="keyword">Cloud</span> or build and test your image locally
+before you push it to <span class="keyword">Cloud</span>. </span> <ul><li>To build the image directly in <span class="keyword">Cloud</span>, run the following command.*<div class="note tip"><span class="tiptitle">Tip:</span> <span class="ph">Run <samp class="ph codeph"><span class="ph">bx ic</span> namespace-get</samp> to retrieve
+your namespace and replace <var class="keyword varname">&lt;my_namespace&gt;</var> with your namespace information.</span></div>
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> build -t registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">&lt;image_name&gt;</var>:<var class="keyword varname">&lt;tag&gt;</var> <var class="keyword varname">&lt;dockerfile_location&gt;</var></code></pre>
+Example<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> build -t registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">my_namespace</var>/<var class="keyword varname">my_image</var>:<var class="keyword varname">v1</var> .</code></pre>
+<div class="steps note"><span class="notetitle">Note:</span> <span class="ph" id="container_single_updating__d43200e229">*In this command, you can replace <samp class="ph codeph"><span class="ph">bx ic</span></samp> with <samp class="ph codeph">docker</samp>
+when you <a href="container_cli_cfic_install.html#container_cli_login" title="After you install the CLI, log in to use it.">logged in to <span class="keyword">IBM
+Cloud Container Service</span></a> and set your environment
+variables to use native Docker commands.</span><span class="ph" id="container_single_updating__d43200e248">You can use native Docker
+commands in all steps that are marked with an asterisk (*) in this topic. </span></div>
+</li>
+<li>To build the image locally and then push the image to <span class="keyword">Cloud</span>, follow these steps.<div class="p"><ol type="a"><li>If you are using the plug-in for <span class="keyword">IBM
+Cloud Container Service</span>, log in again. Do not set the
+environment variables for option 2, so that <samp class="ph codeph">docker</samp> commands will be sent to the
+Docker engine on your local machine.<div class="p"><pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> init</code></pre>
+</div>
+</li>
+<li>Build the image locally from your Dockerfile.<div class="p"><pre class="codeblock"><code>docker build -t <var class="keyword varname">&lt;image_name&gt;</var>:<var class="keyword varname">&lt;tag&gt;</var> <var class="keyword varname">&lt;dockerfile_location&gt;</var></code></pre>
+</div>
+<div class="p">Example<pre class="codeblock"><code>docker build -t <var class="keyword varname">my_ibmliberty_image</var>:<var class="keyword varname">v1</var> .</code></pre>
+</div>
+</li>
+<li>Run a container from the image to test that your new app runs locally by using the following
+command, where <var class="keyword varname">Port</var> is the port for HTTP traffic.<div class="p"><pre class="codeblock"><code>docker run -d --name <var class="keyword varname">&lt;container_name&gt;</var> <var class="keyword varname">&lt;image_name&gt;</var></code></pre>
+</div>
+<div class="p">Example<pre class="codeblock"><code>docker run -d --name <var class="keyword varname">my_container</var> <var class="keyword varname">my_ibmliberty_image</var></code></pre>
+</div>
+<p>If
+the app is running correctly, the container ID is displayed in the CLI output. To review the logs
+for the container, run <samp class="ph codeph">docker logs
+<var class="keyword varname">&lt;container_name_or_id&gt;</var>.</samp></p>
+</li>
+<li id="container_single_updating__d43200e329">Tag the local image with your private <span class="keyword">Cloud</span> registry and a new name. <span class="ph">Use lowercase alphanumeric characters or underscores (_) only
+in the image name. Other symbols, such as hyphens (-) or slashes (/), might prevent the image from
+being pushed to the image registry.</span><div class="p"><pre class="codeblock"><code>docker tag <var class="keyword varname">&lt;current_image_name_or_ID&gt;</var>:<var class="keyword varname">&lt;optional_tag&gt;</var>  registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">&lt;new_image_name&gt;</var>:<var class="keyword varname">&lt;optional_tag&gt;</var> </code></pre>
+</div>
+<p>Example</p>
+<div class="p"><pre class="codeblock"><code>docker tag <var class="keyword varname">my_ibmliberty_image</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">my_ibmliberty_image</var></code></pre>
+</div>
+</li>
+<li>Push the image to your private <span class="keyword">Cloud</span> registry by using the following command.<div class="p"><pre class="codeblock"><code>docker push registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">&lt;image_name&gt;</var></code></pre>
+</div>
+<div class="p">Example<pre class="codeblock"><code>docker push registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">my_namespace</var>/<var class="keyword varname">my_ibmliberty_image</var></code></pre>
+</div>
+</li>
+</ol>
+</div>
+<div class="note important"><span class="importanttitle">Important:</span> <span class="ph">When you push an image to your private <span class="keyword">Cloud</span> registry, the size reported for the
+image is smaller than the size of the same image in your local Docker engine. The difference between
+the sizes does not indicate that an issue occurred when the image was pushed. The compressed size of
+the image is reported in <span class="keyword">IBM
+Cloud Container Service</span>.</span></div>
+</li>
+</ul>
+</li>
+<li class="step stepexpand"><span class="cmd">Unbind the public IP address from the container. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-unbind <var class="keyword varname">&lt;public_IP_address&gt;</var> <var class="keyword varname">&lt;container_name_or_id&gt;</var></code></pre>
+ <p>The container is no longer bound to the IP address, but the IP is still counted toward your
+organization's public IP quota.</p>
+</li>
+<li class="step stepexpand"><span class="cmd">Verify that the IP address was unbound by running the following command.*</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> inspect <var class="keyword varname">&lt;container_name_or_id&gt;</var></code></pre>
+
+<p>If the value for <samp class="ph systemoutput">PublicIpAddress</samp> is not empty, wait a few minutes
+longer and run the command again before you continue with the next step.</p>
+</li>
+<li class="step stepexpand"><span class="cmd">After the IP address was removed from the existing container, create another container with the
+updated image.*</span> <pre class="codeblock"><code><span class="ph"><span class="ph"><samp class="ph codeph">bx ic</samp></span><span class="ph" id="container_single_updating__d43214e3572"> run [-p PORT] [-P] [-d] [-e ENV] [--env-file
+ENVFILE] [-it] [--link NAME:ALIAS] [-m MEMORY] --name NAME [--volume VOLUME:/DIRECTORY_PATH] IMAGE [CMD [CMD ...]] </span></span></code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Bind the IP address to the new container.</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind <var class="keyword varname">&lt;public_IP_address&gt;</var> <var class="keyword varname">&lt;container_name_or_id&gt;</var></code></pre>
+</li>
+<li class="step stepexpand">Optional: <span class="cmd">Delete the old container.*</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> rm <var class="keyword varname">&lt;container_name_or_id&gt;</var></code></pre>
+</li>
+</ol>
+</div>
+<aside role="complementary" aria-labelledby="d72924e1046"></aside></article><article class="topic task nested1" role="article" aria-labelledby="d72924e1513" lang="en-us" id="container_linking"><h2 class="topictitle2" id="d72924e1513">Linking single containers with the command line interface (CLI)</h2>
+<div class="body taskbody"><p class="shortdesc">When a container is linked to another container in the same space, <span class="keyword">IBM
+Cloud Container Service</span> creates a host entry on the recipient
+container for the source container. You can use an alias to refer to the source container, rather
+than a specific IP address that might change frequently.</p>
+<div class="section context"><p>Whenever you want a single container to communicate with another
+container that is running an
+image, such as <samp class="ph codeph">dbimage</samp>, you can address the container
+by using an alias for the
+host name, such as <samp class="ph codeph">dbserver</samp>. With this capability,
+you can create a
+<samp class="ph codeph">webserver</samp> image that refers to the database server
+image by using the
+<samp class="ph codeph">dbserver</samp> host name, regardless of what its IP address
+or actual name is. You can
+run many instances of the pair in the same image without having to
+hand-off configuration or IP
+information. You can always refer to the database server as <samp class="ph codeph">dbserver</samp>.</p>
+
+</div><ol class="steps"><li class="step stepexpand"><span class="cmd">Create a source container by running the following command.*</span> <div class="note tip"><span class="tiptitle">Tip:</span> Make sure to include the <samp class="ph codeph">-p</samp> option to publish the port, which
+exposes the port number to the recipient container. In a Dockerfile, the port that is exposed in the
+image with the EXPOSE statement is not currently used by the linking run time.</div>
+<div class="note tip"><span class="tiptitle">Tip:</span> <span class="ph">Run <samp class="ph codeph"><span class="ph">bx ic</span> namespace-get</samp> to retrieve
+your namespace and replace <var class="keyword varname">&lt;my_namespace&gt;</var> with your namespace information.</span></div>
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run -p <var class="keyword varname">&lt;port&gt;</var> --name <var class="keyword varname">&lt;source_container_name&gt;</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">&lt;source_container_image_name&gt;</var> </code></pre>
+Example
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run -p <var class="keyword varname">17546</var> --name <var class="keyword varname">source</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">dbimage</var> </code></pre>
+<div class="steps note"><span class="notetitle">Note:</span> <span class="ph" id="container_linking__d36742e180">*In this command, you can replace <samp class="ph codeph"><span class="ph">bx ic</span></samp> with <samp class="ph codeph">docker</samp>
+when you <a href="container_cli_cfic_install.html#container_cli_login" title="After you install the CLI, log in to use it.">logged in to <span class="keyword">IBM
+Cloud Container Service</span></a> and set your environment
+variables to use native Docker commands.</span><span class="ph" id="container_linking__d36742e192">You can use native Docker
+commands in all steps that are marked with an asterisk (*) in this topic. </span></div>
+</li>
+<li class="step stepexpand"><span class="cmd">Create a recipient container and link it to the source container by running the following
+command. *</span> For the alias, select a custom name for the image that is used in the source container. You
+can expose multiple ports for the recipient container to the host container by including the
+<span class="keyword option">-p</span> option multiple times. <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run -p <var class="keyword varname">&lt;port&gt;</var> -p <var class="keyword varname">&lt;port&gt;</var> --name <var class="keyword varname">&lt;recipient_container_name&gt;</var> --link <var class="keyword varname">&lt;source_container_name&gt;</var>:<var class="keyword varname">&lt;alias&gt;</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">&lt;recipient_container_image_name&gt;</var> </code></pre>
+Example<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run -p 12534 -p 15256 --name <var class="keyword varname">recipient</var> --link <var class="keyword varname">source</var>:<var class="keyword varname">dbserver</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">webserver</var> </code></pre>
+<p>The
+container is linked when the ID for the recipient container is displayed.</p>
+</li>
+<li class="step stepexpand">Optional: <span class="cmd">Verify the environment variables that are injected by the link by logging into your container
+using <samp class="ph codeph">exec</samp>.*</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> exec -it <var class="keyword varname">&lt;recipient_container_name&gt;</var> bash </code></pre>
+ <div class="p">Run the <samp class="ph codeph">env</samp> command in the bash window to see the details of the
+alias.<pre class="codeblock"><code>"Env": [
+    "<var class="keyword varname">&lt;alias&gt;</var>_PORT_&lt;source_container_port&gt;/tcp_TCP_PORT=&lt;source_container_port&gt;/tcp",
+    "<var class="keyword varname">&lt;alias&gt;</var>_PORT_&lt;source_container_port&gt;/tcp_TCP=tcp://<var class="keyword varname">&lt;recipient_container_private_IP&gt;</var>:&lt;source_container_port&gt;/tcp",
+    "<var class="keyword varname">&lt;alias&gt;</var>_ENV_space_id=<var class="keyword varname">&lt;space_ID&gt;</var>",
+    "logging_password=",
+    "space_id=<var class="keyword varname">&lt;space_ID&gt;</var>",
+    "logstash_target=logs.opvis.bluemix.net:9091",
+    "<var class="keyword varname">&lt;alias&gt;</var>_PORT_<var class="keyword varname">&lt;source_container_port&gt;</var>/tcp_TCP_ADDR=<var class="keyword varname">&lt;recipient_container_private_ip&gt;</var>",
+    "<var class="keyword varname">&lt;alias&gt;</var>_ENV_metrics_target=metrics.opvis.bluemix.net:9095",
+    "<var class="keyword varname">&lt;alias&gt;</var>_NAME=/<var class="keyword varname">&lt;recipient_container&gt;</var>/<var class="keyword varname">&lt;alias&gt;</var>",
+    "<var class="keyword varname">&lt;alias&gt;</var>_ENV_logstash_target=logs.opvis.bluemix.net:9091",
+    "<var class="keyword varname">&lt;alias&gt;</var>_ENV_logging_password=",
+    "<var class="keyword varname">&lt;alias&gt;</var>_PORT_<var class="keyword varname">&lt;source_container_port&gt;</var>/tcp_TCP_PROTO=tcp",
+    "metrics_target=metrics.opvis.bluemix.net:9095"
+],</code></pre>
+</div>
+</li>
+</ol>
+</div>
+<aside role="complementary" aria-labelledby="d72924e1513"></aside></article><article class="topic task nested1" role="article" aria-labelledby="d72924e1825" lang="en-us" id="container_cli_ips"><h2 class="topictitle2" id="d72924e1825">Requesting and binding public IP addresses to containers</h2>
+<div class="body taskbody"><p class="shortdesc">Request and bind a public IP address to a container in <span class="keyword">Cloud</span>.</p>
+<div class="section prereq"><div class="steps note"><span class="notetitle">Note:</span> Binding a public IP address does not include a SSL certificate which encrypts the
+data that are sent to and from your single container. If your app requires SSL encryption, you can
+either implement your own SSL solution or use a container group instead of a single container.
+Container groups are bound to a public route that already includes a SSL certificate, so you can
+access your container group with HTTPS without any additional configuration. For more information,
+see <a href="container_ha.html#container_group_ui" title="Create and deploy a scalable group container from the Cloud GUI. A container group includes two or more containers that run the same image. Use container groups for running long-term services with workloads that require scalability and reliability or for testing at the required scale.">Creating a container group with the
+GUI</a>.</div>
+
+<p>Before you begin, to check whether a public IP address exists for the space that you can use
+instead of creating one, see <a href="container_single_ui.html#container_cli_ips_list" title="To make single containers accessible from the Internet, you must bind a public IP address to it. Before you request an IP address, review the list of public IP addresses already assigned to your organization and see whether one of those existing IP addresses are available.">Finding existing public IP addresses for your organization with the command line interface (CLI)</a>.</p>
+</div><ol class="steps"><li class="step stepexpand"><span class="cmd">Request a public IP address.</span>  When requesting a public IP address, a random one from the public IP address pool is
+allocated to the space. While allocated to a space, the IP address does not change.
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-request</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Note the IP address.</span></li>
+<li class="step stepexpand"><span class="cmd">Bind the address to a new container or an existing running
+container.</span> <ul class="ul choices"><li class="li choice">To bind to an existing running
+container<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind <var class="keyword varname">&lt;public_IP_address&gt;</var> <var class="keyword varname">&lt;container_name_or_id&gt;</var></code></pre>
+Example<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind 192.0.2.23 my_container</code></pre>
+</li>
+<li class="li choice">To bind to a new
+container<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run -p <var class="keyword varname">&lt;ip-address&gt;</var>:<var class="keyword varname">&lt;container-port&gt;</var>:<var class="keyword varname">&lt;container-port&gt;</var> --name <var class="keyword varname">&lt;container_name&gt;</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">&lt;image_name&gt;</var></code></pre>
+</li>
+</ul>
+</li>
+</ol>
+<div class="section result">The bind request is made immediately, but the connectivity to the container with the IP
+address might take a few minutes.</div></div>
+<aside role="complementary" aria-labelledby="d72924e1825"></aside><article class="topic task nested2" role="article" aria-labelledby="d72924e1976" lang="en-us" id="container_cli_ips_list"><h3 class="topictitle3" id="d72924e1976">Finding existing public IP addresses for your organization with the command line interface
+(CLI)</h3>
+<div class="body taskbody"><p class="shortdesc">To make single containers accessible from the Internet, you must bind a public IP address
+to it. Before you request an IP address, review the list of public IP addresses already assigned to
+your organization and see whether one of those existing IP addresses are available.</p>
+<div class="section context"><div class="steps note"><span class="notetitle">Note:</span> Binding a public IP address does not include a SSL certificate which encrypts the
+data that are sent to and from your single container. If your app requires SSL encryption, you can
+either implement your own SSL solution or use a container group instead of a single container.
+Container groups are bound to a public route that already includes a SSL certificate, so you can
+access your container group with HTTPS without any additional configuration. For more information,
+see <a href="container_ha.html#container_group_ui" title="Create and deploy a scalable group container from the Cloud GUI. A container group includes two or more containers that run the same image. Use container groups for running long-term services with workloads that require scalability and reliability or for testing at the required scale.">Creating a container group with the
+GUI</a>.</div>
+</div><div class="step"><span class="cmd">List available public IP addresses for your space.</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ips</code></pre>
+</div>
+<div class="section postreq">If you do not have any IP addresses or want to request one, you can choose between the
+following options. You can request one either when you create a single container by using the
+<span class="keyword">Cloud</span> GUI or when you run <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-request</samp> from the command line. To
+request an IP address by using the command line, see <a href="container_single_ui.html#container_cli_ips" title="Request and bind a public IP address to a container in Cloud.">Requesting and binding public IP addresses to containers</a>.</div></div>
+<aside role="complementary" aria-labelledby="d72924e1976"></aside></article><article class="topic task nested2" role="article" aria-labelledby="d72924e2077" lang="en-us" id="container_cli_ips_unbind"><h3 class="topictitle3" id="d72924e2077">Unbinding public IP addresses from a container</h3>
+<div class="body taskbody"><p class="shortdesc">You can unbind a public IP address from a container, but the IP address is still
+available to other containers and counted toward your organization's public IP quota. </p>
+<ol class="steps"><li class="step stepexpand" id="container_cli_ips_unbind__unbind"><span class="cmd">Unbind the public IP address from the container. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-unbind <var class="keyword varname">&lt;public_IP_address&gt;</var> <var class="keyword varname">&lt;container_name_or_id&gt;</var></code></pre>
+ <p>The container is no longer bound to the IP address, but the IP is still counted toward your
+organization's public IP quota.</p>
+</li>
+<li class="step stepexpand"><span class="cmd">Verify that the IP address is successfully unbound. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ips</code></pre>
+</li>
+</ol>
+</div>
+<aside role="complementary" aria-labelledby="d72924e2077"></aside></article><article class="topic task nested2" role="article" aria-labelledby="d72924e2159" lang="en-us" id="container_cli_ips_remove"><h3 class="topictitle3" id="d72924e2159">Removing public IP addresses from your quota</h3>
+<div class="body taskbody"><p class="shortdesc">If you are not using a public IP address or must delete one to request a new one, you can
+remove a public IP address from your organization's quota. </p>
+<div class="section prereq">Before you begin, unbind the public IP address from any containers that are using
+it.</div><ol class="steps"><li class="step stepexpand"><span class="cmd">Remove the IP address from your organization's quota.</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-release <var class="keyword varname">&lt;public_IP_address&gt;</var> </code></pre>
+</li>
+<li class="step stepexpand">Optional: <span class="cmd">Verify that the IP address is not listed as allocated anymore. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ips</code></pre>
+</li>
+</ol>
+</div>
+<aside role="complementary" aria-labelledby="d72924e2159"></aside></article></article><article class="topic task nested1" role="article" aria-labelledby="d72924e2239" lang="en-us" id="container_single_remove"><h2 class="topictitle2" id="d72924e2239">Removing single containers</h2>
+<div class="body taskbody"><p class="shortdesc">To maximize the use of your quota, remove containers that are not in use
+occasionally.</p>
+<ol class="steps"><li class="step stepexpand"><span class="cmd">Remove a container by using one of the following methods.</span> <ul class="ul choices"><li class="li choice">From the <span class="keyword">Cloud</span> GUI<ol type="a"><li>From the <span class="keyword">Cloud</span> Dashboard, select
+the container that you want to delete.</li>
+<li>Expand the <span class="ph uicontrol">More actions...</span> menu and click
+<span class="ph uicontrol">Delete</span>.</li>
+</ol>
+<ul><li>In the tile for the container, click the gear icon and click <span class="ph uicontrol">Delete
+container</span>. </li>
+</ul>
+</li>
+<li class="li choice">From the CLI
+*<pre class="codeblock"><code><span class="ph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> rm [-f] CONTAINER [CONTAINER] </span></code></pre>
+<div class="steps note"><span class="notetitle">Note:</span> <span class="ph" id="container_single_remove__d42497e180">*In this command, you can replace <samp class="ph codeph"><span class="ph">bx ic</span></samp> with <samp class="ph codeph">docker</samp>
+when you <a href="container_cli_cfic_install.html#container_cli_login" title="After you install the CLI, log in to use it.">logged in to <span class="keyword">IBM
+Cloud Container Service</span></a> and set your environment
+variables to use native Docker commands.</span><span class="ph" id="container_single_remove__d42497e192">You can use native Docker
+commands in all steps that are marked with an asterisk (*) in this topic. </span></div>
+</li>
+</ul>
+</li>
+<li class="step stepexpand">Optional: <span class="cmd">Verify that the container was removed by running the following command and confirming that the
+container does not appear in the list.*</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ps -a</code></pre>
+</li>
+</ol>
+</div>
+<aside role="complementary" aria-labelledby="d72924e2239"></aside></article><article class="topic tutorial nested1" role="article" aria-labelledby="d72924e2390" lang="en-us" id="container_gettingstarted_tutorial"><h2 class="topictitle2" id="d72924e2390">Tutorial: Creating a single container web application</h2>
+<div class="body tutorialBody"><p class="shortdesc"><span class="keyword">IBM
+Cloud</span> gives you the ability to
+run Docker containers in the public cloud. Use containers to deploy self-contained, secure web apps
+that run independently of the host operating system. Containers are lightweight and do not require a
+lot of system resources because containers use the same system kernel and so can be run more
+efficiently than a virtual machine. This tutorial showcases how to build a messaging web app using
+Docker containers in <span class="keyword">Cloud</span>.
+In the process, you will write a Dockerfile, add Docker images to your private <span class="keyword">Cloud</span> images registry and link
+containers together.</p>
+<div class="section tutorialDesc"></div><section class="section learningObjectives tutorialLearningObjectives" role="region" aria-labelledby="d72924e2456"><h3 class="sectiontitle" id="d72924e2456">Objectives</h3>
+<p>In this scenario you will create a web app called Let's Chat in your <span class="keyword">Cloud</span> space. Let's Chat is an online messaging
+app designed for small development teams. Using <span class="keyword">Cloud</span>, you can manage a private Docker images
+registry and deploy your web app to be publicly accessible.</p>
+
+<figure class="fignone" id="container_gettingstarted_tutorial__getting_started_tutorial"><figcaption>Figure 1. Architecture of your running web app</figcaption><div class="image"><object width="480" data="images/getting_started_tutorial.svg"><img width="480" src="images/getting_started_tutorial.jpg" alt="Lets Chat tutorial diagram"></object></div></figure>
+
+<div class="p">This scenario provides instructions for the following tasks:<ul><li>Setting up a <span class="keyword">Cloud</span> account</li>
+<li>Setting up the <span class="keyword">IBM
+Cloud Container Service</span> command-line
+interface</li>
+<li>Creating a Dockerfile</li>
+<li>Pushing an image to your private <span class="keyword">Cloud</span> images registry</li>
+<li>Linking two containers, which creates a network connection between containers</li>
+<li>Building a container that can be accessed by the public </li>
+</ul>
+</div>
+</section>
+<section class="section timeRequired tutorialTimeRequired" role="region" aria-labelledby="d72924e2509"><h3 class="sectiontitle" id="d72924e2509">Time required</h3>45 minutes</section>
+<section role="region" aria-labelledby="d72924e2513"><h3 class="sectiontitle" id="d72924e2513">Audience</h3>
+<p>This tutorial is intended for users who are new to Docker containers in <span class="keyword">Cloud</span> and want to learn how to
+deploy a running app in the <span class="keyword">Cloud</span> public cloud.</p>
+</section></div>
+<article class="topic task tutorialLesson nested2" role="article" aria-labelledby="d72924e2527" lang="en-us" id="container_gettingstarted_tutorial_lesson_1"><h3 class="topictitle3" id="d72924e2527">Lesson 1: Setting up <span class="keyword">IBM
+Cloud Container Service</span></h3>
+<div class="body taskbody"><p class="shortdesc">In this lesson, you will create your <span class="keyword">Cloud</span> account, install the <span class="keyword">IBM
+Cloud Container Service</span> CLI, log in to your account and review
+the default IBM images. </p>
+<ol class="steps"><li class="step stepexpand"><span class="cmd">Go to the <a href="https://console.ng.bluemix.net/registration/" rel="external" target="_blank" title="(Opens in a new tab or window)"><span class="keyword">Cloud</span> registration
+page</a> to create an account.</span> Make note of your user name and password as this information is required later.</li>
+<li class="step stepexpand"><span class="cmd">Install Cloud Foundry CLI version <span class="ph">Cloud Foundry CLI version <span class="ph" id="container_gettingstarted_tutorial_lesson_1__d28262e281">6.14.0</span> - 6.22.0</span>
+from the <a href="https://github.com/cloudfoundry/cli/releases" rel="external" target="_blank" title="(Opens in a new tab or window)">GitHub repository</a>.</span> You must install the Cloud Foundry CLI in the default location for your operating system,
+otherwise the PATH environment variable does not match your installation directory. <div class="steps note"><span class="notetitle">Note:</span> MacOS Sierra users must install Cloud Foundry CLI version 6.22.0 or later. </div>
+
+<div class="p">To verify that the Cloud Foundry CLI is installed properly or, if you already installed the Cloud
+Foundry CLI, to check which version you installed, run the following
+command:<pre class="codeblock"><code>cf -v</code></pre>
+</div>
+</li>
+<li class="step stepexpand"><span class="cmd"><a href="https://www.docker.com/products/docker" rel="external" target="_blank" title="(Opens in a new tab or window)">Install
+Docker 1.10.0 or later</a> from the Docker website.</span></li>
+<li class="step stepexpand"><span class="cmd">Open your Docker terminal.</span> If you are using the Docker Toolbox for Windows or OS X, open a program called Docker
+Quickstart Terminal. </li>
+<li class="step stepexpand"><span class="cmd">Install the <a href="https://clis.ng.bluemix.net/ui/home.html" rel="external" target="_blank" title="(Opens in a new tab or window)"><span class="keyword">Cloud</span>
+CLI</a>.</span></li>
+<li class="step stepexpand"><span class="cmd" id="container_gettingstarted_tutorial_lesson_1__d28262e320">Install the <span class="keyword">IBM
+Cloud Container Service</span> plug-in. </span> <pre class="codeblock" id="container_gettingstarted_tutorial_lesson_1__d28262e331"><code><span class="ph">bx</span> plugin install IBM-Containers -r <span class="ph" data-hd-audience="yellow"><var class="keyword varname">Bluemix</var></span></code></pre>
+ <div class="p">To verify that the plug-in is installed properly, run the following
+command:<pre class="codeblock"><code><span class="ph">bx</span> plugin list</code></pre>
+</div>
+
+<p>The plug-in is displayed in the results as IBM-Containers.</p>
+</li>
+<li class="step stepexpand"><span class="cmd">Now that you have the <span class="keyword">IBM
+Cloud Container Service</span>
+plug-in installed, run <samp class="ph codeph">docker run hello-world</samp> in your Docker terminal. </span> <pre class="codeblock"><code>docker run hello-world</code></pre>
+ This verifies that your Docker configuration is set up correctly. Docker looks for the local
+image, so if this is your first time running the command you will see the following message:
+<pre class="pre screen"><code>Unable to find image 'hello-world:latest' locally</code></pre>
+The image is pulled from Docker
+Hub, a public repository of images, and after the command completes, your output looks like the
+following:<pre class="pre screen"><code>$ docker run hello-world
+
+Hello from Docker.
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the <span class="q">"hello-world"</span> image from the Docker Hub.
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker Hub account:
+ https://hub.docker.com
+
+For more examples and ideas, visit:
+ https://docs.docker.com/userguide/</code></pre>
+ If hello-world does not execute, run <samp class="ph codeph">docker version</samp> to identify that Docker
+is installed correctly. Windows and OS X users, confirm you are running Docker Quickstart Terminal
+and not your standard terminal window.</li>
+<li class="step stepexpand">Optional: <span class="cmd">If this is your first time using <span class="keyword">Cloud</span>, specify an API endpoint. The following
+code sample defaults to the region of your <span class="keyword">Cloud</span> account, but you can change regions
+manually. </span> <pre class="codeblock"><code>bx api https://api.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var></code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Now log in to your <span class="keyword">Cloud</span>
+account.</span> Enter the email and password that you specified when you were creating your <span class="keyword">Cloud</span> account. If needed, select your
+preferred organization and space at the prompts.<pre class="codeblock"><code>bx login [-sso]</code></pre>
+<span class="ph">The single-sign-on parameter <span class="keyword option">--sso</span> is required when you log in
+with a federated ID. If this option is used, open <a href="https://login.ng.bluemix.net/UAALoginServerWAR/passcode" rel="external" target="_blank" title="(Opens in a new tab or window)">https://login.ng.bluemix.net/UAALoginServerWAR/passcode</a> to obtain a one-time passcode. If
+you do not include the <span class="keyword option">--sso</span> option, complete these substeps.</span><ol type="a" class="ol substeps"><li class="li substep"><span class="cmd">For <span class="ph uicontrol">Email</span>, enter your IBMId for
+<span class="keyword">Cloud</span>.</span></li>
+<li class="li substep"><span class="cmd">For <span class="ph uicontrol">Password</span>, enter the password for the IBMId.</span> Your <span class="keyword">Cloud</span> organizations and
+spaces are retrieved. </li>
+<li class="li substep"><span class="cmd">Enter the number that represents one of your <span class="keyword">Cloud</span> organizations. </span></li>
+<li class="li substep"><span class="cmd">Enter the number that represents one of your existing <span class="keyword">Cloud</span> spaces. </span></li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">Create a namespace. </span> Your organization's namespace is a unique identifier for your registry of container images in
+a <span class="keyword">Cloud</span> region. Think of the
+namespace as a way of distinguishing your <span class="keyword">Cloud</span> images registry from every other image
+registry in the IBM public cloud.<div class="steps note"><span class="notetitle">Note:</span> If you or any other user has logged in to your <span class="keyword">Cloud</span> organization and created
+containers, you already have a namespace. You can find out its value by running the following
+command:<pre class="codeblock"><code><samp class="ph codeph"><span class="ph">bx ic</span> namespace-get</samp></code></pre>
+</div>
+ <div class="p">Here are a few tips for creating your namespace:<ul><li>Your namespace must be unique. It cannot be used by any other organization in the same region of
+the IBM public cloud.</li>
+<li>Your namespace can be 4-30 characters and can contain lowercase letters, numbers, or underscores
+(_) only.</li>
+<li>Keep your namespace short. If you use the command line, you will type the namespace frequently
+as part of tagging and pushing your images.</li>
+</ul>
+</div>
+
+<p>In the following command, replace <var class="keyword varname">your_registry_name_here</var> with the namespace
+that you choose:</p>
+ <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> namespace-set <var class="keyword varname">your_registry_name_here</var></code></pre>
+</li>
+<li class="step stepexpand">Optional: <span class="cmd">Set a variable for your namespace.</span> Throughout this tutorial, example commands will include the <samp class="ph codeph">$your_namespace</samp>
+string to show where to place your namespace. To avoid editing those commands manually, create a
+variable in your terminal. <pre class="codeblock"><code>your_namespace=<var class="keyword varname">your_registry_name_here</var></code></pre>
+ Example using <samp class="ph codeph">ljenkins1</samp> as the user's namespace <pre class="pre screen"><code>$ your_namespace=<var class="keyword varname">ljenkins1</var></code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Initialize <span class="keyword">IBM
+Cloud Container Service</span>.</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> init</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Now that you have logged in to<span class="keyword">IBM
+Cloud Container Service</span>, let's check out the default images that
+are available to you. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> images</code></pre>
+
+<pre class="pre screen"><code>$ <span class="ph"><samp class="ph codeph">bx ic</samp></span> images
+REPOSITORY                                        TAG                 IMAGE ID            CREATED             SIZE
+registry.ng.bluemix.net/ibm-mobilefirst-starter   latest              d61c09fd0af7        4 weeks ago         510.2 MB
+registry.ng.bluemix.net/ibm-node-strong-pm        latest              322b9ca7b2dc        2 weeks ago         255.5 MB
+registry.ng.bluemix.net/ibmliberty                latest              33fdda9431c7        2 days ago          292.5 MB
+registry.ng.bluemix.net/ibmnode                   latest              c33c25d4af3b        2 days ago          187.8 MB
+registry.ng.bluemix.net/ibmnode                   v4                  c33c25d4af3b        2 days ago          187.8 MB
+registry.ng.bluemix.net/ibmnode                   v1.1                ef3425f90e1e        2 days ago          175.3 MB
+registry.ng.bluemix.net/ibmnode                   v1.2                c5546bf5e891        2 days ago          183.6 MB</code></pre>
+
+<div class="tablenoborder"><table summary="" id="container_gettingstarted_tutorial_lesson_1__table_lqp_hkm_2v" class="defaultstyle"><caption><span class="tablecap">Table 3. Learn more about images and containers</span></caption><thead><tr><th colspan="2" id="d72924e2921" class="thleft"><span class="ph"><img src="images/idea.png" alt="This icon indicates there is more information to learn about this step of the task."></span> More about
+images and containers</th>
+</tr>
+</thead>
+<tbody><tr><td style="width: NaN%" headers="d72924e2921 ">Image vs. Container</td>
+<td style="width: NaN%" headers="d72924e2921 "><p> So, what is the difference between an image and a container? Essentially, an image is a
+read-only snapshot of defined layers and commands. Only after you run the image does it become a
+container. One of the benefits of this process is that no matter what changes you make to a
+container, an image snapshot remains unchanged. Single containers are, by design, meant to temporary
+processes. Configurations or data that needs to be persisted across containers must be written into
+the image or stored in a persistent volume. See the Docker Glossary for a <a href="https://docs.docker.com/glossary/?term=image" rel="external" target="_blank" title="(Opens in a new tab or window)">definition of
+image</a>.</p>
+</td>
+</tr>
+<tr><td style="width: NaN%" headers="d72924e2921 ">IBM Images</td>
+<td style="width: NaN%" headers="d72924e2921 "><p>In this tutorial, you are using images from Docker Hub. However, IBM also provides four of those
+image <span class="q">"snapshots"</span> that you can use to build your own images or that you can use to run a
+container. Read about the <a href="container_images_adding_ov.html" title="A container image is the basis for every container that you create. An image is created from a Dockerfile, which is a file that contains instructions to build the image, and build artifacts, such as an app, the app's configuration, and its dependencies. Think of a container image as an executable file (.exe or .bin). As soon as you run the executable app file, you create an instance of your app. When you run a container, you create a container instance from the image.">IBM images</a> here.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+</ol>
+<div class="section result"><p>Congratulations! You have successfully created your account, installed the CLI plug-ins and have
+logged in to see the images that are available to you for building your web apps.</p>
+
+<p>To add images to your registry, continue to the next lesson.</p>
+</div></div>
+</article><article class="topic task tutorialLesson nested2" role="article" aria-labelledby="d72924e2964" lang="en-us" id="container_gettingstarted_tutorial_lesson_2"><h3 class="topictitle3" id="d72924e2964">Lesson 2: Adding images to your private <span class="keyword">Cloud</span> images registry</h3>
+<div class="body taskbody"><p class="shortdesc">In this lesson you use two methods to add images to your private images registry: copying
+an image from Docker Hub and creating a Dockerfile. Creating your own Dockerfile allows you to add
+your own commands to an image. Thus, every container launched from that image contains those
+commands. One of the benefits of containers is that these images help you maintain source control so
+that everyone in your organization can build containers with a consistent operating
+environment.</p>
+<div class="section context">The following images are used in this lesson. You can review the Dockerfiles for the images
+and other information in Docker Hub.<ul><li><a href="https://hub.docker.com/_/mongo/" rel="external" target="_blank" title="(Opens in a new tab or window)">MongoDB</a></li>
+<li><a href="https://hub.docker.com/r/sdelements/lets-chat/" rel="external" target="_blank" title="(Opens in a new tab or window)">Let's
+Chat</a></li>
+</ul>
+</div><ol class="steps"><li class="step stepexpand"><span class="cmd">Copy the MongoDB image from Docker Hub to your private <span class="keyword">Cloud</span> images registry.</span> The MongoDB image is used to store data. Even though the MongoDB container can be used to
+store data, any data written to the container is lost when the container is removed. To persist any
+data that is written to a container, you must mount a volume when you run a container. <p>Remember to replace <samp class="ph codeph"><var class="keyword varname">$your_namespace</var></samp> with the namespace that
+you created in Lesson 1 if you did not set up the variable replacement. If you need to confirm what
+your namespace is, run <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> namespace
+get</samp>.</p>
+ <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> cpi <var class="keyword varname">mongo</var> registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/<var class="keyword varname">$your_namespace</var>/<var class="keyword varname">mongo</var></code></pre>
+ The initial output code will be similar to this
+example.<pre class="pre screen"><code>$ <span class="ph"><samp class="ph codeph">bx ic</samp></span> cpi mongo registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/<var class="keyword varname">$your_namespace</var>/<var class="keyword varname">mongo</var>
+Sending build context to Docker daemon 2.048 kB
+Step 1 : FROM mongo
+ ---&gt; 32427ae49eff
+Successfully built 32427ae49eff
+The push refers to a repository [registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/<var class="keyword varname">$your_namespace</var>/<var class="keyword varname">mongo</var>] (len: 1)</code></pre>
+ In the background, the mongo image from Docker Hub is being copied to your images registry.
+The <samp class="ph codeph">cpi</samp> command can take a few minutes to complete, and when it does complete the
+full output will look like the following
+example.<pre class="pre screen"><code>$ <span class="ph"><samp class="ph codeph">bx ic</samp></span> cpi mongo registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/<var class="keyword varname">$your_namespace</var>/<var class="keyword varname">mongo</var>
+Sending build context to Docker daemon 2.048 kB
+Step 1 : FROM mongo
+ ---&gt; 32427ae49eff
+Successfully built 32427ae49eff
+The push refers to a repository [registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/<var class="keyword varname">$your_namespace</var>/<var class="keyword varname">mongo</var>] (len: 1)
+32427ae49eff: Pushed
+424ec4bd7fc4: Pushed
+9e3490ec0722: Pushed
+166aa7bca9c1: Pushed
+c79deeebd6f0: Pushed
+c181e50c0e8b: Pushed
+438e27bd44bf: Pushed
+af6f43fa45bb: Pushed
+605e5767a4ac: Pushed
+33e8076f6b28: Pushed
+e63969171eec: Pushed
+latest: digest: sha256:ab092d78d331337cf6cf0ceeda28489f5e154b1403ca1220e9de6b417
+b7cfb95 size: 32158</code></pre>
+ <div class="tablenoborder"><table summary="" id="container_gettingstarted_tutorial_lesson_2__table_sdf_nkm_2v" class="defaultstyle"><thead><tr><th colspan="2" id="d72924e3131" class="thleft"><span class="ph"><img src="images/idea.png" alt="This icon indicates there is more information to learn about this step of the task."></span> Understanding
+this command's components</th>
+</tr>
+</thead>
+<tbody><tr><td style="width: NaN%" headers="d72924e3131 "><samp class="ph codeph">cpi</samp></td>
+<td style="width: NaN%" headers="d72924e3131 ">The copy command.</td>
+</tr>
+<tr><td style="width: NaN%" headers="d72924e3131 "><samp class="ph codeph">mongo</samp></td>
+<td style="width: NaN%" headers="d72924e3131 ">The source repository and name. In this case, the name of the image is
+<var class="keyword varname">mongo</var> and no further repository definition is needed since the image is located
+in Docker Hub.</td>
+</tr>
+<tr><td style="width: NaN%" headers="d72924e3131 "><samp class="ph codeph">registry. <var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>
+/<var class="keyword varname">$your_namespace</var>/<var class="keyword varname">mongo</var></samp></td>
+<td style="width: NaN%" headers="d72924e3131 ">The destination registry path, which includes your unique namespace and the name of the
+destination image. For this example, we are keeping the name of the image as
+<var class="keyword varname">mongo</var>, but you can choose any name for images in your private registry. When
+working with this image in the CLI, you specify the image by the full path:
+<samp class="ph codeph">registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/<var class="keyword varname">$your_namespace</var>/<var class="keyword varname">mongo</var></samp></td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+<li class="step stepexpand"><span class="cmd">Create and navigate to a new local folder for your Dockerfile.</span> Now that you have added an image to your registry via the <samp class="ph codeph">cpi</samp> command, you
+are going to create another image from a Dockerfile. A Dockerfile allows you to build an image
+locally and allows you to add any additional commands or variables needed for your web app. Some of
+these commands can be added during the container build, but this can create fragmentation with
+multiple versions of the same image. Adding commands to the Dockerfile ensures that every container
+that is built from this image has these commands. <pre class="codeblock"><code>mkdir wrapper &amp;&amp; cd wrapper</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Create a Dockerfile within the <span class="ph filepath">wrapper</span> folder.</span> This command creates a Dockerfile and adds the specified <var class="keyword varname">FROM</var> command,
+which is required in all Dockerfiles. <var class="keyword varname">FROM</var> states what the parent image will be.
+In this case, we are using the <var class="keyword varname">lets-chat</var> image as our parent. <pre class="codeblock"><code>echo <span class="q">"FROM sdelements/lets-chat:latest"</span> &gt; Dockerfile</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Confirm the Dockerfile was created by listing files in your current directory.</span> <pre class="codeblock"><code>ls</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Add a network delay command to your Dockerfile.</span> When the lets-chat container starts, <span class="keyword">IBM
+Cloud Container Service</span> sets up the private container network
+and assigns a private IP address to the container. The lets-chat app requires an active network
+connection at the time the app starts. Adding the network delay ensures that there is enough time
+for the <span class="keyword">IBM
+Cloud Container Service</span> networking to finish
+before the app is started. <pre class="codeblock"><code>echo <span class="q">"CMD (sleep 60; npm start)"</span> &gt;&gt; Dockerfile</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Build and tag your image.</span> Don't forget the <samp class="ph codeph">.</samp> at the end of the command! The period tells Docker to look
+inside your current local folder for the needed Dockerfile. <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> build -t registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/<var class="keyword varname">$your_namespace</var>/lets-chat .</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Confirm that your <var class="keyword varname">mongo</var> image and your <var class="keyword varname">lets-chat</var> image
+are in your <span class="keyword">Cloud</span> images
+registry.</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> images</code></pre>
+
+<pre class="pre screen"><code>$ <span class="ph"><samp class="ph codeph">bx ic</samp></span> images
+REPOSITORY                                                  TAG                 IMAGE ID            CREATED             SIZE
+registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/<var class="keyword varname">$your_namespace</var>/<var class="keyword varname">mongo</var>                          latest              8de059ee71fc        2 minutes ago         317.4 MB
+registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/<var class="keyword varname">$your_namespace</var>/<var class="keyword varname">lets-chat </var>                      latest              d4de00f58363        5 minutes ago          0 B
+registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/ibm-node-strong-pm                  latest              322b9ca7b2dc        2 weeks ago         616.4 MB
+registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/ibmliberty                          latest              6595ea483bf5        2 weeks ago         552.8 MB
+registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/ibmnode                             latest              b2c351248227        2 weeks ago         472.4 MB
+registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/ibmnode                             v4                  b2c351248227        2 weeks ago         472.4 MB
+registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/ibmnode                             v1.1                7d11220193d6        2 weeks ago         449.2 MB
+registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/ibmnode                             v1.2                84efce0c747b        2 weeks ago         465.2 MB</code></pre>
+</li>
+</ol>
+<div class="section result"><p>Now the necessary images are in your private <span class="keyword">Cloud</span> images registry! You successfully copied
+a Docker Hub image, as well as created a Dockerfile, built a new image and pushed that image into
+your <span class="keyword">Cloud</span> images registry.</p>
+
+<p>In the next lesson you get to create the containers, link them together and deploy your web
+app.</p>
+</div></div>
+</article><article class="topic task tutorialLesson nested2" role="article" aria-labelledby="d72924e3344" lang="en-us" id="container_gettingstarted_tutorial_lesson_3"><h3 class="topictitle3" id="d72924e3344">Lesson 3: Building and deploying containers</h3>
+<div class="body taskbody"><p class="shortdesc">You have the necessary images in your <span class="keyword">Cloud</span> images registry to deploy the Let's Chat
+messaging web app. In this lesson, you will build the containers, link them together and assign a
+public IP address to the app.</p>
+<ol class="steps"><li class="step stepexpand"><span class="cmd">Run your container from the mongo image.</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run --name <var class="keyword varname">lc-mongo</var> -p <var class="keyword varname">27017</var> -m <var class="keyword varname">128</var> registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/<var class="keyword varname">$your_namespace</var>/mongo</code></pre>
+ <div class="tablenoborder"><table summary="" id="container_gettingstarted_tutorial_lesson_3__table_lqp_hkm_2v" class="defaultstyle"><thead><tr><th colspan="2" id="d72924e3430" class="thleft"><span class="ph"><img src="images/idea.png" alt="This icon indicates there is more information to learn about this step of the task."></span> Understanding
+this command's components</th>
+</tr>
+</thead>
+<tbody><tr><td style="width: 22.22222222222222%" headers="d72924e3430 ">run</td>
+<td style="width: 77.77777777777779%" headers="d72924e3430 "><p> The run command that creates the container from the specified image.</p>
+</td>
+</tr>
+<tr><td style="width: 22.22222222222222%" headers="d72924e3430 ">--name</td>
+<td style="width: 77.77777777777779%" headers="d72924e3430 ">Defines the name of the container. In this case, we named the container
+<var class="keyword varname">lc-mongo</var>.</td>
+</tr>
+<tr><td style="width: 22.22222222222222%" headers="d72924e3430 ">-p</td>
+<td style="width: 77.77777777777779%" headers="d72924e3430 "><span class="ph">If you want to make your app accessible from the Internet, you must
+expose a public port. When you expose a public port, you create a Public Network Security Group for
+your container that allows you to send and receive public data on the exposed port only. All other
+public ports are closed and cannot be used to access your app from the internet. You can include
+multiple ports with multiple <span class="keyword option">-p</span> options. Ports cannot be mapped or forwarded. If
+you do not expose a port, your container is accessible from the private container network only. You
+can use the assigned private IP address to communicate with your container on the private network.</span> In
+this case, we are exposing port 27017 since that port was specified in the Dockerfile. </td>
+</tr>
+<tr><td style="width: 22.22222222222222%" headers="d72924e3430 ">-m</td>
+<td style="width: 77.77777777777779%" headers="d72924e3430 "><span class="ph">Enter a memory limit for your container in MB. The memory limit
+is part of the container size that defines the maximum amount of memory and disk space a container
+gets on the compute host during runtime. After a container size is assigned, the value cannot be
+changed.</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+<li class="step stepexpand"><span class="cmd">Confirm that the container is running.</span> Wait for the status to update to running before continuing to the next step. If needed, you
+can run <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> ps</samp> until the
+container status is running. <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ps</code></pre>
+
+<pre class="pre screen"><code>$<span class="ph"><samp class="ph codeph">bx ic</samp></span> ps
+CONTAINER ID        IMAGE                                           COMMAND             CREATED             STATUS                PORTS               NAMES
+9f73abc2-9a1        registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/<var class="keyword varname">$your_namespace</var>/<var class="keyword varname">mongo</var>:latest       <span class="q">""</span>                  40 seconds ago          Running 5 seconds ago    27017/tcp           lc-mongo</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">After your <var class="keyword varname">mongo</var> container is running, run your <var class="keyword varname">lets-chat</var>
+container.</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run --name <var class="keyword varname">lets-chat</var> --link lc-mongo:mongo -p <var class="keyword varname">8080</var> -m <var class="keyword varname">128</var> registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/<var class="keyword varname">$your_namespace</var>/<var class="keyword varname">lets-chat</var></code></pre>
+ <div class="tablenoborder"><table summary="" id="container_gettingstarted_tutorial_lesson_3__table_o22_ttv_4x" class="defaultstyle"><thead><tr><th colspan="2" id="d72924e3540" class="thleft"><span class="ph"><img src="images/idea.png" alt="This icon indicates there is more information to learn about this step of the task."></span> Understanding
+this command's components</th>
+</tr>
+</thead>
+<tbody><tr><td style="width: 22.22222222222222%" headers="d72924e3540 ">--link</td>
+<td style="width: 77.77777777777779%" headers="d72924e3540 "><p>Linking a database container like <samp class="ph codeph">lc-mongo</samp> to another container is one of the
+common uses of <samp class="ph codeph">--link</samp>. The <samp class="ph codeph">--link</samp> flag creates a host entry on the
+<var class="keyword varname">lets-chat</var> container for the <var class="keyword varname">lc-mongo</var> container, which allows
+the containers to communicate with one another.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+<li class="step stepexpand"><span class="cmd">View your containers.</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ps</code></pre>
+
+<pre class="pre screen"><code>$<span class="ph"><samp class="ph codeph">bx ic</samp></span> ps
+CONTAINER ID        IMAGE                                           COMMAND             CREATED             STATUS                  PORTS                         NAMES
+68f6536a-82f        registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/<var class="keyword varname">$your_namespace</var>/<var class="keyword varname">lets-chat</var>:latest   <span class="q">""</span>                  3 days ago          Running 6 seconds ago   8080/tcp                      <var class="keyword varname">lets-chat</var>
+9f73abc2-9a1        registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/<var class="keyword varname">$your_namespace</var>/<var class="keyword varname">mongo</var>:latest       <span class="q">""</span>                  3 days ago          Running 3 days ago      27017/tcp                     <var class="keyword varname">lc-mongo</var></code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">List the available IP addresses.</span> Binding an IP address allows your single container web app to be accessible via the
+internet. <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ips</code></pre>
+</li>
+<li class="step stepexpand">Optional: <span class="cmd">If no IP addresses are listed, request an IP address.</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-request</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Choose an available IP address and bind it to the<var class="keyword varname"> lets-chat</var> container.</span> Note that if all of your IP addresses are already bound, you will need to <a href="container_cli_reference_cfic.html#container_cli_reference_cfic__ip_unbind">unbind an IP address</a> first. Replace this example IP address with an IP address
+that you have available in your organization. <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind <var class="keyword varname">192.0.2.100</var> lets-chat</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Wait for the binding of the IP address to finish.</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> inspect lets-chat</code></pre>
+As
+soon as the IP address is bound to your container, it is listed as
+<span class="ph uicontrol">PublicIpAdress</span> in the <span class="ph uicontrol">Networks</span> section of your CLI
+output.<pre class="pre screen"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> inspect lets-chat
+...
+<span class="q">"PortMapping"</span>: null,
+<span class="q">"Ports"</span>: {
+    <span class="q">"8080/tcp"</span>: [
+      {
+         <span class="q">"HostIp"</span>: <span class="q">"192.0.2.100"</span>,
+         <span class="q">"HostPort"</span>: <span class="q">"8080"</span>
+      }
+    ]
+ },
+ <span class="q">"PublicIpAddress"</span>: <span class="q">"192.0.2.100"</span>
+...</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Go look at the web app that is up and running! Paste the bound public IP address into a web
+browser, including the port.</span> <pre class="codeblock"><code>http://<var class="keyword varname">192.0.2.100</var>:8080</code></pre>
+ <p><img src="images/lets-chat_screenshot.jpg" alt="Sign in to the Let's Chat web app."></p>
+</li>
+<li class="step stepexpand">Optional: <span class="cmd">Create an account in Let's Chat and log in to see your web app running in
+IBM Containers!</span> <p><img src="images/lets-chat-room.png" alt="lets-chat room"></p>
+</li>
+<li class="step stepexpand">Optional: <span class="cmd">Stop your containers.</span> If you don't want your containers consuming resources, you can stop and remove them. <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> stop <var class="keyword varname">lets-chat</var> <var class="keyword varname">lc-mongo</var></code></pre>
+
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> rm <var class="keyword varname">lets-chat</var> <var class="keyword varname">lc-mongo</var></code></pre>
+</li>
+</ol>
+<div class="section result" id="container_gettingstarted_tutorial_lesson_3__quiz">Test your knowledge! Now that you completed the tutorial, <a href="http://ibmcloud-quizzes.mybluemix.net/containers/single_containers_gettingstarted_tutorial/quiz.php" rel="external" target="_blank" title="(Opens in a new tab or window)">take a quiz to see what you learned</a>.</div><div class="section postreq"><div class="p"> What do you do next? There are many other <span class="keyword">IBM
+Cloud Container Service</span> features you can apply to this tutorial:<ul><li>Try replacing single containers with <a href="container_ha.html#container_group_ui" title="Create and deploy a scalable group container from the Cloud GUI. A container group includes two or more containers that run the same image. Use container groups for running long-term services with workloads that require scalability and reliability or for testing at the required scale.">highly available container groups</a>, and enable auto-recovery, which
+automatically replaces unavailable containers</li>
+<li>Create and mount <a href="container_volumes_ov.html#container_volumes_ui" title="A volume is a persistent storage location for the data that an app creates or the files that the app requires to run. You can create a volume for your container from the Cloud GUI.">storage
+volumes</a> to your mongo and lets-chat containers so that container data can be persisted across
+container restarts and accessed by multiple containers in your private network</li>
+</ul>
+… and more. Get started today.</div>
+</div></div>
+</article></article><article class="topic tutorial tutorialIntro nested1" role="article" aria-labelledby="d72924e3789" lang="en-us" id="container_compose_intro"><h2 class="topictitle2" id="d72924e3789">Tutorial: Creating a multi-container deployment with Docker Compose and <span class="keyword">IBM
+Cloud Container Service</span></h2>
+<div class="body  tutorialIntroBody"><p class="shortdesc">If you have apps with multiple components, such as databases, services and caches,
+orchestrating all containers to start up and shut down together, can be a hard thing to do. In this
+tutorial, you learn how to deploy and run your app as a multi-container deployment in a
+microservices architecture by using a single Docker Compose command. Each container that is part of
+this system, is based on a Docker Compose service definition, and runs in its own isolated
+environment. </p>
+<section class="section learningObjectives tutorialLearningObjectives" role="region" aria-labelledby="d72924e3849"><h3 class="sectiontitle" id="d72924e3849">Scenario</h3>This tutorial showcases how software developers can use
+Docker Compose and <span class="keyword">IBM
+Cloud Container Service</span> to deploy a
+multi-container deployment that runs the Lets-Chat web app that is linked to a Mongo database and to
+a nginx load balancer that balances incoming user traffic. <div class="p"><figure class="fignone" id="container_compose_intro__fig_compose"><figcaption>Figure 2. Target scenario for your multi-container Lets-Chat app</figcaption><a href="../api/content/containers/images/container_compose_tutorial.png" rel="external" target="_blank" title="(Opens in a new tab or window)"><div class="image"><img src="images/container_compose_tutorial.png" width="700" alt="Target scenario for your multi-container Lets-Chat app"></div></a></figure>
+</div>
+<div class="p">You walk through these lessons.<dl><dt class="dlterm"><a href="container_single_ui.html#container_compose_config" title="First, you configure each service of your multi-container deployment in a YAML file that is named docker-compose.yml. For each service, you specify the image, ports to expose, as well as the links to other services in the system.">Lesson
+1: Configure your multi-container deployment</a></dt>
+<dd>Define services for your Lets-Chat web app and the Mongo database in a configuration file named
+<span class="ph filepath">docker-compose.yml</span>. </dd>
+<dt class="dlterm"><a href="container_single_ui.html#container_compose_run" title="Next, you deploy and run your multi-container deployment. Instead of creating and starting your Lets-Chat and Mongo Database containers separately and manually link them together, you use a single Docker Compose command that creates your containers based on the service definition in your docker-compose.yml file.">Lesson 2: Run
+your multi-container deployment</a></dt>
+<dd>Run your Lets-Chat app on a multi-container deployment and access it from the Internet by using
+a single Docker Compose command. </dd>
+<dt class="dlterm"><a href="container_single_ui.html#container_compose_scale" title="With your multi-container deployment now running, increase the number of Lets-Chat container instances to make your app more reliable.">Lesson 3:
+Scale your multi-container deployment</a></dt>
+<dd>Make your Lets-Chat web app more reliable by increasing the number of container instances. </dd>
+<dt class="dlterm"><a href="container_single_ui.html#container_compose_loadbalance" title="To respond to higher workload, add a nginx load balancer to your multi-container deployment that balances incoming user traffic between your Lets-Chat container instances.">Lesson 4: Add a load balancer to your multi-container deployment</a></dt>
+<dd>Respond to higher workload during business hours by adding a nginx load balancer to your
+multi-container deployment that balances incoming network traffic between your Lets-Chat container
+instances.</dd>
+<dt class="dlterm"><a href="container_single_ui.html#container_compose_remove" title="As a final step, remove the multi-container deployment to release used resources and maximize the use of your quota.">Lesson
+5: Remove your multi-container deployment</a></dt>
+<dd>Delete your multi-container deployment to release used resources and maximize the use of your
+quota.</dd>
+</dl>
+<div class="note tip"><span class="tiptitle">Tip:</span> If you are not familiar with <span class="keyword">IBM
+Cloud Container Service</span>, check out the <a href="container_single_ui.html#container_gettingstarted_tutorial" title="IBM Cloud gives you the ability to run Docker containers in the public cloud. Use containers to deploy self-contained, secure web apps that run independently of the host operating system. Containers are lightweight and do not require a lot of system resources because containers use the same system kernel and so can be run more efficiently than a virtual machine. This tutorial showcases how to build a messaging web app using Docker containers in Cloud. In the process, you will write a Dockerfile, add Docker images to your private Cloud images registry and link containers together.">Getting Started Tutorial</a> and the
+differences between <a href="container_ov.html#container_docker_ov" title="IBM Cloud Container Service is a Cloud runtime that leverages Docker technology. Existing Docker users, and users who are new to Docker, can look forward to the following capabilities with IBM Cloud Container Service.">Docker and IBM
+Containers</a>.</div>
+</div>
+<p>For further information about Docker Compose, review the <a href="container_single_ui.html#container_compose_faq" title="Review these frequently asked questions about Docker Compose.">Docker Compose FAQs</a> and the <a href="container_cli_reference_cfic.html#container_cli_reference_docker-compose" title="Refer to these commands to run and manage your multi-container deployment with the IBM Cloud Container Service plug-in (bx ic).">Docker Compose
+command reference</a>. </p>
+</section>
+<section class="section timeRequired tutorialTimeRequired" role="region" aria-labelledby="d72924e3998"><h3 class="sectiontitle" id="d72924e3998">Time required</h3>45 minutes</section>
+<section role="region" aria-labelledby="d72924e4002" class="section section prerequisites"><h3 class="sectiontitle" id="d72924e4002">Prerequisites</h3>
+<a href="container_cli_cfic_install.html#container_cli_compose_install" title="To start and stop multiple single containers at one time, you can install the Docker Compose CLI.">Install</a> or <a href="container_cli_cfic_install.html#container_cli_compose_upgrade" title="You might need to upgrade the version of your Docker Compose package to use the latest features.">upgrade</a> to the latest version of the
+Docker Compose software package on your computer. </section></div>
+<article class="topic task tutorialLesson nested2" role="article" aria-labelledby="d72924e4016" lang="en-us" id="container_compose_config"><h3 class="topictitle3" id="d72924e4016">Lesson 1: Configuring your multi-container deployment</h3>
+<div class="body taskbody"><p class="shortdesc">First, you configure each service of your multi-container deployment in a YAML file that
+is named <span class="ph filepath">docker-compose.yml</span>. For each service, you specify the image, ports to
+expose, as well as the links to other services in the system. </p>
+<div class="section prereq">Before you begin, consider the following steps. <ul><li>Run <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> namespace-get</samp> to
+retrieve your namespace information and store this information in an environment variable that is
+named <var class="keyword varname">$your_namespace</var>.
+<pre class="codeblock"><code><var class="keyword varname">$your_namespace</var>=&lt;my_namespace_information&gt;</code></pre>
+</li>
+<li>Build the <a href="container_single_ui.html#container_gettingstarted_tutorial_lesson_2" title="In this lesson you use two methods to add images to your private images registry: copying an image from Docker Hub and creating a Dockerfile. Creating your own Dockerfile allows you to add your own commands to an image. Thus, every container launched from that image contains those commands. One of the benefits of containers is that these images help you maintain source control so that everyone in your organization can build containers with a consistent operating environment.">Lets-Chat and the MongoDB container image</a> in your private <span class="keyword">Cloud</span> images registry.</li>
+</ul>
+</div><ol class="steps"><li class="step stepexpand"><span class="cmd">Create a Docker Compose project directory named <var class="keyword varname">composetutorial</var> on your
+computer where you can save the Docker Compose configuration file and navigate into this
+directory.</span> You need to be in this directory at the time you run Docker Compose commands, so your
+configuration file can be found. Otherwise, you get an error message from the Docker Daemon. To
+reduce deployment times, do not choose a directory that contains subdirectories because all files
+are sent to the Docker Daemon at runtime.
+<pre class="codeblock"><code>mkdir <var class="keyword varname">composetutorial</var> &amp;&amp; cd <var class="keyword varname">composetutorial</var></code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Create a <span class="ph filepath">docker-compose.yml</span> file.</span> You can create your configuration file by using your preferred CLI editor or a text editor on
+your computer. The following example shows how to create a <span class="ph filepath">docker-compose.yml</span>
+file with the <a href="http://www.nano-editor.org/dist/v2.2/nano.html" rel="external" target="_blank" title="(Opens in a new tab or window)">nano editor</a>. <ol type="a"><li>Open the nano editor and enter <span class="ph filepath">docker-compose.yml</span> as your file
+name.<pre class="codeblock"><code>nano <span class="ph filepath">docker-compose.yml</span></code></pre>
+</li>
+<li>Define services for your multi-container deployment that runs the Lets-Chat app. You can enter
+comments by using <var class="keyword varname">#</var>.
+<pre class="codeblock"><code>#Name of your Lets-Chat service. 
+#The first container that is started for this service is named:
+#<span class="ph filepath">composetutorial_lets-chat_1</span>
+lets-chat: 
+  #Container image that is used to run the lets-chat service. 
+  #Use the full path to your private images registry.
+  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">$your_namespace</var>/lets-chat  
+  #Enter a public IP address and port 8080. Run <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> ips</samp>
+  #to list available public IP addresses in your space. 
+  #Option 1: If you do not have a public IP address 
+  #that you can use, you can request a new one as follows: 
+  #ports:
+  #- "request:8080:8080". 
+  #Option 2: If you want to bind a public IP address after your Lets-Chat container
+  #is created by using the <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind</samp> command, enter the following:
+  #ports:
+  #- "8080"
+  #Option 3: Bind a public IP address directly to your Lets-Chat container
+  #ports: 
+  #- "<var class="keyword varname">YOUR_PUBLIC_IP_ADDRESS</var>:8080:8080"
+  #Choose one of the port options described. 
+  ports:
+   - "<var class="keyword varname">SELECT_YOUR_PORT_OPTION</var>"
+  #lets-chat service is linked to the mongo service. 
+  links: 
+    - mongo
+#Name of your Mongo database service. 
+#The first container that is started for this service is named:
+#<span class="ph filepath">composetutorial_mongo_1</span>
+mongo:
+  #Container image that is used to run the mongo service. 
+  #Use the full path to your private images registry.
+  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">$your_namespace</var>/mongo
+  #Container port 27017 is published within your private container network. 
+  #If a container instance wants to send messages to a mongo container, 
+  #requests need to be sent to this port. 
+  expose:
+    - "27017"</code></pre>
+<div class="note tip"><span class="tiptitle">Tip:</span>  When you create your own <span class="ph filepath">docker-compose.yml</span> file, add at least one
+service name and the link to the container image you want to use, so the <samp class="ph codeph">docker-compose
+up</samp> command can build the container from your configuration file.</div>
+<div class="steps note"><span class="notetitle">Note:</span> <span class="keyword">IBM
+Cloud Container Service</span> only supports version 1 of the
+<span class="ph filepath">docker-compose.yml</span> file format. Version 2 is currently not supported. Refer to
+the <a href="https://docs.docker.com/compose/compose-file/compose-file-v1/" rel="external" target="_blank" title="(Opens in a new tab or window)">Docker compose file version 1 reference</a> to find more examples about how to
+create your <span class="ph filepath">docker-compose.yml</span> file.</div>
+</li>
+<li>Save your changes by pressing <span class="ph uicontrol">ctrl + o</span>. Confirm your changes by pressing
+<span class="ph uicontrol">ENTER</span>. </li>
+<li>Exit the nano editor by pressing <span class="ph uicontrol">ctrl + x</span>.</li>
+</ol>
+</li>
+</ol>
+<div class="section result">Congratulations. You are now ready to <a href="container_single_ui.html#container_compose_run" title="Next, you deploy and run your multi-container deployment. Instead of creating and starting your Lets-Chat and Mongo Database containers separately and manually link them together, you use a single Docker Compose command that creates your containers based on the service definition in your docker-compose.yml file.">deploy your
+multi-container deployment that runs the Lets-Chat app</a> with <span class="keyword">IBM
+Cloud Container Service</span> and Docker Compose. </div></div>
+</article><article class="topic task tutorialLesson nested2" role="article" aria-labelledby="d72924e4244" lang="en-us" id="container_compose_run"><h3 class="topictitle3" id="d72924e4244">Lesson 2: Running your multi-container deployment</h3>
+<div class="body taskbody"><p class="shortdesc">Next, you deploy and run your multi-container deployment. Instead of creating and
+starting your Lets-Chat and Mongo Database containers separately and manually link them together,
+you use a single Docker Compose command that creates your containers based on the service definition
+in your <span class="ph filepath">docker-compose.yml</span> file. </p>
+<ol class="steps"><li class="step stepexpand"><span class="cmd">If you have not done so yet, <a href="container_cli_cfic_install.html#container_cli_login__option2_li">log in to
+the IBM Containers plug-in</a> and configure your CLI to run native Docker commands. </span></li>
+<li class="step stepexpand"><span class="cmd">Go to the directory where your <span class="ph filepath">docker-compose.yml</span> file is located.</span> To run Docker Compose commands, you must be in the directory where your
+<span class="ph filepath">docker-compose.yml</span> file is stored. </li>
+<li class="step stepexpand"><span class="cmd">Deploy and run your multi-container deployment based on the service definition in your
+<span class="ph filepath">docker-compose.yml</span> file. </span> In <span class="keyword">IBM
+Cloud Container Service</span>, most services and
+apps are long-running tasks. Because of this, use the <samp class="ph codeph">-d</samp> option to avoid getting
+stuck in the console output of your containers with no way to detach.
+<pre class="codeblock"><code>docker-compose up -d</code></pre>
+ If you use the <samp class="ph codeph">-d</samp> option, you can still
+keep track of your container instances as their names are displayed in the CLI after they are
+created.
+<pre class="codeblock"><code>$ docker-compose up -d
+
+Creating composetutorial_mongo_1
+Creating composetutorial_lets-chat_1</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Verify that the containers of your multi-container deployment are running.</span> <pre class="codeblock"><code>docker-compose ps  </code></pre>
+As soon as your container instances are running, an
+<span class="ph uicontrol">Up</span> status is displayed. This process can take a few minutes. Your output
+looks like the following:
+<pre class="codeblock"><code>$ docker-compose ps
+
+        Name                   Command      State             Ports             
+-----------------------------------------------------------------------
+composetutorial_lets-chat_1                  Up      192.0.2.100:8080-&gt;8080/tcp    
+composetutorial_mongo_1                    Up      203.0.113.23:27017-&gt;27017/tcp</code></pre>
+</li>
+<li class="step stepexpand">Optional: <span class="cmd">If you have not configured an IP address in your <span class="ph filepath">docker-compose.yml</span> file,
+bind an available public IP address to your Lets-Chat container. </span> Run <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> ips</samp> to list
+available public IP addresses in your space or <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-request</samp> to request a new public IP
+address. Replace <var class="keyword varname">&lt;IP_address&gt;</var> with your public IP address.
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind <var class="keyword varname">&lt;IP_address&gt;</var> composetutorial_lets-chat_1</code></pre>
+</li>
+<li class="step stepexpand">Optional: <span class="cmd">Wait for the binding of the IP address to the container to complete. </span> This process can take a few minutes. As soon as it is completed, an <span class="ph uicontrol">OK</span>
+message is displayed in your CLI. </li>
+<li class="step stepexpand"><span class="cmd">Access your Lets-Chat app from the Internet.</span> <ol type="a" class="ol substeps"><li class="li substep substepexpand"><span class="cmd">Open your web browser.</span></li>
+<li class="li substep substepexpand"><span class="cmd">Enter your public IP address and the public Lets-Chat port 8080 into the web browser as shown
+in this example: <samp class="ph codeph">192.0.2.100:8080</samp>. </span> The Lets-Chat log-in page is displayed in your web browser. <p><img src="images/lets-chat_screenshot.jpg" alt="Sign in to the Let's Chat web app."></p>
+</li>
+</ol>
+</li>
+</ol>
+<div class="section result">Awesome. Your Lets-Chat app is now ready to use. Feel free to create a Lets-Chat account and
+explore the capabilities of your app. To make your Lets-Chat app more reliable, <a href="container_single_ui.html#container_compose_scale" title="With your multi-container deployment now running, increase the number of Lets-Chat container instances to make your app more reliable."> scale up your
+Lets-Chat container instances</a>. </div></div>
+</article><article class="topic task tutorialLesson nested2" role="article" aria-labelledby="d72924e4422" lang="en-us" id="container_compose_scale"><h3 class="topictitle3" id="d72924e4422">Lesson 3: Scaling your multi-container deployment</h3>
+<div class="body taskbody"><p class="shortdesc">With your multi-container deployment now running, increase the number of Lets-Chat
+container instances to make your app more reliable.</p>
+<div class="section context"></div><ol class="steps"><li class="step stepexpand"><span class="cmd">Update your <span class="ph filepath">docker-compose.yml</span> file.</span> You can only scale services that do not expose a public port as all container instances that
+are started for this service would try to use the same port. As you defined port 8080 to be exposed
+publicly for the Lets-Chat service in the previous lesson, you need to change this setting in the
+<span class="ph filepath">docker-compose.yml</span> file.<ol type="a" class="ol substeps"><li class="li substep substepexpand"><span class="cmd">Open your <span class="ph filepath">docker-compose.yml</span></span> <pre class="codeblock"><code>nano <span class="ph filepath">docker-compose.yml</span></code></pre>
+</li>
+<li class="li substep substepexpand"><span class="cmd">Replace the <span class="ph uicontrol">ports</span> parameter with <span class="ph uicontrol">expose</span> in the
+Lets-Chat service definition and delete the public IP address. </span> The expose parameter publishes a port within your private container network only. Your
+Lets-Chat service definition will look as
+follows.<pre class="codeblock"><code>lets-chat: 
+  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">$your_namespace</var>/lets-chat 
+  expose:
+   - "8080" 
+  links: 
+    - mongo</code></pre>
+</li>
+<li class="li substep substepexpand"><span class="cmd">Save your changes by pressing <span class="ph uicontrol">ctrl + o</span>. Confirm your changes by pressing
+<span class="ph uicontrol">ENTER</span>. </span></li>
+<li class="li substep substepexpand"><span class="cmd">Exit the nano editor by pressing <span class="ph uicontrol">ctrl + x</span>.</span></li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">Re-create your multi-container deployment. Use the <samp class="ph codeph">--force-recreate</samp> option to
+re-create all instances in your deployment. </span> <pre class="codeblock"><code>docker-compose up -d --force-recreate</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Scale up your Lets-Chat service to 2 container instances. </span> With the following command, <span class="keyword">IBM
+Cloud Container Service</span> automatically creates a new Lets-Chat container instance based on the service definition in your
+<span class="ph filepath">docker-compose.yml</span> file.<div class="steps note"><span class="notetitle">Note:</span> If you decrease the number of container
+instances, <span class="keyword">IBM
+Cloud Container Service</span> automatically stops
+and removes extra container instances from the multi-container
+deployment.</div>
+<pre class="codeblock"><code>docker-compose scale lets-chat=2</code></pre>
+Your CLI output looks as
+follows.
+<pre class="codeblock"><code>$ docker-compose scale lets-chat=2
+
+Creating and starting composetutorial_lets-chat_2 ... done</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Re-create your multi-container deployment to link your new container instance.</span> Docker Compose currently does not support automatic link attachment/ detachment which is why
+you need to use the <samp class="ph codeph">--force-recreate</samp> option to re-create all container instances in
+your multi-container deployment. <pre class="codeblock"><code>docker-compose up -d --force-recreate</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Verify that the Mongo container instance was linked to the Lets-Chat container instances. </span> <pre class="codeblock"><code>docker inspect composetutorial_lets-chat_1</code></pre>
+<pre class="codeblock"><code>docker inspect composetutorial_lets-chat_2</code></pre>
+You
+can review the linked Mongo container instance in the <var class="keyword varname">HostConfig &gt; Links</var> section
+of each of your
+responses.<pre class="codeblock"><code>...
+"HostConfig": {
+        "Binds": [],
+        "CapAdd": [],
+        "CapDrop": [],
+        "ContainerIDFile": "",
+        "Links": [
+            "composetutorial_mongo_1:mongo",
+            "composetutorial_mongo_1:composetutorial_mongo_1",
+            "composetutorial_mongo_1:composetutorial_mongo_1"
+        ],
+        "LogConfig": {
+            "Config": {},
+            "Type": "json-file"
+        },
+        "LxcConf": [],
+        "PortBindings": {
+            "8080/tcp": [
+                {
+                    "HostPort": "8080"
+                }
+            ]
+        },
+        "Privileged": false,
+        "PublishAllPorts": false
+    },
+...</code></pre>
+</li>
+</ol>
+<div class="section result">Great. You successfully scaled up your Lets-Chat service and made the app more reliable. To
+be able to respond to higher user traffic, <a href="container_single_ui.html#container_compose_loadbalance" title="To respond to higher workload, add a nginx load balancer to your multi-container deployment that balances incoming user traffic between your Lets-Chat container instances.">add a
+nginx load balancer</a> to your multi-container deployment to balance workload between your
+Lets-Chat container instances. </div></div>
+</article><article class="topic task tutorialLesson nested2" role="article" aria-labelledby="d72924e4608" lang="en-us" id="container_compose_loadbalance"><h3 class="topictitle3" id="d72924e4608">Lesson 4: Adding a load balancer to your multi-container deployment</h3>
+<div class="body taskbody"><p class="shortdesc">To respond to higher workload, add a nginx load balancer to your multi-container
+deployment that balances incoming user traffic between your Lets-Chat container instances. </p>
+<ol class="steps"><li class="step stepexpand"><span class="cmd">Configure your <span class="ph uicontrol">nginx</span> load balancer.</span> <ol type="a" class="ol substeps"><li class="li substep substepexpand"><span class="cmd">Create a <span class="ph filepath">nginx.conf</span> configuration file.</span> <pre class="codeblock"><code>nano <span class="ph filepath">nginx.conf</span></code></pre>
+</li>
+<li class="li substep substepexpand"><span class="cmd">Copy the following information into your configuration file.</span> In order to balance workload between your Lets-Chat container instances, you need to add all
+of them as an upstream server in the configuration file. In this way, all incoming requests are
+forwarded to one of the Lets-Chat container.
+<pre class="codeblock"><code>worker_processes 3;
+
+events { worker_connections 1024; }
+
+http {
+
+        upstream lets-chat-app {
+              ip_hash;
+              server composetutorial_lets-chat_1:8080 weight=10 max_fails=3 fail_timeout=30s;
+              server composetutorial_lets-chat_2:8080 weight=10 max_fails=3 fail_timeout=30s;
+        }
+         
+        server {
+              listen 80;
+         
+              location / {
+                proxy_pass http://lets-chat-app;
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection 'upgrade';
+                proxy_set_header Host $host;
+                proxy_cache_bypass $http_upgrade;
+              }
+        }
+}</code></pre>
+</li>
+<li class="li substep substepexpand"><span class="cmd">Save your changes by pressing <span class="ph uicontrol">ctrl + o</span>. Confirm your changes by pressing
+<span class="ph uicontrol">ENTER</span>. </span></li>
+<li class="li substep substepexpand"><span class="cmd">Exit the nano editor by pressing <span class="ph uicontrol">ctrl + x</span>.</span></li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">Create the <span class="ph uicontrol">nginx</span> image in your private <span class="keyword">Cloud</span> images registry.</span> <ol type="a" class="ol substeps"><li class="li substep substepexpand"><span class="cmd">Create a Dockerfile.</span> <pre class="codeblock"><code>nano Dockerfile</code></pre>
+</li>
+<li class="li substep substepexpand"><span class="cmd">Copy the following information into your Dockerfile. </span> The image that you create is based on the public <span class="ph uicontrol">nginx</span> image that is
+provided by Dockerhub. To apply your custom settings that you specified in the previous step, copy
+the <span class="ph filepath">nginx.conf</span> file into the <span class="ph uicontrol">nginx</span> configuration file
+location by using the <samp class="ph codeph">COPY</samp>
+command.<pre class="codeblock"><code>#Uses the public nginx image available on Dockerhub.
+FROM nginx
+#Copies your custom <span class="ph filepath">nginx.conf</span> file into the nginx configuration file location.
+COPY nginx.conf /etc/nginx/nginx.conf</code></pre>
+</li>
+<li class="li substep substepexpand"><span class="cmd">Save your changes by pressing <span class="ph uicontrol">ctrl + o</span>. Confirm your changes by pressing
+<span class="ph uicontrol">ENTER</span>. </span></li>
+<li class="li substep substepexpand"><span class="cmd">Exit the nano editor by pressing <span class="ph uicontrol">ctrl + x</span>.</span></li>
+<li class="li substep substepexpand"><span class="cmd">Build your <span class="ph uicontrol">nginx</span> image and push it to your private <span class="keyword">Cloud</span> images registry. </span> <pre class="codeblock"><code>docker build -t registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">$your_namespace</var>/nginx .</code></pre>
+
+Your CLI output looks like the following:
+<pre class="codeblock"><code>Sending build context to Docker daemon 9.728 kB
+Step 1 : FROM nginx
+ ---&gt; 6f62f48c4e55
+Step 2 : COPY nginx.conf /etc/nginx/nginx.conf
+ ---&gt; bc40817f0593
+Removing intermediate container 64c5e180943f
+Successfully built bc40817f0593
+The push refers to a repository [registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">$your_namespace</var>/nginx] (len: 1)
+bc40817f0593: Pushed 
+6f62f48c4e55: Pushed 
+50ed65ac2e2d: Pushed 
+fed44c33bce9: Pushed 
+73e8d4f6bf84: Pushed 
+latest: digest: sha256:99587168cbf699b32804c4ff0de610460dfa150120b12385b194c2f9236903f5 size: 15270</code></pre>
+</li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">Add the <span class="ph uicontrol">nginx</span> service definition to your
+<span class="ph filepath">docker-compose.yml</span> file. </span> <ol type="a" class="ol substeps"><li class="li substep substepexpand"><span class="cmd">Open your <span class="ph filepath">docker-compose.yml</span> file. </span> <pre class="codeblock"><code>nano <span class="ph filepath">docker-compose.yml</span></code></pre>
+</li>
+<li class="li substep substepexpand"><span class="cmd">Copy the following information into your <span class="ph filepath">docker-compose.yml</span>. Replace
+<var class="keyword varname">IP_ADDRESS</var> with the public IP address that you want to use to access your
+<span class="ph uicontrol">nginx</span> load balancer. </span> <pre class="codeblock"><code>nginx:
+  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">$your_namespace</var>/nginx  
+  ports:
+   - "<var class="keyword varname">IP_ADDRESS</var>:80:80"
+  links: 
+    - lets-chat</code></pre>
+Your
+<span class="ph filepath">docker-compose.yml</span> file looks as follows.
+<pre class="codeblock"><code>nginx:
+  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">$your_namespace</var>/nginx
+  ports:
+   - "<var class="keyword varname">IP_ADDRESS</var>:80:80"
+  links:
+    - lets-chat
+lets-chat:
+  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">$your_namespace</var>/lets-chat
+  expose:
+   - "8080"
+  links:
+    - mongo
+mongo:
+  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">$your_namespace</var>/mongo
+  expose:
+    - "27017"</code></pre>
+</li>
+<li class="li substep substepexpand"><span class="cmd">Save your changes by pressing <span class="ph uicontrol">ctrl + o</span>. Confirm your changes by pressing
+<span class="ph uicontrol">ENTER</span>.</span></li>
+<li class="li substep substepexpand"><span class="cmd">Exit the nano editor by pressing <span class="ph uicontrol">ctrl + x</span>.</span></li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">Deploy your multi-container deployment that runs the Lets-Chat app with the
+<span class="ph uicontrol">nginx</span> load balancer. </span> <ol type="a" class="ol substeps"><li class="li substep substepexpand"><span class="cmd">Re-create your multi-container deployment.</span> Use the <samp class="ph codeph">--force-recreate</samp> option to re-create all container instances in your
+multi-container deployment, so links will be correctly attached.
+<pre class="codeblock"><code>docker-compose up -d --force-recreate</code></pre>
+</li>
+<li class="li substep substepexpand"><span class="cmd">Verify that containers are linked correctly.</span> <pre class="codeblock"><code>docker inspect composetutorial_nginx_1</code></pre>
+You can review the linked
+Lets-Chat container instances in the <var class="keyword varname">HostConfig &gt; Links</var> section of your
+responses.<pre class="codeblock"><code>...
+"HostConfig": {
+        "Binds": [],
+        "CapAdd": [],
+        "CapDrop": [],
+        "ContainerIDFile": "",
+        "Links": [
+            "composetutorial_lets-chat_2:composetutorial_lets-chat_2",
+            "composetutorial_lets-chat_1:composetutorial_lets-chat_1",
+            "composetutorial_lets-chat_1:composetutorial_lets-chat_1",
+            "composetutorial_lets-chat_2:lets-chat",
+            "composetutorial_lets-chat_2:composetutorial_lets-chat_2"
+        ],
+        "LogConfig": {
+            "Config": {},
+            "Type": "json-file"
+        },
+        "LxcConf": [],
+        "PortBindings": {
+            "80/tcp": [
+                {
+                    "HostPort": "80"
+                }
+            ]
+        },
+        "Privileged": false,
+        "PublishAllPorts": false
+    },
+...</code></pre>
+</li>
+</ol>
+</li>
+<li class="step stepexpand"><span class="cmd">Verify that your custom <span class="ph filepath">nginx.config</span> settings are applied to your
+<span class="ph uicontrol">nginx</span> container instance.</span> <ol type="a" class="ol substeps"><li class="li substep substepexpand"><span class="cmd">Log into your <span class="ph uicontrol">nginx</span> container. </span> <pre class="codeblock"><code>docker exec -it composetutorial_nginx_1 bash</code></pre>
+</li>
+<li class="li substep substepexpand"><span class="cmd">Review the host configuration. </span> <pre class="codeblock"><code>cat <span class="ph filepath">/etc/hosts</span></code></pre>
+If your custom settings are applied, you can see
+the linked Lets-Chat container instances listed with their private IP address in your CLI
+output.<pre class="codeblock"><code>127.0.0.1	localhost
+::1	localhost ip6-localhost ip6-loopback
+fe00::0	ip6-localnet
+ff00::0	ip6-mcastprefix
+ff02::1	ip6-allnodes
+ff02::2	ip6-allrouters
+198.51.100.19	composetutorial_lets-chat_1
+198.51.100.18	composetutorial_lets-chat_2
+198.51.100.20	instance-000f2b2b
+198.51.100.18	lets-chat
+198.51.100.20	composetutorial-nginx-1
+198.51.100.19	composetutoral_lets-chat_1
+198.51.100.18	composetutorial_lets-chat_2
+198.51.100.20	instance-000f2b2b</code></pre>
+</li>
+<li class="li substep substepexpand"><span class="cmd">Log out from your container by entering <samp class="ph codeph">exit</samp> in to your CLI. </span></li>
+</ol>
+</li>
+</ol>
+<div class="section result">Great. You can now balance workload between your Lets-Chat containers and respond to higher
+user traffic. As a final step, you can <a href="container_single_ui.html#container_compose_remove" title="As a final step, remove the multi-container deployment to release used resources and maximize the use of your quota.">delete your
+multi-container deployment</a> to release used resources and maximize the use of your quota. </div></div>
+</article><article class="topic task tutorialLesson nested2" role="article" aria-labelledby="d72924e4951" lang="en-us" id="container_compose_remove"><h3 class="topictitle3" id="d72924e4951">Lesson 5: Removing your multi-container deployment</h3>
+<div class="body taskbody"><p class="shortdesc">As a final step, remove the multi-container deployment to release used resources and
+maximize the use of your quota. </p>
+<div class="section context"><div class="note attention"><span class="attentiontitle">Attention:</span> The deletion of your multi-container deployment cannot be undone. If you want
+to keep the configuration for your multi-container deployment, do not remove the
+<span class="ph filepath">docker-compose.yml</span> file. </div>
+</div><ol class="steps"><li class="step stepexpand"><span class="cmd">Stop all running container instances in your multi-container deployment. </span> <pre class="codeblock"><code>docker-compose stop</code></pre>
+</li>
+<li class="step stepexpand"><span class="cmd">Remove all container instances in your multi-container deployment.</span> <pre class="codeblock"><code>docker-compose rm</code></pre>
+ During the removal process, you are asked to confirm
+that you want to remove all container instances. Confirm by entering
+<span class="ph uicontrol">y</span>.</li>
+<li class="step stepexpand">Optional: <span class="cmd">Verify that all container instances are removed from the container system.</span> <pre class="codeblock"><code>docker-compose ps</code></pre>
+</li>
+<li class="step stepexpand">Optional: <span class="cmd">Delete your <span class="ph filepath">docker-compose.yml</span> file.</span> <div class="note tip"><span class="tiptitle">Tip:</span> If you want to reuse the file, store it in a source-control system instead of
+deleting it.</div>
+
+<pre class="codeblock"><code>rm <span class="ph filepath">docker-compose.yml</span></code></pre>
+</li>
+<li class="step stepexpand">Optional: <span class="cmd">Delete your Docker Compose project directory.</span> <pre class="codeblock"><code>cd &amp;&amp; rmdir composetutorial</code></pre>
+</li>
+</ol>
+<div class="section result">You successfully removed your multi-container deployment and maximized the use of your
+quota. </div></div>
+</article><article class="topic concept nested2" role="article" aria-labelledby="d72924e5057" lang="en-us" id="container_compose_yml"><h3 class="topictitle3" id="d72924e5057">Supported options in the <span class="ph filepath">docker-compose.yml</span> file</h3>
+<div class="body conbody"><p class="shortdesc"></p>
+<div>Review the <span class="ph filepath">docker-compose.yml</span> file options that are supported in
+<span class="keyword">IBM
+Cloud Container Service</span>.<ul><li><a href="container_single_ui.html#container_compose_yml__environment">environment</a></li>
+<li><a href="container_single_ui.html#container_compose_yml__expose">expose</a></li>
+<li><a href="container_single_ui.html#container_compose_yml__image">image</a></li>
+<li><a href="container_single_ui.html#container_compose_yml__links">links</a></li>
+<li><a href="container_single_ui.html#container_compose_yml__mem">mem_limit</a></li>
+<li><a href="container_single_ui.html#container_compose_yml__ports">ports</a></li>
+<li><a href="container_single_ui.html#container_compose_yml__volumes">volumes</a></li>
+</ul>
+</div><section role="region" aria-labelledby="d72924e5148" id="container_compose_yml__environment"><h4 class="sectiontitle" id="d72924e5148"><span class="ph"><samp class="ph codeph">environment</samp></span></h4>Use the
+<span class="ph uicontrol">environment</span> parameter to set an environment variable or bind a <span class="keyword">Cloud</span> service or app to your Docker Compose
+service.<div class="steps note"><span class="notetitle">Note:</span>  If you want to add a <span class="keyword">Cloud</span> service to your multi-container
+deployment, you must create an instance of this service in your space. For more information, see
+<a href="container_integrations.html#container_integrations_binding" title="IBM Cloud has a list of services and manages them on behalf of app developers. To add a Cloud service for your container to use, you must request an instance of this service and bind the service to the container.">Binding a service from the Cloud GUI</a>. <p>Some services do
+not support the binding of the service directly to a container. In this case, you must create a
+Cloud Foundry app. For more information, see <a href="container_troubleshoot.html#ts_bridge_app">Cloud service does not bind directly to a container</a>. </p>
+</div>
+<ul><li><span class="keyword option">Bind an IBM Cloud service</span><p>To bind a service, use the
+<span class="ph uicontrol">CCS_BIND_SRV</span> key. Replace <var class="keyword varname">&lt;service_instance_name&gt;</var> with
+the name of the service instance that you created in your private <span class="keyword">Cloud</span> images
+registry.</p>
+<pre class="codeblock"><code>environment: 
+  - "CCS_BIND_SRV=<var class="keyword varname">&lt;service_instance_name&gt;</var>"</code></pre>
+</li>
+<li><span class="keyword option">Bind a Cloud Foundry app</span><p>To bind an app, use the
+<span class="ph uicontrol">CCS_BIND_APP</span> key. Replace <var class="keyword varname">&lt;app_name&gt;</var> with the name of
+the Cloud Foundry app that you created in your private <span class="keyword">Cloud</span> images
+registry.</p>
+<pre class="codeblock"><code>environment:
+  - "CCS_BIND_APP=<var class="keyword varname">&lt;app_name&gt;</var>"</code></pre>
+</li>
+</ul>
+<dl><dt class="dlterm">Example</dt>
+<dd>The following example shows a sample <span class="ph filepath">docker-compose.yml</span> file that binds a
+Cloud Foundry app named <var class="keyword varname">containerbridge</var> and adds an environment variable named
+<var class="keyword varname">tmp_folder</var> to the lets-chat
+service.<pre class="codeblock"><code>#Name of your service
+lets-chat:
+  #Container image that is used to run the lets-chat service. Replace <var class="keyword varname">&lt;my_namespace&gt;</var> with the name of your namespace.
+  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/lets-chat
+  #Use <span class="ph uicontrol">CCS_BIND_SRV</span> to bind a <span class="keyword">Cloud</span> service or <span class="ph uicontrol">CCS_BIND_APP</span> to bind a Cloud Foundry app to your Docker Compose service. 
+  environment:
+   - "CCS_BIND_APP=containerbridge"
+   - "tmp_folder=/tmp"</code></pre>
+</dd>
+</dl>
+</section><section role="region" aria-labelledby="d72924e5267" id="container_compose_yml__expose"><h4 class="sectiontitle" id="d72924e5267"><span class="ph"><samp class="ph codeph">expose</samp></span></h4>Expose ports to the private
+network only. This port is accessible to all linked services.<dl><dt class="dlterm">Example</dt>
+<dd>The following example shows a sample <span class="ph filepath">docker-compose.yml</span> file that exposes
+port 8080 to the internal network only. The linked mongo container uses this port to send requests
+to the lets-chat container.
+<pre class="codeblock"><code>lets-chat:
+  #Container image that is used to run the lets-chat service. Replace <var class="keyword varname">&lt;my_namespace&gt;</var> with the name of your namespace.
+  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/lets-chat
+  #Make a port available to the private network only. 
+  expose:
+   - "8080"
+  links:
+    - mongo
+mongo:
+  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/mongo</code></pre>
+</dd>
+</dl>
+</section><section role="region" aria-labelledby="d72924e5299" id="container_compose_yml__image"><h4 class="sectiontitle" id="d72924e5299"><span class="ph"><samp class="ph codeph">image</samp></span></h4>Define the base image that you
+want to use to run your Docker Compose service. The image must be available in your private <span class="keyword">Cloud</span> registry before you can use it in the
+<span class="ph filepath">docker-compose.yml</span> file. <p>To define the image, use the full path to your
+private <span class="keyword">Cloud</span> registry in the
+following format: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">&lt;image&gt;</var>:<var class="keyword varname">&lt;tag&gt;</var>.</p>
+<dl><dt class="dlterm">Example</dt>
+<dd>The following example shows a sample <span class="ph filepath">docker-compose.yml</span> file that defines
+the lets-chat image as a base for the lets-chat
+service.<pre class="codeblock"><code>#Name of your service
+lets-chat:
+  #Container image that is used to run the lets-chat service. Replace <var class="keyword varname">&lt;my_namespace&gt;</var> with the name of your namespace.
+  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/lets-chat
+  </code></pre>
+</dd>
+</dl>
+</section><section role="region" aria-labelledby="d72924e5350" id="container_compose_yml__links"><h4 class="sectiontitle" id="d72924e5350"><span class="ph"><samp class="ph codeph">links</samp></span></h4>Link a container to all containers
+that are started for another service. Links determine the dependency between services and therefore
+the order, in which the containers are started when you run the <samp class="ph codeph">docker-compose up</samp>
+command. To link a service, enter the service name. <dl><dt class="dlterm">Example</dt>
+<dd>The following example shows a sample <span class="ph filepath">docker-compose.yml</span> file that links the
+nginx container to all the containers that are started for the lets-chat service.
+<pre class="codeblock"><code>#Name of your service
+nginx:
+  #Container image that is used to run the nginx service. Replace <var class="keyword varname">&lt;my_namespace&gt;</var> with the name of your namespace.
+  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/nginx
+  #Enter the name of the service that you want to link. 
+  links:
+    - lets-chat
+lets-chat:
+  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace</var>/lets-chat</code></pre>
+</dd>
+</dl>
+</section><section role="region" aria-labelledby="d72924e5385" id="container_compose_yml__mem"><h4 class="sectiontitle" id="d72924e5385"><span class="ph"><samp class="ph codeph">mem_limit</samp></span></h4>Set the size for your container
+instance. The container size defines the maximum amount of memory and disk space a container gets on
+the compute host during run time. After a container size is assigned, the value cannot be changed.
+<p>Choose between the following sizes in <span class="keyword">IBM
+Cloud Container Service</span>. </p>
+<ul data-hd-audience="yellow"><li>Pico (64 MB memory, 4 GB disk space)</li>
+<li>Nano (128 MB memory, 8 GB disk space)</li>
+<li>Micro (256 MB memory, 16 GB disk space)</li>
+<li>Tiny (512 MB memory, 32 GB disk space)</li>
+<li>Small (1024 MB memory, 64 GB disk space)</li>
+<li>Medium (2048 MB memory, 128 GB disk space)</li>
+<li>Large (4096 MB memory, 256 GB disk space)</li>
+<li>X-Large (8192 MB memory, 512 GB disk space)</li>
+<li>2X-Large (16384 MB memory, 1 TB disk space) </li>
+</ul>
+Enter the size that you want in megabytes without the <samp class="ph codeph">'M'</samp> unit label. If you
+do not specify a size, all containers are created with a <span class="ph uicontrol">micro</span> size by default.<dl><dt class="dlterm">Example</dt>
+<dd>The following example shows a sample <span class="ph filepath">docker-compose.yml</span> file that sets the
+container size of the lets-chat service to 512
+megabytes.<pre class="codeblock"><code>#Name of your service
+lets-chat:
+  #Container image that is used to run the lets-chat service. Replace <var class="keyword varname">&lt;my_namespace&gt;</var> with the name of your namespace.
+  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/lets-chat
+  #Enter the size you want in megabytes
+  mem_limit: 512</code></pre>
+</dd>
+</dl>
+</section><section role="region" aria-labelledby="d72924e5447" id="container_compose_yml__ports"><h4 class="sectiontitle" id="d72924e5447"><span class="ph"><samp class="ph codeph">ports</samp></span></h4>Use the
+<span class="ph uicontrol">ports</span> option to expose a public port for every container that is started for
+your service. Choose between one of the following configurations. <ul><li><span class="keyword option">Request a public IP address</span><div class="p">This configuration requests a new public IP address for your space, exposes port 8080 to the
+public, and binds the requested IP address to the container.<div class="steps note"><span class="notetitle">Note:</span> You must have enough public IP
+address quota to allocate new IP addresses to your space. </div>
+</div>
+<pre class="codeblock"><code>ports:
+  - "request:8080:8080"</code></pre>
+</li>
+<li><span class="keyword option">Expose a public port</span><p>With this configuration, port 8080 is exposed to the
+public. No IP address is bound to the container. To make your app accessible from the internet,
+<a href="container_single_ui.html#container_cli_ips" title="Request and bind a public IP address to a container in Cloud.">bind a public IP address</a> after the
+container is created. </p>
+<pre class="codeblock"><code>ports:
+  - "8080"</code></pre>
+</li>
+<li><span class="keyword option">Bind an existing public IP address</span><div class="p">With this configuration, port 8080 is
+exposed to the public and an existing public IP address is automatically bound to the container
+after it is created. <div class="steps note"><span class="notetitle">Note:</span> The IP address that you use must be allocated to your space and available
+to be used. If the IP address is already bound to a container, you must <a href="container_single_ui.html#container_cli_ips_unbind" title="You can unbind a public IP address from a container, but the IP address is still available to other containers and counted toward your organization's public IP quota.">unbind it</a> first.</div>
+</div>
+<pre class="codeblock"><code>ports:
+  - "<var class="keyword varname">IP_ADDRESS</var>:8080:8080"</code></pre>
+</li>
+</ul>
+</section><section role="region" aria-labelledby="d72924e5499" id="container_compose_yml__volumes"><h4 class="sectiontitle" id="d72924e5499"><span class="ph"><samp class="ph codeph">volumes</samp></span></h4>Use the
+<span class="ph uicontrol">volumes</span> parameter to add an existing volume to your service. <div class="steps note"><span class="notetitle">Note:</span> You must
+create a volume first before you can add it to the service definition in the
+<span class="ph filepath">docker-compose.yml</span> file. Refer to the <a href="container_volumes_ov.html#container_volumes_cli" title="A volume is a persistent storage location for the data that an app creates or the files that the app requires to run. You can create a volume for your container from the command line.">Creating volumes with the command line (CLI)</a> topic, for more information. To populate data into the volume prior to mounting it
+to the container, see <a href="container_volumes_ov.html#container_volumes_mount" title="After you create a volume, you can mount the volume to a container and add files that are accessible by any container the volume is mounted to.">Adding files to volumes with the command line interface (CLI)</a>.</div>
+<dl><dt class="dlterm">Example</dt>
+<dd>The following example shows a sample <span class="ph filepath">docker-compose.yml</span> file that adds an
+external volume named <var class="keyword varname">my_volume</var> to the lets-chat service. The volume is mounted
+to the <span class="ph filepath">/tmp/data</span> folder with read and write access.
+<pre class="codeblock"><code>version: '2'
+#Name of your service
+lets-chat:
+  #container image that is used to run the lets-chat service. Replace &lt;my_namespace&gt; with the name of your namespace.
+  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/lets-chat
+  #You need to first create your volume before you can add it
+  volumes:
+   - <var class="keyword varname">my_volume</var>:<span class="ph filepath">/tmp/data</span>:rw
+
+#declare volume as external
+volumes:
+  my_volume:
+    external: true</code></pre>
+</dd>
+</dl>
+</section></div>
+</article><article class="topic concept nested2" role="article" aria-labelledby="d72924e5557" lang="en-us" id="container_compose_faq"><h3 class="topictitle3" id="d72924e5557">Docker Compose FAQs</h3>
+<div class="body conbody"><p class="shortdesc">Review these frequently asked questions about Docker Compose.</p>
+<div class="p"><dl><dt class="dlterm">How do I set up my Docker compose client so that it points to the IBM Containers service?</dt>
+<dd>When you log into the <span class="keyword">IBM
+Cloud Container Service</span> CLI,
+you can choose to run <span class="keyword">IBM
+Cloud Container Service</span> (<span class="ph"><samp class="ph codeph">bx ic</samp></span>) commands or to set environment variables so
+that you can use native Docker commands (<samp class="ph codeph">docker</samp>). To execute Docker Compose
+commands against <span class="keyword">IBM
+Cloud Container Service</span>, you must set
+the environment variables to run native Docker Commands against the <span class="keyword">IBM
+Cloud Container Service</span>. For more information, see <a href="container_cli_cfic_install.html#container_cli_login" title="After you install the CLI, log in to use it.">Logging in to the IBM Cloud Container Service CLI plug-in (bx ic)</a>.</dd>
+<dt class="dlterm">How do I use scalable container groups with Docker Compose?</dt>
+<dd>Docker Compose does not support the <span class="keyword">IBM
+Cloud Container Service</span> group concept where balancing workload
+between multiple container instances is already included. If you want to balance workload between
+your container instances, you need to add another container that runs your load balancer and link it
+to your container instances. </dd>
+<dt class="dlterm">What version of the <span class="ph filepath">docker-compose.yml</span> file format is supported with
+<span class="keyword">IBM
+Cloud Container Service</span>?</dt>
+<dd><span class="keyword">IBM
+Cloud Container Service</span> only supports version 1 of
+the <span class="ph filepath">docker-compose.yml</span> file format. Version 2 is currently not supported. </dd>
+<dt class="dlterm">How do I run Docker Compose commands in attached mode?</dt>
+<dd>You might experience an error when running the <samp class="ph codeph">docker-compose up</samp> command in
+attached mode. Docker Compose is currently only supported to be run in detached mode with <span class="keyword">IBM
+Cloud Container Service</span>. Use the <samp class="ph codeph">-d</samp> option to
+avoid getting stuck in the console output of your containers with no way to detach. </dd>
+<dt class="dlterm">How do I access the logs for each container instance that runs in my multi-container
+deployment?</dt>
+<dd>The <samp class="ph codeph">docker-compose logs</samp> command is currently not supported with <span class="keyword">IBM
+Cloud Container Service</span>.</dd>
+<dt class="dlterm">What parameter options are supported in the <span class="ph filepath">docker-compose.yml</span> file?</dt>
+<dd>To review a list of supported parameter options, see <a href="container_single_ui.html#container_compose_yml">Supported options in the docker-compose.yml file</a>.</dd>
+</dl>
+</div>
+</div>
+</article></article></article></div></main></body></html>

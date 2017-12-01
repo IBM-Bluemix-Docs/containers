@@ -142,7 +142,7 @@ Click one of the following options to get started:
     <area href="container_index.html#clusters" alt="Getting started with Kubernetes clusters in {{site.data.keyword.Bluemix_notm}}
 " title="Getting started with Kubernetes clusters in {{site.data.keyword.Bluemix_notm}}
 " shape="rect" coords="-5, -6, 123, 154" />
-    <area href="cs_classic.html#cs_classic" alt="Running single and scalable containers in {{site.data.keyword.containershort_notm}}" title="Running single and scalable containers in I{{site.data.keyword.containershort_notm}}" shape="rect" coords="181, -5, 320, 161" />
+    <area href="cs_classic.html" alt="Running single and scalable containers in {{site.data.keyword.containershort_notm}}" title="Running single and scalable containers in I{{site.data.keyword.containershort_notm}}" shape="rect" coords="181, -5, 320, 161" />
     </map>
 
 ### {{site.data.keyword.Bluemix_dedicated_notm}}
@@ -163,7 +163,7 @@ Click one of the following options to get started:
     <map name="dedicated_options" id="dedicated_options">
     <area href="#setup_dedicated" alt="Setting up {{site.data.keyword.containershort_notm}} on {{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)" title="Setting up {{site.data.keyword.containershort_notm}} on {{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)" shape="rect" coords="-5, -15, 100, 153" />
     <area href="container_index.html#dedicated" alt="Getting started with Kubernetes clusters in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)" title="Getting started with Kubernetes clusters in {{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)" shape="rect" coords="153, -10, 276, 182" />
-    <area href="cs_classic.html#cs_classic" alt="Running single and scalable containers in {{site.data.keyword.containershort_notm}}" title="Running single and scalable containers in {{site.data.keyword.containershort_notm}}" shape="rect" coords="317, -11, 436, 188" />
+    <area href="cs_classic.html" alt="Running single and scalable containers in {{site.data.keyword.containershort_notm}}" title="Running single and scalable containers in {{site.data.keyword.containershort_notm}}" shape="rect" coords="317, -11, 436, 188" />
     <area href="container_ha.html#container_group_ui" alt="Running long-term services as container groups from the {{site.data.keyword.Bluemix_notm}} GUI" title="Running long-term services as container groups from the {{site.data.keyword.Bluemix_notm}} GUI" shape="rect" coords="485, -1, 600, 173" />
     </map>
 
