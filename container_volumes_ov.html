@@ -67,7 +67,7 @@ shares</a>.</span></p>
 organization manager, proceed to creating a volume. One default 20 GB file share is provided for
 each organization.</li>
 <li class="step"><span class="cmd">Create a volume by using either the <a href="container_volumes_ov.html#container_volumes_ui" title="A volume is a persistent storage location for the data that an app creates or the files that the app requires to run. You can create a volume for your container from the Cloud GUI.">GUI</a> or the <a href="container_volumes_ov.html#container_volumes_cli" title="A volume is a persistent storage location for the data that an app creates or the files that the app requires to run. You can create a volume for your container from the command line.">CLI</a>.</span></li>
-<li class="step"><span class="cmd">Create an automatic backup of your volume by using the <a href="../images/docker_image_ibmbackup_restore/ibmbackup_restore_starter.html#ibmbackup_restore_starter">ibm-backup-restore image</a>.</span></li>
+<li class="step"><span class="cmd">Create an automatic backup of your volume by using the <a href="../services/RegistryImages/ibm-backup-restore/index.html">ibm-backup-restore image</a>.</span></li>
 <li class="step"><span class="cmd">Delete a <a href="container_volumes_ov.html#container_volumes_remove" title="If you no longer need a volume to store data for your containers, you can remove the volume.">volume</a>.</span></li>
 <li class="step"><span class="cmd">Delete a <a href="container_volumes_ov.html#container_filestorage_managing" title="An organization manager can remove existing file shares and view which volumes are mounted on a file share.">file
 share</a>.</span></li>
@@ -405,7 +405,7 @@ reprovisioned in the new data center. </div>
 <li class="step stepexpand"><span class="cmd">Back up every volume that you want to use in the new data center. Choose between the following
 options.</span> <ul class="ul choices"><li class="li choice">Use the <a href="container_volumes_ov.html#container_volumes_backup" title="Container volumes are hosted on persistent storage but do not have backups. If you require a backup of your volume data, you can use bx ic cp to create a manual backup."><span class="ph">bx ic</span> cp command</a> to back up
 the volume to your local machine. </li>
-<li class="li choice">Create a backup container from the <a href="../images/docker_image_ibmbackup_restore/ibmbackup_restore_starter.html">IBM Backup and Restore image</a> to save data in an <span class="keyword">IBM Object
+<li class="li choice">Create a backup container from the <a href="../services/RegistryImages/ibm-backup-restore/index.html">IBM Backup and Restore image</a> to save data in an <span class="keyword">IBM Object
 Storage for IBM Cloud</span> instance.</li>
 </ul>
 <div class="note attention"><span class="attentiontitle">Attention:</span> If you do not back up your volume and you reprovision your space to the new
@@ -425,7 +425,7 @@ to restore the backed up data.</span></li>
 <li class="step stepexpand"><span class="cmd">Restore the data into your new volume. Depending on the way that you used to back up your
 volume, choose between the following options. </span> <ul class="ul choices"><li class="li choice">Use the <a href="container_volumes_ov.html#container_volumes_backup" title="Container volumes are hosted on persistent storage but do not have backups. If you require a backup of your volume data, you can use bx ic cp to create a manual backup."><span class="ph">bx ic</span> cp command</a> to restore
 the data from your local machine.</li>
-<li class="li choice">Create a restore container from the <a href="../images/docker_image_ibmbackup_restore/ibmbackup_restore_starter.html">IBM Backup and Restore image</a> to restore data from your <span class="keyword">IBM Object
+<li class="li choice">Create a restore container from the <a href="../services/RegistryImages/ibm-backup-restore/index.html">IBM Backup and Restore image</a> to restore data from your <span class="keyword">IBM Object
 Storage for IBM Cloud</span> instance.</li>
 </ul>
 </li>
