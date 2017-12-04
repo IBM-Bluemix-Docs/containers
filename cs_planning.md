@@ -542,6 +542,10 @@ IBM Blockchain Platform <img src="../icons/launch-glyph.svg" alt="External link 
 </td>
 </tr>
 <tr>
+<td>{{site.data.keyword.bpshort}}</td>
+<td>{{site.data.keyword.bplong}} is an automation tool that uses Terraform to deploy your infrastructure as code. When you deploy your infrastructure as a single unit, you can reuse those cloud resource definitions across any number of environments. To define a Kubernetes cluster as a resource with {site.data.keyword.bpshort}}, try creating an environment with the [container-cluster template](https://console.bluemix.net/schematics/templates/details/Cloud-Schematics%2Fcontainer-cluster). For more information about Schematics, see [About {{site.data.keyword.bplong_notm}}](docs/services/schematics/schematics_overview.html#about).</td>
+</tr>
+<tr>
 <td>Weave Scope</td>
 <td>Weave Scope provides a visual diagram of your resources within a Kubernetes cluster, including services, pods, containers, processes, nodes, and more. Weave Scope provides interactive metrics for CPU and memory and also provides tools to tail and exec into a container.<p>For more information, see [Visualizing Kubernetes cluster resources with Weave Scope and {{site.data.keyword.containershort_notm}}](cs_cluster.html#cs_weavescope).</p></li></ol>
 </td>
