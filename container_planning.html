@@ -637,12 +637,12 @@ Cloud Container Service</span>.
 Then, you can use one of these images as a parent image, modify the Dockerfile and build your own
 image with your own app code on it. </dd>
 <dt class="dlterm">Images from Docker Hub</dt>
-<dd><a href="container_images_copying.html" title="You can copy an image into your organization's private Cloud registry from one of the following locations.">Copy images directly from
-Docker Hub</a> into your private <span class="keyword">Cloud</span> registry or <a href="container_images_pulling.html" title="You can pull an image from Docker Hub or your private registry, modify it locally, and push it to your organization's private Cloud registry.">pull an image from Docker Hub</a>, modify it
+<dd><a href="../services/Registry/registry_images_.html#registry_images_copying" title="You can copy an image into your organization's private Cloud registry from one of the following locations.">Copy images directly from
+Docker Hub</a> into your private <span class="keyword">Cloud</span> registry or <a href="../services/Registry/registry_images_.html#registry_images_pulling" title="You can pull an image from Docker Hub or your private registry, modify it locally, and push it to your organization's private Cloud registry.">pull an image from Docker Hub</a>, modify it
 locally, and then build it directly in your registry. </dd>
 <dt class="dlterm">Create your own image</dt>
 <dd>If you have container images that you already use in your local Docker environment, you can
-<a href="container_images_pulling.html" title="You can pull an image from Docker Hub or your private registry, modify it locally, and push it to your organization's private Cloud registry.">push them to your private <span class="keyword">Cloud</span> registry</a> to use them in <span class="keyword">IBM
+<a href="../services/Registry/registry_images_.html#registry_images_pulling" title="You can pull an image from Docker Hub or your private registry, modify it locally, and push it to your organization's private Cloud registry.">push them to your private <span class="keyword">Cloud</span> registry</a> to use them in <span class="keyword">IBM
 Cloud Container Service</span>. You can also create your own
 Dockerfile, build, test it locally, and then push it to your private images registry. </dd>
 </dl>
@@ -891,7 +891,7 @@ select the <span class="keyword">Cloud</span>
 </div>
 To use a <span class="keyword">Cloud</span> service with
 <span class="keyword">IBM
-Cloud Container Service</span>, you must <a href="../services/reqnsi.html#req_instance">create an instance of this
+Cloud Container Service</span>, you must <a href="../cli/reference/bluemix_cli/bx_cli.html#bluemix_resource_service_instance_create">create an instance of this
 service</a> in your space before you can create a container. After a service instance is created
 in your space, you must <a href="container_integrations.html#container_integrations_binding" title="IBM Cloud has a list of services and manages them on behalf of app developers. To add a Cloud service for your container to use, you must request an instance of this service and bind the service to the container.">bind the service to your container</a> so that the container can access the environment
 variables that define the service. These environment variables are called VCAP_SERVICES. When you
