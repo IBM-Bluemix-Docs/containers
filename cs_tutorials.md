@@ -146,7 +146,7 @@ Congratulations! You've successfully installed the CLIs for the following lesson
 ## Lesson 2: Setting up your cluster environment
 {: #cs_cluster_tutorial_lesson2}
 
-Create your Kubernetes cluster, set up a private image repository in {{site.data.keyword.registryshort_notm}}, and add secrets to your cluster so that the app can access the {{site.data.keyword.toneanalyzershort}} service.
+Set up a private image repository in {{site.data.keyword.registryshort_notm}} and add secrets to your cluster so that the app can access the {{site.data.keyword.toneanalyzershort}} service.
 
 1.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI by using your {{site.data.keyword.Bluemix_notm}} credentials, when prompted.
 
