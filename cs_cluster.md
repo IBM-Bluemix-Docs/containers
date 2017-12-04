@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-01"
+lastupdated: "2017-12-04"
 
 ---
 
@@ -47,6 +47,7 @@ To create a cluster:
     2. Select a type of machine and specify the number of worker nodes that you need. The machine type defines the amount of virtual CPU and memory that is set up in each worker node and made available to the containers.
         - The micro machine type indicates the smallest option.
         - A balanced machine has an equal amount of memory that is assigned to each CPU, which optimizes performance.
+        - Machine types that include `encrypted` in the name encrypt the host's docker data. The `/var/lib/docker` directory, where all container data is stored, is encrypted with LUKS encryption.
     3. Select a Public and Private VLAN from your IBM Cloud infrastructure (SoftLayer) account. Both VLANs communicate between worker nodes but the public VLAN also communicates with the IBM-managed Kubernetes master. You can use the same VLAN for multiple clusters.
         **Note**: If you choose not to select a public VLAN, you must configure an alternative solution.
     4. Select a type of hardware. Shared is a sufficient option for most situations.

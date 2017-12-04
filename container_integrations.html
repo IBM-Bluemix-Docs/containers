@@ -147,7 +147,7 @@ VPN</span> service</a>.</li>
 Cloud</span> has a list of services and
 manages them on behalf of app developers. To add a <span class="keyword">Cloud</span> service for your container to use, you
 must request an instance of this service and bind the service to the container.</p>
-<div class="section prereq">Before you begin, add the service to your <span class="keyword">Cloud</span> space. For more information, see <a href="../services/reqnsi.html#req_instance">Requesting a new service
+<div class="section prereq">Before you begin, add the service to your <span class="keyword">Cloud</span> space. For more information, see <a href="../cli/reference/bluemix_cli/bx_cli.html#bluemix_resource_service_instance_create">Requesting a new service
 instance</a>.</div><div class="section context"><div class="note restriction" id="container_integrations_binding__restriction"><span class="restrictiontitle">Restriction:</span> Some <span class="keyword">Cloud</span> services do not support the binding
 directly to a container and lead to a failure during container creation. In this case, bind the
 <span class="keyword">Cloud</span> service to a Cloud Foundry app
@@ -171,7 +171,7 @@ Credentials</span>. The information that is displayed is the VCAP_SERVICES.</li>
 Cloud</span> has a list of services and
 manages them on behalf of app developers. To add a <span class="keyword">Cloud</span> service for your container to use, you
 must request an instance of this service and bind the service to the container.</p>
-<div class="section prereq">Before you begin, add the service to your <span class="keyword">Cloud</span> space. For more information, see <a href="../services/reqnsi.html#req_instance">Requesting a new service
+<div class="section prereq">Before you begin, add the service to your <span class="keyword">Cloud</span> space. For more information, see <a href="../cli/reference/bluemix_cli/bx_cli.html#bluemix_resource_service_instance_create">Requesting a new service
 instance</a>.</div><div class="section context"><div class="note restriction" id="container_integrations_binding_cli__restriction"><span class="restrictiontitle">Restriction:</span> Some <span class="keyword">Cloud</span> services do not support the binding
 directly to a container and lead to a failure during container creation. In this case, bind the
 <span class="keyword">Cloud</span> service to a Cloud Foundry app
@@ -233,7 +233,7 @@ manage your alert notifications. With the <span class="keyword">Alert Notificati
 notification policies that filters the alerts that you are interested in. You can refine the policy
 filters as needed to specify individuals or groups as recipients of alerts, as well as preferred
 notification methods and frequency.</p>
-<div class="section prereq">Before you begin, review the <a href="../services/reqnsi.html#req_instance">Requesting a new service instance</a> topic and create an instance of the <span class="keyword">Alert Notification</span> service in your <span class="keyword">Cloud</span> space. </div><div class="section context"><p>The following steps showcase how to create a container that runs a sample <span class="keyword">Alert Notification</span> node app. You can send test
+<div class="section prereq">Before you begin, review the <a href="../cli/reference/bluemix_cli/bx_cli.html#bluemix_resource_service_instance_create">Requesting a new service instance</a> topic and create an instance of the <span class="keyword">Alert Notification</span> service in your <span class="keyword">Cloud</span> space. </div><div class="section context"><p>The following steps showcase how to create a container that runs a sample <span class="keyword">Alert Notification</span> node app. You can send test
 alerts to the <span class="keyword">Alert Notification</span> service
 and review them in the Alert Viewer tool. </p>
 </div><ol class="steps"><li class="step stepexpand"><span class="cmd">Download and clone the sample <a href="https://github.com/IBM-Bluemix/alert-notification-helloworld" rel="external" target="_blank" title="(Opens in a new tab or window)">Alert Notification app</a> to your local machine. </span> <pre class="codeblock"><code>git clone <span class="ph filepath">https://github.com/IBM-Bluemix/alert-notification-helloworld.git</span></code></pre>
