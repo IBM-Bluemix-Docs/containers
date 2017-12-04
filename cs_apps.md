@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-01"
+lastupdated: "2017-12-04"
 
 ---
 
@@ -246,11 +246,11 @@ The diagram shows how Kubernetes carries user network traffic in {{site.data.key
  <ul>
   <li>Expose multiple apps in your cluster by creating one external HTTP or HTTPS load balancer that uses a secured and unique public entrypoint to route incoming requests to your apps.</li>
   <li>You can use one public route to expose multiple apps in your cluster as services.</li>
-  <li>Ingress consists of three main components, the Ingress resource, the Ingress controller, and the application load balancer. 
+  <li>Ingress consists of three main components, the Ingress resource, the Ingress controller, and the application load balancer.
    <ul>
     <li>The Ingress resource defines the rules for how to route and load balance incoming requests for an app.</li>
     <li>The Ingress controller enables the application load balancer, which listens for incoming HTTP or HTTPS service requests and forwards requests based on the rules defined for each Ingress resource.</li>
-    <li>The application load balancer load balances requests across the apps's pods. 
+    <li>The application load balancer load balances requests across the apps's pods.
    </ul>
   <li>Use Ingress if you want to implement your own load balancer with custom routing rules and if you need SSL termination for your apps.</li>
  </ul>
@@ -925,36 +925,12 @@ To configure the application load balancer:
 3.  Create a TLS certificate and key for your domain that is encoded in PEM format.
 4.  Store your TLS certificate and key in a Kubernetes secret.
     1.  Open your preferred editor and create a Kubernetes secret configuration file that is named, for example, `mysecret.yaml`.
-    2.  Define a secret that uses your TLS certificate and key.
+    2.  Define a secret that uses your TLS certificate and key. Replace <em>&lt;mytlssecret&gt;</em> with a name for your Kubernetes secret, <tls_key_filepath> with the path to your custom TLS key file, and <tls_cert_filepath> with the path to your custom TLS certificate file.
 
         ```
-        apiVersion: v1
-        kind: Secret
-        metadata:
-          name: <mytlssecret>
-        type: Opaque
-        data:
-          tls.crt: <tlscert>
-          tls.key: <tlskey>
+        kubectl create secret tls <mytlssecret> --key <tls_key_filepath> --cert <tls_cert_filepath>
         ```
-        {: codeblock}
-
-        <table>
-        <thead>
-        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
-        </thead>
-        <tbody>
-        <tr>
-        <td><code>name</code></td>
-        <td>Replace <em>&lt;mytlssecret&gt;</em> with a name for your Kubernetes secret.</td>
-        </tr>
-        <tr>
-        <td><code>tls.cert</code></td>
-        <td>Replace <em>&lt;tlscert&gt;</em> with your custom TLS certificate that is encoded in base64 format.</td>
-         </tr>
-         <td><code>tls.key</code></td>
-         <td>Replace <em>&lt;tlskey&gt;</em> with your custom TLS key that is encoded in base64 format.</td>
-         </tbody></table>
+        {: pre}
 
     3.  Save your configuration file.
     4.  Create the TLS secret for your cluster.
@@ -1724,36 +1700,12 @@ To configure the application load balancer:
 
 4.  Store your TLS certificate and key in a Kubernetes secret.
     1.  Open your preferred editor and create a Kubernetes secret configuration file that is named, for example, `mysecret.yaml`.
-    2.  Define a secret that uses your TLS certificate and key.
+    2.  Define a secret that uses your TLS certificate and key. Replace <em>&lt;mytlssecret&gt;</em> with a name for your Kubernetes secret, <tls_key_filepath> with the path to your custom TLS key file, and <tls_cert_filepath> with the path to your custom TLS certificate file.
 
         ```
-        apiVersion: v1
-        kind: Secret
-        metadata:
-          name: <mytlssecret>
-        type: Opaque
-        data:
-          tls.crt: <tlscert>
-          tls.key: <tlskey>
+        kubectl create secret tls <mytlssecret> --key <tls_key_filepath> --cert <tls_cert_filepath>
         ```
-        {: codeblock}
-
-        <table>
-        <thead>
-        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
-        </thead>
-        <tbody>
-        <tr>
-        <td><code>name</code></td>
-        <td>Replace <em>&lt;mytlssecret&gt;</em> with a name for your Kubernetes secret.</td>
-        </tr>
-        <tr>
-        <td><code>tls.cert</code></td>
-        <td>Replace <em>&lt;tlscert&gt;</em> with your custom TLS certificate that is encoded in base64 format.</td>
-         </tr>
-         <td><code>tls.key</code></td>
-         <td>Replace <em>&lt;tlskey&gt;</em> with your custom TLS key that is encoded in base64 format.</td>
-         </tbody></table>
+        {: pre}
 
     3.  Save your configuration file.
     4.  Create the TLS secret for your cluster.
@@ -2436,7 +2388,7 @@ When an {{site.data.keyword.Bluemix_dedicated_notm}} account is [enabled for clu
 2.  Decide if you want to save your data and the NFS file share after you delete the pvc. If you want to keep your data, then choose a `retain` storage class. If you want the data and your file share to be deleted when you delete the pvc, choose a storage class without `retain`.
 
 3.  Review the IOPS of a storage class and the available storage sizes.
-    
+
     - The bronze, silver, and gold storage classes use [Endurance storage ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/topic/endurance-storage) and have a single defined IOPS per GB for each class. The total IOPS depends on the size of the storage. For example, 1000Gi pvc at 4 IOPS per GB has a total of 4000 IOPS.
 
       ```
