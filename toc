@@ -15,32 +15,35 @@ IBM Cloud Container Service
         cs_tutorials_apps.md
 
     cs_security.md
-    {: .navgroup-end}
-
-    {: .navgroup id="reference"}
-    cs_cli_reference.md
-    cs_versions.md
-    cs_regions.md
-    cs_annotations.md
-    {: .navgroup-end}
+    {: .navgroup-end
 
     {: .navgroup id="howto"}
     cs_cli_install.md
     cs_cluster.md
     cs_apps.md
-    [Deprecated: Running single and scalable containers](cs_classic.html)
-        [Migrating single and scalable containers to Kubernetes clusters](cs_classic.html#cs_classic_migrating)
-        [About single and scalable containers](container_ov.html)
-        [Planning single and scalable containers](container_planning.html)
-        [Security for single and scalable containers](container_security.html)
-        [Setting up the CLI for single and scalable containers](container_cli_cfic_install.html)
-        [IBM Images](../services/RegistryImages/index.html)
-        [Running short-term tasks as containers](container_single_ui.html)
-        [Running highly available groups](container_ha.html)
-        [Storing persistent data for single and scalable containers](container_volumes_ov.html)
-        [Integrating services with single and scalable containers](container_integrations.html)
-        [CLI reference for single and scalable containers](container_cli_reference_cfic.html)
-        [Troubleshooting single and scalable containers](container_troubleshoot.html)
+    {: .navgroup-end}
+    
+    {: .navgroup id="reference"}
+    cs_cli_reference.md
+    cs_versions.md
+    cs_regions.md
+    cs_annotations.md
+    
+    {: .topicgroup}
+    IBM Cloud Dedicated
+        [Deprecated: Running single and scalable containers](cs_classic.html)
+            [Migrating single and scalable containers to Kubernetes clusters](cs_classic.html#cs_classic_migrating)
+            [About single and scalable containers](container_ov.html)
+            [Planning single and scalable containers](container_planning.html)
+            [Security for single and scalable containers](container_security.html)
+            [Setting up the CLI for single and scalable containers](container_cli_cfic_install.html)
+            [IBM Images](../services/RegistryImages/index.html)
+            [Running short-term tasks as containers](container_single_ui.html)
+            [Running highly available groups](container_ha.html)
+            [Storing persistent data for single and scalable containers](container_volumes_ov.html)
+            [Integrating services with single and scalable containers](container_integrations.html)
+            [CLI reference for single and scalable containers](container_cli_reference_cfic.html)
+            [Troubleshooting single and scalable containers](container_troubleshoot.html)
     {: .navgroup-end}
 
     {: .navgroup id="help"}
