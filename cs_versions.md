@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-11-03"
+lastupdated: "2017-12-05"
 
 ---
 
@@ -90,7 +90,7 @@ Review changes you might need to make when updating to Kubernetes version 1.8.
 </tr>
 <tr>
 <td>`kubectl delete`</td>
-<td>The `kubectl delete` command no longer scales down workload API objects, like pods, before the object is deleted. If you require the object to scale down, use [kubectl scale ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/user-guide/kubectl/v1.8/#scale) before you delete the object.</td>
+<td>The `kubectl delete` command no longer scales down workload API objects, like pods, before the object is deleted. If you require the object to scale down, use [kubectl scale ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#scale) before you delete the object.</td>
 </tr>
 <tr>
 <td>`kubectl run`</td>

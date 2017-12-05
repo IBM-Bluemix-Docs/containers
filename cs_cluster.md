@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-01"
+lastupdated: "2017-12-04"
 
 ---
 
@@ -47,6 +47,7 @@ To create a cluster:
     2. Select a type of machine and specify the number of worker nodes that you need. The machine type defines the amount of virtual CPU and memory that is set up in each worker node and made available to the containers.
         - The micro machine type indicates the smallest option.
         - A balanced machine has an equal amount of memory that is assigned to each CPU, which optimizes performance.
+        - Machine types that include `encrypted` in the name encrypt the host's docker data. The `/var/lib/docker` directory, where all container data is stored, is encrypted with LUKS encryption.
     3. Select a Public and Private VLAN from your IBM Cloud infrastructure (SoftLayer) account. Both VLANs communicate between worker nodes but the public VLAN also communicates with the IBM-managed Kubernetes master. You can use the same VLAN for multiple clusters.
         **Note**: If you choose not to select a public VLAN, you must configure an alternative solution.
     4. Select a type of hardware. Shared is a sufficient option for most situations.
@@ -1182,7 +1183,7 @@ While IBM automatically applies patches to the Kubernetes master, you must expli
 - Use [replicas ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#replicas) in your deployments to reschedule pods on available nodes.
 
 Updating production-level clusters:
-- To help avoid downtime for your apps, the update process prevents pods from being scheduled on the worker node during the update. See [`kubectl drain` ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/user-guide/kubectl/v1.8/#drain) for more information.
+- To help avoid downtime for your apps, the update process prevents pods from being scheduled on the worker node during the update. See [`kubectl drain` ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#drain) for more information.
 - Use a test cluster to validate that your workloads and the delivery process are not impacted by the update. You cannot roll back worker nodes to a previous version.
 - Production-level clusters should have capacity to survive a worker node failure. If your cluster does not, add a worker node before updating the cluster.
 - A rolling update is performed when multiple worker nodes are requested to upgrade. A maximum of 20 percent of the total amount of worker nodes in a cluster can be upgraded simultaneously. The upgrade process waits for a worker node to complete the upgrade before another worker starts upgrading.
