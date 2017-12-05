@@ -142,7 +142,7 @@ Click one of the following options to get started:
     <area href="container_index.html#clusters" alt="Getting started with Kubernetes clusters in {{site.data.keyword.Bluemix_notm}}
 " title="Getting started with Kubernetes clusters in {{site.data.keyword.Bluemix_notm}}
 " shape="rect" coords="-5, -6, 123, 154" />
-    <area href="cs_classic.html" alt="Running single and scalable containers in {{site.data.keyword.containershort_notm}}" title="Running single and scalable containers in I{{site.data.keyword.containershort_notm}}" shape="rect" coords="181, -5, 320, 161" />
+    <area href="cs_cli_install.html" alt="Installing the CLIs" title="Installing the CLIs" shape="rect" coords="181, -5, 320, 161" />
     </map>
 
 ### {{site.data.keyword.Bluemix_dedicated_notm}}
