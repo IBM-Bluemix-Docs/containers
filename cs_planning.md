@@ -477,6 +477,8 @@ For more information about how to access a public or private registry and use an
 {: #cs_planning_apps_storage}
 
 A container is, by design, short-lived. However, as shown in the following diagram, you can choose between several options to persist data for the case of a container failover and to share data between containers.
+
+**Note**: If you have a firewall, [allow egress access](cs_security.html#opening_ports) for the IBM Cloud infrastructure (SoftLayer) IP ranges of the locations (data centers) that your clusters are in, so that you can create persistent volume claims.
 {:shortdesc}
 
 ![Persistent storage options for deployments in Kubernetes clusters](images/cs_planning_apps_storage.png)

@@ -137,10 +137,4 @@ Example of `GET /clusters` API in US South:
 
 </br>
 
-To view documentation on the API commands, append `swagger-api` to the endpoint for the region to view.
-  * AP North: https://ap-north.containers.bluemix.net/swagger-api/
-  * AP South: https://ap-south.containers.bluemix.net/swagger-api/
-  * EU Central: https://eu-central.containers.bluemix.net/swagger-api/
-  * UK South: https://uk-south.containers.bluemix.net/swagger-api/
-  * US East: https://us-east.containers.bluemix.net/swagger-api/
-  * US South: https://us-south.containers.bluemix.net/swagger-api/
+To view documentation on the API commands, view [https://containers.bluemix.net/swagger-api/](https://containers.bluemix.net/swagger-api/).

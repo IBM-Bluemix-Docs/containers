@@ -22,7 +22,7 @@ lastupdated: "2017-11-16"
 You can use built-in security features for risk analysis and security protection. These features help you to protect your cluster infrastructure and network communication, isolate your compute resources, and ensure security compliance across your infrastructure components and container deployments.
 {: shortdesc}
 
-In the following diagram, you can see security features that are grouped by Kubernetes master, worker nodes, and container images.  
+In the following diagram, you can see security features that are grouped by Kubernetes master, worker nodes, and container images.
 <img src="images/cs_security.png" width="400" alt="{{site.data.keyword.containershort_notm}} cluster security" style="width:400px; border-style: none"/>
 
 
@@ -252,13 +252,18 @@ Review these situations in which you might need to open specific ports and IP ad
 </p>
 
   5. For private firewalls, allow the appropriate IBM Cloud infrastructure (SoftLayer) private IP ranges. Consult [this link](https://knowledgelayer.softlayer.com/faq/what-ip-ranges-do-i-allow-through-firewall) beginning with the **Backend (private) Network** section.
-      - Add all of the [locations within the regions](cs_regions.html#locations) that you are using
-      - Note that you must add the dal01 location (data center)
-      - Open ports 80 and 443 to allow the cluster bootstrapping process
+      - Add all of the [locations within the regions](cs_regions.html#locations) that you are using.
+      - Note that you must add the dal01 location (data center).
+      - Open ports 80 and 443 to allow the cluster bootstrapping process.
 
-  6. Optional: To access the load balancer from outside of the VLAN, open the port for incoming network traffic on the specific IP address of that load balancer.
+  6. To create persistent volume claims for data storage, allow egress access through your firewall for the [IBM Cloud infrastructure (SoftLayer) IP addresses](https://knowledgelayer.softlayer.com/faq/what-ip-ranges-do-i-allow-through-firewall) of the location (data center) that your cluster is in.
+      - To find the location (data center) of your cluster, run `bx cs clusters`.
+      - Allow access to the IP range for both the **Frontend (public) network** and **Backend (private) Network**.
+      - Note that you must add the dal01 location (data center) for the **Backend (private) Network**.
 
-  7. Optional: To access the Ingress controller from outside of the VLAN, open either port 80 or 443 for incoming network traffic on the specific IP address of that Ingress controller, depending on which port you have configured.
+  7. Optional: To access the load balancer from outside of the VLAN, open the port for incoming network traffic on the specific IP address of that load balancer.
+
+  8. Optional: To access the Ingress controller from outside of the VLAN, open either port 80 or 443 for incoming network traffic on the specific IP address of that Ingress controller, depending on which port you have configured.
 
 ## Restricting network traffic to edge worker nodes
 {: #cs_edge}
