@@ -501,7 +501,7 @@ Open the following ports and IP addresses in your customized firewall.
       <tr>
          <td>EU Central</td>
          <td>ams03<br>fra02<br>par01</td>
-         <td><code>169.50.169.110</code><br><code>169.50.56.174</code><br><code>159.8.86.149</code></td>
+         <td><code>169.50.169.110</code><br><code>169.50.56.174</code><br><code>159.8.86.149, 159.8.98.170</code></td>
         </tr>
       <tr>
         <td>UK South</td>
@@ -615,9 +615,14 @@ Open the following ports and IP addresses in your customized firewall.
 </p>
 
 5. If you have a private firewall, allow the appropriate IBM Cloud infrastructure (SoftLayer) private IP ranges. Consult [this link](https://knowledgelayer.softlayer.com/faq/what-ip-ranges-do-i-allow-through-firewall) beginning with the **Backend (private) Network** section.
-    - Add all the [locations within the region(s)](cs_regions.html#locations) that you are using
-    - Note that you must add the dal01 location (data center)
-    - Open ports 80 and 443 to allow the cluster bootstrapping process
+    - Add all the [locations within the region(s)](cs_regions.html#locations) that you are using.
+    - Note that you must add the dal01 location (data center).
+    - Open ports 80 and 443 to allow the cluster bootstrapping process.
+
+6. To create persistent volume claims for data storage, allow egress access through your firewall for the [IBM Cloud infrastructure (SoftLayer) IP addresses](https://knowledgelayer.softlayer.com/faq/what-ip-ranges-do-i-allow-through-firewall) of the location (data center) that your cluster is in.
+    - To find the location (data center) of your cluster, run `bx cs clusters`.
+    - Allow access to the IP range for both the **Frontend (public) network** and **Backend (private) Network**.
+    - Note that you must add the dal01 location (data center) for the **Backend (private) Network**.
 
 <br />
 

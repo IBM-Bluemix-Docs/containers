@@ -19,7 +19,7 @@ lastupdated: "2017-12-01"
 # Planning clusters and apps
 {: #cs_planning}
 
-Get a feel for the decisions you can make to configure and customize Kubernetes clusters in {{site.data.keyword.containershort_notm}} and meet the requirements of your organization. Some of these configurations cannot be changed after a cluster is created. Knowing these configurations in advance can ensure that resources, such as memory, disk space, and IP addresses are available to your development teams as needed.
+Get a feel for the decisions you can make to configure and customize Kubernetes clusters in {{site.data.keyword.containershort_notm}}. Some of these configurations cannot be changed after a cluster is created. Knowing these configurations in advance can ensure that resources, such as memory, disk space, and IP addresses, are available to your development teams as needed.
 {:shortdesc}
 
 <br />
@@ -28,7 +28,7 @@ Get a feel for the decisions you can make to configure and customize Kubernetes 
 ## Comparison of lite and standard clusters
 {: #cs_planning_cluster_type}
 
-You can create lite or standard clusters. Create lite clusters to get familiar and test Kubernetes capabilities or create standard clusters to  use full Kubernetes capabilities to deploy apps.
+You can create lite or standard clusters. Try out lite clusters to get familiar and test a few Kubernetes capabilities, or create standard clusters to use the full capabilities of Kubernetes to deploy apps.
 {:shortdesc}
 
 |Characteristics|Lite clusters|Standard clusters|
@@ -64,11 +64,11 @@ Review these potential cluster setups that are ordered with increasing degrees o
 2.  Two clusters that run in different locations in the same region, each with multiple worker nodes
 3.  Two clusters that run in different regions, each with multiple worker nodes
 
-Learn more about how you can use these techniques to increase the availability of your cluster:
+Increase the availability of your cluster with these techniques:
 
 <dl>
-<dt>Include enough worker nodes to spread out app instances</dt>
-<dd>For high availability, allow your app developers to spread their containers across multiple worker nodes per cluster. Three worker nodes allow for the downtime of one worker node to occur without interrupting the usage of the app. You can specify how many worker nodes to include when you create a cluster from the [{{site.data.keyword.Bluemix_notm}} GUI](cs_cluster.html#cs_cluster_ui) or the [CLI](cs_cluster.html#cs_cluster_cli). Kubernetes limits the maximum number of worker nodes that you can have in a cluster. Review [worker node and pod quotas ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/admin/cluster-large/) for more information.
+<dt>Spread apps across worker nodes</dt>
+<dd>Allow developers to spread their apps in containers across multiple worker nodes per cluster. An app instance in each of three worker nodes allow for the downtime of one worker node without interrupting the usage of the app. You can specify how many worker nodes to include when you create a cluster from the [{{site.data.keyword.Bluemix_notm}} GUI](cs_cluster.html#cs_cluster_ui) or the [CLI](cs_cluster.html#cs_cluster_cli). Kubernetes limits the maximum number of worker nodes that you can have in a cluster, so keep in mind the [worker node and pod quotas ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/admin/cluster-large/).
 <pre class="codeblock">
 <code>bx cs cluster-create --location &lt;dal10&gt; --workers 3 --public-vlan &lt;my_public_vlan_id&gt; --private-vlan &lt;my_private_vlan_id&gt; --machine-type &lt;u2c.2x4&gt; --name &lt;my_cluster&gt;</code>
 </pre>
@@ -85,8 +85,8 @@ Learn more about how you can use these techniques to increase the availability o
 </pre>
 </dd>
 <dt>Spread apps across clusters in different regions</dt>
-<dd>When you spread applications across clusters in different regions, you can allow load balancing to occur based on the region the user is in. If the cluster, hardware, or even an entire location in one region goes down, traffic is routed to the container that is deployed in another location.
-<p><strong>Important:</strong> After you configure your custom domain, you might use these commands to create the clusters.</p>
+<dd>When you spread apps across clusters in different regions, you can allow load balancing to occur based on the region the user is in. If the cluster, hardware, or even an entire location in one region goes down, traffic is routed to the container that is deployed in another location.
+<p><strong>Important:</strong> After you configure a custom domain, you can use these commands to create the clusters.</p>
 <p>Location 1:</p>
 <pre class="codeblock">
 <code>bx cs cluster-create --location &lt;dal10&gt; --workers 3 --public-vlan &lt;my_public_vlan_id&gt; --private-vlan &lt;my_private_vlan_id&gt; --machine-type &lt;u2c.2x4&gt; --name &lt;my_cluster1&gt;</code>
@@ -104,7 +104,7 @@ Learn more about how you can use these techniques to increase the availability o
 ## Worker node configuration
 {: #cs_planning_worker_nodes}
 
-A Kubernetes cluster consists of virtual machine worker nodes and is centrally monitored and managed by the Kubernetes master. Cluster admins must decide how to set up the cluster of worker nodes to ensure that cluster users have all the resources to deploy and run apps in the cluster.
+A Kubernetes cluster consists of worker nodes and is centrally monitored and managed by the Kubernetes master. Cluster admins decide how to set up the cluster of worker nodes to ensure that cluster users have all the resources to deploy and run apps in the cluster.
 {:shortdesc}
 
 When you create a standard cluster, worker nodes are ordered in IBM Cloud infrastructure (SoftLayer) on your behalf and set up in {{site.data.keyword.Bluemix_notm}}. Every worker node is assigned a unique worker node ID and domain name that must not be changed after the cluster is created. Depending on the level of hardware isolation that you choose, worker nodes can be set up as shared or dedicated nodes. Every worker node is provisioned with a specific machine type that determines the number of vCPUs, memory, and disk space that are available to the containers that are deployed to the worker node. Kubernetes limits the maximum number of worker nodes that you can have in a cluster. Review [worker node and pod quotas ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/admin/cluster-large/) for more information.
@@ -477,6 +477,8 @@ For more information about how to access a public or private registry and use an
 {: #cs_planning_apps_storage}
 
 A container is, by design, short-lived. However, as shown in the following diagram, you can choose between several options to persist data for the case of a container failover and to share data between containers.
+
+**Note**: If you have a firewall, [allow egress access](cs_security.html#opening_ports) for the IBM Cloud infrastructure (SoftLayer) IP ranges of the locations (data centers) that your clusters are in, so that you can create persistent volume claims.
 {:shortdesc}
 
 ![Persistent storage options for deployments in Kubernetes clusters](images/cs_planning_apps_storage.png)
