@@ -19,10 +19,10 @@ lastupdated: "2017-10-16"
 # Tutorial: Creating clusters
 {: #cs_cluster_tutorial}
 
-Deploy and manage your own Kubernetes cluster in the cloud. You can automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of independent compute hosts called worker nodes.
+Deploy and manage your own Kubernetes cluster in {{site.data.keyword.Bluemix_short}}. You can automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of independent compute hosts called worker nodes.
 {:shortdesc}
 
-In this tutorial series, you can see how a fictional public relations firm uses Kubernetes to deploy a containerized app in {{site.data.keyword.Bluemix_short}}. Leveraging {{site.data.keyword.toneanalyzerfull}}, the PR firm analyzes their press releases and receives feedback.
+In this tutorial series, you can see how a fictional public relations firm uses Kubernetes capabilities to deploy a containerized app in {{site.data.keyword.Bluemix_notm}}. Leveraging {{site.data.keyword.toneanalyzerfull}}, the PR firm analyzes their press releases and receives feedback.
 
 
 ## Objectives
@@ -32,9 +32,9 @@ In this first tutorial, you act as the PR firm's networking administrator. You c
 To set up the infrastructure:
 
 -   Create a Kubernetes cluster with one worker node
--   Install the CLIs for using the Kubernetes API and managing Docker images
+-   Install the CLIs for running Kubernetes commands and managing Docker images
 -   Create a private image repository in {{site.data.keyword.registrylong_notm}} to store your images
--   Add the {{site.data.keyword.toneanalyzershort}} service to the cluster so that any app in the cluster can use the service
+-   Add the {{site.data.keyword.toneanalyzershort}} service to the cluster so that any app in the cluster can use that service
 
 
 ## Time required
