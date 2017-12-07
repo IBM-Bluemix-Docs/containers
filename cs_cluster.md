@@ -1467,7 +1467,7 @@ Kubernetes differentiates between persistent volumes that represent the actual h
 
 ![Create persistent volumes and persistent volume claims](images/cs_cluster_pv_pvc.png)
 
- As depicted in the diagram, to enable existing NFS file shares to be used with Kubernetes, you must create persistent volumes with a certain size and access mode and create a persistent volume claim that matches the persistent volume specification. If persistent volume and persistent volume claim match, they are bound to each other. Only bound persistent volume claims can be used by the cluster user to mount the volume to a pod. This process is referred to as static provisioning of persistent storage.
+ As depicted in the diagram, to enable existing NFS file shares to be used with Kubernetes, you must create persistent volumes with a certain size and access mode and create a persistent volume claim that matches the persistent volume specification. If persistent volume and persistent volume claim match, they are bound to each other. Only bound persistent volume claims can be used by the cluster user to mount the volume to a deployment. This process is referred to as static provisioning of persistent storage.
 
 Before you begin, make sure that you have an existing NFS file share that you can use to create your persistent volume.
 
@@ -1517,7 +1517,7 @@ To create a persistent volume and matching persistent volume claim, follow these
     </tr>
     <tr>
     <td><code>accessMode</code></td>
-    <td>Access modes define the way that the persistent volume claim can be mounted to a worker node.<ul><li>ReadWriteOnce (RWO): The persistent volume can be mounted to pods in a single worker node only. Pods that are mounted to this persistent volume can read from and write to the volume.</li><li>ReadOnlyMany (ROX): The persistent volume can be mounted to pods that are hosted on multiple worker nodes. Pods that are mounted to this persistent volume can only read from the volume.</li><li>ReadWriteMany (RWX): This persistent volume can be mounted to pods that are hosted on multiple worker nodes. Pods that are mounted to this persistent volume can read from and write to the volume.</li></ul></td>
+    <td>Access modes define the way that the persistent volume claim can be mounted to a worker node.<ul><li>ReadWriteOnce (RWO): The persistent volume can be mounted to deployments in a single worker node only. Containers in deployments that are mounted to this persistent volume can read from and write to the volume.</li><li>ReadOnlyMany (ROX): The persistent volume can be mounted to deployments that are hosted on multiple worker nodes. Deployments that are mounted to this persistent volume can only read from the volume.</li><li>ReadWriteMany (RWX): This persistent volume can be mounted to deployments that are hosted on multiple worker nodes. Deployments that are mounted to this persistent volume can read from and write to the volume.</li></ul></td>
     </tr>
     <tr>
     <td><code>server</code></td>
@@ -1603,7 +1603,7 @@ To create a persistent volume and matching persistent volume claim, follow these
     {: screen}
 
 
-You successfully created a persistent volume object and bound it to a persistent volume claim. Cluster users can now [mount the persistent volume claim](cs_apps.html#cs_apps_volume_mount) to their pod and start reading from and writing to the persistent volume object.
+You successfully created a persistent volume object and bound it to a persistent volume claim. Cluster users can now [mount the persistent volume claim](cs_apps.html#cs_apps_volume_mount) to their deployments and start reading from and writing to the persistent volume object.
 
 <br />
 
@@ -2134,7 +2134,7 @@ You can configure other tools for more monitoring capabilities.
 ### Configuring health monitoring for worker nodes with Autorecovery
 {: #cs_configure_worker_monitoring}
 
-The {{site.data.keyword.containerlong_notm}} Autorecovery system can be deployed into existing clusters of Kubernetes version 1.7 or later. The Autorecovery system uses various checks to query worker node health status. If Autorecovery detects an unhealthy worker node based on the configured checks, Autorecovery triggers a corrective action like an OS reload on the worker node. Only one worker node undergoes a corrective action at a time. The worker node must successfully complete the corrective action before any other worker node undergoes a corrective action.
+The {{site.data.keyword.containerlong_notm}} Autorecovery system can be deployed into existing clusters of Kubernetes version 1.7 or later. The Autorecovery system uses various checks to query worker node health status. If Autorecovery detects an unhealthy worker node based on the configured checks, Autorecovery triggers a corrective action like an OS reload on the worker node. Only one worker node undergoes a corrective action at a time. The worker node must successfully complete the corrective action before any other worker node undergoes a corrective action. For more information, see this [Autorecovery blog post ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/blogs/bluemix/2017/12/autorecovery-utilizes-consistent-hashing-high-availability/).
 **NOTE**: Autorecovery requires at least one healthy node to function properly. Configure Autorecovery with active checks only in clusters with two or more worker nodes.
 
 Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster where you want to check worker node statuses.
