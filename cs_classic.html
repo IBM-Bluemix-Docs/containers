@@ -56,18 +56,37 @@ Cloud Container Registry</span></a>.</p>
 <div class="body taskbody"><p class="shortdesc">You can re-create the <span class="ph">single and scalable containers</span> in Kubernetes
 clusters.</p>
 <div class="section context" id="cs_classic_migrating__context_iy5_jgr_mz"><div class="p">In this
-page:<div class="lines">&nbsp;&nbsp;&nbsp;&nbsp;• <a href="cs_classic.html#migrating_containers" title="You can take the properties from single and scalable containers creation commands and create configuration scripts to deploy similar container pods in Kubernetes clusters.">Re-creating single and scalable containers in clusters</a><br>
+page:<div class="lines">&nbsp;&nbsp;&nbsp;&nbsp;• <a href="cs_classic.html#migrating_containers" title="You can take the properties from single and scalable containers creation commands and create configuration files to deploy similar container pods in Kubernetes clusters.">Re-creating single and scalable container commands in Kubernetes configuration files</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <a href="cs_classic.html#migrate_groups">Container group example</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• <a href="cs_classic.html#migrate_single">Single container example</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;• <a href="cs_classic.html#deploying_yaml">Deploying Kubernetes configuration files</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;• <a href="cs_classic.html#migrating_autoscaling">Migrating auto-scaling</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;• <a href="cs_classic.html#migrating_compose">Migrating Docker Compose configurations to clusters</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;• <a href="cs_classic.html#container_single_remove">Removing single containers</a><br>
 &nbsp;&nbsp;&nbsp;&nbsp;• <a href="cs_classic.html#container_group_remove">Removing container groups</a></div>
 </div>
 </div></div>
-<article class="topic task nested2" role="article" aria-labelledby="d91310e190" id="migrating_containers"><h3 class="topictitle3" id="d91310e190">Re-creating <span class="ph">single and scalable containers</span> in clusters</h3>
+<article class="topic task nested2" role="article" aria-labelledby="d91310e190" id="migrating_containers"><h3 class="topictitle3" id="d91310e190">Re-creating <span class="ph">single and scalable containers</span> commands in Kubernetes configuration files</h3>
 <div class="body taskbody"><p class="shortdesc">You can take the properties from <span class="ph">single and scalable containers</span> creation
-commands and create configuration scripts to deploy similar container pods in Kubernetes
-clusters.</p>
-<div class="section context" id="migrating_containers__context_r35_hpq_mz"></div></div>
+commands and create configuration files to deploy similar container pods in Kubernetes
+clusters. Configuration files are YAML files that contain configuration details for each of the resources you are creating in Kubernetes. Your script might include one or more of the following sections:
+          <ul>
+            <li>
+              <p><a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/">Deployment <img src="../icons/launch-glyph.svg" alt="External link icon" title="External link icon"></a>: Defines the creation of pods and replica sets. A pod
+                includes an individual containerized app and replica sets control multiple instances of pods.</p>
+            </li>
+            <li>
+              <p><a href="https://kubernetes.io/docs/concepts/services-networking/service/">Service <img src="../icons/launch-glyph.svg" alt="External link icon" title="External link icon"></a>: Provides front-end access to pods by using a worker node or
+                load balancer public IP address, or a public Ingress route.</p>
+            </li>
+            <li>
+              <p><a href="https://kubernetes.io/docs/concepts/services-networking/ingress/">Ingress <img src="../icons/launch-glyph.svg" alt="External link icon" title="External link icon"></a>: Specifies a type of load balancer that provides routes to access
+                your app publicly.</p>
+            </li>
+          </ul>
+           <a href="https://kubernetes.io/docs/concepts/configuration/overview/">Learn more about the best practices for Kubernetes configuration files. <img src="../icons/launch-glyph.svg" alt="External link icon" title="External link icon"></a></div>
+         </article>
+<div class="section context" id="migrating_containers__context_r35_hpq_mz"></div>
 <article class="topic task nested3" role="article" aria-labelledby="d91310e203" id="migrate_groups"><h4 class="topictitle4" id="d91310e203">Container group example</h4>
 <div class="body taskbody"><div class="abstract"><span class="shortdesc">If you used container groups in the past, you can create a similar setup in a
 cluster. </span>
@@ -97,7 +116,7 @@ to learn how to implement similar functionality in a cluster.</p>
 <a href="cs_classic.html#migrate_groups__group_image">registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">ibmliberty</var></a></samp><div class="steps note"><span class="notetitle">Note:</span> If you used <samp class="ph codeph">cf ic group
 create</samp> command with the <samp class="ph codeph">--ip</samp> option, note that existing floating IP
 addresses cannot be migrated to a Kubernetes cluster. To expose a service on a public IP address,
-use create a configuration script to deploy a NodePort or LoadBalancer service type. This set up
+use create a configuration file to deploy a NodePort or LoadBalancer service type. This set up
 exposes the service on the public IP address of your Kubernetes cluster. <a href="cs_planning.html#cs_planning_public_network">Learn more about public deployment
 setup options.</a></div>
 </div>
@@ -146,7 +165,7 @@ replicas.<pre class="codeblock"><code>spec:
 <dt class="dlterm" id="migrate_groups__group_service_bind">--e CCS_BIND_SRV=<var class="keyword varname">my_service_instance</var></dt>
 <dd id="migrate_groups__service_bind_dl">First, <a href="cs_cluster.html#cs_cluster_service">add the service to the cluster</a> by creating a secret. This task is a one-time
 task that makes the secret for the service available to any app within the cluster. Then, <a href="cs_apps.html#cs_apps_volume_claim">add that secret and a mount path
-to the secret</a> in the configuration script for the deployment. <p>All <span class="keyword">Cloud</span> services that support service keys are
+to the secret</a> in the configuration file for the deployment. <p>All <span class="keyword">Cloud</span> services that support service keys are
 supported for use with the Kubernetes functionality. In other words, if you had to use the Cloud
 Foundry app bridge method for connecting services to <span class="ph">single and scalable containers</span>
 (CCS_BIND_APP), that service is not supported for use with Kubernetes clusters. If you used the
@@ -176,12 +195,12 @@ values.</a><pre class="codeblock"><code>        resources:
             memory: 1000Mi</code></pre>
 </dd>
 <dt class="dlterm" id="migrate_groups__group_max">--max 5</dt>
-<dd>Use the HorizontalPodAutoscaler type of configuration script instead of the deployment type that
+<dd>Use the HorizontalPodAutoscaler type of configuration file instead of the deployment type that
 is used in this example. With horizontal auto-scaling, you can set a maximum number of pods. <a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/" rel="external" target="_blank" title="(Opens in a new tab or window)">Learn more about horizontal
 auto-scaling.</a><pre class="codeblock"><code>maxReplicas: 5</code></pre>
 </dd>
 <dt class="dlterm" id="migrate_groups__group_min">--min 2</dt>
-<dd>Use the HorizontalPodAutoscaler type of configuration script instead of the deployment type that
+<dd>Use the HorizontalPodAutoscaler type of configuration file instead of the deployment type that
 is used in this example. With horizontal auto-scaling, you can set a minimum number of pods. <a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/" rel="external" target="_blank" title="(Opens in a new tab or window)">Learn more about horizontal
 auto-scaling.</a><pre class="codeblock"><code>minReplicas: 2</code></pre>
 </dd>
@@ -199,7 +218,7 @@ traffic.<pre class="codeblock"><code>ports:
 <dt class="dlterm" id="migrate_groups__group_volume">--volume <var class="keyword varname">volume</var>:/<var class="keyword varname">directory_path</var></dt>
 <dd id="migrate_groups__volume_dl">First, <a href="cs_apps.html#cs_apps_volume_claim">create persistent volume claim</a>, and a persistent volume with the requested storage size and
 storage class is created dynamically for you. Then, <a href="cs_apps.html#cs_apps_volume_claim">add the claim name and a mount path</a> to
-the configuration script. To copy data from an existing volume, use the <a href="https://console.bluemix.net/docs/images/docker_image_ibmbackup_restore/ibmbackup_restore_starter.html" rel="external" target="_blank" title="(Opens in a new tab or window)"><span class="ph uicontrol">ibm-backup-restore</span></a> image to transfer your data to an
+the configuration file. To copy data from an existing volume, use the <a href="https://console.bluemix.net/docs/images/docker_image_ibmbackup_restore/ibmbackup_restore_starter.html" rel="external" target="_blank" title="(Opens in a new tab or window)"><span class="ph uicontrol">ibm-backup-restore</span></a> image to transfer your data to an
 <span class="keyword">IBM Object
 Storage for IBM Cloud</span>
 instance.<pre class="codeblock"><code>      containers:
@@ -225,7 +244,7 @@ options</a>.<pre class="codeblock"><code>    spec:
 </dd>
 </dl>
 </div>
-</div><div class="section postreq" id="migrate_groups__postreq_rm5_hcx_rz"><div class="p">With the values from the container group example command, use the following configuration script
+</div><div class="section postreq" id="migrate_groups__postreq_rm5_hcx_rz"><div class="p">With the values from the container group example command, use the following configuration file
 to deploy similar container pods in a
 cluster:<pre class="codeblock"><code>apiVersion: extensions/v1beta1
 kind: Deployment
@@ -316,7 +335,7 @@ to learn how to implement similar functionality in a cluster.</p>
 <div class="p"><dl><dt class="dlterm" id="migrate_single__single_service_bind">--e CCS_BIND_SRV=<var class="keyword varname">my_service_instance</var></dt>
 <dd>First, <a href="cs_cluster.html#cs_cluster_service">add the service to the cluster</a> by creating a secret. This task is a one-time
 task that makes the secret for the service available to any app within the cluster. Then, <a href="cs_apps.html#cs_apps_volume_claim">add that secret and a mount path
-to the secret</a> in the configuration script for the deployment. <p>All <span class="keyword">Cloud</span> services that support service keys are
+to the secret</a> in the configuration file for the deployment. <p>All <span class="keyword">Cloud</span> services that support service keys are
 supported for use with the Kubernetes functionality. In other words, if you had to use the Cloud
 Foundry app bridge method for connecting services to <span class="ph">single and scalable containers</span>
 (CCS_BIND_APP), that service is not supported for use with Kubernetes clusters. If you used the
@@ -359,7 +378,7 @@ traffic.<pre class="codeblock"><code>ports:
 <dt class="dlterm" id="migrate_single__single_volumes">--volume <var class="keyword varname">volume</var>:/<var class="keyword varname">directory_path</var></dt>
 <dd>First, <a href="cs_apps.html#cs_apps_volume_claim">create persistent volume claim</a>, and a persistent volume with the requested storage size and
 storage class is created dynamically for you. Then, <a href="cs_apps.html#cs_apps_volume_claim">add the claim name and a mount path</a> to
-the configuration script. To copy data from an existing volume, use the <a href="https://console.bluemix.net/docs/images/docker_image_ibmbackup_restore/ibmbackup_restore_starter.html" rel="external" target="_blank" title="(Opens in a new tab or window)"><span class="ph uicontrol">ibm-backup-restore</span></a> image to transfer your data to an
+the configuration file. To copy data from an existing volume, use the <a href="https://console.bluemix.net/docs/images/docker_image_ibmbackup_restore/ibmbackup_restore_starter.html" rel="external" target="_blank" title="(Opens in a new tab or window)"><span class="ph uicontrol">ibm-backup-restore</span></a> image to transfer your data to an
 <span class="keyword">IBM Object
 Storage for IBM Cloud</span>
 instance.<pre class="codeblock"><code>      containers:
@@ -385,7 +404,7 @@ options</a>.<pre class="codeblock"><code>    spec:
 </dd>
 </dl>
 </div>
-</div><div class="section postreq" id="migrate_single__postreq_wvj_vmq_wz"><div class="p">With the values from the single container example command, use the following configuration script
+</div><div class="section postreq" id="migrate_single__postreq_wvj_vmq_wz"><div class="p">With the values from the single container example command, use the following configuration file
 to deploy a similar container pod in a
 cluster:<pre class="codeblock"><code>apiVersion: extensions/v1beta1
 kind: Deployment
@@ -438,9 +457,13 @@ spec:
      port: 9080</code></pre>
 </div>
 </div></div>
-</article></article><article class="topic task nested2" role="article" aria-labelledby="d91310e630" id="migrating_autoscaling"><h3 class="topictitle3" id="d91310e630">Migrating to Kubernetes Autoscaling</h3>
+</article></article>
+    <article class="topic task nested2" role="article" aria-labelledby="d91310e190" id="deploying_yaml"><h3 class="topictitle3" id="d91310e190">Deploying Kubernetes configuration files</h3>
+<div class="body taskbody"><p class="shortdesc">After the configuration file is created, <a href="cs_apps.html#cs_apps_cli">you can deploy it to a cluster by using the Kubernetes CLI</a>. </p></div></article>
+    
+    <article class="topic task nested2" role="article" aria-labelledby="d91310e630" id="migrating_autoscaling"><h3 class="topictitle3" id="d91310e630">Migrating to Kubernetes Autoscaling</h3>
 <div class="body taskbody"><p class="li stepsection"><p>With <a href="cs_ov.html">Kubernetes</a>, you can enable <a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/" rel="external" target="_blank" title="(Opens in a new tab or window)">Horizontal Pod Autoscaling</a> to scale your apps based on CPU. </p>
-</p><ol class="steps"><li class="step stepexpand"><span class="cmd">Install the required <a href="cs_cli_install.html#cs_cli_install_steps">CLIs</a>.</span></li>
+<ol class="steps"><li class="step stepexpand"><span class="cmd">Install the required <a href="cs_cli_install.html#cs_cli_install_steps">CLIs</a>.</span></li>
 <li class="step stepexpand"><span class="cmd">Create a cluster by following the steps in <a href="container_index.html#clusters">Getting started with Kubernetes clusters in IBM Cloud</a>. Be sure to
 set up your cluster to replicate your current container group, including logging, monitoring,
 vulnerability advisor, and any other customizations you have in place.</span></li>
@@ -504,8 +527,8 @@ remove</a> your original instance of Containers.</span></li>
 </article><article class="topic task nested2" role="article" aria-labelledby="d91310e773" id="migrating_compose"><h3 class="topictitle3" id="d91310e773">Migrating Docker Compose configurations to clusters</h3>
 <div class="body taskbody"><p class="shortdesc"></p>
 <div class="section context"><span class="ph">If you used Docker Compose to deploy your containers, <a href="https://kubernetes.io/docs/tools/kompose/user-guide/" rel="external" target="_blank" title="(Opens in a new tab or window)">you can
-use the Kompose tool from Kubernetes</a> to migrate the Docker Compose configuration scripts to
-configuration scripts that deploy containers into Kubernetes clusters. </span></div><div class="section postreq" id="migrating_compose__postreq_sdm_kmd_5z">Now that you migrated your containers to Kubernetes resources in
+use the Kompose tool from Kubernetes</a> to migrate the Docker Compose configuration files to
+configuration files that deploy containers into Kubernetes clusters. </span></div><div class="section postreq" id="migrating_compose__postreq_sdm_kmd_5z">Now that you migrated your containers to Kubernetes resources in
 clusters, check out <a href="cs_apps.html#cs_cli_dashboard">Accessing
 the Kubernetes dashboard</a> to see how those resources are running.</div></div>
 </article><article class="topic task nested2" role="article" aria-labelledby="d91310e789" lang="en-us" id="container_single_remove"><h3 class="topictitle3" id="d91310e789">Removing single containers</h3>
@@ -560,4 +583,4 @@ that the container group does not appear in the list.</span> <pre class="codeblo
 </li>
 </ol>
 </div>
-<aside role="complementary" aria-labelledby="d91310e940"></aside></article></article></article></div></main></body></html>
+<aside role="complementary" aria-labelledby="d91310e940"></aside></article></article></div></main></body></html>
