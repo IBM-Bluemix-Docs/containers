@@ -944,7 +944,7 @@ View a list of available machine types for your worker nodes. Each machine type 
 **Example**:
 
   ```
-  bx cs machine-types LOCATION
+  bx cs machine-types dal10
   ```
   {: pre}
 
@@ -984,7 +984,12 @@ For a list of available regions, review [regions and locations](cs_regions.html)
 **Example**:
 
 ```
-bx cs region-set [REGION]
+bx cs region-set eu-central
+```
+{: pre}
+
+```
+bx cs region-set
 ```
 {: pre}
 

@@ -101,7 +101,7 @@ For {{site.data.keyword.Bluemix_dedicated_notm}} users, see [Creating Kubernetes
 
 To create a cluster:
 1.  Install the {{site.data.keyword.Bluemix_notm}} CLI and the [{{site.data.keyword.containershort_notm}} plug-in](cs_cli_install.html#cs_cli_install).
-2.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your {{site.data.keyword.Bluemix_notm}} credentials when prompted. To specify an {{site.data.keyword.Bluemix_notm}} region, [include the API endpoint](cs_regions.html#bluemix_regions).
+2.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your {{site.data.keyword.Bluemix_notm}} credentials when prompted. 
 
     ```
     bx login
@@ -929,6 +929,8 @@ To add a service:
 
 To use the service in a pod that is deployed in the cluster, cluster users can access the service credentials of the {{site.data.keyword.Bluemix_notm}} service by [mounting the Kubernetes secret as a secret volume to a pod](cs_apps.html#cs_apps_service).
 
+
+
 ### Adding {{site.data.keyword.Bluemix_notm}} services to clusters in {{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)
 {: #binding_dedicated}
 
@@ -1046,81 +1048,55 @@ To use the service in a pod that is deployed in the cluster, cluster users can a
       ```
       {: pre}
 
+
 <br />
+
 
 
 ## Managing cluster access
 {: #cs_cluster_user}
 
-You can grant access to your cluster to other users, so that they can access the cluster, manage the cluster, and deploy apps to the cluster.
+Every user that works with {{site.data.keyword.containershort_notm}} must be assigned a combination of service-specific user roles that determine which actions the user can perform. 
 {:shortdesc}
-
-Every user that works with {{site.data.keyword.containershort_notm}} must be assigned a service-specific user role in Identity and Access Management that determines what actions this user can perform. Identity and Access Management differentiates between the following access permissions.
 
 <dl>
 <dt>{{site.data.keyword.containershort_notm}} access policies</dt>
-<dd>Access policies determine the cluster management actions that you can perform on a cluster, such as creating or removing clusters, and adding or removing extra worker nodes.</dd>
-<dt>Resource Groups</dt>
-<dd>A resource group is a way to organize {{site.data.keyword.Bluemix_notm}} services into groupings so that you can quickly assign users access to more than one resource at a time. Learn how to [manage users by using resource groups](/docs/admin/resourcegroups.html#rgs).</dd>
-<dt>RBAC roles</dt>
-<dd>Every user who is assigned an {{site.data.keyword.containershort_notm}} access policy is automatically assigned an RBAC role. RBAC roles determine the actions that you can perform on Kubernetes resources inside the cluster. RBAC roles are set up for the default namespace only. The cluster administrator can add RBAC roles for other namespaces in the cluster. See [Using RBAC Authorization ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/admin/authorization/rbac/#api-overview) in the Kubernetes documentation for more information.</dd>
+<dd>In Identity and Access Management, {{site.data.keyword.containershort_notm}} access policies determine the cluster management actions that you can perform on a cluster, such as creating or removing clusters, and adding or removing extra worker nodes. These policies must be set in conjunction with infrastructure policies.</dd>
+<dt>Infrastructure access policies</dt>
+<dd>In Identity and Access Management, infrastructure access policies allow the actions that are requested from the {{site.data.keyword.containershort_notm}} user interface or the CLI to be completed in IBM Cloud infrastructure (SoftLayer). These policies must be set in conjunction with {{site.data.keyword.containershort_notm}} access policies. [Learn more about the available infrastructure roles](/docs/iam/infrastructureaccess.html#infrapermission).</dd>
+<dt>Resource groups</dt>
+<dd>A resource group is a way to organize {{site.data.keyword.Bluemix_notm}} services into groupings so that you can quickly assign users access to more than one resource at a time. [Learn how to manage users by using resource groups](/docs/admin/resourcegroups.html#rgs).</dd>
 <dt>Cloud Foundry roles</dt>
-<dd>Every user must be assigned a Cloud Foundry user role. This role determines the actions that the user can perform on the {{site.data.keyword.Bluemix_notm}} account, such as inviting other users, or viewing the quota usage. To review the permissions of each role, see [Cloud Foundry roles](/docs/iam/cfaccess.html#cfaccess).</dd>
+<dd>In Identity and Access Management, every user must be assigned a Cloud Foundry user role. This role determines the actions that the user can perform on the {{site.data.keyword.Bluemix_notm}} account, such as inviting other users, or viewing the quota usage. [Learn more about the available Cloud Foundry roles](/docs/iam/cfaccess.html#cfaccess).</dd>
+<dt>Kubernetes RBAC roles</dt>
+<dd>Every user who is assigned an {{site.data.keyword.containershort_notm}} access policy is automatically assigned a Kubernetes RBAC role. In Kubernetes, RBAC roles determine the actions that you can perform on Kubernetes resources inside the cluster. RBAC roles are set up for the default namespace only. The cluster administrator can add RBAC roles for other namespaces in the cluster. See [Using RBAC Authorization ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/admin/authorization/rbac/#api-overview) in the Kubernetes documentation for more information.</dd>
 </dl>
 
-Choose from the following actions to proceed:
+In this section:
 
--   [View required access policies and permissions to work with clusters](#access_ov).
--   [View your current access policy](#view_access).
--   [Change the access policy of an existing user](#change_access).
--   [Add additional users to the {{site.data.keyword.Bluemix_notm}} account](#add_users).
+-   [Access policies and permissions](#access_ov)
+-   [Adding users to the {{site.data.keyword.Bluemix_notm}} account](#add_users)
+-   [Changing the permissions of an existing user](#change_access)
 
-### Overview of required {{site.data.keyword.containershort_notm}} access policies and permissions
+### Access policies and permissions
 {: #access_ov}
 
 Review the access policies and permissions that you can grant to users in your {{site.data.keyword.Bluemix_notm}} account. The operator and editor roles have separate permissions. If you want a user to, for example, add worker nodes and bind services, then you must assign the user both the operator and editor roles.
 
-|Access policy|Cluster Management Permissions|Kubernetes Resource Permissions|
+|{{site.data.keyword.containershort_notm}} access policy|Cluster management permissions|Kubernetes resource permissions|
 |-------------|------------------------------|-------------------------------|
-|<ul><li>Role: Administrator</li><li>Service Instances: all current service instances</li></ul>|<ul><li>Create a lite or standard cluster</li><li>Set credentials for an {{site.data.keyword.Bluemix_notm}} account to access the IBM Cloud infrastructure (SoftLayer) portfolio</li><li>Remove a cluster</li><li>Assign and change {{site.data.keyword.containershort_notm}} access policies for other existing users in this account.</li></ul><br/>This role inherits permissions from the Editor, Operator, and Viewer roles for all clusters in this account.|<ul><li>RBAC Role: cluster-admin</li><li>Read/write access to resources in every namespace</li><li>Create roles within a namespace</li><li>Access Kubernetes dashboard</li><li>Create an Ingress resource that makes apps publically available</li></ul>|
-|<ul><li>Role: Administrator</li><li>Service Instances: a specific cluster ID</li></ul>|<ul><li>Remove a specific cluster.</li></ul><br/>This role inherits permissions from the Editor, Operator, and Viewer roles for the selected cluster.|<ul><li>RBAC Role: cluster-admin</li><li>Read/write access to resources in every namespace</li><li>Create roles within a namespace</li><li>Access Kubernetes dashboard</li><li>Create an Ingress resource that makes apps publically available</li></ul>|
-|<ul><li>Role: Operator</li><li>Service Instances: all current service instances/ a specific cluster ID</li></ul>|<ul><li>Add additional worker nodes to a cluster</li><li>Remove worker nodes from a cluster</li><li>Reboot a worker node</li><li>Reload a worker node</li><li>Add a subnet to a cluster</li></ul>|<ul><li>RBAC Role: admin</li><li>Read/write access to resources inside the default namespace but not to the namespace itself</li><li>Create roles within a namespace</li></ul>|
-|<ul><li>Role: Editor</li><li>Service Instances: all current service instances a specific cluster ID</li></ul>|<ul><li>Bind an {{site.data.keyword.Bluemix_notm}} service to a cluster.</li><li>Unbind an {{site.data.keyword.Bluemix_notm}} service to a cluster.</li><li>Create a webhook.</li></ul><br/>Use this role for your app developers.|<ul><li>RBAC Role: edit</li><li>Read/write access to resources inside the default namespace</li></ul>|
-|<ul><li>Role: Viewer</li><li>Service Instances: all current service instances/ a specific cluster ID</li></ul>|<ul><li>List a cluster</li><li>View details for a cluster</li></ul>|<ul><li>RBAC Role: view</li><li>Read access to resources inside the default namespace</li><li>No read access to Kubernetes secrets</li></ul>|
-|<ul><li>Cloud Foundry organization role: Manager</li></ul>|<ul><li>Add additional users to an {{site.data.keyword.Bluemix_notm}} account</li></ul>| |
-|<ul><li>Cloud Foundry space role: Developer</li></ul>|<ul><li>Create {{site.data.keyword.Bluemix_notm}} service instances/li><li>Bind {{site.data.keyword.Bluemix_notm}} service instances to clusters</li></ul>| |
-{: caption="Table 7. Overview of required {{site.data.keyword.containershort_notm}} access policies and permissions" caption-side="top"}
+|Administrator|This role inherits permissions from the Editor, Operator, and Viewer roles for all clusters in this account. <br/><br/>When set for all current service instances:<ul><li>Create a lite or standard cluster</li><li>Set credentials for an {{site.data.keyword.Bluemix_notm}} account to access the IBM Cloud infrastructure (SoftLayer) portfolio</li><li>Remove a cluster</li><li>Assign and change {{site.data.keyword.containershort_notm}} access policies for other existing users in this account.</li></ul>When set for a specific cluster ID:<ul><li>Remove a specific cluster</li></ul>Corresponding infrastructure access policy: Super user<br/><br/><b>Note</b>: To create resources such as machines, VLANs, and subnets, users need the **Super user** infrastructure role .|<ul><li>RBAC Role: cluster-admin</li><li>Read/write access to resources in every namespace</li><li>Create roles within a namespace</li><li>Access Kubernetes dashboard</li><li>Create an Ingress resource that makes apps publically available</li></ul>|
+|Operator|<ul><li>Add additional worker nodes to a cluster</li><li>Remove worker nodes from a cluster</li><li>Reboot a worker node</li><li>Reload a worker node</li><li>Add a subnet to a cluster</li></ul>Corresponding infrastructure access policy: Basic user|<ul><li>RBAC Role: admin</li><li>Read/write access to resources inside the default namespace but not to the namespace itself</li><li>Create roles within a namespace</li></ul>|
+|Editor <br/><br/><b>Tip</b>: Use this role for app developers.|<ul><li>Bind an {{site.data.keyword.Bluemix_notm}} service to a cluster.</li><li>Unbind an {{site.data.keyword.Bluemix_notm}} service to a cluster.</li><li>Create a webhook.</li></ul>Corresponding infrastructure access policy: Basic user|<ul><li>RBAC Role: edit</li><li>Read/write access to resources inside the default namespace</li></ul>|
+|Viewer|<ul><li>List a cluster</li><li>View details for a cluster</li></ul>Corresponding infrastructure access policy: View only|<ul><li>RBAC Role: view</li><li>Read access to resources inside the default namespace</li><li>No read access to Kubernetes secrets</li></ul>|
+{: caption="Table 7. {{site.data.keyword.containershort_notm}} access policies and permissions" caption-side="top"}
 
-### Verifying your {{site.data.keyword.containershort_notm}} access policy
-{: #view_access}
-
-You can review and verify your assigned access policy for {{site.data.keyword.containershort_notm}}. The access policy determines the cluster management actions that you can perform.
-
-1.  Select the {{site.data.keyword.Bluemix_notm}} account where you want to verify your {{site.data.keyword.containershort_notm}} access policy.
-2.  From the menu bar, click **Manage** > **Security** > **Identity and Access**. The **Users** window displays a list of users with their email addresses and current status for the selected account.
-3.  Select the user for whom you want to check the access policy.
-4.  In the **Access policies** section, review the access policy for the user. To find detailed information about the actions that you can perform with this role, see [Overview of required {{site.data.keyword.containershort_notm}} access policies and permissions](#access_ov).
-5.  Optional: [Change your current access policy](#change_access).
-
-    **Note:** Only users with an assigned Administrator service policy for all resources in {{site.data.keyword.containershort_notm}} can change the access policy for an existing user. To add further users to an {{site.data.keyword.Bluemix_notm}} account, you must have the Manager Cloud Foundry role for the account. To find the ID of the {{site.data.keyword.Bluemix_notm}} account owner, run `bx iam accounts` and look for the **Owner User ID**.
+|Cloud Foundry access policy|Account management permissions|
+|-------------|------------------------------|
+|Organization role: Manager|<ul><li>Add additional users to an {{site.data.keyword.Bluemix_notm}} account</li></ul>| |
+|Space role: Developer|<ul><li>Create {{site.data.keyword.Bluemix_notm}} service instances</li><li>Bind {{site.data.keyword.Bluemix_notm}} service instances to clusters</li></ul>| 
 
 
-### Changing the {{site.data.keyword.containershort_notm}} access policy for an existing user
-{: #change_access}
-
-You can change the access policy for an existing user to grant cluster management permissions for a cluster in your {{site.data.keyword.Bluemix_notm}} account.
-
-Before you begin, [verify that you have been assigned the Administrator access policy](#view_access) for all resources in {{site.data.keyword.containershort_notm}}.
-
-1.  Select the {{site.data.keyword.Bluemix_notm}} account where you want to change the {{site.data.keyword.containershort_notm}} access policy for an existing user.
-2.  From the menu bar, click **Manage** > **Security** > **Identity and Access**. The **Users** window displays a list of users with their email addresses and current status for the selected account.
-3.  Find the user for whom you want to change the access policy. If you do not find the user you are looking for, [invite this user to the {{site.data.keyword.Bluemix_notm}} account](#add_users).
-4.  From the **Access policies**, in the **Role** row, under the **Actions** column, expand and click **Edit policy**.
-5.  From the **Service** drop-down list, select **{{site.data.keyword.containershort_notm}}**.
-6.  From the **Regions** drop-down list, select the region for which you want to change the policy.
-7.  From the **Service instance** drop-down list, select the cluster for which you want to change the policy. To find the ID of a specific cluster, run `bx cs clusters`.
-8.  In the **Select roles** section, click the role that you want to change the user's access to. To find a list of supported actions per role, see [Overview of required {{site.data.keyword.containershort_notm}} access policies and permissions](#access_ov).
-9.  Click **Save** to save your changes.
 
 ### Adding users to an {{site.data.keyword.Bluemix_notm}} account
 {: #add_users}
@@ -1129,29 +1105,38 @@ You can add additional users to an {{site.data.keyword.Bluemix_notm}} account to
 
 Before you begin, verify that you have been assigned the Manager Cloud Foundry role for an {{site.data.keyword.Bluemix_notm}} account.
 
-1.  Select the {{site.data.keyword.Bluemix_notm}} account where you want to add users.
-2.  From the menu bar, click **Manage** > **Security** > **Identity and Access**. The Users window displays a list of users with their email addresses and current status for the selected account.
-3.  Click **Invite users**.
-4.  In **Email address**, enter the email address of the user that you want to add to the {{site.data.keyword.Bluemix_notm}} account.
-5.  In the **Access** section, expand **Services**.
-6.  From the **Assign access to** drop-down list, decide whether you want to grant access only to your {{site.data.keyword.containershort_notm}} account (**Resource**), or to a collection of various resources within your account (**Resource group**).
-7.  If **Resource**:
-    1. From the **Services** drop-down list, select **{{site.data.keyword.containershort_notm}}**.
-    2. From the **Region** drop-down list, select the region that you want to invite the user to.
-    3. From the **Service instance** drop-down list, select the cluster that you want to invite the user to. To find the ID of a specific cluster, run `bx cs clusters`.
-    4. In the **Select roles** section, click the role that you want to change the user's access to. To find a list of supported actions per role, see [Overview of required {{site.data.keyword.containershort_notm}} access policies and permissions](#access_ov).
-8. If **Resource group**:
-    1. From the **Resource group** drop-down list, select the resource group that includes permissions for your account's {{site.data.keyword.containershort_notm}} resource.
-    2. From the **Assign access to a resource group** drop-down list, select the role you want the invited user to have. To find a list of supported actions per role, see [Overview of required {{site.data.keyword.containershort_notm}} access policies and permissions](#access_ov).
-9. Optional: To allow this user to add additional users to an {{site.data.keyword.Bluemix_notm}} account, assign the user a Cloud Foundry org role.
-    1. In the **Cloud Foundry roles** section, from the **Organization** drop-down list, select the organization that you want to grant the user permissions to.
-    2. From the **Organization Roles** drop-down list, select **Manager**.
-    3. From the **Region** drop-down list, select the region that you want to grant the user perissions to.
-    4. From the **Space** drop-down list, select the space that you want to grant the user perissions to.
-    5. From the **Space roles** drop-down list, select **Manager**.
-10. Click **Invite users**.
+1.  [Add the user to the account](../iam/iamuserinv.html#iamuserinv).
+2.  In the **Access** section, expand **Services**.
+3.  Assign an {{site.data.keyword.containershort_notm}} access role. From the **Assign access to** drop-down list, decide whether you want to grant access only to your {{site.data.keyword.containershort_notm}} account (**Resource**), or to a collection of various resources within your account (**Resource group**).
+  -  For **Resource**:
+      1. From the **Services** drop-down list, select **{{site.data.keyword.containershort_notm}}**.
+      2. From the **Region** drop-down list, select the region to invite the user to.
+      3. From the **Service instance** drop-down list, select the cluster to invite the user to. To find the ID of a specific cluster, run `bx cs clusters`.
+      4. In the **Select roles** section, choose a role. To find a list of supported actions per role, see [Access policies and permissions](#access_ov).
+  - For **Resource group**:
+      1. From the **Resource group** drop-down list, select the resource group that includes permissions for your account's {{site.data.keyword.containershort_notm}} resource.
+      2. From the **Assign access to a resource group** drop-down list, select a role. To find a list of supported actions per role, see [Access policies and permissions](#access_ov).
+4. [Optional: Assign an infrastructure role](/docs/iam/mnginfra.html#managing-infrastructure-access). 
+5. [Optional: Assign a Cloud Foundry role](/docs/iam/mngcf.html#mngcf). 
+5. Click **Invite users**.
+
+
+
+### Customizing infrastructure permissions for a user
+{: #change_access}
+
+When you set infrastructure policies in Identity and Access Management, a user is given permissions associated with a role. To customize those permissions, you must log into IBM Cloud infrastructure (SoftLayer) and adjust the permissions there.
+{: #view_access}
+
+For example, basic users can reboot a worker node, but they cannot reload a worker node. Without giving that person super user permissions, you can adjust the IBM Cloud infrastructure (SoftLayer) permissions and add the permission to run a reload command.
+
+1.  Log in to your IBM Cloud infrastructure (SoftLayer) account.
+2.  Select a user profile to update.
+3.  In the **Portal Permissions**, customize the user's access. For example, to add reload permission, in the **Devices** tab, select **Issue OS Reloads and Initiate Rescue Kernel**.
+9.  Save your changes.
 
 <br />
+
 
 
 ## Updating the Kubernetes master
