@@ -2354,7 +2354,7 @@ You can now access the {{site.data.keyword.Bluemix_notm}} service details and cr
 ## Creating persistent storage
 {: #cs_apps_volume_claim}
 
-Create a persistent volume claim (pvc) to provision NFS file storage for your cluster. Then, mount this claim to a pod to ensure that data is available even if the pod crashes or shuts down.
+Create a persistent volume claim (pvc) to provision NFS file storage for your cluster. Then, mount this claim to a deployment to ensure that data is available even if the pods crash or shut down.
 {:shortdesc}
 
 The NFS file storage that backs the persistent volume is clustered by IBM in order to provide high availability for your data.
@@ -2523,13 +2523,18 @@ When an {{site.data.keyword.Bluemix_dedicated_notm}} account is [enabled for clu
     ```
     {: screen}
 
-6.  {: #cs_apps_volume_mount}To mount the persistent volume claim to your pod, create a configuration file. Save the configuration as a `.yaml` file.
+6.  {: #cs_apps_volume_mount}To mount the persistent volume claim to your deployment, create a configuration file. Save the configuration as a `.yaml` file.
 
     ```
-    apiVersion: v1
-    kind: Pod
+    apiVersion: extensions/v1beta1
+    kind: Deployment
     metadata:
-     name: <pod_name>
+     name: <deployment_name>
+    replicas: 1
+    template:
+     metadata:
+       labels:
+         app: <app_name>
     spec:
      containers:
      - image: <image_name>
@@ -2551,37 +2556,41 @@ When an {{site.data.keyword.Bluemix_dedicated_notm}} account is [enabled for clu
     <tbody>
     <tr>
     <td><code>metadata/name</code></td>
-    <td>The name of the pod.</td>
+    <td>The name of the deployment.</td>
+    </tr>
+    <tr>
+    <td><code>template/metadata/labels/app</code></td>
+    <td>A label for the deployment.</td>
     </tr>
     <tr>
     <td><code>volumeMounts/mountPath</code></td>
-    <td>The absolute path of the directory to where the volume is mounted inside the container.</td>
+    <td>The absolute path of the directory to where the volume is mounted inside the deployment.</td>
     </tr>
     <tr>
     <td><code>volumeMounts/name</code></td>
-    <td>The name of the volume that you mount to your container.</td>
+    <td>The name of the volume to mount to your deployment.</td>
     </tr>
     <tr>
     <td><code>volumes/name</code></td>
-    <td>The name of the volume that you mount to your container. Typically this name is the same as <code>volumeMounts/name</code>.</td>
+    <td>The name of the volume to mount to your deployment. Typically this name is the same as <code>volumeMounts/name</code>.</td>
     </tr>
     <tr>
     <td><code>volumes/name/persistentVolumeClaim</code></td>
-    <td>The name of the persistent volume claim that you want to use as your volume. When you mount the volume to the pod, Kubernetes identifies the persistent volume that is bound to the persistent volume claim and enables the user to read from and write to the persistent volume.</td>
+    <td>The name of the persistent volume claim that you want to use as your volume. When you mount the volume to the deployment, Kubernetes identifies the persistent volume that is bound to the persistent volume claim and enables the user to read from and write to the persistent volume.</td>
     </tr>
     </tbody></table>
 
-8.  Create the pod and mount the persistent volume claim to your pod.
+8.  Create the deployment and mount the persistent volume claim.
 
     ```
     kubectl apply -f <local_yaml_path>
     ```
     {: pre}
 
-9.  Verify that the volume is successfully mounted to your pod.
+9.  Verify that the volume is successfully mounted.
 
     ```
-    kubectl describe pod <pod_name>
+    kubectl describe deployment <deployment_name>
     ```
     {: pre}
 
