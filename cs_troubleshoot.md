@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-11-28"
+lastupdated: "2017-12-07"
 
 ---
 
@@ -276,8 +276,6 @@ To add credentials your {{site.data.keyword.Bluemix_notm}} account:
 <br />
 
 
-
-
 ## Firewall prevents worker nodes from connecting
 {: #cs_firewall}
 
@@ -478,6 +476,20 @@ Open the following ports and IP addresses in your customized firewall.
 
 <br />
 
+
+## Accessing your worker node with SSH fails		
+{: #cs_ssh_worker}		
+	
+{: tsSymptoms}		
+You cannot access your worker node by using a SSH connection.		
+	
+{: tsCauses}		
+SSH is disabled on the worker nodes.		
+	
+{: tsResolve}		
+Use [DaemonSets ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) for anything you must run on every node or jobs for any one-time actions you must execute.		
+	
+<br />
 
 
 

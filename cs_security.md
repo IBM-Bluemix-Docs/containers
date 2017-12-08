@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-06"
+lastupdated: "2017-12-07"
 
 ---
 
@@ -50,7 +50,13 @@ In the following diagram, you can see security features that are grouped by Kube
 <br />
 
 
-## Kubernetes master
+## Security by cluster component
+{: #cs_security_cluster}
+
+Each {{site.data.keyword.containerlong_notm}} cluster has security features built-in to its [master](#cs_security_master) and [worker](#cs_security_worker) nodes. If you have a firewall, need to access load balancing from outside the cluster, or want to run `kubectl` commands from your local system when corporate network policies prevent access to public internet endpoints, [open ports in your firewall](#opening_ports). If you want to connect apps in your cluster to an on-premises network or to other apps external to your cluster, [set up VPN connectivity](#vpn).
+{: shortdesc}
+
+### Kubernetes master
 {: #cs_security_master}
 
 Review the built-in Kubernetes master security features to protect the Kubernetes master and to secure the cluster network communication.
@@ -77,7 +83,7 @@ Review the built-in Kubernetes master security features to protect the Kubernete
 <br />
 
 
-## Worker nodes
+### Worker nodes
 {: #cs_security_worker}
 
 Review the built-in worker node security features to protect the worker node environment and to assure resource, network and storage isolation.
@@ -87,20 +93,35 @@ Review the built-in worker node security features to protect the worker node env
   <dt>Compute, network and storage infrastructure isolation</dt>
     <dd>When you create a cluster, virtual machines are provisioned as worker nodes in the customer IBM Cloud infrastructure (SoftLayer) account or in the dedicated IBM Cloud infrastructure (SoftLayer) account by IBM. Worker nodes are dedicated to a cluster and do not host workloads of other clusters.</br> Every {{site.data.keyword.Bluemix_notm}} account is set up with IBM Cloud infrastructure (SoftLayer) VLANs to assure quality network performance and isolation on the worker nodes. </br>To persist data in your cluster, you can provision dedicated NFS based file storage from IBM Cloud infrastructure (SoftLayer) and leverage the built-in data security features of that platform.</dd>
   <dt>Secured worker node set up</dt>
-    <dd>Every worker node is set up with an Ubuntu operating system that cannot be changed by the user. To protect the operating system of the worker nodes from potential attacks, every worker node is configured with expert firewall settings that are enforced by Linux iptable rules.</br> All containers that run on Kubernetes are protected by predefined Calico network policy settings that are configured on every worker node during cluster creation. This set up ensures secure network communication between worker nodes and pods. To further restrict the actions that a container can perform on the worker node, users can choose to configure [AppArmor policies ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tutorials/clusters/apparmor/) on the worker nodes.</br> By default, SSH access for the root user is disabled on the worker node. If you want to install additional features on your worker node, you can use [Kubernetes daemon sets ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset) for everything that you want to run on every worker node, or [Kubernetes jobs ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/) for any one-time action you must execute.</dd>
+    <dd>Every worker node is set up with an Ubuntu operating system that cannot be changed by the user. To protect the operating system of the worker nodes from potential attacks, every worker node is configured with expert firewall settings that are enforced by Linux iptable rules.</br> All containers that run on Kubernetes are protected by predefined Calico network policy settings that are configured on every worker node during cluster creation. This set up ensures secure network communication between worker nodes and pods. To further restrict the actions that a container can perform on the worker node, users can choose to configure [AppArmor policies ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tutorials/clusters/apparmor/) on the worker nodes.</br> SSH access is disabled on the worker node. If you want to install additional features on your worker node, you can use [Kubernetes daemon sets ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset) for everything that you want to run on every worker node, or [Kubernetes jobs ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/) for any one-time action you must execute.</dd>
   <dt>Kubernetes worker node security compliance</dt>
-    <dd>IBM works with internal and external security advisory teams to address potential security compliance vulnerabilities. IBM maintains SSH access to the worker nodes in order to deploy updates and security patches to the operating system.</br> <b>Important</b>: Reboot your worker nodes on a regular basis to ensure the installation of the updates and security patches that are automatically deployed to the operating system. IBM does not reboot your worker nodes.</dd>
+    <dd>IBM works with internal and external security advisory teams to address potential security compliance vulnerabilities. IBM maintains access to the worker nodes in order to deploy updates and security patches to the operating system.</br> <b>Important</b>: Reboot your worker nodes on a regular basis to ensure the installation of the updates and security patches that are automatically deployed to the operating system. IBM does not reboot your worker nodes.</dd>
   <dt>Support for IBM Cloud infrastructure (SoftLayer) network firewalls</dt>
     <dd>{{site.data.keyword.containershort_notm}} is compatible with all [IBM Cloud infrastructure (SoftLayer) firewall offerings ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/cloud-computing/bluemix/network-security). On {{site.data.keyword.Bluemix_notm}} Public, you can set up a firewall with custom network policies to provide dedicated network security for your cluster and to detect and remediate network intrusion. For example, you might choose to set up a [Vyatta ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/topic/vyatta-1) to act as your firewall and block unwanted traffic. When you set up a firewall, [you must also open up the required ports and IP addresses](#opening_ports) for each region so that the master and the worker nodes can communicate. On {{site.data.keyword.Bluemix_dedicated_notm}}, firewalls, DataPower, Fortigate, and DNS are already configured as part of the standard dedicated environment deployment.</dd>
   <dt>Keep services private or selectively expose services and apps to the public internet</dt>
     <dd>You can choose to keep your services and apps private and leverage the built-in security features described in this topic to assure secured communication between worker nodes and pods. To expose services and apps to the public internet, you can leverage the Ingress and load balancer support to securely make your services publicly available.</dd>
   <dt>Securely connect your worker nodes and apps to an on-premises data center</dt>
-  <dd>You can set up a Vyatta Gateway Appliance or Fortigate Appliance to configure an IPSec VPN endpoint that connects your Kubernetes cluster with an on-premise data center. Over an encrypted tunnel, all services that run in your Kubernetes cluster can communicate securely with on-premise apps, such as user directories, databases, or mainframes. For more information, see [Connecting a cluster to an on-premise data center ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/blogs/bluemix/2017/07/kubernetes-and-bluemix-container-based-workloads-part4/).</dd>
+  <dd>You can set up a Vyatta Gateway Appliance or Fortigate Appliance to configure an IPSec VPN endpoint that connects your Kubernetes cluster with an on-premise data center. Over an encrypted tunnel, two-way communication is enabled between all services that run in your Kubernetes cluster and on-premises apps, such as user directories, databases, or mainframes. For more information, see [Connecting a cluster to an on-premise data center ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/blogs/bluemix/2017/07/kubernetes-and-bluemix-container-based-workloads-part4/).</dd>
   <dt>Continuous monitoring and logging of cluster activity</dt>
     <dd>For standard clusters, all cluster-related events, such as adding a worker node, rolling update progress, or capacity usage information can be logged and monitored by {{site.data.keyword.containershort_notm}} and sent to {{site.data.keyword.loganalysislong_notm}} and {{site.data.keyword.monitoringlong_notm}}. For information about setting up logging and monitoring, see [Configuring cluster logging](https://console.bluemix.net/docs/containers/cs_cluster.html#cs_logging) and [Configuring cluster monitoring](https://console.bluemix.net/docs/containers/cs_cluster.html#cs_monitoring).</dd>
 </dl>
 
-### Opening required ports and IP addresses in your firewall
+### Images
+{: #cs_security_deployment}
+
+Manage the security and integrity of your images with built-in security features.
+{: shortdesc}
+
+**Secured Docker private image repository in {{site.data.keyword.registryshort_notm}}**: You can set up your own Docker image repository in a multi-tenant, highly available, and scalable private image registry that is hosted and managed by IBM to build, securely store, and share Docker images across cluster users.
+
+**Image security compliance**: When you use {{site.data.keyword.registryshort_notm}}, you can leverage the built-in security scanning that is provided by Vulnerability Advisor. Every image that is pushed to your namespace is automatically scanned for vulnerabilities against a database of known CentOS, Debian, Red Hat, and Ubuntu issues. If vulnerabilities are found, Vulnerability Advisor provides instructions for how to resolve them to assure image integrity and security.
+
+To view the vulnerability assessment for your images, [review the Vulnerability Advisor documentation](/docs/services/va/va_index.html#va_registry_cli).
+
+<br />
+
+
+## Opening required ports and IP addresses in your firewall
 {: #opening_ports}
 
 Review these situations in which you might need to open specific ports and IP addresses in your firewalls:
@@ -115,7 +136,7 @@ Review these situations in which you might need to open specific ports and IP ad
       ```
       {: pre}
 
-  2.  In your firewall for OUTBOUND connectivity from your worker nodes, allow outgoing network traffic from the source worker node to the destination TCP/UDP port range 20000-32767 and port 443 for `<each_worker_node_publicIP>`, and the following IP addresses and network groups.
+  2.  Allow outgoing network traffic from the source IP (such as the worker node) to the destination TCP/UDP port range 20000-32767 and port 443, and the following IP addresses and network groups. If you have a corporate firewall that prevents your local machine from accessing public internet endpoints, do this step for both your source worker nodes and your local machine.
       - **Important**: You must allow outgoing traffic to port 443 for all of the locations within the region, to balance the load during the bootstrapping process. For example, if your cluster is in US South, you must allow traffic from port 443 to the IP addresses for all of the locations (dal10, dal12, and dal13).
       <p>
   <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
@@ -267,82 +288,6 @@ Review these situations in which you might need to open specific ports and IP ad
 
 
 
-## Restricting network traffic to edge worker nodes
-{: #cs_edge}
-
-Add the `dedicated=edge` label to two or more worker nodes in your cluster to ensure that Ingress and load balancers are deployed to those worker nodes only.
-
-Edge worker nodes can improve the security of your cluster by allowing fewer worker nodes to be accessed externally and by isolating the networking workload. When these worker nodes are marked for networking only, other workloads cannot consume the CPU or memory of the worker node and interfere with networking.
-
-Before you begin:
-
-- [Create a standard cluster.](cs_cluster.html#cs_cluster_cli)
-- Ensure that your cluster has a least one public VLAN. Edge worker nodes are not available for clusters with private VLANs only.
-- [Target the Kubernetes CLI to the cluster](cs_cli_install.html#cs_cli_configure).
-
-
-1. List all of the worker nodes in the cluster. Use the private IP address from the **NAME** column to identify the nodes. Select at least two worker nodes to be edge worker nodes. Using two or more worker nodes improves availability of the networking resources.
-
-  ```
-  kubectl get nodes -L publicVLAN,privateVLAN,dedicated
-  ```
-  {: pre}
-
-2. Label the worker nodes with `dedicated=edge`. After a worker node is marked with `dedicated=edge`, all subsequent Ingress and load balancers are deployed to an edge worker node.
-
-  ```
-  kubectl label nodes <node_name> <node_name2> dedicated=edge
-  ```
-  {: pre}
-
-3. Retrieve all existing load balancer services in your cluster.
-
-  ```
-  kubectl get services --all-namespaces -o jsonpath='{range .items[*]}kubectl get service -n {.metadata.namespace} {.metadata.name} -o yaml | kubectl apply -f - :{.spec.type},{end}' | tr "," "\n" | grep "LoadBalancer" | cut -d':' -f1
-  ```
-  {: pre}
-
-  Output:
-
-  ```
-  kubectl get service -n <namespace> <name> -o yaml | kubectl apply -f
-  ```
-  {: screen}
-
-4. Using the output from the previous step, copy and paste each `kubectl get service` line. This command redeploys the load balancer to an edge worker node. Only public load balancers need to be redeployed.
-
-  Output:
-
-  ```
-  service "<name>" configured
-  ```
-  {: screen}
-
-You labeled worker nodes with `dedicated=edge` and redeployed all existing load balancers and Ingress to the edge worker nodes. Next, prevent other [workloads from running on edge worker nodes](#cs_edge_workloads) and [block inbound traffic to node ports on worker nodes](#cs_block_ingress).
-
-### Prevent workloads from running on edge worker nodes
-{: #cs_edge_workloads}
-
-One of the benefits of edge worker nodes is that these worker nodes can be specified to run networking services only. Using the `dedicated=edge` toleration means that all load balancer and Ingress services are deployed to the labeled worker nodes only. However, to prevent other workloads from running on edge worker nodes and consuming worker node resources, you must use [Kubernetes taints ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/).
-
-1. List all worker nodes with the `edge` label.
-
-  ```
-  kubectl get nodes -L publicVLAN,privateVLAN,dedicated -l dedicated=edge
-  ```
-  {: pre}
-
-2. Apply a taint to each worker node that prevents pods from running on the worker node and that removes pods that do not have the `edge` label from the worker node. The pods that are removed are redeployed on other worker nodes with capacity.
-
-  ```
-  kubectl taint node <node_name> dedicated=edge:NoSchedule dedicated=edge:NoExecute
-  ```
-
-Now, only pods with the `dedicated=edge` toleration are deployed to your edge worker nodes.
-
-<br />
-
-
 ## Network policies
 {: #cs_security_network_policies}
 
@@ -368,8 +313,6 @@ These policies are applied by using `calicoctl` commands. Calico enforces these 
 When a cluster is created, default network policies are automatically set up for the public network interface of each worker node to limit incoming traffic for a worker node from the public internet. These policies do not affect pod to pod traffic and are set up to allow access to the Kubernetes nodeport, load balancer, and Ingress services.
 
 Default policies are not applied to pods directly; they are applied to the public network interface of a worker node by using a Calico host endpoint. When a host endpoint is created in Calico, all traffic to and from that worker node's network interface is blocked, unless that traffic is allowed by a policy.
-
-Note that a policy to allow SSH does not exist, so SSH access by way of the public network interface is blocked, as are all other ports that do not have a policy to open them. SSH access, and other access, is available on the private network interface of each worker node.
 
 **Important:** Do not remove policies that are applied to a host endpoint unless you fully understand the policy and know that you do not need the traffic that is being allowed by the policy.
 
@@ -696,18 +639,76 @@ policy changes to be applied throughout the cluster.
 <br />
 
 
-## Images
-{: #cs_security_deployment}
 
-Manage the security and integrity of your images with built-in security features.
-{: shortdesc}
+## Restricting network traffic to edge worker nodes
+{: #cs_edge}
 
-### Secured Docker private image repository in {{site.data.keyword.registryshort_notm}}:
+Add the `dedicated=edge` label to two or more worker nodes in your cluster to ensure that Ingress and load balancers are deployed to those worker nodes only.
 
- You can set up your own Docker image repository in a multi-tenant, highly available, and scalable private image registry that is hosted and managed by IBM to build, securely store, and share Docker images across cluster users.
+Edge worker nodes can improve the security of your cluster by allowing fewer worker nodes to be accessed externally and by isolating the networking workload. When these worker nodes are marked for networking only, other workloads cannot consume the CPU or memory of the worker node and interfere with networking.
 
-### Image security compliance:
+Before you begin:
 
-When you use {{site.data.keyword.registryshort_notm}}, you can leverage the built-in security scanning that is provided by Vulnerability Advisor. Every image that is pushed to your namespace is automatically scanned for vulnerabilities against a database of known CentOS, Debian, Red Hat, and Ubuntu issues. If vulnerabilities are found, Vulnerability Advisor provides instructions for how to resolve them to assure image integrity and security.
+- [Create a standard cluster.](cs_cluster.html#cs_cluster_cli)
+- Ensure that your cluster has a least one public VLAN. Edge worker nodes are not available for clusters with private VLANs only.
+- [Target the Kubernetes CLI to the cluster](cs_cli_install.html#cs_cli_configure).
 
-To view the vulnerability assessment for your images, [review the Vulnerability Advisor documentation](/docs/services/va/va_index.html#va_registry_cli).
+
+1. List all of the worker nodes in the cluster. Use the private IP address from the **NAME** column to identify the nodes. Select at least two worker nodes to be edge worker nodes. Using two or more worker nodes improves availability of the networking resources.
+
+  ```
+  kubectl get nodes -L publicVLAN,privateVLAN,dedicated
+  ```
+  {: pre}
+
+2. Label the worker nodes with `dedicated=edge`. After a worker node is marked with `dedicated=edge`, all subsequent Ingress and load balancers are deployed to an edge worker node.
+
+  ```
+  kubectl label nodes <node_name> <node_name2> dedicated=edge
+  ```
+  {: pre}
+
+3. Retrieve all existing load balancer services in your cluster.
+
+  ```
+  kubectl get services --all-namespaces -o jsonpath='{range .items[*]}kubectl get service -n {.metadata.namespace} {.metadata.name} -o yaml | kubectl apply -f - :{.spec.type},{end}' | tr "," "\n" | grep "LoadBalancer" | cut -d':' -f1
+  ```
+  {: pre}
+
+  Output:
+
+  ```
+  kubectl get service -n <namespace> <name> -o yaml | kubectl apply -f
+  ```
+  {: screen}
+
+4. Using the output from the previous step, copy and paste each `kubectl get service` line. This command redeploys the load balancer to an edge worker node. Only public load balancers need to be redeployed.
+
+  Output:
+
+  ```
+  service "<name>" configured
+  ```
+  {: screen}
+
+You labeled worker nodes with `dedicated=edge` and redeployed all existing load balancers and Ingress to the edge worker nodes. Next, prevent other [workloads from running on edge worker nodes](#cs_edge_workloads) and [block inbound traffic to node ports on worker nodes](#cs_block_ingress).
+
+### Prevent workloads from running on edge worker nodes
+{: #cs_edge_workloads}
+
+One of the benefits of edge worker nodes is that these worker nodes can be specified to run networking services only. Using the `dedicated=edge` toleration means that all load balancer and Ingress services are deployed to the labeled worker nodes only. However, to prevent other workloads from running on edge worker nodes and consuming worker node resources, you must use [Kubernetes taints ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/).
+
+1. List all worker nodes with the `edge` label.
+
+  ```
+  kubectl get nodes -L publicVLAN,privateVLAN,dedicated -l dedicated=edge
+  ```
+  {: pre}
+
+2. Apply a taint to each worker node that prevents pods from running on the worker node and that removes pods that do not have the `edge` label from the worker node. The pods that are removed are redeployed on other worker nodes with capacity.
+
+  ```
+  kubectl taint node <node_name> dedicated=edge:NoSchedule dedicated=edge:NoExecute
+  ```
+
+Now, only pods with the `dedicated=edge` toleration are deployed to your edge worker nodes.
