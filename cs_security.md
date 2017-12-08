@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-11-16"
+lastupdated: "2017-12-06"
 
 ---
 
@@ -22,12 +22,12 @@ lastupdated: "2017-11-16"
 You can use built-in security features for risk analysis and security protection. These features help you to protect your cluster infrastructure and network communication, isolate your compute resources, and ensure security compliance across your infrastructure components and container deployments.
 {: shortdesc}
 
-In the following diagram, you can see security features that are grouped by Kubernetes master, worker nodes, and container images.  
+In the following diagram, you can see security features that are grouped by Kubernetes master, worker nodes, and container images.
 <img src="images/cs_security.png" width="400" alt="{{site.data.keyword.containershort_notm}} cluster security" style="width:400px; border-style: none"/>
 
 
   <table summary="The first row in the table spans both columns. The remaining rows are to be read left to right, with the server location in column one and IP addresses to match in column two.">
-  <caption>Security features</caption>
+  <caption>Table 1. Security features</caption>
   <thead>
   <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Built-in cluster security settings in {{site.data.keyword.containershort_notm}}</th>
   </thead>
@@ -94,10 +94,10 @@ Review the built-in worker node security features to protect the worker node env
     <dd>{{site.data.keyword.containershort_notm}} is compatible with all [IBM Cloud infrastructure (SoftLayer) firewall offerings ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/cloud-computing/bluemix/network-security). On {{site.data.keyword.Bluemix_notm}} Public, you can set up a firewall with custom network policies to provide dedicated network security for your cluster and to detect and remediate network intrusion. For example, you might choose to set up a [Vyatta ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/topic/vyatta-1) to act as your firewall and block unwanted traffic. When you set up a firewall, [you must also open up the required ports and IP addresses](#opening_ports) for each region so that the master and the worker nodes can communicate. On {{site.data.keyword.Bluemix_dedicated_notm}}, firewalls, DataPower, Fortigate, and DNS are already configured as part of the standard dedicated environment deployment.</dd>
   <dt>Keep services private or selectively expose services and apps to the public internet</dt>
     <dd>You can choose to keep your services and apps private and leverage the built-in security features described in this topic to assure secured communication between worker nodes and pods. To expose services and apps to the public internet, you can leverage the Ingress and load balancer support to securely make your services publicly available.</dd>
-  <dt>Securely connect your worker nodes and apps to an on-premise data center</dt>
-    <dd>You can set up a Vyatta Gateway Appliance or Fortigate Appliance to configure an IPSec VPN endpoint that connects your Kubernetes cluster with an on-premise data center. Over an encrypted tunnel, all services that run in your Kubernetes cluster can communicate securely with on-premise apps, such as user directories, databases, or mainframes. For more information, see [Connecting a cluster to an on-premise data center ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/blogs/bluemix/2017/07/kubernetes-and-bluemix-container-based-workloads-part4/).</dd>
+  <dt>Securely connect your worker nodes and apps to an on-premises data center</dt>
+  <dd>You can set up a Vyatta Gateway Appliance or Fortigate Appliance to configure an IPSec VPN endpoint that connects your Kubernetes cluster with an on-premise data center. Over an encrypted tunnel, all services that run in your Kubernetes cluster can communicate securely with on-premise apps, such as user directories, databases, or mainframes. For more information, see [Connecting a cluster to an on-premise data center ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/blogs/bluemix/2017/07/kubernetes-and-bluemix-container-based-workloads-part4/).</dd>
   <dt>Continuous monitoring and logging of cluster activity</dt>
-    <dd>For standard clusters, all cluster-related events, such as adding a worker node, rolling update progress, or capacity usage information are logged and monitored by {{site.data.keyword.containershort_notm}} and sent to the IBM Monitoring and Logging Service.</dd>
+    <dd>For standard clusters, all cluster-related events, such as adding a worker node, rolling update progress, or capacity usage information can be logged and monitored by {{site.data.keyword.containershort_notm}} and sent to {{site.data.keyword.loganalysislong_notm}} and {{site.data.keyword.monitoringlong_notm}}. For information about setting up logging and monitoring, see [Configuring cluster logging](https://console.bluemix.net/docs/containers/cs_cluster.html#cs_logging) and [Configuring cluster monitoring](https://console.bluemix.net/docs/containers/cs_cluster.html#cs_monitoring).</dd>
 </dl>
 
 ### Opening required ports and IP addresses in your firewall
@@ -133,17 +133,17 @@ Review these situations in which you might need to open specific ports and IP ad
       <tr>
          <td>AP South</td>
          <td>mel01<br>syd01<br>syd04</td>
-         <td><code>168.1.97.67</code><br><code>168.1.8.195</code><br><code>130.198.64.19</code></td>
+         <td><code>168.1.97.67</code><br><code>168.1.8.195</code><br><code>130.198.64.19, 130.198.66.34</code></td>
       </tr>
       <tr>
          <td>EU Central</td>
          <td>ams03<br>fra02<br>par01</td>
-         <td><code>169.50.169.110</code><br><code>169.50.56.174</code><br><code>159.8.86.149</code></td>
+         <td><code>169.50.169.106, 169.50.154.194</code><br><code>169.50.56.170, 169.50.56.174</code><br><code>159.8.86.149, 159.8.98.170</code></td>
         </tr>
       <tr>
         <td>UK South</td>
         <td>lon02<br>lon04</td>
-        <td><code>159.122.242.78</code><br><code>158.175.65.170</code></td>
+        <td><code>159.122.242.78</code><br><code>158.175.65.170, 158.175.74.170, 158.175.76.2</code></td>
       </tr>
       <tr>
         <td>US East</td>
@@ -153,7 +153,7 @@ Review these situations in which you might need to open specific ports and IP ad
       <tr>
         <td>US South</td>
         <td>dal10<br>dal12<br>dal13</td>
-        <td><code>169.46.7.238</code><br><code>169.47.70.10</code><br><code>169.60.128.2</code></td>
+        <td><code>169.47.234.18, 169.46.7.234</code><br><code>169.47.70.10</code><br><code>169.60.128.2</code></td>
       </tr>
       </tbody>
     </table>
@@ -231,34 +231,41 @@ Review these situations in which you might need to open specific ports and IP ad
         <th>Logging address</th>
         <th>Logging IP addresses</th>
         </thead>
-      <tbody>
-        <tr>
-         <td>EU Central</td>
-         <td>ingest.logging.eu-de.bluemix.net</td>
-         <td><code>169.50.25.125</code></td>
-        </tr>
-        <tr>
-         <td>UK South</td>
-         <td>ingest.logging.eu-gb.bluemix.net</td>
-         <td><code>169.50.115.113</code></td>
-        </tr>
-        <tr>
-          <td>US East, US South, AP North</td>
-          <td>ingest.logging.ng.bluemix.net</td>
-          <td><code>169.48.79.236</code><br><code>169.46.186.113</code></td>
-         </tr>
-        </tbody>
-      </table>
+        <tbody>
+          <tr>
+            <td>US East, US South</td>
+            <td>ingest.logging.ng.bluemix.net</td>
+            <td><code>169.48.79.236</code><br><code>169.46.186.113</code></td>
+           </tr>
+          <tr>
+           <td>EU Central, UK South</td>
+           <td>ingest-eu-fra.logging.bluemix.net</td>
+           <td><code>158.177.88.43</code><br><code>159.122.87.107</code></td>
+          </tr>
+          <tr>
+           <td>AP South, AP North</td>
+           <td>ingest-au-syd.logging.bluemix.net</td>
+           <td><code>130.198.76.125</code><br><code>168.1.209.20</code></td>
+          </tr>
+         </tbody>
+       </table>
 </p>
 
   5. For private firewalls, allow the appropriate IBM Cloud infrastructure (SoftLayer) private IP ranges. Consult [this link](https://knowledgelayer.softlayer.com/faq/what-ip-ranges-do-i-allow-through-firewall) beginning with the **Backend (private) Network** section.
-      - Add all of the [locations within the regions](cs_regions.html#locations) that you are using
-      - Note that you must add the dal01 location (data center)
-      - Open ports 80 and 443 to allow the cluster bootstrapping process
+      - Add all of the [locations within the regions](cs_regions.html#locations) that you are using.
+      - Note that you must add the dal01 location (data center).
+      - Open ports 80 and 443 to allow the cluster bootstrapping process.
 
-  6. Optional: To access the load balancer from outside of the VLAN, open the port for incoming network traffic on the specific IP address of that load balancer.
+  6. To create persistent volume claims for data storage, allow egress access through your firewall for the [IBM Cloud infrastructure (SoftLayer) IP addresses](https://knowledgelayer.softlayer.com/faq/what-ip-ranges-do-i-allow-through-firewall) of the location (data center) that your cluster is in.
+      - To find the location (data center) of your cluster, run `bx cs clusters`.
+      - Allow access to the IP range for both the **Frontend (public) network** and **Backend (private) Network**.
+      - Note that you must add the dal01 location (data center) for the **Backend (private) Network**.
 
-  7. Optional: To access the Ingress controller from outside of the VLAN, open either port 80 or 443 for incoming network traffic on the specific IP address of that Ingress controller, depending on which port you have configured.
+  7. Optional: To access the load balancer from outside of the VLAN, open the port for incoming network traffic on the specific IP address of that load balancer.
+
+  8. Optional: To access the Ingress controller from outside of the VLAN, open either port 80 or 443 for incoming network traffic on the specific IP address of that Ingress controller, depending on which port you have configured.
+
+
 
 ## Restricting network traffic to edge worker nodes
 {: #cs_edge}
@@ -368,6 +375,7 @@ Note that a policy to allow SSH does not exist, so SSH access by way of the publ
 
 
  <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
+ <caption>Table 3. Default policies for each cluster</caption>
   <thead>
   <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Default policies for each cluster</th>
   </thead>
