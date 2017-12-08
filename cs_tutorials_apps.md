@@ -2,11 +2,11 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-11-14"
+lastupdated: "2017-12-08"
 
 ---
 
-{:new_window: target="blank"}
+{:new_window: target="_blank"}
 {:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
@@ -812,110 +812,45 @@ From the previous tutorial, you have your account and a cluster with one worker 
 ### Lesson 3b. Updating the running Watson Tone Analyzer deployment
 {: #lesson3b}
 
-While a deployment is running, you can edit the deployment to change values in the pod template. This lesson includes updating the image that is used.
+While a deployment is running, you can edit the deployment to change values in the pod template. This lesson includes updating the image that is used. The PR firm wants to change the app in the deployment.
 
-1.  Change the name of the image. The PR firm wants to try out a different app in the same deployment, but roll back if an issue is found with the new app.
+Change the name of the image:
 
-    1.  Open the configuration script for the running deployment.
+1.  Open the configuration details for the running deployment.
 
-        ```
-        kubectl edit deployment/watson-talk-pod
-        ```
-        {: pre}
+    ```
+    kubectl edit deployment/watson-talk-pod
+    ```
+    {: pre}
 
-        Depending on your operating system, either a vi editor opens or a text editor opens.
+    Depending on your operating system, either a vi editor opens or a text editor opens.
 
-    2.  Change the name of the image to the ibmliberty image.
+2.  Change the name of the image to the ibmliberty image.
 
-        ```
-        spec:
-              containers:
-              - image: registry.<region>.bluemix.net/ibmliberty:latest
-        ```
-        {: codeblock}
+    ```
+    spec:
+          containers:
+          - image: registry.<region>.bluemix.net/ibmliberty:latest
+    ```
+    {: codeblock}
 
-    3.  Save your changes and exit the editor.
+3.  Save your changes and exit the editor.
 
-    4.  Apply the changes in the configuration script to the running deployment.
+4.  Apply the changes to the running deployment.
 
-        ```
-        kubectl rollout status deployment/watson-talk-pod
-        ```
-        {: pre}
+    ```
+    kubectl rollout status deployment/watson-talk-pod
+    ```
+    {: pre}
 
-        Wait for confirmation that the rollout is complete.
+    Wait for confirmation that the rollout is complete.
 
-        ```
-        deployment "watson-talk-pod" successfully rolled out
-        ```
-        {: screen}
+    ```
+    deployment "watson-talk-pod" successfully rolled out
+    ```
+    {: screen}
 
-        When you roll out a change, another pod is created and tested by Kubernetes. When the test is successful, the old pod is removed.
-
-    5.  If the changes do not look as expected, the changes can be rolled back. Maybe someone in the PR firm made a mistake with the app changes and they need to go back to the previous deployment.
-
-        1.  View the revision version numbers to identify the number of the previous deployment. The latest revision is the highest version number. In this example, revision 1 was the original deployment and revision 2 is the image change you made in the previous step.
-
-            ```
-            kubectl rollout history deployment/watson-talk-pod
-            ```
-            {: pre}
-
-            Output:
-
-            ```
-            deployments "watson-talk-pod"
-            REVISION	CHANGE-CAUSE
-            1		        <none>
-            2 	        <none>
-
-            ```
-            {: screen}
-
-        2.  Run the following command to revert the deployment back to the previous revision. Again, another pod is created and tested by Kubernetes. When the test is successful, the old pod is removed.
-
-            ```
-            kubectl rollout undo deployment/watson-talk-pod --to-revision=1
-            ```
-            {: pre}
-
-            Output:
-
-            ```
-            deployment "watson-talk-pod" rolled back
-            ```
-            {: screen}
-
-        3.  Get the name of the pod to use in the next step.
-
-            ```
-            kubectl get pods
-            ```
-            {: pre}
-
-            Output:
-
-            ```
-            NAME                              READY     STATUS    RESTARTS   AGE
-            watson-talk-pod-2511517105-6tckg  1/1       Running   0          2m
-            ```
-            {: screen}
-
-        4.  View the details of the pod and verify that the image was rolled back.
-
-            ```
-            kubectl describe pod <pod_name>
-            ```
-            {: pre}
-
-            Output:
-
-            ```
-            Image: registry.<region>.bluemix.net/namespace/watson-talk
-            ```
-            {: screen}
-
-2.  Optional: Repeat the changes for the watson-pod deployment.
+    When you roll out a change, another pod is created and tested by Kubernetes. When the test is successful, the old pod is removed.
 
 [Test your knowledge and take a quiz! ![External link icon](../icons/launch-glyph.svg "External link icon")](https://ibmcloud-quizzes.mybluemix.net/containers/apps_tutorial/quiz.php)
 

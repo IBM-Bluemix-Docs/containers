@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-06"
+lastupdated: "2017-12-07"
 
 ---
 
@@ -347,7 +347,7 @@ For more information about how to create a service of type cluster IP, see [Kube
 When you create a cluster, every cluster must be connected to a public VLAN. The public VLAN determines the public IP address that is assigned to a worker node during cluster creation.
 {:shortdesc}
 
-The public network interface for the worker nodes in both lite and standard clusters is protected by Calico network policies. These policies block most inbound traffic by default, including SSH. However, inbound traffic that is necessary for Kubernetes to function is allowed, as are connections to NodePort, Loadbalancer, and Ingress services. For more information about these policies, inlcuding how to modify them, see [Network policies](cs_security.html#cs_security_network_policies).
+The public network interface for the worker nodes in both lite and standard clusters is protected by Calico network policies. These policies block most inbound traffic by default. However, inbound traffic that is necessary for Kubernetes to function is allowed, as are connections to NodePort, Loadbalancer, and Ingress services. For more information about these policies, inlcuding how to modify them, see [Network policies](cs_security.html#cs_security_network_policies).
 
 |Cluster type|Manager of the public VLAN for the cluster|
 |------------|------------------------------------------|
