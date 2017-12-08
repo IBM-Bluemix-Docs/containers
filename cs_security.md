@@ -50,7 +50,13 @@ In the following diagram, you can see security features that are grouped by Kube
 <br />
 
 
-## Kubernetes master
+## Security by cluster component
+{: #cs_security_cluster}
+
+Each {{site.data.keyword.containerlong_notm}} cluster has security features built-in to its [master](#cs_security_master) and [worker](#cs_security_worker) nodes. If you have a firewall, need to access load balancing from outside the cluster, or want to run `kubectl` commands from your local system when corporate network policies prevent access to public internet endpoints, [open ports in your firewall](#opening_ports). If you want to connect apps in your cluster to an on-premises network or to other apps external to your cluster, [set up VPN connectivity](#vpn).
+{: shortdesc}
+
+### Kubernetes master
 {: #cs_security_master}
 
 Review the built-in Kubernetes master security features to protect the Kubernetes master and to secure the cluster network communication.
@@ -77,7 +83,7 @@ Review the built-in Kubernetes master security features to protect the Kubernete
 <br />
 
 
-## Worker nodes
+### Worker nodes
 {: #cs_security_worker}
 
 Review the built-in worker node security features to protect the worker node environment and to assure resource, network and storage isolation.
@@ -100,7 +106,22 @@ Review the built-in worker node security features to protect the worker node env
     <dd>For standard clusters, all cluster-related events, such as adding a worker node, rolling update progress, or capacity usage information can be logged and monitored by {{site.data.keyword.containershort_notm}} and sent to {{site.data.keyword.loganalysislong_notm}} and {{site.data.keyword.monitoringlong_notm}}. For information about setting up logging and monitoring, see [Configuring cluster logging](https://console.bluemix.net/docs/containers/cs_cluster.html#cs_logging) and [Configuring cluster monitoring](https://console.bluemix.net/docs/containers/cs_cluster.html#cs_monitoring).</dd>
 </dl>
 
-### Opening required ports and IP addresses in your firewall
+### Images
+{: #cs_security_deployment}
+
+Manage the security and integrity of your images with built-in security features.
+{: shortdesc}
+
+**Secured Docker private image repository in {{site.data.keyword.registryshort_notm}}**: You can set up your own Docker image repository in a multi-tenant, highly available, and scalable private image registry that is hosted and managed by IBM to build, securely store, and share Docker images across cluster users.
+
+**Image security compliance**: When you use {{site.data.keyword.registryshort_notm}}, you can leverage the built-in security scanning that is provided by Vulnerability Advisor. Every image that is pushed to your namespace is automatically scanned for vulnerabilities against a database of known CentOS, Debian, Red Hat, and Ubuntu issues. If vulnerabilities are found, Vulnerability Advisor provides instructions for how to resolve them to assure image integrity and security.
+
+To view the vulnerability assessment for your images, [review the Vulnerability Advisor documentation](/docs/services/va/va_index.html#va_registry_cli).
+
+<br />
+
+
+## Opening required ports and IP addresses in your firewall
 {: #opening_ports}
 
 Review these situations in which you might need to open specific ports and IP addresses in your firewalls:
@@ -115,7 +136,7 @@ Review these situations in which you might need to open specific ports and IP ad
       ```
       {: pre}
 
-  2.  In your firewall for OUTBOUND connectivity from your worker nodes, allow outgoing network traffic from the source worker node to the destination TCP/UDP port range 20000-32767 and port 443 for `<each_worker_node_publicIP>`, and the following IP addresses and network groups.
+  2.  Allow outgoing network traffic from the source IP (such as the worker node) to the destination TCP/UDP port range 20000-32767 and port 443, and the following IP addresses and network groups. If you have a corporate firewall that prevents your local machine from accessing public internet endpoints, do this step for both your source worker nodes and your local machine.
       - **Important**: You must allow outgoing traffic to port 443 for all of the locations within the region, to balance the load during the bootstrapping process. For example, if your cluster is in US South, you must allow traffic from port 443 to the IP addresses for all of the locations (dal10, dal12, and dal13).
       <p>
   <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
@@ -265,82 +286,6 @@ Review these situations in which you might need to open specific ports and IP ad
 
   8. Optional: To access the Ingress controller from outside of the VLAN, open either port 80 or 443 for incoming network traffic on the specific IP address of that Ingress controller, depending on which port you have configured.
 
-
-
-## Restricting network traffic to edge worker nodes
-{: #cs_edge}
-
-Add the `dedicated=edge` label to two or more worker nodes in your cluster to ensure that Ingress and load balancers are deployed to those worker nodes only.
-
-Edge worker nodes can improve the security of your cluster by allowing fewer worker nodes to be accessed externally and by isolating the networking workload. When these worker nodes are marked for networking only, other workloads cannot consume the CPU or memory of the worker node and interfere with networking.
-
-Before you begin:
-
-- [Create a standard cluster.](cs_cluster.html#cs_cluster_cli)
-- Ensure that your cluster has a least one public VLAN. Edge worker nodes are not available for clusters with private VLANs only.
-- [Target the Kubernetes CLI to the cluster](cs_cli_install.html#cs_cli_configure).
-
-
-1. List all of the worker nodes in the cluster. Use the private IP address from the **NAME** column to identify the nodes. Select at least two worker nodes to be edge worker nodes. Using two or more worker nodes improves availability of the networking resources.
-
-  ```
-  kubectl get nodes -L publicVLAN,privateVLAN,dedicated
-  ```
-  {: pre}
-
-2. Label the worker nodes with `dedicated=edge`. After a worker node is marked with `dedicated=edge`, all subsequent Ingress and load balancers are deployed to an edge worker node.
-
-  ```
-  kubectl label nodes <node_name> <node_name2> dedicated=edge
-  ```
-  {: pre}
-
-3. Retrieve all existing load balancer services in your cluster.
-
-  ```
-  kubectl get services --all-namespaces -o jsonpath='{range .items[*]}kubectl get service -n {.metadata.namespace} {.metadata.name} -o yaml | kubectl apply -f - :{.spec.type},{end}' | tr "," "\n" | grep "LoadBalancer" | cut -d':' -f1
-  ```
-  {: pre}
-
-  Output:
-
-  ```
-  kubectl get service -n <namespace> <name> -o yaml | kubectl apply -f
-  ```
-  {: screen}
-
-4. Using the output from the previous step, copy and paste each `kubectl get service` line. This command redeploys the load balancer to an edge worker node. Only public load balancers need to be redeployed.
-
-  Output:
-
-  ```
-  service "<name>" configured
-  ```
-  {: screen}
-
-You labeled worker nodes with `dedicated=edge` and redeployed all existing load balancers and Ingress to the edge worker nodes. Next, prevent other [workloads from running on edge worker nodes](#cs_edge_workloads) and [block inbound traffic to node ports on worker nodes](#cs_block_ingress).
-
-### Prevent workloads from running on edge worker nodes
-{: #cs_edge_workloads}
-
-One of the benefits of edge worker nodes is that these worker nodes can be specified to run networking services only. Using the `dedicated=edge` toleration means that all load balancer and Ingress services are deployed to the labeled worker nodes only. However, to prevent other workloads from running on edge worker nodes and consuming worker node resources, you must use [Kubernetes taints ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/).
-
-1. List all worker nodes with the `edge` label.
-
-  ```
-  kubectl get nodes -L publicVLAN,privateVLAN,dedicated -l dedicated=edge
-  ```
-  {: pre}
-
-2. Apply a taint to each worker node that prevents pods from running on the worker node and that removes pods that do not have the `edge` label from the worker node. The pods that are removed are redeployed on other worker nodes with capacity.
-
-  ```
-  kubectl taint node <node_name> dedicated=edge:NoSchedule dedicated=edge:NoExecute
-  ```
-
-Now, only pods with the `dedicated=edge` toleration are deployed to your edge worker nodes.
-
-<br />
 
 
 ## Network policies
@@ -696,18 +641,76 @@ policy changes to be applied throughout the cluster.
 <br />
 
 
-## Images
-{: #cs_security_deployment}
 
-Manage the security and integrity of your images with built-in security features.
-{: shortdesc}
+## Restricting network traffic to edge worker nodes
+{: #cs_edge}
 
-### Secured Docker private image repository in {{site.data.keyword.registryshort_notm}}:
+Add the `dedicated=edge` label to two or more worker nodes in your cluster to ensure that Ingress and load balancers are deployed to those worker nodes only.
 
- You can set up your own Docker image repository in a multi-tenant, highly available, and scalable private image registry that is hosted and managed by IBM to build, securely store, and share Docker images across cluster users.
+Edge worker nodes can improve the security of your cluster by allowing fewer worker nodes to be accessed externally and by isolating the networking workload. When these worker nodes are marked for networking only, other workloads cannot consume the CPU or memory of the worker node and interfere with networking.
 
-### Image security compliance:
+Before you begin:
 
-When you use {{site.data.keyword.registryshort_notm}}, you can leverage the built-in security scanning that is provided by Vulnerability Advisor. Every image that is pushed to your namespace is automatically scanned for vulnerabilities against a database of known CentOS, Debian, Red Hat, and Ubuntu issues. If vulnerabilities are found, Vulnerability Advisor provides instructions for how to resolve them to assure image integrity and security.
+- [Create a standard cluster.](cs_cluster.html#cs_cluster_cli)
+- Ensure that your cluster has a least one public VLAN. Edge worker nodes are not available for clusters with private VLANs only.
+- [Target the Kubernetes CLI to the cluster](cs_cli_install.html#cs_cli_configure).
 
-To view the vulnerability assessment for your images, [review the Vulnerability Advisor documentation](/docs/services/va/va_index.html#va_registry_cli).
+
+1. List all of the worker nodes in the cluster. Use the private IP address from the **NAME** column to identify the nodes. Select at least two worker nodes to be edge worker nodes. Using two or more worker nodes improves availability of the networking resources.
+
+  ```
+  kubectl get nodes -L publicVLAN,privateVLAN,dedicated
+  ```
+  {: pre}
+
+2. Label the worker nodes with `dedicated=edge`. After a worker node is marked with `dedicated=edge`, all subsequent Ingress and load balancers are deployed to an edge worker node.
+
+  ```
+  kubectl label nodes <node_name> <node_name2> dedicated=edge
+  ```
+  {: pre}
+
+3. Retrieve all existing load balancer services in your cluster.
+
+  ```
+  kubectl get services --all-namespaces -o jsonpath='{range .items[*]}kubectl get service -n {.metadata.namespace} {.metadata.name} -o yaml | kubectl apply -f - :{.spec.type},{end}' | tr "," "\n" | grep "LoadBalancer" | cut -d':' -f1
+  ```
+  {: pre}
+
+  Output:
+
+  ```
+  kubectl get service -n <namespace> <name> -o yaml | kubectl apply -f
+  ```
+  {: screen}
+
+4. Using the output from the previous step, copy and paste each `kubectl get service` line. This command redeploys the load balancer to an edge worker node. Only public load balancers need to be redeployed.
+
+  Output:
+
+  ```
+  service "<name>" configured
+  ```
+  {: screen}
+
+You labeled worker nodes with `dedicated=edge` and redeployed all existing load balancers and Ingress to the edge worker nodes. Next, prevent other [workloads from running on edge worker nodes](#cs_edge_workloads) and [block inbound traffic to node ports on worker nodes](#cs_block_ingress).
+
+### Prevent workloads from running on edge worker nodes
+{: #cs_edge_workloads}
+
+One of the benefits of edge worker nodes is that these worker nodes can be specified to run networking services only. Using the `dedicated=edge` toleration means that all load balancer and Ingress services are deployed to the labeled worker nodes only. However, to prevent other workloads from running on edge worker nodes and consuming worker node resources, you must use [Kubernetes taints ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/).
+
+1. List all worker nodes with the `edge` label.
+
+  ```
+  kubectl get nodes -L publicVLAN,privateVLAN,dedicated -l dedicated=edge
+  ```
+  {: pre}
+
+2. Apply a taint to each worker node that prevents pods from running on the worker node and that removes pods that do not have the `edge` label from the worker node. The pods that are removed are redeployed on other worker nodes with capacity.
+
+  ```
+  kubectl taint node <node_name> dedicated=edge:NoSchedule dedicated=edge:NoExecute
+  ```
+
+Now, only pods with the `dedicated=edge` toleration are deployed to your edge worker nodes.
