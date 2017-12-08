@@ -33,6 +33,8 @@ You can take some general steps to ensure that your clusters are up-to-date:
 <br />
 
 
+
+
 ## Debugging clusters
 {: #debug_clusters}
 
@@ -168,6 +170,8 @@ Review the options to debug your clusters and find the root causes for failures.
 <br />
 
 
+
+
 ## Debugging app deployments
 {: #debug_apps}
 
@@ -209,6 +213,8 @@ Review the options that you have to debug your app deployments and find the root
 <br />
 
 
+
+
 ## Identifying local client and server versions of kubectl
 
 To check which version of the Kubernetes CLI that you are running locally or that your cluster is running, run the following command and check the version.
@@ -227,6 +233,8 @@ Server Version: v1.5.6
 {: screen}
 
 <br />
+
+
 
 
 ## Unable to connect to your IBM Cloud infrastructure (SoftLayer) account while creating a cluster
@@ -268,162 +276,6 @@ To add credentials your {{site.data.keyword.Bluemix_notm}} account:
 <br />
 
 
-## Accessing your worker node with SSH fails
-{: #cs_ssh_worker}
-
-{: tsSymptoms}
-You cannot access your worker node by using a SSH connection.
-
-{: tsCauses}
-SSH via password is disabled on the worker nodes.
-
-{: tsResolve}
-Use [DaemonSets ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) for anything you must run on every node or jobs for any one-time actions you must execute.
-
-<br />
-
-
-## Pods remain in pending state
-{: #cs_pods_pending}
-
-{: tsSymptoms}
-When you run `kubectl get pods`, you can see pods that remain in a **Pending** state.
-
-{: tsCauses}
-If you just created the Kubernetes cluster, the worker nodes might still be configuring. If this cluster is an existing one, you might not have enough capacity in your cluster to deploy the pod.
-
-{: tsResolve}
-This task requires an [Administrator access policy](cs_cluster.html#access_ov). Verify your current [access policy](cs_cluster.html#view_access).
-
-If you just created the Kubernetes cluster, run the following command and wait for the worker nodes to initialize.
-
-```
-kubectl get nodes
-```
-{: pre}
-
-If this cluster is an existing one, check your cluster capacity.
-
-1.  Set the proxy with the default port number.
-
-  ```
-  kubectl proxy
-  ```
-   {: pre}
-
-2.  Open the Kubernetes dashboard.
-
-  ```
-  http://localhost:8001/ui
-  ```
-  {: pre}
-
-3.  Check if you have enough capacity in your cluster to deploy your pod.
-
-4.  If you don't have enough capacity in your cluster, add another worker node to your cluster.
-
-  ```
-  bx cs worker-add <cluster name or id> 1
-  ```
-  {: pre}
-
-5.  If your pods still stay in a **pending** state after the worker node is fully deployed, review the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-pod-replication-controller/#my-pod-stays-pending) to further troubleshoot the pending state of your pod.
-
-<br />
-
-
-## Pods are stuck in the creating state
-{: #stuck_creating_state}
-
-{: tsSymptoms}
-When you run `kubectl get pods -o wide`, you see that multiple pods that are running on the same worker node are stuck in the `ContainerCreating` state.
-
-{: tsCauses}
-The file system on the worker node is read-only.
-
-{: tsResolve}
-1. Back up any data that might be stored on the worker node or in your containers.
-2. Rebuild the worker node by running the following command.
-
-<pre class="pre"><code>bx cs worker-reload &lt;cluster_name&gt; &lt;worker_id&gt;</code></pre>
-
-<br />
-
-
-## Containers do not start
-{: #containers_do_not_start}
-
-{: tsSymptoms}
-The pods deploy successfully to clusters, but the containers do not start.
-
-{: tsCauses}
-Containers might not start when the registry quota is reached.
-
-{: tsResolve}
-[Free up storage in {{site.data.keyword.registryshort_notm}}.](../services/Registry/registry_quota.html#registry_quota_freeup)
-
-<br />
-
-
-## Accessing a pod on a new worker node fails with a timeout
-{: #cs_nodes_duplicate_ip}
-
-{: tsSymptoms}
-You deleted a worker node in your cluster and then added a worker node. When you deployed a pod or Kubernetes service, the resource cannot access the newly created worker node, and the connection times out.
-
-{: tsCauses}
-If you delete a worker node from your cluster and then add a worker node, it is possible for the new worker node to be assigned the private IP address of the deleted worker node. Calico uses this private IP address as a tag and continues to try to reach the deleted node.
-
-{: tsResolve}
-Manually update the reference of the private IP address to point to the correct node.
-
-1.  Confirm that you have two worker nodes with the same **Private IP** address. Note the **Private IP** and **ID** of the deleted worker.
-
-  ```
-  bx cs workers <CLUSTER_NAME>
-  ```
-  {: pre}
-
-  ```
-  ID                                                 Public IP       Private IP       Machine Type   State     Status
-  kube-dal10-cr9b7371a7fcbe46d08e04f046d5e6d8b4-w1   192.0.2.0.12   203.0.113.144   b2c.4x16       normal    Ready
-  kube-dal10-cr9b7371a7fcbe46d08e04f046d5e6d8b4-w2   192.0.2.0.16   203.0.113.144   b2c.4x16       deleted    -
-  ```
-  {: screen}
-
-2.  Install the [Calico CLI](cs_security.html#adding_network_policies).
-3.  List the available worker nodes in Calico. Replace <path_to_file> with the local path to the Calico configuration file.
-
-  ```
-  calicoctl get nodes --config=<path_to_file>/calicoctl.cfg
-  ```
-  {: pre}
-
-  ```
-  NAME
-  kube-dal10-cr9b7371a7fcbe46d08e04f046d5e6d8b4-w1
-  kube-dal10-cr9b7371a7fcbe46d08e04f046d5e6d8b4-w2
-  ```
-  {: screen}
-
-4.  Delete the duplicate worker node in Calico. Replace NODE_ID with the worker node ID.
-
-  ```
-  calicoctl delete node NODE_ID --config=<path_to_file>/calicoctl.cfg
-  ```
-  {: pre}
-
-5.  Reboot the worker node that was not deleted.
-
-  ```
-  bx cs worker-reboot CLUSTER_ID NODE_ID
-  ```
-  {: pre}
-
-
-The deleted node is no longer listed in Calico.
-
-<br />
 
 
 ## Firewall prevents worker nodes from connecting
@@ -496,17 +348,17 @@ Open the following ports and IP addresses in your customized firewall.
       <tr>
          <td>AP South</td>
          <td>mel01<br>syd01<br>syd04</td>
-         <td><code>168.1.97.67</code><br><code>168.1.8.195</code><br><code>130.198.64.19</code></td>
+         <td><code>168.1.97.67</code><br><code>168.1.8.195</code><br><code>130.198.64.19, 130.198.66.34</code></td>
       </tr>
       <tr>
          <td>EU Central</td>
          <td>ams03<br>fra02<br>par01</td>
-         <td><code>169.50.169.110</code><br><code>169.50.56.174</code><br><code>159.8.86.149</code></td>
+         <td><code>169.50.169.106, 169.50.154.194</code><br><code>169.50.56.170, 169.50.56.174</code><br><code>159.8.86.149, 159.8.98.170</code></td>
         </tr>
       <tr>
         <td>UK South</td>
         <td>lon02<br>lon04</td>
-        <td><code>159.122.242.78</code><br><code>158.175.65.170</code></td>
+        <td><code>159.122.242.78</code><br><code>158.175.65.170, 158.175.74.170, 158.175.76.2</code></td>
       </tr>
       <tr>
         <td>US East</td>
@@ -516,7 +368,7 @@ Open the following ports and IP addresses in your customized firewall.
       <tr>
         <td>US South</td>
         <td>dal10<br>dal12<br>dal13</td>
-        <td><code>169.46.7.238</code><br><code>169.47.70.10</code><br><code>169.60.128.2</code></td>
+        <td><code>169.47.234.18, 169.46.7.234</code><br><code>169.47.70.10</code><br><code>169.60.128.2</code></td>
       </tr>
       </tbody>
     </table>
@@ -594,32 +446,56 @@ Open the following ports and IP addresses in your customized firewall.
         <th>Logging address</th>
         <th>Logging IP addresses</th>
         </thead>
-      <tbody>
-        <tr>
-         <td>EU Central</td>
-         <td>ingest.logging.eu-de.bluemix.net</td>
-         <td><code>169.50.25.125</code></td>
-        </tr>
-        <tr>
-         <td>UK South</td>
-         <td>ingest.logging.eu-gb.bluemix.net</td>
-         <td><code>169.50.115.113</code></td>
-        </tr>
-        <tr>
-          <td>US East, US South, AP North</td>
-          <td>ingest.logging.ng.bluemix.net</td>
-          <td><code>169.48.79.236</code><br><code>169.46.186.113</code></td>
-         </tr>
-        </tbody>
-      </table>
+        <tbody>
+          <tr>
+            <td>US East, US South</td>
+            <td>ingest.logging.ng.bluemix.net</td>
+            <td><code>169.48.79.236</code><br><code>169.46.186.113</code></td>
+           </tr>
+          <tr>
+           <td>EU Central, UK South</td>
+           <td>ingest-eu-fra.logging.bluemix.net</td>
+           <td><code>158.177.88.43</code><br><code>159.122.87.107</code></td>
+          </tr>
+          <tr>
+           <td>AP South, AP North</td>
+           <td>ingest-au-syd.logging.bluemix.net</td>
+           <td><code>130.198.76.125</code><br><code>168.1.209.20</code></td>
+          </tr>
+         </tbody>
+       </table>
 </p>
 
 5. If you have a private firewall, allow the appropriate IBM Cloud infrastructure (SoftLayer) private IP ranges. Consult [this link](https://knowledgelayer.softlayer.com/faq/what-ip-ranges-do-i-allow-through-firewall) beginning with the **Backend (private) Network** section.
-    - Add all the [locations within the region(s)](cs_regions.html#locations) that you are using
-    - Note that you must add the dal01 location (data center)
-    - Open ports 80 and 443 to allow the cluster bootstrapping process
+    - Add all the [locations within the region(s)](cs_regions.html#locations) that you are using.
+    - Note that you must add the dal01 location (data center).
+    - Open ports 80 and 443 to allow the cluster bootstrapping process.
+
+6. To create persistent volume claims for data storage, allow egress access through your firewall for the [IBM Cloud infrastructure (SoftLayer) IP addresses](https://knowledgelayer.softlayer.com/faq/what-ip-ranges-do-i-allow-through-firewall) of the location (data center) that your cluster is in.
+    - To find the location (data center) of your cluster, run `bx cs clusters`.
+    - Allow access to the IP range for both the **Frontend (public) network** and **Backend (private) Network**.
+    - Note that you must add the dal01 location (data center) for the **Backend (private) Network**.
 
 <br />
+
+
+
+
+## Accessing your worker node with SSH fails
+{: #cs_ssh_worker}
+
+{: tsSymptoms}
+You cannot access your worker node by using a SSH connection.
+
+{: tsCauses}
+SSH via password is disabled on the worker nodes.
+
+{: tsResolve}
+Use [DaemonSets ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) for anything you must run on every node or jobs for any one-time actions you must execute.
+
+<br />
+
+
 
 
 ## After updating or reloading a worker node, duplicate nodes and pods appear
@@ -640,6 +516,159 @@ There are no service disruptions due to these duplicates, but you should remove 
   {: pre}
 
 <br />
+
+
+
+
+## Accessing a pod on a new worker node fails with a timeout
+{: #cs_nodes_duplicate_ip}
+
+{: tsSymptoms}
+You deleted a worker node in your cluster and then added a worker node. When you deployed a pod or Kubernetes service, the resource cannot access the newly created worker node, and the connection times out.
+
+{: tsCauses}
+If you delete a worker node from your cluster and then add a worker node, it is possible for the new worker node to be assigned the private IP address of the deleted worker node. Calico uses this private IP address as a tag and continues to try to reach the deleted node.
+
+{: tsResolve}
+Manually update the reference of the private IP address to point to the correct node.
+
+1.  Confirm that you have two worker nodes with the same **Private IP** address. Note the **Private IP** and **ID** of the deleted worker.
+
+  ```
+  bx cs workers <CLUSTER_NAME>
+  ```
+  {: pre}
+
+  ```
+  ID                                                 Public IP       Private IP       Machine Type   State     Status
+  kube-dal10-cr9b7371a7fcbe46d08e04f046d5e6d8b4-w1   192.0.2.0.12   203.0.113.144   b2c.4x16       normal    Ready
+  kube-dal10-cr9b7371a7fcbe46d08e04f046d5e6d8b4-w2   192.0.2.0.16   203.0.113.144   b2c.4x16       deleted    -
+  ```
+  {: screen}
+
+2.  Install the [Calico CLI](cs_security.html#adding_network_policies).
+3.  List the available worker nodes in Calico. Replace <path_to_file> with the local path to the Calico configuration file.
+
+  ```
+  calicoctl get nodes --config=<path_to_file>/calicoctl.cfg
+  ```
+  {: pre}
+
+  ```
+  NAME
+  kube-dal10-cr9b7371a7fcbe46d08e04f046d5e6d8b4-w1
+  kube-dal10-cr9b7371a7fcbe46d08e04f046d5e6d8b4-w2
+  ```
+  {: screen}
+
+4.  Delete the duplicate worker node in Calico. Replace NODE_ID with the worker node ID.
+
+  ```
+  calicoctl delete node NODE_ID --config=<path_to_file>/calicoctl.cfg
+  ```
+  {: pre}
+
+5.  Reboot the worker node that was not deleted.
+
+  ```
+  bx cs worker-reboot CLUSTER_ID NODE_ID
+  ```
+  {: pre}
+
+
+The deleted node is no longer listed in Calico.
+
+<br />
+
+
+
+
+## Pods remain in pending state
+{: #cs_pods_pending}
+
+{: tsSymptoms}
+When you run `kubectl get pods`, you can see pods that remain in a **Pending** state.
+
+{: tsCauses}
+If you just created the Kubernetes cluster, the worker nodes might still be configuring. If this cluster is an existing one, you might not have enough capacity in your cluster to deploy the pod.
+
+{: tsResolve}
+This task requires an [Administrator access policy](cs_cluster.html#access_ov). Verify your current [access policy](cs_cluster.html#view_access).
+
+If you just created the Kubernetes cluster, run the following command and wait for the worker nodes to initialize.
+
+```
+kubectl get nodes
+```
+{: pre}
+
+If this cluster is an existing one, check your cluster capacity.
+
+1.  Set the proxy with the default port number.
+
+  ```
+  kubectl proxy
+  ```
+   {: pre}
+
+2.  Open the Kubernetes dashboard.
+
+  ```
+  http://localhost:8001/ui
+  ```
+  {: pre}
+
+3.  Check if you have enough capacity in your cluster to deploy your pod.
+
+4.  If you don't have enough capacity in your cluster, add another worker node to your cluster.
+
+  ```
+  bx cs worker-add <cluster name or id> 1
+  ```
+  {: pre}
+
+5.  If your pods still stay in a **pending** state after the worker node is fully deployed, review the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-pod-replication-controller/#my-pod-stays-pending) to further troubleshoot the pending state of your pod.
+
+<br />
+
+
+
+
+## Pods are stuck in the creating state
+{: #stuck_creating_state}
+
+{: tsSymptoms}
+When you run `kubectl get pods -o wide`, you see that multiple pods that are running on the same worker node are stuck in the `ContainerCreating` state.
+
+{: tsCauses}
+The file system on the worker node is read-only.
+
+{: tsResolve}
+1. Back up any data that might be stored on the worker node or in your containers.
+2. Rebuild the worker node by running the following command.
+
+<pre class="pre"><code>bx cs worker-reload &lt;cluster_name&gt; &lt;worker_id&gt;</code></pre>
+
+<br />
+
+
+
+
+## Containers do not start
+{: #containers_do_not_start}
+
+{: tsSymptoms}
+The pods deploy successfully to clusters, but the containers do not start.
+
+{: tsCauses}
+Containers might not start when the registry quota is reached.
+
+{: tsResolve}
+[Free up storage in {{site.data.keyword.registryshort_notm}}.](../services/Registry/registry_quota.html#registry_quota_freeup)
+
+<br />
+
+
 
 
 ## Logs do not appear
@@ -696,6 +725,8 @@ D. To trigger a log for an event, you can deploy Noisy, a sample pod that produc
 <br />
 
 
+
+
 ## Kubernetes dashboard does not display utilization graphs
 {: #cs_dashboard_graphs}
 
@@ -714,6 +745,8 @@ Delete the `kube-dashboard` pod to force a restart. The pod is re-created with R
   {: pre}
 
 <br />
+
+
 
 
 ## Connecting to an app via Ingress fails
@@ -813,7 +846,7 @@ To troubleshoot your Ingress:
     1.  Retrieve the ID of the Ingress pods that are running in your cluster.
 
       ```
-      kubectl get pods -n kube-system |grep ingress
+      kubectl get pods -n kube-system | grep alb1
       ```
       {: pre}
 
@@ -827,6 +860,8 @@ To troubleshoot your Ingress:
     3.  Look for error messages in the Ingress controller logs.
 
 <br />
+
+
 
 
 ## Connecting to an app via a load balancer service fails
@@ -904,6 +939,8 @@ To troubleshoot your load balancer service:
 <br />
 
 
+
+
 ## Retrieving the ETCD url for Calico CLI configuration fails
 {: #cs_calico_fails}
 
@@ -935,6 +972,8 @@ To retrieve the `<ETCD_URL>`, run one of the following commands:
 When you retrieve the `<ETCD_URL>`, continue with the steps as listed in (Adding network policies)[cs_security.html#adding_network_policies].
 
 <br />
+
+
 
 
 ## Getting help and support
