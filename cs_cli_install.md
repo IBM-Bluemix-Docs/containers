@@ -246,7 +246,7 @@ To update the CLIs:
 2. Log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your {{site.data.keyword.Bluemix_notm}} credentials when prompted. To specify an {{site.data.keyword.Bluemix_notm}} region, [include the API endpoint](cs_regions.html#bluemix_regions).
 
     ```
-    bx login
+    bx login 
     ```
     {: pre}
 
@@ -430,6 +430,14 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     POST https://iam.<region>.bluemix.net/oidc/token
     ```
     {: codeblock}
+    
+    Example:
+    ```
+    POST https://iam.ng.bluemix.net/oidc/token
+    ```
+    {: pre}
+    
+    To specify an {{site.data.keyword.Bluemix_notm}} region, [review the region abbreviations as they are used in the API endpoints](cs_regions.html#bluemix_regions).
 
     <table summary-"Input parameters to get tokens">
     <thead>
@@ -543,6 +551,14 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     POST https://iam.<region>.bluemix.net/oidc/token
     ```
     {: codeblock}
+    
+    Example:
+    ```
+    POST https://iam.ng.bluemix.net/oidc/token
+    ```
+    {: pre}
+    
+    To specify an {{site.data.keyword.Bluemix_notm}} region, [review the region abbreviations as they are used in the API endpoints](cs_regions.html#bluemix_regions).
 
     <table summary-"Input parameters to get tokens">
     <thead>
