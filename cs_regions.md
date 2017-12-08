@@ -39,7 +39,7 @@ You can create Kubernetes lite clusters in the following regions:
   * UK South
   * US South
 
-  **Note**: If you are not a paid customer, you are unable to create lite clusters in the US South region.
+  **Note**: Customers with a Pay As You Go or Subscription account can create lite clusters in the US South region.
 
 
 ## {{site.data.keyword.Bluemix_notm}} region API endpoints
