@@ -15,20 +15,20 @@ IBM Cloud Container Service
         cs_tutorials_apps.md
 
     cs_security.md
-    {: .navgroup-end
+    {: .navgroup-end}
 
     {: .navgroup id="howto"}
     cs_cli_install.md
     cs_cluster.md
     cs_apps.md
     {: .navgroup-end}
-    
+
     {: .navgroup id="reference"}
     cs_cli_reference.md
     cs_versions.md
     cs_regions.md
     cs_annotations.md
-    
+
     {: .topicgroup}
     IBM Cloud Dedicated
         [Deprecated: Running single and scalable containers](cs_classic.html)

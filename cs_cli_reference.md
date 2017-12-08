@@ -764,43 +764,15 @@ Initialize the {{site.data.keyword.containershort_notm}} plug-in or specify the 
 
    <dl>
    <dt><code>--host <em>HOST</em></code></dt>
-   <dd>The {{site.data.keyword.containershort_notm}} API endpoint that you want to use.  This value is optional. Examples:
-
-    <ul>
-    <li>US South:
-
-    <pre class="codeblock">
-    <code>bx cs init --host https://us-south.containers.bluemix.net</code>
-    </pre></li>
-
-    <li>US East:
-
-    <pre class="codeblock">
-    <code>bx cs init --host https://us-east.containers.bluemix.net</code>
-    </pre>
-    <p><strong>Note</strong>: US-East is available for use with CLI commands only.</p></li>
-
-    <li>UK South:
-
-    <pre class="codeblock">
-    <code>bx cs init --host https://uk-south.containers.bluemix.net</code>
-    </pre></li>
-
-    <li>EU Central:
-
-    <pre class="codeblock">
-    <code>bx cs init --host https://eu-central.containers.bluemix.net</code>
-    </pre></li>
-
-    <li>AP South:
-
-    <pre class="codeblock">
-    <code>bx cs init --host https://ap-south.containers.bluemix.net</code>
-    </pre></li></ul>
-</dd>
-</dl>
+   <dd>The {{site.data.keyword.containershort_notm}} API endpoint to use.  This value is optional. [View the available API endpoint values.](cs_regions.html#container_regions)</dd>
+   </dl>
 
 
+
+```
+bx cs init --host https://uk-south.containers.bluemix.net
+```
+{: pre}
 
 ### bx cs kube-versions
 {: #cs_kube_versions}
@@ -1383,5 +1355,8 @@ You can view the current cluster state by running the bx cs clusters command and
 |Pending|The Kubernetes master is deployed. The worker nodes are being provisioned and are not available in the cluster yet. You can access the cluster, but you cannot deploy apps to the cluster.|
 |Normal|All worker nodes in a cluster are up and running. You can access the cluster and deploy apps to the cluster.|
 |Warning|At least one worker node in the cluster is not available, but other worker nodes are available and can take over the workload. <ol><li>List the worker nodes in your cluster and note the ID of the worker nodes that show a <strong>Warning</strong> state.<pre class="pre"><code>bx cs workers &lt;cluster_name_or_id&gt;</code></pre><li>Get the details for a worker node.<pre class="pre"><code>bx cs worker-get &lt;worker_id&gt;</code></pre><li>Review the <strong>State</strong>, <strong>Status</strong>, and <strong>Details</strong> fields to find the root problem for why the worker node is down.</li><li>If your worker node almost reached the memory or disk space limit, reduce work load on your worker node or add a worker node to your cluster to help load balance the work load.</li></ol>|
-|Critical|The Kubernetes master cannot be reached or all worker nodes in the cluster are down. <ol><li>List the worker nodes in your cluster.<pre class="pre"><code>bx cs workers &lt;cluser_name_or_id&gt;</code></pre><li>Get the details for each worker node.<pre class="pre"><code>bx cs worker-get &lt;worker_id&gt;</code></pre></li><li>Review the <strong>State</strong>, <strong>Status</strong>, and <strong>Details</strong> field to find the root problem for why the worker node is down.</li><li>If the worker node state shows <strong>Provision_failed</strong>, you might not have the required permissions to provision a worker node from the IBM Cloud infrastructure (SoftLayer) portfolio. To find the required permissions, see [Configure access to the IBM Cloud infrastructure (SoftLayer) portfolio to create standard Kubernetes clusters](cs_planning.html#cs_planning_unify_accounts).</li><li>If the worker node state shows <strong>Critical</strong> and the worker node status shows <strong>Out of disk</strong>, then your worker node ran out of capacity. You can either reduce work load on your worker node or add a worker node to your cluster to help load balance the work load.</li><li>If the worker node state shows <strong>Critical</strong> and the worker node status shows <strong>Unknown</strong>, then the Kubernetes master is not available. Contact {{site.data.keyword.Bluemix_notm}} support by opening an [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/support/index.html#contacting-support).</li></ol>|
+|Critical|The Kubernetes master cannot be reached or all worker nodes in the cluster are down. <ol><li>List the worker nodes in your cluster.<pre class="pre"><code>bx cs workers &lt;cluser_name_or_id&gt;</code></pre><li>Get the details for each worker node.<pre class="pre"><code>bx cs worker-get &lt;worker_id&gt;</code></pre></li><li>Review the <strong>State</strong> and <strong>Status</strong> fields to find the root problem for why the worker node is down.<ul><li>If the worker node state shows <strong>Provision_failed</strong>, you might not have the required permissions to provision a worker node from the IBM Cloud infrastructure (SoftLayer) portfolio. To find the required permissions, see [Configure access to the IBM Cloud infrastructure (SoftLayer) portfolio to create standard Kubernetes clusters](cs_planning.html#cs_planning_unify_accounts).</li>
+<li>If the worker node state shows <strong>Critical</strong> and the status shows <strong>Not Ready</strong>, then your worker node might not be able to connect to IBM Cloud infrastructure (SoftLayer). Start troubleshooting by running <code>bx cs worker-reboot --hard CLUSTER WORKER</code> first. If that command is unsuccessful, then run <code>bx cs worker reload CLUSTER WORKER</code>.</li>
+<li>If the worker node state shows <strong>Critical</strong> and the status shows <strong>Out of disk</strong>, then your worker node ran out of capacity. You can either reduce work load on your worker node or add a worker node to your cluster to help load balance the work load.</li>
+<li>If the worker node state shows <strong>Critical</strong> and the status shows <strong>Unknown</strong>, then the Kubernetes master is not available. Contact {{site.data.keyword.Bluemix_notm}} support by opening an [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/support/index.html#contacting-support).</li></ul></li></ol>|
 {: caption="Table 3. Cluster states" caption-side="top"}
