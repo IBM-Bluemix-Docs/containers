@@ -31,6 +31,7 @@ IBM Cloud Container Service
 
     {: .topicgroup}
     IBM Cloud Dedicated
+        cs_dedicated.md
         [Deprecated: Running single and scalable containers](cs_classic.html)
             [Migrating single and scalable containers to Kubernetes clusters](cs_classic.html#cs_classic_migrating)
             [About single and scalable containers](container_ov.html)

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-01"
+lastupdated: "2017-12-11"
 
 ---
 
@@ -55,7 +55,7 @@ Learn about some basic Docker concepts:
 <dt>Containers are portable</dt>
 <dd><ul>
   <li>Reuse pieces of images to build containers. </li>
-  <li>Move app code quickly from staging to production environments.</li> 
+  <li>Move app code quickly from staging to production environments.</li>
   <li>Automate your processes with continuous delivery tools.</li> </ul></dd>
 </dl>
 
@@ -93,7 +93,7 @@ Define update strategies for your app, including the number of pods that you wan
 <dd>Every containerized app that is deployed into a cluster is deployed, run, and managed by a Kubernetes resource that is called a pod. Pods represent small deployable units in a Kubernetes cluster and are used to group the containers that must be treated as a single unit. In most cases, each container is deployed in its own pod. However, an app might require a container and other helper containers to be deployed into one pod so that those containers can be addressed by using the same private IP address.</dd>
 
 <dt>App</dt>
-<dd>An app might refer to a complete app or a component of an app. You might deploy components of an app in separate pods or separate worker nodes. 
+<dd>An app might refer to a complete app or a component of an app. You might deploy components of an app in separate pods or separate worker nodes.
 </br></br>
 To learn more about Kubernetes terminology, <a href="cs_tutorials.html#cs_cluster_tutorial" target="_blank">try the tutorial</a>.</dd>
 
@@ -123,99 +123,6 @@ Clusters are deployed on compute hosts that provide native Kubernetes and {{site
 <br />
 
 
-## Cloud environments
-{: #cs_ov_environments}
-
-You can choose the {{site.data.keyword.Bluemix_notm}} cloud environment on which to deploy clusters and containers.
-{:shortdesc}
-
-### {{site.data.keyword.Bluemix_notm}} Public
-{: #public_environment}
-
-Deploy clusters into the public cloud environment ([https://console.bluemix.net ![External link icon](../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net)) and connect to any service in the {{site.data.keyword.Bluemix_notm}} catalog.
-
-With clusters in {{site.data.keyword.Bluemix_notm}} Public, you can choose the level of hardware isolation for the worker nodes in your cluster. Use dedicated hardware for available physical resources to be dedicated to your cluster only, or shared hardware to allow physical resources to be shared with clusters from other {{site.data.keyword.IBM_notm}} customers. You might choose a dedicated cluster in the {{site.data.keyword.Bluemix_notm}} Public environment when you want isolation for your cluster, but you do not require such isolation for the other {{site.data.keyword.Bluemix_notm}} services that you use.
-
-Click one of the following options to get started:
-
-<img usemap="#public_options" border="0" class="image" id="cs_ov_environments__image_ztx_crb_f1b" src="images/cs_public_options.png" width="320" alt="With {{site.data.keyword.Bluemix_notm}}
- Public, you can create Kubernetes clusters or migrate single and scalable container groups to clusters." style="width:320px;" />
-    <map name="public_options" id="public_options">
-    <area href="container_index.html#clusters" alt="Getting started with Kubernetes clusters in {{site.data.keyword.Bluemix_notm}}
-" title="Getting started with Kubernetes clusters in {{site.data.keyword.Bluemix_notm}}
-" shape="rect" coords="-5, -6, 123, 154" />
-    <area href="cs_cli_install.html" alt="Installing the CLIs" title="Installing the CLIs" shape="rect" coords="181, -5, 320, 161" />
-    </map>
-
-### {{site.data.keyword.Bluemix_dedicated_notm}}
-{: #dedicated_environment}
-
-Deploy clusters (Closed Beta) or single and scalable containers in a dedicated cloud environment (`https://<my-dedicated-cloud-instance>.bluemix.net`) and connect with the preselected {{site.data.keyword.Bluemix_notm}} services that are also running there.
-
-Clusters with {{site.data.keyword.Bluemix_dedicated_notm}} are equivalent to clusters that are created with dedicated hardware in {{site.data.keyword.Bluemix_notm}} Public. Available physical resources are dedicated to your cluster only and are not shared with clusters from other {{site.data.keyword.IBM_notm}} customers. For both Public and for Dedicated, the public API endpoint is used to create clusters. However, with {{site.data.keyword.Bluemix_notm}} Dedicated, the most significant differences are as followed.
-
-*   {{site.data.keyword.IBM_notm}} owns and manages the IBM Cloud infrastructure (SoftLayer) account that the worker nodes, VLANs, and subnets are deployed into, rather than in an account that is owned by you.
-*   Specifications for those VLANs and subnets are determined when the Dedicated environment is created, not when the cluster is created.
-
-You might choose to set up an {{site.data.keyword.Bluemix_dedicated_notm}} environment when you want isolation for your cluster and you also require such isolation for the other {{site.data.keyword.Bluemix_notm}} services that you use.
-
-Click one of the following options to get started:
-
-<img usemap="#dedicated_options" border="0" class="image" id="cs_ov_environments__image_hjb_4ln_j1b" src="images/cs_dedicated_options.png" width="600" alt="With {{site.data.keyword.Bluemix_dedicated_notm}}, you can create Kubernetes clusters or migrate single and scalable container groups to clusters. " style="width:600px;" />
-    <map name="dedicated_options" id="dedicated_options">
-    <area href="#setup_dedicated" alt="Setting up {{site.data.keyword.containershort_notm}} on {{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)" title="Setting up {{site.data.keyword.containershort_notm}} on {{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)" shape="rect" coords="-5, -15, 100, 153" />
-    <area href="container_index.html#dedicated" alt="Getting started with Kubernetes clusters in {{site.data.keyword.Bluemix_notm}} Dedicated (Closed Beta)" title="Getting started with Kubernetes clusters in {{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)" shape="rect" coords="153, -10, 276, 182" />
-    <area href="cs_classic.html" alt="Running single and scalable containers in {{site.data.keyword.containershort_notm}}" title="Running single and scalable containers in {{site.data.keyword.containershort_notm}}" shape="rect" coords="317, -11, 436, 188" />
-    <area href="container_ha.html#container_group_ui" alt="Running long-term services as container groups from the {{site.data.keyword.Bluemix_notm}} GUI" title="Running long-term services as container groups from the {{site.data.keyword.Bluemix_notm}} GUI" shape="rect" coords="485, -1, 600, 173" />
-    </map>
-
-### Differences in cluster management between the cloud environments
-{: #env_differences}
-
-|Area|{{site.data.keyword.Bluemix_notm}} Public|{{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)|
-|--|--------------|--------------------------------|
-|Cluster creation|Create a lite cluster or specify the following details for a standard cluster:<ul><li>Cluster type</li><li>Name</li><li>Location</li><li>Machine type</li><li>Number of worker nodes</li><li>Public VLAN</li><li>Private VLAN</li><li>Hardware</li></ul>|Specify the following details for a standard cluster:<ul><li>Name</li><li>Kubernetes version</li><li>Machine type</li><li>Number of worker nodes</li></ul><p>**Note:** The VLANs and Hardware settings are pre-defined during the creation of the {{site.data.keyword.Bluemix_notm}} environment.</p>|
-|Cluster hardware and ownership|In standard clusters, the hardware can be shared by other {{site.data.keyword.IBM_notm}} customers or dedicated to you only. The public and private VLANs are owned and managed by you in your IBM Cloud infrastructure (SoftLayer) account.|In clusters on {{site.data.keyword.Bluemix_dedicated_notm}}, the hardware is always dedicated. The public and private VLANs are owned and managed by IBM for you. Location is pre-defined for the {{site.data.keyword.Bluemix_notm}} environment.|
-|Service binding with a cluster|Use the [bx cs cluster-service-bind](cs_cluster.html#cs_cluster_service) command to bind a Kubernetes secret to the cluster.|Create a [JSON key file](cs_cluster.html#binding_dedicated) for the service credentials, and then create a Kubernetes secret from that file to bind to the cluster.|
-|Load balancer and Ingress networking|During the provisioning of standard clusters, the following actions occur automatically.<ul><li>A public portable subnet is bound to your cluster and assigned to your IBM Cloud infrastructure (SoftLayer) account.</li><li>One portable public IP address is used for a highly available Ingress controller and a unique public route is assigned in the format &lt;cluster_name&gt;.containers.mybluemix.net. You can use this route to expose multiple apps to the public.</li><li>Four portable public IP addresses are assigned to the cluster that can be used to expose apps to the public via load balancer services. Additional subnets can be requested through your IBM Cloud infrastructure (SoftLayer) account.</li></ul>|When you create your Dedicated account, you make the following decisions:<ul><li>How many subnets you want</li><li>The type of subnets you want, either load balancer or Ingress. {{site.data.keyword.IBM_notm}} creates the subnets and performs the network management tasks for you. Depending on your selections, an Ingress controller might be created and a public route might be assigned. Additional subnets can be requested by [opening a support ticket](/docs/support/index.html#contacting-support) to create the subnet, and then use the [`bx cs cluster-subnet-add`](cs_cli_reference.html#cs_cluster_subnet_add) command to add the subnet to the cluster.|
-|NodePort networking|Expose a public port on your worker node and use the public IP address of the worker node to publicly access your service in the cluster.|All public IP addresses of the workers nodes are blocked by a firewall. However, for {{site.data.keyword.Bluemix_notm}} services that are added to the cluster, the node port can be accessed via a public IP address or a private IP address.|
-|Persistent storage|Use [dynamic provisioning](cs_apps.html#cs_apps_volume_claim) or [static provisioning](cs_cluster.html#cs_cluster_volume_create) of volumes.|Use [dynamic provisioning](cs_apps.html) of volumes.</li></ul>|
-|Image registry URL in {{site.data.keyword.registryshort_notm}}|<ul><li>US-South and US-East: <code>registry.ng bluemix.net</code></li><li>UK-South: <code>registry.eu-gb.bluemix.net</code></li><li>EU-Central (Frankfurt): <code>registry.eu-de.bluemix.net</code></li><li>Australia (Sydney): <code>registry.au-syd.bluemix.net</code></li></ul>|<ul><li>For new namespaces, use the same region-based registries that are defined for {{site.data.keyword.Bluemix_notm}} Public.</li><li>For namespaces that were set up for single and scalable containers in {{site.data.keyword.Bluemix_dedicated_notm}}, use <code>registry.&lt;dedicated_domain&gt;</code></li></ul>|
-|Accessing the registry|See the options in [Using private and public image registries with {{site.data.keyword.containershort_notm}}](cs_cluster.html#cs_apps_images).|<ul><li>For new namespaces, see the options in [Using private and public image registries with {{site.data.keyword.containershort_notm}}](cs_cluster.html#cs_apps_images).</li><li>For namespaces that were set up for single and scalable groups, [use a token and create a Kubernetes secret](cs_dedicated_tokens.html#cs_dedicated_tokens) for authentication.</li></ul>|
-{: caption="Table 2. Feature differences between {{site.data.keyword.Bluemix_notm}} Public and {{site.data.keyword.Bluemix_dedicated_notm}}" caption-side="top"}
-
-
-### Setting up {{site.data.keyword.containershort_notm}} on {{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)
-{: #setup_dedicated}
-
-Administrators must add the IBM administrator ID and users of your organization to the Dedicated environment.
-
-Before you begin, [set up an {{site.data.keyword.Bluemix_dedicated_notm}} environment](/docs/dedicated/index.html#setupdedicated).
-
-To set up your Dedicated environment to use clusters:
-
-1.  Add the provided IBM administrator ID to the environment.
-    1.  Select your {{site.data.keyword.Bluemix_dedicated_notm}} account.
-    2.  From the menu bar, click **Manage > Security > Identity and Access**. The Users window displays a list of users with their email addresses and status for the selected account.
-    3.  Click **Invite users**.
-    4.  In **Email address or existing IBMid**, enter the following email address: `cfsdl@us.ibm.com`.
-    5.  In the **Access** section, expand **Identity and Access enabled services**.
-    6.  From the **Services** drop-down list, select **{{site.data.keyword.containershort_notm}}**.
-    7.  From the **Roles** drop-down list, select **Administrator**.
-    8.  Click **Invite users**.
-2.  [Create IBMids for the end users of your {{site.data.keyword.Bluemix_notm}} account. ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/account/us-en/signup/register.html)
-3.  [Add the users from the previous step to your {{site.data.keyword.Bluemix_notm}} account.](cs_cluster.html#add_users)
-4.  Access your {{site.data.keyword.Bluemix_dedicated_notm}} account through the Public console and start creating clusters.
-    1.  Log in to {{site.data.keyword.Bluemix_notm}} Public console ([https://console.bluemix.net ![External link icon](../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net)) with your IBMid.
-    2.  From the account menu, select your {{site.data.keyword.Bluemix_dedicated_notm}} account. The console is updated with the services and information for your {{site.data.keyword.Bluemix_dedicated_notm}} instance.
-    3.  From the catalog for your {{site.data.keyword.Bluemix_dedicated_notm}} instance, select **Containers** and click **Kubernetes cluster**.
-    For more information about creating a cluster, see [Creating Kubernetes clusters from the GUI in {{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)](cs_cluster.html#creating_ui_dedicated).
-5. If your local system or your corporate network controls public internet endpoints by using proxies or firewalls, see [Opening required ports and IP addresses in your firewall](cs_security.html#opening_ports) for more information about how to allow outbound traffic.
-
-
-<br />
-
-
 ## Service architecture
 {: #cs_ov_architecture}
 
@@ -227,13 +134,6 @@ Each worker node is set up with an {{site.data.keyword.IBM_notm}} managed Docker
 ![{{site.data.keyword.containerlong_notm}} Kubernetes architecture](images/cs_org_ov.png)
 
 The diagram outlines what you maintain and what IBM maintains in a cluster. For more details about these maintenance tasks, see [Cluster management responsibilities](cs_planning.html#responsibilities).
-
-### {{site.data.keyword.Bluemix_dedicated_notm}}
-{: #dedicated_architecture}
-
-*Figure 2. Kubernetes architecture and networking in the {{site.data.keyword.Bluemix_dedicated_notm}}*
-
-![{{site.data.keyword.containershort_notm}} Kubernetes architecture on {{site.data.keyword.Bluemix_dedicated_notm}}](images/cs_dedicated_arch.png)
 
 <br />
 
