@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-07"
+lastupdated: "2017-12-11"
 
 ---
 
@@ -33,7 +33,7 @@ You can create lite or standard clusters. Try out lite clusters to get familiar 
 
 |Characteristics|Lite clusters|Standard clusters|
 |---------------|-------------|-----------------|
-|[Available in {{site.data.keyword.Bluemix_notm}} Public](cs_ov.html#cs_ov)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
+|[Available in {{site.data.keyword.Bluemix_notm}}](cs_ov.html#cs_ov)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 |[In-cluster networking](#cs_planning_private_network)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 |[Public network app access by a NodePort service](#cs_nodeport)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 |[User access management](cs_cluster.html#cs_cluster_user)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
@@ -44,7 +44,7 @@ You can create lite or standard clusters. Try out lite clusters to get familiar 
 |[Public network app access by an Ingress service](#cs_ingress)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 |[Portable public IP addresses](cs_apps.html#cs_cluster_ip_subnet)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 |[Logging and monitoring](cs_cluster.html#cs_logging)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
-|[Available in {{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)](cs_ov.html#dedicated_environment)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
+|[Available in {{site.data.keyword.Bluemix_dedicated_notm}}](cs_dedicated.html#dedicated_environment)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 {: caption="Table 1. Differences between lite and standard clusters" caption-side="top"}
 
 <br />
@@ -113,7 +113,7 @@ When you create a standard cluster, worker nodes are ordered in IBM Cloud infras
 ### Hardware for worker nodes
 {: #shared_dedicated_node}
 
-Every worker node is set up as a virtual machine on physical hardware. When you create a standard cluster in {{site.data.keyword.Bluemix_notm}} Public, you must choose whether you want the underlying hardware to be shared by multiple {{site.data.keyword.IBM_notm}} customers (multi tenancy) or to be dedicated to you only (single tenancy).
+Every worker node is set up as a virtual machine on physical hardware. When you create a standard cluster in {{site.data.keyword.Bluemix_notm}}, you must choose whether you want the underlying hardware to be shared by multiple {{site.data.keyword.IBM_notm}} customers (multi tenancy) or to be dedicated to you only (single tenancy).
 {:shortdesc}
 
 In a multi-tenant set up, physical resources, such as CPU and memory, are shared across all virtual machines that are deployed to the same physical hardware. To ensure that every virtual machine can run independently, a virtual machine monitor, also referred to as the hypervisor, segments the physical resources into isolated entities and allocates them as dedicated resources to a virtual machine (hypervisor isolation).
@@ -123,8 +123,6 @@ In a single-tenant set up, all physical resources are dedicated to you only. You
 Shared nodes are usually cheaper than dedicated nodes because the costs for the underlying hardware are shared among multiple customers. However, when you decide between shared and dedicated nodes, you might want to check with your legal department to discuss the level of infrastructure isolation and compliance that your app environment requires.
 
 When you create a lite cluster, your worker node is automatically provisioned as a shared node in the {{site.data.keyword.IBM_notm}} IBM Cloud infrastructure (SoftLayer) account.
-
-When you create a cluster in {{site.data.keyword.Bluemix_dedicated_notm}}, a single-tenant set up only is used and all physical resources are dedicated to you only. You deploy multiple worker nodes as virtual machines on the same physical host.
 
 <br />
 
@@ -152,7 +150,7 @@ To review how much memory is used on your worker node, run [kubectl top node ![E
 ## Cluster management responsibilities
 {: #responsibilities}
 
-Review the responsibilities that you share with IBM to manage your clusters. To review responsibilities for clusters that are managed in {{site.data.keyword.Bluemix_dedicated_notm}} environments, see [Differences in cluster management between the cloud environments](cs_ov.html#env_differences) instead.
+Review the responsibilities that you share with IBM to manage your clusters.
 {:shortdesc}
 
 **IBM is responsible for:**
@@ -325,9 +323,8 @@ When you create a cluster, every cluster is automatically connected to a private
 
 |Cluster type|Manager of the private VLAN for the cluster|
 |------------|-------------------------------------------|
-|Lite clusters in {{site.data.keyword.Bluemix_notm}} Public|{{site.data.keyword.IBM_notm}}|
-|Standard clusters in {{site.data.keyword.Bluemix_notm}} Public|You in your IBM Cloud infrastructure (SoftLayer) account <p>**Tip:** To have access to all VLANs in your account, turn on [VLAN Spanning ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/procedure/enable-or-disable-vlan-spanning).</p>|
-|Standard clusters in {{site.data.keyword.Bluemix_dedicated_notm}}|{{site.data.keyword.IBM_notm}}|
+|Lite clusters in {{site.data.keyword.Bluemix_notm}}|{{site.data.keyword.IBM_notm}}|
+|Standard clusters in {{site.data.keyword.Bluemix_notm}}|You in your IBM Cloud infrastructure (SoftLayer) account <p>**Tip:** To have access to all VLANs in your account, turn on [VLAN Spanning ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/procedure/enable-or-disable-vlan-spanning).</p>|
 {: caption="Table 2. Private VLAN management responsibilities" caption-side="top"}
 
 All pods that are deployed to a worker node are also assigned a private IP address. Pods are assigned an IP in the 172.30.0.0/16 private address range and are routed between worker nodes only. To avoid conflicts, do not use this IP range on any nodes that will communicate with your worker nodes. Worker nodes and pods can securely communicate on the private network by using the private IP addresses. However, when a pod crashes or a worker node needs to be re-created, a new private IP address is assigned.
@@ -351,9 +348,8 @@ The public network interface for the worker nodes in both lite and standard clus
 
 |Cluster type|Manager of the public VLAN for the cluster|
 |------------|------------------------------------------|
-|Lite clusters in {{site.data.keyword.Bluemix_notm}} Public|{{site.data.keyword.IBM_notm}}|
-|Standard clusters in {{site.data.keyword.Bluemix_notm}} Public|You in your IBM Cloud infrastructure (SoftLayer) account|
-|Standard clusters in {{site.data.keyword.Bluemix_dedicated_notm}}|{{site.data.keyword.IBM_notm}}|
+|Lite clusters in {{site.data.keyword.Bluemix_notm}}|{{site.data.keyword.IBM_notm}}|
+|Standard clusters in {{site.data.keyword.Bluemix_notm}}|You in your IBM Cloud infrastructure (SoftLayer) account|
 {: caption="Table 3. VLAN management responsibilities" caption-side="top"}
 
 Depending on whether you created a lite or standard cluster, you can choose between the following options to expose an app to the public.

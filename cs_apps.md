@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-04"
+lastupdated: "2017-12-11"
 
 ---
 
@@ -265,8 +265,6 @@ Make your app available to internet access by using the public IP address of any
 
 You can expose your app as a Kubernetes NodePort service for lite or standard clusters.
 
-For {{site.data.keyword.Bluemix_dedicated_notm}} environments, public IP addresses are blocked by a firewall. To make an app publicly available, use a [LoadBalancer service](#cs_apps_public_load_balancer) or [Ingress](#cs_apps_public_ingress) instead.
-
 **Note:** The public IP address of a worker node is not permanent. If the worker node must be re-created, a new public IP address is assigned to the worker node. If you need a stable public IP address and more availability for your service, expose your app by using a [LoadBalancer service](#cs_apps_public_load_balancer) or [Ingress](#cs_apps_public_ingress).
 
 
@@ -387,8 +385,6 @@ Expose a port and use a portable IP address for the load balancer to access the 
 Unlike with a NodePort service, the portable IP address of the load balancer service is not dependent on the worker node that the app is deployed on. However, a Kubernetes LoadBalancer service is also a NodePort service. A LoadBalancer service makes your app available over the load balancer IP address and port and makes your app available over the service's node ports.
 
 The portable IP address of the load balancer is assigned for you and does not change when you add or remove worker nodes. Therefore, load balancer services are more highly available than NodePort services. Users can select any port for the load balancer and are not limited to the NodePort port range. You can use load balancer services for TCP and UDP protocols.
-
-When an {{site.data.keyword.Bluemix_dedicated_notm}} account is [enabled for clusters](cs_ov.html#setup_dedicated), you can request public subnets to be used for load balancer IP addresses. [Open a support ticket](/docs/support/index.html#contacting-support) to create the subnet, and then use the [`bx cs cluster-subnet-add`](cs_cli_reference.html#cs_cluster_subnet_add) command to add the subnet to the cluster.
 
 **Note:** Load balancer services do not support TLS termination. If your app requires TLS termination, you can expose your app by using [Ingress](#cs_apps_public_ingress), or configure your app to manage the TLS termination.
 
@@ -527,8 +523,6 @@ Expose multiple apps in your cluster by creating Ingress resources that are mana
 **Note:** Ingress is available for standard clusters only and requires at least two worker nodes in the cluster to ensure high availability and that periodic updates are applied. Setting up Ingress requires an [Administrator access policy](cs_cluster.html#access_ov). Verify your current [access policy](cs_cluster.html#view_access).
 
 When you create a standard cluster, the Ingress controller automatically creates and enables an application load balancer that is assigned a portable public IP address and a public route. An application load balancer that is assigned a portable private IP address and a private route is also automatically created, but is not automatically enabled. You can configure these application load balancers and define individual routing rules for every app that you expose to the public or to private networks. Every app that is exposed to the public via Ingress is assigned a unique path that is appended to the public route, so that you can use a unique URL to access an app publicly in your cluster.
-
-When an {{site.data.keyword.Bluemix_dedicated_notm}} account is [enabled for clusters](cs_ov.html#setup_dedicated), you can request public subnets to be used for application load balancer IP addresses. Then, the application load balancer is created and a public route is assigned. [Open a support ticket](/docs/support/index.html#contacting-support) to create the subnet, and then use the [`bx cs cluster-subnet-add`](cs_cli_reference.html#cs_cluster_subnet_add) command to add the subnet to the cluster.
 
 To expose your app to the public, you can configure the public application load balancer for the following scenarios.
 
@@ -2358,10 +2352,6 @@ Create a persistent volume claim (pvc) to provision NFS file storage for your cl
 {:shortdesc}
 
 The NFS file storage that backs the persistent volume is clustered by IBM in order to provide high availability for your data.
-
-
-When an {{site.data.keyword.Bluemix_dedicated_notm}} account is [enabled for clusters](cs_ov.html#setup_dedicated), instead of using this task, you must [open a support ticket](/docs/support/index.html#contacting-support). By opening a ticket, you can request a backup for your volumes, a restoration from your volumes, and other storage functions.
-
 
 1.  Review the available storage classes. {{site.data.keyword.containerlong}} provides eight pre-defined storage classes so that the cluster admin does not have to create any storage classes. The `ibmc-file-bronze` storage class is the same as the `default` storage class.
 
