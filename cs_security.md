@@ -430,7 +430,7 @@ You can allow incoming access to NodePort, load balancer, and Ingress services.
 <br />
 
 
-## Setting up VPN connectivity with the Strongswan IPSec VPN service
+## Setting up VPN connectivity with the Strongswan IPSec VPN service Helm chart
 {: #vpn}
 
 VPN connectivity allows you to securely connect apps in a Kubernetes cluster to an on-premises network. You can also connect apps that are external to your cluster to an app that is running inside your cluster. To set up VPN connectivity, you can use a Helm Chart to configure and deploy the [Strongswan IPSec VPN service ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.strongswan.org/) inside of a Kubernetes pod. All VPN traffic is then routed through this pod. For more information about the Helm commands used to set up the Strongswan chart, see the [Helm documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.helm.sh/helm/).
