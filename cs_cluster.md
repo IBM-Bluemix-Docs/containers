@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-04"
+lastupdated: "2017-12-11"
 
 ---
 
@@ -37,7 +37,6 @@ As shown in the diagram, deploying your apps across multiple worker nodes makes 
 
 A Kubernetes cluster is a set of worker nodes that are organized into a network. The purpose of the cluster is to define a set of resources, nodes, networks, and storage devices that keep applications highly available. Before you can deploy an app, you must create a cluster and set the definitions for the worker nodes in that cluster.
 {:shortdesc}
-For {{site.data.keyword.Bluemix_dedicated_notm}} users, see [Creating Kubernetes clusters from the GUI in {{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)](#creating_ui_dedicated) instead.
 
 To create a cluster:
 1. In the catalog, select **Kubernetes Cluster**.
@@ -66,28 +65,6 @@ When the cluster is up and running, you can check out the following tasks:
 -   [Set up your own private registry in {{site.data.keyword.Bluemix_notm}} to store and share Docker images with other users.](/docs/services/Registry/index.html)
 
 
-### Creating clusters with the GUI in {{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)
-{: #creating_ui_dedicated}
-
-1.  Log in to {{site.data.keyword.Bluemix_notm}} Public console ([https://console.bluemix.net ![External link icon](../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net)) with your IBMid.
-2.  From the account menu, select your {{site.data.keyword.Bluemix_dedicated_notm}} account. The console is updated with the services and information for your {{site.data.keyword.Bluemix_dedicated_notm}} instance.
-3.  From the catalog, select **Containers** and click **Kubernetes cluster**.
-4.  Enter a **Cluster Name**.
-5.  Select a **Machine type**. The machine type defines the amount of virtual CPU and memory that is set up in each worker node and that is available for all the containers that you deploy in your nodes.
-    - The micro machine type indicates the smallest option.
-    - A balanced machine type has an equal amount of memory assigned to each CPU, which optimizes performance.
-    - Machine types that include `encrypted` in the name encrypt the host's Docker data. The `/var/lib/docker` directory, where all container data is stored, is encrypted with LUKS encryption.
-6.  Choose the **Number of worker nodes** that you need. Select `3` to ensure high availability of your cluster.
-7.  Click **Create Cluster**. The details for the cluster open, but the worker nodes in the cluster take a few minutes to provision. In the **Worker nodes** tab, you can see the progress of the worker node deployment. When the worker nodes are ready, the state changes to **Ready**.
-
-**What's next?**
-
-When the cluster is up and running, you can check out the following tasks:
-
--   [Install the CLIs to start working with your cluster.](cs_cli_install.html#cs_cli_install)
--   [Deploy an app in your cluster.](cs_apps.html#cs_apps_cli)
--   [Set up your own private registry in {{site.data.keyword.Bluemix_notm}} to store and share Docker images with other users.](/docs/services/Registry/index.html)
-
 <br />
 
 
@@ -96,8 +73,6 @@ When the cluster is up and running, you can check out the following tasks:
 
 A cluster is a set of worker nodes that are organized into a network. The purpose of the cluster is to define a set of resources, nodes, networks, and storage devices that keep applications highly available. Before you can deploy an app, you must create a cluster and set the definitions for the worker nodes in that cluster.
 {:shortdesc}
-
-For {{site.data.keyword.Bluemix_dedicated_notm}} users, see [Creating Kubernetes clusters from the CLI in {{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)](#creating_cli_dedicated) instead.
 
 To create a cluster:
 1.  Install the {{site.data.keyword.Bluemix_notm}} CLI and the [{{site.data.keyword.containershort_notm}} plug-in](cs_cli_install.html#cs_cli_install).
@@ -316,150 +291,6 @@ To create a cluster:
 -   [Manage your cluster with the `kubectl` command line. ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/user-guide/kubectl/)
 -   [Set up your own private registry in {{site.data.keyword.Bluemix_notm}} to store and share Docker images with other users.](/docs/services/Registry/index.html)
 
-### Creating clusters with the CLI in {{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)
-{: #creating_cli_dedicated}
-
-1.  Install the {{site.data.keyword.Bluemix_notm}} CLI and the [{{site.data.keyword.containershort_notm}} plug-in](cs_cli_install.html#cs_cli_install).
-2.  Log in to the public endpoint for {{site.data.keyword.containershort_notm}}. Enter your {{site.data.keyword.Bluemix_notm}} credentials and select the {{site.data.keyword.Bluemix_dedicated_notm}} account when prompted.
-
-    ```
-    bx login -a api.<region>.bluemix.net
-    ```
-    {: pre}
-
-    **Note:** If you have a federated ID, use `bx login --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
-
-3.  Create a cluster with the `cluster-create` command. When you create a standard cluster, the hardware of the worker node is billed by hours of usage.
-
-    Example:
-
-    ```
-    bx cs cluster-create --location <location> --machine-type <machine-type> --name <cluster_name> --workers <number>
-    ```
-    {: pre}
-
-    <table>
-    <caption>Table 2. Understanding this command's components</caption>
-    <thead>
-    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
-    </thead>
-    <tbody>
-    <tr>
-    <td><code>cluster-create</code></td>
-    <td>The command to create a cluster in your {{site.data.keyword.Bluemix_notm}} organization.</td>
-    </tr>
-    <tr>
-    <td><code>--location <em>&lt;location&gt;</em></code></td>
-    <td>Replace &lt;location&gt; with the {{site.data.keyword.Bluemix_notm}} location ID where you want to create your cluster. [Available locations](cs_regions.html#locations) depend on the {{site.data.keyword.containershort_notm}} region you are logged in to.</td>
-    </tr>
-    <tr>
-    <td><code>--machine-type <em>&lt;machine_type&gt;</em></code></td>
-    <td>If you are creating a standard cluster, choose a machine type. The machine type specifies the virtual compute resources that are available to each worker node. Review [Comparison of lite and standard clusters for {{site.data.keyword.containershort_notm}}](cs_planning.html#cs_planning_cluster_type) for more information. For lite clusters, you do not have to define the machine type.</td>
-    </tr>
-    <tr>
-    <td><code>--name <em>&lt;name&gt;</em></code></td>
-    <td>Replace <em>&lt;name&gt;</em> with a name for your cluster.</td>
-    </tr>
-    <tr>
-    <td><code>--workers <em>&lt;number&gt;</em></code></td>
-    <td>The number of worker nodes to include in the cluster. If the <code>--workers</code> option is not specified, 1 worker node is created.</td>
-    </tr>
-    </tbody></table>
-
-4.  Verify that the creation of the cluster was requested.
-
-    ```
-    bx cs clusters
-    ```
-    {: pre}
-
-    **Note:** It can take up to 15 minutes for the worker node machines to be ordered, and for the cluster to be set up and provisioned in your account.
-
-    When the provisioning of your cluster is completed, the state of your cluster changes to **deployed**.
-
-    ```
-    Name         ID                                   State      Created          Workers
-    my_cluster   paf97e8843e29941b49c598f516de72101   deployed   20170201162433   1
-    ```
-    {: screen}
-
-5.  Check the status of the worker nodes.
-
-    ```
-    bx cs workers <cluster>
-    ```
-    {: pre}
-
-    When the worker nodes are ready, the state changes to **normal** and the status is **Ready**. When the node status is **Ready**, you can then access the cluster.
-
-    ```
-    ID                                                  Public IP        Private IP     Machine Type   State      Status
-    prod-dal10-pa8dfcc5223804439c87489886dbbc9c07-w1   169.47.223.113   10.171.42.93   free           normal    Ready
-    ```
-    {: screen}
-
-6.  Set the cluster you created as the context for this session. Complete these configuration steps every time that you work with your cluster.
-
-    1.  Get the command to set the environment variable and download the Kubernetes configuration files.
-
-        ```
-        bx cs cluster-config <cluster_name_or_id>
-        ```
-        {: pre}
-
-        When the download of the configuration files is finished, a command is displayed that you can use to set the path to the local Kubernetes configuration file as an environment variable.
-
-        Example for OS X:
-
-        ```
-        export KUBECONFIG=/Users/<user_name>/.bluemix/plugins/container-service/clusters/<cluster_name>/kube-config-prod-dal10-<cluster_name>.yml
-        ```
-        {: screen}
-
-    2.  Copy and paste the command that is displayed in your terminal to set the `KUBECONFIG` environment variable.
-    3.  Verify that the `KUBECONFIG` environment variable is set properly.
-
-        Example for OS X:
-
-        ```
-        echo $KUBECONFIG
-        ```
-        {: pre}
-
-        Output:
-
-        ```
-        /Users/<user_name>/.bluemix/plugins/container-service/clusters/<cluster_name>/kube-config-prod-dal10-<cluster_name>.yml
-
-        ```
-        {: screen}
-
-7.  Access your Kubernetes dashboard with the default port 8001.
-    1.  Set the proxy with the default port number.
-
-        ```
-        kubectl proxy
-        ```
-        {: pre}
-
-        ```
-        Starting to serve on 127.0.0.1:8001
-        ```
-        {: screen}
-
-    2.  Open the following URL in a web browser in order to see the Kubernetes dashboard.
-
-        ```
-        http://localhost:8001/ui
-        ```
-        {: codeblock}
-
-
-**What's next?**
-
--   [Deploy an app in your cluster.](cs_apps.html#cs_apps_cli)
--   [Manage your cluster with the `kubectl` command line. ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/user-guide/kubectl/)
--   [Set up your own private registry in {{site.data.keyword.Bluemix_notm}} to store and share Docker images with other users.](/docs/services/Registry/index.html)
 
 <br />
 
@@ -860,7 +691,6 @@ Before you begin:
 1. [Target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
 2. [Request an instance of the {{site.data.keyword.Bluemix_notm}} service](/docs/manageapps/reqnsi.html#req_instance).
    **Note:** To create an instance of a service in the Washington DC location, you must use the CLI.
-3. For {{site.data.keyword.Bluemix_dedicated_notm}} users, see [Adding {{site.data.keyword.Bluemix_notm}} services to clusters in {{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)](#binding_dedicated) instead.
 
 **Note:**
 <ul><ul>
@@ -928,126 +758,6 @@ To add a service:
 
 
 To use the service in a pod that is deployed in the cluster, cluster users can access the service credentials of the {{site.data.keyword.Bluemix_notm}} service by [mounting the Kubernetes secret as a secret volume to a pod](cs_apps.html#cs_apps_service).
-
-
-
-### Adding {{site.data.keyword.Bluemix_notm}} services to clusters in {{site.data.keyword.Bluemix_dedicated_notm}} (Closed Beta)
-{: #binding_dedicated}
-
-**Note**: The cluster and the worker nodes must be deployed fully before you can add a service.
-
-1.  Set the path to your local {{site.data.keyword.Bluemix_dedicated_notm}} configuration file as the `DEDICATED_BLUEMIX_CONFIG` environment variable.
-
-    ```
-    export DEDICATED_BLUEMIX_CONFIG=<path_to_config_directory>
-    ```
-    {: pre}
-
-2.  Set the same path defined above as the `BLUEMIX_HOME` environment variable.
-
-    ```
-    export BLUEMIX_HOME=$DEDICATED_BLUEMIX_CONFIG
-    ```
-    {: pre}
-
-3.  Log in to the {{site.data.keyword.Bluemix_dedicated_notm}} environment where you want to create the service instance.
-
-    ```
-    bx login -a api.<dedicated_domain> -u <user> -p <password> -o <org> -s <space>
-    ```
-    {: pre}
-
-4.  List the available services in the {{site.data.keyword.Bluemix_notm}} catalog.
-
-    ```
-    bx service offerings
-    ```
-    {: pre}
-
-5.  Create an instance of the service you want to bind to the cluster.
-
-    ```
-    bx service create <service_name> <service_plan> <service_instance_name>
-    ```
-    {: pre}
-
-6.  Verify that you created your service instance by listing available {{site.data.keyword.Bluemix_notm}} services.
-
-    ```
-    bx service list
-    ```
-    {: pre}
-
-    Example CLI output:
-
-    ```
-    name                      service           plan    bound apps   last operation
-    <service_instance_name>   <service_name>    spark                create succeeded
-    ```
-    {: screen}
-
-7.  Unset the `BLUEMIX_HOME` environment variable to return to using {{site.data.keyword.Bluemix_notm}} Public.
-
-    ```
-    unset $BLUEMIX_HOME
-    ```
-    {: pre}
-
-8.  Log in to the public endpoint for {{site.data.keyword.containershort_notm}} and target your CLI to the cluster in your {{site.data.keyword.Bluemix_dedicated_notm}} environment.
-    1.  Log in to the account by using the public endpoint for {{site.data.keyword.containershort_notm}}. Enter your {{site.data.keyword.Bluemix_notm}} credentials and select the {{site.data.keyword.Bluemix_dedicated_notm}} account when prompted.
-
-        ```
-        bx login -a api.ng.bluemix.net
-        ```
-        {: pre}
-
-        **Note:** If you have a federated ID, use `bx login --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
-
-    2.  Get a list of available clusters and identify the name of the cluster to target in your CLI.
-
-        ```
-        bx cs clusters
-        ```
-        {: pre}
-
-    3.  Get the command to set the environment variable and download the Kubernetes configuration files.
-
-        ```
-        bx cs cluster-config <cluster_name_or_id>
-        ```
-        {: pre}
-
-        When the download of the configuration files is finished, a command is displayed that you can use to set the path to the local Kubernetes configuration file as an environment variable.
-
-        Example for OS X:
-
-        ```
-        export KUBECONFIG=/Users/<user_name>/.bluemix/plugins/container-service/clusters/<cluster_name>/kube-config-prod-dal10-<cluster_name>.yml
-        ```
-        {: screen}
-
-    4.  Copy and paste the command that is displayed in your terminal to set the `KUBECONFIG` environment variable.
-
-9.  Identify the cluster namespace that you want to use to add your service. Choose between the following options.
-    * List existing namespaces and choose a namespace that you want to use.
-        ```
-        kubectl get namespaces
-        ```
-        {: pre}
-
-    * Create a new namespace in your cluster.
-        ```
-        kubectl create namespace <namespace_name>
-        ```
-        {: pre}
-
-10.  Bind the service instance to your cluster.
-
-      ```
-      bx cs cluster-service-bind <cluster_name_or_id> <namespace> <service_instance_name>
-      ```
-      {: pre}
-
 
 <br />
 
@@ -1217,8 +927,6 @@ When you create a standard cluster, {{site.data.keyword.containershort_notm}} au
 {: #add_subnet}
 
 You can add stable, portable public or private IPs to the cluster by assigning subnets to the cluster.
-
-For {{site.data.keyword.Bluemix_dedicated_notm}} users, instead of using this task, you must [open a support ticket](/docs/support/index.html#contacting-support) to create the subnet, and then use the [`bx cs cluster-subnet-add`](cs_cli_reference.html#cs_cluster_subnet_add) command to add the subnet to the cluster.
 
 Before you begin, make sure that you can access the IBM Cloud infrastructure (SoftLayer) portfolio through the {{site.data.keyword.Bluemix_notm}} GUI. To access the portfolio, you must set up or use an existing {{site.data.keyword.Bluemix_notm}} Pay-As-You-Go account.
 

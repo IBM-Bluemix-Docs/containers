@@ -276,6 +276,8 @@ To add credentials your {{site.data.keyword.Bluemix_notm}} account:
 <br />
 
 
+
+
 ## Firewall prevents worker nodes from connecting
 {: #cs_firewall}
 
@@ -318,6 +320,7 @@ You might have an additional firewall set up or customized your existing firewal
 
 {: tsResolve}
 This task requires an [Administrator access policy](cs_cluster.html#access_ov). Verify your current [access policy](cs_cluster.html#view_access).
+
 
 Open the following ports and IP addresses in your customized firewall.
 
@@ -474,21 +477,23 @@ Open the following ports and IP addresses in your customized firewall.
     - Allow access to the IP range for both the **Frontend (public) network** and **Backend (private) Network**.
     - Note that you must add the dal01 location (data center) for the **Backend (private) Network**.
 
+
+
 <br />
 
 
-## Accessing your worker node with SSH fails		
-{: #cs_ssh_worker}		
-	
-{: tsSymptoms}		
-You cannot access your worker node by using a SSH connection.		
-	
-{: tsCauses}		
-SSH is disabled on the worker nodes.		
-	
-{: tsResolve}		
-Use [DaemonSets ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) for anything you must run on every node or jobs for any one-time actions you must execute.		
-	
+## Accessing your worker node with SSH fails
+{: #cs_ssh_worker}
+
+{: tsSymptoms}
+You cannot access your worker node by using a SSH connection.
+
+{: tsCauses}
+SSH is disabled on the worker nodes.
+
+{: tsResolve}
+Use [DaemonSets ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) for anything you must run on every node or jobs for any one-time actions you must execute.
+
 <br />
 
 
