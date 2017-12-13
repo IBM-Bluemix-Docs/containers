@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-07"
+lastupdated: "2017-12-13"
 
 ---
 
@@ -335,21 +335,6 @@ You might have an additional firewall set up or customized your existing firewal
 <br />
 
 
-## Accessing your worker node with SSH fails
-{: #cs_ssh_worker}
-
-{: tsSymptoms}
-You cannot access your worker node by using a SSH connection.
-
-{: tsCauses}
-SSH is disabled on the worker nodes.
-
-{: tsResolve}
-Use [DaemonSets ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) for anything you must run on every node or jobs for any one-time actions you must execute.
-
-<br />
-
-
 
 ## Accessing your worker node with SSH fails
 {: #cs_ssh_worker}
@@ -549,18 +534,20 @@ When you access the Kibana dashboard, logs do not display.
 
 {: tsCauses}
 Logs might not be appearing for one of the following reasons:<br/><br/>
-    A. The cluster is not in a `Normal` state.<br/><br/>
-    B. The log storage quota has been hit.<br/><br/>
-    C. If you specified a space at cluster creation, the account owner does not have Manager, Developer, or Auditor permissions to that space.<br/><br/>
-    D. No events that trigger logs have occurred in your pod yet.<br/><br/>
+    A. No logging configuration is set up.
+    B. The cluster is not in a `Normal` state.<br/><br/>
+    C. The log storage quota has been hit.<br/><br/>
+    D. If you specified a space at cluster creation, the account owner does not have Manager, Developer, or Auditor permissions to that space.<br/><br/>
+    E. No events that trigger logs have occurred in your pod yet.<br/><br/>
 
 {: tsResolve}
 Review the following options to resolve each of the possible reasons why logs do not appear:
 
-A. To check the state of your cluster, see [Debugging clusters](cs_troubleshoot.html#debug_clusters).<br/><br/>
-B. To increase your log storage limits, see the [{{site.data.keyword.loganalysislong_notm}} documentation](https://console.bluemix.net/docs/services/CloudLogAnalysis/troubleshooting/error_msgs.html#error_msgs).<br/><br/>
-C. To change {{site.data.keyword.containershort_notm}} access permissions for the account owner, see [Managing cluster access](cs_cluster.html#cs_cluster_user). Once permissions are changed, it can take up to 24 hours for logs to start appearing.<br/><br/>
-D. To trigger a log for an event, you can deploy Noisy, a sample pod that produces several log events, onto a worker node in your cluster.<br/>
+A. In order for logs to be sent, you must first create a logging configuration to forward logs to {{site.data.keyword.loganalysislong_notm}}. To create a logging configuration, see [Enabling log forwarding](cs_cluster.html#cs_log_sources_enable).
+B. To check the state of your cluster, see [Debugging clusters](cs_troubleshoot.html#debug_clusters).<br/><br/>
+C. To increase your log storage limits, see the [{{site.data.keyword.loganalysislong_notm}} documentation](https://console.bluemix.net/docs/services/CloudLogAnalysis/troubleshooting/error_msgs.html#error_msgs).<br/><br/>
+D. To change {{site.data.keyword.containershort_notm}} access permissions for the account owner, see [Managing cluster access](cs_cluster.html#cs_cluster_user). Once permissions are changed, it can take up to 24 hours for logs to start appearing.<br/><br/>
+E. To trigger a log for an event, you can deploy Noisy, a sample pod that produces several log events, onto a worker node in your cluster.<br/>
   1. [Target your CLI](cs_cli_install.html#cs_cli_configure) to a cluster where you want to start producing logs.
 
   2. Create the `deploy-noisy.yaml` configuration file.
@@ -807,6 +794,8 @@ To troubleshoot your load balancer service:
     2.  Check that your custom domain is mapped to the portable public IP address of your load balancer service in the Pointer record (PTR).
 
 <br />
+
+
 
 
 

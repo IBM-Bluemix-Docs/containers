@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-11-02"
+lastupdated: "2017-12-13"
 
 ---
 
@@ -44,8 +44,12 @@ Check out what container developers are interested in.
 <td>With the CLI, you create and manage your Kubernetes clusters.</td>
 </tr>
 <tr>
-<td>[Update to Kubernetes 1.7](cs_versions.html)</td>
-<td>Review the changes to make to your clusters before updating to Kubernetes 1.7.</td>
+<td>[Opening required ports and IP addresses in your firewall](cs_security.html#opening_ports)</td>
+<td>You might need to open specific ports and IP addresses in your firewalls to run CLI commands or to allow communication between the Kubernetes master and the worker nodes.</td>
+</tr>
+<tr>
+<td>[Update Kubernetes](cs_versions.html)</td>
+<td>Review the changes to make to your clusters before updating Kubernetes.</td>
 </tr>
 <tr>
 <td>[REST API for clusters ![External link icon](../icons/launch-glyph.svg "External link icon")](https://us-south.containers.bluemix.net/swagger)</td>
