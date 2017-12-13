@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-11"
+lastupdated: "2017-12-12"
 
 ---
 
@@ -256,6 +256,16 @@ The diagram shows how Kubernetes carries user network traffic in {{site.data.key
  </ul>
 </dd></dl>
 
+To choose the best networking option for your application, you can follow this decision tree:
+
+<img usemap="#networking_map" border="0" class="image" src="images/networkingdt.png" width="500px" alt="This image walks you through choosing the best networking option for your application. If this image is not displaying, the information can still be found in the documentation." style="width:500px;" />
+<map name="networking_map" id="networking_map">
+<area href="/docs/containers/cs_apps.html#cs_apps_public_nodeport" alt="Nodeport service" shape="circle" coords="52, 283, 45"/>
+<area href="/docs/containers/cs_apps.html#cs_apps_public_load_balancer" alt="Loadbalancer service" shape="circle" coords="247, 419, 44"/>
+<area href="/docs/containers/cs_apps.html#cs_apps_public_ingress" alt="Ingress service" shape="circle" coords="445, 420, 45"/>
+</map>
+
+
 ### Configuring public access to an app by using the NodePort service type
 {: #cs_apps_public_nodeport}
 
@@ -437,6 +447,7 @@ To create a load balancer service:
           ports:
            - protocol: TCP
              port: 8080
+          loadBalancerIp: <private_ip_address>
         ```
         {: codeblock}
 
@@ -460,6 +471,11 @@ To create a load balancer service:
         <tr>
           <td>`service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type:`
           <td>Annotation to specify the type of LoadBalancer. The values are `private` and `public`. When creating a public LoadBalancer in clusters on public VLANs, this annotation is not required.</td>
+        </tr>
+        <tr>
+          <td><code>loadBalancerIp</code></td>
+          <td>When creating a private LoadBalancer, replace <em>&lt;loadBalancerIp&gt;</em> with the IP address that you want to use for the LoadBalancer.</td>
+        </tr>
         </tbody></table>
     3.  Optional: To use a specific portable IP address for your load balancer that is available to your cluster, you can specify that IP address by including the `loadBalancerIP` in the spec section. For more information, see the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/services-networking/service/).
     4.  Optional: Configure a firewall by specifying the `loadBalancerSourceRanges` in the spec section. For more information, see the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/).
@@ -513,8 +529,6 @@ To create a load balancer service:
         {: codeblock}
 
 
-
-
 ### Configuring access to an app by using Ingress
 {: #cs_apps_public_ingress}
 
@@ -539,6 +553,19 @@ To expose your app to private networks, first [enable the private application lo
 
 -   [Use a custom domain without TLS termination](#private_ingress_no_tls)
 -   [Use a custom domain and TLS certificate to do TLS termination](#private_ingress_tls)
+
+
+To choose the best configuration for Ingress, you can follow this decision tree:
+
+<img usemap="#ingress_map" border="0" class="image" src="images/networkingdt-ingress.png" width="750px" alt="This image walks you through choosing the best configuration for your Ingress controller. If this image is not displaying, the information can still be found in the documentation." style="width:750px;" />
+<map name="ingress_map" id="ingress_map">
+<area href="/docs/containers/cs_apps.html#private_ingress_no_tls" alt="Using the private Ingress controller with a custom domain." shape="rect" coords="25, 246, 187, 294"/>
+<area href="/docs/containers/cs_apps.html#private_ingress_tls" alt="Using the private Ingress controller with a custom domain and a TLS certificate." shape="rect" coords="161, 337, 309, 385"/>
+<area href="/docs/containers/cs_apps.html#external_endpoint" alt="Configuring the public Ingress controller to route network traffice to apps outside of the cluster." shape="rect" coords="313, 229, 466, 282"/>
+<area href="/docs/containers/cs_apps.html#custom_domain_cert" alt="Using the public Ingress controller with a custom domain and TLS certificate." shape="rect" coords="365, 415, 518, 468"/>
+<area href="/docs/containers/cs_apps.html#ibm_domain" alt="Using the public Ingress controller with the IBM -provided domain" shape="rect" coords="414, 609, 569, 659"/>
+<area href="/docs/containers/cs_apps.html#ibm_domain_cert" alt="Using the public Ingress controller with the IBM provided domain and TLS certificate." shape="rect" coords="563, 681, 716, 734"/>
+</map>
 
 #### Using the IBM-provided domain without TLS termination
 {: #ibm_domain}
