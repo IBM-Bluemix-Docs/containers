@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-11"
+lastupdated: "2017-12-13"
 
 ---
 
@@ -40,6 +40,8 @@ So you want to deploy an app in container? Hold on! Start by creating a Kubernet
 {:shortdesc}
 
 And what is a cluster? A cluster is a set of resources, worker nodes, networks, and storage devices that keep apps highly available. After you have your cluster, then you can deploy your apps in containers.
+
+[Before you begin, you must have a Pay-As-You-Go or Subscription {{site.data.keyword.Bluemix_notm}} account to create a lite cluster.](https://console.bluemix.net/registration/)
 
 
 To create a lite cluster:
