@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-07"
+lastupdated: "2017-12-13"
 
 ---
 
@@ -331,21 +331,6 @@ You might have an additional firewall set up or customized your existing firewal
 
 {: tsResolve}
 [Allow the cluster to access infrastructure resources and other services](cs_security.html#firewall_outbound). This task requires an [Administrator access policy](cs_cluster.html#access_ov). Verify your current [access policy](cs_cluster.html#view_access).
-
-<br />
-
-
-## Accessing your worker node with SSH fails
-{: #cs_ssh_worker}
-
-{: tsSymptoms}
-You cannot access your worker node by using a SSH connection.
-
-{: tsCauses}
-SSH is disabled on the worker nodes.
-
-{: tsResolve}
-Use [DaemonSets ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) for anything you must run on every node or jobs for any one-time actions you must execute.
 
 <br />
 
@@ -807,6 +792,8 @@ To troubleshoot your load balancer service:
     2.  Check that your custom domain is mapped to the portable public IP address of your load balancer service in the Pointer record (PTR).
 
 <br />
+
+
 
 
 

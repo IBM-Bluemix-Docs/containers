@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-11"
+lastupdated: "2017-12-13"
 
 ---
 
@@ -2105,7 +2105,7 @@ To use Weave Scope with a cluster:
 When you are finished with a cluster, you can remove it so that the cluster is no longer consuming resources.
 {:shortdesc}
 
-Lite and standard clusters created with an {{site.data.keyword.Bluemix_notm}} lite or Pay-As-You-Go account must be removed manually by the user when they are not needed anymore.
+Lite and standard clusters created with a Pay-As-You-Go account must be removed manually by the user when they are not needed anymore.
 
 When you delete a cluster, you are also deleting resources on the cluster, including containers, pods, bound services, and secrets. If you do not delete your storage when you delete your cluster, you can delete your storage through the IBM Cloud infrastructure (SoftLayer) dashboard in the {{site.data.keyword.Bluemix_notm}} GUI. Due to the monthly billing cycle, a persistent volume claim cannot be deleted on the last day of a month. If you delete the persistent volume claim on the last day of the month, the deletion remains pending until the beginning of the next month.
 

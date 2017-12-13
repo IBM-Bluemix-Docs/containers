@@ -420,4 +420,4 @@ If you want to use public IP addresses for the application load balancer, ensure
 ### Creating persistent storage
 {: #dedicated_apps_volume_claim}
 
-For {{site.data.keyword.Bluemix_dedicated_notm}} environments, you must [open a support ticket](/docs/support/index.html#contacting-support). By opening a ticket, you can request a backup for your volumes, a restoration from your volumes, and other storage functions.
+To review options for creating persistent storage, see [Persistent data storage](cs_planning.html#cs_planning_apps_storage). To request a backup for your volumes, a restoration from your volumes, and other storage functions, you must [open a support ticket](/docs/support/index.html#contacting-support).
