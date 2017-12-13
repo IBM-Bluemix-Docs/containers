@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-11"
+lastupdated: "2017-12-12"
 
 ---
 
@@ -256,6 +256,7 @@ The diagram shows how Kubernetes carries user network traffic in {{site.data.key
  </ul>
 </dd></dl>
 
+
 ### Configuring public access to an app by using the NodePort service type
 {: #cs_apps_public_nodeport}
 
@@ -437,6 +438,7 @@ To create a load balancer service:
           ports:
            - protocol: TCP
              port: 8080
+          loadBalancerIp: <private_ip_address>
         ```
         {: codeblock}
 
@@ -460,6 +462,11 @@ To create a load balancer service:
         <tr>
           <td>`service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type:`
           <td>Annotation to specify the type of LoadBalancer. The values are `private` and `public`. When creating a public LoadBalancer in clusters on public VLANs, this annotation is not required.</td>
+        </tr>
+        <tr>
+          <td><code>loadBalancerIp</code></td>
+          <td>When creating a private LoadBalancer, replace <em>&lt;loadBalancerIp&gt;</em> with the IP address that you want to use for the LoadBalancer.</td>
+        </tr>
         </tbody></table>
     3.  Optional: To use a specific portable IP address for your load balancer that is available to your cluster, you can specify that IP address by including the `loadBalancerIP` in the spec section. For more information, see the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/services-networking/service/).
     4.  Optional: Configure a firewall by specifying the `loadBalancerSourceRanges` in the spec section. For more information, see the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/).
@@ -539,6 +546,7 @@ To expose your app to private networks, first [enable the private application lo
 
 -   [Use a custom domain without TLS termination](#private_ingress_no_tls)
 -   [Use a custom domain and TLS certificate to do TLS termination](#private_ingress_tls)
+
 
 #### Using the IBM-provided domain without TLS termination
 {: #ibm_domain}

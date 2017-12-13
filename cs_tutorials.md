@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-10-16"
+lastupdated: "2017-12-13"
 
 ---
 
@@ -49,7 +49,8 @@ This tutorial is intended for software developers and network administrators who
 
 ## Prerequisites
 
--  An [{{site.data.keyword.Bluemix_notm}} account ![External link icon](../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net/registration/)
+-  A Pay-As-You-Go or Subscription [{{site.data.keyword.Bluemix_notm}} account ![External link icon](../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net/registration/)
+
 
 
 

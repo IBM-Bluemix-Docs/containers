@@ -26,6 +26,7 @@ Refer to these commands to create and manage clusters.
 
 
 <!--[https://github.ibm.com/alchemy-containers/armada-cli ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.ibm.com/alchemy-containers/armada-cli)-->
+<!--If you're confused by the two tables... I (Rachael) have some extensive changes but dev needs to see it in staging first, so just adding a whole second staging table. Too hard to add staging tags for individual commands in the table.--> 
 
 <table summary="Commands for creating clusters on {{site.data.keyword.Bluemix_notm}}">
  <thead>
@@ -94,6 +95,9 @@ Refer to these commands to create and manage clusters.
  </tbody>
  </table>
 
+
+
+
 **Tip:** To see the version of the {{site.data.keyword.containershort_notm}} plug-in, run the following command.
 
 ```
@@ -123,6 +127,8 @@ View the status of all application load balancers in a cluster. If no applicatio
   bx cs albs --cluster mycluster
   ```
   {: pre}
+
+
 
 ### bx cs alb-configure --albID ALB_ID [--enable][--disable][--user-ip USERIP]
 {: #cs_alb_configure}
@@ -208,6 +214,7 @@ View the application load balancer types that are supported in the region.
   bx cs alb-types
   ```
   {: pre}
+
 
 ### bx cs cluster-config CLUSTER [--admin] [--export]
 {: #cs_cluster_config}
