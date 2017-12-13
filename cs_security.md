@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-12"
+lastupdated: "2017-12-13"
 
 ---
 
@@ -133,10 +133,10 @@ Review these situations in which you might need to open specific ports and IP ad
 * [To allow communication between the Kubernetes master and the worker nodes](#firewall_outbound) when either a firewall is set up for the worker nodes or the firewall settings are customized in your IBM Cloud infrastructure (SoftLayer) account.
 * [To access the NodePort service, LoadBalancer service, or Ingress from outside of the cluster](#firewall_inbound).
 
-### Running `bx` commands from behind a firewall
+### Running `bx cs` commands from behind a firewall
 {: #firewall_bx}
 
-If corporate network policies prevent access from your local system to public endpoints via proxies or firewalls, to run `bx` commands, you must allow TCP access for {{site.data.keyword.containerlong_notm}}.
+If corporate network policies prevent access from your local system to public endpoints via proxies or firewalls, to run `bx cs` commands, you must allow TCP access for {{site.data.keyword.containerlong_notm}}.
 
 1. Allow access to `containers.bluemix.net` on port 443.
 2. Verify your connection. If access is configured correctly, ships are displayed in the output.
@@ -166,7 +166,7 @@ If corporate network policies prevent access from your local system to public en
 
 When a cluster is created, the port in the master URL is randomly assigned from within 20000-32767. You can either choose to open port range 20000-32767 for any cluster that might get created or you can choose to allow access for a specific existing cluster.
 
-Before you begin, allow access to [run `bx` commands](#firewall_bx).
+Before you begin, allow access to [run `bx cs` commands](#firewall_bx).
 
 To allow access for a specific cluster:
 
@@ -255,7 +255,7 @@ Before you begin, allow access to run [`bx` commands](#firewall_bx) and [`kubect
   ```
   {: pre}
 
-3. Allow access for the Calico policies via the master URL IP address and the ETCD port on port 443.
+3. Allow access for the Calico policies via the master URL IP address and the ETCD port.
 
 ### Allowing the cluster to access infrastructure resources and other services
 {: #firewall_outbound}
@@ -430,7 +430,7 @@ You can allow incoming access to NodePort, load balancer, and Ingress services.
 <br />
 
 
-## Setting up VPN connectivity with the Strongswan IPSec VPN service
+## Setting up VPN connectivity with the Strongswan IPSec VPN service Helm chart
 {: #vpn}
 
 VPN connectivity allows you to securely connect apps in a Kubernetes cluster to an on-premises network. You can also connect apps that are external to your cluster to an app that is running inside your cluster. To set up VPN connectivity, you can use a Helm Chart to configure and deploy the [Strongswan IPSec VPN service ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.strongswan.org/) inside of a Kubernetes pod. All VPN traffic is then routed through this pod. For more information about the Helm commands used to set up the Strongswan chart, see the [Helm documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.helm.sh/helm/).
