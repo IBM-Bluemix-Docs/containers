@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-11"
+lastupdated: "2017-12-13"
 
 ---
 
@@ -1125,27 +1125,7 @@ Before you begin: Configure the routing of network traffic into and out of the e
     ```
     {: screen}
 
-4. Add a private load balancer to access your app over the private network. If you want to use a private IP address from the subnet that you added, you must specify an IP address when you create a private load balancer. Otherwise, an IP address is chosen at random from the IBM Cloud infrastructure (SoftLayer) subnets or user-provided subnets on the private VLAN. For more information See [Configuring access to an app](cs_apps.html#cs_apps_public_load_balancer).
-
-    Example configuration file for a private load balancer service with a specified IP address:
-
-    ```
-    apiVersion: v1
-    kind: Service
-    metadata:
-      name: <myservice>
-      annotations:
-        service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: private
-    spec:
-      type: LoadBalancer
-      selector:
-        <selectorkey>:<selectorvalue>
-      ports:
-       - protocol: TCP
-         port: 8080
-      loadBalancerIP: <private_ip_address>
-    ```
-    {: codeblock}
+4. Add a private load balancer service or a private Ingress application load balancer to access your app over the private network. If you want to use a private IP address from the subnet that you added when you create a private load balancer or a private Ingress application load balancer, you must specify an IP address. Otherwise, an IP address is chosen at random from the IBM Cloud infrastructure (SoftLayer) subnets or user-provided subnets on the private VLAN. For more information, see [Configuring access to an app by using the load balancer service type](cs_apps.html#cs_apps_public_load_balancer) or [Enabling the private application load balancer](cs_apps.html#private_ingress).
 
 <br />
 
@@ -2105,7 +2085,7 @@ To use Weave Scope with a cluster:
 When you are finished with a cluster, you can remove it so that the cluster is no longer consuming resources.
 {:shortdesc}
 
-Lite and standard clusters created with an {{site.data.keyword.Bluemix_notm}} lite or Pay-As-You-Go account must be removed manually by the user when they are not needed anymore.
+Lite and standard clusters created with a Pay-As-You-Go account must be removed manually by the user when they are not needed anymore.
 
 When you delete a cluster, you are also deleting resources on the cluster, including containers, pods, bound services, and secrets. If you do not delete your storage when you delete your cluster, you can delete your storage through the IBM Cloud infrastructure (SoftLayer) dashboard in the {{site.data.keyword.Bluemix_notm}} GUI. Due to the monthly billing cycle, a persistent volume claim cannot be deleted on the last day of a month. If you delete the persistent volume claim on the last day of the month, the deletion remains pending until the beginning of the next month.
 
