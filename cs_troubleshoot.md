@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-07"
+lastupdated: "2017-12-13"
 
 ---
 
@@ -807,6 +807,8 @@ To troubleshoot your load balancer service:
     2.  Check that your custom domain is mapped to the portable public IP address of your load balancer service in the Pointer record (PTR).
 
 <br />
+
+
 
 
 
