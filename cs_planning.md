@@ -122,7 +122,7 @@ In a single-tenant set up, all physical resources are dedicated to you only. You
 
 Shared nodes are usually cheaper than dedicated nodes because the costs for the underlying hardware are shared among multiple customers. However, when you decide between shared and dedicated nodes, you might want to check with your legal department to discuss the level of infrastructure isolation and compliance that your app environment requires.
 
-When you create a lite cluster, your worker node is automatically provisioned as a shared node in the {{site.data.keyword.IBM_notm}} IBM Cloud infrastructure (SoftLayer) account.
+When you create a lite cluster, your worker node is automatically provisioned as a shared node in the IBM Cloud infrastructure (SoftLayer) account.
 
 <br />
 
