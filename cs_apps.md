@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-11"
+lastupdated: "2017-12-12"
 
 ---
 
@@ -255,6 +255,7 @@ The diagram shows how Kubernetes carries user network traffic in {{site.data.key
   <li>Use Ingress if you want to implement your own load balancer with custom routing rules and if you need SSL termination for your apps.</li>
  </ul>
 </dd></dl>
+
 
 ### Configuring public access to an app by using the NodePort service type
 {: #cs_apps_public_nodeport}
@@ -539,6 +540,7 @@ To expose your app to private networks, first [enable the private application lo
 
 -   [Use a custom domain without TLS termination](#private_ingress_no_tls)
 -   [Use a custom domain and TLS certificate to do TLS termination](#private_ingress_tls)
+
 
 #### Using the IBM-provided domain without TLS termination
 {: #ibm_domain}
