@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-13"
+lastupdated: "2017-12-14"
 
 ---
 
@@ -62,4 +62,4 @@ Check out what container developers are interested in.
 
 You can see what others are talking about and ask your own questions in the [{{site.data.keyword.containershort_notm}} Slack. ![External link icon](../icons/launch-glyph.svg "External link icon")](https://ibm-container-service.slack.com)
 
-If you are not using an IBM ID for your {{site.data.keyword.Bluemix_notm}} account, contact [crosen@us.ibm.com](mailto:crosen@us.ibm.com) and request an invitation to this Slack.
+Tip: If you are not using an IBM ID for your {{site.data.keyword.Bluemix_notm}} account, [request an invitation](https://bxcs-slack-invite.mybluemix.net/) to this Slack.
