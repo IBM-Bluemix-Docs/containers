@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-05"
+lastupdated: "2017-12-14"
 
 ---
 
@@ -47,6 +47,9 @@ By default, you cannot update a Kubernetes master more than two minor versions a
 
 ## Version 1.8
 {: #cs_v18}
+
+
+
 Review changes you might need to make when updating to Kubernetes version 1.8.
 
 ### Update before master
@@ -105,6 +108,8 @@ Review changes you might need to make when updating to Kubernetes version 1.8.
 
 ## Version 1.7
 {: #cs_v17}
+
+
 
 Review changes you might need to make when updating to Kubernetes version 1.7.
 
