@@ -928,52 +928,44 @@ When you create a standard cluster, {{site.data.keyword.containershort_notm}} au
 
 You can add stable, portable public or private IPs to the cluster by assigning subnets to the cluster.
 
-Before you begin, make sure that you can access the IBM Cloud infrastructure (SoftLayer) portfolio through the {{site.data.keyword.Bluemix_notm}} GUI. To access the portfolio, you must set up or use an existing {{site.data.keyword.Bluemix_notm}} Pay-As-You-Go account.
+**Note:** When you make a subnet available to a cluster, IP addresses of this subnet are used for cluster networking purposes. To avoid IP address conflicts, make sure that you use a subnet with one cluster only. Do not use a subnet for multiple clusters or for other purposes outside of {{site.data.keyword.containershort_notm}} at the same time.
 
-1.  From the catalog, in the **Infrastructure** section, select **Network**.
-2.  Select **Subnet/IPs** and click **Create**.
-3.  From the **Select the type of subnet to add to this account** drop-down menu, select **Portable Public** or **Portable Private**.
-4.  Select the number of IP addresses that you want to add from your portable subnet.
+Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
 
-    **Note:** When you add portable IP addresses for your subnet, three IP addresses are used to establish cluster-internal networking, so that you cannot use them for your application load balancer or to create a load balancer service. For example, if you request eight portable public IP addresses, you can use five of them to expose your apps to the public.
+To create a subnet in an IBM Cloud infrastructure (SoftLayer) account and make it available to a specified cluster:
 
-5.  Select the public or private VLAN where you want to route the portable public or private IP addresses to. You must select the public or private VLAN that an existing worker node is connected to. Review the public or private VLAN for a worker node.
+1. Provision a new subnet.
 
     ```
-    bx cs worker-get <worker_id>
+    bx cs cluster-subnet-create <cluster_name_or_id> <subnet_size> <VLAN_ID>
     ```
     {: pre}
 
-6.  Complete the questionnaire and click **Place order**.
+    <table>
+    <caption>Table 8. Understanding this command's components</caption>
+    <thead>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
+    </thead>
+    <tbody>
+    <tr>
+    <td><code>cluster-subnet-create</code></td>
+    <td>The command to provision a subnet for your cluster.</td>
+    </tr>
+    <tr>
+    <td><code><em>&lt;cluster_name_or_id&gt;</em></code></td>
+    <td>Replace <code>&gt;cluster_name_or_id&lt;</code> with the name or ID of the cluster.</td>
+    </tr>
+    <tr>
+    <td><code><em>&lt;subnet_size&gt;</em></code></td>
+    <td>Replace <code>&gt;subnet_size&lt;</code> with the number of IP addresses that you want to add from your portable subnet. Accepted values are 8, 16, 32, or 64. <p>**Note:** When you add portable IP addresses for your subnet, three IP addresses are used to establish cluster-internal networking, so that you cannot use them for your application load balancer or to create a load balancer service. For example, if you request eight portable public IP addresses, you can use five of them to expose your apps to the public.</p> </td>
+    </tr>
+    <tr>
+    <td><code><em>&lt;VLAN_ID&gt;</em></code></td>
+    <td>Replace <code>&gt;VLAN_ID&lt;</code> with the ID of the public or private VLAN on which you want to allocate the portable public or private IP addresses. You must select the public or private VLAN that an existing worker node is connected to. To review the public or private VLAN for a worker node, run the <code>bx cs worker-get &gt;worker_id&lt;</code> command.</td>
+    </tr>
+    </tbody></table>
 
-    **Note:** Portable public IP addresses are charged on a monthly basis. If you choose to remove portable public IP addresses after you created them, you still must pay the monthly charge, even if you used them only part of the month.
-
-7.  After the subnet is provisioned, make the subnet available to your Kubernetes cluster.
-    1.  From the Infrastructure dashboard, select the subnet that you created and note the ID of the subnet.
-    2.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI. To specify an {{site.data.keyword.Bluemix_notm}} region, [include the API endpoint](cs_regions.html#bluemix_regions).
-
-        ```
-        bx login
-        ```
-        {: pre}
-
-        **Note:** If you have a federated ID, use `bx login --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
-
-    3.  List all clusters in your account and note the ID of the cluster where you want to make your subnet available.
-
-        ```
-        bx cs clusters
-        ```
-        {: pre}
-
-    4.  Add the subnet to your cluster. When you make a subnet available to a cluster, a Kubernetes config map is created for you that includes all available portable public or private IP addresses that you can use. If no application load balancer exists for your cluster, one portable public IP address is automatically used to create the public application load balancer and one portable private IP address is automatically used to create the private application load balancer. All other portable public and private IP addresses can be used to create load balancer services for your apps.
-
-        ```
-        bx cs cluster-subnet-add <cluster name or id> <subnet id>
-        ```
-        {: pre}
-
-8.  Verify that the subnet was successfully added to your cluster. The subnet CIDR is listed in the **VLANs** section.
+2.  Verify that the subnet was successfully created and added to your cluster. The subnet CIDR is listed in the **VLANs** section.
 
     ```
     bx cs cluster-get --showResources <cluster name or id>
@@ -1542,6 +1534,7 @@ To change the details of a logging configuration:
     <td><code>--port <em>&lt;log_collector_port&gt;</em></code></td>
     <td>Replace <em>&lt;log_server_port&gt;</em> with the port of the log collector server. If you do not specify a port, then the standard port <code>514</code> is used for <code>syslog</code> and <code>9091</code> is used for <code>ibm</code>.</td>
     </tr>
+    <tr>
     <td><code>--spaceName <em>&lt;cluster_space&gt;</em></code></td>
     <td>Replace <em>&lt;cluster_space&gt;</em> with the name of the space that you want to send logs to. This value is valid only for log type <code>ibm</code> and is optional. If you do not specify a space, logs are sent to the account level.</td>
     </tr>
