@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-13"
+lastupdated: "2017-12-14"
 
 ---
 
@@ -1413,10 +1413,10 @@ To enable log forwarding for a container, worker node, Kubernetes system compone
       Example output:
 
       ```
-      Id                                    Source       Protocol   Namespace     Host                          Port   Paths                                         Org    Space     Account
-      f4bc77c0-ee7d-422d-aabf-a4e6b977264e  kubernetes   syslog     -             172.30.162.138                5514   /var/log/kubelet.log,/var/log/kube-proxy.log  -        -         -
-      5bd9c609-13c8-4c48-9d6e-3a6664c825a9  application  ibm        -             ingest.logging.ng.bluemix.net 9091   /var/log/apps/**/*.log,/var/log/apps/**/*.err my_org   my_space  example@ibm.com
-      8a284f1a-451c-4c48-b1b4-a4e6b977264e  containers   syslog     my-namespace  myhostname.common             5514   -                                             -        -         -
+      Id                                    Source       Namespace     Host                          Port   Org      Space      Protocol     Paths
+      f4bc77c0-ee7d-422d-aabf-a4e6b977264e  kubernetes   -             172.30.162.138                5514   -        -          syslog       /var/log/kubelet.log,/var/log/kube-proxy.log
+      5bd9c609-13c8-4c48-9d6e-3a6664c825a9  application  -             ingest.logging.ng.bluemix.net 9091   my_org   my_space   ibm          /var/log/apps/**/*.log,/var/log/apps/**/*.err
+      8a284f1a-451c-4c48-b1b4-a4e6b977264e  containers   my-namespace  myhostname.common             5514   -        -          syslog       -
       ```
       {: screen}
 
@@ -1429,9 +1429,9 @@ To enable log forwarding for a container, worker node, Kubernetes system compone
       Example output:
 
       ```
-      Id                                    Source    Protocol   Namespace   Host                          Port   Paths                              Org   Space  Account
-      f4bc77c0-ee7d-422d-aabf-a4e6b977264e  worker    ibm        -           ingest.logging.ng.bluemix.net 9091   /var/log/syslog,/var/log/auth.log  -     -      example@ibm.com  
-      5bd9c609-13c8-4c48-9d6e-3a6664c825a9  worker    syslog     -           172.30.162.138                5514   /var/log/syslog,/var/log/auth.log  -     -      -
+      Id                                    Source    Namespace   Host                            Port   Org    Space     Protocol    Paths
+      f4bc77c0-ee7d-422d-aabf-a4e6b977264e  worker    -           ingest.logging.ng.bluemix.net   9091   -      -         ibm         /var/log/syslog,/var/log/auth.log
+      5bd9c609-13c8-4c48-9d6e-3a6664c825a9  worker    -           172.30.162.138                  5514   -      -         syslog      /var/log/syslog,/var/log/auth.log
       ```
       {: screen}
 
@@ -1551,35 +1551,38 @@ To change the details of a logging configuration:
 2. Verify that the log forwarding configuration was updated.
 
     * To list all the logging configurations in the cluster:
-    ```
-    bx cs logging-config-get <my_cluster>
-    ```
-    {: pre}
 
-    Example output:
+      ```
+      bx cs logging-config-get <my_cluster>
+      ```
+      {: pre}
 
-    ```
-    Id                                    Source       Protocol   Namespace     Host                          Port   Paths                                         Org    Space     Account
-    f4bc77c0-ee7d-422d-aabf-a4e6b977264e  kubernetes   syslog     -             172.30.162.138                5514   /var/log/kubelet.log,/var/log/kube-proxy.log  -        -         -
-    5bd9c609-13c8-4c48-9d6e-3a6664c825a9  application  ibm        -             ingest.logging.ng.bluemix.net 9091   /var/log/apps/**/*.log,/var/log/apps/**/*.err my_org   my_space  example@ibm.com
-    8a284f1a-451c-4c48-b1b4-a4e6b977264e  containers   syslog     my-namespace  myhostname.common             5514   -                                             -        -         -
-    ```
-    {: screen}
+      Example output:
+
+      ```
+      Id                                    Source       Namespace     Host                          Port   Org      Space      Protocol     Paths
+      f4bc77c0-ee7d-422d-aabf-a4e6b977264e  kubernetes   -             172.30.162.138                5514   -        -          syslog       /var/log/kubelet.log,/var/log/kube-proxy.log
+      5bd9c609-13c8-4c48-9d6e-3a6664c825a9  application  -             ingest.logging.ng.bluemix.net 9091   my_org   my_space   ibm          /var/log/apps/**/*.log,/var/log/apps/**/*.err
+      8a284f1a-451c-4c48-b1b4-a4e6b977264e  containers   my-namespace  myhostname.common             5514   -        -          syslog       -
+      ```
+      {: screen}
 
     * To list logging configurations for one type of log source:
-    ```
-    bx cs logging-config-get <my_cluster> --logsource worker
-    ```
-    {: pre}
 
-    Example output:
+      ```
+      bx cs logging-config-get <my_cluster> --logsource worker
+      ```
+      {: pre}
 
-    ```
-    Id                                    Source    Protocol   Namespace   Host                          Port   Paths                              Org   Space  Account
-    f4bc77c0-ee7d-422d-aabf-a4e6b977264e  worker    ibm        -           ingest.logging.ng.bluemix.net 9091   /var/log/syslog,/var/log/auth.log  -     -      example@ibm.com  
-    5bd9c609-13c8-4c48-9d6e-3a6664c825a9  worker    syslog     -           172.30.162.138                5514   /var/log/syslog,/var/log/auth.log  -     -      -
-    ```
-    {: screen}
+      Example output:
+
+      ```
+      Id                                    Source    Namespace   Host                            Port   Org    Space     Protocol    Paths
+      f4bc77c0-ee7d-422d-aabf-a4e6b977264e  worker    -           ingest.logging.ng.bluemix.net   9091   -      -         ibm         /var/log/syslog,/var/log/auth.log
+      5bd9c609-13c8-4c48-9d6e-3a6664c825a9  worker    -           172.30.162.138                  5514   -      -         syslog      /var/log/syslog,/var/log/auth.log
+      ```
+
+      {: screen}
 
 #### Stopping log forwarding
 {: #cs_log_sources_delete}
