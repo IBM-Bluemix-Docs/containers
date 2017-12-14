@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-13"
+lastupdated: "2017-12-14"
 
 ---
 
@@ -52,6 +52,7 @@ To create a cluster:
     4. Select a type of hardware. Shared is a sufficient option for most situations.
         - **Dedicated**: Ensure complete isolation of your physical resources.
         - **Shared**: Allow storage of your physical resources on the same hardware as other IBM customers.
+        - Worker nodes feature disk encryption by default; [learn more](cs_security.html#cs_security_worker). If you want to disable encryption, clear the **Encrypt local disk** check box.
 4. Click **Create cluster**. You can see the progress of the worker node deployment in the **Worker nodes** tab. When the deploy is done, you can see that your cluster is ready in the **Overview** tab.
     **Note:** Every worker node is assigned a unique worker node ID and domain name that must not be manually changed after the cluster is created. Changing the ID or domain name prevents the Kubernetes master from managing your cluster.
 
@@ -137,10 +138,10 @@ To create a cluster:
 
         If a public and private VLAN already exists, note the matching routers. Private VLAN routers always begin with `bcr` (back-end router) and public VLAN routers always begin with `fcr` (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. In the example output, any of the private VLANs can be used with any of public VLANs because the routers all include `02a.dal10`.
 
-    4.  Run the `cluster-create` command. You can choose between a lite cluster, which includes one worker node set up with 2vCPU and 4GB memory, or a standard cluster, which can include as many worker nodes as you choose in your IBM Cloud infrastructure (SoftLayer) account. When you create a standard cluster, by default, the hardware of the worker node is shared by multiple IBM customers and billed by hours of usage. </br>Example for a standard cluster:
+    4.  Run the `cluster-create` command. You can choose between a lite cluster, which includes one worker node set up with 2vCPU and 4GB memory, or a standard cluster, which can include as many worker nodes as you choose in your IBM Cloud infrastructure (SoftLayer) account. When you create a standard cluster, by default, the worker node disks are encrypted, its hardware is shared by multiple IBM customers, and it is billed by hours of usage. </br>Example for a standard cluster:
 
         ```
-        bx cs cluster-create --location dal10 --public-vlan <public_vlan_id> --private-vlan <private_vlan_id> --machine-type u2c.2x4 --workers 3 --name <cluster_name> --kube-version <major.minor.patch>
+        bx cs cluster-create --location dal10 --public-vlan <public_vlan_id> --private-vlan <private_vlan_id> --machine-type u2c.2x4 --workers 3 --name <cluster_name> --kube-version <major.minor.patch> 
         ```
         {: pre}
 
@@ -192,6 +193,10 @@ To create a cluster:
         <tr>
           <td><code>--kube-version <em>&lt;major.minor.patch&gt;</em></code></td>
           <td>The Kubernetes version for the cluster master node. This value is optional. Unless specified, the cluster is created with the default of supported Kubernetes versions. To see available versions, run <code>bx cs kube-versions</code>.</td>
+        </tr>
+        <tr>
+        <td><code>--disable-disk-encrypt</code></td>
+        <td>Worker nodes feature disk encryption by default; [learn more](cs_security.html#cs_security_worker). If you want to disable encryption, include this option.</td>
         </tr>
         </tbody></table>
 
@@ -1290,7 +1295,7 @@ You can forward logs for log sources such as containers, applications, worker no
 |`ingress`|Logs for an application load balancer, managed by the Ingress controller, that manages network traffic coming into a Kubernetes cluster.|`/var/log/alb/ids/*.log`, `/var/log/alb/ids/*.err`, `/var/log/alb/customerlogs/*.log`, `/var/log/alb/customerlogs/*.err`|
 {: caption="Table 9. Log source characteristics." caption-side="top"}
 
-#### Enabling log forwarding
+### Enabling log forwarding
 {: #cs_log_sources_enable}
 
 You can forward logs to {{site.data.keyword.loganalysislong_notm}} or to an external syslog server. If you want to forward logs from one log source to both log collector servers, then you must create two logging configurations. **Note**: To forward logs for applications, see [Enabling log forwarding for applications](#cs_apps_enable).
@@ -1413,10 +1418,10 @@ To enable log forwarding for a container, worker node, Kubernetes system compone
       Example output:
 
       ```
-      Id                                    Source       Protocol   Namespace     Host                          Port   Paths                                         Org    Space     Account
-      f4bc77c0-ee7d-422d-aabf-a4e6b977264e  kubernetes   syslog     -             172.30.162.138                5514   /var/log/kubelet.log,/var/log/kube-proxy.log  -        -         -
-      5bd9c609-13c8-4c48-9d6e-3a6664c825a9  application  ibm        -             ingest.logging.ng.bluemix.net 9091   /var/log/apps/**/*.log,/var/log/apps/**/*.err my_org   my_space  example@ibm.com
-      8a284f1a-451c-4c48-b1b4-a4e6b977264e  containers   syslog     my-namespace  myhostname.common             5514   -                                             -        -         -
+      Id                                    Source       Namespace     Host                          Port   Org      Space      Protocol     Paths
+      f4bc77c0-ee7d-422d-aabf-a4e6b977264e  kubernetes   -             172.30.162.138                5514   -        -          syslog       /var/log/kubelet.log,/var/log/kube-proxy.log
+      5bd9c609-13c8-4c48-9d6e-3a6664c825a9  application  -             ingest.logging.ng.bluemix.net 9091   my_org   my_space   ibm          /var/log/apps/**/*.log,/var/log/apps/**/*.err
+      8a284f1a-451c-4c48-b1b4-a4e6b977264e  containers   my-namespace  myhostname.common             5514   -        -          syslog       -
       ```
       {: screen}
 
@@ -1429,9 +1434,9 @@ To enable log forwarding for a container, worker node, Kubernetes system compone
       Example output:
 
       ```
-      Id                                    Source    Protocol   Namespace   Host                          Port   Paths                              Org   Space  Account
-      f4bc77c0-ee7d-422d-aabf-a4e6b977264e  worker    ibm        -           ingest.logging.ng.bluemix.net 9091   /var/log/syslog,/var/log/auth.log  -     -      example@ibm.com  
-      5bd9c609-13c8-4c48-9d6e-3a6664c825a9  worker    syslog     -           172.30.162.138                5514   /var/log/syslog,/var/log/auth.log  -     -      -
+      Id                                    Source    Namespace   Host                            Port   Org    Space     Protocol    Paths
+      f4bc77c0-ee7d-422d-aabf-a4e6b977264e  worker    -           ingest.logging.ng.bluemix.net   9091   -      -         ibm         /var/log/syslog,/var/log/auth.log
+      5bd9c609-13c8-4c48-9d6e-3a6664c825a9  worker    -           172.30.162.138                  5514   -      -         syslog      /var/log/syslog,/var/log/auth.log
       ```
       {: screen}
 
@@ -1481,7 +1486,7 @@ Before you start, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
 
 3. To create a log forwarding configuration, follow the steps in [Enabling log forwarding](cs_cluster.html#cs_log_sources_enable).
 
-#### Updating the log forwarding configuration
+### Updating the log forwarding configuration
 {: #cs_log_sources_update}
 
 You can update a logging configuration for a container, application, worker node, Kubernetes system component, or Ingress application load balancer.
@@ -1551,37 +1556,40 @@ To change the details of a logging configuration:
 2. Verify that the log forwarding configuration was updated.
 
     * To list all the logging configurations in the cluster:
-    ```
-    bx cs logging-config-get <my_cluster>
-    ```
-    {: pre}
 
-    Example output:
+      ```
+      bx cs logging-config-get <my_cluster>
+      ```
+      {: pre}
 
-    ```
-    Id                                    Source       Protocol   Namespace     Host                          Port   Paths                                         Org    Space     Account
-    f4bc77c0-ee7d-422d-aabf-a4e6b977264e  kubernetes   syslog     -             172.30.162.138                5514   /var/log/kubelet.log,/var/log/kube-proxy.log  -        -         -
-    5bd9c609-13c8-4c48-9d6e-3a6664c825a9  application  ibm        -             ingest.logging.ng.bluemix.net 9091   /var/log/apps/**/*.log,/var/log/apps/**/*.err my_org   my_space  example@ibm.com
-    8a284f1a-451c-4c48-b1b4-a4e6b977264e  containers   syslog     my-namespace  myhostname.common             5514   -                                             -        -         -
-    ```
-    {: screen}
+      Example output:
+
+      ```
+      Id                                    Source       Namespace     Host                          Port   Org      Space      Protocol     Paths
+      f4bc77c0-ee7d-422d-aabf-a4e6b977264e  kubernetes   -             172.30.162.138                5514   -        -          syslog       /var/log/kubelet.log,/var/log/kube-proxy.log
+      5bd9c609-13c8-4c48-9d6e-3a6664c825a9  application  -             ingest.logging.ng.bluemix.net 9091   my_org   my_space   ibm          /var/log/apps/**/*.log,/var/log/apps/**/*.err
+      8a284f1a-451c-4c48-b1b4-a4e6b977264e  containers   my-namespace  myhostname.common             5514   -        -          syslog       -
+      ```
+      {: screen}
 
     * To list logging configurations for one type of log source:
-    ```
-    bx cs logging-config-get <my_cluster> --logsource worker
-    ```
-    {: pre}
 
-    Example output:
+      ```
+      bx cs logging-config-get <my_cluster> --logsource worker
+      ```
+      {: pre}
 
-    ```
-    Id                                    Source    Protocol   Namespace   Host                          Port   Paths                              Org   Space  Account
-    f4bc77c0-ee7d-422d-aabf-a4e6b977264e  worker    ibm        -           ingest.logging.ng.bluemix.net 9091   /var/log/syslog,/var/log/auth.log  -     -      example@ibm.com  
-    5bd9c609-13c8-4c48-9d6e-3a6664c825a9  worker    syslog     -           172.30.162.138                5514   /var/log/syslog,/var/log/auth.log  -     -      -
-    ```
-    {: screen}
+      Example output:
 
-#### Stopping log forwarding
+      ```
+      Id                                    Source    Namespace   Host                            Port   Org    Space     Protocol    Paths
+      f4bc77c0-ee7d-422d-aabf-a4e6b977264e  worker    -           ingest.logging.ng.bluemix.net   9091   -      -         ibm         /var/log/syslog,/var/log/auth.log
+      5bd9c609-13c8-4c48-9d6e-3a6664c825a9  worker    -           172.30.162.138                  5514   -      -         syslog      /var/log/syslog,/var/log/auth.log
+      ```
+
+      {: screen}
+
+### Stopping log forwarding
 {: #cs_log_sources_delete}
 
 You can stop forwarding logs by deleting the logging configuration.
@@ -1691,7 +1699,7 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
 2. Apply the configuration update by restarting the Kubernetes master.
 
     ```
-    {[bx cs]} apiserver-refresh <my_cluster>
+    bx cs apiserver-refresh <my_cluster>
     ```
     {: pre}
 
