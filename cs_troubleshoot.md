@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-13"
+lastupdated: "2017-12-14"
 
 ---
 
@@ -534,7 +534,7 @@ When you access the Kibana dashboard, logs do not display.
 
 {: tsCauses}
 Logs might not be appearing for one of the following reasons:<br/><br/>
-    A. No logging configuration is set up.
+    A. No logging configuration is set up.<br/><br/>
     B. The cluster is not in a `Normal` state.<br/><br/>
     C. The log storage quota has been hit.<br/><br/>
     D. If you specified a space at cluster creation, the account owner does not have Manager, Developer, or Auditor permissions to that space.<br/><br/>
@@ -543,7 +543,7 @@ Logs might not be appearing for one of the following reasons:<br/><br/>
 {: tsResolve}
 Review the following options to resolve each of the possible reasons why logs do not appear:
 
-A. In order for logs to be sent, you must first create a logging configuration to forward logs to {{site.data.keyword.loganalysislong_notm}}. To create a logging configuration, see [Enabling log forwarding](cs_cluster.html#cs_log_sources_enable).
+A. In order for logs to be sent, you must first create a logging configuration to forward logs to {{site.data.keyword.loganalysislong_notm}}. To create a logging configuration, see [Enabling log forwarding](cs_cluster.html#cs_log_sources_enable).<br/><br/>
 B. To check the state of your cluster, see [Debugging clusters](cs_troubleshoot.html#debug_clusters).<br/><br/>
 C. To increase your log storage limits, see the [{{site.data.keyword.loganalysislong_notm}} documentation](https://console.bluemix.net/docs/services/CloudLogAnalysis/troubleshooting/error_msgs.html#error_msgs).<br/><br/>
 D. To change {{site.data.keyword.containershort_notm}} access permissions for the account owner, see [Managing cluster access](cs_cluster.html#cs_cluster_user). Once permissions are changed, it can take up to 24 hours for logs to start appearing.<br/><br/>
@@ -841,7 +841,7 @@ When you retrieve the `<ETCD_URL>`, continue with the steps as listed in (Adding
 Where do you start troubleshooting a container?
 
 -   To see whether {{site.data.keyword.Bluemix_notm}} is available, [check the {{site.data.keyword.Bluemix_notm}} status page ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/bluemix/support/#status).
--   Post a question in the [{{site.data.keyword.containershort_notm}} Slack. ![External link icon](../icons/launch-glyph.svg "External link icon")](https://ibm-container-service.slack.com) If you are not using an IBM ID for your {{site.data.keyword.Bluemix_notm}} account, contact [crosen@us.ibm.com](mailto:crosen@us.ibm.com) and request an invitation to this Slack.
+-   Post a question in the [{{site.data.keyword.containershort_notm}} Slack. ![External link icon](../icons/launch-glyph.svg "External link icon")](https://ibm-container-service.slack.com) Tip: If you are not using an IBM ID for your {{site.data.keyword.Bluemix_notm}} account, [request an invitation](https://bxcs-slack-invite.mybluemix.net/) to this Slack.
 -   Review the forums to see whether other users ran into the same issue. When you use the forums to ask a question, tag your question so that it is seen by the {{site.data.keyword.Bluemix_notm}} development teams.
 
     -   If you have technical questions about developing or deploying clusters or apps with {{site.data.keyword.containershort_notm}}, post your question on [Stack Overflow ![External link icon](../icons/launch-glyph.svg "External link icon")](http://stackoverflow.com/search?q=bluemix+containers) and tag your question with `ibm-bluemix`, `kubernetes`, and `containers`.
