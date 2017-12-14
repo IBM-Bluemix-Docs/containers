@@ -534,7 +534,7 @@ When you access the Kibana dashboard, logs do not display.
 
 {: tsCauses}
 Logs might not be appearing for one of the following reasons:<br/><br/>
-    A. No logging configuration is set up.
+    A. No logging configuration is set up.<br/><br/>
     B. The cluster is not in a `Normal` state.<br/><br/>
     C. The log storage quota has been hit.<br/><br/>
     D. If you specified a space at cluster creation, the account owner does not have Manager, Developer, or Auditor permissions to that space.<br/><br/>
@@ -543,7 +543,7 @@ Logs might not be appearing for one of the following reasons:<br/><br/>
 {: tsResolve}
 Review the following options to resolve each of the possible reasons why logs do not appear:
 
-A. In order for logs to be sent, you must first create a logging configuration to forward logs to {{site.data.keyword.loganalysislong_notm}}. To create a logging configuration, see [Enabling log forwarding](cs_cluster.html#cs_log_sources_enable).
+A. In order for logs to be sent, you must first create a logging configuration to forward logs to {{site.data.keyword.loganalysislong_notm}}. To create a logging configuration, see [Enabling log forwarding](cs_cluster.html#cs_log_sources_enable).<br/><br/>
 B. To check the state of your cluster, see [Debugging clusters](cs_troubleshoot.html#debug_clusters).<br/><br/>
 C. To increase your log storage limits, see the [{{site.data.keyword.loganalysislong_notm}} documentation](https://console.bluemix.net/docs/services/CloudLogAnalysis/troubleshooting/error_msgs.html#error_msgs).<br/><br/>
 D. To change {{site.data.keyword.containershort_notm}} access permissions for the account owner, see [Managing cluster access](cs_cluster.html#cs_cluster_user). Once permissions are changed, it can take up to 24 hours for logs to start appearing.<br/><br/>
