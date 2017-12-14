@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-13"
+lastupdated: "2017-12-14"
 
 ---
 
@@ -1290,7 +1290,7 @@ You can forward logs for log sources such as containers, applications, worker no
 |`ingress`|Logs for an application load balancer, managed by the Ingress controller, that manages network traffic coming into a Kubernetes cluster.|`/var/log/alb/ids/*.log`, `/var/log/alb/ids/*.err`, `/var/log/alb/customerlogs/*.log`, `/var/log/alb/customerlogs/*.err`|
 {: caption="Table 9. Log source characteristics." caption-side="top"}
 
-#### Enabling log forwarding
+### Enabling log forwarding
 {: #cs_log_sources_enable}
 
 You can forward logs to {{site.data.keyword.loganalysislong_notm}} or to an external syslog server. If you want to forward logs from one log source to both log collector servers, then you must create two logging configurations. **Note**: To forward logs for applications, see [Enabling log forwarding for applications](#cs_apps_enable).
@@ -1413,10 +1413,10 @@ To enable log forwarding for a container, worker node, Kubernetes system compone
       Example output:
 
       ```
-      Id                                    Source       Protocol   Namespace     Host                          Port   Paths                                         Org    Space     Account
-      f4bc77c0-ee7d-422d-aabf-a4e6b977264e  kubernetes   syslog     -             172.30.162.138                5514   /var/log/kubelet.log,/var/log/kube-proxy.log  -        -         -
-      5bd9c609-13c8-4c48-9d6e-3a6664c825a9  application  ibm        -             ingest.logging.ng.bluemix.net 9091   /var/log/apps/**/*.log,/var/log/apps/**/*.err my_org   my_space  example@ibm.com
-      8a284f1a-451c-4c48-b1b4-a4e6b977264e  containers   syslog     my-namespace  myhostname.common             5514   -                                             -        -         -
+      Id                                    Source       Namespace     Host                          Port   Org      Space      Protocol     Paths
+      f4bc77c0-ee7d-422d-aabf-a4e6b977264e  kubernetes   -             172.30.162.138                5514   -        -          syslog       /var/log/kubelet.log,/var/log/kube-proxy.log
+      5bd9c609-13c8-4c48-9d6e-3a6664c825a9  application  -             ingest.logging.ng.bluemix.net 9091   my_org   my_space   ibm          /var/log/apps/**/*.log,/var/log/apps/**/*.err
+      8a284f1a-451c-4c48-b1b4-a4e6b977264e  containers   my-namespace  myhostname.common             5514   -        -          syslog       -
       ```
       {: screen}
 
@@ -1429,9 +1429,9 @@ To enable log forwarding for a container, worker node, Kubernetes system compone
       Example output:
 
       ```
-      Id                                    Source    Protocol   Namespace   Host                          Port   Paths                              Org   Space  Account
-      f4bc77c0-ee7d-422d-aabf-a4e6b977264e  worker    ibm        -           ingest.logging.ng.bluemix.net 9091   /var/log/syslog,/var/log/auth.log  -     -      example@ibm.com  
-      5bd9c609-13c8-4c48-9d6e-3a6664c825a9  worker    syslog     -           172.30.162.138                5514   /var/log/syslog,/var/log/auth.log  -     -      -
+      Id                                    Source    Namespace   Host                            Port   Org    Space     Protocol    Paths
+      f4bc77c0-ee7d-422d-aabf-a4e6b977264e  worker    -           ingest.logging.ng.bluemix.net   9091   -      -         ibm         /var/log/syslog,/var/log/auth.log
+      5bd9c609-13c8-4c48-9d6e-3a6664c825a9  worker    -           172.30.162.138                  5514   -      -         syslog      /var/log/syslog,/var/log/auth.log
       ```
       {: screen}
 
@@ -1481,7 +1481,7 @@ Before you start, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
 
 3. To create a log forwarding configuration, follow the steps in [Enabling log forwarding](cs_cluster.html#cs_log_sources_enable).
 
-#### Updating the log forwarding configuration
+### Updating the log forwarding configuration
 {: #cs_log_sources_update}
 
 You can update a logging configuration for a container, application, worker node, Kubernetes system component, or Ingress application load balancer.
@@ -1551,37 +1551,40 @@ To change the details of a logging configuration:
 2. Verify that the log forwarding configuration was updated.
 
     * To list all the logging configurations in the cluster:
-    ```
-    bx cs logging-config-get <my_cluster>
-    ```
-    {: pre}
 
-    Example output:
+      ```
+      bx cs logging-config-get <my_cluster>
+      ```
+      {: pre}
 
-    ```
-    Id                                    Source       Protocol   Namespace     Host                          Port   Paths                                         Org    Space     Account
-    f4bc77c0-ee7d-422d-aabf-a4e6b977264e  kubernetes   syslog     -             172.30.162.138                5514   /var/log/kubelet.log,/var/log/kube-proxy.log  -        -         -
-    5bd9c609-13c8-4c48-9d6e-3a6664c825a9  application  ibm        -             ingest.logging.ng.bluemix.net 9091   /var/log/apps/**/*.log,/var/log/apps/**/*.err my_org   my_space  example@ibm.com
-    8a284f1a-451c-4c48-b1b4-a4e6b977264e  containers   syslog     my-namespace  myhostname.common             5514   -                                             -        -         -
-    ```
-    {: screen}
+      Example output:
+
+      ```
+      Id                                    Source       Namespace     Host                          Port   Org      Space      Protocol     Paths
+      f4bc77c0-ee7d-422d-aabf-a4e6b977264e  kubernetes   -             172.30.162.138                5514   -        -          syslog       /var/log/kubelet.log,/var/log/kube-proxy.log
+      5bd9c609-13c8-4c48-9d6e-3a6664c825a9  application  -             ingest.logging.ng.bluemix.net 9091   my_org   my_space   ibm          /var/log/apps/**/*.log,/var/log/apps/**/*.err
+      8a284f1a-451c-4c48-b1b4-a4e6b977264e  containers   my-namespace  myhostname.common             5514   -        -          syslog       -
+      ```
+      {: screen}
 
     * To list logging configurations for one type of log source:
-    ```
-    bx cs logging-config-get <my_cluster> --logsource worker
-    ```
-    {: pre}
 
-    Example output:
+      ```
+      bx cs logging-config-get <my_cluster> --logsource worker
+      ```
+      {: pre}
 
-    ```
-    Id                                    Source    Protocol   Namespace   Host                          Port   Paths                              Org   Space  Account
-    f4bc77c0-ee7d-422d-aabf-a4e6b977264e  worker    ibm        -           ingest.logging.ng.bluemix.net 9091   /var/log/syslog,/var/log/auth.log  -     -      example@ibm.com  
-    5bd9c609-13c8-4c48-9d6e-3a6664c825a9  worker    syslog     -           172.30.162.138                5514   /var/log/syslog,/var/log/auth.log  -     -      -
-    ```
-    {: screen}
+      Example output:
 
-#### Stopping log forwarding
+      ```
+      Id                                    Source    Namespace   Host                            Port   Org    Space     Protocol    Paths
+      f4bc77c0-ee7d-422d-aabf-a4e6b977264e  worker    -           ingest.logging.ng.bluemix.net   9091   -      -         ibm         /var/log/syslog,/var/log/auth.log
+      5bd9c609-13c8-4c48-9d6e-3a6664c825a9  worker    -           172.30.162.138                  5514   -      -         syslog      /var/log/syslog,/var/log/auth.log
+      ```
+
+      {: screen}
+
+### Stopping log forwarding
 {: #cs_log_sources_delete}
 
 You can stop forwarding logs by deleting the logging configuration.
