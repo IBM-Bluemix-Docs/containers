@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-11"
+lastupdated: "2017-12-14"
 
 ---
 
@@ -388,6 +388,7 @@ Review the following options for other cluster configurations:
   * [Updating worker nodes](cs_cluster.html#cs_cluster_worker_update)
   * [Configuring cluster logging](cs_cluster.html#cs_logging)
   * [Configuring cluster monitoring](cs_cluster.html#cs_monitoring)
+      * **Note**: An `ibm-monitoring` cluster exists within each {{site.data.keyword.Bluemix_dedicated_notm}} account. This cluster continuously monitors the health of the {{site.data.keyword.containerlong_notm}} in the Dedicated environment, checking the stability and connectivity of the environment. Do not remove this cluster from the environment.
   * [Visualizing Kubernetes cluster resources](cs_cluster.html#cs_weavescope)
   * [Removing clusters](cs_cluster.html#cs_cluster_remove)
 
