@@ -13,6 +13,7 @@ IBM Cloud Container Service
     Tutorials
         cs_tutorials.md
         cs_tutorials_apps.md
+        cs_tutorials_istio.md
 
     cs_security.md
     {: .navgroup-end}

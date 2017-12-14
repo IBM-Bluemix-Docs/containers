@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-11"
+lastupdated: "2017-12-14"
 
 ---
 
@@ -380,7 +380,7 @@ Before you begin: Configure the routing of network traffic into and out of your 
   - If you did not use a 10.x.x.x private IP address range for the subnet, use valid IPs from that range to configure on-premises connectivity with Ingress and a load balancer. For more information, see [Configuring access to an app](cs_apps.html#cs_apps_public). However, you must use an IBM Cloud infrastructure (SoftLayer) portable private subnet to configure internal account connectivity between your cluster and other Cloud Foundry-based services. You can create a portable private subnet with the [`bx cs cluster-subnet-add`](cs_cli_reference.html#cs_cluster_subnet_add) command. For this scenario, your cluster has both a user-managed subnet for on-premises connectivity and an IBM Cloud infrastructure (SoftLayer) portable private subnet for internal account connectivity.
 
 ### Other cluster configurations
-{: dedicated_other}
+{: #dedicated_other}
 
 Review the following options for other cluster configurations:
   * [Managing cluster access](cs_cluster.html#cs_cluster_user)
@@ -388,6 +388,7 @@ Review the following options for other cluster configurations:
   * [Updating worker nodes](cs_cluster.html#cs_cluster_worker_update)
   * [Configuring cluster logging](cs_cluster.html#cs_logging)
   * [Configuring cluster monitoring](cs_cluster.html#cs_monitoring)
+      * **Note**: An `ibm-monitoring` cluster exists within each {{site.data.keyword.Bluemix_dedicated_notm}} account. This cluster continuously monitors the health of the {{site.data.keyword.containerlong_notm}} in the Dedicated environment, checking the stability and connectivity of the environment. Do not remove this cluster from the environment.
   * [Visualizing Kubernetes cluster resources](cs_cluster.html#cs_weavescope)
   * [Removing clusters](cs_cluster.html#cs_cluster_remove)
 
