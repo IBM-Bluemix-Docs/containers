@@ -1,7 +1,7 @@
 {:navgroup: .navgroup}
 {:topicgroup: .topicgroup}
 
-{: .toc subcollection="containers" audience="compute" href="/docs/containers/index.html"}
+{: .toc subcollection="containers" audience="compute" href="/docs/containers/container_index.html"}
 IBM Cloud Container Service
 
     {: .navgroup id="learn"}

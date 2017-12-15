@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-14"
+lastupdated: "2017-12-15"
 
 ---
 
@@ -22,7 +22,7 @@ Review the Kubernetes versions that are available on {{site.data.keyword.contain
 {:shortdesc}
 
 {{site.data.keyword.containershort_notm}} supports several versions of Kubernetes. The default version is used when you create or update a cluster, unless you specify a different version. The available Kubernetes versions are:
-- 1.8.2
+- 1.8.4
 - 1.7.4 (Default version)
 - 1.5.6
 
@@ -97,7 +97,7 @@ Review changes you might need to make when updating to Kubernetes version 1.8.
 </tr>
 <tr>
 <td>`kubectl run`</td>
-<td>The `kubectl run` command must use multiple flags for `--env` instead of comma separated arguments. For example, run `kubectl run --env <x>=<y> --env <z>=<a>` and not `kubectl run --env <x>=<y>,<z>=<a>`.</td>
+<td>The `kubectl run` command must use multiple flags for `--env` instead of comma separated arguments. For example, run `kubectl run --env <x>=<y> --env <z>=<a>` and not `kubectl run --env <x>=<y>,<z>=<a>`. </td> 
 </tr>
 <td>`kubectl stop`</td>
 <td>The `kubectl stop` command is no longer available.</td>
