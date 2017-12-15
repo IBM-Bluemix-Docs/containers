@@ -1328,7 +1328,7 @@ To enable log forwarding for a container, worker node, Kubernetes system compone
     <tbody>
     <tr>
     <td><code>logging-config-create</code></td>
-    <td>The command to create a {{site.data.keyword.loganalysislong_notm}} log forwarding configuration.</td>
+    <td>The command to create an {{site.data.keyword.loganalysislong_notm}} log forwarding configuration.</td>
     </tr>
     <tr>
     <td><code><em>&lt;my_cluster&gt;</em></code></td>

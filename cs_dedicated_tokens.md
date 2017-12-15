@@ -16,7 +16,7 @@ lastupdated: "2017-11-02"
 {:download: .download}
 
 
-# Creating a {{site.data.keyword.registryshort_notm}} token for an {{site.data.keyword.Bluemix_dedicated_notm}} image registry
+# Creating an {{site.data.keyword.registryshort_notm}} token for an {{site.data.keyword.Bluemix_dedicated_notm}} image registry
 {: #cs_dedicated_tokens}
 
 Create a non-expiring token to use an image registry that you used for single and scalable groups with clusters.
