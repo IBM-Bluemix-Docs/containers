@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-14"
+lastupdated: "2017-12-15"
 
 ---
 
@@ -22,7 +22,7 @@ Review the Kubernetes versions that are available on {{site.data.keyword.contain
 {:shortdesc}
 
 {{site.data.keyword.containershort_notm}} supports several versions of Kubernetes. The default version is used when you create or update a cluster, unless you specify a different version. The available Kubernetes versions are:
-- 1.8.2
+- 1.8.4
 - 1.7.4 (Default version)
 - 1.5.6
 
