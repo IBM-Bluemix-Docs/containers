@@ -183,7 +183,7 @@ When you deploy BookInfo, Envoy sidecar proxies are injected as containers into 
        ```
        {: screen}
 
-       The resulting Ingress address for this example is `130.211.10.121:80`. Export the address as the gateway URL with the following command. You will use the gateway URL in the next step to access the BookInfo product page.
+       The resulting Ingress address for this example is `169.48.221.218:80`. Export the address as the gateway URL with the following command. You will use the gateway URL in the next step to access the BookInfo product page.
 
        ```
        export GATEWAY_URL=169.48.221.218:80
