@@ -48,7 +48,7 @@ By default, you cannot update a Kubernetes master more than two minor versions a
 ## Version 1.8
 {: #cs_v18}
 
-
+<p><img src="images/certified_kubernetes_1.8.png" height="100" align= "left" alt="This badge indicates Kubernetes version 1.8 certification for IBM Cloud Container Service."/> {{site.data.keyword.containerlong_notm}} is a Certified Kubernetes product for version 1.8 under the CNCF Kubernetes Software Conformance Certification program. _Kubernetes® is a registered trademark of The Linux Foundation in the United States and other countries, and is used pursuant to a license from The Linux Foundation._</p>
 
 Review changes you might need to make when updating to Kubernetes version 1.8.
 
@@ -109,7 +109,7 @@ Review changes you might need to make when updating to Kubernetes version 1.8.
 ## Version 1.7
 {: #cs_v17}
 
-
+<p><img src="images/certified_kubernetes_1.7.png" height="100" align= "left" alt="This badge indicates Kubernetes version 1.7 certification for IBM Cloud Container Service."/> {{site.data.keyword.containerlong_notm}} is a Certified Kubernetes product for version 1.7 under the CNCF Kubernetes Software Conformance Certification program.</p>
 
 Review changes you might need to make when updating to Kubernetes version 1.7.
 
