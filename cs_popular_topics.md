@@ -52,7 +52,7 @@ Check out what container developers are interested in.
 <td>Review the changes to make to your clusters before updating Kubernetes.</td>
 </tr>
 <tr>
-<td>[REST API for clusters ![External link icon](../icons/launch-glyph.svg "External link icon")](https://us-south.containers.bluemix.net/swagger)</td>
+<td>[REST API for clusters ![External link icon](../icons/launch-glyph.svg "External link icon")](https://containers.bluemix.net/swagger)</td>
 <td>View the API documentation to manage the {{site.data.keyword.containershort_notm}}.</td>
 </tr>
 </tbody></table>

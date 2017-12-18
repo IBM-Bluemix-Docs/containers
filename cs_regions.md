@@ -83,13 +83,7 @@ To check which {{site.data.keyword.Bluemix_notm}} region you are currently in, r
 By using {{site.data.keyword.containershort_notm}} regions, you can create or access Kubernetes clusters in a region other than the {{site.data.keyword.Bluemix_notm}} region that you are logged in to. {{site.data.keyword.containershort_notm}} region endpoints refer specifically to the {{site.data.keyword.containershort_notm}}, not {{site.data.keyword.Bluemix_notm}} as a whole.
 {:shortdesc}
 
-{{site.data.keyword.containershort_notm}} region API endpoints:
-  * AP North: `https://ap-north.containers.bluemix.net`
-  * AP South: `https://ap-south.containers.bluemix.net`
-  * EU Central: `https://eu-central.containers.bluemix.net`
-  * UK South: `https://uk-south.containers.bluemix.net`
-  * US East: `https://us-east.containers.bluemix.net`
-  * US South: `https://us-south.containers.bluemix.net`
+You can access the {{site.data.keyword.containershort_notm}} through one global endpoint: `https://containers.bluemix.net/`.
 
 To check which {{site.data.keyword.containershort_notm}} region you are currently in, run `bx cs region`.
 
@@ -118,14 +112,16 @@ Locations are data centers that are available within a region.
   | US East      | tor01, wdc06, wdc07        | Toronto, Washington, DC |
   | US South     | dal10, dal12, dal13       | Dallas |
 
+**Note**: Milan (mil01) is available for lite clusters only.
+
 ### Using container service API commands
 {: #container_api}
 
-To interact with the {{site.data.keyword.containershort_notm}} API, enter the command type and append `/v1/command` to the endpoint.
+To interact with the {{site.data.keyword.containershort_notm}} API, enter the command type and append `/v1/command` to the global endpoint.
 
-Example of `GET /clusters` API in US South:
+Example of `GET /clusters` API:
   ```
-  GET https://us-south.containers.bluemix.net/v1/clusters
+  GET https://containers.bluemix.net/v1/clusters
   ```
   {: codeblock}
 
