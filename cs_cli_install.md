@@ -246,7 +246,7 @@ To update the CLIs:
 2. Log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your {{site.data.keyword.Bluemix_notm}} credentials when prompted. To specify an {{site.data.keyword.Bluemix_notm}} region, [include the API endpoint](cs_regions.html#bluemix_regions).
 
     ```
-    bx login 
+    bx login
     ```
     {: pre}
 
@@ -430,13 +430,13 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     POST https://iam.<region>.bluemix.net/oidc/token
     ```
     {: codeblock}
-    
+
     Example:
     ```
     POST https://iam.ng.bluemix.net/oidc/token
     ```
     {: pre}
-    
+
     To specify an {{site.data.keyword.Bluemix_notm}} region, [review the region abbreviations as they are used in the API endpoints](cs_regions.html#bluemix_regions).
 
     <table summary-"Input parameters to get tokens">
@@ -551,13 +551,13 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     POST https://iam.<region>.bluemix.net/oidc/token
     ```
     {: codeblock}
-    
+
     Example:
     ```
     POST https://iam.ng.bluemix.net/oidc/token
     ```
     {: pre}
-    
+
     To specify an {{site.data.keyword.Bluemix_notm}} region, [review the region abbreviations as they are used in the API endpoints](cs_regions.html#bluemix_regions).
 
     <table summary-"Input parameters to get tokens">
@@ -625,38 +625,8 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
 
 4.  List all Kubernetes clusters in your account. Use the information that you retrieved in earlier steps to build your header information.
 
-    -   US-South
-
         ```
-        GET https://us-south.containers.bluemix.net/v1/clusters
-        ```
-        {: codeblock}
-
-    -   US-East
-
-        ```
-        GET https://us-east.containers.bluemix.net/v1/clusters
-        ```
-        {: codeblock}
-
-    -   UK-South
-
-        ```
-        GET https://uk-south.containers.bluemix.net/v1/clusters
-        ```
-        {: codeblock}
-
-    -   EU-Central
-
-        ```
-        GET https://eu-central.containers.bluemix.net/v1/clusters
-        ```
-        {: codeblock}
-
-    -   AP-South
-
-        ```
-        GET https://ap-south.containers.bluemix.net/v1/clusters
+        GET https://containers.bluemix.net/v1/clusters
         ```
         {: codeblock}
 
@@ -674,7 +644,7 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
         </tbody>
         </table>
 
-5.  Review the [{{site.data.keyword.containershort_notm}} API documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://us-south.containers.bluemix.net/swagger-api) to find a list of supported APIs.
+5.  Review the [{{site.data.keyword.containershort_notm}} API documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://containers.bluemix.net/swagger-api) to find a list of supported APIs.
 
 <br />
 
