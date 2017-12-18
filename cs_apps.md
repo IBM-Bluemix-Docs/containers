@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2017
-lastupdated: "2017-12-12"
+lastupdated: "2017-12-18"
 
 ---
 
@@ -2091,8 +2091,6 @@ To deploy your app:
 ## Scaling apps
 {: #cs_apps_scaling}
 
-<!--Horizontal auto-scaling is not working at the moment due to a port issue with heapster. The dev team is working on a fix. We pulled out this content from the public docs. It is only visible in staging right now.-->
-
 Deploy cloud applications that respond to changes in demand for your applications and that use resources only when needed. Autoscaling automatically increases or decreases the number of instances of your apps based on CPU.
 {:shortdesc}
 
@@ -2157,6 +2155,8 @@ With Kubernetes, you can enable [Horizontal Pod Autoscaling ![External link icon
     <td>The maximum number of deployed pods that are used to maintain the specified CPU utilization percentage.</td>
     </tr>
     </tbody></table>
+
+
 
 <br />
 
