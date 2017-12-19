@@ -154,7 +154,7 @@ Kubernetes secrets are a secure way to store confidential information, such as u
 
 To view the default TLS secret:
 <pre>
-bx cs cluster-get &gt;CLUSTER-NAME&lt; &#124; grep "Ingress secret"
+bx cs cluster-get &gt;CLUSTER-NAME&lt; | grep "Ingress secret"
 </pre>
 </p>
 To create your own instead, complete the steps in this topic.</td>
