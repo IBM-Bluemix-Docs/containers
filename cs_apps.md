@@ -154,7 +154,7 @@ Kubernetes secrets are a secure way to store confidential information, such as u
 
 To view the default TLS secret:
 <pre>
-bx cs cluster-get &gt;CLUSTER-NAME&lt; &#124; grep "Ingress secret"
+bx cs cluster-get &gt;CLUSTER-NAME&lt; | grep "Ingress secret"
 </pre>
 </p>
 To create your own instead, complete the steps in this topic.</td>
@@ -239,7 +239,7 @@ The diagram shows how Kubernetes carries user network traffic in {{site.data.key
   <li>Every standard cluster is provisioned with 4 portable public and 4 portable private IP addresses that you can use to create an external TCP/ UDP load balancer for your app.</li>
   <li>Iptables is a Linux kernel feature that load balances requests across the app's pods, provides high performance networking routing, and provides network access control.</li>
   <li>The portable public IP address that is assigned to the load balancer is permanent and does not change when a worker node is re-created in the cluster.</li>
-  <li>You can customize your load balancer by exposing any port that your app requires.</li>
+  <li>You can customize your load balancer by exposing any port that your app requires.</li></ul>
 </dd>
 <dt><a href="#cs_apps_public_ingress" target="_blank">Ingress</a> (standard clusters only)</dt>
 <dd>
