@@ -99,7 +99,7 @@ Review changes you might need to make when updating to Kubernetes version 1.8.
 </tr>
 <tr>
 <td>`kubectl run`</td>
-<td>The `kubectl run` command must use multiple flags for `--env` instead of comma separated arguments. For example, run `kubectl run --env <x>=<y> --env <z>=<a>` and not `kubectl run --env <x>=<y>,<z>=<a>`. </td>
+<td>The `kubectl run` command must use multiple flags for `--env` instead of comma separated arguments. For example, run `kubectl run --env &lt;x&gt;=&lt;y&gt; --env &lt;z&gt;=&lt;a&gt;` and not `kubectl run --env &lt;x&gt;=&lt;y&gt;,&lt;z&gt;=&lt;a&gt;`. </td>
 </tr>
 <td>`kubectl stop`</td>
 <td>The `kubectl stop` command is no longer available.</td>
