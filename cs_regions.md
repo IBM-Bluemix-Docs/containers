@@ -84,8 +84,11 @@ By using {{site.data.keyword.containershort_notm}} regions, you can create or ac
 {:shortdesc}
 
 You can access the {{site.data.keyword.containershort_notm}} through one global endpoint: `https://containers.bluemix.net/`.
+* To check which {{site.data.keyword.containershort_notm}} region you are currently in, run `bx cs region`.
+* To retrieve a list of available regions and their endpoints, run `bx cs regions`.
 
-To check which {{site.data.keyword.containershort_notm}} region you are currently in, run `bx cs region`.
+To use the API with the global endpoint, in all your requests, pass the region name in an `X-Region` header.
+{: tip}
 
 ### Logging in to a different container service region
 {: #container_login_endpoints}
@@ -126,5 +129,8 @@ Example of `GET /clusters` API:
   {: codeblock}
 
 </br>
+
+To use the API with the global endpoint, in all your requests, pass the region name in an `X-Region` header. To list available regions, run `bx cs regions`.
+{: tip}
 
 To view documentation on the API commands, view [https://containers.bluemix.net/swagger-api/](https://containers.bluemix.net/swagger-api/).
