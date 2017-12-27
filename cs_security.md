@@ -95,7 +95,7 @@ Review the built-in worker node security features to protect the worker node env
   <dt>Kubernetes worker node security compliance</dt>
     <dd>IBM works with internal and external security advisory teams to address potential security compliance vulnerabilities. IBM maintains access to the worker nodes in order to deploy updates and security patches to the operating system.</br> <b>Important</b>: Reboot your worker nodes on a regular basis to ensure the installation of the updates and security patches that are automatically deployed to the operating system. IBM does not reboot your worker nodes.</dd>
   <dt>Encrypted disk</dt>
-  <dd>By default, {{site.data.keyword.containershort_notm}} provides two local SSD encrypted data partitions for all worker nodes when provisioned. The first partition is not encrypted, and the second partition mounted to _/var/lib/docker_ is unlocked when provisioned by using LUKS encryption keys. Each worker in each Kubernetes cluster has its own unique LUKS encryption key, managed by {{site.data.keyword.containershort_notm}}. When you create a cluster or add a worker node to an existing cluster, the keys are pulled securely and then discarded after the encrypted disk is unlocked.
+  <dd>By default, {{site.data.keyword.containershort_notm}} provides two local SSD encrypted data partitions for all worker nodes when the worker nodes are provisioned. The first partition is not encrypted, and the second partition mounted to _/var/lib/docker_ is unlocked by using LUKS encryption keys. Each worker in each Kubernetes cluster has its own unique LUKS encryption key, managed by {{site.data.keyword.containershort_notm}}. When you create a cluster or add a worker node to an existing cluster, the keys are pulled securely and then discarded after the encrypted disk is unlocked.
   <p><b>Note</b>: Encryption can impact disk I/O performance. For workloads that require high-performance disk I/O, test a cluster with encryption both enabled and disabled to help you decide whether to turn off encryption.</p>
   </dd>
   <dt>Support for IBM Cloud infrastructure (SoftLayer) network firewalls</dt>
@@ -495,7 +495,7 @@ To set up VPN connectivity with Strongswan:
     ```
     {: pre}
 
-3. Open the `config.yaml` file and make the following changes to the default values according to the VPN configuration you want. If a property has set options for values, they are listed in comments above each property in the file. **Important**: If you do not need to change a property, comment that property out by placing a `#` in front of it.
+3. Open the `config.yaml` file and make the following changes to the default values according to the VPN configuration you want. If a property has specific values that you can choose from, those values are listed in comments above each property in the file. **Important**: If you do not need to change a property, comment that property out by placing a `#` in front of it.
 
     <table>
     <caption>Table 2. Understanding the YAML file components</caption>
