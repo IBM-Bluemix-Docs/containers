@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2017-12-14"
+lastupdated: "2018-01-02"
 
 ---
 
@@ -1645,7 +1645,7 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
     </tr>
     <tr>
     <td><code>--remoteServer <em>&lt;server_URL&gt;</em></code></td>
-    <td>Replace <em>&lt;server_URL&gt;</em> with the URL or IP address for the remote logging service you want to send logs to. If you provide an insecure serverURL, any certificates are ignored. If you do not specify a remote server URL or IP address, a default QRadar configuration is used and the logs are sent to the QRadar instance for the region the cluster is in.</td>
+    <td>Replace <em>&lt;server_URL&gt;</em> with the URL or IP address for the remote logging service you want to send logs to. If you provide an insecure serverURL, any certificates are ignored.</td>
     </tr>
     <tr>
     <td><code>--caCert <em>&lt;CA_cert_path&gt;</em></code></td>
