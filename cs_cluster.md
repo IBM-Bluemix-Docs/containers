@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2017-12-14"
+lastupdated: "2018-01-02"
 
 ---
 
@@ -1316,7 +1316,7 @@ To enable log forwarding for a container, worker node, Kubernetes system compone
   * To forward logs to {{site.data.keyword.loganalysislong_notm}}:
 
     ```
-    bx cs logging-config-create <my_cluster> --logsource <my_log_source> --namespace <kubernetes_namespace> --hostname <ingestion_URL> --port <ingestion_port> --spaceName <cluster_space> --orgName <cluster_org> --type ibm
+    bx cs logging-config-create <my_cluster> --logsource <my_log_source> --namespace <kubernetes_namespace> --hostname <ingestion_URL> --port <ingestion_port> --space <cluster_space> --org <cluster_org> --type ibm
     ```
     {: pre}
 
@@ -1351,11 +1351,11 @@ To enable log forwarding for a container, worker node, Kubernetes system compone
     <td>Replace <em>&lt;ingestion_port&gt;</em> with the ingestion port. If you do not specify a port, then the standard port <code>9091</code> is used.</td>
     </tr>
     <tr>
-    <td><code>--spaceName <em>&lt;cluster_space&gt;</em></code></td>
+    <td><code>--space <em>&lt;cluster_space&gt;</em></code></td>
     <td>Replace <em>&lt;cluster_space&gt;</em> with the name of the space that you want to send logs to. If you do not specify a space, logs are sent to the account level.</td>
     </tr>
     <tr>
-    <td><code>--orgName <em>&lt;cluster_org&gt;</em></code></td>
+    <td><code>--org <em>&lt;cluster_org&gt;</em></code></td>
     <td>Replace <em>&lt;cluster_org&gt;</em> with the name of the org that the space is in. This value is required if you specified a space.</td>
     </tr>
     <tr>
@@ -1505,7 +1505,7 @@ To change the details of a logging configuration:
 1. Update the logging configuration.
 
     ```
-    bx cs logging-config-update <my_cluster> <log_config_id> --logsource <my_log_source> --hostname <log_server_hostname_or_IP> --port <log_server_port> --spaceName <cluster_space> --orgName <cluster_org> --type <logging_type>
+    bx cs logging-config-update <my_cluster> <log_config_id> --logsource <my_log_source> --hostname <log_server_hostname_or_IP> --port <log_server_port> --space <cluster_space> --org <cluster_org> --type <logging_type>
     ```
     {: pre}
 
@@ -1540,11 +1540,11 @@ To change the details of a logging configuration:
     <td>Replace <em>&lt;log_server_port&gt;</em> with the port of the log collector server. If you do not specify a port, then the standard port <code>514</code> is used for <code>syslog</code> and <code>9091</code> is used for <code>ibm</code>.</td>
     </tr>
     <tr>
-    <td><code>--spaceName <em>&lt;cluster_space&gt;</em></code></td>
+    <td><code>--space <em>&lt;cluster_space&gt;</em></code></td>
     <td>Replace <em>&lt;cluster_space&gt;</em> with the name of the space that you want to send logs to. This value is valid only for log type <code>ibm</code> and is optional. If you do not specify a space, logs are sent to the account level.</td>
     </tr>
     <tr>
-    <td><code>--orgName <em>&lt;cluster_org&gt;</em></code></td>
+    <td><code>--org <em>&lt;cluster_org&gt;</em></code></td>
     <td>Replace <em>&lt;cluster_org&gt;</em> with the name of the org that the space is in. This value is valid only for log type <code>ibm</code> and is required if you specified a space.</td>
     </tr>
     <tr>
@@ -1645,7 +1645,7 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
     </tr>
     <tr>
     <td><code>--remoteServer <em>&lt;server_URL&gt;</em></code></td>
-    <td>Replace <em>&lt;server_URL&gt;</em> with the URL or IP address for the remote logging service you want to send logs to. If you provide an insecure serverURL, any certificates are ignored. If you do not specify a remote server URL or IP address, a default QRadar configuration is used and the logs are sent to the QRadar instance for the region the cluster is in.</td>
+    <td>Replace <em>&lt;server_URL&gt;</em> with the URL or IP address for the remote logging service you want to send logs to. If you provide an insecure serverURL, any certificates are ignored.</td>
     </tr>
     <tr>
     <td><code>--caCert <em>&lt;CA_cert_path&gt;</em></code></td>
