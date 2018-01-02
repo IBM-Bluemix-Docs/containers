@@ -1,7 +1,7 @@
 ---
 
 copyright:
-  years: 2014, 2017
+  years: 2014, 2018
 lastupdated: "2017-12-14"
 
 ---
@@ -574,7 +574,7 @@ E. To trigger a log for an event, you can deploy Noisy, a sample pod that produc
         ```
         {:pre}
 
-  4. After a few minutes, you can view your logs in the Kibana dashboard. To access the Kibana dashboard, go to one of the following URLs and select the {{site.data.keyword.Bluemix_notm}} account where you created the cluster. If you specified a space at cluster creation, go to that space instead.        
+  4. After a few minutes, you can view your logs in the Kibana dashboard. To access the Kibana dashboard, go to one of the following URLs and select the {{site.data.keyword.Bluemix_notm}} account where you created the cluster. If you specified a space at cluster creation, go to that space instead.
         - US-South and US-East: https://logging.ng.bluemix.net
         - UK-South and EU-Central: https://logging.eu-fra.bluemix.net
         - AP-South: https://logging.au-syd.bluemix.net

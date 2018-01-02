@@ -1,7 +1,7 @@
 ---
 
 copyright:
-  years: 2014, 2017
+  years: 2014, 2018
 lastupdated: "2017-12-08"
 
 ---
@@ -396,7 +396,7 @@ The following diagram includes the components that you deploy by completing this
 
 ![Deployment setup](images/cs_app_tutorial_components2.png)
 
-From the previous tutorial, you have your account and a cluster with one worker node. In this lesson, you configure a deployment and deploy three instances of the Hello World app. Each instance is deployed in a Kubernetes pod as part of a replica set in the worker node. To make it publicly available, you also create a Kubernetes service. 
+From the previous tutorial, you have your account and a cluster with one worker node. In this lesson, you configure a deployment and deploy three instances of the Hello World app. Each instance is deployed in a Kubernetes pod as part of a replica set in the worker node. To make it publicly available, you also create a Kubernetes service.
 
 As defined in the configuration script, Kubernetes can use an availability check to see whether a container in a pod is running or not. For example, these checks might catch deadlocks, where an app is running, but it is unable to make progress. Restarting a container that is in this condition can help to make the app more available despite bugs. Then, Kubernetes uses readiness check to know when a container is ready to start accepting traffic again. A pod is considered ready when its container is ready. When the pod is ready, it is started again. In the Stage2 app, every 15 seconds, the app times out. With a health check configured in the configuration script, containers are re-created if the health check finds an issue with an app.
 
@@ -599,7 +599,7 @@ The following diagram includes the components that you deploy by completing this
 
 ![Deployment setup](images/cs_app_tutorial_components3.png)
 
-From the previous tutorial, you have your account and a cluster with one worker node. In this lesson, you create an instance of Watson Tone Analyzer service in your {{site.data.keyword.Bluemix_notm}} account and configure two deployments, one deployment for each component of the app. Each component is deployed in a Kubernetes pod in the worker node. To make both of those components publicly available, you also create a Kubernetes service for each component. 
+From the previous tutorial, you have your account and a cluster with one worker node. In this lesson, you create an instance of Watson Tone Analyzer service in your {{site.data.keyword.Bluemix_notm}} account and configure two deployments, one deployment for each component of the app. Each component is deployed in a Kubernetes pod in the worker node. To make both of those components publicly available, you also create a Kubernetes service for each component.
 
 
 ### Lesson 3a: Deploying the Watson Tone Analyzer app

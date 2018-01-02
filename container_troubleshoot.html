@@ -2,7 +2,7 @@
 <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="UTF-8">
 <meta name="dcterms.date" content="2017-11-10">
-<meta name="dcterms.rights" content="© Copyright IBM Corporation 2014, 2017">
+<meta name="dcterms.rights" content="© Copyright IBM Corporation 2014, 2018">
 
 <meta name="description" content="If you have problems or questions when you are using IBM Cloud Container Service, you can get help by searching for information or by asking questions through a forum. You can also open a support ticket.">
 <meta name="keywords" content="troubleshoot, support, IBM Containers, containers, debug, fail, troubleshooting, cli, quota, images, Delivery pipeline, container, liberty, image, single containers, container groups, auto-recovery, group instances fail, group instances crash, delete, network_degraded, docker compose, data storage, volumes">
@@ -17,7 +17,7 @@
   ibm: {
   country: "ZZ",
   type: "CT701"
-  
+
          }
        }
      }
@@ -157,7 +157,7 @@ Foundry CLI</a>.</li>
 <div class="section tsSymptoms">When you run <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span>
 init</samp>, you see one of the following authentication error messages.<div class="p"><ul><li><pre class="codeblock"><code>Could not authenticate with IBM Containers registry at registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>
 ****exit status 1
-****time="2015-07-31T08:58:32-04:00" level=fatal msg="Post http:///var/run/docker.sock/v1.18/auth: dial 
+****time="2015-07-31T08:58:32-04:00" level=fatal msg="Post http:///var/run/docker.sock/v1.18/auth: dial
 unix /var/run/docker.sock: no such file or directory. Are you trying to connect to a TLS-enabled daemon without TLS?”</code></pre>
 </li>
 <li><pre class="codeblock"><code>** Retrieving client certificates from IBM Containers
@@ -196,9 +196,9 @@ the following command, then, if you are on Linux, you must log out then log back
 <aside role="complementary" aria-labelledby="d81670e780"></aside><article class="topic tsTroubleshooting nested2" role="article" aria-labelledby="d81670e841" lang="en-us" id="ts_quota_space"><h3 class="topictitle3" id="d81670e841">A container cannot be created because of insufficient org quota</h3>
 <div class="body tsBody"><div class="section tsSymptoms">When you create a container, you receive a message that you do not have sufficient quota
 in your
-space.<pre class="pre msgblock"><code>BXNUI0110E: Could not allocate IBM Containers resources. Insufficient ORG quota to allocate 
+space.<pre class="pre msgblock"><code>BXNUI0110E: Could not allocate IBM Containers resources. Insufficient ORG quota to allocate
 to new SPACE. Cannot exceed your organization '<var class="keyword varname">organization</var>' floating IPs. Use IBM
-    <span class="keyword">Cloud</span> Manage Organizations to 
+    <span class="keyword">Cloud</span> Manage Organizations to
 adjust quota allocation.</code></pre>
 </div><div class="section tsCauses">This message might be displayed when you try to create containers in a space that does not
 have enough quota allocated. By default, every space requires 2 IP addresses and 2 GB of memory to
@@ -285,8 +285,8 @@ message is shown in the <span class="ph uicontrol">Env</span> section of your CL
             "logging_password=",
             "space_id=0e65c436-9413-46e2-8b42-ff06aa74ac21",
             "logstash_target=logmet.opvis.bluemix.net:9091",
-            "metadata_err_msg=Cannot pull image from registry: Pull failed with error message failed 
-             to register layer: ApplyLayer exit status 1 stdout:  stderr: Container ID 1234567890 
+            "metadata_err_msg=Cannot pull image from registry: Pull failed with error message failed
+             to register layer: ApplyLayer exit status 1 stdout:  stderr: Container ID 1234567890
              cannot be mapped to a host ID",
             "metrics_target=logmet.opvis.bluemix.net:9095",
             "metadata_running=1"</code></pre>
@@ -796,15 +796,15 @@ app when it is deployed as a group. Try deploying the app as a single container 
 <div class="body tsBody"><p class="shortdesc"></p>
 <div class="section tsSymptoms">When you run Docker Compose commands in the CLI, a warning similar to one of the
 following examples is displayed. Other related error messages can be found in the <a href="https://urllib3.readthedocs.org/en/latest/security.html" rel="external" target="_blank" title="(Opens in a new tab or window)">urlib3
-development documentation</a>.<div class="p"><pre class="pre msgblock"><code>/.../requests/packages/urllib3/util/ssl_.py:315: SNIMissingWarning: An HTTPS request 
-has been made, but the SNI (Subject Name Indication) extension to TLS is not available on this 
-platform. This may cause the server to present an incorrect TLS certificate, which can cause 
-validation failures. For more information, see 
+development documentation</a>.<div class="p"><pre class="pre msgblock"><code>/.../requests/packages/urllib3/util/ssl_.py:315: SNIMissingWarning: An HTTPS request
+has been made, but the SNI (Subject Name Indication) extension to TLS is not available on this
+platform. This may cause the server to present an incorrect TLS certificate, which can cause
+validation failures. For more information, see
 https://urllib3.readthedocs.org/en/latest/security.html#snimissingwarning. SNIMissingWarning</code></pre>
 
-<pre class="pre msgblock"><code>/.../requests/packages/urllib3/util/ssl_.py:120: InsecurePlatformWarning: A true 
-SSLContext object is not available. This prevents urllib3 from configuring SSL appropriately 
-and may cause certain SSL connections to fail. For more information, see 
+<pre class="pre msgblock"><code>/.../requests/packages/urllib3/util/ssl_.py:120: InsecurePlatformWarning: A true
+SSLContext object is not available. This prevents urllib3 from configuring SSL appropriately
+and may cause certain SSL connections to fail. For more information, see
 https://urllib3.readthedocs.org/en/latest/security.html#insecureplatformwarning. InsecurePlatformWarning</code></pre>
 </div>
 </div><div class="section tsCauses">This error message is typical for Linux operating systems and is caused by a missing
@@ -819,16 +819,16 @@ the package to the latest version. <pre class="codeblock"><code>pip install --up
 </article><article class="topic tsTroubleshooting nested2" role="article" aria-labelledby="d81670e3446" lang="en-us" id="ts_compose_commands_failed"><h3 class="topictitle3" id="d81670e3446">No module named queue error is displayed when executing Docker Compose commands</h3>
 <div class="body tsBody"><p class="shortdesc"></p>
 <div class="section tsSymptoms">As soon as you run Docker Compose commands in your CLI, an error message similar to the
-following example is displayed. <div class="p"><pre class="pre msgblock"><code>File "/usr/local/bin/docker-compose", line 9, in &lt;module&gt; 
-load_entry_point('docker-compose==1.6.2', 'console_scripts', 'docker-compose')() File 
-"/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/pkg_resources.py", line 357, 
-in load_entry_point return get_distribution(dist).load_entry_point(group, name) File 
-"/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/pkg_resources.py", line 2394, 
-in load_entry_point return ep.load() File "/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/pkg_resources.py", 
-line 2108, in load entry = __import__(self.module_name, globals(),globals(), ['__name__']) 
-File "/Library/Python/2.7/site-packages/compose/cli/main.py", line 26, in &lt;module&gt; from ..project import NoSuchService 
-File "/Library/Python/2.7/site-packages/compose/project.py", line 10, in &lt;module&gt; from . import parallel 
-File "/Library/Python/2.7/site-packages/compose/parallel.py", line 9, in &lt;module&gt; from six.moves.queue import Empty ImportError: 
+following example is displayed. <div class="p"><pre class="pre msgblock"><code>File "/usr/local/bin/docker-compose", line 9, in &lt;module&gt;
+load_entry_point('docker-compose==1.6.2', 'console_scripts', 'docker-compose')() File
+"/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/pkg_resources.py", line 357,
+in load_entry_point return get_distribution(dist).load_entry_point(group, name) File
+"/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/pkg_resources.py", line 2394,
+in load_entry_point return ep.load() File "/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/pkg_resources.py",
+line 2108, in load entry = __import__(self.module_name, globals(),globals(), ['__name__'])
+File "/Library/Python/2.7/site-packages/compose/cli/main.py", line 26, in &lt;module&gt; from ..project import NoSuchService
+File "/Library/Python/2.7/site-packages/compose/project.py", line 10, in &lt;module&gt; from . import parallel
+File "/Library/Python/2.7/site-packages/compose/parallel.py", line 9, in &lt;module&gt; from six.moves.queue import Empty ImportError:
 No module named queue</code></pre>
 </div>
 </div><div class="section tsCauses">The Python path is pointing to the wrong directory. The Docker Compose Python package
@@ -914,31 +914,31 @@ organization manager role. For detailed information, see <a href="../iam/users_r
 </div><div class="section tsResolve"><ol><li>Determine the ID of the file share that your volume is hosted
 on.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> volume-inspect <var class="keyword varname">my_volume</var></code></pre>
 <pre class="codeblock"><code>{
-    "fsId": "<var class="keyword varname">fa277ff4-8a64-435b-9b75-0f11d59a3ae4</var>", 
-    "hostPath": "<span class="ph filepath">/vol/fa277ff4-8a64-435b-9b75-0f11d59a3ae4/my_volume</span>", 
-    "otherSpaceVisibility": [], 
-    "spaceGuid": "fa277ff4-8a64-435b-9b75-0f11d59a3ae4", 
+    "fsId": "<var class="keyword varname">fa277ff4-8a64-435b-9b75-0f11d59a3ae4</var>",
+    "hostPath": "<span class="ph filepath">/vol/fa277ff4-8a64-435b-9b75-0f11d59a3ae4/my_volume</span>",
+    "otherSpaceVisibility": [],
+    "spaceGuid": "fa277ff4-8a64-435b-9b75-0f11d59a3ae4",
     "volName": "<var class="keyword varname">my_volume</var>"
 }</code></pre>
 </li>
 <li>View your file share to determine its size and
 IOPS.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> volume-fs</code></pre>
-<pre class="codeblock"><code>Name                                   Size   IOPS/GB   Created               State   
+<pre class="codeblock"><code>Name                                   Size   IOPS/GB   Created               State
 <var class="keyword varname">fa277ff4-8a64-435b-9b75-0f11d59a3ae4</var>   20     4.00      2016-05-20 13:48:10   READY   </code></pre>
 </li>
 <li>View the available sizes in GB for your file
 shares.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> volume fs-flavor</code></pre>
 <pre class="codeblock"><code>[
-    20, 
-    40, 
-    80, 
-    100, 
-    250, 
-    500, 
-    1000, 
-    2000, 
-    4000, 
-    8000, 
+    20,
+    40,
+    80,
+    100,
+    250,
+    500,
+    1000,
+    2000,
+    4000,
+    8000,
     12000
 ]</code></pre>
 </li>

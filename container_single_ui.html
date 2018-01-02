@@ -2,7 +2,7 @@
 <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="UTF-8">
 <meta name="dcterms.date" content="2017-11-10">
-<meta name="dcterms.rights" content="© Copyright IBM Corporation 2014, 2017">
+<meta name="dcterms.rights" content="© Copyright IBM Corporation 2014, 2018">
 
 <meta name="description" content="Use a single container to run simple tests as you develop an app or service or for short-term processes that do not require high availability. To use your own networking front end, you can assign a public IP address to the container.">
 <meta name="keywords" content="single container, dashboard, GUI, IBM Containers, containers, CLI, docker run, bx ic, run, updating, command line, container, links, linking, --link, ip address, public, ip-bind, ip-request, ips, ip-unbind, remove, release, docker rm, rm, removing, tutorial, getting started, cli, install, plug-in, images, deploy, docker compose, multi-container deployment, multi-container app, docker-compose.yml, scaling, load balancer, nginx, workload, yml, supported options, faq">
@@ -17,7 +17,7 @@
   ibm: {
   country: "ZZ",
   type: "CT701"
-  
+
          }
        }
      }
@@ -1055,42 +1055,42 @@ name.<pre class="codeblock"><code>nano <span class="ph filepath">docker-compose.
 </li>
 <li>Define services for your multi-container deployment that runs the Lets-Chat app. You can enter
 comments by using <var class="keyword varname">#</var>.
-<pre class="codeblock"><code>#Name of your Lets-Chat service. 
+<pre class="codeblock"><code>#Name of your Lets-Chat service.
 #The first container that is started for this service is named:
 #<span class="ph filepath">composetutorial_lets-chat_1</span>
-lets-chat: 
-  #Container image that is used to run the lets-chat service. 
+lets-chat:
+  #Container image that is used to run the lets-chat service.
   #Use the full path to your private images registry.
-  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">$your_namespace</var>/lets-chat  
+  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">$your_namespace</var>/lets-chat
   #Enter a public IP address and port 8080. Run <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> ips</samp>
-  #to list available public IP addresses in your space. 
-  #Option 1: If you do not have a public IP address 
-  #that you can use, you can request a new one as follows: 
+  #to list available public IP addresses in your space.
+  #Option 1: If you do not have a public IP address
+  #that you can use, you can request a new one as follows:
   #ports:
-  #- "request:8080:8080". 
+  #- "request:8080:8080".
   #Option 2: If you want to bind a public IP address after your Lets-Chat container
   #is created by using the <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind</samp> command, enter the following:
   #ports:
   #- "8080"
   #Option 3: Bind a public IP address directly to your Lets-Chat container
-  #ports: 
+  #ports:
   #- "<var class="keyword varname">YOUR_PUBLIC_IP_ADDRESS</var>:8080:8080"
-  #Choose one of the port options described. 
+  #Choose one of the port options described.
   ports:
    - "<var class="keyword varname">SELECT_YOUR_PORT_OPTION</var>"
-  #lets-chat service is linked to the mongo service. 
-  links: 
+  #lets-chat service is linked to the mongo service.
+  links:
     - mongo
-#Name of your Mongo database service. 
+#Name of your Mongo database service.
 #The first container that is started for this service is named:
 #<span class="ph filepath">composetutorial_mongo_1</span>
 mongo:
-  #Container image that is used to run the mongo service. 
+  #Container image that is used to run the mongo service.
   #Use the full path to your private images registry.
   image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">$your_namespace</var>/mongo
-  #Container port 27017 is published within your private container network. 
-  #If a container instance wants to send messages to a mongo container, 
-  #requests need to be sent to this port. 
+  #Container port 27017 is published within your private container network.
+  #If a container instance wants to send messages to a mongo container,
+  #requests need to be sent to this port.
   expose:
     - "27017"</code></pre>
 <div class="note tip"><span class="tiptitle">Tip:</span>  When you create your own <span class="ph filepath">docker-compose.yml</span> file, add at least one
@@ -1140,9 +1140,9 @@ As soon as your container instances are running, an
 looks like the following:
 <pre class="codeblock"><code>$ docker-compose ps
 
-        Name                   Command      State             Ports             
+        Name                   Command      State             Ports
 -----------------------------------------------------------------------
-composetutorial_lets-chat_1                  Up      192.0.2.100:8080-&gt;8080/tcp    
+composetutorial_lets-chat_1                  Up      192.0.2.100:8080-&gt;8080/tcp
 composetutorial_mongo_1                    Up      203.0.113.23:27017-&gt;27017/tcp</code></pre>
 </li>
 <li class="step stepexpand">Optional: <span class="cmd">If you have not configured an IP address in your <span class="ph filepath">docker-compose.yml</span> file,
@@ -1174,11 +1174,11 @@ publicly for the Lets-Chat service in the previous lesson, you need to change th
 <li class="li substep substepexpand"><span class="cmd">Replace the <span class="ph uicontrol">ports</span> parameter with <span class="ph uicontrol">expose</span> in the
 Lets-Chat service definition and delete the public IP address. </span> The expose parameter publishes a port within your private container network only. Your
 Lets-Chat service definition will look as
-follows.<pre class="codeblock"><code>lets-chat: 
-  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">$your_namespace</var>/lets-chat 
+follows.<pre class="codeblock"><code>lets-chat:
+  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">$your_namespace</var>/lets-chat
   expose:
-   - "8080" 
-  links: 
+   - "8080"
+  links:
     - mongo</code></pre>
 </li>
 <li class="li substep substepexpand"><span class="cmd">Save your changes by pressing <span class="ph uicontrol">ctrl + o</span>. Confirm your changes by pressing
@@ -1264,10 +1264,10 @@ http {
               server composetutorial_lets-chat_1:8080 weight=10 max_fails=3 fail_timeout=30s;
               server composetutorial_lets-chat_2:8080 weight=10 max_fails=3 fail_timeout=30s;
         }
-         
+
         server {
               listen 80;
-         
+
               location / {
                 proxy_pass http://lets-chat-app;
                 proxy_http_version 1.1;
@@ -1309,11 +1309,11 @@ Step 2 : COPY nginx.conf /etc/nginx/nginx.conf
 Removing intermediate container 64c5e180943f
 Successfully built bc40817f0593
 The push refers to a repository [registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">$your_namespace</var>/nginx] (len: 1)
-bc40817f0593: Pushed 
-6f62f48c4e55: Pushed 
-50ed65ac2e2d: Pushed 
-fed44c33bce9: Pushed 
-73e8d4f6bf84: Pushed 
+bc40817f0593: Pushed
+6f62f48c4e55: Pushed
+50ed65ac2e2d: Pushed
+fed44c33bce9: Pushed
+73e8d4f6bf84: Pushed
 latest: digest: sha256:99587168cbf699b32804c4ff0de610460dfa150120b12385b194c2f9236903f5 size: 15270</code></pre>
 </li>
 </ol>
@@ -1324,10 +1324,10 @@ latest: digest: sha256:99587168cbf699b32804c4ff0de610460dfa150120b12385b194c2f92
 <li class="li substep substepexpand"><span class="cmd">Copy the following information into your <span class="ph filepath">docker-compose.yml</span>. Replace
 <var class="keyword varname">IP_ADDRESS</var> with the public IP address that you want to use to access your
 <span class="ph uicontrol">nginx</span> load balancer. </span> <pre class="codeblock"><code>nginx:
-  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">$your_namespace</var>/nginx  
+  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">$your_namespace</var>/nginx
   ports:
    - "<var class="keyword varname">IP_ADDRESS</var>:80:80"
-  links: 
+  links:
     - lets-chat</code></pre>
 Your
 <span class="ph filepath">docker-compose.yml</span> file looks as follows.
@@ -1469,7 +1469,7 @@ Cloud Foundry app. For more information, see <a href="container_troubleshoot.htm
 <span class="ph uicontrol">CCS_BIND_SRV</span> key. Replace <var class="keyword varname">&lt;service_instance_name&gt;</var> with
 the name of the service instance that you created in your private <span class="keyword">Cloud</span> images
 registry.</p>
-<pre class="codeblock"><code>environment: 
+<pre class="codeblock"><code>environment:
   - "CCS_BIND_SRV=<var class="keyword varname">&lt;service_instance_name&gt;</var>"</code></pre>
 </li>
 <li><span class="keyword option">Bind a Cloud Foundry app</span><p>To bind an app, use the
@@ -1488,7 +1488,7 @@ service.<pre class="codeblock"><code>#Name of your service
 lets-chat:
   #Container image that is used to run the lets-chat service. Replace <var class="keyword varname">&lt;my_namespace&gt;</var> with the name of your namespace.
   image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/lets-chat
-  #Use <span class="ph uicontrol">CCS_BIND_SRV</span> to bind a <span class="keyword">Cloud</span> service or <span class="ph uicontrol">CCS_BIND_APP</span> to bind a Cloud Foundry app to your Docker Compose service. 
+  #Use <span class="ph uicontrol">CCS_BIND_SRV</span> to bind a <span class="keyword">Cloud</span> service or <span class="ph uicontrol">CCS_BIND_APP</span> to bind a Cloud Foundry app to your Docker Compose service.
   environment:
    - "CCS_BIND_APP=containerbridge"
    - "tmp_folder=/tmp"</code></pre>
@@ -1502,7 +1502,7 @@ to the lets-chat container.
 <pre class="codeblock"><code>lets-chat:
   #Container image that is used to run the lets-chat service. Replace <var class="keyword varname">&lt;my_namespace&gt;</var> with the name of your namespace.
   image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/lets-chat
-  #Make a port available to the private network only. 
+  #Make a port available to the private network only.
   expose:
    - "8080"
   links:
@@ -1536,7 +1536,7 @@ nginx container to all the containers that are started for the lets-chat service
 nginx:
   #Container image that is used to run the nginx service. Replace <var class="keyword varname">&lt;my_namespace&gt;</var> with the name of your namespace.
   image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/nginx
-  #Enter the name of the service that you want to link. 
+  #Enter the name of the service that you want to link.
   links:
     - lets-chat
 lets-chat:

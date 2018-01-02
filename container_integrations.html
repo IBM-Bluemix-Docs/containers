@@ -2,7 +2,7 @@
 <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="UTF-8">
 <meta name="dcterms.date" content="2017-11-10">
-<meta name="dcterms.rights" content="© Copyright IBM Corporation 2014, 2017">
+<meta name="dcterms.rights" content="© Copyright IBM Corporation 2014, 2018">
 
 <meta name="description" content="You can use various services in the catalog with IBM Cloud Container Service. Many of the Cloud services help you to bring extra capabilities to the apps that you deploy in containers. Additionally, some Cloud services can be used to help you manage your containers.">
 <meta name="keywords" content="IBM Containers, containers, services, Bluemix, integrations, binding, alert notification, policies, notifications, Delivery Pipeline, pipeline, continuous delivery, single container, delivery pipeline, image, build, Vulnerability Advisor, security, service, image cleanup, environment properties, bind, container group, Devops Services, container, deploy">
@@ -17,7 +17,7 @@
   ibm: {
   country: "ZZ",
   type: "CT701"
-  
+
          }
        }
      }
@@ -982,13 +982,13 @@ editor</a>. <pre class="codeblock"><code>nano Dockerfile</code></pre>
 <li class="step stepexpand"><span class="cmd">Copy the following script into the Dockerfile.</span> <pre class="codeblock"><code>#Use the IBM Node image as a base image
 FROM registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/ibmnode:latest
 
-#Expose the port for your Personal Insights app, and set 
+#Expose the port for your Personal Insights app, and set
 #it as an environment variable as expected by cf apps
 ENV PORT=3000
 EXPOSE 3000
 ENV NODE_ENV production
 
-#Copy all app files from the current directory into the app 
+#Copy all app files from the current directory into the app
 #directory in your container. Set the app directory
 #as the working directory
 ADD . /app
@@ -998,10 +998,10 @@ WORKDIR /app
 RUN npm install
 
 #Sleep before the app starts. This command ensures that the
-#IBM Containers networking is finished before the app starts. 
+#IBM Containers networking is finished before the app starts.
 CMD (sleep 60; npm start)
 
-#Start the Personal Insight app. 
+#Start the Personal Insight app.
 CMD ["node", "/app/app.js"]</code></pre>
 </li>
 <li class="step stepexpand"><span class="cmd">Save your changes by pressing <span class="ph uicontrol">ctrl + o</span>. Confirm your changes by pressing

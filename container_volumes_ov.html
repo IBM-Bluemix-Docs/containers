@@ -2,7 +2,7 @@
 <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="UTF-8">
 <meta name="dcterms.date" content="2017-11-10">
-<meta name="dcterms.rights" content="© Copyright IBM Corporation 2014, 2017">
+<meta name="dcterms.rights" content="© Copyright IBM Corporation 2014, 2018">
 
 <meta name="description" content="A storage volume is used to persist or share data between containers in an organization's space.">
 <meta name="keywords" content="IBM Containers, containers, persistent storage, volume, creating, CLI, adding files, mount, exec, docker cp, data backup, writing, removing, file shares, storage, dashboard, gui, add, cli, fs, remove">
@@ -17,7 +17,7 @@
   ibm: {
   country: "ZZ",
   type: "CT701"
-  
+
          }
        }
      }
@@ -284,7 +284,7 @@ volume, you must add the following processes to your Dockerfile and entrypoint s
 </div><ol class="steps"><li class="step stepexpand"><span class="cmd">Create a Dockerfile in a local directory.</span> This example Dockerfile is creating a non-root user named <var class="keyword varname">myguest</var>.  <pre class="codeblock"><code>FROM registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/ibmnode:latest
 
 # Create group and user with GID &amp; UID <var class="keyword varname">1010</var>.
-# In this case your are creating a group and user named <var class="keyword varname">myguest</var>. 
+# In this case your are creating a group and user named <var class="keyword varname">myguest</var>.
 # The GUID and UID <var class="keyword varname">1010</var> is unlikely to create a conflict with any existing user GUIDs or UIDs in the image.
 # The GUID and UID must be between 0 and 65536. Otherwise, container creation fails.
 RUN groupadd --gid <var class="keyword varname">1010</var> <var class="keyword varname">myguest</var>
@@ -309,7 +309,7 @@ set -e
 MOUNTPATH="/<span class="ph filepath">mnt</span>/<span class="ph filepath">myvol</span>"
 MY_USER=${MY_USER:-"myguest"}
 
-# This function creates a subdirectory that is owned by 
+# This function creates a subdirectory that is owned by
 # the non-root user under the shared volume mount path.
 create_data_dir() {
   #Add the non-root user to primary group of root user.
@@ -378,7 +378,7 @@ d92ee43d-2af        registry.<var class="keyword varname" data-hd-keyref="Domain
 </li>
 <li class="step stepexpand"><span class="cmd">View permissions of your volume mount path.</span> <pre class="codeblock"><code>ls -al <span class="ph filepath">/mnt/myvol/</span></code></pre>
 
-<pre class="pre screen"><code>root@instance-006ff76b:/# ls -al /mnt/myvol/                                                                                                                                                             
+<pre class="pre screen"><code>root@instance-006ff76b:/# ls -al /mnt/myvol/
 total 12
 drwxr-xr-x 3 root    root    4096 Jul 13 19:03 .
 drwxr-xr-x 3 root    root    4096 Jul 13 19:03 ..
