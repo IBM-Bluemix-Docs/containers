@@ -62,7 +62,7 @@ Review changes you might need to make when updating to Kubernetes version 1.8.
 <thead>
 <tr>
 <th>Type</th>
-<th>Description
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -80,7 +80,7 @@ Review changes you might need to make when updating to Kubernetes version 1.8.
 <thead>
 <tr>
 <th>Type</th>
-<th>Description
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -126,7 +126,7 @@ Review changes you might need to make when updating to Kubernetes version 1.7.
 <thead>
 <tr>
 <th>Type</th>
-<th>Description
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -155,7 +155,7 @@ Review changes you might need to make when updating to Kubernetes version 1.7.
 <thead>
 <tr>
 <th>Type</th>
-<th>Description
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -178,8 +178,8 @@ Review changes you might need to make when updating to Kubernetes version 1.7.
   ```
   kubectl get pods -n <namespace> -o yaml | grep "scheduler.alpha.kubernetes.io/affinity" && echo "Action required"
   ```
-  </br>
-  <li>If `"Action required"` is returned, use the [_PodSpec_ ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/api-reference/v1.7/#podspec-v1-core) _affinity_ field instead of the `scheduler.alpha.kubernetes.io/affinity` annotation.
+  </br></li>
+  <li>If `"Action required"` is returned, use the [_PodSpec_ ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/api-reference/v1.7/#podspec-v1-core) _affinity_ field instead of the `scheduler.alpha.kubernetes.io/affinity` annotation.</li>
 </ol>
 </tr>
 <tr>
@@ -210,7 +210,7 @@ Review changes you might need to make when updating to Kubernetes version 1.7.
   ```
   kubectl annotate ns <namespace> --overwrite "net.beta.kubernetes.io/network-policy-"
   ```
-  </ol>
+  </li></ol>
 </tr>
 <tr>
 <td>Tolerations</td>
@@ -237,7 +237,7 @@ Review changes you might need to make when updating to Kubernetes version 1.7.
   `kubectl annotate nodes <node> scheduler.alpha.kubernetes.io/taints-`
   <li>Add a taint to each node:</br>
   `kubectl taint node <node> <taint>`
-  </ol>
+  </li></ol>
 </tr>
 <tr>
 <td>StatefulSet pod DNS</td>
