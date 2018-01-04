@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2017-12-18"
+lastupdated: "2018-01-05"
 
 ---
 
@@ -26,9 +26,20 @@ Review the Kubernetes versions that are available on {{site.data.keyword.contain
 - 1.7.4 (Default version)
 - 1.5.6
 
-The following information summarizes updates that are likely to have impact on deployed apps when you update a cluster to a new version. Review the [Kubernetes changelog ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG.md) for a complete list of changes in Kubernetes versions.
+To check which version of the Kubernetes CLI that you are running locally or that your cluster is running, run the following command and check the version.
 
-For more information on the updating process, see [Updating clusters](cs_cluster.html#cs_cluster_update) and [Updating worker nodes](cs_cluster.html#cs_cluster_worker_update).
+```
+kubectl version  --short
+```
+{: pre}
+
+Example output:
+
+```
+Client Version: 1.7.4
+Server Version: 1.7.4
+```
+{: screen}
 
 ## Update types
 {: #version_types}
@@ -44,6 +55,11 @@ Kubernetes provides these version update types:
 {: caption="Impacts of Kubernetes updates" caption-side="top"}
 
 By default, you cannot update a Kubernetes master more than two minor versions ahead. For example, if your current master is version 1.5 and you want to update to 1.8, you must update to 1.7 first. You can force the update to continue, but updating more than two minor versions might cause unexpected results.
+{: tip}
+
+The following information summarizes updates that are likely to have impact on deployed apps when you update a cluster to a new version. Review the [Kubernetes changelog ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG.md) for a complete list of changes in Kubernetes versions.
+
+For more information on the updating process, see [Updating clusters](cs_cluster.html#cs_cluster_update) and [Updating worker nodes](cs_cluster.html#cs_cluster_worker_update).
 
 ## Version 1.8
 {: #cs_v18}
@@ -62,7 +78,7 @@ Review changes you might need to make when updating to Kubernetes version 1.8.
 <thead>
 <tr>
 <th>Type</th>
-<th>Description
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -80,7 +96,7 @@ Review changes you might need to make when updating to Kubernetes version 1.8.
 <thead>
 <tr>
 <th>Type</th>
-<th>Description
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -88,7 +104,6 @@ Review changes you might need to make when updating to Kubernetes version 1.8.
 <td>Kubernetes dashboard login</td>
 <td>The URL for accessing the Kubernetes dashboard in version 1.8 has changed, and the login process includes a new authentication step. See [accessing the Kubernetes dashboard](cs_apps.html#cs_cli_dashboard) for more information.</td>
 </tr>
-<tr>
 <tr>
 <td>Kubernetes dashboard permissions</td>
 <td>To force users to log in with their credentials to view cluster resources in version 1.8, remove the 1.7 ClusterRoleBinding RBAC authorization. Run `kubectl delete clusterrolebinding -n kube-system kubernetes-dashboard`.</td>
@@ -126,7 +141,7 @@ Review changes you might need to make when updating to Kubernetes version 1.7.
 <thead>
 <tr>
 <th>Type</th>
-<th>Description
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -155,7 +170,7 @@ Review changes you might need to make when updating to Kubernetes version 1.7.
 <thead>
 <tr>
 <th>Type</th>
-<th>Description
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
@@ -178,8 +193,8 @@ Review changes you might need to make when updating to Kubernetes version 1.7.
   ```
   kubectl get pods -n <namespace> -o yaml | grep "scheduler.alpha.kubernetes.io/affinity" && echo "Action required"
   ```
-  </br>
-  <li>If `"Action required"` is returned, use the [_PodSpec_ ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/api-reference/v1.7/#podspec-v1-core) _affinity_ field instead of the `scheduler.alpha.kubernetes.io/affinity` annotation.
+  </br></li>
+  <li>If `"Action required"` is returned, use the [_PodSpec_ ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/api-reference/v1.7/#podspec-v1-core) _affinity_ field instead of the `scheduler.alpha.kubernetes.io/affinity` annotation.</li>
 </ol>
 </tr>
 <tr>
@@ -210,7 +225,7 @@ Review changes you might need to make when updating to Kubernetes version 1.7.
   ```
   kubectl annotate ns <namespace> --overwrite "net.beta.kubernetes.io/network-policy-"
   ```
-  </ol>
+  </li></ol>
 </tr>
 <tr>
 <td>Tolerations</td>
@@ -237,7 +252,7 @@ Review changes you might need to make when updating to Kubernetes version 1.7.
   `kubectl annotate nodes <node> scheduler.alpha.kubernetes.io/taints-`
   <li>Add a taint to each node:</br>
   `kubectl taint node <node> <taint>`
-  </ol>
+  </li></ol>
 </tr>
 <tr>
 <td>StatefulSet pod DNS</td>
