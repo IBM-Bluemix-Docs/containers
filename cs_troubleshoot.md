@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2017-12-14"
+lastupdated: "2017-01-04"
 
 ---
 
@@ -350,6 +350,47 @@ Use [DaemonSets ![External link icon](../icons/launch-glyph.svg "External link i
 
 <br />
 
+
+
+## Binding a service to a cluster results in same name error
+{: #cs_duplicate_nodes}
+
+{: tsSymptoms}
+When you run `bx cs cluster-service-bind <cluster_name> <namespace> <service_instance_name>` you see the following message.
+
+```
+Multiple services with the same name were found. 
+Run 'bx service list' to view available Bluemix service instances...
+```
+{: screen}
+
+{: tsCauses}
+Multiple service instances might have the same name in different regions.
+
+{: tsResolve}
+Use the service GUID instead of the service instance name in the `bx cs cluster-service-bind` command.
+
+1. [Log in to the region that includes the service instance to bind.](cs_regions.html#bluemix_regions)
+
+2. Get the GUID for the service instance.
+  ```
+  bx service show <service_instance_name> --guid
+  ```
+  {: pre}
+  
+  Output:
+  ```
+  Invoking 'cf service <service_instance_name> --guid'...
+  <service_instance_GUID>
+  ```
+  {: screen}
+3. Bind the service to the cluster again.
+  ```
+  bx cs cluster-service-bind <cluster_name> <namespace> <service_instance_GUID>
+  ```
+  {: pre}
+  
+<br />
 
 
 
