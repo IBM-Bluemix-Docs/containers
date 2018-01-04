@@ -33,7 +33,7 @@ For general information about Ingress services and how to get started using them
 |[Custom connect-timeouts and read-timeouts](#proxy-connect-timeout)|Adjust the time the application load balancer waits to connect to and read from the back-end app before the back-end app is considered to be not available.|
 |[Custom HTTP and HTTPS ports](#custom-port)|Change the default ports for HTTP and HTTPS network traffic.|
 |[Custom maximum client request body size](#client-max-body-size)|Adjust the size of the client request body that is allowed to be sent to the application load balancer.|
-|[External services](#proxy-external-service)|Adds definition of paths to external services, such as a service hosted in {{site.data.keyword.Bluemix_notm}}.|
+|[External services](#proxy-external-service)|Add definition of paths to external services, such as a service hosted in {{site.data.keyword.Bluemix_notm}}.|
 |[Global rate limits](#global-rate-limit)|For all services, limit the request processing rate and connections per a defined key.|
 |[HTTP redirects to HTTPS](#redirect-to-https)|Redirect insecure HTTP requests on your domain to HTTPS.|
 |[Keepalive requests](#keepalive-requests)|Configure the maximum number of requests that can be served through one keepalive connection.|
@@ -840,178 +840,179 @@ Choose a private application load balancer to route incoming requests with inste
   <br />
 
 
- ## Proxy buffers (proxy-buffers)
- {: #proxy-buffers}
 
- Configure proxy buffers for the application load balancer.
- {:shortdesc}
+## Proxy buffers (proxy-buffers)
+{: #proxy-buffers}
 
- <dl>
- <dt>Description</dt>
- <dd>
- Set the number and size of the buffers that are used to read a response for a single connection from the proxied server. The configuration is applied to all of the services in the Ingress host unless a service is specified. For example, if a configuration such as <code>serviceName=SERVICE number=2 size=1k</code> is specified, 1k is applied to the service. If a configuration such as <code>number=2 size=1k</code> is specified, 1k is applied to all of the services in the Ingress host.
- </dd>
- <dt>Sample Ingress resource YAML</dt>
- <dd>
- <pre class="codeblock">
- <code>apiVersion: extensions/v1beta1
+Configure proxy buffers for the application load balancer.
+{:shortdesc}
+
+<dl>
+<dt>Description</dt>
+<dd>
+Set the number and size of the buffers that are used to read a response for a single connection from the proxied server. The configuration is applied to all of the services in the Ingress host unless a service is specified. For example, if a configuration such as <code>serviceName=SERVICE number=2 size=1k</code> is specified, 1k is applied to the service. If a configuration such as <code>number=2 size=1k</code> is specified, 1k is applied to all of the services in the Ingress host.
+</dd>
+<dt>Sample Ingress resource YAML</dt>
+<dd>
+<pre class="codeblock">
+<code>apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: proxy-ingress
-  annotations:
-    ingress.bluemix.net/proxy-buffers: "serviceName=&lt;service_name&gt; number=&lt;number_of_buffers&gt; size=&lt;size&gt;"
+ name: proxy-ingress
+ annotations:
+   ingress.bluemix.net/proxy-buffers: "serviceName=&lt;service_name&gt; number=&lt;number_of_buffers&gt; size=&lt;size&gt;"
 spec:
-  tls:
-  - hosts:
-    - mydomain
-    secretName: mytlssecret
-  rules:
-  - host: mydomain
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: myservice
-          servicePort: 8080</code></pre>
+ tls:
+ - hosts:
+   - mydomain
+   secretName: mytlssecret
+ rules:
+ - host: mydomain
+   http:
+     paths:
+     - path: /
+       backend:
+         serviceName: myservice
+         servicePort: 8080</code></pre>
 
- <table>
-  <thead>
-  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
-  </thead>
-  <tbody>
-  <tr>
-  <td><code>annotations</code></td>
-  <td>Replace the following values:
-  <ul>
-  <li><code><em>&lt;serviceName&gt;</em></code>: Replace <em>&lt;serviceName&gt;</em> with a name for the service to apply proxy-buffers. </li>
-  <li><code><em>&lt;number_of_buffers&gt;</em></code>: Replace <em>&lt;number_of_buffers&gt;</em> with a number, such as <em>2</em>.</li>
-  <li><code><em>&lt;size&gt;</em></code>: Enter the size of each buffer in kilobytes (k or K), such as <em>1K</em>.</li>
-  </ul>
-  </td>
-  </tr>
-  </tbody>
-  </table>
-  </dd>
-  </dl>
-
- <br />
-
-
- ## Proxy busy buffers size (proxy-busy-buffers-size)
- {: #proxy-busy-buffers-size}
-
- Configure proxy busy buffers size for the application load balancer.
- {:shortdesc}
-
- <dl>
- <dt>Description</dt>
- <dd>
- When buffering of responses from the proxied server is enabled, limit the total size of buffers that can be busy sending a response to the client while the response is not yet fully read. In the meantime, the rest of the buffers can be used for reading the response and, if needed, buffering part of the response to a temporary file. The configuration is applied to all of the services in the Ingress host unless a service is specified. For example, if a configuration such as <code>serviceName=SERVICE size=1k</code> is specified, 1k is applied to the service. If a configuration such as <code>size=1k</code> is specified, 1k is applied to all of the services in the Ingress host.
+<table>
+ <thead>
+ <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
+ </thead>
+ <tbody>
+ <tr>
+ <td><code>annotations</code></td>
+ <td>Replace the following values:
+ <ul>
+ <li><code><em>&lt;serviceName&gt;</em></code>: Replace <em>&lt;serviceName&gt;</em> with a name for the service to apply proxy-buffers. </li>
+ <li><code><em>&lt;number_of_buffers&gt;</em></code>: Replace <em>&lt;number_of_buffers&gt;</em> with a number, such as <em>2</em>.</li>
+ <li><code><em>&lt;size&gt;</em></code>: Enter the size of each buffer in kilobytes (k or K), such as <em>1K</em>.</li>
+ </ul>
+ </td>
+ </tr>
+ </tbody>
+ </table>
  </dd>
+ </dl>
+
+<br />
 
 
- <dt>Sample Ingress resource YAML</dt>
- <dd>
+## Proxy busy buffers size (proxy-busy-buffers-size)
+{: #proxy-busy-buffers-size}
 
- <pre class="codeblock">
- <code>apiVersion: extensions/v1beta1
+Configure proxy busy buffers size for the application load balancer.
+{:shortdesc}
+
+<dl>
+<dt>Description</dt>
+<dd>
+When buffering of responses from the proxied server is enabled, limit the total size of buffers that can be busy sending a response to the client while the response is not yet fully read. In the meantime, the rest of the buffers can be used for reading the response and, if needed, buffering part of the response to a temporary file. The configuration is applied to all of the services in the Ingress host unless a service is specified. For example, if a configuration such as <code>serviceName=SERVICE size=1k</code> is specified, 1k is applied to the service. If a configuration such as <code>size=1k</code> is specified, 1k is applied to all of the services in the Ingress host.
+</dd>
+
+
+<dt>Sample Ingress resource YAML</dt>
+<dd>
+
+<pre class="codeblock">
+<code>apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: proxy-ingress
-  annotations:
-    ingress.bluemix.net/proxy-busy-buffers-size: "serviceName=&lt;serviceName&gt; size=&lt;size&gt;"
+ name: proxy-ingress
+ annotations:
+   ingress.bluemix.net/proxy-busy-buffers-size: "serviceName=&lt;serviceName&gt; size=&lt;size&gt;"
 spec:
-  tls:
-  - hosts:
-    - mydomain
-    secretName: mytlssecret
-  rules:
-  - host: mydomain
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: myservice
-          servicePort: 8080
-          </code></pre>
- <table>
-  <thead>
-  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
-  </thead>
-  <tbody>
-  <tr>
-  <td><code>annotations</code></td>
-  <td>Replace the following values:<ul>
-  <li><code><em>&lt;serviceName&gt;</em></code>: Replace <em>&lt;serviceName&gt;</em> with a name of the service to apply proxy-busy-buffers-size.</li>
-  <li><code><em>&lt;size&gt;</em></code>: Enter the size of each buffer in kilobytes (k or K), such as <em>1K</em>.</li>
-  </ul>
-  </td>
-  </tr>
-  </tbody></table>
+ tls:
+ - hosts:
+   - mydomain
+   secretName: mytlssecret
+ rules:
+ - host: mydomain
+   http:
+     paths:
+     - path: /
+       backend:
+         serviceName: myservice
+         servicePort: 8080
+         </code></pre>
+<table>
+ <thead>
+ <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
+ </thead>
+ <tbody>
+ <tr>
+ <td><code>annotations</code></td>
+ <td>Replace the following values:<ul>
+ <li><code><em>&lt;serviceName&gt;</em></code>: Replace <em>&lt;serviceName&gt;</em> with a name of the service to apply proxy-busy-buffers-size.</li>
+ <li><code><em>&lt;size&gt;</em></code>: Enter the size of each buffer in kilobytes (k or K), such as <em>1K</em>.</li>
+ </ul>
+ </td>
+ </tr>
+ </tbody></table>
 
-  </dd>
-  </dl>
-
- <br />
-
-
- ## Proxy buffer size (proxy-buffer-size)
- {: #proxy-buffer-size}
-
- Configure the proxy buffer size for the application load balancer.
- {:shortdesc}
-
- <dl>
- <dt>Description</dt>
- <dd>
- Set the size of the buffer that is used for reading the first part of the response that is received from the proxied server. This part of the response usually contains a small response header. The configuration is applied to all of the services in the Ingress host unless a service is specified. For example, if a configuration such as <code>serviceName=SERVICE size=1k</code> is specified, 1k is applied to the service. If a configuration such as <code>size=1k</code> is specified, 1k is applied to all of the services in the Ingress host.
  </dd>
+ </dl>
+
+<br />
 
 
- <dt>Sample Ingress resource YAML</dt>
- <dd>
+## Proxy buffer size (proxy-buffer-size)
+{: #proxy-buffer-size}
 
- <pre class="codeblock">
- <code>apiVersion: extensions/v1beta1
+Configure the proxy buffer size for the application load balancer.
+{:shortdesc}
+
+<dl>
+<dt>Description</dt>
+<dd>
+Set the size of the buffer that is used for reading the first part of the response that is received from the proxied server. This part of the response usually contains a small response header. The configuration is applied to all of the services in the Ingress host unless a service is specified. For example, if a configuration such as <code>serviceName=SERVICE size=1k</code> is specified, 1k is applied to the service. If a configuration such as <code>size=1k</code> is specified, 1k is applied to all of the services in the Ingress host.
+</dd>
+
+
+<dt>Sample Ingress resource YAML</dt>
+<dd>
+
+<pre class="codeblock">
+<code>apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: proxy-ingress
-  annotations:
-    ingress.bluemix.net/proxy-buffer-size: "serviceName=&lt;serviceName&gt; size=&lt;size&gt;"
+ name: proxy-ingress
+ annotations:
+   ingress.bluemix.net/proxy-buffer-size: "serviceName=&lt;serviceName&gt; size=&lt;size&gt;"
 spec:
-  tls:
-  - hosts:
-    - mydomain
-    secretName: mytlssecret
-  rules:
-  - host: mydomain
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: myservice
-          servicePort: 8080
- </code></pre>
+ tls:
+ - hosts:
+   - mydomain
+   secretName: mytlssecret
+ rules:
+ - host: mydomain
+   http:
+     paths:
+     - path: /
+       backend:
+         serviceName: myservice
+         servicePort: 8080
+</code></pre>
 
- <table>
-  <thead>
-  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
-  </thead>
-  <tbody>
-  <tr>
-  <td><code>annotations</code></td>
-  <td>Replace the following values:<ul>
-  <li><code><em>&lt;serviceName&gt;</em></code>: Replace <em>&lt;serviceName&gt;</em> with a name of the service to apply proxy-busy-buffers-size.</li>
-  <li><code><em>&lt;size&gt;</em></code>: Enter the size of each buffer in kilobytes (k or K), such as <em>1K</em>.</li>
-  </ul>
-  </td>
-  </tr>
-  </tbody></table>
+<table>
+ <thead>
+ <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
+ </thead>
+ <tbody>
+ <tr>
+ <td><code>annotations</code></td>
+ <td>Replace the following values:<ul>
+ <li><code><em>&lt;serviceName&gt;</em></code>: Replace <em>&lt;serviceName&gt;</em> with a name of the service to apply proxy-busy-buffers-size.</li>
+ <li><code><em>&lt;size&gt;</em></code>: Enter the size of each buffer in kilobytes (k or K), such as <em>1K</em>.</li>
+ </ul>
+ </td>
+ </tr>
+ </tbody></table>
 
-  </dd>
-  </dl>
+ </dd>
+ </dl>
 
- <br />
+<br />
 
 
 
