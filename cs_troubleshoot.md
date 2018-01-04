@@ -353,6 +353,7 @@ Use [DaemonSets ![External link icon](../icons/launch-glyph.svg "External link i
 
 
 
+
 ## After updating or reloading a worker node, duplicate nodes and pods appear
 {: #cs_duplicate_nodes}
 
