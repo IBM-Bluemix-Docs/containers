@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2017-12-01"
+lastupdated: "2017-01-02"
 
 ---
 
@@ -99,11 +99,10 @@ bx plugin list
 ## bx cs commands
 {: #cs_commands}
 
-
 ### bx cs albs --cluster CLUSTER
 {: #cs_albs}
 
-View the status of all application load balancers (ALBs) in a cluster. An ALB is also called an Ingress controller. If no ALB IDs are returned, then the cluster does not have a portable subnet. You can [create](#cs_cluster_subnet_create) or [add](#cs_cluster_subnet_add) subnets to a cluster.
+View the status of all application load balancers in a cluster. If no application load balancer IDs are returned, then the cluster does not have a portable subnet. You can [create](#cs_cluster_subnet_create) or [add](#cs_cluster_subnet_add) subnets to a cluster.
 
 <strong>Command options</strong>:
 
@@ -119,50 +118,52 @@ View the status of all application load balancers (ALBs) in a cluster. An ALB is
   ```
   {: pre}
 
+
+
 ### bx cs alb-configure --albID ALB_ID [--enable][--disable][--user-ip USERIP]
 {: #cs_alb_configure}
 
-Enable or disable an application load balancer (ALB), also called the Ingress controller, in your standard cluster. The public application load balancer is enabled by default.
+Enable or disable an application load balancer in your standard cluster. The public application load balancer is enabled by default.
 
 **Command options**:
 
    <dl>
    <dt><code><em>--albID </em>ALB_ID</code></dt>
-   <dd>The ID for an alb. Run <code>bx cs albs <em>--cluster </em>CLUSTER</code> to view the IDs for the ALBs in a cluster. This value is required.</dd>
+   <dd>The ID for an application load balancer. Run <code>bx cs albs <em>--cluster </em>CLUSTER</code> to view the IDs for the application load balancers in a cluster. This value is required.</dd>
 
    <dt><code>--enable</code></dt>
-   <dd>Include this flag to enable an ALB in a cluster.</dd>
+   <dd>Include this flag to enable an application load balancer in a cluster.</dd>
 
    <dt><code>--disable</code></dt>
-   <dd>Include this flag to disable an ALB in a cluster.</dd>
+   <dd>Include this flag to disable an application load balancer in a cluster.</dd>
 
    <dt><code>--user-ip <em>USER_IP</em></code></dt>
    <dd>
 
    <ul>
-    <li>This parameter is available for a private alb only</li>
-    <li>The private ALB is deployed with an IP address from a user-provided private subnet. If no IP address is provided, the ALB is deployed with a random IP address from a private subnet in IBM Cloud infrastructure (SoftLayer).</li>
+    <li>This parameter is available for a private application load balancer only</li>
+    <li>The private application load balancer is deployed with an IP address from a user-provided private subnet. If no IP address is provided, the application load balancer is deployed with a private IP address from the portable private subnet that was provisioned automatically when you created the cluster.</li>
    </ul>
    </dd>
    </dl>
 
 **Examples**:
 
-  Example for enabling an ALB:
+  Example for enabling an application load balancer:
 
   ```
   bx cs alb-configure --albID my_alb_id --enable
   ```
   {: pre}
 
-  Example for disabling an ALB:
+  Example for disabling an application load balancer:
 
   ```
   bx cs alb-configure --albID my_alb_id --disable
   ```
   {: pre}
 
-  Example for enabling an ALB with a user-provided IP address:
+  Example for enabling an application load balancer with a user-provided IP address:
 
   ```
   bx cs alb-configure --albID my_private_alb_id --enable --user-ip user_ip
@@ -172,13 +173,13 @@ Enable or disable an application load balancer (ALB), also called the Ingress co
 ### bx cs alb-get --albID ALB_ID
 {: #cs_alb_get}
 
-View the details of an application load balancer (ALB).
+View the details of an application load balancer.
 
 <strong>Command options</strong>:
 
    <dl>
    <dt><code><em>--albID </em>ALB_ID</code></dt>
-   <dd>The ID for an ALB. Run <code>bx cs albs --cluster <em>CLUSTER</em></code> to view the IDs for the albs in a cluster. This value is required.</dd>
+   <dd>The ID for an application load balancer. Run <code>bx cs albs --cluster <em>CLUSTER</em></code> to view the IDs for the application load balancers in a cluster. This value is required.</dd>
    </dl>
 
 **Example**:
@@ -203,6 +204,101 @@ View the application load balancer types that are supported in the region.
   bx cs alb-types
   ```
   {: pre}
+
+
+### bx cs apiserver-config-set
+{: #cs_apiserver_config_set}
+
+Set an option for a cluster's Kubernetes API server configuration. This command must be combined with one of the following subcommands for the configuration option you want to set.
+
+#### bx cs apiserver-config-get audit-webhook CLUSTER
+{: #cs_apiserver_api_webhook_get}
+
+View the URL for the remote logging service that you are sending API server audit logs to. The URL was specified when you created the webhook backend for the API server configuration.
+
+<strong>Command options</strong>:
+
+   <dl>
+   <dt><code><em>CLUSTER</em></code></dt>
+   <dd>The name or ID of the cluster. This value is required.</dd>
+   </dl>
+
+**Example**:
+
+  ```
+  bx cs apiserver-config-get audit-webhook my_cluster
+  ```
+  {: pre}
+
+#### bx cs apiserver-config-set audit-webhook CLUSTER [--remoteServer SERVER_URL_OR_IP] [--caCert CA_CERT_PATH] [--clientCert CLIENT_CERT_PATH] [--clientKey CLIENT_KEY_PATH]
+{: #cs_apiserver_api_webhook_set}
+
+Set the webhook backend for the API server configuration. The webhook backend forwards API server audit logs to a remote server. A webhook configuration is created based on the information you provide in this command's flags. If you do not provide any information in the flags, a default webhook configuration is used.
+
+<strong>Command options</strong>:
+
+   <dl>
+   <dt><code><em>CLUSTER</em></code></dt>
+   <dd>The name or ID of the cluster. This value is required.</dd>
+
+   <dt><code>--remoteServer <em>SERVER_URL</em></code></dt>
+   <dd>The URL or IP address for the remote logging service you want to send audit logs to. If you provide an insecure server URL, any certificates are ignored. This value is optional.</dd>
+
+   <dt><code>--caCert <em>CA_CERT_PATH</em></code></dt>
+   <dd>The filepath for the CA certificate that is used to verify the remote logging service. This value is optional.</dd>
+
+   <dt><code>--clientCert <em>CLIENT_CERT_PATH</em></code></dt>
+   <dd>The filepath for the client certificate that is used to authenticate against the remote logging service. This value is optional.</dd>
+
+   <dt><code>--clientKey <em> CLIENT_KEY_PATH</em></code></dt>
+   <dd>The filepath for the corresponding client key that is used to connect to the remote logging service. This value is optional.</dd>
+   </dl>
+
+**Example**:
+
+  ```
+  bx cs apiserver-config-set audit-webhook my_cluster --remoteServer https://audit.example.com/audit --caCert /mnt/etc/kubernetes/apiserver-audit/ca.pem --clientCert /mnt/etc/kubernetes/apiserver-audit/cert.pem --clientKey /mnt/etc/kubernetes/apiserver-audit/key.pem
+  ```
+  {: pre}
+
+#### bx cs apiserver-config-unset audit-webhook CLUSTER
+{: #cs_apiserver_api_webhook_unset}
+
+Disable the webhook backend configuration for the cluster's API server. Diabling the webhook backend stops forwarding API server audit logs to a remote server.
+
+<strong>Command options</strong>:
+
+   <dl>
+   <dt><code><em>CLUSTER</em></code></dt>
+   <dd>The name or ID of the cluster. This value is required.</dd>
+   </dl>
+
+**Example**:
+
+  ```
+  bx cs apiserver-config-unset audit-webhook my_cluster
+  ```
+  {: pre}
+
+### bx cs apiserver-refresh CLUSTER
+{: #cs_apiserver_refresh}
+
+Restart the Kubernetes master in the cluster to apply changes to the API server configuration.
+
+<strong>Command options</strong>:
+
+   <dl>
+   <dt><code><em>CLUSTER</em></code></dt>
+   <dd>The name or ID of the cluster. This value is required.</dd>
+   </dl>
+
+**Example**:
+
+  ```
+  bx cs apiserver-refresh my_cluster
+  ```
+  {: pre}
+
 
 ### bx cs cluster-config CLUSTER [--admin] [--export]
 {: #cs_cluster_config}
@@ -231,7 +327,7 @@ bx cs cluster-config my_cluster
 
 
 
-### bx cs cluster-create [--file FILE_LOCATION] [--hardware HARDWARE] --location LOCATION --machine-type MACHINE_TYPE --name NAME [--kube-version MAJOR.MINOR.PATCH] [--no-subnet] [--private-vlan PRIVATE_VLAN] [--public-vlan PUBLIC_VLAN] [--workers WORKER]
+### bx cs cluster-create [--file FILE_LOCATION] [--hardware HARDWARE] --location LOCATION --machine-type MACHINE_TYPE --name NAME [--kube-version MAJOR.MINOR.PATCH] [--no-subnet] [--private-vlan PRIVATE_VLAN] [--public-vlan PUBLIC_VLAN] [--workers WORKER] [--disable-disk-encrypt]
 {: #cs_cluster_create}
 
 To create a cluster in your organization.
@@ -255,6 +351,7 @@ public-vlan: <em>&lt;public_vlan&gt;</em>
 hardware: <em>&lt;shared_or_dedicated&gt;</em>
 workerNum: <em>&lt;number_workers&gt;</em>
 kube-version: <em>&lt;kube-version&gt;</em>
+
 </code></pre>
 
 
@@ -298,7 +395,10 @@ kube-version: <em>&lt;kube-version&gt;</em>
      </tr>
      <tr>
       <td><code><em>kube-version</em></code></td>
-      <td>The Kubernetes version for the cluster master node. This value is optional. Unless specified, the cluster is created with the default of supported Kubernetes versions. To see available versions, run <code>bx cs kube-versions</code>.</td>
+      <td>The Kubernetes version for the cluster master node. This value is optional. Unless specified, the cluster is created with the default of supported Kubernetes versions. To see available versions, run <code>bx cs kube-versions</code>.</td></tr>
+      <tr>
+      <td><code>diskEncryption: <em>false</em></code></td>
+      <td>Worker nodes feature disk encryption by default; [learn more](cs_security.html#cs_security_worker). To disable encryption, include this option and set the value to <code>false</code>.</td></tr>
      </tbody></table>
     </p></dd>
 
@@ -355,6 +455,9 @@ kube-version: <em>&lt;kube-version&gt;</em>
 <dd>The number of worker nodes that you want to deploy in your cluster. If you do not specify this option, a cluster with 1 worker node is created. This value is optional for standard clusters and is not available for lite clusters.
 
 <p><strong>Note:</strong> Every worker node is assigned a unique worker node ID and domain name that must not be manually changed after the cluster is created. Changing the ID or domain name prevents the Kubernetes master from managing your cluster.</p></dd>
+
+<dt><code>--disable-disk-encrypt</code></dt>
+<dd>Worker nodes feature disk encryption by default; [learn more](cs_security.html#cs_security_worker). To disable encryption, include this option.</dd>
 </dl>
 
 **Examples**:
@@ -757,43 +860,15 @@ Initialize the {{site.data.keyword.containershort_notm}} plug-in or specify the 
 
    <dl>
    <dt><code>--host <em>HOST</em></code></dt>
-   <dd>The {{site.data.keyword.containershort_notm}} API endpoint that you want to use.  This value is optional. Examples:
-
-    <ul>
-    <li>US South:
-
-    <pre class="codeblock">
-    <code>bx cs init --host https://us-south.containers.bluemix.net</code>
-    </pre></li>
-
-    <li>US East:
-
-    <pre class="codeblock">
-    <code>bx cs init --host https://us-east.containers.bluemix.net</code>
-    </pre>
-    <p><strong>Note</strong>: US-East is available for use with CLI commands only.</p></li>
-
-    <li>UK South:
-
-    <pre class="codeblock">
-    <code>bx cs init --host https://uk-south.containers.bluemix.net</code>
-    </pre></li>
-
-    <li>EU Central:
-
-    <pre class="codeblock">
-    <code>bx cs init --host https://eu-central.containers.bluemix.net</code>
-    </pre></li>
-
-    <li>AP South:
-
-    <pre class="codeblock">
-    <code>bx cs init --host https://ap-south.containers.bluemix.net</code>
-    </pre></li></ul>
-</dd>
-</dl>
+   <dd>The {{site.data.keyword.containershort_notm}} API endpoint to use.  This value is optional. [View the available API endpoint values.](cs_regions.html#container_regions)</dd>
+   </dl>
 
 
+
+```
+bx cs init --host https://uk-south.containers.bluemix.net
+```
+{: pre}
 
 ### bx cs kube-versions
 {: #cs_kube_versions}
@@ -827,10 +902,10 @@ View a list of available locations for you to create a cluster in.
   ```
   {: pre}
 
-### bx cs logging-config-create CLUSTER --logsource LOG_SOURCE [--namespace KUBERNETES_NAMESPACE] [--hostname LOG_SERVER_HOSTNAME] [--port LOG_SERVER_PORT] --type LOG_TYPE
+### bx cs logging-config-create CLUSTER --logsource LOG_SOURCE [--namespace KUBERNETES_NAMESPACE] [--hostname LOG_SERVER_HOSTNAME_OR_IP] [--port LOG_SERVER_PORT] [--space CLUSTER_SPACE] [--org CLUSTER_ORG] --type LOG_TYPE [--json]
 {: #cs_logging_create}
 
-Create a logging configuration. By default, namespace logs are forwarded to {{site.data.keyword.loganalysislong_notm}}. You can use this command to forward namespace logs to an external syslog server. You can also use this command to forward logs for applications, worker nodes, Kubernetes clusters, and Ingress controllers to {{site.data.keyword.loganalysisshort_notm}} or to an external syslog server.
+Create a logging configuration. You can use this command to forward logs for containers, applications, worker nodes, Kubernetes clusters, and Ingress application load balancers to {{site.data.keyword.loganalysisshort_notm}} or to an external syslog server.
 
 <strong>Command options</strong>:
 
@@ -838,34 +913,47 @@ Create a logging configuration. By default, namespace logs are forwarded to {{si
 <dt><code><em>CLUSTER</em></code></dt>
 <dd>The name or ID of the cluster.</dd>
 <dt><code>--logsource <em>LOG_SOURCE</em></code></dt>
-<dd>The log source for which you want to enable log forwarding. Accepted values are <code>application</code>, <code>worker</code>, <code>kubernetes</code>, and <code>ingress</code>. This value is required.</dd>
+<dd>The log source that you want to enable log forwarding for. Accepted values are <code>container</code>, <code>application</code>, <code>worker</code>, <code>kubernetes</code>, and <code>ingress</code>. This value is required.</dd>
 <dt><code>--namespace <em>KUBERNETES_NAMESPACE</em></code></dt>
-<dd>The Docker container namespace from which you want to forward logs to syslog. Log forwarding is not supported for the <code>ibm-system</code> and <code>kube-system</code> Kubernetes namespaces. This value is required for namespaces. If you do not specify a namespace, then all namespaces in the container use this configuration.</dd>
+<dd>The Docker container namespace that you want to forward logs from. Log forwarding is not supported for the <code>ibm-system</code> and <code>kube-system</code> Kubernetes namespaces. This value is valid only for the container log source and is optional. If you do not specify a namespace, then all namespaces in the container use this configuration.</dd>
 <dt><code>--hostname <em>LOG_SERVER_HOSTNAME</em></code></dt>
-<dd>The hostname or IP address of the log collector server. This value is required when the logging type is <code>syslog</code>.</dd>
+<dd>When the logging type is <code>syslog</code>, the hostname or IP address of the log collector server. This value is required for <code>syslog</code>. When the logging type is <code>ibm</code>, the {{site.data.keyword.loganalysislong_notm}} ingestion URL. You can find the list of available ingestion URLs [here](/docs/services/CloudLogAnalysis/log_ingestion.html#log_ingestion_urls). If you do not specify an ingestion URL, the endpoint for the region where your cluster was created is used.</dd>
 <dt><code>--port <em>LOG_SERVER_PORT</em></code></dt>
-<dd>The port of the log collector server. This value is optional when the logging type is <code>syslog</code>. If you do not specify a port, then the standard port <code>514</code> is used for <code>syslog</code>.</dd>
+<dd>The port of the log collector server. This value is optional. If you do not specify a port, then the standard port <code>514</code> is used for <code>syslog</code> and the standard port <code>9091</code> is used for <code>ibm</code>.</dd>
+<dt><code>--space <em>CLUSTER_SPACE</em></code></dt>
+<dd>The name of the space that you want to send logs to. This value is valid only for log type <code>ibm</code> and is optional. If you do not specify a space, logs are sent to the account level.</dd>
+<dt><code>--org <em>CLUSTER_ORG</em></code></dt>
+<dd>The name of the org that the space is in. This value is valid only for log type <code>ibm</code> and is required if you specified a space.</dd>
 <dt><code>--type <em>LOG_TYPE</em></code></dt>
 <dd>The log forwarding protocol that you want to use. Currently, <code>syslog</code> and <code>ibm</code> are supported. This value is required.</dd>
+<dt><code>--json</code></dt>
+<dd>Optionally prints the command output in JSON format.</dd>
 </dl>
 
 **Examples**:
 
-Example for log source `namespace`:
+Example for log type `ibm` that forwards from a `container` log source on default port 9091:
 
   ```
-  bx cs logging-config-create my_cluster --logsource namespaces --namespace my_namespace --hostname localhost --port 5514 --type syslog
-  ```
-  {: pre}
-
-Example for log source `ingress`:
-
-  ```
-  bx cs logging-config-create my_cluster --logsource ingress --type ibm
+  bx cs logging-config-create my_cluster --logsource container --namespace my_namespace --hostname ingest.logging.ng.bluemix.net --type ibm
   ```
   {: pre}
 
-### bx cs logging-config-get CLUSTER [--logsource LOG_SOURCE]
+Example for log type `syslog` that fowards from a `container` log source on default port 514:
+
+  ```
+  bx cs logging-config-create my_cluster --logsource container --namespace my_namespace  --hostname my_hostname-or-IP --type syslog
+  ```
+  {: pre}
+
+  Example for log type `syslog` that forwards logs from an `ingress` source on a port different than the default:
+
+    ```
+    bx cs logging-config-create my_cluster --logsource container --hostname my_hostname-or-IP --port 5514 --type syslog
+    ```
+    {: pre}
+
+### bx cs logging-config-get CLUSTER [--logsource LOG_SOURCE] [--json]
 {: #cs_logging_get}
 
 View all log forwarding configurations for a cluster, or filter logging configurations based on log source.
@@ -876,7 +964,9 @@ View all log forwarding configurations for a cluster, or filter logging configur
    <dt><code><em>CLUSTER</em></code></dt>
    <dd>The name or ID of the cluster. This value is required.</dd>
    <dt><code>--logsource <em>LOG_SOURCE</em></code></dt>
-   <dd>The kind of log source for which you want to filter. Only logging configurations of this log source in the cluster are returned. Accepted values are <code>namespaces</code>, <code>application</code>, <code>worker</code>, <code>kubernetes</code>, and <code>ingress</code>. This value is optional.</dd>
+   <dd>The kind of log source for which you want to filter. Only logging configurations of this log source in the cluster are returned. Accepted values are <code>container</code>, <code>application</code>, <code>worker</code>, <code>kubernetes</code>, and <code>ingress</code>. This value is optional.</dd>
+   <dt><code>--json</code></dt>
+   <dd>Optionally prints the command output in JSON format.</dd>
    </dl>
 
 **Example**:
@@ -887,61 +977,65 @@ View all log forwarding configurations for a cluster, or filter logging configur
   {: pre}
 
 
-### bx cs logging-config-rm CLUSTER --id LOG_CONFIG_ID
+### bx cs logging-config-rm CLUSTER LOG_CONFIG_ID
 {: #cs_logging_rm}
 
-Deletes a log forwarding configuration. For a Docker container namespace, you can stop forwarding logs to a syslog server. The namespace continues to forward logs to {{site.data.keyword.loganalysislong_notm}}. For a log source other than a Docker container namespace, you can stop forwarding logs to a syslog server or to {{site.data.keyword.loganalysisshort_notm}}.
+Deletes a log forwarding configuration. This stops log forwarding to a syslog server or to {{site.data.keyword.loganalysisshort_notm}}.
 
 <strong>Command options</strong>:
 
    <dl>
    <dt><code><em>CLUSTER</em></code></dt>
    <dd>The name or ID of the cluster. This value is required.</dd>
-   <dt><code>--id <em>LOG_CONFIG_ID</em></code></dt>
+   <dt><code><em>LOG_CONFIG_ID</em></code></dt>
    <dd>The logging configuration ID that you want to remove from the log source. This value is required.</dd>
    </dl>
 
 **Example**:
 
   ```
-  bx cs logging-config-rm my_cluster --id my_log_config_id
+  bx cs logging-config-rm my_cluster f4bc77c0-ee7d-422d-aabf-a4e6b977264e
   ```
   {: pre}
 
 
-### bx cs logging-config-update CLUSTER [--namespace NAMESPACE] [--id LOG_CONFIG_ID] [--hostname LOG_SERVER_HOSTNAME] [--port LOG_SERVER_PORT] --type LOG_TYPE
+### bx cs logging-config-update CLUSTER LOG_CONFIG_ID [--hostname LOG_SERVER_HOSTNAME_OR_IP] [--port LOG_SERVER_PORT] [--space CLUSTER_SPACE] [--org CLUSTER_ORG] --type LOG_TYPE [--json]
 {: #cs_logging_update}
 
-Update log forwarding to the logging server you want use. For a Docker container namespace, you can use this command to update details for the current syslog server or change to a different syslog server. For a logging source other than a Docker container namespace, you can use this command to change the log collector server type. Currently, 'syslog' and 'ibm' are supported as log types.
+Update the details of a log forwarding configuration.
 
 <strong>Command options</strong>:
 
    <dl>
    <dt><code><em>CLUSTER</em></code></dt>
    <dd>The name or ID of the cluster. This value is required.</dd>
-   <dt><code>--namespace <em>NAMESPACE</em></code></dt>
-   <dd>The Docker container namespace from which you want to forward logs to syslog. Log forwarding is not supported for the <code>ibm-system</code> and <code>kube-system</code> Kubernetes namespaces. This value is required for namespaces.</dd>
-   <dt><code>--id <em>LOG_CONFIG_ID</em></code></dt>
-   <dd>The logging configuration ID that you want to update. This value is required for log sources other than Docker container namespaces.</dd>
+   <dt><code><em>LOG_CONFIG_ID</em></code></dt>
+   <dd>The logging configuration ID that you want to update. This value is required.</dd>
    <dt><code>--hostname <em>LOG_SERVER_HOSTNAME</em></code></dt>
-   <dd>The hostname or IP address of the log collector server. This value is required when the logging type is <code>syslog</code>.</dd>
+   <dd>When the logging type is <code>syslog</code>, the hostname or IP address of the log collector server. This value is required for <code>syslog</code>. When the logging type is <code>ibm</code>, the {{site.data.keyword.loganalysislong_notm}} ingestion URL. You can find the list of available ingestion URLs [here](/docs/services/CloudLogAnalysis/log_ingestion.html#log_ingestion_urls). If you do not specify an ingestion URL, the endpoint for the region where your cluster was created is used.</dd>
    <dt><code>--port <em>LOG_SERVER_PORT</em></code></dt>
-   <dd>The port of the log collector server. This value is optional when the logging type is <code>syslog</code>. If you do not specify a port, then the standard port 514 is used for <code>syslog</code>.</dd>
+   <dd>The port of the log collector server. This value is optional when the logging type is <code>syslog</code>. If you do not specify a port, then the standard port <code>514</code> is used for <code>syslog</code> and <code>9091</code> is used for <code>ibm</code>.</dd>
+   <dt><code>--space <em>CLUSTER_SPACE</em></code></dt>
+   <dd>The name of the space that you want to send logs to. This value is valid only for log type <code>ibm</code> and is optional. If you do not specify a space, logs are sent to the account level.</dd>
+   <dt><code>--org <em>CLUSTER_ORG</em></code></dt>
+   <dd>The name of the org that the space is in. This value is valid only for log type <code>ibm</code> and is required if you specified a space.</dd>
    <dt><code>--type <em>LOG_TYPE</em></code></dt>
    <dd>The log forwarding protocol that you want to use. Currently, <code>syslog</code> and <code>ibm</code> are supported. This value is required.</dd>
+   <dt><code>--json</code></dt>
+   <dd>Optionally prints the command output in JSON format.</dd>
    </dl>
 
 **Example for log type `ibm`**:
 
   ```
-  bx cs logging-config-update my_cluster --id f4bc77c0-ee7d-422d-aabf-a4e6b977264e --type ibm
+  bx cs logging-config-update my_cluster f4bc77c0-ee7d-422d-aabf-a4e6b977264e --type ibm
   ```
   {: pre}
 
 **Example for log type `syslog`**:
 
   ```
-  bx cs logging-config-update my_cluster --namespace my_namespace --hostname localhost --port 5514 --type syslog
+  bx cs logging-config-update my_cluster f4bc77c0-ee7d-422d-aabf-a4e6b977264e --hostname localhost --port 5514 --type syslog
   ```
   {: pre}
 
@@ -951,7 +1045,7 @@ Update log forwarding to the logging server you want use. For a Docker container
 
 View a list of available machine types for your worker nodes. Each machine type includes the amount of virtual CPU, memory, and disk space for each worker node in the cluster.
 - Machine types with `u2c` or `b2c` in the name use local disk instead of storage area networing (SAN) for reliability. Reliability benefits include higher throughput when serializing bytes to the local disk and reduced file system degradation due to network failures. These machine types contain 25GB local disk storage for the OS file system and 100GB local disk storage for `/var/lib/docker`, the directory that all the container data is written to.
-- Machine types that include `encrypted` in the name encrypt the host's docker data. The `/var/lib/docker` directory, where all container data is stored, is encrypted with LUKS encryption.
+- Machine types that include `encrypted` in the name encrypt the host's Docker data. The `/var/lib/docker` directory, where all container data is stored, is encrypted with LUKS encryption.
 - Machine types with `u1c` or `b1c` in the name are deprecated, such as `u1c.2x4`. To start using `u2c` and `b2c` machine types, use the `bx cs worker-add` command to add  worker nodes with the updated machine type. Then, remove the worker nodes that are using the deprecated machine types by using the `bx cs worker-rm` command.
 </p>
 
@@ -965,10 +1059,92 @@ View a list of available machine types for your worker nodes. Each machine type 
 **Example**:
 
   ```
-  bx cs machine-types LOCATION
+  bx cs machine-types dal10
   ```
   {: pre}
 
+### bx cs region
+{: #cs_region}
+
+Find the {{site.data.keyword.containershort_notm}} region that you are currently in. You create and manage clusters specific to the region. Use the `bx cs region-set` command to change regions.
+
+**Example**:
+
+```
+bx cs region
+```
+{: pre}
+
+**Output**:
+```
+Region: us-south
+```
+{: screen}
+
+### bx cs region-set [REGION]
+{: #cs_region-set}
+
+Set the region for {{site.data.keyword.containershort_notm}}. You create and manage clusters specific to the region, and you might want clusters in multiple regions for high availability.
+
+For example, you can log in to {{site.data.keyword.Bluemix_notm}} in the US South region and create a cluster. Next, you can use `bx cs region-set eu-central` to target the EU Central region and create another cluster. Finally, you can use `bx cs region-set us-south` to return to US South to manage your cluster in that region.
+
+**Command options**:
+
+<dl>
+<dt><code><em>REGION</em></code></dt>
+<dd>Enter the region that you want to target. This value is optional. If you do not provide the region, you can select it from the list in the output.
+
+For a list of available regions, review [regions and locations](cs_regions.html) or use the `bx cs regions` [command](#cs_regions).</dd></dl>
+
+**Example**:
+
+```
+bx cs region-set eu-central
+```
+{: pre}
+
+```
+bx cs region-set
+```
+{: pre}
+
+**Output**:
+```
+Choose a region:
+1. ap-north
+2. ap-south
+3. eu-central
+4. uk-south
+5. us-east
+6. us-south
+Enter a number> 3
+OK
+```
+{: screen}
+
+### bx cs regions
+{: #cs_regions}
+
+Lists the available regions. The `Region Name` is the {{site.data.keyword.containershort_notm}} name, and the `Region Alias` is the general {{site.data.keyword.Bluemix_notm}} name for the region.
+
+**Example**:
+
+```
+bx cs regions
+```
+{: pre}
+
+**Output**:
+```
+Region Name   Region Alias
+ap-north      jp-tok
+ap-south      au-syd
+eu-central    eu-de
+uk-south      eu-gb
+us-east       us-east
+us-south      us-south
+```
+{: screen}
 
 ### bx cs subnets
 {: #cs_subnets}
@@ -1036,7 +1212,7 @@ Create webhooks.
   {: pre}
 
 
-### bx cs worker-add --cluster CLUSTER [--file FILE_LOCATION] [--hardware HARDWARE] --machine-type MACHINE_TYPE --number NUMBER --private-vlan PRIVATE_VLAN --public-vlan PUBLIC_VLAN
+### bx cs worker-add --cluster CLUSTER [--file FILE_LOCATION] [--hardware HARDWARE] --machine-type MACHINE_TYPE --number NUMBER --private-vlan PRIVATE_VLAN --public-vlan PUBLIC_VLAN [--disable-disk-encrypt]
 {: #cs_worker_add}
 
 Add worker nodes to your standard cluster.
@@ -1059,7 +1235,8 @@ machine-type: <em>&lt;machine_type&gt;</em>
 private-vlan: <em>&lt;private_vlan&gt;</em>
 public-vlan: <em>&lt;public_vlan&gt;</em>
 hardware: <em>&lt;shared_or_dedicated&gt;</em>
-workerNum: <em>&lt;number_workers&gt;</em></code></pre>
+workerNum: <em>&lt;number_workers&gt;</em>
+</code></pre>
 
 <table>
 <caption>Table 2. Understanding the YAML file components</caption>
@@ -1095,6 +1272,9 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 <td><code>workerNum</code></td>
 <td>Replace <code><em>&lt;number_workers&gt;</em></code> with the number of worker nodes that you want to deploy.</td>
 </tr>
+<tr>
+<td><code>diskEncryption: <em>false</em></code></td>
+<td>Worker nodes feature disk encryption by default; [learn more](cs_security.html#cs_security_worker). To disable encryption, include this option and set the value to <code>false</code>.</td></tr>
 </tbody></table></p></dd>
 
 <dt><code>--hardware <em>HARDWARE</em></code></dt>
@@ -1115,6 +1295,9 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
 <dd>The public VLAN that was specified when the cluster was created. This value is optional.
 
 <p><strong>Note:</strong> The public and private VLANs that you specify must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></dd>
+
+<dt><code>--disable-disk-encrypt</code></dt>
+<dd>Worker nodes feature disk encryption by default; [learn more](cs_security.html#cs_security_worker). To disable encryption, include this option.</dd>
 </dl>
 
 **Examples**:
@@ -1132,7 +1315,7 @@ workerNum: <em>&lt;number_workers&gt;</em></code></pre>
   {: pre}
 
 
-### bx cs worker-get WORKER_NODE_ID
+### bx cs worker-get [CLUSTER_NAME_OR_ID] WORKER_NODE_ID
 {: #cs_worker_get}
 
 View details of a worker node.
@@ -1140,6 +1323,8 @@ View details of a worker node.
 <strong>Command options</strong>:
 
    <dl>
+   <dt><code><em>CLUSTER_NAME_OR_ID</em></code></dt>
+   <dd>The name or ID of the worker node's cluster. This value is optional.</dd>
    <dt><code><em>WORKER_NODE_ID</em></code></dt>
    <dd>The ID for a worker node. Run <code>bx cs workers <em>CLUSTER</em></code> to view the IDs for the worker nodes in a cluster. This value is required.</dd>
    </dl>
@@ -1147,7 +1332,7 @@ View details of a worker node.
 **Example**:
 
   ```
-  bx cs worker-get WORKER_NODE_ID
+  bx cs worker-get [CLUSTER_NAME_OR_ID] WORKER_NODE_ID
   ```
   {: pre}
 
@@ -1283,3 +1468,6 @@ View a list of worker nodes and the status for each in a cluster.
   bx cs workers mycluster
   ```
   {: pre}
+
+<br />
+
