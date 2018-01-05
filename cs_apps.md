@@ -24,7 +24,7 @@ You can use Kubernetes techniques to deploy apps and to ensure your apps are up 
 
 Learn the general steps for deploying apps by clicking an area of the following image.
 
-<img usemap="#d62e18" border="0" class="image" id="basic_deployment_process" src="images/basic_deployment_process.png" width="780" style="width:780px;"/>
+<img usemap="#d62e18" border="0" class="image" id="basic_deployment_process" src="images/basic_deployment_process.png" width="780" style="width:780px;" alt="Basic deployment process"/>
 <map name="d62e18" id="d62e18">
 <area href="cs_cli_install.html" target="_blank" alt="Install the CLIs." title="Install the CLIs." shape="rect" coords="30, 69, 179, 209" />
 <area href="https://kubernetes.io/docs/concepts/configuration/overview/" target="_blank" alt="Create a configuration file for your app. Review the best practices from Kubernetes." title="Create a configuration file for your app. Review the best practices from Kubernetes." shape="rect" coords="254, 64, 486, 231" />
@@ -431,7 +431,7 @@ To create a load balancer service:
           ports:
            - protocol: TCP
              port: 8080
-          loadBalancerIp: <private_ip_address>
+          loadBalancerIP: <private_ip_address>
         ```
         {: codeblock}
 
@@ -457,8 +457,8 @@ To create a load balancer service:
           <td>Annotation to specify the type of LoadBalancer. The values are `private` and `public`. When creating a public LoadBalancer in clusters on public VLANs, this annotation is not required.</td>
         </tr>
         <tr>
-          <td><code>loadBalancerIp</code></td>
-          <td>When creating a private LoadBalancer, replace <em>&lt;loadBalancerIp&gt;</em> with the IP address that you want to use for the LoadBalancer.</td>
+          <td><code>loadBalancerIP</code></td>
+          <td>When creating a private LoadBalancer, replace <em>&lt;loadBalancerIP&gt;</em> with the IP address that you want to use for the LoadBalancer.</td>
         </tr>
         </tbody></table>
     3.  Optional: To use a specific portable IP address for your load balancer that is available to your cluster, you can specify that IP address by including the `loadBalancerIP` in the spec section. For more information, see the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/services-networking/service/).
