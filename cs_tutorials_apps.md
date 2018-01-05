@@ -274,7 +274,7 @@ From the previous tutorial, you have an account and a cluster with one worker no
     <table summary=“Information about the expose command parameters.”>
     <caption>Table 1. Command parameters</caption>
     <thead>
-    <th colspan=2><img src="images/idea.png"/> More about the expose parameters</th>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> More about the expose parameters</th>
     </thead>
     <tbody>
     <tr>
