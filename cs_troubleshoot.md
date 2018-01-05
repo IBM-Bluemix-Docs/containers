@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2017-12-14"
+lastupdated: "2018-01-05"
 
 ---
 
@@ -213,39 +213,17 @@ Review the options that you have to debug your app deployments and find the root
 <br />
 
 
-
-
-## Identifying local client and server versions of kubectl
-
-To check which version of the Kubernetes CLI that you are running locally or that your cluster is running, run the following command and check the version.
-
-```
-kubectl version  --short
-```
-{: pre}
-
-Example output:
-
-```
-Client Version: v1.5.6
-Server Version: v1.5.6
-```
-{: screen}
-
-<br />
-
-
-
-
-## Unable to connect to your IBM Cloud infrastructure (SoftLayer) account while creating a cluster
+## Unable to connect to your infrastructure account
 {: #cs_credentials}
 
 {: tsSymptoms}
 When you create a new Kubernetes cluster, you receive the following message.
 
 ```
-We were unable to connect to your IBM Cloud infrastructure (SoftLayer) account. Creating a standard cluster requires that you have either a Pay-As-You-Go account that is linked to an IBM Cloud infrastructure (SoftLayer) account term or that you have used the IBM
-{{site.data.keyword.Bluemix_notm}} Container Service CLI to set your {{site.data.keyword.Bluemix_notm}} Infrastructure API keys.
+We were unable to connect to your IBM Cloud infrastructure (SoftLayer) account. 
+Creating a standard cluster requires that you have either a Pay-As-You-Go account 
+that is linked to an IBM Cloud infrastructure (SoftLayer) account term or that you have used the {{site.data.keyword.Bluemix_notm}} 
+Container Service CLI to set your {{site.data.keyword.Bluemix_notm}} Infrastructure API keys.
 ```
 {: screen}
 
@@ -276,7 +254,7 @@ To add credentials your {{site.data.keyword.Bluemix_notm}} account:
 <br />
 
 
-## Firewall prevents running `bx`, `kubectl`, or `calicoctl` CLI commands
+## Firewall prevents running CLI commands
 {: #ts_firewall_clis}
 
 {: tsSymptoms}
@@ -289,7 +267,7 @@ You might have corporate network policies that prevent access from your local sy
 [Allow TCP access for the CLI commands to work](cs_security.html#opening_ports). This task requires an [Administrator access policy](cs_cluster.html#access_ov). Verify your current [access policy](cs_cluster.html#view_access).
 
 
-## Firewall prevents worker nodes from connecting
+## Firewall prevents cluster from connecting to resources
 {: #cs_firewall}
 
 {: tsSymptoms}
@@ -350,6 +328,47 @@ Use [DaemonSets ![External link icon](../icons/launch-glyph.svg "External link i
 
 <br />
 
+
+
+## Binding a service to a cluster results in same name error
+{: #cs_duplicate_services}
+
+{: tsSymptoms}
+When you run `bx cs cluster-service-bind <cluster_name> <namespace> <service_instance_name>` you see the following message.
+
+```
+Multiple services with the same name were found. 
+Run 'bx service list' to view available Bluemix service instances...
+```
+{: screen}
+
+{: tsCauses}
+Multiple service instances might have the same name in different regions.
+
+{: tsResolve}
+Use the service GUID instead of the service instance name in the `bx cs cluster-service-bind` command.
+
+1. [Log in to the region that includes the service instance to bind.](cs_regions.html#bluemix_regions)
+
+2. Get the GUID for the service instance.
+  ```
+  bx service show <service_instance_name> --guid
+  ```
+  {: pre}
+  
+  Output:
+  ```
+  Invoking 'cf service <service_instance_name> --guid'...
+  <service_instance_GUID>
+  ```
+  {: screen}
+3. Bind the service to the cluster again.
+  ```
+  bx cs cluster-service-bind <cluster_name> <namespace> <service_instance_GUID>
+  ```
+  {: pre}
+  
+<br />
 
 
 
@@ -533,21 +552,30 @@ Containers might not start when the registry quota is reached.
 When you access the Kibana dashboard, logs do not display.
 
 {: tsCauses}
-Logs might not be appearing for one of the following reasons:<br/><br/>
-    A. No logging configuration is set up.<br/><br/>
-    B. The cluster is not in a `Normal` state.<br/><br/>
-    C. The log storage quota has been hit.<br/><br/>
-    D. If you specified a space at cluster creation, the account owner does not have Manager, Developer, or Auditor permissions to that space.<br/><br/>
-    E. No events that trigger logs have occurred in your pod yet.<br/><br/>
+Logs might not be appearing for one of the following reasons:
+
+1. No logging configuration is set up.
+
+2. The cluster is not in a `Normal` state.
+
+3. The log storage quota has been hit.
+
+4. If you specified a space at cluster creation, the account owner does not have Manager, Developer, or Auditor permissions to that space.
+
+5. No events that trigger logs have occurred in your pod yet.
 
 {: tsResolve}
 Review the following options to resolve each of the possible reasons why logs do not appear:
 
-A. In order for logs to be sent, you must first create a logging configuration to forward logs to {{site.data.keyword.loganalysislong_notm}}. To create a logging configuration, see [Enabling log forwarding](cs_cluster.html#cs_log_sources_enable).<br/><br/>
-B. To check the state of your cluster, see [Debugging clusters](cs_troubleshoot.html#debug_clusters).<br/><br/>
-C. To increase your log storage limits, see the [{{site.data.keyword.loganalysislong_notm}} documentation](https://console.bluemix.net/docs/services/CloudLogAnalysis/troubleshooting/error_msgs.html#error_msgs).<br/><br/>
-D. To change {{site.data.keyword.containershort_notm}} access permissions for the account owner, see [Managing cluster access](cs_cluster.html#cs_cluster_user). Once permissions are changed, it can take up to 24 hours for logs to start appearing.<br/><br/>
-E. To trigger a log for an event, you can deploy Noisy, a sample pod that produces several log events, onto a worker node in your cluster.<br/>
+1. In order for logs to be sent, you must first create a logging configuration to forward logs to {{site.data.keyword.loganalysislong_notm}}. To create a logging configuration, see [Enabling log forwarding](cs_cluster.html#cs_log_sources_enable).
+
+2. To check the state of your cluster, see [Debugging clusters](cs_troubleshoot.html#debug_clusters).
+
+3. To increase your log storage limits, see the [{{site.data.keyword.loganalysislong_notm}} documentation](https://console.bluemix.net/docs/services/CloudLogAnalysis/troubleshooting/error_msgs.html#error_msgs).
+
+4. To change {{site.data.keyword.containershort_notm}} access permissions for the account owner, see [Managing cluster access](cs_cluster.html#cs_cluster_user). Once permissions are changed, it can take up to 24 hours for logs to start appearing.
+
+5. To trigger a log for an event, you can deploy Noisy, a sample pod that produces several log events, onto a worker node in your cluster.
   1. [Target your CLI](cs_cli_install.html#cs_cli_configure) to a cluster where you want to start producing logs.
 
   2. Create the `deploy-noisy.yaml` configuration file.
@@ -604,9 +632,82 @@ Delete the `kube-dashboard` pod to force a restart. The pod is re-created with R
 <br />
 
 
+## Cannot connect to an app via a load balancer service
+{: #cs_loadbalancer_fails}
+
+{: tsSymptoms}
+You publicly exposed your app by creating a load balancer service in your cluster. When you tried to connect to your app via the public IP address of the load balancer, the connection failed or timed out.
+
+{: tsCauses}
+Your load balancer service might not be working properly for one of the following reasons:
+
+-   The cluster is a lite cluster or a standard cluster with only one worker node.
+-   The cluster is not fully deployed yet.
+-   The configuration script for your load balancer service includes errors.
+
+{: tsResolve}
+To troubleshoot your load balancer service:
+
+1.  Check that you set up a standard cluster that is fully deployed and has at least two worker nodes to assure high availability for your load balancer service.
+
+  ```
+  bx cs workers <cluster_name_or_id>
+  ```
+  {: pre}
+
+    In your CLI output, make sure that the **Status** of your worker nodes displays **Ready** and that the **Machine Type** shows a machine type other than **free**.
+
+2.  Check the accuracy of the configuration file for your load balancer service.
+
+  ```
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: myservice
+  spec:
+    type: LoadBalancer
+    selector:
+      <selectorkey>:<selectorvalue>
+    ports:
+     - protocol: TCP
+       port: 8080
+  ```
+  {: pre}
+
+    1.  Check that you defined **LoadBalancer** as the type for your service.
+    2.  Make sure that you used the same **<selectorkey>** and **<selectorvalue>** that you used in the **label/metadata** section when you deployed your app.
+    3.  Check that you used the **port** that your app listens on.
+
+3.  Check your load balancer service and review the **Events** section to find potential errors.
+
+  ```
+  kubectl describe service <myservice>
+  ```
+  {: pre}
+
+    Look for the following error messages:
+    <ul><ul><li><pre class="screen"><code>Clusters with one node must use services of type NodePort</code></pre></br>To use the load balancer service, you must have a standard cluster with at least two worker nodes.
+    <li><pre class="screen"><code>No cloud provider IPs are available to fulfill the load balancer service request. Add a portable subnet to the cluster and try again</code></pre></br>This error message indicates that no portable public IP addresses are left to be allocated to your load balancer service. Refer to [Adding subnets to clusters](cs_cluster.html#cs_cluster_subnet) to find information about how to request portable public IP addresses for your cluster. After portable public IP addresses are available to the cluster, the load balancer service is automatically created.
+    <li><pre class="screen"><code>Requested cloud provider IP <cloud-provider-ip> is not available. The following cloud provider IPs are available: <available-cloud-provider-ips</code></pre></br>You defined a portable public IP address for your load balancer service by using the **loadBalancerIP** section, but this portable public IP address is not available in your portable public subnet. Change your load balancer service configuration script and either choose one of the available portable public IP addresses, or remove the **loadBalancerIP** section from your script so that an available portable public IP address can be allocated automatically.
+    <li><pre class="screen"><code>No available nodes for load balancer services</code></pre>You do not have enough worker nodes to deploy a load balancer service. One reason might be that you deployed a standard cluster with more than one worker node, but the provisioning of the worker nodes failed.
+    <ol><li>List available worker nodes.</br><pre class="codeblock"><code>kubectl get nodes</code></pre>
+    <li>If at least two available worker nodes are found, list the worker node details.</br><pre class="screen"><code>bx cs worker-get [<cluster_name_or_id>] <worker_ID></code></pre>
+    <li>Make sure that the public and private VLAN IDs for the worker nodes that were returned by the 'kubectl get nodes' and the 'bx cs [<cluster_name_or_id>] worker-get' commands match.</ol></ul></ul>
+
+4.  If you are using a custom domain to connect to your load balancer service, make sure that your custom domain is mapped to the public IP address of your load balancer service.
+    1.  Find the public IP address of your load balancer service.
+
+      ```
+      kubectl describe service <myservice> | grep "LoadBalancer Ingress"
+      ```
+      {: pre}
+
+    2.  Check that your custom domain is mapped to the portable public IP address of your load balancer service in the Pointer record (PTR).
+
+<br />
 
 
-## Connecting to an app via Ingress fails
+## Cannot connect to an app via Ingress
 {: #cs_ingress_fails}
 
 {: tsSymptoms}
@@ -721,97 +822,17 @@ To troubleshoot your Ingress:
 
 
 
-## Connecting to an app via a load balancer service fails
-{: #cs_loadbalancer_fails}
-
-{: tsSymptoms}
-You publicly exposed your app by creating a load balancer service in your cluster. When you tried to connect to your app via the public IP address of the load balancer, the connection failed or timed out.
-
-{: tsCauses}
-Your load balancer service might not be working properly for one of the following reasons:
-
--   The cluster is a lite cluster or a standard cluster with only one worker node.
--   The cluster is not fully deployed yet.
--   The configuration script for your load balancer service includes errors.
-
-{: tsResolve}
-To troubleshoot your load balancer service:
-
-1.  Check that you set up a standard cluster that is fully deployed and has at least two worker nodes to assure high availability for your load balancer service.
-
-  ```
-  bx cs workers <cluster_name_or_id>
-  ```
-  {: pre}
-
-    In your CLI output, make sure that the **Status** of your worker nodes displays **Ready** and that the **Machine Type** shows a machine type other than **free**.
-
-2.  Check the accuracy of the configuration file for your load balancer service.
-
-  ```
-  apiVersion: v1
-  kind: Service
-  metadata:
-    name: myservice
-  spec:
-    type: LoadBalancer
-    selector:
-      <selectorkey>:<selectorvalue>
-    ports:
-     - protocol: TCP
-       port: 8080
-  ```
-  {: pre}
-
-    1.  Check that you defined **LoadBalancer** as the type for your service.
-    2.  Make sure that you used the same **<selectorkey>** and **<selectorvalue>** that you used in the **label/metadata** section when you deployed your app.
-    3.  Check that you used the **port** that your app listens on.
-
-3.  Check your load balancer service and review the **Events** section to find potential errors.
-
-  ```
-  kubectl describe service <myservice>
-  ```
-  {: pre}
-
-    Look for the following error messages:
-    <ul><ul><li><pre class="screen"><code>Clusters with one node must use services of type NodePort</code></pre></br>To use the load balancer service, you must have a standard cluster with at least two worker nodes.
-    <li><pre class="screen"><code>No cloud provider IPs are available to fulfill the load balancer service request. Add a portable subnet to the cluster and try again</code></pre></br>This error message indicates that no portable public IP addresses are left to be allocated to your load balancer service. Refer to [Adding subnets to clusters](cs_cluster.html#cs_cluster_subnet) to find information about how to request portable public IP addresses for your cluster. After portable public IP addresses are available to the cluster, the load balancer service is automatically created.
-    <li><pre class="screen"><code>Requested cloud provider IP <cloud-provider-ip> is not available. The following cloud provider IPs are available: <available-cloud-provider-ips</code></pre></br>You defined a portable public IP address for your load balancer service by using the **loadBalancerIP** section, but this portable public IP address is not available in your portable public subnet. Change your load balancer service configuration script and either choose one of the available portable public IP addresses, or remove the **loadBalancerIP** section from your script so that an available portable public IP address can be allocated automatically.
-    <li><pre class="screen"><code>No available nodes for load balancer services</code></pre>You do not have enough worker nodes to deploy a load balancer service. One reason might be that you deployed a standard cluster with more than one worker node, but the provisioning of the worker nodes failed.
-    <ol><li>List available worker nodes.</br><pre class="codeblock"><code>kubectl get nodes</code></pre>
-    <li>If at least two available worker nodes are found, list the worker node details.</br><pre class="screen"><code>bx cs worker-get [<cluster_name_or_id>] <worker_ID></code></pre>
-    <li>Make sure that the public and private VLAN IDs for the worker nodes that were returned by the 'kubectl get nodes' and the 'bx cs [<cluster_name_or_id>] worker-get' commands match.</ol></ul></ul>
-
-4.  If you are using a custom domain to connect to your load balancer service, make sure that your custom domain is mapped to the public IP address of your load balancer service.
-    1.  Find the public IP address of your load balancer service.
-
-      ```
-      kubectl describe service <myservice> | grep "LoadBalancer Ingress"
-      ```
-      {: pre}
-
-    2.  Check that your custom domain is mapped to the portable public IP address of your load balancer service in the Pointer record (PTR).
-
-<br />
-
-
-
-
-
-
-
-## Retrieving the ETCD url for Calico CLI configuration fails
+## Cannot retrieve the ETCD URL for Calico CLI configuration
 {: #cs_calico_fails}
 
 {: tsSymptoms}
 When you retrieve the `<ETCD_URL>` to [add network policies](cs_security.html#adding_network_policies), you get a `calico-config not found` error message.
 
 {: tsCauses}
-Your cluster is not at (Kubernetes version 1.7)[cs_versions.html] or later.
+Your cluster is not at [Kubernetes version 1.7](cs_versions.html) or later.
 
 {: tsResolve}
-(Update your cluster)[cs_cluster.html#cs_cluster_update] or retrieve the `<ETCD_URL>` with commands that are compatible with earlier versions of Kubernetes.
+[Update your cluster](cs_cluster.html#cs_cluster_update) or retrieve the `<ETCD_URL>` with commands that are compatible with earlier versions of Kubernetes.
 
 To retrieve the `<ETCD_URL>`, run one of the following commands:
 
