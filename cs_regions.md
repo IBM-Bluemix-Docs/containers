@@ -108,7 +108,7 @@ Locations are data centers that are available within a region.
 
   | Region | Location | City |
   |--------|----------|------|
-  | AP North | hkg02, tok02 | Hong Kong, Tokyo |
+  | AP North | hkg02, sng01, tok02 | Hong Kong, Singapore, Tokyo |
   | AP South     | mel01, syd01, syd04        | Melbourne, Sydney |
   | EU Central     | ams03, fra02, mil01, par01        | Amsterdam, Frankfurt, Milan, Paris |
   | UK South      | lon02, lon04         | London |
