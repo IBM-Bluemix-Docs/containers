@@ -25,7 +25,7 @@ You can use built-in security features for risk analysis and security protection
 ## Security by cluster component
 {: #cs_security_cluster}
 
-Each {{site.data.keyword.containerlong_notm}} cluster has security features built-in to its [master](#cs_security_master) and [worker](#cs_security_worker) nodes. If you have a firewall, need to access load balancing from outside the cluster, or want to run `kubectl` commands from your local system when corporate network policies prevent access to public internet endpoints, [open ports in your firewall](#opening_ports). If you want to connect apps in your cluster to an on-premises network or to other apps external to your cluster, [set up VPN connectivity](#vpn).
+Each {{site.data.keyword.containerlong_notm}} cluster has security features that are built into its [master](#cs_security_master) and [worker](#cs_security_worker) nodes. If you have a firewall, need to access load balancing from outside the cluster, or want to run `kubectl` commands from your local system when corporate network policies prevent access to public internet endpoints, [open ports in your firewall](#opening_ports). If you want to connect apps in your cluster to an on-premises network or to other apps external to your cluster, [set up VPN connectivity](#vpn).
 {: shortdesc}
 
 In the following diagram, you can see security features that are grouped by Kubernetes master, worker nodes, and container images.
