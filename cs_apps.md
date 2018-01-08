@@ -1627,7 +1627,7 @@ To configure the private application load balancer:
         </tr>
         <tr>
         <td><code>ingress.bluemix.net/ALB-ID</code></td>
-        <td>Replace <em>&lt;private_ALB_ID&gt;</em> with the ALB ID for your private Ingress controller. Run <code>bx cs albs --cluster <my_cluster></code> to find the ALB ID. For more information about this Ingress annotation, see [Application load balancer ID (ALB_ID)](cs_annotations.html#alb-id).</td>
+        <td>Replace <em>&lt;private_ALB_ID&gt;</em> with the ALB ID for your private Ingress controller. Run <code>bx cs albs --cluster <my_cluster></code> to find the ALB ID. For more information about this Ingress annotation, see [Private application load balancer routing](cs_annotations.html#alb-id).</td>
         </tr>
         <td><code>host</code></td>
         <td>Replace <em>&lt;mycustomdomain&gt;</em> with your custom domain.
