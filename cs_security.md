@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-05"
+lastupdated: "2018-01-09"
 
 ---
 
@@ -315,17 +315,22 @@ Before you begin, allow access to run [`bx` commands](#firewall_bx) and [`kubect
     </table>
 </p>
 
-  3.  Allow outgoing network traffic from the worker nodes to {{site.data.keyword.registrylong_notm}}:
+  3.  Allow outgoing network traffic from the worker nodes to [{{site.data.keyword.registrylong_notm}} regions](/docs/services/Registry/registry_overview.html#registry_regions):
       - `TCP port 443 FROM <each_worker_node_publicIP> TO <registry_publicIP>`
-      - Replace <em>&lt;registry_publicIP&gt;</em> with all of the addresses for registry regions to which you want to allow traffic:
+      - Replace <em>&lt;registry_publicIP&gt;</em> with the registry IP addresses to which you want to allow traffic. The international registry stores IBM-provided public images, and regional registries store your own private or public images.
         <p>
 <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
       <thead>
-        <th>Container region</th>
+        <th>{{site.data.keyword.containershort_notm}} region</th>
         <th>Registry address</th>
         <th>Registry IP address</th>
       </thead>
       <tbody>
+        <tr>
+          <td>International registry across container regions</td>
+          <td>registry.bluemix.net</td>
+          <td><code>169.60.72.144/28</code><br><code>169.61.76.176/28</code></td>
+        </tr>
         <tr>
           <td>AP North, AP South</td>
           <td>registry.au-syd.bluemix.net</td>
@@ -634,7 +639,7 @@ You can choose between Calico and native Kubernetes capabilities to create netwo
 
 <ul>
   <li>[Kubernetes network policies ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/services-networking/network-policies/): Some basic options are provided, such as specifying which pods can communicate with each other. Incoming network traffic can be allowed or blocked for a protocol and port. This traffic can be filtered based on the labels and Kubernetes namespaces of the pod that is trying to connect to other pods.</br>These policies can be applied by using `kubectl` commands or the Kubernetes APIs. When these policies are applied, they are converted into Calico network policies and Calico enforces these policies.</li>
-  <li>[Calico network policies ![External link icon](../icons/launch-glyph.svg "External link icon")](http://docs.projectcalico.org/v2.4/getting-started/kubernetes/tutorials/advanced-policy): These policies are a superset of the Kubernetes network policies and enhance the native Kubernetes capabilities with the following features.</li>
+  <li>[Calico network policies ![External link icon](../icons/launch-glyph.svg "External link icon")](http://docs.projectcalico.org/v2.6/getting-started/kubernetes/tutorials/advanced-policy): These policies are a superset of the Kubernetes network policies and enhance the native Kubernetes capabilities with the following features.</li>
     <ul><ul><li>Allow or block network traffic on specific network interfaces, not only Kubernetes pod traffic.</li>
     <li>Allow or block incoming (ingress) and outgoing (egress) network traffic.</li>
     <li>[Block incoming (ingress) traffic to LoadBalancer or NodePort Kubernetes services](#cs_block_ingress).</li>
@@ -899,7 +904,7 @@ To add network policies:
 
 4.  Create the Calico network policies to allow or block traffic.
 
-    1.  Define your [Calico network policy ![External link icon](../icons/launch-glyph.svg "External link icon")](http://docs.projectcalico.org/v2.1/reference/calicoctl/resources/policy) by creating a configuration script (.yaml). These configuration files include the selectors that describe what pods, namespaces, or hosts that these policies apply to. Refer to these [sample Calico policies ![External link icon](../icons/launch-glyph.svg "External link icon")](http://docs.projectcalico.org/v2.0/getting-started/kubernetes/tutorials/advanced-policy) to help you create your own.
+    1.  Define your [Calico network policy ![External link icon](../icons/launch-glyph.svg "External link icon")](http://docs.projectcalico.org/v2.6/reference/calicoctl/resources/policy) by creating a configuration script (.yaml). These configuration files include the selectors that describe what pods, namespaces, or hosts that these policies apply to. Refer to these [sample Calico policies ![External link icon](../icons/launch-glyph.svg "External link icon")](http://docs.projectcalico.org/v2.6/getting-started/kubernetes/tutorials/advanced-policy) to help you create your own.
 
     2.  Apply the policies to the cluster.
         -   Linux and OS X:
@@ -936,7 +941,7 @@ Some common uses for Calico `preDNAT` network policies:
 The `preDNAT` network policies are useful because default Kubernetes and Calico policies are difficult to apply to protecting Kubernetes NodePort and LoadBalancer services due to the DNAT iptables rules generated for these services.
 
 Calico `preDNAT` network policies generate iptables rules based on a [Calico
-network policy resource ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.projectcalico.org/v2.4/reference/calicoctl/resources/policy).
+network policy resource ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.projectcalico.org/v2.6/reference/calicoctl/resources/policy).
 
 1. Define a Calico `preDNAT` network policy for ingress access to Kubernetes services.
 
