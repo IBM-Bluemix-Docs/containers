@@ -1340,7 +1340,7 @@ To enable log forwarding for a container, worker node, Kubernetes system compone
     </tr>
     <tr>
     <td><code><em>&lt;kubernetes_namespace&gt;</em></code></td>
-    <td>Replace <em>&lt;kubernetes_namespace&gt;</em> with the Docker container namespace that you want to forward logs from. Log forwarding is not supported for the <code>ibm-system</code> and <code>kube-system</code> Kubernetes namespaces. This value is valid only for the container log source and is optional. If you do not specify a namespace, then all namespaces in the container use this configuration.</td>
+    <td>Replace <em>&lt;kubernetes_namespace&gt;</em> with the Kubernetes namespace that you want to forward logs from. Log forwarding is not supported for the <code>ibm-system</code> and <code>kube-system</code> Kubernetes namespaces. This value is valid only for the container log source and is optional. If you do not specify a namespace, then all namespaces in the cluster use this configuration.</td>
     </tr>
     <tr>
     <td><code>--hostname <em>&lt;ingestion_URL&gt;</em></code></td>
@@ -1352,11 +1352,11 @@ To enable log forwarding for a container, worker node, Kubernetes system compone
     </tr>
     <tr>
     <td><code>--space <em>&lt;cluster_space&gt;</em></code></td>
-    <td>Replace <em>&lt;cluster_space&gt;</em> with the name of the space that you want to send logs to. If you do not specify a space, logs are sent to the account level.</td>
+    <td>Replace <em>&lt;cluster_space&gt;</em> with the name of the Cloud Foundry space that you want to send logs to. If you do not specify a space, logs are sent to the account level.</td>
     </tr>
     <tr>
     <td><code>--org <em>&lt;cluster_org&gt;</em></code></td>
-    <td>Replace <em>&lt;cluster_org&gt;</em> with the name of the org that the space is in. This value is required if you specified a space.</td>
+    <td>Replace <em>&lt;cluster_org&gt;</em> with the name of the Cloud Foundry org that the space is in. This value is required if you specified a space.</td>
     </tr>
     <tr>
     <td><code>--type ibm</code></td>
@@ -1391,7 +1391,7 @@ To enable log forwarding for a container, worker node, Kubernetes system compone
     </tr>
     <tr>
     <td><code><em>&lt;kubernetes_namespace&gt;</em></code></td>
-    <td>Replace <em>&lt;kubernetes_namespace&gt;</em> with the Docker container namespace that you want to forward logs from. Log forwarding is not supported for the <code>ibm-system</code> and <code>kube-system</code> Kubernetes namespaces. This value is valid only for the container log source and is optional. If you do not specify a namespace, then all namespaces in the container use this configuration.</td>
+    <td>Replace <em>&lt;kubernetes_namespace&gt;</em> with the Kubernetes namespace that you want to forward logs from. Log forwarding is not supported for the <code>ibm-system</code> and <code>kube-system</code> Kubernetes namespaces. This value is valid only for the container log source and is optional. If you do not specify a namespace, then all namespaces in the cluster use this configuration.</td>
     </tr>
     <tr>
     <td><code>--hostname <em>&lt;log_server_hostname_or_IP&gt;</em></code></td>
@@ -1505,7 +1505,7 @@ To change the details of a logging configuration:
 1. Update the logging configuration.
 
     ```
-    bx cs logging-config-update <my_cluster> <log_config_id> --logsource <my_log_source> --hostname <log_server_hostname_or_IP> --port <log_server_port> --space <cluster_space> --org <cluster_org> --type <logging_type>
+    bx cs logging-config-update <my_cluster> --id <log_config_id> --logsource <my_log_source> --hostname <log_server_hostname_or_IP> --port <log_server_port> --space <cluster_space> --org <cluster_org> --type <logging_type>
     ```
     {: pre}
 
@@ -1524,7 +1524,7 @@ To change the details of a logging configuration:
     <td>Replace <em>&lt;my_cluster&gt;</em> with the name or ID of the cluster.</td>
     </tr>
     <tr>
-    <td><code><em>&lt;log_config_id&gt;</em></code></td>
+    <td><code>--id <em>&lt;log_config_id&gt;</em></code></td>
     <td>Replace <em>&lt;log_config_id&gt;</em> with the ID of the log source configuration.</td>
     </tr>
     <tr>
@@ -1541,11 +1541,11 @@ To change the details of a logging configuration:
     </tr>
     <tr>
     <td><code>--space <em>&lt;cluster_space&gt;</em></code></td>
-    <td>Replace <em>&lt;cluster_space&gt;</em> with the name of the space that you want to send logs to. This value is valid only for log type <code>ibm</code> and is optional. If you do not specify a space, logs are sent to the account level.</td>
+    <td>Replace <em>&lt;cluster_space&gt;</em> with the name of the Cloud Foundry space that you want to send logs to. This value is valid only for log type <code>ibm</code> and is optional. If you do not specify a space, logs are sent to the account level.</td>
     </tr>
     <tr>
     <td><code>--org <em>&lt;cluster_org&gt;</em></code></td>
-    <td>Replace <em>&lt;cluster_org&gt;</em> with the name of the org that the space is in. This value is valid only for log type <code>ibm</code> and is required if you specified a space.</td>
+    <td>Replace <em>&lt;cluster_org&gt;</em> with the name of the Cloud Foundry org that the space is in. This value is valid only for log type <code>ibm</code> and is required if you specified a space.</td>
     </tr>
     <tr>
     <td><code>--type <em>&lt;logging_type&gt;</em></code></td>
@@ -1599,7 +1599,7 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to you
 1. Delete the logging configuration.
 
     ```
-    bx cs logging-config-rm <my_cluster> <log_config_id>
+    bx cs logging-config-rm <my_cluster> --id <log_config_id>
     ```
     {: pre}
     Replace <em>&lt;my_cluster&gt;</em> with the name of the cluster that the logging configuration is in and <em>&lt;log_config_id&gt;</em> with the ID of the log source configuration.
@@ -1616,7 +1616,13 @@ Kubernetes API audit logs capture any calls to the Kubernetes API server from yo
 #### Enabling Kubernetes API audit log forwarding
 {: #cs_audit_enable}
 
-Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster that you want to collect API server audit logs from.
+Before you begin:
+
+1. Set up a remote logging server where you can forward the logs. For example, you can [use Logstash with Kubernetes ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/debug-application-cluster/audit/#use-logstash-to-collect-and-distribute-audit-events-from-webhook-backend) to collect audit events.
+
+2. [Target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster that you want to collect API server audit logs from.
+
+To forward Kubernetes API audit logs:
 
 1. Set the webhook backend for the API server configuration. A webhook configuration is created based on the information you provide in this command's flags. If you do not provide any information in the flags, a default webhook configuration is used.
 
@@ -1768,7 +1774,7 @@ The {{site.data.keyword.containerlong_notm}} Autorecovery system can be deployed
 
 Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster where you want to check worker node statuses.
 
-1. Create a configuration map file that defines your checks in JSON format. For example, the following YAML file defines three checks: an HTTP check and two Kubernetes API server checks.
+1. Create a configuration map file that defines your checks in JSON format. For example, the following YAML file defines three checks: an HTTP check and two Kubernetes API server checks. **Note**: Each check needs to be defined as a unique key in the data section of the config map.
 
     ```
     kind: ConfigMap
@@ -1799,7 +1805,7 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
           "CooloffSeconds":1800,
           "IntervalSeconds":180,
           "TimeoutSeconds":10,
-          "Enabled":false
+          "Enabled":true
         }
       checkpod.json: |
         {
@@ -1807,78 +1813,106 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
           "Resource":"POD",
           "PodFailureThresholdPercent":50,
           "FailureThreshold":3,
-          "CorrectiveAction":"REBOOT",
+          "CorrectiveAction":"RELOAD",
           "CooloffSeconds":1800,
           "IntervalSeconds":180,
           "TimeoutSeconds":10,
-          "Enabled":false
+          "Enabled":true
       }
     ```
     {:codeblock}
 
-    <table>
-    <caption>Table 14. Understanding the YAML file components</caption>
-    <thead>
-    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
-    </thead>
-    <tbody>
-    <tr>
-    <td><code>name</code></td>
-    <td>The configuration name <code>ibm-worker-recovery-checks</code> is a constant and cannot be changed.</td>
+
+<table summary="Understanding the Config Map Components">
+<caption>Table 14. Understanding the Config Map Components</caption>
+  <thead>
+    <th colspan=2><img src="images/idea.png"/>Table 14. Understanding the Config Map Components</th>
+  </thead>
+  <tbody>
+   <tr>
+      <td><code>name</code></td>
+      <td>The configuration name <code>ibm-worker-recovery-checks</code> is a constant and cannot be changed.</td>
+   </tr>
+   <tr>
+      <td><code>namespace</code></td>
+      <td>The <code>kube-system</code> namespace is a constant and cannot be changed.</td>
+   </tr>
+  <tr>
+      <td><code>checkhttp.json</code></td>
+      <td>Defines an HTTP check that checks that an HTTP server is running on every node's IP address on port 80 and returns a 200 response at path <code>/myhealth</code>. You can find the IP address for a node by running <code>kubectl get nodes</code>.
+           For example, consider two nodes in a cluster that have IP adresses of 10.10.10.1 and 10.10.10.2. In this example, two routes are checked for 200 OK responses: <code>http://10.10.10.1:80/myhealth</code> and <code>http://10.10.10.2:80/myhealth</code>.
+           The check in the above example YAML runs every 3 minutes. If it fails 3 consecutive times, the node is rebooted. This action is equivalent to running <code>bx cs worker-reboot</code>. The HTTP check is disabled until you set the <b>Enabled</b> field to <code>true</code>.</td>
     </tr>
     <tr>
-    <td><code>namespace</code></td>
-    <td>The <code>kube-system</code> namespace is a constant and cannot be changed.</td>
+      <td><code>checknode.json</code></td>
+      <td>Defines a Kubernetes API node check that checks whether each node is in the <code>Ready</code> state. The check for a specific node counts as a failure if the node is not in the <code>Ready</code> state.
+           The check in the above example YAML runs every 3 minutes. If it fails 3 consecutive times, the node is reloaded. This action is equivalent to running <code>bx cs worker-reload</code>. The node check is enabled until you set the <b>Enabled</b> field to <code>false</code> or remove the check.</td>
     </tr>
     <tr>
-    <tr>
-    <td><code>Check</code></td>
-    <td>Enter the type of check that you want Autorecovery to use. <ul><li><code>HTTP</code>: Autorecovery calls HTTP servers that run on each node to determine whether the nodes are running properly.</li><li><code>KUBEAPI</code>: Autorecovery calls the Kubernetes API server and reads the health status data reported by the worker nodes.</li></ul></td>
+      <td><code>checkpod.json</code></td>
+      <td>Defines a Kubernetes API pod check that checks the total percentage of <code>NotReady</code> pods on a node based on the total pods assigned to that node. The check for a specific node counts as a failure if the total percentage of <code>NotReady</code> pods is greater than the defined <code>PodFailureThresholdPercent</code>.
+           The check in the above example YAML runs every 3 minutes. If it fails 3 consecutive times, the node is reloaded. This action is equivalent to running <code>bx cs worker-reload</code>. The pod check is enabled until you set the <b>Enabled</b> field to <code>false</code> or remove the check.</td>
     </tr>
+  </tbody>
+</table>
+
+
+<table summary="Understanding the Components of Individual Rules">
+<caption>Table 15. Understanding the Components of Individual Rules</caption>
+  <thead>
+    <th colspan=2><img src="images/idea.png"/> Table 15. Understanding the Individual Rule Components </th>
+  </thead>
+  <tbody>
+   <tr>
+       <td><code>Check</code></td>
+       <td>Enter the type of check that you want Autorecovery to use. <ul><li><code>HTTP</code>: Autorecovery calls HTTP servers that run on each node to determine whether the nodes are running properly.</li><li><code>KUBEAPI</code>: Autorecovery calls the Kubernetes API server and reads the health status data reported by the worker nodes.</li></ul></td>
+       </tr>
+   <tr>
+       <td><code>Resource</code></td>
+       <td>When the check type is <code>KUBEAPI</code>, enter the type of resource that you want Autorecovery to check. Accepted values are <code>NODE</code> or <code>PODS</code>.</td>
+       </tr>
+   <tr>
+       <td><code>FailureThreshold</code></td>
+       <td>Enter the threshold for the number of consecutive failed checks. When this threshold is met, Autorecovery triggers the specified corrective action. For example, if the value is 3 and Autorecovery fails a configured check three consecutive times, Autorecovery triggers the corrective action that is associated with the check.</td>
+   </tr>
+   <tr>
+       <td><code>PodFailureThresholdPercent</code></td>
+       <td>When the resource type is <code>PODS</code>, enter the threshold for the percentage of pods on a worker node that can be in a [NotReady ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#define-readiness-probes) state. This percentage is based on the total number of pods that are scheduled to a worker node. When a check determines that the percentage of unhealthy pods is greater than the threshold, the check counts as one failure.</td>
+       </tr>
     <tr>
-    <td><code>Resource</code></td>
-    <td>When the check type is <code>KUBEAPI</code>, enter the type of resource that you want Autorecovery to check. Accepted values are <code>NODE</code> or <code>PODS</code>.</td>
-    <tr>
-    <td><code>FailureThreshold</code></td>
-    <td>Enter the threshold for the number of consecutive failed checks. When this threshold is met, Autorecovery triggers the specified corrective action. For example, if the value is 3 and Autorecovery fails a configured check three consecutive times, Autorecovery triggers the corrective action that is associated with the check.</td>
-    </tr>
-    <tr>
-    <td><code>PodFailureThresholdPercent</code></td>
-    <td>When the resource type is <code>PODS</code>, enter the threshold for the percentage of pods on a worker node that can be in a [NotReady ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#define-readiness-probes) state. This percentage is based on the total number of pods that are scheduled to a worker node. When a check determines that the percentage of unhealthy pods is greater than the threshold, the check counts as one failure.</td>
-    </tr>
-    <tr>
-    <td><code>CorrectiveAction</code></td>
-    <td>Enter the action to run when the failure threshold is met. A corrective action runs only while no other workers are being repaired and when this worker node is not in a cool-off period from a previous action. <ul><li><code>REBOOT</code>: Reboots the worker node.</li><li><code>RELOAD</code>: Reloads all of the necessary configurations for the worker node from a clean OS.</li></ul></td>
-    </tr>
-    <tr>
-    <td><code>CooloffSeconds</code></td>
-    <td>Enter the number of seconds Autorecovery must wait to issue another corrective action for a node that was already issued a corrective action. The cooloff period starts at the time a corrective action is issued.</td>
-    </tr>
-    <tr>
-    <td><code>IntervalSeconds</code></td>
-    <td>Enter the number of seconds in between consecutive checks. For example, if the value is 180, Autorecovery runs the check on each node every 3 minutes.</td>
-    </tr>
-    <tr>
-    <td><code>TimeoutSeconds</code></td>
-    <td>Enter the maximum number of seconds that a check call to the database takes before Autorecovery terminates the call operation. The value for <code>TimeoutSeconds</code> must be less than the value for <code>IntervalSeconds</code>.</td>
-    </tr>
-    <tr>
-    <td><code>Port</code></td>
-    <td>When the check type is <code>HTTP</code>, enter the port that the HTTP server must bind to on the worker nodes. This port must be exposed on the IP of every worker node in the cluster. Autorecovery requires a constant port number across all nodes for checking servers. Use [DaemonSets ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)when deploying a custom server into a cluster.</td>
-    </tr>
-    <tr>
-    <td><code>ExpectedStatus</code></td>
-    <td>When the check type is <code>HTTP</code>, enter the HTTP server status that you expect to be returned from the check. For example, a value of 200 indicates that you expect an <code>OK</code> response from the server.</td>
-    </tr>
-    <tr>
-    <td><code>Route</code></td>
-    <td>When the check type is <code>HTTP</code>, enter the path that is requested from the HTTP server. This value is typically the metrics path for the server that is running on all of the worker nodes.</td>
-    </tr>
-    <tr>
-    <td><code>Enabled</code></td>
-    <td>Enter <code>true</code> to enable the check or <code>false</code> to disable the check.</td>
-    </tr>
-    </tbody></table>
+          <td><code>CorrectiveAction</code></td>
+          <td>Enter the action to run when the failure threshold is met. A corrective action runs only while no other workers are being repaired and when this worker node is not in a cool-off period from a previous action. <ul><li><code>REBOOT</code>: Reboots the worker node.</li><li><code>RELOAD</code>: Reloads all of the necessary configurations for the worker node from a clean OS.</li></ul></td>
+          </tr>
+      <tr>
+          <td><code>CooloffSeconds</code></td>
+          <td>Enter the number of seconds Autorecovery must wait to issue another corrective action for a node that was already issued a corrective action. The cooloff period starts at the time a corrective action is issued.</td>
+          </tr>
+      <tr>
+          <td><code>IntervalSeconds</code></td>
+          <td>Enter the number of seconds in between consecutive checks. For example, if the value is 180, Autorecovery runs the check on each node every 3 minutes.</td>
+          </tr>
+      <tr>
+          <td><code>TimeoutSeconds</code></td>
+          <td>Enter the maximum number of seconds that a check call to the database takes before Autorecovery terminates the call operation. The value for <code>TimeoutSeconds</code> must be less than the value for <code>IntervalSeconds</code>.</td>
+          </tr>
+      <tr>
+          <td><code>Port</code></td>
+          <td>When the check type is <code>HTTP</code>, enter the port that the HTTP server must bind to on the worker nodes. This port must be exposed on the IP of every worker node in the cluster. Autorecovery requires a constant port number across all nodes for checking servers. Use [DaemonSets ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)when deploying a custom server into a cluster.</td>
+          </tr>
+      <tr>
+          <td><code>ExpectedStatus</code></td>
+          <td>When the check type is <code>HTTP</code>, enter the HTTP server status that you expect to be returned from the check. For example, a value of 200 indicates that you expect an <code>OK</code> response from the server.</td>
+          </tr>
+      <tr>
+          <td><code>Route</code></td>
+          <td>When the check type is <code>HTTP</code>, enter the path that is requested from the HTTP server. This value is typically the metrics path for the server that is running on all of the worker nodes.</td>
+          </tr>
+      <tr>
+          <td><code>Enabled</code></td>
+          <td>Enter <code>true</code> to enable the check or <code>false</code> to disable the check.</td>
+          </tr>
+  </tbody>
+</table>
 
 2. Create the configuration map in your cluster.
 

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2017-01-04"
+lastupdated: "2017-01-08"
 
 ---
 
@@ -24,37 +24,179 @@ To add capabilities to your application load balancer, you can specify annotatio
 
 For general information about Ingress services and how to get started using them, see [Configuring public access to an app by using Ingress](cs_apps.html#cs_apps_public_ingress).
 
+<table>
+<col width="20%">
+<col width="15%">
+<col width="65%">
+ <thead>
+ <th colspan=3>General annotations</th>
+ </thead>
+ <tbody>
+ <tr>
+ <td><a href="#proxy-external-service">External services</a></td>
+ <td><code>proxy-external-service</code></td>
+ <td>Add path definitions to external services, such as a service hosted in {{site.data.keyword.Bluemix_notm}}.</td>
+ </tr>
+ <tr>
+ <td><a href="#alb-id">Private application load balancer routing</a></td>
+ <td><code>ALB-ID</code></td>
+ <td>Route incoming requests to your apps with a private application load balancer.</td>
+ </tr>
+ <tr>
+ <td><a href="#rewrite-path">Rewrite paths</a></td>
+ <td><code>rewrite-path</code></td>
+ <td>Route incoming network traffic to a different path that your back-end app listens on.</td>
+ </tr>
+ <tr>
+ <td><a href="#sticky-cookie-services">Session-affinity with cookies</a></td>
+ <td><code>sticky-cookie-services</code></td>
+ <td>Always route incoming network traffic to the same upstream server by using a sticky cookie.</td>
+ </tr>
+ <tr>
+ <td><a href="#tcp-ports">TCP ports</a></td>
+ <td><code>tcp-ports</code></td>
+ <td>Access an app via a non-standard TCP port.</td>
+ </tr>
+ </tbody></table>
 
-|Supported annotation|Description|
-|-----------|-------------------|
-|**General annotations**||
-|[External services](#proxy-external-service)|Add path definitions to external services, such as a service hosted in {{site.data.keyword.Bluemix_notm}}.|
-|[Private application load balancer routing](#alb-id)|Route incoming requests to your apps with a private application load balancer.|
-|[Rewrite paths](#rewrite-path)|Route incoming network traffic to a different path that your back-end app listens on.|
-|[Session-affinity with cookies](#sticky-cookie-services)|Always route incoming network traffic to the same upstream server by using a sticky cookie.|
-|[TCP ports](#tcp-ports)|Access an app via a non-standard TCP port.|
-|**Connection annotations**||
-|[Custom connect-timeouts and read-timeouts](#proxy-connect-timeout)|Adjust the time that the application load balancer waits to connect to and read from the back-end app before the back-end app is considered unavailable.|
-|[Keepalive requests](#keepalive-requests)|Configure the maximum number of requests that can be served through one keepalive connection.|
-|[Keepalive timeout](#keepalive-timeout)|Configure the time that a keepalive connection stays open on the server.|
-|[Upstream keepalive](#upstream-keepalive)|Configure the maximum number of idle keepalive connections for an upstream server.|
-|**Proxy buffer annotations**||
-|[Client response data buffering](#proxy-buffering)|Disable the buffering of a client response on the application load balancer while sending the response to the client.|
-|[Proxy buffers](#proxy-buffers)|Set the number and size of the buffers that read a response for a single connection from the proxied server.|
-|[Proxy buffer size](#proxy-buffer-size)|Set the size of the buffer that reads the first part of the response that is received from the proxied server.|
-|[Proxy busy buffers size](#proxy-busy-buffers-size)|Set the size of proxy buffers that can be busy.|
-|**Request and response annotations**||
-|[Additional client request or response header](#proxy-add-headers)|Add header information to a client request before forwarding the request to your back-end app or to a client response before sending the response to the client.|
-|[Client response header removal](#response-remove-headers)|Remove header information from a client response before forwarding the response to the client.|
-|[Custom maximum client request body size](#client-max-body-size)|Adjust the size of the client request body that is allowed to be sent to the application load balancer.|
-|**Service limit annotations**||
-|[Global rate limits](#global-rate-limit)|Limit the request processing rate and number of connections per a defined key for all services.|
-|[Service rate limits](#service-rate-limit)|Limit the request processing rate and the number of connections per a defined key for specific services.|
-|**TLS/SSL authentication annotations**||
-|[Custom HTTP and HTTPS ports](#custom-port)|Change the default ports for HTTP (port 80) and HTTPS (port 443) network traffic.|
-|[HTTP redirects to HTTPS](#redirect-to-https)|Redirect insecure HTTP requests on your domain to HTTPS.|
-|[Mutual authentication](#mutual-auth)|Configure mutual authentication for the application load balancer.|
-|[SSL services support](#ssl-services)|Allow SSL services support for load balancing.|
+
+<table>
+<col width="20%">
+<col width="15%">
+<col width="65%">
+ <thead>
+  <th colspan=3>Connection annotations</th>
+  </thead>
+  <tbody>
+  <tr>
+  <td><a href="#proxy-connect-timeout">Custom connect-timeouts and read-timeouts</a></td>
+  <td><code>proxy-connect-timeout</code></td>
+  <td>Adjust the time that the application load balancer waits to connect to and read from the back-end app before the back-end app is considered unavailable.</td>
+  </tr>
+  <tr>
+  <td><a href="#keepalive-requests">Keepalive requests</a></td>
+  <td><code>keepalive-requests</code></td>
+  <td>Configure the maximum number of requests that can be served through one keepalive connection.</td>
+  </tr>
+  <tr>
+  <td><a href="#keepalive-timeout">Keepalive timeout</a></td>
+  <td><code>keepalive-timeout</code></td>
+  <td>Configure the time that a keepalive connection stays open on the server.</td>
+  </tr>
+  <tr>
+  <td><a href="#upstream-keepalive">Upstream keepalive</a></td>
+  <td><code>upstream-keepalive</code></td>
+  <td>Configure the maximum number of idle keepalive connections for an upstream server.</td>
+  </tr>
+  </tbody></table>
+
+
+<table>
+<col width="20%">
+<col width="15%">
+<col width="65%">
+ <thead>
+ <th colspan=3>Proxy buffer annotations</th>
+ </thead>
+ <tbody>
+ <tr>
+ <td><a href="#proxy-buffering">Client response data buffering</a></td>
+ <td><code>proxy-buffering</code></td>
+ <td>Disable the buffering of a client response on the application load balancer while sending the response to the client.</td>
+ </tr>
+ <tr>
+ <td><a href="#proxy-buffers">Proxy buffers</a></td>
+ <td><code>proxy-buffers</code></td>
+ <td>Set the number and size of the buffers that read a response for a single connection from the proxied server.</td>
+ </tr>
+ <tr>
+ <td><a href="#proxy-buffer-size">Proxy buffer size</a></td>
+ <td><code>proxy-buffer-size</code></td>
+ <td>Set the size of the buffer that reads the first part of the response that is received from the proxied server.</td>
+ </tr>
+ <tr>
+ <td><a href="#proxy-busy-buffers-size">Proxy busy buffers size</a></td>
+ <td><code>proxy-busy-buffers-size</code></td>
+ <td>Set the size of proxy buffers that can be busy.</td>
+ </tr>
+ </tbody></table>
+
+
+<table>
+<col width="20%">
+<col width="15%">
+<col width="65%">
+<thead>
+<th colspan=3>Request and response annotations</th>
+</thead>
+<tbody>
+<tr>
+<td><a href="#proxy-add-headers">Additional client request or response header</a></td>
+<td><code>proxy-add-headers</code></td>
+<td>Add header information to a client request before forwarding the request to your back-end app or to a client response before sending the response to the client.</td>
+</tr>
+<tr>
+<td><a href="#response-remove-headers">Client response header removal</a></td>
+<td><code>response-remove-headers</code></td>
+<td>Remove header information from a client response before forwarding the response to the client.</td>
+</tr>
+<tr>
+<td><a href="#client-max-body-size">Custom maximum client request body size</a></td>
+<td><code>client-max-body-size</code></td>
+<td>Adjust the size of the client request body that is allowed to be sent to the application load balancer.</td>
+</tr>
+</tbody></table>
+
+<table>
+<col width="20%">
+<col width="15%">
+<col width="65%">
+<thead>
+<th colspan=3>Service limit annotations</th>
+</thead>
+<tbody>
+<tr>
+<td><a href="#global-rate-limit">Global rate limits</a></td>
+<td><code>global-rate-limit</code></td>
+<td>Limit the request processing rate and number of connections per a defined key for all services.</td>
+</tr>
+<tr>
+<td><a href="#service-rate-limit">Service rate limits</a></td>
+<td><code>service-rate-limit</code></td>
+<td>Limit the request processing rate and the number of connections per a defined key for specific services.</td>
+</tr>
+</tbody></table>
+
+<table>
+<col width="20%">
+<col width="15%">
+<col width="65%">
+<thead>
+<th colspan=3>HTTPS and TLS/SSL authentication annotations</th>
+</thead>
+<tbody>
+<tr>
+<td><a href="#custom-port">Custom HTTP and HTTPS ports</a></td>
+<td><code>custom-port</code></td>
+<td>Change the default ports for HTTP (port 80) and HTTPS (port 443) network traffic.</td>
+</tr>
+<tr>
+<td><a href="#redirect-to-https">HTTP redirects to HTTPS</a></td>
+<td><code>redirect-to-https</code></td>
+<td>Redirect insecure HTTP requests on your domain to HTTPS.</td>
+</tr>
+<tr>
+<td><a href="#mutual-auth">Mutual authentication</a></td>
+<td><code>mutual-auth</code></td>
+<td>Configure mutual authentication for the application load balancer.</td>
+</tr>
+<tr>
+<td><a href="#ssl-services">SSL services support</a></td>
+<td><code>ssl-services</code></td>
+<td>Allow SSL services support for load balancing.</td>
+</tr>
+</tbody></table>
+
 
 
 ## General annotations
@@ -80,17 +222,17 @@ kind: Ingress
 metadata:
   name: cafe-ingress
   annotations:
-    ingress.bluemix.net/proxy-external-service: "path=&lt;path&gt; external-svc=https:&lt;external_service&gt; host=&lt;mydomain&gt;"
+    ingress.bluemix.net/proxy-external-service: "path=&lt;mypath&gt; external-svc=https:&lt;external_service&gt; host=&lt;mydomain&gt;"
 spec:
   tls:
   - hosts:
-    - &lt;mydomain&gt;
+    - mydomain
     secretName: mysecret
   rules:
-  - host: &lt;mydomain&gt;
+  - host: mydomain
     http:
       paths:
-      - path: &lt;path&gt;
+      - path: /
         backend:
           serviceName: myservice
           servicePort: 80
@@ -102,11 +244,16 @@ spec:
  </thead>
  <tbody>
  <tr>
- <td><code>annotations</code></td>
- <td>Replace the following value:
- <ul>
- <li><code><em>&lt;external_service&gt;</em></code>: Enter the external service to be called. For example, https://&lt;myservice&gt;.&lt;region&gt;.mybluemix.net.</li>
- </ul>
+ <td><code>path</code></td>
+ <td>Replace <code>&lt;<em>mypath</em>&gt;</code> with the path that the external service listens on.</td>
+ </tr>
+ <tr>
+ <td><code>external-svc</code></td>
+ <td>Replace <code>&lt;<em>external_service</em>&gt;</code> with the external service to be called. For example, <code>https://&lt;myservice&gt;.&lt;region&gt;.mybluemix.net</code>.</td>
+ </tr>
+ <tr>
+ <td><code>host</code></td>
+ <td>Replace <code>&lt;<em>mydomain</em>&gt;</code> with the host domain for the external service.</td>
  </tr>
  </tbody></table>
 
@@ -158,8 +305,8 @@ rules:
 </thead>
 <tbody>
 <tr>
-<td><code>annotations</code></td>
-<td>Replace <em>&lt;private_ALB_ID&gt;</em> with the ID for your private application load balancer. Run <code>bx cs albs --cluster <my_cluster></code> to find the application load balancer ID.
+<td><code>&lt;private_ALB_ID&gt;</code></td>
+<td>The ID for your private application load balancer. Run <code>bx cs albs --cluster <my_cluster></code> to find the private application load balancer ID.
 </td>
 </tr>
 </tbody></table>
@@ -187,24 +334,21 @@ kind: Ingress
 metadata:
   name: myingress
   annotations:
-    ingress.bluemix.net/rewrite-path: "serviceName=&lt;service_name1&gt; rewrite=&lt;target_path1&gt;;serviceName=&lt;service_name2&gt; rewrite=&lt;target_path2&gt;"
+    ingress.bluemix.net/rewrite-path: "serviceName=&lt;myservice1&gt; rewrite=&lt;target_path1&gt;;serviceName=&lt;myservice2&gt; rewrite=&lt;target_path2&gt;"
 spec:
   tls:
   - hosts:
     - mydomain
-    secretName: &lt;mytlssecret&gt;
+    secretName: mysecret
   rules:
   - host: mydomain
     http:
       paths:
-      - path: /&lt;domain_path1&gt;
+      - path: /beans
         backend:
-          serviceName: &lt;service_name1&gt;
-          servicePort: &lt;service_port1&gt;
-      - path: /&lt;domain_path2&gt;
-        backend:
-          serviceName: &lt;service_name2&gt;
-          servicePort: &lt;service_port2&gt;</code></pre>
+          serviceName: myservice1
+          servicePort: 80
+</code></pre>
 
 <table>
 <thead>
@@ -212,21 +356,14 @@ spec:
 </thead>
 <tbody>
 <tr>
-<td><code>annotations</code></td>
-<td>Replace <em>&lt;service_name&gt;</em> with the name of the Kubernetes service that you created for your app, and <em>&lt;target-path&gt;</em> with the path that your app listens on. Incoming network traffic on the application load balancer domain is forwarded to the Kubernetes service by using this path. Most apps do not listen on a specific path, but use the root path and a specific port. In this case, define <code>/</code> as the <em>rewrite-path</em> for your app.</td>
-</tr>
-<tr>
-<td><code>path</code></td>
-<td>Replace <em>&lt;domain_path&gt;</em> with the path that you want to append to your application load balancer domain. Incoming network traffic on this path is forwarded to the rewrite path that you defined in your annotation. In the example above, set the domain path to <code>/beans</code> to include this path into the load balancing of your Ingress controller.</td>
-</tr>
-<tr>
 <td><code>serviceName</code></td>
-<td>Replace <em>&lt;service_name&gt;</em> with the name of the Kubernetes service that you created for your app. The service name that you use here must be the same name that you defined in your annotation.</td>
+<td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the Kubernetes service that you created for your app.</td>
 </tr>
 <tr>
-<td><code>servicePort</code></td>
-<td>Replace <em>&lt;service_port&gt;</em> with the port that your service listens on.</td>
-</tr></tbody></table>
+<td><code>rewrite</code></td>
+<td>Replace <code>&lt;<em>target_path</em>&gt;</code> with the path that your app listens on. Incoming network traffic on the application load balancer domain is forwarded to the Kubernetes service by using this path. Most apps do not listen on a specific path, but use the root path and a specific port. In the example above, the rewrite path was defined as <code>/coffee</code>.</td>
+</tr>
+</tbody></table>
 
 </dd></dl>
 
@@ -257,7 +394,7 @@ kind: Ingress
 metadata:
   name: myingress
   annotations:
-    ingress.bluemix.net/sticky-cookie-services: "serviceName=&lt;service_name1&gt; name=&lt;cookie_name1&gt; expires=&lt;expiration_time1&gt; path=&lt;cookie_path1&gt; hash=&lt;hash_algorithm1&gt;;serviceName=&lt;service_name2&gt; name=&lt;cookie_name2&gt; expires=&lt;expiration_time2&gt; path=&lt;cookie_path2&gt; hash=&lt;hash_algorithm2&gt;"
+    ingress.bluemix.net/sticky-cookie-services: "serviceName=&lt;myservice1&gt; name=&lt;cookie_name1&gt; expires=&lt;expiration_time1&gt; path=&lt;cookie_path1&gt; hash=&lt;hash_algorithm1&gt;;serviceName=&lt;myservice2&gt; name=&lt;cookie_name2&gt; expires=&lt;expiration_time2&gt; path=&lt;cookie_path2&gt; hash=&lt;hash_algorithm2&gt;"
 spec:
   tls:
   - hosts:
@@ -269,11 +406,11 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: &lt;service_name1&gt;
+          serviceName: &lt;myservice1&gt;
           servicePort: 8080
       - path: /myapp
         backend:
-          serviceName: &lt;service_name2&gt;
+          serviceName: &lt;myservice2&gt;
           servicePort: 80</code></pre>
 
   <table>
@@ -283,14 +420,24 @@ spec:
   </thead>
   <tbody>
   <tr>
-  <td><code>annotations</code></td>
-  <td>Replace the following values:<ul>
-  <li><code><em>&lt;service_name&gt;</em></code>: The name of the Kubernetes service that you created for your app.</li>
-  <li><code><em>&lt;cookie_name&gt;</em></code>: Choose a name of the sticky cookie that is created during a session.</li>
-  <li><code><em>&lt;expiration_time&gt;</em></code>: The time in seconds, minutes, or hours before the sticky cookie expires. This time is independent of the user activity. After the cookie is expired, the cookie is deleted by the client web browser and no longer sent to the application load balancer. For example, to set an expiration time of 1 second, 1 minute, or 1 hour, enter <strong>1s</strong>, <strong>1m</strong>, or <strong>1h</strong>.</li>
-  <li><code><em>&lt;cookie_path&gt;</em></code>: The path that is appended to the Ingress subdomain and that indicates for which domains and subdomains the cookie is sent to the application load balancer. For example, if your Ingress domain is <code>www.myingress.com</code> and you want to send the cookie in every client request, you must set <code>path=/</code>. If you want to send the cookie only for <code>www.myingress.com/myapp</code> and all its subdomains, then you must set <code>path=/myapp</code>.</li>
-  <li><code><em>&lt;hash_algorithm&gt;</em></code>: The hash algorithm that protects the information in the cookie. Only <code>sha1</code> is supported. SHA1 creates a hash sum based on the information in the cookie and appends this hash sum to the cookie. The server can decrypt the information in the cookie and verify data integrity.
-  </li></ul></td>
+  <td><code>serviceName</code></td>
+  <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the Kubernetes service that you created for your app.</td>
+  </tr>
+  <tr>
+  <td><code>name</code></td>
+  <td>Replace <code>&lt;<em>cookie_name</em>&gt;</code> with the name of a sticky cookie that is created during a session.</td>
+  </tr>
+  <tr>
+  <td><code>expires</code></td>
+  <td>Replace <code>&lt;<em>expiration_time</em>&gt;</code> with the time in seconds (s), minutes (m), or hours (h) before the sticky cookie expires. This time is independent of the user activity. After the cookie is expired, the cookie is deleted by the client web browser and no longer sent to the application load balancer. For example, to set an expiration time of 1 second, 1 minute, or 1 hour, enter <code>1s</code>, <code>1m</code>, or <code>1h</code>.</td>
+  </tr>
+  <tr>
+  <td><code>path</code></td>
+  <td>Replace <code>&lt;<em>cookie_path</em>&gt;</code> with the path that is appended to the Ingress subdomain and that indicates for which domains and subdomains the cookie is sent to the application load balancer. For example, if your Ingress domain is <code>www.myingress.com</code> and you want to send the cookie in every client request, you must set <code>path=/</code>. If you want to send the cookie only for <code>www.myingress.com/myapp</code> and all its subdomains, then you must set <code>path=/myapp</code>.</td>
+  </tr>
+  <tr>
+  <td><code>hash</code></td>
+  <td>Replace <code>&lt;<em>hash_algorithm</em>&gt;</code> with the hash algorithm that protects the information in the cookie. Only <code>sha1</code> is supported. SHA1 creates a hash sum based on the information in the cookie and appends this hash sum to the cookie. The server can decrypt the information in the cookie and verify data integrity.</td>
   </tr>
   </tbody></table>
 
@@ -315,29 +462,29 @@ Use this annotation for an app that is running a TCP streams workload.
 </dd>
 
 
- <dt>Sample Ingress resource YAML</dt>
- <dd>
+<dt>Sample Ingress resource YAML</dt>
+<dd>
 
- <pre class="codeblock">
- <code>apiVersion: extensions/v1beta1
- kind: Ingress
- metadata:
-  name: myingress
-  annotations:
-    ingress.bluemix.net/tcp-ports: "serviceName=&lt;service_name&gt; ingressPort=&lt;ingress_port&gt; [servicePort=&lt;service_port&gt;]"
- spec:
+<pre class="codeblock">
+<code>apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+name: myingress
+annotations:
+  ingress.bluemix.net/tcp-ports: "serviceName=&lt;myservice&gt; ingressPort=&lt;ingress_port&gt; [servicePort=&lt;service_port&gt;]"
+spec:
   tls:
   - hosts:
     - mydomain
-    secretName: mytlssecret
+    secretName: mysecret
   rules:
   - host: mydomain
     http:
       paths:
       - path: /
         backend:
-          serviceName: myservice
-          servicePort: 8080</code></pre>
+          serviceName: &lt;myservice&gt;
+          servicePort: 80</code></pre>
 
  <table>
   <thead>
@@ -345,13 +492,16 @@ Use this annotation for an app that is running a TCP streams workload.
   </thead>
   <tbody>
   <tr>
-  <td><code>annotations</code></td>
-  <td>Replace the following values:<ul>
-  <li><code><em>&lt;ingressPort&gt;</em></code>: The TCP port on which you want to access your app.</li>
-  <li><code><em>&lt;serviceName&gt;</em></code>: The name of the Kubernetes service to access over non-standard TCP port.</li>
-  <li><code><em>&lt;servicePort&gt;</em></code>: This parameter is optional. When provided, the port is substituted to this value before traffic is sent to the backend app. Otherwise, the port remains same as the Ingress port.</li>
-  </ul>
-  </td>
+  <td><code>serviceName</code></td>
+  <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the Kubernetes service to access over non-standard TCP port.</td>
+  </tr>
+  <tr>
+  <td><code>ingressPort</code></td>
+  <td>Replace <code>&lt;<em>ingress_port</em>&gt;</code> with the TCP port on which you want to access your app.</td>
+  </tr>
+  <tr>
+  <td><code>servicePort</code></td>
+  <td>Replace <code>&lt;<em>service_port</em>&gt;</code> with this parameter is optional. When provided, the port is substituted to this value before traffic is sent to the backend app. Otherwise, the port remains same as the Ingress port.</td>
   </tr>
   </tbody></table>
   </dd>
@@ -413,11 +563,12 @@ spec:
  </thead>
  <tbody>
  <tr>
- <td><code>annotations</code></td>
- <td>Replace the following values:<ul><li><code><em>&lt;connect_timeout&gt;</em></code>: Enter the number of seconds to wait to connect to the back-end app, for example <strong>65s</strong>.
-
- </br></br>
- <strong>Note:</strong> A connect-timeout cannot exceed 75 seconds.</li><li><code><em>&lt;read_timeout&gt;</em></code>: Enter the number of seconds to wait before the back-end app is read, for example <strong>65s</strong>.</li></ul></td>
+ <td><code>&lt;connect_timeout&gt;</code></td>
+ <td>The number of seconds to wait to connect to the back-end app, for example <code>65s</code>. <strong>Note:</strong> A connect-timeout cannot exceed 75 seconds.</td>
+ </tr>
+ <tr>
+ <td><code>&lt;read_timeout&gt;</code></td>
+ <td>The number of seconds to wait before the back-end app is read, for example <code>65s</code>.</td>
  </tr>
  </tbody></table>
 
@@ -449,7 +600,7 @@ kind: Ingress
 metadata:
 name: myingress
 annotations:
-  ingress.bluemix.net/keepalive-requests: "serviceName=&lt;service_name&gt; requests=&lt;max_requests&gt;"
+  ingress.bluemix.net/keepalive-requests: "serviceName=&lt;myservice&gt; requests=&lt;max_requests&gt;"
 spec:
 tls:
 - hosts:
@@ -461,7 +612,7 @@ rules:
     paths:
     - path: /
       backend:
-        serviceName: myservice
+        serviceName: &lt;myservice&gt;
         servicePort: 8080</code></pre>
 
 <table>
@@ -470,12 +621,12 @@ rules:
 </thead>
 <tbody>
 <tr>
-<td><code>annotations</code></td>
-<td>Replace the following values:<ul>
-<li><code><em>&lt;serviceName&gt;</em></code>: Replace <em>&lt;service_name&gt;</em> with the name of the Kubernetes service that you created for your app. This parameter is optional. The configuration is applied to all of the services in the Ingress host unless a service is specified. If the parameter is provided, the keepalive requests are set for the given service. If the parameter is not provided, the keepalive requests are set at the server level of the <code>nginx.conf</code> for all the services that do not have the keepalive requests configured.</li>
-<li><code><em>&lt;requests&gt;</em></code>: Replace <em>&lt;max_requests&gt;</em> with the maximum number of requests that can be served through one keepalive connection.</li>
-</ul>
-</td>
+<td><code>serviceName</code></td>
+<td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the Kubernetes service that you created for your app. This parameter is optional. The configuration is applied to all of the services in the Ingress host unless a service is specified. If the parameter is provided, the keepalive requests are set for the given service. If the parameter is not provided, the keepalive requests are set at the server level of the <code>nginx.conf</code> for all the services that do not have the keepalive requests configured.</td>
+</tr>
+<tr>
+<td><code>requests</code></td>
+<td>Replace <code>&lt;<em>max_requests</em>&gt;</code> with the maximum number of requests that can be served through one keepalive connection.</td>
 </tr>
 </tbody></table>
 
@@ -508,7 +659,7 @@ kind: Ingress
 metadata:
  name: myingress
  annotations:
-   ingress.bluemix.net/keepalive-timeout: "serviceName=&lt;service_name&gt; timeout=&lt;time&gt;s"
+   ingress.bluemix.net/keepalive-timeout: "serviceName=&lt;myservice&gt; timeout=&lt;time&gt;s"
 spec:
  tls:
  - hosts:
@@ -529,12 +680,12 @@ spec:
  </thead>
  <tbody>
  <tr>
- <td><code>annotations</code></td>
- <td>Replace the following values:<ul>
- <li><code><em>&lt;serviceName&gt;</em></code>: Replace <em>&lt;service_name&gt;</em> with the name of the Kubernetes service that you created for your app. This parameter is optional. If the parameter is provided, the keepalive timeout is set for the given service. If the parameter is not provided, the keepalive timeout is set at the server level of the <code>nginx.conf</code> for all the services that do not have the keepalive timeout configured.</li>
- <li><code><em>&lt;timeout&gt;</em></code>: Replace <em>&lt;time&gt;</em> with an amount of time in seconds. Example:<code><em>timeout=20s</em></code>. A zero value disables the keepalive client connections.</li>
- </ul>
- </td>
+ <td><code>serviceName</code></td>
+ <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the Kubernetes service that you created for your app. This parameter is optional. If the parameter is provided, the keepalive timeout is set for the given service. If the parameter is not provided, the keepalive timeout is set at the server level of the <code>nginx.conf</code> for all the services that do not have the keepalive timeout configured.</td>
+ </tr>
+ <tr>
+ <td><code>timeout</code></td>
+ <td>Replace <code>&lt;<em>time</em>&gt;</code> with an amount of time in seconds. Example: <code>timeout=20s</code>. A zero value disables the keepalive client connections.</td>
  </tr>
  </tbody></table>
 
@@ -567,7 +718,7 @@ Change the maximum number of idle keepalive connections to the upstream server o
  metadata:
   name: myingress
   annotations:
-    ingress.bluemix.net/upstream-keepalive: "serviceName=&lt;service_name&gt; keepalive=&lt;max_connections&gt;"
+    ingress.bluemix.net/upstream-keepalive: "serviceName=&lt;myservice&gt; keepalive=&lt;max_connections&gt;"
  spec:
   tls:
   - hosts:
@@ -588,18 +739,19 @@ Change the maximum number of idle keepalive connections to the upstream server o
   </thead>
   <tbody>
   <tr>
-  <td><code>annotations</code></td>
-  <td>Replace the following values:<ul>
-  <li><code><em>&lt;serviceName&gt;</em></code>: Replace <em>&lt;service_name&gt;</em> with the name of the Kubernetes service that you created for your app.</li>
-  <li><code><em>&lt;keepalive&gt;</em></code>: Replace <em>&lt;max_connections&gt;</em> with the maximum number of idle keepalive connections to the upstream server. The default is 64. A zero value disables upstream keepalive connections for the given service.</li>
-  </ul>
-  </td>
+  <td><code>serviceName</code></td>
+  <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the Kubernetes service that you created for your app.</td>
+  </tr>
+  <tr>
+  <td><code>keepalive</code></td>
+  <td>Replace <code>&lt;<em>max_connections</em>&gt;</code> with the maximum number of idle keepalive connections to the upstream server. The default is <code>64</code>. A <code>0</code> value disables upstream keepalive connections for the given service.</td>
   </tr>
   </tbody></table>
   </dd>
   </dl>
 
-{[whitespace.md]}
+<br />
+
 
 
 ## Proxy buffer annotations
@@ -668,7 +820,7 @@ kind: Ingress
 metadata:
  name: proxy-ingress
  annotations:
-   ingress.bluemix.net/proxy-buffers: "serviceName=&lt;service_name&gt; number=&lt;number_of_buffers&gt; size=&lt;size&gt;"
+   ingress.bluemix.net/proxy-buffers: "serviceName=&lt;myservice&gt; number=&lt;number_of_buffers&gt; size=&lt;size&gt;"
 spec:
  tls:
  - hosts:
@@ -689,19 +841,20 @@ spec:
  </thead>
  <tbody>
  <tr>
- <td><code>annotations</code></td>
- <td>Replace the following values:
- <ul>
- <li><code><em>&lt;serviceName&gt;</em></code>: Replace <em>&lt;serviceName&gt;</em> with a name for the service to apply proxy-buffers. </li>
- <li><code><em>&lt;number_of_buffers&gt;</em></code>: Replace <em>&lt;number_of_buffers&gt;</em> with a number, such as <em>2</em>.</li>
- <li><code><em>&lt;size&gt;</em></code>: Enter the size of each buffer in kilobytes (k or K), such as <em>1K</em>.</li>
- </ul>
- </td>
+ <td><code>serviceName</code></td>
+ <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name for a service to apply proxy-buffers.</td>
+ </tr>
+ <tr>
+ <td><code>number_of_buffers</code></td>
+ <td>Replace <code>&lt;<em>number_of_buffers</em>&gt;</code> with a number, such as <em>2</em>.</td>
+ </tr>
+ <tr>
+ <td><code>size</code></td>
+ <td>Replace <code>&lt;<em>size</em>&gt;</code> with the size of each buffer in kilobytes (k or K), such as <em>1K</em>.</td>
  </tr>
  </tbody>
  </table>
- </dd>
- </dl>
+ </dd></dl>
 
 <br />
 
@@ -728,7 +881,7 @@ kind: Ingress
 metadata:
  name: proxy-ingress
  annotations:
-   ingress.bluemix.net/proxy-buffer-size: "serviceName=&lt;serviceName&gt; size=&lt;size&gt;"
+   ingress.bluemix.net/proxy-buffer-size: "serviceName=&lt;myservice&gt; size=&lt;size&gt;"
 spec:
  tls:
  - hosts:
@@ -750,12 +903,12 @@ spec:
  </thead>
  <tbody>
  <tr>
- <td><code>annotations</code></td>
- <td>Replace the following values:<ul>
- <li><code><em>&lt;serviceName&gt;</em></code>: Replace <em>&lt;serviceName&gt;</em> with a name of the service to apply proxy-busy-buffers-size.</li>
- <li><code><em>&lt;size&gt;</em></code>: Enter the size of each buffer in kilobytes (k or K), such as <em>1K</em>.</li>
- </ul>
- </td>
+ <td><code>serviceName</code></td>
+ <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of a service to apply proxy-buffers-size.</td>
+ </tr>
+ <tr>
+ <td><code>size</code></td>
+ <td>Replace <code>&lt;<em>size</em>&gt;</code> with the size of each buffer in kilobytes (k or K), such as <em>1K</em>.</td>
  </tr>
  </tbody></table>
 
@@ -803,20 +956,21 @@ spec:
          serviceName: myservice
          servicePort: 8080
          </code></pre>
+
 <table>
- <thead>
- <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
- </thead>
- <tbody>
- <tr>
- <td><code>annotations</code></td>
- <td>Replace the following values:<ul>
- <li><code><em>&lt;serviceName&gt;</em></code>: Replace <em>&lt;serviceName&gt;</em> with a name of the service to apply proxy-busy-buffers-size.</li>
- <li><code><em>&lt;size&gt;</em></code>: Enter the size of each buffer in kilobytes (k or K), such as <em>1K</em>.</li>
- </ul>
- </td>
- </tr>
- </tbody></table>
+<thead>
+<th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
+</thead>
+<tbody>
+<tr>
+<td><code>serviceName</code></td>
+<td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of a service to apply proxy-busy-buffers-size.</td>
+</tr>
+<tr>
+<td><code>size</code></td>
+<td>Replace <code>&lt;<em>size</em>&gt;</code> with the size of each buffer in kilobytes (k or K), such as <em>1K</em>.</td>
+</tr>
+</tbody></table>
 
  </dd>
  </dl>
@@ -851,19 +1005,19 @@ metadata:
   name: myingress
   annotations:
     ingress.bluemix.net/proxy-add-headers: |
-      serviceName=&lt;service_name1&gt; {
-      &lt;header1> &lt;value1&gt;;
-      &lt;header2> &lt;value2&gt;;
+      serviceName=&lt;myservice1&gt; {
+      &lt;header1&gt; &lt;value1&gt;;
+      &lt;header2&gt; &lt;value2&gt;;
       }
-      serviceName=&lt;service_name2&gt; {
+      serviceName=&lt;myservice2&gt; {
       &lt;header3&gt; &lt;value3&gt;;
       }
     ingress.bluemix.net/response-add-headers: |
-      serviceName=&lt;service_name1&gt; {
+      serviceName=&lt;myservice1&gt; {
       "&lt;header1&gt;: &lt;value1&gt;";
       "&lt;header2&gt;: &lt;value2&gt;";
       }
-      serviceName=&lt;service_name1&gt; {
+      serviceName=&lt;myservice2&gt; {
       "&lt;header3&gt;: &lt;value3&gt;";
       }
 spec:
@@ -877,11 +1031,11 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: &lt;service_name1&gt;
+          serviceName: &lt;myservice1&gt;
           servicePort: 8080
       - path: /myapp
         backend:
-          serviceName: &lt;service_name2&gt;
+          serviceName: &lt;myservice2&gt;
           servicePort: 80</code></pre>
 
  <table>
@@ -890,12 +1044,16 @@ spec:
   </thead>
   <tbody>
   <tr>
-  <td><code>annotations</code></td>
-  <td>Replace the following values:<ul>
-  <li><code><em>&lt;service_name&gt;</em></code>: The name of the Kubernetes service that you created for your app.</li>
-  <li><code><em>&lt;header&gt;</em></code>: The key of the header information to add to the client request or client response.</li>
-  <li><code><em>&lt;value&gt;</em></code>: The value of the header information to add to the client request or client response.</li>
-  </ul></td>
+  <td><code>service_name</code></td>
+  <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the Kubernetes service that you created for your app.</td>
+  </tr>
+  <tr>
+  <td><code>&lt;header&gt;</code></td>
+  <td>The key of the header information to add to the client request or client response.</td
+  </tr>
+  <tr>
+  <td><code>&lt;value&gt;</code></td>
+  <td>The value of the header information to add to the client request or client response.</td>
   </tr>
   </tbody></table>
  </dd></dl>
@@ -922,11 +1080,11 @@ Remove header information that is included in the client response from the back-
    name: myingress
    annotations:
      ingress.bluemix.net/response-remove-headers: |
-       serviceName=&lt;service_name1&gt; {
+       serviceName=&lt;myservice1&gt; {
        "&lt;header1&gt;";
        "&lt;header2&gt;";
        }
-       serviceName=&lt;service_name2&gt; {
+       serviceName=&lt;myservice2&gt; {
        "&lt;header3&gt;";
        }
  spec:
@@ -940,11 +1098,11 @@ Remove header information that is included in the client response from the back-
        paths:
        - path: /
          backend:
-           serviceName: &lt;service_name1&gt;
+           serviceName: &lt;myservice1&gt;
            servicePort: 8080
        - path: /myapp
          backend:
-           serviceName: &lt;service_name2&gt;
+           serviceName: &lt;myservice2&gt;
            servicePort: 80</code></pre>
 
   <table>
@@ -953,11 +1111,12 @@ Remove header information that is included in the client response from the back-
    </thead>
    <tbody>
    <tr>
-   <td><code>annotations</code></td>
-   <td>Replace the following values:<ul>
-   <li><code><em>&lt;service_name&gt;</em></code>: The name of the Kubernetes service that you created for your app.</li>
-   <li><code><em>&lt;header&gt;</em></code>: The key of the header to remove from the client response.</li>
-   </ul></td>
+   <td><code>service_name</code></td>
+   <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the Kubernetes service that you created for your app.</td>
+   </tr>
+   <tr>
+   <td><code>&lt;header&gt;</code></td>
+   <td>The key of the header to remove from the client response.</td>
    </tr>
    </tbody></table>
    </dd></dl>
@@ -973,12 +1132,12 @@ Adjust the maximum size of the body that the client can send as part of a reques
 
 <dl>
 <dt>Description</dt>
-<dd>To maintain the expected performance, the maximum client request body size is set to 1 megabyte. When a client request with a body size over the limit is sent to the Ingress application load balancer, and the client does not allow data to be divided, the application load balancer returns a 413 (Request Entity Too Large) http response to the client. A connection between the client and the application load balancer is not possible until the size of the request body is reduced. When the client allows data to be split up into multiple chunks, data is divided into packages of 1 megabyte and sent to the application load balancer.
+<dd>To maintain the expected performance, the maximum client request body size is set to 1 megabyte. When a client request with a body size over the limit is sent to the Ingress application load balancer, and the client does not allow data to be divided, the application load balancer returns a 413 (Request Entity Too Large) HTTP response to the client. A connection between the client and the application load balancer is not possible until the size of the request body is reduced. When the client allows data to be split up into multiple chunks, data is divided into packages of 1 megabyte and sent to the application load balancer.
 
 </br></br>
 You might want to increase the maximum body size because you expect client requests with a body size that is greater than 1 megabyte. For example, you want your client to be able to upload large files. Increasing the maximum request body size might impact the performance of your application load balancer because the connection to the client must stay open until the request is received.
 </br></br>
-<strong>Note:</strong> Some client web browsers cannot display the 413 http response message properly.</dd>
+<strong>Note:</strong> Some client web browsers cannot display the 413 HTTP response message properly.</dd>
 <dt>Sample Ingress resource YAML</dt>
 <dd>
 
@@ -1009,12 +1168,8 @@ spec:
  </thead>
  <tbody>
  <tr>
- <td><code>annotations</code></td>
- <td>Replace the following value:<ul>
- <li><code><em>&lt;size&gt;</em></code>: Enter the maximum size of the client response body. For example, to set it to 200 megabyte, define <strong>200m</strong>.
-
- </br></br>
- <strong>Note:</strong> You can set the size to 0 to disable the check of the client request body size.</li></ul></td>
+ <td><code>&lt;size&gt;</code></td>
+ <td>The maximum size of the client response body. For example, to set it to 200 megabyte, define <code>200m</code>.  <strong>Note:</strong> You can set the size to 0 to disable the check of the client request body size.</td>
  </tr>
  </tbody></table>
 
@@ -1071,13 +1226,16 @@ For all services, limit the request processing rate and the number of connection
   </thead>
   <tbody>
   <tr>
-  <td><code>annotations</code></td>
-  <td>Replace the following values:<ul>
-  <li><code><em>&lt;key&gt;</em></code>: To set a global limit for incoming requests based on the location or service, use `key=location`. To set a global limit for incoming requests based on the header, use `X-USER-ID key==$http_x_user_id`.</li>
-  <li><code><em>&lt;rate&gt;</em></code>: The processing rate. To define a rate per second, use r/s: <code>10r/s</code>. To define a rate per minute, use r/m: <code>50r/m</code>.</li>
-  <li><code><em>&lt;conn&gt;</em></code>: The number of connections.</li>
-  </ul>
-  </td>
+  <td><code>key</code></td>
+  <td>To set a global limit for incoming requests based on the location or service, use `key=location`. To set a global limit for incoming requests based on the header, use `X-USER-ID key==$http_x_user_id`.</td>
+  </tr>
+  <tr>
+  <td><code>rate</code></td>
+  <td>Replace <code>&lt;<em>rate</em>&gt;</code> with the processing rate. Enter a value as a rate per second (r/s) or rate per minute (r/m). Example: <code>50r/m</code>.</td>
+  </tr>
+  <tr>
+  <td><code>number-of_connections</code></td>
+  <td>Replace <code>&lt;<em>conn</em>&gt;</code> with the number of connections.</td>
   </tr>
   </tbody></table>
 
@@ -1109,7 +1267,7 @@ Limit the request processing rate and the number of connections for specific ser
  metadata:
   name: myingress
   annotations:
-    ingress.bluemix.net/service-rate-limit: "serviceName=&lt;service_name&gt; key=&lt;key&gt; rate=&lt;rate&gt; conn=&lt;number_of_connections&gt;"
+    ingress.bluemix.net/service-rate-limit: "serviceName=&lt;myservice&gt; key=&lt;key&gt; rate=&lt;rate&gt; conn=&lt;number_of_connections&gt;"
  spec:
   tls:
   - hosts:
@@ -1130,14 +1288,20 @@ Limit the request processing rate and the number of connections for specific ser
   </thead>
   <tbody>
   <tr>
-  <td><code>annotations</code></td>
-  <td>Replace the following values:<ul>
-  <li><code><em>&lt;serviceName&gt;</em></code>: The name of the Ingress resource.</li>
-  <li><code><em>&lt;key&gt;</em></code>: To set a global limit for incoming requests based on the location or service, use `key=location`. To set a global limit for incoming requests based on the header, use `X-USER-ID key==$http_x_user_id`.</li>
-  <li><code><em>&lt;rate&gt;</em></code>: The processing rate. The processing rate. To define a rate per second, use r/s: <code>10r/s</code>. To define a rate per minute, use r/m: <code>50r/m</code>.</li>
-  <li><code><em>&lt;conn&gt;</em></code>: The number of connections.</li>
-  </ul>
-  </td>
+  <td><code>serviceName</code></td>
+  <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the service for which you want to limit the processing rate.</li>
+  </tr>
+  <tr>
+  <td><code>key</code></td>
+  <td>To set a global limit for incoming requests based on the location or service, use `key=location`. To set a global limit for incoming requests based on the header, use `X-USER-ID key==$http_x_user_id`.</td>
+  </tr>
+  <tr>
+  <td><code>rate</code></td>
+  <td>Replace <code>&lt;<em>rate</em>&gt;</code> with the processing rate. To define a rate per second, use r/s: <code>10r/s</code>. To define a rate per minute, use r/m: <code>50r/m</code>.</td>
+  </tr>
+  <tr>
+  <td><code>number-of_connections</code></td>
+  <td>Replace <code>&lt;<em>conn</em>&gt;</code> with the number of connections.</td>
   </tr>
   </tbody></table>
   </dd>
@@ -1147,8 +1311,8 @@ Limit the request processing rate and the number of connections for specific ser
 
 
 
-## TLS/SSL authentication annotations
-{: #tls-ssl-auth}
+## HTTPS and TLS/SSL authentication annotations
+{: #https-auth}
 
 
 ### Custom HTTP and HTTPS ports (custom-port)
@@ -1172,7 +1336,7 @@ kind: Ingress
 metadata:
  name: myingress
  annotations:
-   ingress.bluemix.net/custom-port: "protocol=&lt;protocol1&gt; port=&lt;port1&gt;;protocol=&lt;protocol2&gt;port=&lt;port2&gt;"
+   ingress.bluemix.net/custom-port: "protocol=&lt;protocol1&gt; port=&lt;port1&gt;;protocol=&lt;protocol2&gt; port=&lt;port2&gt;"
 spec:
  tls:
  - hosts:
@@ -1193,13 +1357,12 @@ spec:
  </thead>
  <tbody>
  <tr>
- <td><code>annotations</code></td>
- <td>Replace the following values:<ul>
- <li><code><em>&lt;protocol&gt;</em></code>: Enter <strong>http</strong> or <strong>https</strong> to change the default port for incoming HTTP or HTTPS network traffic.</li>
- <li><code><em>&lt;port&gt;</em></code>: Enter the port number that you want to use for incoming HTTP or HTTPS network traffic.</li>
- </ul>
- <p><strong>Note:</strong> When a custom port is specified for either HTTP or HTTPS, the default ports are no longer valid for both HTTP and HTTPS. For example, to change the default port for HTTPS to 8443, but use the default port for HTTP, you must set custom ports for both: <code>custom-port: "protocol=http port=80; protocol=https port=8443"</code>.</p>
- </td>
+ <td><code>&lt;protocol&gt;</code></td>
+ <td>Enter <strong>http</strong> or <strong>https</strong> to change the default port for incoming HTTP or HTTPS network traffic.</td>
+ </tr>
+ <tr>
+ <td><code>&lt;port&gt;</code></td>
+ <td>Enter the port number that you want to use for incoming HTTP or HTTPS network traffic.  <p><strong>Note:</strong> When a custom port is specified for either HTTP or HTTPS, the default ports are no longer valid for both HTTP and HTTPS. For example, to change the default port for HTTPS to 8443, but use the default port for HTTP, you must set custom ports for both: <code>custom-port: "protocol=http port=80; protocol=https port=8443"</code>.</p></td>
  </tr>
  </tbody></table>
 
@@ -1254,10 +1417,11 @@ Convert insecure HTTP client requests to HTTPS.
 
 <dl>
 <dt>Description</dt>
-<dd>You set up your Ingress application load balancer to secure your domain with the IBM-provided TLS certificate or your custom TLS certificate. Some users might try to access your apps by using an insecure http request to your application load balancer domain, for example <code>http://www.myingress.com</code>, instead of using <code>https</code>. You can use the redirect annotation to always convert insecure http requests to https. If you do not use this annotation, insecure http requests are not converted into https requests by default and might expose unencrypted confidential information to the public.
+<dd>You set up your Ingress application load balancer to secure your domain with the IBM-provided TLS certificate or your custom TLS certificate. Some users might try to access your apps by using an insecure http request to your application load balancer domain, for example <code>http://www.myingress.com</code>, instead of using <code>https</code>. You can use the redirect annotation to always convert insecure HTTP requests to HTTPS. If you do not use this annotation, insecure HTTP requests are not converted into HTTPS requests by default and might expose unencrypted confidential information to the public.
 
 </br></br>
-Redirecting http requests to https is disabled by default.</dd>
+Redirecting HTTP requests to HTTPS is disabled by default.</dd>
+
 <dt>Sample Ingress resource YAML</dt>
 <dd>
 <pre class="codeblock">
@@ -1316,21 +1480,21 @@ kind: Ingress
 metadata:
 name: myingress
 annotations:
-  ingress.bluemix.net/mutual-auth: "port=&lt;port&gt; secretName=&lt;secretName&gt; serviceName=&lt;service1&gt;,&lt;service2&gt;"
+  ingress.bluemix.net/mutual-auth: "secretName=&lt;mysecret&gt; port=&lt;port&gt; serviceName=&lt;servicename1&gt;,&lt;servicename2&gt;"
 spec:
-tls:
-- hosts:
-  - mydomain
-  secretName: mytlssecret
-rules:
-- host: mydomain
-  http:
-    paths:
-    - path: /
-      backend:
-        serviceName: myservice
-        servicePort: 8080
-        </code></pre>
+  tls:
+  - hosts:
+    - mydomain
+    secretName: mytlssecret
+  rules:
+  - host: mydomain
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: myservice
+          servicePort: 8080
+          </code></pre>
 
 <table>
 <thead>
@@ -1338,13 +1502,16 @@ rules:
 </thead>
 <tbody>
 <tr>
-<td><code>annotations</code></td>
-<td>Replace the following values:<ul>
-<li><code><em>&lt;serviceName&gt;</em></code>: The name of one or more Ingress resources. This parameter is optional.</li>
-<li><code><em>&lt;secretName&gt;</em></code>: Replace <em>&lt;secret_name&gt;</em> with a name for the secret resource.</li>
-<li><code><em>&lt;port&gt;</em></code>: Enter the port number.</li>
-</ul>
-</td>
+<td><code>secretName</code></td>
+<td>Replace <code>&lt;<em>mysecret</em>&gt;</code> with a name for the secret resource.</td>
+</tr>
+<tr>
+<td><code>&lt;port&gt;</code></td>
+<td>The application load balancer port number.</td>
+</tr>
+<tr>
+<td><code>&lt;serviceName&gt;</code></td>
+<td>The name of one or more Ingress resources. This parameter is optional.</td>
 </tr>
 </tbody></table>
 
@@ -1379,19 +1546,19 @@ kind: Ingress
 metadata:
   name: &lt;myingressname&gt;
   annotations:
-    ingress.bluemix.net/ssl-services: ssl-service=&lt;service1&gt; [ssl-secret=&lt;service1-ssl-secret&gt;];ssl-service=&lt;service2&gt; [ssl-secret=&lt;service2-ssl-secret&gt;]
+    ingress.bluemix.net/ssl-services: "ssl-service=&lt;myservice1&gt; [ssl-secret=&lt;service1-ssl-secret&gt;];ssl-service=&lt;myservice2&gt; [ssl-secret=&lt;service2-ssl-secret&gt;]
 spec:
   rules:
-  - host: &lt;ibmdomain&gt;
+  - host: mydomain
     http:
       paths:
-      - path: /&lt;myservicepath1&gt;
+      - path: /
         backend:
-          serviceName: &lt;myservice1&gt;
+          serviceName: myservice1
           servicePort: 8443
-      - path: /&lt;myservicepath2&gt;
+      - path: /
         backend:
-          serviceName: &lt;myservice2&gt;
+          serviceName: myservice2
           servicePort: 8444</code></pre>
 
 <table>
@@ -1400,43 +1567,12 @@ spec:
   </thead>
   <tbody>
   <tr>
-  <td><code>name</code></td>
-  <td>Replace <em>&lt;myingressname&gt;</em> with a name for your Ingress resource.</td>
+  <td><code>ssl-service</code></td>
+  <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the service that represents your app. Traffic is encrypted from application load balancer to this app.</td>
   </tr>
   <tr>
-  <td><code>annotations</code></td>
-  <td>Replace the following values:<ul>
-  <li><code><em>&lt;myservice&gt;</em></code>: Enter the name of the service that represents your app. Traffic is encrypted from application load balancer to this app.</li>
-  <li><code><em>&lt;ssl-secret&gt;</em></code>: Enter the secret for the service. This parameter is optional. If the parameter is provided, the value must contain the key and the certificate that your app is expecting from the client.  </li></ul>
-  </td>
-  </tr>
-  <tr>
-  <td><code>rules/host</code></td>
-  <td>Replace <em>&lt;ibmdomain&gt;</em> with the IBM-provided <strong>Ingress subdomain</strong> name.
-  <br><br>
-  <strong>Note:</strong> To avoid failures during Ingress creation, do not use * for your host or leave the host property empty.</td>
-  </tr>
-  <tr>
-  <td><code>rules/path</code></td>
-  <td>Replace <em>&lt;myservicepath&gt;</em> with a slash or the unique path that your app is listening on, so that network traffic can be forwarded to the app.
-
-  </br>
-  For every Kubernetes service, you can define an individual path that is appended to the IBM-provided domain to create a unique path to your app, for example <code>ingress_domain/myservicepath1</code>. When you enter this route into a web browser, network traffic is routed to the application load balancer. The application load balancer looks up the associated service and sends network traffic to the service and to the pods where the app is running by using the same path. The app must be set up to listen on this path in order to receive incoming network traffic.
-
-  </br></br>
-  Many apps do not listen on a specific path but use the root path and a specific port. In this case, define the root path as <code>/</code> and do not specify an individual path for your app.
-  </br>
-  Examples: <ul><li>For <code>http://ingress_host_name/</code>, enter <code>/</code> as the path.</li><li>For <code>http://ingress_host_name/myservicepath</code>, enter <code>/myservicepath</code> as the path.</li></ul>
-  </br>
-  <strong>Tip:</strong> To configure your Ingress to listen on a path that is different to the one that your app listens on, you can use the <a href="#rewrite-path" target="_blank">rewrite annotation</a> to establish proper routing to your app.</td>
-  </tr>
-  <tr>
-  <td><code>serviceName</code></td>
-  <td>Replace <em>&lt;myservice&gt;</em> with the name of the service that you used when you created the Kubernetes service for your app.</td>
-  </tr>
-  <tr>
-  <td><code>servicePort</code></td>
-  <td>The port that your service listens to. Use the same port that you defined when you created the Kubernetes service for your app.</td>
+  <td><code>ssl-secret</code></td>
+  <td>Replace <code>&lt;<em>service-ssl-secret</em>&gt;</code> with the secret for the service. This parameter is optional. If the parameter is provided, the value must contain the key and the certificate that your app is expecting from the client.</td>
   </tr>
   </tbody></table>
 
@@ -1472,25 +1608,26 @@ metadata:
   name: &lt;myingressname&gt;
   annotations:
     ingress.bluemix.net/ssl-services: |
-      ssl-service=&lt;service1&gt; ssl-secret=&lt;service1-ssl-secret&gt;;
-      ssl-service=&lt;service2&gt; ssl-secret=&lt;service2-ssl-secret&gt;
+      ssl-service=&lt;myservice1&gt; ssl-secret=&lt;service1-ssl-secret&gt;;
+      ssl-service=&lt;myservice2&gt; ssl-secret=&lt;service2-ssl-secret&gt;
 spec:
   tls:
   - hosts:
-    - &lt;ibmdomain&gt;
-    secretName: &lt;secret_name&gt;
+    - mydomain
+    secretName: mysecret
   rules:
-  - host: &lt;ibmdomain&gt;
+  - host: mydomain
     http:
       paths:
-      - path: /&lt;myservicepath1&gt;
+      - path: /
         backend:
-          serviceName: &lt;myservice1&gt;
+          serviceName: myservice1
           servicePort: 8443
-      - path: /&lt;myservicepath2&gt;
+      - path: /
         backend:
-          serviceName: &lt;myservice2&gt;
-          servicePort: 8444</code></pre>
+          serviceName: myservice2
+          servicePort: 8444
+          </code></pre>
 
 <table>
   <thead>
@@ -1498,47 +1635,12 @@ spec:
   </thead>
   <tbody>
   <tr>
-  <td><code>name</code></td>
-  <td>Replace <em>&lt;myingressname&gt;</em> with a name for your Ingress resource.</td>
+  <td><code>ssl-service</code></td>
+  <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the service that represents your app. Traffic is encrypted from application load balancer to this app.</td>
   </tr>
   <tr>
-  <td><code>annotations</code></td>
-  <td>Replace the following values:<ul>
-  <li><code><em>&lt;service&gt;</em></code>: Enter the name of the service.</li>
-  <li><code><em>&lt;service-ssl-secret&gt;</em></code>: Enter the secret for the service.</li></ul>
-  </td>
-  </tr>
-  <tr>
-  <td><code>tls/host</code></td>
-  <td>Replace <em>&lt;ibmdomain&gt;</em> with the IBM-provided <strong>Ingress subdomain</strong> name.
-  <br><br>
-  <strong>Note:</strong> To avoid failures during Ingress creation, do not use * for your host or leave the host property empty.</td>
-  </tr>
-  <tr>
-  <td><code>tls/secretName</code></td>
-  <td>Replace <em>&lt;secret_name&gt;</em> with the name of the secret that holds your certificate and, for mutual authentication, key.
-  </tr>
-  <tr>
-  <td><code>rules/path</code></td>
-  <td>Replace <em>&lt;myservicepath&gt;</em> with a slash or the unique path that your app is listening on, so that network traffic can be forwarded to the app.
-
-  </br>
-  For every Kubernetes service, you can define an individual path that is appended to the IBM-provided domain to create a unique path to your app, for example <code>ingress_domain/myservicepath1</code>. When you enter this route into a web browser, network traffic is routed to the application load balancer. The application load balancer looks up the associated service, and sends network traffic to the service and to the pods where the app is running by using the same path. The app must be set up to listen on this path in order to receive incoming network traffic.
-
-  </br></br>
-  Many apps do not listen on a specific path, but use the root path and a specific port. In this case, define the root path as <code>/</code> and do not specify an individual path for your app.
-  </br>
-  Examples: <ul><li>For <code>http://ingress_host_name/</code>, enter <code>/</code> as the path.</li><li>For <code>http://ingress_host_name/myservicepath</code>, enter <code>/myservicepath</code> as the path.</li></ul>
-  </br>
-  <strong>Tip:</strong> To configure your Ingress to listen on a path that is different to the one that your app listens on, you can use the <a href="#rewrite-path" target="_blank">rewrite annotation</a> to establish proper routing to your app.</td>
-  </tr>
-  <tr>
-  <td><code>serviceName</code></td>
-  <td>Replace <em>&lt;myservice&gt;</em> with the name of the service that you used when you created the Kubernetes service for your app.</td>
-  </tr>
-  <tr>
-  <td><code>servicePort</code></td>
-  <td>The port that your service listens to. Use the same port that you defined when you created the Kubernetes service for your app.</td>
+  <td><code>ssl-secret</code></td>
+  <td>Replace <code>&lt;<em>service-ssl-secret</em>&gt;</code> with the secret for the service. This parameter is optional. If the parameter is provided, the value must contain the key and the certificate that your app is expecting from the client.</td>
   </tr>
   </tbody></table>
 
