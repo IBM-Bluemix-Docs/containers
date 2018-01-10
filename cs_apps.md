@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2017-12-18"
+lastupdated: "2018-01-10"
 
 ---
 
@@ -927,27 +927,29 @@ To configure the application load balancer:
 2.  Configure your domain to route incoming network traffic to the IBM-provided application load balancer. Choose between these options:
     -   Define an alias for your custom domain by specifying the IBM-provided domain as a Canonical Name record (CNAME). To find the IBM-provided Ingress domain, run `bx cs cluster-get <mycluster>` and look for the **Ingress subdomain** field.
     -   Map your custom domain to the portable public IP address of the IBM-provided application load balancer by adding the IP address as a record. To find the portable public IP address of the application load balancer, run `bx cs alb-get <public_alb_ID>`.
-3.  Create a TLS certificate and key for your domain that is encoded in PEM format.
-4.  Store your TLS certificate and key in a Kubernetes secret.
-    1.  Open your preferred editor and create a Kubernetes secret configuration file that is named, for example, `mysecret.yaml`.
-    2.  Define a secret that uses your TLS certificate and key. Replace <em>&lt;mytlssecret&gt;</em> with a name for your Kubernetes secret, <tls_key_filepath> with the path to your custom TLS key file, and <tls_cert_filepath> with the path to your custom TLS certificate file.
+3.  Either import or create a TLS certificate and key secret:
+    * If you already have a TLS certificate stored in {{site.data.keyword.cloudcerts_long_notm}} that you want to use, you can import its associated secret into your cluster by running `bx cs alb-cert-deploy --secret-name <secret_name> --cluster <cluster_name_or_ID> --cert-crn <certificate_crn>`.
+    * If you do not have a TLS certificate ready, follow these steps:
+        1. Create a TLS certificate and key for your domain that is encoded in PEM format.
+        2.  Open your preferred editor and create a Kubernetes secret configuration file that is named, for example, `mysecret.yaml`.
+        3.  Define a secret that uses your TLS certificate and key. Replace <em>&lt;mytlssecret&gt;</em> with a name for your Kubernetes secret, <em>&lt;tls_key_filepath&gt;</em> with the path to your custom TLS key file, and <em>&lt;tls_cert_filepath&gt;</em> with the path to your custom TLS certificate file.
 
-        ```
-        kubectl create secret tls <mytlssecret> --key <tls_key_filepath> --cert <tls_cert_filepath>
-        ```
-        {: pre}
+            ```
+            kubectl create secret tls <mytlssecret> --key <tls_key_filepath> --cert <tls_cert_filepath>
+            ```
+            {: pre}
 
-    3.  Save your configuration file.
-    4.  Create the TLS secret for your cluster.
+        4.  Save your configuration file.
+        5.  Create the TLS secret for your cluster.
 
-        ```
-        kubectl apply -f mysecret.yaml
-        ```
-        {: pre}
+            ```
+            kubectl apply -f mysecret.yaml
+            ```
+            {: pre}
 
-5.  [Deploy your app to the cluster](#cs_apps_cli). When you deploy your app to the cluster, one or more pods are created for you that run your app in a container. Ensure that you add a label to your deployment in the metadata section of your configuration file. This label is needed to identify all pods where your app is running, so that they can be included in the Ingress load balancing.
+4.  [Deploy your app to the cluster](#cs_apps_cli). When you deploy your app to the cluster, one or more pods are created for you that run your app in a container. Ensure that you add a label to your deployment in the metadata section of your configuration file. This label is needed to identify all pods where your app is running, so that they can be included in the Ingress load balancing.
 
-6.  Create a Kubernetes service for the app to expose. The application load balancer can include your app into the Ingress load balancing only if your app is exposed via a Kubernetes service inside the cluster.
+5.  Create a Kubernetes service for the app to expose. The application load balancer can include your app into the Ingress load balancing only if your app is exposed via a Kubernetes service inside the cluster.
 
     1.  Open your preferred editor and create a service configuration file that is named, for example, `myservice.yaml`.
     2.  Define a service for the app that you want to expose to the public.
@@ -992,7 +994,7 @@ To configure the application load balancer:
         {: pre}
 
     5.  Repeat these steps for every app that you want to expose to the public.
-7.  Create an Ingress resource. Ingress resources define the routing rules for the Kubernetes service that you created for your app and are used by the application load balancer to route incoming network traffic to the service. You can use one Ingress resource to define routing rules for multiple apps as long as every app is exposed via a Kubernetes service inside the cluster.
+6.  Create an Ingress resource. Ingress resources define the routing rules for the Kubernetes service that you created for your app and are used by the application load balancer to route incoming network traffic to the service. You can use one Ingress resource to define routing rules for multiple apps as long as every app is exposed via a Kubernetes service inside the cluster.
     1.  Open your preferred editor and create an Ingress configuration file that is named, for example, `myingress.yaml`.
     2.  Define an Ingress resource in your configuration file that uses your custom domain to route incoming network traffic to your services, and your custom certificate to manage the TLS termination. For every service you can define an individual path that is appended to your custom domain to create a unique path to your app, for example `https://mydomain/myapp`. When you enter this route into a web browser, network traffic is routed to the application load balancer. The application load balancer looks up the associated service and sends network traffic to the service, and further to the pods where the app is running.
 
@@ -1041,7 +1043,7 @@ To configure the application load balancer:
         </tr>
         <tr>
         <td><code>tls/secretName</code></td>
-        <td>Replace <em>&lt;mytlssecret&gt;</em> with the name of the secret that you created earlier and that holds your custom TLS certificate and key to manage the TLS termination for your custom domain.
+        <td>Replace <em>&lt;mytlssecret&gt;</em> with the name of the secret that you created earlier that holds your custom TLS certificate and key. If you imported a certificate from {{site.data.keyword.cloudcerts_short}}, you can run <code>bx cs alb-cert-get --cluster <cluster_name_or_ID> --cert-crn <certificate_crn></code> to see the secrets associated with a TLS certificate.
         </tr>
         <tr>
         <td><code>host</code></td>
@@ -1084,7 +1086,7 @@ To configure the application load balancer:
         ```
         {: pre}
 
-8.  Verify that the Ingress resource was created successfully. Replace _&lt;myingressname&gt;_ with the name of the Ingress resource that you created earlier.
+7.  Verify that the Ingress resource was created successfully. Replace _&lt;myingressname&gt;_ with the name of the Ingress resource that you created earlier.
 
     ```
     kubectl describe ingress <myingressname>
@@ -1093,7 +1095,7 @@ To configure the application load balancer:
 
     **Note:** It might take a few minutes for the Ingress resource to be created properly and for the app to be available on the public internet.
 
-9.  Access your app from the internet.
+8.  Access your app from the internet.
     1.  Open your preferred web browser.
     2.  Enter the URL of the app service that you want to access.
 
@@ -1627,7 +1629,7 @@ To configure the private application load balancer:
         </tr>
         <tr>
         <td><code>ingress.bluemix.net/ALB-ID</code></td>
-        <td>Replace <em>&lt;private_ALB_ID&gt;</em> with the ALB ID for your private Ingress controller. Run <code>bx cs albs --cluster <my_cluster></code> to find the ALB ID. For more information about this Ingress annotation, see [Application load balancer ID (ALB_ID)](cs_annotations.html#alb-id).</td>
+        <td>Replace <em>&lt;private_ALB_ID&gt;</em> with the ALB ID for your private Ingress controller. Run <code>bx cs albs --cluster <my_cluster></code> to find the ALB ID. For more information about this Ingress annotation, see [Private application load balancer routing](cs_annotations.html#alb-id).</td>
         </tr>
         <td><code>host</code></td>
         <td>Replace <em>&lt;mycustomdomain&gt;</em> with your custom domain.
@@ -1701,28 +1703,29 @@ To configure the application load balancer:
 
 2.  Map your custom domain to the portable private IP address of the IBM-provided private application load balancer by adding the IP address as a record. To find the portable private IP address of the private application load balancer, run `bx cs albs --cluster <cluster_name>`.
 
-3.  Create a TLS certificate and key for your domain that is encoded in PEM format.
+3.  Either import or create a TLS certificate and key secret:
+    * If you already have a TLS certificate stored in {{site.data.keyword.cloudcerts_long_notm}} that you want to use, you can import its associated secret into your cluster by running `bx cs alb-cert-deploy --secret-name <secret_name> --cluster <cluster_name_or_ID> --cert-crn <certificate_crn>`.
+    * If you do not have a TLS certificate ready, follow these steps:
+        1. Create a TLS certificate and key for your domain that is encoded in PEM format.
+        2.  Open your preferred editor and create a Kubernetes secret configuration file that is named, for example, `mysecret.yaml`.
+        3.  Define a secret that uses your TLS certificate and key. Replace <em>&lt;mytlssecret&gt;</em> with a name for your Kubernetes secret, <em>&lt;tls_key_filepath&gt;</em> with the path to your custom TLS key file, and <em>&lt;tls_cert_filepath&gt;</em> with the path to your custom TLS certificate file.
 
-4.  Store your TLS certificate and key in a Kubernetes secret.
-    1.  Open your preferred editor and create a Kubernetes secret configuration file that is named, for example, `mysecret.yaml`.
-    2.  Define a secret that uses your TLS certificate and key. Replace <em>&lt;mytlssecret&gt;</em> with a name for your Kubernetes secret, <tls_key_filepath> with the path to your custom TLS key file, and <tls_cert_filepath> with the path to your custom TLS certificate file.
+            ```
+            kubectl create secret tls <mytlssecret> --key <tls_key_filepath> --cert <tls_cert_filepath>
+            ```
+            {: pre}
 
-        ```
-        kubectl create secret tls <mytlssecret> --key <tls_key_filepath> --cert <tls_cert_filepath>
-        ```
-        {: pre}
+        4.  Save your configuration file.
+        5.  Create the TLS secret for your cluster.
 
-    3.  Save your configuration file.
-    4.  Create the TLS secret for your cluster.
+            ```
+            kubectl apply -f mysecret.yaml
+            ```
+            {: pre}
 
-        ```
-        kubectl apply -f mysecret.yaml
-        ```
-        {: pre}
+4.  [Deploy your app to the cluster](#cs_apps_cli). When you deploy your app to the cluster, one or more pods are created for you that run your app in a container. Ensure that you add a label to your deployment in the metadata section of your configuration file. This label is needed to identify all pods where your app is running, so that they can be included in the Ingress load balancing.
 
-5.  [Deploy your app to the cluster](#cs_apps_cli). When you deploy your app to the cluster, one or more pods are created for you that run your app in a container. Ensure that you add a label to your deployment in the metadata section of your configuration file. This label is needed to identify all pods where your app is running, so that they can be included in the Ingress load balancing.
-
-6.  Create a Kubernetes service for the app to expose. The private application load balancer can include your app into the Ingress load balancing only if your app is exposed via a Kubernetes service inside the cluster.
+5.  Create a Kubernetes service for the app to expose. The private application load balancer can include your app into the Ingress load balancing only if your app is exposed via a Kubernetes service inside the cluster.
 
     1.  Open your preferred editor and create a service configuration file that is named, for example, `myservice.yaml`.
     2.  Define a service for the app that you want to expose to the public.
@@ -1767,7 +1770,7 @@ To configure the application load balancer:
         {: pre}
 
     5.  Repeat these steps for every app that you want to expose on the private network.
-7.  Create an Ingress resource. Ingress resources define the routing rules for the Kubernetes service that you created for your app and are used by the application load balancer to route incoming network traffic to the service. You can use one Ingress resource to define routing rules for multiple apps as long as every app is exposed via a Kubernetes service inside the cluster.
+6.  Create an Ingress resource. Ingress resources define the routing rules for the Kubernetes service that you created for your app and are used by the application load balancer to route incoming network traffic to the service. You can use one Ingress resource to define routing rules for multiple apps as long as every app is exposed via a Kubernetes service inside the cluster.
     1.  Open your preferred editor and create an Ingress configuration file that is named, for example, `myingress.yaml`.
     2.  Define an Ingress resource in your configuration file that uses your custom domain to route incoming network traffic to your services, and your custom certificate to manage the TLS termination. For every service you can define an individual path that is appended to your custom domain to create a unique path to your app, for example `https://mydomain/myapp`. When you enter this route into a web browser, network traffic is routed to the application load balancer. The application load balancer looks up the associated service and sends network traffic to the service, and further to the pods where the app is running.
 
@@ -1822,7 +1825,7 @@ To configure the application load balancer:
         </tr>
         <tr>
         <td><code>tls/secretName</code></td>
-        <td>Replace <em>&lt;mytlssecret&gt;</em> with the name of the secret that you created earlier and that holds your custom TLS certificate and key to manage the TLS termination for your custom domain.
+        <td>Replace <em>&lt;mytlssecret&gt;</em> with the name of the secret that you created earlier and that holds your custom TLS certificate and key. If you imported a certificate from {{site.data.keyword.cloudcerts_short}}, you can run <code>bx cs alb-cert-get --cluster <cluster_name_or_ID> --cert-crn <certificate_crn></code> to see the secrets associated with a TLS certificate.
         </tr>
         <tr>
         <td><code>host</code></td>
@@ -1865,7 +1868,7 @@ To configure the application load balancer:
         ```
         {: pre}
 
-8.  Verify that the Ingress resource was created successfully. Replace <em>&lt;myingressname&gt;</em> with the name of the Ingress resource that you created earlier.
+7.  Verify that the Ingress resource was created successfully. Replace <em>&lt;myingressname&gt;</em> with the name of the Ingress resource that you created earlier.
 
     ```
     kubectl describe ingress <myingressname>
@@ -1874,7 +1877,7 @@ To configure the application load balancer:
 
     **Note:** It might take a few seconds for the Ingress resource to be created properly and for the app to be available.
 
-9.  Access your app from the internet.
+8.  Access your app from the internet.
     1.  Open your preferred web browser.
     2.  Enter the URL of the app service that you want to access.
 

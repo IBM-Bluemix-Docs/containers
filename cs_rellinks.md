@@ -28,9 +28,9 @@ lastupdated: "2017-12-01"
 - [developerWorks container orchestration journeys ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/code/journey/category/container-orchestration/)
 - [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/)
 - [Docker documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.docker.com/engine/)
-- [Helm documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.helm.sh/helm/)
-- [Istio ![External link icon](../icons/launch-glyph.svg "External link icon")](https://istio.io/)
-- [Weave Scope ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.weave.works/oss/scope/)
+- <a rel="nofollow" href="https://docs.helm.sh/helm/" target="_blank">Helm documentation <img src="../icons/launch-glyph.svg" alt="External link icon"></a> for Kubernetes package management
+- [Istio ![External link icon](../icons/launch-glyph.svg "External link icon")](https://istio.io/) service mesh
+- [Weave Scope ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.weave.works/oss/scope/) visualization
 
 <br />
 

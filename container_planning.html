@@ -63,7 +63,7 @@ page:<div class="lines">&nbsp;&nbsp;&nbsp;&nbsp; • <a href="container_planning
 <div class="body taskbody"><div class="section context" id="roles__context_tc2_pxz_nz"><p data-hd-otherprops="registry_check">Containers are managed by
 organization managers and container developers. The following image shows a sample container
 configuration of an organization and highlights the components that can be set by either the
-organization manager or the container developer. <a href="../api/content/containers/images/container_planning_container_ov_bluemixify.png" rel="external" target="_blank" title="(Opens in a new tab or window)"><img id="roles__image_qlf_pxz_nz" src="images/container_planning_container_ov_bluemixify.png" width="700" alt="A diagram that displays the components of IBM Cloud Container Service that the container developer or organization manager can configure."></a></p>
+organization manager or the container developer. <img id="roles__image_qlf_pxz_nz" src="images/container_planning_container_ov_bluemixify.png" width="700" alt="A diagram that displays the components of IBM Cloud Container Service that the container developer or organization manager can configure."></p>
 Review the sub-sections in this topic to find information about every component, and the
 decision, and configurations that you can make. Some of these configurations cannot be changed after
 a container is created. Knowing these configurations in advance can help you to assure that all the
@@ -905,7 +905,7 @@ that help you manage your containers, see <a href="container_integrations.html#c
 run. </p>
 <div class="section context">A single container is, by design, short-lived. However, there are several options that you
 can choose from to persist data between container restarts, to share data between containers in a
-space, and to share data between container instances in a group. <p><a href="../api/content/containers/images/data_options.png" rel="external" target="_blank" title="(Opens in a new tab or window)"><img src="images/data_options.png" width="400" alt="Options for where to store data or files."></a></p>
+space, and to share data between container instances in a group. <p><img src="images/data_options.png" width="400" alt="Options for where to store data or files."></p>
 <div class="tablenoborder"><table summary="Options for storing app files" id="container_planning_volumes__table_pvn_fks_bw" class="defaultstyle"><caption><span class="tablecap">Table 7. Options for storing app files</span></caption><thead><tr><th style="width: 33.33333333333333%" id="d64747e3451" class="thleft">Data storage options</th>
 <th style="width: 33.33333333333333%" id="d64747e3453" class="thleft">Description</th>
 <th style="width: 33.33333333333333%" id="d64747e3455" class="thleft">Amount of data that can be stored is limited by</th>
@@ -1063,7 +1063,7 @@ container group from the CLI</a>. </p>
 instances are added to an existing group, whether you add instances yourself or an instance is
 re-created during auto-recovery, load balancing is enabled. </p>
 <div class="section context"><div class="p"><img id="group_loadbalancing__loadbalancing_gif" src="images/container_group_loadbalancing.gif" longdesc="transcript_loadbalancing.html" alt="Users are routed to group instances to evenly distribute the workload.">
-<a href="../api/content/containers/images/container_group_loadbalancing_infinite.gif" rel="external" target="_blank" title="Watch again? Reload this animation in a new tab to see it again. (Opens in a new tab or window)"><img src="images/refresh.png" alt="Reload icon"></a><ul><li><span class="keyword calloutlabel">&nbsp;A&nbsp;</span>: Container group with three instances</li>
+<img src="images/refresh.png" alt="Reload icon"><ul><li><span class="keyword calloutlabel">&nbsp;A&nbsp;</span>: Container group with three instances</li>
 <li><span class="keyword calloutlabel">&nbsp;B&nbsp;</span>: Load balancer for the container group</li>
 <li><span class="keyword calloutlabel">&nbsp;1, 2, 3&nbsp;</span>: Instances in the container group</li>
 </ul>
@@ -1096,7 +1096,7 @@ the number of container instances in the group or remove the <samp class="ph cod
 <div class="body taskbody"><p class="shortdesc">You can choose whether to enable auto-recovery when you create a container group by using
 the <samp class="ph codeph">--auto</samp> option in the <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create</samp> command. </p>
 <div class="section context"><p><img id="group_autorecovery__autorecovery_gif" src="images/container_group_autorecovery.gif" longdesc="transcript_autorecovery.html" alt="When an instance in a group fails, it is removed and a new instance is started. A link to a text description follows.">
-<a href="../api/content/containers/images/container_group_autorecovery_infinite.gif" rel="external" target="_blank" title="Watch again? Reload this animation in a new tab to see it again. (Opens in a new tab or window)"><img src="images/refresh.png" alt="Reload icon"></a></p>
+<img src="images/refresh.png" alt="Reload icon"></p>
 
 <p><span class="ph" id="group_autorecovery__auto-recovery">When automatic recovery is enabled for a container group and the group has
 been running for 10 minutes, the group's load balancer starts to regularly check the health of each
