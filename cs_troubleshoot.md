@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-05"
+lastupdated: "2018-01-09"
 
 ---
 
@@ -551,31 +551,37 @@ Containers might not start when the registry quota is reached.
 {: tsSymptoms}
 When you access the Kibana dashboard, logs do not display.
 
-{: tsCauses}
-Logs might not be appearing for one of the following reasons:
-
-- **Reason 1**: No logging configuration is set up.
-
-- **Reason 2**: The cluster is not in a `Normal` state.
-
-- **Reason 3**: The log storage quota has been hit.
-
-- **Reason 4**: If you specified a space at cluster creation, the account owner does not have Manager, Developer, or Auditor permissions to that space.
-
-- **Reason 5**: No events that trigger logs have occurred in your pod yet.
-
 {: tsResolve}
-Review the following options to resolve each of the possible reasons why logs do not appear:
+Review the following reasons why logs are not appearing and the corresponding troubleshooting steps:
 
-- **Reason 1**: In order for logs to be sent, you must first create a logging configuration to forward logs to {{site.data.keyword.loganalysislong_notm}}. To create a logging configuration, see [Enabling log forwarding](cs_cluster.html#cs_log_sources_enable).
+<table>
+<col width="40%">
+<col width="60%">
+ <thead>
+ <th>Why it's happening</th>
+ <th>How to fix it</th>
+ </thead>
+ <tbody>
+ <tr>
+ <td>No logging configuration is set up.</td>
+ <td>In order for logs to be sent, you must first create a logging configuration to forward logs to {{site.data.keyword.loganalysislong_notm}}. To create a logging configuration, see <a href="cs_cluster.html#cs_log_sources_enable">Enabling log forwarding</a>.</td>
+ </tr>
+ <tr>
+ <td>The cluster is not in a <code>Normal</code> state.</td>
+ <td>To check the state of your cluster, see <a href="cs_troubleshoot.html#debug_clusters">Debugging clusters</a>.</td>
+ </tr>
+ <tr>
+ <td>The log storage quota has been hit.</td>
+ <td>To increase your log storage limits, see the <a href="/docs/services/CloudLogAnalysis/troubleshooting/error_msgs.html#error_msgs">{{site.data.keyword.loganalysislong_notm}} documentation</a>.</td>
+ </tr>
+ <tr>
+ <td>If you specified a space at cluster creation, the account owner does not have Manager, Developer, or Auditor permissions to that space.</td>
+ <td>To change access permissions for the account owner:<ol><li>To find out who the account owner for the cluster is, run <code>bx cs api-key-info &lt;cluster_name_or_id&gt;</code>.</li><li>To grant that account owner Manager, Developer, or Auditor {{site.data.keyword.containershort_notm}} access permissions to the space, see <a href="cs_cluster.html#cs_cluster_user">Managing cluster access</a>.</li><li>To refresh the logging token after permissions have been changed, run <code>bx cs logging-config-refresh &lt;cluster_name_or_id&gt;</code>.</li></ol></td>
+ </tr>
+ </tbody></table>
 
-- **Reason 2**: To check the state of your cluster, see [Debugging clusters](cs_troubleshoot.html#debug_clusters).
+To test changes you made during troubleshooting, you can deploy Noisy, a sample pod that produces several log events, onto a worker node in your cluster.
 
-- **Reason 3**: To increase your log storage limits, see the [{{site.data.keyword.loganalysislong_notm}} documentation](https://console.bluemix.net/docs/services/CloudLogAnalysis/troubleshooting/error_msgs.html#error_msgs).
-
-- **Reason 4**: To change {{site.data.keyword.containershort_notm}} access permissions for the account owner, see [Managing cluster access](cs_cluster.html#cs_cluster_user). Once permissions are changed, it can take up to 24 hours for logs to start appearing.
-
-- **Reason 5**: To trigger a log for an event, you can deploy Noisy, a sample pod that produces several log events, onto a worker node in your cluster.
   1. [Target your CLI](cs_cli_install.html#cs_cli_configure) to a cluster where you want to start producing logs.
 
   2. Create the `deploy-noisy.yaml` configuration file.
@@ -686,13 +692,14 @@ To troubleshoot your load balancer service:
   {: pre}
 
     Look for the following error messages:
-    <ul><ul><li><pre class="screen"><code>Clusters with one node must use services of type NodePort</code></pre></br>To use the load balancer service, you must have a standard cluster with at least two worker nodes.
-    <li><pre class="screen"><code>No cloud provider IPs are available to fulfill the load balancer service request. Add a portable subnet to the cluster and try again</code></pre></br>This error message indicates that no portable public IP addresses are left to be allocated to your load balancer service. Refer to [Adding subnets to clusters](cs_cluster.html#cs_cluster_subnet) to find information about how to request portable public IP addresses for your cluster. After portable public IP addresses are available to the cluster, the load balancer service is automatically created.
-    <li><pre class="screen"><code>Requested cloud provider IP <cloud-provider-ip> is not available. The following cloud provider IPs are available: <available-cloud-provider-ips</code></pre></br>You defined a portable public IP address for your load balancer service by using the **loadBalancerIP** section, but this portable public IP address is not available in your portable public subnet. Change your load balancer service configuration script and either choose one of the available portable public IP addresses, or remove the **loadBalancerIP** section from your script so that an available portable public IP address can be allocated automatically.
-    <li><pre class="screen"><code>No available nodes for load balancer services</code></pre>You do not have enough worker nodes to deploy a load balancer service. One reason might be that you deployed a standard cluster with more than one worker node, but the provisioning of the worker nodes failed.
-    <ol><li>List available worker nodes.</br><pre class="codeblock"><code>kubectl get nodes</code></pre>
-    <li>If at least two available worker nodes are found, list the worker node details.</br><pre class="screen"><code>bx cs worker-get [<cluster_name_or_id>] <worker_ID></code></pre>
-    <li>Make sure that the public and private VLAN IDs for the worker nodes that were returned by the 'kubectl get nodes' and the 'bx cs [<cluster_name_or_id>] worker-get' commands match.</ol></ul></ul>
+
+    <ul><li><pre class="screen"><code>Clusters with one node must use services of type NodePort</code></pre></br>To use the load balancer service, you must have a standard cluster with at least two worker nodes.</li>
+    <li><pre class="screen"><code>No cloud provider IPs are available to fulfill the load balancer service request. Add a portable subnet to the cluster and try again</code></pre></br>This error message indicates that no portable public IP addresses are left to be allocated to your load balancer service. Refer to <a href="cs_cluster.html#cs_cluster_subnet">Adding subnets to clusters</a> to find information about how to request portable public IP addresses for your cluster. After portable public IP addresses are available to the cluster, the load balancer service is automatically created.</li>
+    <li><pre class="screen"><code>Requested cloud provider IP <cloud-provider-ip> is not available. The following cloud provider IPs are available: <available-cloud-provider-ips></code></pre></br>You defined a portable public IP address for your load balancer service by using the **loadBalancerIP** section, but this portable public IP address is not available in your portable public subnet. Change your load balancer service configuration script and either choose one of the available portable public IP addresses, or remove the **loadBalancerIP** section from your script so that an available portable public IP address can be allocated automatically.</li>
+    <li><pre class="screen"><code>No available nodes for load balancer services</code></pre>You do not have enough worker nodes to deploy a load balancer service. One reason might be that you deployed a standard cluster with more than one worker node, but the provisioning of the worker nodes failed.</li>
+    <ol><li>List available worker nodes.</br><pre class="codeblock"><code>kubectl get nodes</code></pre></li>
+    <li>If at least two available worker nodes are found, list the worker node details.</br><pre class="screen"><code>bx cs worker-get [&lt;cluster_name_or_id&gt;] &lt;worker_ID&gt;</code></pre></li>
+    <li>Make sure that the public and private VLAN IDs for the worker nodes that were returned by the <code>kubectl get nodes</code> and the <code>bx cs [&lt;cluster_name_or_id&gt;] worker-get</code> commands match.</li></ol></li></ul>
 
 4.  If you are using a custom domain to connect to your load balancer service, make sure that your custom domain is mapped to the public IP address of your load balancer service.
     1.  Find the public IP address of your load balancer service.
@@ -819,6 +826,50 @@ To troubleshoot your Ingress:
 
 <br />
 
+
+
+## Ingress application load balancer secret issues
+{: #cs_albsecret_fails}
+
+{: tsSymptoms}
+After deploying an Ingress application load balancer secret to your cluster, the `Description` field is not updating with the secret name when you view your certificate in {{site.data.keyword.cloudcerts_full_notm}}.
+
+When you list information about the application load balancer secret, the status says `*_failed`. For example, `create_failed`, `update_failed`, `delete_failed`.
+
+{: tsResolve}
+Review the following reasons why the application load balancer secret might fail and the corresponding troubleshooting steps:
+
+<table>
+<col width="40%">
+<col width="60%">
+ <thead>
+ <th>Why it's happening</th>
+ <th>How to fix it</th>
+ </thead>
+ <tbody>
+ <tr>
+ <td>You do not have the required access roles to download and update certificate data.</td>
+ <td>Check with your account Administrator to assign you both the **Operator** and **Editor** roles for your {{site.data.keyword.cloudcerts_full_notm}} instance. For more details, see <a href="/docs/services/certificate-manager/about.html#identity-access-management">Identity and Access Management</a> for {{site.data.keyword.cloudcerts_short}}.</td>
+ </tr>
+ <tr>
+ <td>The certificate CRN provided at time of create, update, or remove does not belong to the same account as the cluster.</td>
+ <td>Check that the certificate CRN you provided is imported to an instance of the {{site.data.keyword.cloudcerts_short}} service that is deployed in the same account as your cluster.</td>
+ </tr>
+ <tr>
+ <td>The certificate CRN provided at time of create is incorrect.</td>
+ <td><ol><li>Check the accuracy of the certificate CRN string you provide.</li><li>If the certificate CRN is found to be accurate, then try to update the secret by running <code>bx cs alb-cert-deploy --update --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code>.</li><li>If this command results in the <code>update_failed</code> status, then remove the secret by running <code>bx cs alb-cert-rm --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt;</code>.</li><li>Deploy the secret again by running <code>bx cs alb-cert-deploy --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code>.</li></ol></td>
+ </tr>
+ <tr>
+ <td>The certificate CRN provided at time of update is incorrect.</td>
+ <td><ol><li>Check the accuracy of the certificate CRN string you provide.</li><li>If the certificate CRN is found to be accurate, then remove the secret by running <code>bx cs alb-cert-rm --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt;</code>.</li><li>Deploy the secret again by running <code>bx cs alb-cert-deploy --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code>.</li><li>Try to update the secret by running <code>bx cs alb-cert-deploy --update --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code>.</li></ol></td>
+ </tr>
+ <tr>
+ <td>The {{site.data.keyword.cloudcerts_long_notm}} service is experiencing downtime.</td>
+ <td>Check that your {{site.data.keyword.cloudcerts_short}} service is up and running.</td>
+ </tr>
+ </tbody></table>
+
+<br />
 
 
 
