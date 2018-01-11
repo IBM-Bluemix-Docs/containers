@@ -22,6 +22,9 @@ lastupdated: "2018-01-09"
 Refer to these commands to create and manage clusters.
 {:shortdesc}
 
+## bx cs commands
+{: #cs_commands}
+
 **Tip:** Looking for `bx cr` commands? See the [{{site.data.keyword.registryshort_notm}} CLI reference](/docs/cli/plugins/registry/index.html). Looking for `kubectl` commands? See the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands).
 
 
@@ -111,9 +114,7 @@ bx plugin list
 ```
 {: pre}
 
-## bx cs commands
-{: #cs_commands}
-
+## Application load balancer commands
 
 ### bx cs alb-cert-deploy [--update] --cluster CLUSTER --secret-name SECRET_NAME --cert-crn CERTIFICATE_CRN
 {: #cs_alb_cert_deploy}
@@ -192,8 +193,8 @@ View information about an application load balancer secret in a cluster.
  bx cs alb-cert-get --cluster my_cluster --cert-crn  crn:v1:staging:public:cloudcerts:us-south:a/06580c923e40314421d3b6cb40c01c68:0db4351b-0ee1-479d-af37-56a4da9ef30f:certificate:4bc35b7e0badb304e60aef00947ae7ff
  ```
  {: pre}
- 
- 
+
+
 ### bx cs alb-cert-rm --cluster CLUSTER [--secret-name SECRET_NAME] [--cert-crn CERTIFICATE_CRN]
 {: #cs_alb_cert_rm}
 
@@ -359,7 +360,7 @@ View the status of all application load balancers in a cluster. If no applicatio
   {: pre}
 
 
-### bx cs api-key-info CLUSTER
+## bx cs api-key-info CLUSTER
 {: #cs_api_key_info}
 
 View the name and email address for the owner of the cluster's IAM API key.
@@ -379,12 +380,12 @@ View the name and email address for the owner of the cluster's IAM API key.
   {: pre}
 
 
-### bx cs apiserver-config-set
+## bx cs apiserver-config-set
 {: #cs_apiserver_config_set}
 
 Set an option for a cluster's Kubernetes API server configuration. This command must be combined with one of the following subcommands for the configuration option you want to set.
 
-#### bx cs apiserver-config-get audit-webhook CLUSTER
+### bx cs apiserver-config-get audit-webhook CLUSTER
 {: #cs_apiserver_api_webhook_get}
 
 View the URL for the remote logging service that you are sending API server audit logs to. The URL was specified when you created the webhook backend for the API server configuration.
@@ -403,7 +404,7 @@ View the URL for the remote logging service that you are sending API server audi
   ```
   {: pre}
 
-#### bx cs apiserver-config-set audit-webhook CLUSTER [--remoteServer SERVER_URL_OR_IP] [--caCert CA_CERT_PATH] [--clientCert CLIENT_CERT_PATH] [--clientKey CLIENT_KEY_PATH]
+### bx cs apiserver-config-set audit-webhook CLUSTER [--remoteServer SERVER_URL_OR_IP] [--caCert CA_CERT_PATH] [--clientCert CLIENT_CERT_PATH] [--clientKey CLIENT_KEY_PATH]
 {: #cs_apiserver_api_webhook_set}
 
 Set the webhook backend for the API server configuration. The webhook backend forwards API server audit logs to a remote server. A webhook configuration is created based on the information you provide in this command's flags. If you do not provide any information in the flags, a default webhook configuration is used.
@@ -434,7 +435,7 @@ Set the webhook backend for the API server configuration. The webhook backend fo
   ```
   {: pre}
 
-#### bx cs apiserver-config-unset audit-webhook CLUSTER
+### bx cs apiserver-config-unset audit-webhook CLUSTER
 {: #cs_apiserver_api_webhook_unset}
 
 Disable the webhook backend configuration for the cluster's API server. Diabling the webhook backend stops forwarding API server audit logs to a remote server.
@@ -453,7 +454,7 @@ Disable the webhook backend configuration for the cluster's API server. Diabling
   ```
   {: pre}
 
-### bx cs apiserver-refresh CLUSTER
+## bx cs apiserver-refresh CLUSTER
 {: #cs_apiserver_refresh}
 
 Restart the Kubernetes master in the cluster to apply changes to the API server configuration.
@@ -472,6 +473,7 @@ Restart the Kubernetes master in the cluster to apply changes to the API server 
   ```
   {: pre}
 
+## Cluster commands
 
 ### bx cs cluster-config CLUSTER [--admin] [--export]
 {: #cs_cluster_config}
@@ -571,7 +573,7 @@ kube-version: <em>&lt;kube-version&gt;</em>
       <td>The Kubernetes version for the cluster master node. This value is optional. Unless specified, the cluster is created with the default of supported Kubernetes versions. To see available versions, run <code>bx cs kube-versions</code>.</td></tr>
       <tr>
       <td><code>diskEncryption: <em>false</em></code></td>
-      <td>Worker nodes feature disk encryption by default; [learn more](cs_security.html#cs_security_worker). To disable encryption, include this option and set the value to <code>false</code>.</td></tr>
+      <td>Worker nodes feature disk encryption by default; [learn more](cs_secure.html#security_worker). To disable encryption, include this option and set the value to <code>false</code>.</td></tr>
      </tbody></table>
     </p></dd>
 
@@ -630,7 +632,7 @@ kube-version: <em>&lt;kube-version&gt;</em>
 <p><strong>Note:</strong> Every worker node is assigned a unique worker node ID and domain name that must not be manually changed after the cluster is created. Changing the ID or domain name prevents the Kubernetes master from managing your cluster.</p></dd>
 
 <dt><code>--disable-disk-encrypt</code></dt>
-<dd>Worker nodes feature disk encryption by default; [learn more](cs_security.html#cs_security_worker). To disable encryption, include this option.</dd>
+<dd>Worker nodes feature disk encryption by default; [learn more](cs_secure.html#security_worker). To disable encryption, include this option.</dd>
 </dl>
 
 **Examples**:
@@ -943,6 +945,7 @@ View a list of clusters in your organization.
   ```
   {: pre}
 
+## Credentials commands
 
 ### bx cs credentials-set --infrastructure-api-key API_KEY --infrastructure-username USERNAME
 {: #cs_credentials_set}
@@ -1007,7 +1010,7 @@ Remove IBM Cloud infrastructure (SoftLayer) account credentials from your {{site
 
 
 
-### bx cs help
+## bx cs help
 {: #cs_help}
 
 View a list of supported commands and parameters.
@@ -1024,7 +1027,7 @@ View a list of supported commands and parameters.
   {: pre}
 
 
-### bx cs init [--host HOST]
+## bx cs init [--host HOST]
 {: #cs_init}
 
 Initialize the {{site.data.keyword.containershort_notm}} plug-in or specify the region where you want to create or access Kubernetes clusters.
@@ -1043,7 +1046,7 @@ bx cs init --host https://uk-south.containers.bluemix.net
 ```
 {: pre}
 
-### bx cs kube-versions
+## bx cs kube-versions
 {: #cs_kube_versions}
 
 View a list of Kubernetes versions supported in {{site.data.keyword.containershort_notm}}. Update your [cluster master](#cs_cluster_update) and [worker nodes](#cs_worker_update) to the default version for the latest, stable capabilities.
@@ -1059,7 +1062,7 @@ View a list of Kubernetes versions supported in {{site.data.keyword.containersho
   ```
   {: pre}
 
-### bx cs locations
+## bx cs locations
 {: #cs_datacenters}
 
 View a list of available locations for you to create a cluster in.
@@ -1074,6 +1077,8 @@ View a list of available locations for you to create a cluster in.
   bx cs locations
   ```
   {: pre}
+
+## Logging commands
 
 ### bx cs logging-config-create CLUSTER --logsource LOG_SOURCE [--namespace KUBERNETES_NAMESPACE] [--hostname LOG_SERVER_HOSTNAME_OR_IP] [--port LOG_SERVER_PORT] [--space CLUSTER_SPACE] [--org CLUSTER_ORG] --type LOG_TYPE [--json]
 {: #cs_logging_create}
@@ -1233,12 +1238,12 @@ Update the details of a log forwarding configuration.
   {: pre}
 
 
-### bx cs machine-types LOCATION
+## bx cs machine-types LOCATION
 {: #cs_machine_types}
 
 View a list of available machine types for your worker nodes. Each machine type includes the amount of virtual CPU, memory, and disk space for each worker node in the cluster.
+- By default, the host's Docker data is encrypted in the machine types. The `/var/lib/docker` directory, where all container data is stored, is encrypted with LUKS encryption. If the `disable-disk-encrypt` option is included during cluster creation, then the host's Docker data is not encrypted. [Learn more about the encryption.](cs_secure.html#security_worker)
 - Machine types with `u2c` or `b2c` in the name use local disk instead of storage area networing (SAN) for reliability. Reliability benefits include higher throughput when serializing bytes to the local disk and reduced file system degradation due to network failures. These machine types contain 25GB local disk storage for the OS file system and 100GB local disk storage for `/var/lib/docker`, the directory that all the container data is written to.
-- Machine types that include `encrypted` in the name encrypt the host's Docker data. The `/var/lib/docker` directory, where all container data is stored, is encrypted with LUKS encryption.
 - Machine types with `u1c` or `b1c` in the name are deprecated, such as `u1c.2x4`. To start using `u2c` and `b2c` machine types, use the `bx cs worker-add` command to add  worker nodes with the updated machine type. Then, remove the worker nodes that are using the deprecated machine types by using the `bx cs worker-rm` command.
 </p>
 
@@ -1255,6 +1260,8 @@ View a list of available machine types for your worker nodes. Each machine type 
   bx cs machine-types dal10
   ```
   {: pre}
+
+## Region commands
 
 ### bx cs region
 {: #cs_region}
@@ -1339,7 +1346,7 @@ us-south      us-south
 ```
 {: screen}
 
-### bx cs subnets
+## bx cs subnets
 {: #cs_subnets}
 
 View a list of subnets that are available in an IBM Cloud infrastructure (SoftLayer) account.
@@ -1356,7 +1363,7 @@ View a list of subnets that are available in an IBM Cloud infrastructure (SoftLa
   {: pre}
 
 
-### bx cs vlans LOCATION
+## bx cs vlans LOCATION
 {: #cs_vlans}
 
 List the public and private VLANs that are available for a location in your IBM Cloud infrastructure (SoftLayer) account. To list available VLANs, you must have a paid account.
@@ -1376,7 +1383,7 @@ List the public and private VLANs that are available for a location in your IBM 
   {: pre}
 
 
-### bx cs webhook-create --cluster CLUSTER --level LEVEL --type slack --URL URL
+## bx cs webhook-create --cluster CLUSTER --level LEVEL --type slack --URL URL
 {: #cs_webhook_create}
 
 Create webhooks.
@@ -1404,6 +1411,7 @@ Create webhooks.
   ```
   {: pre}
 
+## Worker commands
 
 ### bx cs worker-add --cluster CLUSTER [--file FILE_LOCATION] [--hardware HARDWARE] --machine-type MACHINE_TYPE --number NUMBER --private-vlan PRIVATE_VLAN --public-vlan PUBLIC_VLAN [--disable-disk-encrypt]
 {: #cs_worker_add}
@@ -1467,7 +1475,7 @@ workerNum: <em>&lt;number_workers&gt;</em>
 </tr>
 <tr>
 <td><code>diskEncryption: <em>false</em></code></td>
-<td>Worker nodes feature disk encryption by default; [learn more](cs_security.html#cs_security_worker). To disable encryption, include this option and set the value to <code>false</code>.</td></tr>
+<td>Worker nodes feature disk encryption by default; [learn more](cs_secure.html#security_worker). To disable encryption, include this option and set the value to <code>false</code>.</td></tr>
 </tbody></table></p></dd>
 
 <dt><code>--hardware <em>HARDWARE</em></code></dt>
@@ -1490,7 +1498,7 @@ workerNum: <em>&lt;number_workers&gt;</em>
 <p><strong>Note:</strong> The public and private VLANs that you specify must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></dd>
 
 <dt><code>--disable-disk-encrypt</code></dt>
-<dd>Worker nodes feature disk encryption by default; [learn more](cs_security.html#cs_security_worker). To disable encryption, include this option.</dd>
+<dd>Worker nodes feature disk encryption by default; [learn more](cs_secure.html#security_worker). To disable encryption, include this option.</dd>
 </dl>
 
 **Examples**:
@@ -1664,18 +1672,3 @@ View a list of worker nodes and the status for each in a cluster.
 
 <br />
 
-
-## Cluster states
-{: #cs_cluster_states}
-
-You can view the current cluster state by running the bx cs clusters command and locating the **State** field. The cluster state gives you information about the availability and capacity of the cluster, and potential problems that might have occurred.
-{:shortdesc}
-
-|Cluster state|Reason|
-|-------------|------|
-|Deploying|The Kubernetes master is not fully deployed yet. You cannot access your cluster.|
-|Pending|The Kubernetes master is deployed. The worker nodes are being provisioned and are not available in the cluster yet. You can access the cluster, but you cannot deploy apps to the cluster.|
-|Normal|All worker nodes in a cluster are up and running. You can access the cluster and deploy apps to the cluster.|
-|Warning|At least one worker node in the cluster is not available, but other worker nodes are available and can take over the workload. <ol><li>List the worker nodes in your cluster and note the ID of the worker nodes that show a <strong>Warning</strong> state.<pre class="pre"><code>bx cs workers &lt;cluster_name_or_id&gt;</code></pre><li>Get the details for a worker node.<pre class="pre"><code>bx cs worker-get &lt;worker_id&gt;</code></pre><li>Review the <strong>State</strong>, <strong>Status</strong>, and <strong>Details</strong> fields to find the root problem for why the worker node is down.</li><li>If your worker node almost reached the memory or disk space limit, reduce work load on your worker node or add a worker node to your cluster to help load balance the work load.</li></ol>|
-|Critical|The Kubernetes master cannot be reached or all worker nodes in the cluster are down. <ol><li>List the worker nodes in your cluster.<pre class="pre"><code>bx cs workers &lt;cluser_name_or_id&gt;</code></pre><li>Get the details for each worker node.<pre class="pre"><code>bx cs worker-get &lt;worker_id&gt;</code></pre></li><li>Review the <strong>State</strong> and <strong>Status</strong> fields to find the root problem for why the worker node is down.<ul><li>If the worker node state shows <strong>Provision_failed</strong>, you might not have the required permissions to provision a worker node from the IBM Cloud infrastructure (SoftLayer) portfolio. To find the required permissions, see [Configure access to the IBM Cloud infrastructure (SoftLayer) portfolio to create standard Kubernetes clusters](cs_planning.html#cs_planning_unify_accounts).</li><li>If the worker node state shows <strong>Critical</strong> and the status shows <strong>Not Ready</strong>, then your worker node might not be able to connect to IBM Cloud infrastructure (SoftLayer). Start troubleshooting by running <code>bx cs worker-reboot --hard CLUSTER WORKER</code> first. If that command is unsuccessful, then run <code>bx cs worker reload CLUSTER WORKER</code>.</li><li>If the worker node state shows <strong>Critical</strong> and the status shows <strong>Out of disk</strong>, then your worker node ran out of capacity. You can either reduce work load on your worker node or add a worker node to your cluster to help load balance the work load.</li><li>If the worker node state shows <strong>Critical</strong> and the status shows <strong>Unknown</strong>, then the Kubernetes master is not available. Contact {{site.data.keyword.Bluemix_notm}} support by opening an [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/support/index.html#contacting-support).</li></ul></li></ol>|
-{: caption="Table 3. Cluster states" caption-side="top"}
