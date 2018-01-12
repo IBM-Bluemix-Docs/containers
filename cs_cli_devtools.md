@@ -398,7 +398,7 @@ kube-version: <em>&lt;kube-version&gt;</em>
       <td>The Kubernetes version for the cluster master node. This value is optional. Unless specified, the cluster is created with the default of supported Kubernetes versions. To see available versions, run <code>bx cs kube-versions</code>.</td></tr>
       <tr>
       <td><code>diskEncryption: <em>false</em></code></td>
-      <td>Worker nodes feature disk encryption by default; [learn more](cs_security.html#cs_security_worker). To disable encryption, include this option and set the value to <code>false</code>.</td></tr>
+      <td>Worker nodes feature disk encryption by default; [learn more](cs_secure.html#worker). To disable encryption, include this option and set the value to <code>false</code>.</td></tr>
      </tbody></table>
     </p></dd>
 
@@ -457,7 +457,7 @@ kube-version: <em>&lt;kube-version&gt;</em>
 <p><strong>Note:</strong> Every worker node is assigned a unique worker node ID and domain name that must not be manually changed after the cluster is created. Changing the ID or domain name prevents the Kubernetes master from managing your cluster.</p></dd>
 
 <dt><code>--disable-disk-encrypt</code></dt>
-<dd>Worker nodes feature disk encryption by default; [learn more](cs_security.html#cs_security_worker). To disable encryption, include this option.</dd>
+<dd>Worker nodes feature disk encryption by default; [learn more](cs_secure.html#worker). To disable encryption, include this option.</dd>
 </dl>
 
 **Examples**:
@@ -1274,7 +1274,7 @@ workerNum: <em>&lt;number_workers&gt;</em>
 </tr>
 <tr>
 <td><code>diskEncryption: <em>false</em></code></td>
-<td>Worker nodes feature disk encryption by default; [learn more](cs_security.html#cs_security_worker). To disable encryption, include this option and set the value to <code>false</code>.</td></tr>
+<td>Worker nodes feature disk encryption by default; [learn more](cs_secure.html#worker). To disable encryption, include this option and set the value to <code>false</code>.</td></tr>
 </tbody></table></p></dd>
 
 <dt><code>--hardware <em>HARDWARE</em></code></dt>
@@ -1297,7 +1297,7 @@ workerNum: <em>&lt;number_workers&gt;</em>
 <p><strong>Note:</strong> The public and private VLANs that you specify must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></dd>
 
 <dt><code>--disable-disk-encrypt</code></dt>
-<dd>Worker nodes feature disk encryption by default; [learn more](cs_security.html#cs_security_worker). To disable encryption, include this option.</dd>
+<dd>Worker nodes feature disk encryption by default; [learn more](cs_secure.html#worker). To disable encryption, include this option.</dd>
 </dl>
 
 **Examples**:
