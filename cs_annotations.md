@@ -22,7 +22,7 @@ lastupdated: "2017-01-08"
 To add capabilities to your application load balancer, you can specify annotations as metadata in an Ingress resource.
 {: shortdesc}
 
-For general information about Ingress services and how to get started using them, see [Configuring public access to an app by using Ingress](cs_apps.html#cs_apps_public_ingress).
+For general information about Ingress services and how to get started using them, see [Configuring public access to an app by using Ingress](cs_ingress.html#config).
 
 <table>
 <col width="20%">
@@ -1147,7 +1147,7 @@ kind: Ingress
 metadata:
  name: myingress
  annotations:
-   ingress.bluemix.net/client-max-body-size: "&lt;size&gt;"
+   ingress.bluemix.net/client-max-body-size: "size=&lt;size&gt;"
 spec:
  tls:
  - hosts:
@@ -1465,8 +1465,8 @@ Configure mutual authentication for the Ingress application load balancer. The c
 <dt>Pre-requisites</dt>
 <dd>
 <ul>
-<li>[You must have a valid secret that contains the required certificate authority (CA)](cs_apps.html#secrets). The <code>client.key</code> and <code>client.crt</code> are also needed to authenticate with mutual authentication.</li>
-<li>To enable mutual authentication on a port other than 443, [configure the load balancer to open the valid port](cs_apps.html#opening_ingress_ports).</li>
+<li>[You must have a valid secret that contains the required certificate authority (CA)](cs_app.html#secrets). The <code>client.key</code> and <code>client.crt</code> are also needed to authenticate with mutual authentication.</li>
+<li>To enable mutual authentication on a port other than 443, [configure the load balancer to open the valid port](cs_ingress.html#opening_ingress_ports).</li>
 </ul>
 </dd>
 
