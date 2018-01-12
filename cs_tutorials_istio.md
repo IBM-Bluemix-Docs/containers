@@ -45,7 +45,7 @@ This tutorial is intended for software developers and network administrators who
 ## Prerequisites
 
 -  [Install the CLI](cs_cli_install.html#cs_cli_install_steps)
--  [Create a cluster](cs_cluster.html#cs_cluster_cli)
+-  [Create a cluster](cs_clusters.html#clusters_cli)
 -  [Target the CLI to your cluster](cs_cli_install.html#cs_cli_configure)
 
 ## Lesson 1: Download and install Istio
