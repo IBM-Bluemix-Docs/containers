@@ -162,7 +162,7 @@ Review the options to debug your clusters and find the root causes for failures.
 
         </br></br>
         {{site.data.keyword.Bluemix_notm}} Infrastructure Exception: 'Item' must be ordered with permission.</td>
-        <td>You might not have the required permissions to provision a worker node from the IBM Cloud infrastructure (SoftLayer) portfolio. See [Configure access to the IBM Cloud infrastructure (SoftLayer) portfolio to create standard Kubernetes clusters](cs_planning.html#cs_planning_unify_accounts).</td>
+        <td>You might not have the required permissions to provision a worker node from the IBM Cloud infrastructure (SoftLayer) portfolio. See [Configure access to the IBM Cloud infrastructure (SoftLayer) portfolio to create standard Kubernetes clusters](cs_infrastructure.html#unify_accounts).</td>
       </tr>
     </tbody>
   </table>
@@ -264,7 +264,7 @@ When you run `bx`, `kubectl`, or `calicoctl` commands from the CLI, they fail.
 You might have corporate network policies that prevent access from your local system to public endpoints via proxies or firewalls.
 
 {: tsResolve}
-[Allow TCP access for the CLI commands to work](cs_security.html#opening_ports). This task requires an [Administrator access policy](cs_cluster.html#access_ov). Verify your current [access policy](cs_cluster.html#view_access).
+[Allow TCP access for the CLI commands to work](cs_firewall.html#firewall). This task requires an [Administrator access policy](cs_users.html#access_policies). Verify your current [access policy](cs_users.html#infra_access).
 
 
 ## Firewall prevents cluster from connecting to resources
@@ -308,7 +308,7 @@ If kubectl proxy succeeds, but the dashboard is not available, you might see the
 You might have an additional firewall set up or customized your existing firewall settings in your IBM Cloud infrastructure (SoftLayer) account. {{site.data.keyword.containershort_notm}} requires certain IP addresses and ports to be opened to allow communication from the worker node to the Kubernetes master and vice versa. Another reason might be that the worker nodes are stuck in a reloading loop.
 
 {: tsResolve}
-[Allow the cluster to access infrastructure resources and other services](cs_security.html#firewall_outbound). This task requires an [Administrator access policy](cs_cluster.html#access_ov). Verify your current [access policy](cs_cluster.html#view_access).
+[Allow the cluster to access infrastructure resources and other services](cs_firewall.html#firewall_outbound). This task requires an [Administrator access policy](cs_users.html#access_policies). Verify your current [access policy](cs_users.html#infra_access).
 
 <br />
 
@@ -420,7 +420,7 @@ Manually update the reference of the private IP address to point to the correct 
   ```
   {: screen}
 
-2.  Install the [Calico CLI](cs_security.html#adding_network_policies).
+2.  Install the [Calico CLI](cs_network_policy.html#adding_network_policies).
 3.  List the available worker nodes in Calico. Replace <path_to_file> with the local path to the Calico configuration file.
 
   ```
@@ -467,7 +467,7 @@ When you run `kubectl get pods`, you can see pods that remain in a **Pending** s
 If you just created the Kubernetes cluster, the worker nodes might still be configuring. If this cluster is an existing one, you might not have enough capacity in your cluster to deploy the pod.
 
 {: tsResolve}
-This task requires an [Administrator access policy](cs_cluster.html#access_ov). Verify your current [access policy](cs_cluster.html#view_access).
+This task requires an [Administrator access policy](cs_users.html#access_policies). Verify your current [access policy](cs_users.html#infra_access).
 
 If you just created the Kubernetes cluster, run the following command and wait for the worker nodes to initialize.
 
@@ -564,7 +564,7 @@ Review the following reasons why logs are not appearing and the corresponding tr
  <tbody>
  <tr>
  <td>No logging configuration is set up.</td>
- <td>In order for logs to be sent, you must first create a logging configuration to forward logs to {{site.data.keyword.loganalysislong_notm}}. To create a logging configuration, see <a href="cs_cluster.html#cs_log_sources_enable">Enabling log forwarding</a>.</td>
+ <td>In order for logs to be sent, you must first create a logging configuration to forward logs to {{site.data.keyword.loganalysislong_notm}}. To create a logging configuration, see <a href="cs_health.html#log_sources_enable">Enabling log forwarding</a>.</td>
  </tr>
  <tr>
  <td>The cluster is not in a <code>Normal</code> state.</td>
@@ -576,7 +576,7 @@ Review the following reasons why logs are not appearing and the corresponding tr
  </tr>
  <tr>
  <td>If you specified a space at cluster creation, the account owner does not have Manager, Developer, or Auditor permissions to that space.</td>
- <td>To change access permissions for the account owner:<ol><li>To find out who the account owner for the cluster is, run <code>bx cs api-key-info &lt;cluster_name_or_id&gt;</code>.</li><li>To grant that account owner Manager, Developer, or Auditor {{site.data.keyword.containershort_notm}} access permissions to the space, see <a href="cs_cluster.html#cs_cluster_user">Managing cluster access</a>.</li><li>To refresh the logging token after permissions have been changed, run <code>bx cs logging-config-refresh &lt;cluster_name_or_id&gt;</code>.</li></ol></td>
+ <td>To change access permissions for the account owner:<ol><li>To find out who the account owner for the cluster is, run <code>bx cs api-key-info &lt;cluster_name_or_id&gt;</code>.</li><li>To grant that account owner Manager, Developer, or Auditor {{site.data.keyword.containershort_notm}} access permissions to the space, see <a href="cs_users.html#managing">Managing cluster access</a>.</li><li>To refresh the logging token after permissions have been changed, run <code>bx cs logging-config-refresh &lt;cluster_name_or_id&gt;</code>.</li></ol></td>
  </tr>
  </tbody></table>
 
@@ -694,7 +694,7 @@ To troubleshoot your load balancer service:
     Look for the following error messages:
 
     <ul><li><pre class="screen"><code>Clusters with one node must use services of type NodePort</code></pre></br>To use the load balancer service, you must have a standard cluster with at least two worker nodes.</li>
-    <li><pre class="screen"><code>No cloud provider IPs are available to fulfill the load balancer service request. Add a portable subnet to the cluster and try again</code></pre></br>This error message indicates that no portable public IP addresses are left to be allocated to your load balancer service. Refer to <a href="cs_cluster.html#cs_cluster_subnet">Adding subnets to clusters</a> to find information about how to request portable public IP addresses for your cluster. After portable public IP addresses are available to the cluster, the load balancer service is automatically created.</li>
+    <li><pre class="screen"><code>No cloud provider IPs are available to fulfill the load balancer service request. Add a portable subnet to the cluster and try again</code></pre></br>This error message indicates that no portable public IP addresses are left to be allocated to your load balancer service. Refer to <a href="cs_subnets.html#subnets">Adding subnets to clusters</a> to find information about how to request portable public IP addresses for your cluster. After portable public IP addresses are available to the cluster, the load balancer service is automatically created.</li>
     <li><pre class="screen"><code>Requested cloud provider IP <cloud-provider-ip> is not available. The following cloud provider IPs are available: <available-cloud-provider-ips></code></pre></br>You defined a portable public IP address for your load balancer service by using the **loadBalancerIP** section, but this portable public IP address is not available in your portable public subnet. Change your load balancer service configuration script and either choose one of the available portable public IP addresses, or remove the **loadBalancerIP** section from your script so that an available portable public IP address can be allocated automatically.</li>
     <li><pre class="screen"><code>No available nodes for load balancer services</code></pre>You do not have enough worker nodes to deploy a load balancer service. One reason might be that you deployed a standard cluster with more than one worker node, but the provisioning of the worker nodes failed.</li>
     <ol><li>List available worker nodes.</br><pre class="codeblock"><code>kubectl get nodes</code></pre></li>
@@ -857,11 +857,11 @@ Review the following reasons why the application load balancer secret might fail
  </tr>
  <tr>
  <td>The certificate CRN provided at time of create is incorrect.</td>
- <td><ol><li>Check the accuracy of the certificate CRN string you provide.</li><li>If the certificate CRN is found to be accurate, then try to update the secret by running <code>bx cs alb-cert-deploy --update --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code>.</li><li>If this command results in the <code>update_failed</code> status, then remove the secret by running <code>bx cs alb-cert-rm --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt;</code>.</li><li>Deploy the secret again by running <code>bx cs alb-cert-deploy --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code>.</li></ol></td>
+ <td><ol><li>Check the accuracy of the certificate CRN string you provide.</li><li>If the certificate CRN is found to be accurate, then try to update the secret. <pre class="pre"><code>bx cs alb-cert-deploy --update --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></pre></li><li>If this command results in the <code>update_failed</code> status, then remove the secret. <pre class="pre"><code>bx cs alb-cert-rm --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt;</code></pre></li><li>Deploy the secret again. <pre class="pre"><code>bx cs alb-cert-deploy --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></pre></li></ol></td>
  </tr>
  <tr>
  <td>The certificate CRN provided at time of update is incorrect.</td>
- <td><ol><li>Check the accuracy of the certificate CRN string you provide.</li><li>If the certificate CRN is found to be accurate, then remove the secret by running <code>bx cs alb-cert-rm --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt;</code>.</li><li>Deploy the secret again by running <code>bx cs alb-cert-deploy --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code>.</li><li>Try to update the secret by running <code>bx cs alb-cert-deploy --update --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code>.</li></ol></td>
+ <td><ol><li>Check the accuracy of the certificate CRN string you provide.</li><li>If the certificate CRN is found to be accurate, then remove the secret. <pre class="pre"><code>bx cs alb-cert-rm --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt;</code></pre></li><li>Deploy the secret again. <pre class="pre"><code>bx cs alb-cert-deploy --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></pre></li><li>Try to update the secret. <pre class="pre"><code>bx cs alb-cert-deploy --update --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></pre></li></ol></td>
  </tr>
  <tr>
  <td>The {{site.data.keyword.cloudcerts_long_notm}} service is experiencing downtime.</td>
@@ -877,13 +877,13 @@ Review the following reasons why the application load balancer secret might fail
 {: #cs_calico_fails}
 
 {: tsSymptoms}
-When you retrieve the `<ETCD_URL>` to [add network policies](cs_security.html#adding_network_policies), you get a `calico-config not found` error message.
+When you retrieve the `<ETCD_URL>` to [add network policies](cs_network_policy.html#adding_network_policies), you get a `calico-config not found` error message.
 
 {: tsCauses}
 Your cluster is not at [Kubernetes version 1.7](cs_versions.html) or later.
 
 {: tsResolve}
-[Update your cluster](cs_cluster.html#cs_cluster_update) or retrieve the `<ETCD_URL>` with commands that are compatible with earlier versions of Kubernetes.
+[Update your cluster](cs_cluster_update.html#master) or retrieve the `<ETCD_URL>` with commands that are compatible with earlier versions of Kubernetes.
 
 To retrieve the `<ETCD_URL>`, run one of the following commands:
 
@@ -901,7 +901,7 @@ To retrieve the `<ETCD_URL>`, run one of the following commands:
     <li> Locate the ETCD endpoints value. Example: <code>https://169.1.1.1:30001</code>
     </ol>
 
-When you retrieve the `<ETCD_URL>`, continue with the steps as listed in (Adding network policies)[cs_security.html#adding_network_policies].
+When you retrieve the `<ETCD_URL>`, continue with the steps as listed in (Adding network policies)[cs_network_policy.html#adding_network_policies].
 
 <br />
 
