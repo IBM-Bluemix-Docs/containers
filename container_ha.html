@@ -471,7 +471,7 @@ set up your cluster to replicate your current container group, including logging
 vulnerability advisor, and any other customizations you have in place.</span></li>
 <li class="step stepexpand"><span class="cmd"><a href="cs_cli_install.html#cs_cli_configure">Set the
 context</a> for your cluster.</span></li>
-<li class="step stepexpand"><span class="cmd">Deploy your existing app to your cluster <a href="cs_apps.html#cs_apps_cli">from the CLI</a>.</span> When you deploy your app, you must request CPU.
+<li class="step stepexpand"><span class="cmd">Deploy your existing app to your cluster <a href="cs_app.html#app_cli">from the CLI</a>.</span> When you deploy your app, you must request CPU.
 <pre class="codeblock"><code>kubectl run &lt;name&gt; --image=&lt;image&gt; --requests=cpu=&lt;cpu&gt; --expose --port=&lt;port_number&gt;</code></pre>
 <div class="tablenoborder"><table summary="" id="migrating_autoscaling__table_px1_qsx_yy" class="defaultstyle"><thead><tr><th colspan="2" id="d49620e1891" class="thleft"><span class="ph"><img src="images/idea.png" alt="This icon indicates there is more information to learn about this step of the task."></span> Understanding
 this command's components</th>
@@ -493,7 +493,7 @@ this command's components</th>
 </tbody>
 </table>
 </div>
-<div class="steps note"><span class="notetitle">Note:</span> For more complex deployments, you may need to create a <a href="cs_apps.html#cs_apps_cli">deployment script</a>.</div>
+<div class="steps note"><span class="notetitle">Note:</span> For more complex deployments, you may need to create a <a href="cs_app.html#app_cli">deployment script</a>.</div>
 </li>
 <li class="step stepexpand"><span class="cmd">Create a Horizontal Pod Autoscaler and define your policy.</span>  For more information about working with the <samp class="ph codeph">kubetcl autoscale</samp> command, see
 <a href="https://v1-7.docs.kubernetes.io/docs/user-guide/kubectl/kubectl_autoscale/#autoscale" rel="external" target="_blank" title="(Opens in a new tab or window)">the Kubernetes documentation</a>.<pre class="codeblock"><code>kubectl autoscale deployment &lt;deployment_name&gt; --cpu-percent=&lt;percentage&gt; --min=&lt;min_value&gt; --max=&lt;max_value&gt;</code></pre>
