@@ -42,11 +42,11 @@ The most significant differences between {{site.data.keyword.Bluemix_notm}} publ
 |--|--------------|--------------------------------|
 |Cluster creation|Create a lite cluster or specify the following details for a standard cluster:<ul><li>Cluster type</li><li>Name</li><li>Location</li><li>Machine type</li><li>Number of worker nodes</li><li>Public VLAN</li><li>Private VLAN</li><li>Hardware</li></ul>|Specify the following details for a standard cluster:<ul><li>Name</li><li>Kubernetes version</li><li>Machine type</li><li>Number of worker nodes</li></ul><p>**Note:** The VLANs and Hardware settings are pre-defined during the creation of the {{site.data.keyword.Bluemix_notm}} environment.</p>|
 |Cluster hardware and ownership|In standard clusters, the hardware can be shared by other {{site.data.keyword.IBM_notm}} customers or dedicated to you only. The public and private VLANs are owned and managed by you in your IBM Cloud infrastructure (SoftLayer) account.|In clusters on {{site.data.keyword.Bluemix_dedicated_notm}}, the hardware is always dedicated. The public and private VLANs are owned and managed by IBM for you. Location is pre-defined for the {{site.data.keyword.Bluemix_notm}} environment.|
-|Load balancer and Ingress networking|During the provisioning of standard clusters, the following actions occur automatically.<ul><li>One portable public and one portable private subnet are bound to your cluster and assigned to your IBM Cloud infrastructure (SoftLayer) account.</li><li>One portable public IP address is used for a highly available application load balancer and a unique public route is assigned in the format &lt;cluster_name&gt;.containers.mybluemix.net. You can use this route to expose multiple apps to the public. One portable private IP address is used for a private application load balancer.</li><li>Four portable public and four portable private IP addresses are assigned to the cluster that can be used to expose apps via load balancer services. Additional subnets can be requested through your IBM Cloud infrastructure (SoftLayer) account.</li></ul>|When you create your Dedicated account, you make a connectivity decision on how you want to expose and access your cluster services. If you want to use your own enterprise IP ranges (user-manged IPs), you must provide them when you [set up an {{site.data.keyword.Bluemix_dedicated_notm}} environment](/docs/dedicated/index.html#setupdedicated). <ul><li>By default, no portable public subnets are bound to clusters that you create in your Dedicated account. Instead, you have the flexibility to choose the connectivity model which best suits your enterprise.</li><li>After you create the cluster, you choose the type of subnets you want bind to and use with your cluster for either load balancer or Ingress connectivity.<ul><li>For public or private portable subnets, you can [add subnets to clusters](cs_cluster.html#cs_cluster_subnet)</li><li>For user-managed IP addresses that you provided to IBM at Dedicated onboarding, you can [add user-managed subnets to clusters](#dedicated_byoip_subnets).</li></ul></li><li>After you bind a subnet to your cluster, the Ingress controller is created. A public Ingress route is created only if you use a portable public subnet.</li></ul>|
+|Load balancer and Ingress networking|During the provisioning of standard clusters, the following actions occur automatically.<ul><li>One portable public and one portable private subnet are bound to your cluster and assigned to your IBM Cloud infrastructure (SoftLayer) account.</li><li>One portable public IP address is used for a highly available application load balancer and a unique public route is assigned in the format &lt;cluster_name&gt;.containers.mybluemix.net. You can use this route to expose multiple apps to the public. One portable private IP address is used for a private application load balancer.</li><li>Four portable public and four portable private IP addresses are assigned to the cluster that can be used to expose apps via load balancer services. Additional subnets can be requested through your IBM Cloud infrastructure (SoftLayer) account.</li></ul>|When you create your Dedicated account, you make a connectivity decision on how you want to expose and access your cluster services. If you want to use your own enterprise IP ranges (user-manged IPs), you must provide them when you [set up an {{site.data.keyword.Bluemix_dedicated_notm}} environment](/docs/dedicated/index.html#setupdedicated). <ul><li>By default, no portable public subnets are bound to clusters that you create in your Dedicated account. Instead, you have the flexibility to choose the connectivity model which best suits your enterprise.</li><li>After you create the cluster, you choose the type of subnets you want bind to and use with your cluster for either load balancer or Ingress connectivity.<ul><li>For public or private portable subnets, you can [add subnets to clusters](cs_subnets.html#subnets)</li><li>For user-managed IP addresses that you provided to IBM at Dedicated onboarding, you can [add user-managed subnets to clusters](#dedicated_byoip_subnets).</li></ul></li><li>After you bind a subnet to your cluster, the Ingress controller is created. A public Ingress route is created only if you use a portable public subnet.</li></ul>|
 |NodePort networking|Expose a public port on your worker node and use the public IP address of the worker node to publicly access your service in the cluster.|All public IP addresses of the workers nodes are blocked by a firewall. However, for {{site.data.keyword.Bluemix_notm}} services that are added to the cluster, the node port can be accessed via a public IP address or a private IP address.|
-|Persistent storage|Use [dynamic provisioning](cs_apps.html#cs_apps_volume_claim) or [static provisioning](cs_cluster.html#cs_cluster_volume_create) of volumes.|Use [dynamic provisioning](cs_apps.html#cs_apps_volume_claim) of volumes. [Open a support ticket](/docs/support/index.html#contacting-support) to request a backup for your volumes, request a restoration from your volumes, and perform other storage functions.</li></ul>|
+|Persistent storage|Use [dynamic provisioning](cs_storage.html#create) or [static provisioning](cs_storage.html#existing) of volumes.|Use [dynamic provisioning](cs_storage.html#create) of volumes. [Open a support ticket](/docs/support/index.html#contacting-support) to request a backup for your volumes, request a restoration from your volumes, and perform other storage functions.</li></ul>|
 |Image registry URL in {{site.data.keyword.registryshort_notm}}|<ul><li>US-South and US-East: <code>registry.ng bluemix.net</code></li><li>UK-South: <code>registry.eu-gb.bluemix.net</code></li><li>EU-Central (Frankfurt): <code>registry.eu-de.bluemix.net</code></li><li>Australia (Sydney): <code>registry.au-syd.bluemix.net</code></li></ul>|<ul><li>For new namespaces, use the same region-based registries that are defined for {{site.data.keyword.Bluemix_notm}} public.</li><li>For namespaces that were set up for single and scalable containers in {{site.data.keyword.Bluemix_dedicated_notm}}, use <code>registry.&lt;dedicated_domain&gt;</code></li></ul>|
-|Accessing the registry|See the options in [Using private and public image registries with {{site.data.keyword.containershort_notm}}](cs_cluster.html#cs_apps_images).|<ul><li>For new namespaces, see the options in [Using private and public image registries with {{site.data.keyword.containershort_notm}}](cs_cluster.html#cs_apps_images).</li><li>For namespaces that were set up for single and scalable groups, [use a token and create a Kubernetes secret](cs_dedicated_tokens.html#cs_dedicated_tokens) for authentication.</li></ul>|
+|Accessing the registry|See the options in [Using private and public image registries with {{site.data.keyword.containershort_notm}}](cs_images.html).|<ul><li>For new namespaces, see the options in [Using private and public image registries with {{site.data.keyword.containershort_notm}}](cs_images.html).</li><li>For namespaces that were set up for single and scalable groups, [use a token and create a Kubernetes secret](cs_dedicated_tokens.html#cs_dedicated_tokens) for authentication.</li></ul>|
 {: caption="Table 1. Feature differences between {{site.data.keyword.Bluemix_notm}} public and {{site.data.keyword.Bluemix_dedicated_notm}}" caption-side="top"}
 
 <br />
@@ -72,7 +72,7 @@ Each {{site.data.keyword.Bluemix_dedicated_notm}} environment has a public, clie
 
 Before you begin:
   * [Set up an {{site.data.keyword.Bluemix_dedicated_notm}} environment](/docs/dedicated/index.html#setupdedicated).
-  * If your local system or your corporate network controls public internet endpoints by using proxies or firewalls, you must [open required ports and IP addresses in your firewall](cs_security.html#opening_ports).
+  * If your local system or your corporate network controls public internet endpoints by using proxies or firewalls, you must [open required ports and IP addresses in your firewall](cs_firewall.html#firewall).
 
 To allow {{site.data.keyword.Bluemix_dedicated_notm}} users to access clusters:
 
@@ -139,7 +139,7 @@ To allow {{site.data.keyword.Bluemix_dedicated_notm}} users to access clusters:
 
         Invited users that have an existing IBMid will have a status of `ACTIVE`. Invited users that did not have an existing IBMid will have a status of either `PENDING` or `ACTIVE` depending on whether or not they have accepted the invitation to the account yet.
 
-3.  Once users are added to your Public account, you must grant the Administrator role to any user that needs to create a cluster. See [Managing user access](cs_cluster.html#cs_cluster_user) for information about how to grant the Administrator role.
+3.  Once users are added to your Public account, you must grant the Administrator role to any user that needs to create a cluster. See [Managing user access](cs_users.html#managing) for information about how to grant the Administrator role.
 
 4.  Users can now log in to the Dedicated account endpoint to start creating clusters.
 
@@ -226,7 +226,7 @@ Design your {{site.data.keyword.Bluemix_dedicated_notm}} cluster setup for maxim
     </tr>
     <tr>
     <td><code>--machine-type <em>&lt;machine_type&gt;</em></code></td>
-    <td>If you are creating a standard cluster, choose a machine type. The machine type specifies the virtual compute resources that are available to each worker node. Review [Comparison of lite and standard clusters for {{site.data.keyword.containershort_notm}}](cs_planning.html#cs_planning_cluster_type) for more information. For lite clusters, you do not have to define the machine type.</td>
+    <td>If you are creating a standard cluster, choose a machine type. The machine type specifies the virtual compute resources that are available to each worker node. Review [Comparison of lite and standard clusters for {{site.data.keyword.containershort_notm}}](cs_why.html#cluster_types) for more information. For lite clusters, you do not have to define the machine type.</td>
     </tr>
     <tr>
     <td><code>--name <em>&lt;name&gt;</em></code></td>
@@ -329,12 +329,12 @@ Design your {{site.data.keyword.Bluemix_dedicated_notm}} cluster setup for maxim
 ### Using private and public image registries
 {: #dedicated_images}
 
-For new namespaces, see the options in [Using private and public image registries with {{site.data.keyword.containershort_notm}}](cs_cluster.html#cs_apps_images). For namespaces that were set up for single and scalable groups, [use a token and create a Kubernetes secret](cs_dedicated_tokens.html#cs_dedicated_tokens) for authentication.
+For new namespaces, see the options in [Using private and public image registries with {{site.data.keyword.containershort_notm}}](cs_images.html). For namespaces that were set up for single and scalable groups, [use a token and create a Kubernetes secret](cs_dedicated_tokens.html#cs_dedicated_tokens) for authentication.
 
 ### Adding subnets to clusters
 {: #dedicated_cluster_subnet}
 
-Change the pool of available portable public IP addresses by adding subnets to your cluster. For more information, see [Adding subnets to clusters](cs_cluster.html#cs_cluster_subnet). Review the following differences for adding subnets to Dedicated clusters.
+Change the pool of available portable public IP addresses by adding subnets to your cluster. For more information, see [Adding subnets to clusters](cs_subnets.html#subnets). Review the following differences for adding subnets to Dedicated clusters.
 
 #### Adding additional user-managed subnets and IP addresses to your Kubernetes clusters
 {: #dedicated_byoip_subnets}
@@ -376,21 +376,21 @@ Before you begin: Configure the routing of network traffic into and out of your 
     {: screen}
 
 4. To configure on-premises and internal account connectivity, choose between these options:
-  - If you used a 10.x.x.x private IP address range for the subnet, use valid IPs from that range to configure on-premises and internal account connectivity with Ingress and a load balancer. For more information, see [Configuring access to an app](cs_apps.html#cs_apps_public).
-  - If you did not use a 10.x.x.x private IP address range for the subnet, use valid IPs from that range to configure on-premises connectivity with Ingress and a load balancer. For more information, see [Configuring access to an app](cs_apps.html#cs_apps_public). However, you must use an IBM Cloud infrastructure (SoftLayer) portable private subnet to configure internal account connectivity between your cluster and other Cloud Foundry-based services. You can create a portable private subnet with the [`bx cs cluster-subnet-add`](cs_cli_reference.html#cs_cluster_subnet_add) command. For this scenario, your cluster has both a user-managed subnet for on-premises connectivity and an IBM Cloud infrastructure (SoftLayer) portable private subnet for internal account connectivity.
+  - If you used a 10.x.x.x private IP address range for the subnet, use valid IPs from that range to configure on-premises and internal account connectivity with Ingress and a load balancer. For more information, see [Configuring access to an app](cs_network_planning.html#planning).
+  - If you did not use a 10.x.x.x private IP address range for the subnet, use valid IPs from that range to configure on-premises connectivity with Ingress and a load balancer. For more information, see [Configuring access to an app](cs_network_planning.html#planning). However, you must use an IBM Cloud infrastructure (SoftLayer) portable private subnet to configure internal account connectivity between your cluster and other Cloud Foundry-based services. You can create a portable private subnet with the [`bx cs cluster-subnet-add`](cs_cli_reference.html#cs_cluster_subnet_add) command. For this scenario, your cluster has both a user-managed subnet for on-premises connectivity and an IBM Cloud infrastructure (SoftLayer) portable private subnet for internal account connectivity.
 
 ### Other cluster configurations
 {: #dedicated_other}
 
 Review the following options for other cluster configurations:
-  * [Managing cluster access](cs_cluster.html#cs_cluster_user)
-  * [Updating the Kubernetes master](cs_cluster.html#cs_cluster_update)
-  * [Updating worker nodes](cs_cluster.html#cs_cluster_worker_update)
-  * [Configuring cluster logging](cs_cluster.html#cs_logging)
-  * [Configuring cluster monitoring](cs_cluster.html#cs_monitoring)
+  * [Managing cluster access](cs_users.html#managing)
+  * [Updating the Kubernetes master](cs_cluster_update.html#master)
+  * [Updating worker nodes](cs_cluster_update.html#worker_node)
+  * [Configuring cluster logging](cs_health.html#logging)
+  * [Configuring cluster monitoring](cs_health.html#monitoring)
       * **Note**: An `ibm-monitoring` cluster exists within each {{site.data.keyword.Bluemix_dedicated_notm}} account. This cluster continuously monitors the health of the {{site.data.keyword.containerlong_notm}} in the Dedicated environment, checking the stability and connectivity of the environment. Do not remove this cluster from the environment.
-  * [Visualizing Kubernetes cluster resources](cs_cluster.html#cs_weavescope)
-  * [Removing clusters](cs_cluster.html#cs_cluster_remove)
+  * [Visualizing Kubernetes cluster resources](cs_integrations.html#weavescope)
+  * [Removing clusters](cs_clusters.html#remove)
 
 <br />
 
@@ -401,7 +401,7 @@ Review the following options for other cluster configurations:
 You can use Kubernetes techniques to deploy apps in {{site.data.keyword.Bluemix_dedicated_notm}} clusters and to ensure that your apps are always up and running.
 {:shortdesc}
 
-To deploy apps in clusters, you can follow the instructions for [deploying apps in {{site.data.keyword.Bluemix_notm}} public clusters](cs_apps.html#cs_apps). Review the following differences for {{site.data.keyword.Bluemix_dedicated_notm}} clusters.
+To deploy apps in clusters, you can follow the instructions for [deploying apps in {{site.data.keyword.Bluemix_notm}} public clusters](cs_app.html#app). Review the following differences for {{site.data.keyword.Bluemix_dedicated_notm}} clusters.
 
 ### Allowing public access to apps
 {: #dedicated_apps_public}
@@ -411,14 +411,14 @@ For {{site.data.keyword.Bluemix_dedicated_notm}} environments, public primary IP
 #### Configuring access to an app by using the load balancer service type
 {: #dedicated_apps_public_load_balancer}
 
-If you want to use public IP addresses for the load balancer, ensure that an enterprise firewall whitelist was provided to IBM or [open a support ticket](/docs/support/index.html#contacting-support) to configure the firewall whitelist. Then follow the steps in [Configuring access to an app by using the load balancer service type](cs_apps.html#cs_apps_public_load_balancer).
+If you want to use public IP addresses for the load balancer, ensure that an enterprise firewall whitelist was provided to IBM or [open a support ticket](/docs/support/index.html#contacting-support) to configure the firewall whitelist. Then follow the steps in [Configuring access to an app by using the load balancer service type](cs_loadbalancer.html#config).
 
 #### Configuring public access to an app by using Ingress
 {: #dedicated_apps_public_ingress}
 
-If you want to use public IP addresses for the application load balancer, ensure that an enterprise firewall whitelist was provided to IBM or [open a support ticket](/docs/support/index.html#contacting-support) to configure the firewall whitelist. Then follow the steps in [Configuring access to an app by using Ingress](cs_apps.html#cs_apps_public_ingress).
+If you want to use public IP addresses for the application load balancer, ensure that an enterprise firewall whitelist was provided to IBM or [open a support ticket](/docs/support/index.html#contacting-support) to configure the firewall whitelist. Then follow the steps in [Configuring access to an app by using Ingress](cs_ingress.html#config).
 
 ### Creating persistent storage
 {: #dedicated_apps_volume_claim}
 
-To review options for creating persistent storage, see [Persistent data storage](cs_planning.html#cs_planning_apps_storage). To request a backup for your volumes, a restoration from your volumes, and other storage functions, you must [open a support ticket](/docs/support/index.html#contacting-support).
+To review options for creating persistent storage, see [Persistent data storage](cs_storage.html#planning). To request a backup for your volumes, a restoration from your volumes, and other storage functions, you must [open a support ticket](/docs/support/index.html#contacting-support).
