@@ -282,6 +282,7 @@ Set up a private image repository in {{site.data.keyword.registryshort_notm}} an
 Great work! You've configured your cluster and your local environment is ready for you to start deploying apps into the cluster.
 
 ## What's next?
+{: #next}
 
 * [Test your knowledge and take a quiz! ![External link icon](../icons/launch-glyph.svg "External link icon")](https://ibmcloud-quizzes.mybluemix.net/containers/cluster_tutorial/quiz.php)
 
