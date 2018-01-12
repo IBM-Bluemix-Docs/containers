@@ -6,22 +6,47 @@ IBM Cloud Container Service
 
     {: .navgroup id="learn"}
     container_index.md
-    cs_ov.md
-    cs_planning.md
+    
+    
+    {: .topicgroup}
+    About
+        cs_why.md
+        cs_tech.md
+        cs_secure.md
 
     {: .topicgroup}
     Tutorials
         cs_tutorials.md
         cs_tutorials_apps.md
         cs_tutorials_istio.md
-
-    cs_security.md
     {: .navgroup-end}
 
     {: .navgroup id="howto"}
     cs_cli_install.md
-    cs_cluster.md
-    cs_apps.md
+    
+    {: .topicgroup}
+    Administering clusters
+        cs_clusters.md
+        cs_firewall.md
+        cs_network_policies.md
+        cs_cluster_update.md
+        cs_users.md
+        cs_infrastructure.md
+        cs_health.md
+    
+    cs_images.md
+    cs_app.md
+    
+    {: .topicgroup}
+    Networking to expose apps
+        cs_network_planning.md
+        cs_nodeport.md
+        cs_loadbalancer.md
+        cs_ingress.md
+        cs_subnets
+    
+    cs_storage.md
+    cs_integrations.md
     {: .navgroup-end}
 
     {: .navgroup id="reference"}
