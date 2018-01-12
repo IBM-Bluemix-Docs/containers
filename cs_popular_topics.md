@@ -36,7 +36,7 @@ Check out what container developers are interested in.
 <td>Docker and Kubernetes deliver built-in security and isolation, and they automate deployment, operation, scaling, and monitoring of containerized apps in a cluster of independent compute hosts.</td>
 </tr>
 <tr>
-<td>[Deploying apps in clusters](cs_apps.html)</td>
+<td>[Deploying apps in clusters](cs_app.html)</td>
 <td>You can use Kubernetes techniques to deploy apps and to ensure your apps are up and running at all times. For example, you can perform rolling updates and rollbacks without downtime for your users.</td>
 </tr>
 <tr>
@@ -44,7 +44,7 @@ Check out what container developers are interested in.
 <td>With the CLI, you create and manage your Kubernetes clusters.</td>
 </tr>
 <tr>
-<td>[Opening required ports and IP addresses in your firewall](cs_security.html#opening_ports)</td>
+<td>[Opening required ports and IP addresses in your firewall](cs_firewall.html#firewall)</td>
 <td>You might need to open specific ports and IP addresses in your firewalls to run CLI commands or to allow communication between the Kubernetes master and the worker nodes.</td>
 </tr>
 <tr>
