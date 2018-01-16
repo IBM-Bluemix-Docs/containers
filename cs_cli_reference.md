@@ -1620,7 +1620,7 @@ Remove one or more worker nodes from a cluster.
 ### bx cs worker-update [-f] CLUSTER WORKER [WORKER] [--kube-version MAJOR.MINOR.PATCH] [--force-update]
 {: #cs_worker_update}
 
-Update worker nodes to the latest Kubernetes version. Running `bx cs worker-update` can cause downtime for your apps and services. During the update, all pods are rescheduled onto other worker nodes and data is deleted if not stored outside the pod. To avoid downtime, ensure that you have enough worker nodes to handle your workload while the selected worker nodes are updating.
+Update worker nodes to the latest Kubernetes version. Running `bx cs worker-update` can cause downtime for your apps and services. During the update, all pods are rescheduled onto other worker nodes and data is deleted if not stored outside the pod. To avoid downtime, [ensure that you have enough worker nodes to handle your workload while the selected worker nodes are updating](cs_cluster_update.html#worker_node).
 
 You might need to change your YAML files for deployments before updating. Review this [release note](cs_versions.html) for details.
 
