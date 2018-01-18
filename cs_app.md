@@ -36,13 +36,13 @@ Learn the general steps for deploying apps by clicking an area of the following 
 <br />
 
 
-## Deployment planning
+## Planning highly available deployments
 {: #highly_available_apps}
 
 The more widely you distribute your setup across multiple worker nodes and clusters, the less likely your users are to experience downtime with your app.
-{:shortdesc}
 
-Review these potential app setups that are ordered with increasing degrees of availability:
+Review the following potential app setups that are ordered with increasing degrees of availability.
+{:shortdesc}
 
 ![Stages of high availability for an app](images/cs_app_ha_roadmap.png)
 

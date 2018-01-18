@@ -15,9 +15,9 @@ lastupdated: "2018-01-10"
 {:tip: .tip}
 {:download: .download}
 
-# This page has moved!
+# The content that you are looking for moved
 
-Find the planning topics here:
+Check out the latest information in its new location:
  - [Comparison of lite and standard clusters](cs_why.html#cluster_types)
  - [Cluster configuration](cs_clusters.html#planning_clusters)
  - [Worker node configuration](cs_clusters.html#planning_worker_nodes)
