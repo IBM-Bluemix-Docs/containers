@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-12"
+lastupdated: "2018-01-16"
 
 ---
 
@@ -29,7 +29,9 @@ For general information about Ingress services and how to get started using them
 <col width="20%">
 <col width="60%">
  <thead>
- <th colspan=3>General annotations</th>
+ <th>General annotations</th>
+ <th>Name</th>
+ <th>Description</th>
  </thead>
  <tbody>
  <tr>
@@ -65,7 +67,9 @@ For general information about Ingress services and how to get started using them
 <col width="20%">
 <col width="60%">
  <thead>
-  <th colspan=3>Connection annotations</th>
+ <th>Connection annotations</th>
+ <th>Name</th>
+ <th>Description</th>
   </thead>
   <tbody>
   <tr>
@@ -96,7 +100,9 @@ For general information about Ingress services and how to get started using them
 <col width="20%">
 <col width="60%">
  <thead>
- <th colspan=3>Proxy buffer annotations</th>
+ <th>Proxy buffer annotations</th>
+ <th>Name</th>
+ <th>Description</th>
  </thead>
  <tbody>
  <tr>
@@ -127,7 +133,9 @@ For general information about Ingress services and how to get started using them
 <col width="20%">
 <col width="60%">
 <thead>
-<th colspan=3>Request and response annotations</th>
+<th>Request and response annotations</th>
+<th>Name</th>
+<th>Description</th>
 </thead>
 <tbody>
 <tr>
@@ -152,7 +160,9 @@ For general information about Ingress services and how to get started using them
 <col width="20%">
 <col width="60%">
 <thead>
-<th colspan=3>Service limit annotations</th>
+<th>Service limit annotations</th>
+<th>Name</th>
+<th>Description</th>
 </thead>
 <tbody>
 <tr>
@@ -172,7 +182,9 @@ For general information about Ingress services and how to get started using them
 <col width="20%">
 <col width="60%">
 <thead>
-<th colspan=3>HTTPS and TLS/SSL authentication annotations</th>
+<th>HTTPS and TLS/SSL authentication annotations</th>
+<th>Name</th>
+<th>Description</th>
 </thead>
 <tbody>
 <tr>
@@ -1049,7 +1061,7 @@ spec:
   </tr>
   <tr>
   <td><code>&lt;header&gt;</code></td>
-  <td>The key of the header information to add to the client request or client response.</td
+  <td>The key of the header information to add to the client request or client response.</td>
   </tr>
   <tr>
   <td><code>&lt;value&gt;</code></td>
@@ -1645,6 +1657,7 @@ spec:
   </tbody></table>
 
   </dd>
+  </dl>
 
 
 <br />
