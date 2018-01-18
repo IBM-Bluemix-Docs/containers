@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-09"
+lastupdated: "2018-01-18"
 
 ---
 
@@ -19,7 +19,7 @@ lastupdated: "2018-01-09"
 # CLI reference for managing clusters
 {: #cs_cli_reference}
 
-Refer to these commands to create and manage clusters.
+Refer to these commands to create and manage clusters on {{site.data.keyword.Bluemix_notm}}.
 {:shortdesc}
 
 ## bx cs commands
@@ -30,9 +30,12 @@ Refer to these commands to create and manage clusters.
 
 <!--[https://github.ibm.com/alchemy-containers/armada-cli ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.ibm.com/alchemy-containers/armada-cli)-->
 
-<table summary="Commands for creating clusters on {{site.data.keyword.Bluemix_notm}}">
+<table summary="Application load balancer commands">
+<col width="25%">
+<col width="25%">
+<col width="25%">
  <thead>
-    <th colspan=5>Commands for creating clusters on {{site.data.keyword.Bluemix_notm}}</th>
+    <th colspan=4>Application load balancer commands</th>
  </thead>
  <tbody>
   <tr>
@@ -40,72 +43,217 @@ Refer to these commands to create and manage clusters.
     <td>[bx cs alb-cert-get](#cs_alb_cert_get)</td>
     <td>[bx cs alb-cert-rm](#cs_alb_cert_rm)</td>
     <td>[bx cs alb-certs](#cs_alb_certs)</td>
+  </tr>
+  <tr>
     <td>[bx cs alb-configure](#cs_alb_configure)</td>
- </tr>
- <tr>
     <td>[bx cs alb-get](#cs_alb_get)</td>
     <td>[bx cs alb-types](#cs_alb_types)</td>
     <td>[bx cs albs](#cs_albs)</td>
-    <td>[bx cs api-key-info](#cs_api_key_info)</td>
-    <td>[bx cs apiserver-config-set](#cs_apiserver_config_set)</td>
  </tr>
- <tr>
+</tbody>
+</table>
+
+<br>
+
+<table summary="API commands">
+<col width="25%">
+<col width="25%">
+<col width="25%">
+ <thead>
+    <th colspan=4>API commands</th>
+ </thead>
+ <tbody>
+  <tr>
+    <td>[bx cs api-key-info](#cs_api_key_info)</td>
+    <td>[bx cs api-key-reset](#cs_api_key_reset)</td>
+    <td>[bx cs apiserver-config-get](#cs_apiserver_config_get)</td>
+    <td>[bx cs apiserver-config-set](#cs_apiserver_config_set)</td>
+  </tr>
+  <tr>
+    <td>[bx cs apiserver-config-unset](#cs_apiserver_config_unset)</td>
     <td>[bx cs apiserver-refresh](#cs_apiserver_refresh)</td>
+    <td></td>
+    <td></td>
+ </tr>
+</tbody>
+</table>
+
+<br>
+
+<table summary="CLI plug-in usage commands">
+<col width="25%">
+<col width="25%">
+<col width="25%">
+ <thead>
+    <th colspan=4>CLI plug-in usage commands</th>
+ </thead>
+ <tbody>
+  <tr>
+    <td>[bx cs help](#cs_help)</td>
+    <td>[bx cs init](#cs_init)</td>
+    <td>[bx cs messages](#cs_messages)</td>
+    <td></td>
+  </tr>
+</tbody>
+</table>
+
+<br>
+
+<table summary="Cluster commands: Management">
+<col width="25%">
+<col width="25%">
+<col width="25%">
+ <thead>
+    <th colspan=4>Cluster commands: Management</th>
+ </thead>
+ <tbody>
+  <tr>
     <td>[bx cs cluster-config](#cs_cluster_config)</td>
     <td>[bx cs cluster-create](#cs_cluster_create)</td>
     <td>[bx cs cluster-get](#cs_cluster_get)</td>
     <td>[bx cs cluster-rm](#cs_cluster_rm)</td>
- </tr>
- <tr>
+  </tr>
+  <tr>
+    <td>[bx cs cluster-update](#cs_cluster_update)</td>
+    <td>[bx cs clusters](#cs_clusters)</td>
+    <td>[bx cs kube-versions](#cs_kube_versions)</td>
+    <td></td>
+  </tr>
+</tbody>
+</table>
+
+<br>
+
+<table summary="Cluster commands: Services and integrations">
+<col width="25%">
+<col width="25%">
+<col width="25%">
+ <thead>
+    <th colspan=4>Cluster commands: Services and integrations</th>
+ </thead>
+ <tbody>
+  <tr>
     <td>[bx cs cluster-service-bind](#cs_cluster_service_bind)</td>
     <td>[bx cs cluster-service-unbind](#cs_cluster_service_unbind)</td>
     <td>[bx cs cluster-services](#cs_cluster_services)</td>
+    <td>[bx cs webhook-create](#cs_webhook_create)</td>
+  </tr>
+</tbody>
+</table>
+
+<br>
+
+<table summary="Cluster commands: Subnets">
+<col width="25%">
+<col width="25%">
+<col width="25%">
+ <thead>
+    <th colspan=4>Cluster commands: Subnets</th>
+ </thead>
+ <tbody>
+  <tr>
     <td>[bx cs cluster-subnet-add](#cs_cluster_subnet_add)</td>
     <td>[bx cs cluster-subnet-create](#cs_cluster_subnet_create)</td>
- </tr>
- <tr>
     <td>[bx cs cluster-user-subnet-add](#cs_cluster_user_subnet_add)</td>
     <td>[bx cs cluster-user-subnet-rm](#cs_cluster_user_subnet_rm)</td>
-    <td>[bx cs cluster-update](#cs_cluster_update)</td>
-    <td>[bx cs clusters](#cs_clusters)</td>
+  </tr>
+  <tr>
+    <td>[bx cs subnets](#cs_subnets)</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</tbody>
+</table>
+
+<br>
+
+<table summary="Infrastructure commands">
+<col width="25%">
+<col width="25%">
+<col width="25%">
+ <thead>
+    <th colspan=4>Infrastructure commands</th>
+ </thead>
+ <tbody>
+  <tr>
     <td>[bx cs credentials-set](#cs_credentials_set)</td>
- </tr>
- <tr>
     <td>[bx cs credentials-unset](#cs_credentials_unset)</td>
-    <td>[bx cs help](#cs_help)</td>
-    <td>[bx cs init](#cs_init)</td>
-    <td>[bx cs kube-versions](#cs_kube_versions)</td>
-    <td>[bx cs locations](#cs_datacenters)</td>
- </tr>
- <tr>
+    <td>[bx cs machine-types](#cs_machine_types)</td>
+    <td>[bx cs vlans](#cs_vlans)</td>
+  </tr>
+</tbody>
+</table>
+
+<br>
+
+<table summary="Logging commands">
+<col width="25%">
+<col width="25%">
+<col width="25%">
+ <thead>
+    <th colspan=4>Logging commands</th>
+ </thead>
+ <tbody>
+  <tr>
     <td>[bx cs logging-config-create](#cs_logging_create)</td>
     <td>[bx cs logging-config-get](#cs_logging_get)</td>
     <td>[bx cs logging-config-refresh](#cs_logging_refresh)</td>
     <td>[bx cs logging-config-rm](#cs_logging_rm)</td>
+  </tr>
+  <tr>
     <td>[bx cs logging-config-update](#cs_logging_update)</td>
- </tr>
- <tr>
-    <td>[bx cs machine-types](#cs_machine_types)</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</tbody>
+</table>
+
+<br>
+
+<table summary="Region commands">
+<col width="25%">
+<col width="25%">
+<col width="25%">
+ <thead>
+    <th colspan=4>Region commands</th>
+ </thead>
+ <tbody>
+  <tr>
+    <td>[bx cs locations](#cs_datacenters)</td>
     <td>[bx cs region](#cs_region)</td>
     <td>[bx cs region-set](#cs_region-set)</td>
     <td>[bx cs regions](#cs_regions)</td>
-    <td>[bx cs subnets](#cs_subnets)</td>
- </tr>
- <tr>
-    <td>[bx cs vlans](#cs_vlans)</td>
-    <td>[bx cs webhook-create](#cs_webhook_create)</td>
+  </tr>
+</tbody>
+</table>
+
+<br>
+
+<table summary="Worker node commands">
+<col width="25%">
+<col width="25%">
+<col width="25%">
+ <thead>
+    <th colspan=4>Worker node commands</th>
+ </thead>
+ <tbody>
+  <tr>
     <td>[bx cs worker-add](#cs_worker_add)</td>
     <td>[bx cs worker-get](#cs_worker_get)</td>
     <td>[bx cs worker-reboot](#cs_worker_reboot)</td>
- </tr>
- <tr>
     <td>[bx cs worker-reload](#cs_worker_reload)</td>
+  </tr>
+  <tr>
     <td>[bx cs worker-rm](#cs_worker_rm)</td>
     <td>[bx cs worker-update](#cs_worker_update)</td>
     <td>[bx cs workers](#cs_workers)</td>
- </tr>
- </tbody>
- </table>
+    <td></td>
+  </tr>
+</tbody>
+</table>
+</staging>
 
 **Tip:** To see the version of the {{site.data.keyword.containershort_notm}} plug-in, run the following command.
 
@@ -115,6 +263,7 @@ bx plugin list
 {: pre}
 
 ## Application load balancer commands
+{: #alb_commands}
 
 ### bx cs alb-cert-deploy [--update] --cluster CLUSTER --secret-name SECRET_NAME --cert-crn CERTIFICATE_CRN
 {: #cs_alb_cert_deploy}
@@ -360,7 +509,13 @@ View the status of all application load balancers in a cluster. If no applicatio
   {: pre}
 
 
-## bx cs api-key-info CLUSTER
+<br />
+
+
+## API commands
+{: #api_commands}
+
+### bx cs api-key-info CLUSTER
 {: #cs_api_key_info}
 
 View the name and email address for the owner of the cluster's IAM API key.
@@ -380,12 +535,25 @@ View the name and email address for the owner of the cluster's IAM API key.
   {: pre}
 
 
-## bx cs apiserver-config-set
-{: #cs_apiserver_config_set}
+### bx cs api-key-reset
+{: #cs_api_key_reset}
 
-Set an option for a cluster's Kubernetes API server configuration. This command must be combined with one of the following subcommands for the configuration option you want to set.
+Replace the API key. The API key is required to manage your clusters. To avoid service interruptions, do not replace the API key unless your existing key is compromised.
 
-### bx cs apiserver-config-get audit-webhook CLUSTER
+**Example**:
+
+  ```
+  bx cs api-key-reset
+  ```
+  {: pre}
+
+
+### bx cs apiserver-config-get
+{: #cs_apiserver_config_get}
+
+Get information about an option for a cluster's Kubernetes API server configuration. This command must be combined with one of the following subcommands for the configuration option you want information on.
+
+#### bx cs apiserver-config-get audit-webhook CLUSTER
 {: #cs_apiserver_api_webhook_get}
 
 View the URL for the remote logging service that you are sending API server audit logs to. The URL was specified when you created the webhook backend for the API server configuration.
@@ -404,7 +572,12 @@ View the URL for the remote logging service that you are sending API server audi
   ```
   {: pre}
 
-### bx cs apiserver-config-set audit-webhook CLUSTER [--remoteServer SERVER_URL_OR_IP] [--caCert CA_CERT_PATH] [--clientCert CLIENT_CERT_PATH] [--clientKey CLIENT_KEY_PATH]
+### bx cs apiserver-config-set
+{: #cs_apiserver_config_set}
+
+Set an option for a cluster's Kubernetes API server configuration. This command must be combined with one of the following subcommands for the configuration option you want to set.
+
+#### bx cs apiserver-config-set audit-webhook CLUSTER [--remoteServer SERVER_URL_OR_IP] [--caCert CA_CERT_PATH] [--clientCert CLIENT_CERT_PATH] [--clientKey CLIENT_KEY_PATH]
 {: #cs_apiserver_api_webhook_set}
 
 Set the webhook backend for the API server configuration. The webhook backend forwards API server audit logs to a remote server. A webhook configuration is created based on the information you provide in this command's flags. If you do not provide any information in the flags, a default webhook configuration is used.
@@ -435,7 +608,13 @@ Set the webhook backend for the API server configuration. The webhook backend fo
   ```
   {: pre}
 
-### bx cs apiserver-config-unset audit-webhook CLUSTER
+
+### bx cs apiserver-config-unset
+{: #cs_apiserver_config_unset}
+
+Disable an option for a cluster's Kubernetes API server configuration. This command must be combined with one of the following subcommands for the configuration option you want to unset.
+
+#### bx cs apiserver-config-unset audit-webhook CLUSTER
 {: #cs_apiserver_api_webhook_unset}
 
 Disable the webhook backend configuration for the cluster's API server. Diabling the webhook backend stops forwarding API server audit logs to a remote server.
@@ -454,7 +633,7 @@ Disable the webhook backend configuration for the cluster's API server. Diabling
   ```
   {: pre}
 
-## bx cs apiserver-refresh CLUSTER
+### bx cs apiserver-refresh CLUSTER
 {: #cs_apiserver_refresh}
 
 Restart the Kubernetes master in the cluster to apply changes to the API server configuration.
@@ -473,7 +652,70 @@ Restart the Kubernetes master in the cluster to apply changes to the API server 
   ```
   {: pre}
 
-## Cluster commands
+
+<br />
+
+
+## CLI plug-in usage commands
+{: #cli_plug-in_commands}
+
+### bx cs help
+{: #cs_help}
+
+View a list of supported commands and parameters.
+
+<strong>Command options</strong>:
+
+   None
+
+**Example**:
+
+  ```
+  bx cs help
+  ```
+  {: pre}
+
+
+### bx cs init [--host HOST]
+{: #cs_init}
+
+Initialize the {{site.data.keyword.containershort_notm}} plug-in or specify the region where you want to create or access Kubernetes clusters.
+
+<strong>Command options</strong>:
+
+   <dl>
+   <dt><code>--host <em>HOST</em></code></dt>
+   <dd>The {{site.data.keyword.containershort_notm}} API endpoint to use.  This value is optional. [View the available API endpoint values.](cs_regions.html#container_regions)</dd>
+   </dl>
+
+**Example**:
+
+
+```
+bx cs init --host https://uk-south.containers.bluemix.net
+```
+{: pre}
+
+
+### bx cs messages
+{: #cs_messages}
+
+View current messages for the IBMid user.
+
+**Example**:
+
+```
+bx cs messages
+```
+{: pre}
+
+
+<br />
+
+
+## Cluster commands: Management
+{: #cluster_mgmt_commands}
+
 
 ### bx cs cluster-config CLUSTER [--admin] [--export]
 {: #cs_cluster_config}
@@ -499,7 +741,6 @@ After logging in, download Kubernetes configuration data and certificates to con
 bx cs cluster-config my_cluster
 ```
 {: pre}
-
 
 
 ### bx cs cluster-create [--file FILE_LOCATION] [--hardware HARDWARE] --location LOCATION --machine-type MACHINE_TYPE --name NAME [--kube-version MAJOR.MINOR.PATCH] [--no-subnet] [--private-vlan PRIVATE_VLAN] [--public-vlan PUBLIC_VLAN] [--workers WORKER] [--disable-disk-encrypt]
@@ -708,6 +949,77 @@ Remove a cluster from your organization.
   {: pre}
 
 
+### bx cs cluster-update [-f] CLUSTER [--kube-version MAJOR.MINOR.PATCH] [--force-update]
+{: #cs_cluster_update}
+
+Update the Kubernetes master to the default API version. During the update, you cannot access or change the cluster. Worker nodes, apps, and resources that have been deployed by the user are not modified and will continue to run.
+
+You might need to change your YAML files for future deployments. Review this [release note](cs_versions.html) for details.
+
+<strong>Command options</strong>:
+
+   <dl>
+   <dt><code><em>CLUSTER</em></code></dt>
+   <dd>The name or ID of the cluster. This value is required.</dd>
+
+   <dt><code>--kube-version <em>MAJOR.MINOR.PATCH</em></code></dt>
+   <dd>The Kubernetes version of the cluster. If this flag is not specified, the Kubernetes master is update to the default API version. To see available versions, run [bx cs kube-versions](#cs_kube_versions). This value is optional.</dd>
+
+   <dt><code>-f</code></dt>
+   <dd>Use this option to force the update of the master with no user prompts. This value is optional.</dd>
+
+   <dt><code>--force-update</code></dt>
+   <dd>Attempt the update even if the change is greater than two minor versions. This value is optional.</dd>
+   </dl>
+
+**Example**:
+
+  ```
+  bx cs cluster-update my_cluster
+  ```
+  {: pre}
+
+
+### bx cs clusters
+{: #cs_clusters}
+
+View a list of clusters in your organization.
+
+<strong>Command options</strong>:
+
+  None
+
+**Example**:
+
+  ```
+  bx cs clusters
+  ```
+  {: pre}
+
+
+### bx cs kube-versions
+{: #cs_kube_versions}
+
+View a list of Kubernetes versions supported in {{site.data.keyword.containershort_notm}}. Update your [cluster master](#cs_cluster_update) and [worker nodes](#cs_worker_update) to the default version for the latest, stable capabilities.
+
+**Command options**:
+
+  None
+
+**Example**:
+
+  ```
+  bx cs kube-versions
+  ```
+  {: pre}
+
+
+<br />
+
+
+## Cluster commands: Services and integrations
+{: #cluster_services_commands}
+
 ### bx cs cluster-service-bind CLUSTER KUBERNETES_NAMESPACE SERVICE_INSTANCE_GUID
 {: #cs_cluster_service_bind}
 
@@ -788,6 +1100,41 @@ List the services that are bound to one or all of the Kubernetes namespace in a 
   {: pre}
 
 
+  ### bx cs webhook-create --cluster CLUSTER --level LEVEL --type slack --URL URL
+  {: #cs_webhook_create}
+
+  Create webhooks.
+
+  <strong>Command options</strong>:
+
+     <dl>
+     <dt><code>--cluster <em>CLUSTER</em></code></dt>
+     <dd>The name or ID of the cluster. This value is required.</dd>
+
+     <dt><code>--level <em>LEVEL</em></code></dt>
+     <dd>The notification level, such as <code>Normal</code> or <code>Warning</code>. <code>Warning</code> is the default value. This value is optional.</dd>
+
+     <dt><code>--type <em>slack</em></code></dt>
+     <dd>The webhook type, such as slack. Only slack is supported. This value is required.</dd>
+
+     <dt><code>--URL <em>URL</em></code></dt>
+     <dd>The URL for the webhook. This value is required.</dd>
+     </dl>
+
+  **Example**:
+
+    ```
+    bx cs webhook-create --cluster my_cluster --level Normal --type slack --URL http://github.com/<mywebhook>
+    ```
+    {: pre}
+
+
+<br />
+
+
+## Cluster commands: Subnets
+{: #cluster_subnets_commands}
+
 ### bx cs cluster-subnet-add CLUSTER SUBNET
 {: #cs_cluster_subnet_add}
 
@@ -811,6 +1158,7 @@ Make a subnet in an IBM Cloud infrastructure (SoftLayer) account available to a 
   bx cs cluster-subnet-add my_cluster subnet
   ```
   {: pre}
+
 
 ### bx cs cluster-subnet-create CLUSTER SIZE VLAN_ID
 {: #cs_cluster_subnet_create}
@@ -838,6 +1186,7 @@ Create a subnet in an IBM Cloud infrastructure (SoftLayer) account and make it a
   bx cs cluster-subnet-create my_cluster 8 1764905
   ```
   {: pre}
+
 
 ### bx cs cluster-user-subnet-add CLUSTER SUBNET_CIDR PRIVATE_VLAN
 {: #cs_cluster_user_subnet_add}
@@ -898,54 +1247,28 @@ Remove your own private subnet from a specified cluster.
   ```
   {: pre}
 
+### bx cs subnets
+{: #cs_subnets}
 
-### bx cs cluster-update [-f] CLUSTER [--kube-version MAJOR.MINOR.PATCH] [--force-update]
-{: #cs_cluster_update}
-
-Update the Kubernetes master to the default API version. During the update, you cannot access or change the cluster. Worker nodes, apps, and resources that have been deployed by the user are not modified and will continue to run.
-
-You might need to change your YAML files for future deployments. Review this [release note](cs_versions.html) for details.
+View a list of subnets that are available in an IBM Cloud infrastructure (SoftLayer) account.
 
 <strong>Command options</strong>:
 
-   <dl>
-   <dt><code><em>CLUSTER</em></code></dt>
-   <dd>The name or ID of the cluster. This value is required.</dd>
-
-   <dt><code>--kube-version <em>MAJOR.MINOR.PATCH</em></code></dt>
-   <dd>The Kubernetes version of the cluster. If this flag is not specified, the Kubernetes master is update to the default API version. To see available versions, run [bx cs kube-versions](#cs_kube_versions). This value is optional.</dd>
-
-   <dt><code>-f</code></dt>
-   <dd>Use this option to force the update of the master with no user prompts. This value is optional.</dd>
-
-   <dt><code>--force-update</code></dt>
-   <dd>Attempt the update even if the change is greater than two minor versions. This value is optional.</dd>
-   </dl>
+   None
 
 **Example**:
 
   ```
-  bx cs cluster-update my_cluster
+  bx cs subnets
   ```
   {: pre}
 
-### bx cs clusters
-{: #cs_clusters}
 
-View a list of clusters in your organization.
+<br />
 
-<strong>Command options</strong>:
 
-  None
-
-**Example**:
-
-  ```
-  bx cs clusters
-  ```
-  {: pre}
-
-## Credentials commands
+## Infrastructure commands
+{: #infrastructure_commands}
 
 ### bx cs credentials-set --infrastructure-api-key API_KEY --infrastructure-username USERNAME
 {: #cs_credentials_set}
@@ -1009,76 +1332,55 @@ Remove IBM Cloud infrastructure (SoftLayer) account credentials from your {{site
   {: pre}
 
 
+### bx cs machine-types LOCATION
+{: #cs_machine_types}
 
-## bx cs help
-{: #cs_help}
+View a list of available machine types for your worker nodes. Each machine type includes the amount of virtual CPU, memory, and disk space for each worker node in the cluster.
+- By default, the host's Docker data is encrypted in the machine types. The `/var/lib/docker` directory, where all container data is stored, is encrypted with LUKS encryption. If the `disable-disk-encrypt` option is included during cluster creation, then the host's Docker data is not encrypted. [Learn more about the encryption.](cs_secure.html#encrypted_disks)
+- Machine types with `u2c` or `b2c` in the name use local disk instead of storage area networing (SAN) for reliability. Reliability benefits include higher throughput when serializing bytes to the local disk and reduced file system degradation due to network failures. These machine types contain 25GB local disk storage for the OS file system and 100GB local disk storage for `/var/lib/docker`, the directory that all the container data is written to.
+- Machine types with `u1c` or `b1c` in the name are deprecated, such as `u1c.2x4`. To start using `u2c` and `b2c` machine types, use the `bx cs worker-add` command to add  worker nodes with the updated machine type. Then, remove the worker nodes that are using the deprecated machine types by using the `bx cs worker-rm` command.
+</p>
 
-View a list of supported commands and parameters.
-
-<strong>Command options</strong>:
-
-   None
-
-**Example**:
-
-  ```
-  bx cs help
-  ```
-  {: pre}
-
-
-## bx cs init [--host HOST]
-{: #cs_init}
-
-Initialize the {{site.data.keyword.containershort_notm}} plug-in or specify the region where you want to create or access Kubernetes clusters.
 
 <strong>Command options</strong>:
 
    <dl>
-   <dt><code>--host <em>HOST</em></code></dt>
-   <dd>The {{site.data.keyword.containershort_notm}} API endpoint to use.  This value is optional. [View the available API endpoint values.](cs_regions.html#container_regions)</dd>
-   </dl>
-
-
-
-```
-bx cs init --host https://uk-south.containers.bluemix.net
-```
-{: pre}
-
-## bx cs kube-versions
-{: #cs_kube_versions}
-
-View a list of Kubernetes versions supported in {{site.data.keyword.containershort_notm}}. Update your [cluster master](#cs_cluster_update) and [worker nodes](#cs_worker_update) to the default version for the latest, stable capabilities.
-
-**Command options**:
-
-  None
+   <dt><code><em>LOCATION</em></code></dt>
+   <dd>Enter the location where you want to list available machine types. This value is required. Review [available locations](cs_regions.html#locations).</dd></dl>
 
 **Example**:
 
   ```
-  bx cs kube-versions
+  bx cs machine-types dal10
   ```
   {: pre}
 
-## bx cs locations
-{: #cs_datacenters}
 
-View a list of available locations for you to create a cluster in.
+### bx cs vlans LOCATION
+{: #cs_vlans}
+
+List the public and private VLANs that are available for a location in your IBM Cloud infrastructure (SoftLayer) account. To list available VLANs, you must have a paid account.
 
 <strong>Command options</strong>:
 
-   None
+   <dl>
+   <dt><code><em>LOCATION</em></code></dt>
+   <dd>Enter the location where you want to list your private and public VLANs. This value is required. Review [available locations](cs_regions.html#locations).</dd>
+   </dl>
 
 **Example**:
 
   ```
-  bx cs locations
+  bx cs vlans dal10
   ```
   {: pre}
 
+
+<br />
+
+
 ## Logging commands
+{: #logging_commands}
 
 ### bx cs logging-config-create CLUSTER --logsource LOG_SOURCE [--namespace KUBERNETES_NAMESPACE] [--hostname LOG_SERVER_HOSTNAME_OR_IP] [--port LOG_SERVER_PORT] [--space CLUSTER_SPACE] [--org CLUSTER_ORG] --type LOG_TYPE [--json]
 {: #cs_logging_create}
@@ -1238,30 +1540,28 @@ Update the details of a log forwarding configuration.
   {: pre}
 
 
-## bx cs machine-types LOCATION
-{: #cs_machine_types}
+<br />
 
-View a list of available machine types for your worker nodes. Each machine type includes the amount of virtual CPU, memory, and disk space for each worker node in the cluster.
-- By default, the host's Docker data is encrypted in the machine types. The `/var/lib/docker` directory, where all container data is stored, is encrypted with LUKS encryption. If the `disable-disk-encrypt` option is included during cluster creation, then the host's Docker data is not encrypted. [Learn more about the encryption.](cs_secure.html#encrypted_disks)
-- Machine types with `u2c` or `b2c` in the name use local disk instead of storage area networing (SAN) for reliability. Reliability benefits include higher throughput when serializing bytes to the local disk and reduced file system degradation due to network failures. These machine types contain 25GB local disk storage for the OS file system and 100GB local disk storage for `/var/lib/docker`, the directory that all the container data is written to.
-- Machine types with `u1c` or `b1c` in the name are deprecated, such as `u1c.2x4`. To start using `u2c` and `b2c` machine types, use the `bx cs worker-add` command to add  worker nodes with the updated machine type. Then, remove the worker nodes that are using the deprecated machine types by using the `bx cs worker-rm` command.
-</p>
 
+## Region commands
+{: #region_commands}
+
+### bx cs locations
+{: #cs_datacenters}
+
+View a list of available locations for you to create a cluster in.
 
 <strong>Command options</strong>:
 
-   <dl>
-   <dt><code><em>LOCATION</em></code></dt>
-   <dd>Enter the location where you want to list available machine types. This value is required. Review [available locations](cs_regions.html#locations).</dd></dl>
+   None
 
 **Example**:
 
   ```
-  bx cs machine-types dal10
+  bx cs locations
   ```
   {: pre}
 
-## Region commands
 
 ### bx cs region
 {: #cs_region}
@@ -1346,72 +1646,12 @@ us-south      us-south
 ```
 {: screen}
 
-## bx cs subnets
-{: #cs_subnets}
 
-View a list of subnets that are available in an IBM Cloud infrastructure (SoftLayer) account.
-
-<strong>Command options</strong>:
-
-   None
-
-**Example**:
-
-  ```
-  bx cs subnets
-  ```
-  {: pre}
+<br />
 
 
-## bx cs vlans LOCATION
-{: #cs_vlans}
-
-List the public and private VLANs that are available for a location in your IBM Cloud infrastructure (SoftLayer) account. To list available VLANs, you must have a paid account.
-
-<strong>Command options</strong>:
-
-   <dl>
-   <dt><code><em>LOCATION</em></code></dt>
-   <dd>Enter the location where you want to list your private and public VLANs. This value is required. Review [available locations](cs_regions.html#locations).</dd>
-   </dl>
-
-**Example**:
-
-  ```
-  bx cs vlans dal10
-  ```
-  {: pre}
-
-
-## bx cs webhook-create --cluster CLUSTER --level LEVEL --type slack --URL URL
-{: #cs_webhook_create}
-
-Create webhooks.
-
-<strong>Command options</strong>:
-
-   <dl>
-   <dt><code>--cluster <em>CLUSTER</em></code></dt>
-   <dd>The name or ID of the cluster. This value is required.</dd>
-
-   <dt><code>--level <em>LEVEL</em></code></dt>
-   <dd>The notification level, such as <code>Normal</code> or <code>Warning</code>. <code>Warning</code> is the default value. This value is optional.</dd>
-
-   <dt><code>--type <em>slack</em></code></dt>
-   <dd>The webhook type, such as slack. Only slack is supported. This value is required.</dd>
-
-   <dt><code>--URL <em>URL</em></code></dt>
-   <dd>The URL for the webhook. This value is required.</dd>
-   </dl>
-
-**Example**:
-
-  ```
-  bx cs webhook-create --cluster my_cluster --level Normal --type slack --URL http://github.com/<mywebhook>
-  ```
-  {: pre}
-
-## Worker commands
+## Worker node commands
+{: worker_node_commands}
 
 ### bx cs worker-add --cluster CLUSTER [--file FILE_LOCATION] [--hardware HARDWARE] --machine-type MACHINE_TYPE --number NUMBER --private-vlan PRIVATE_VLAN --public-vlan PUBLIC_VLAN [--disable-disk-encrypt]
 {: #cs_worker_add}
@@ -1620,7 +1860,7 @@ Remove one or more worker nodes from a cluster.
 ### bx cs worker-update [-f] CLUSTER WORKER [WORKER] [--kube-version MAJOR.MINOR.PATCH] [--force-update]
 {: #cs_worker_update}
 
-Update worker nodes to the latest Kubernetes version. Running `bx cs worker-update` can cause downtime for your apps and services. During the update, all pods are rescheduled onto other worker nodes and data is deleted if not stored outside the pod. To avoid downtime, ensure that you have enough worker nodes to handle your workload while the selected worker nodes are updating.
+Update worker nodes to the latest Kubernetes version. Running `bx cs worker-update` can cause downtime for your apps and services. During the update, all pods are rescheduled onto other worker nodes and data is deleted if not stored outside the pod. To avoid downtime, [ensure that you have enough worker nodes to handle your workload while the selected worker nodes are updating](cs_cluster_update.html#worker_node).
 
 You might need to change your YAML files for deployments before updating. Review this [release note](cs_versions.html) for details.
 
@@ -1669,6 +1909,3 @@ View a list of worker nodes and the status for each in a cluster.
   bx cs workers mycluster
   ```
   {: pre}
-
-<br />
-

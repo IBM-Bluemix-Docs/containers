@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-05"
+lastupdated: "2018-01-15"
 
 ---
 
@@ -22,9 +22,11 @@ Review the Kubernetes versions that are available on {{site.data.keyword.contain
 {:shortdesc}
 
 {{site.data.keyword.containershort_notm}} supports several versions of Kubernetes. The default version is used when you create or update a cluster, unless you specify a different version. The available Kubernetes versions are:
-- 1.8.6
-- 1.7.4 (Default version)
+
+- 1.8.6 (Default version)
+- 1.7.4
 - 1.5.6
+
 
 To check which version of the Kubernetes CLI that you are running locally or that your cluster is running, run the following command and check the version.
 
@@ -36,8 +38,8 @@ kubectl version  --short
 Example output:
 
 ```
-Client Version: 1.7.4
-Server Version: 1.7.4
+Client Version: 1.8.6
+Server Version: 1.8.6
 ```
 {: screen}
 
@@ -57,7 +59,7 @@ Kubernetes provides these version update types:
 By default, you cannot update a Kubernetes master more than two minor versions ahead. For example, if your current master is version 1.5 and you want to update to 1.8, you must update to 1.7 first. You can force the update to continue, but updating more than two minor versions might cause unexpected results.
 {: tip}
 
-The following information summarizes updates that are likely to have impact on deployed apps when you update a cluster to a new version. Review the [Kubernetes changelog ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG.md) for a complete list of changes in Kubernetes versions.
+The following information summarizes updates that are likely to have impact on deployed apps when you update a cluster to a new version from the previous version. Review the [Kubernetes changelog ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG.md) for a complete list of changes in Kubernetes versions.
 
 For more information on the updating process, see [Updating clusters](cs_cluster_update.html#master) and [Updating worker nodes](cs_cluster_update.html#worker_node).
 
@@ -66,7 +68,7 @@ For more information on the updating process, see [Updating clusters](cs_cluster
 
 <p><img src="images/certified_kubernetes_1x8.png" style="width:62px; height: 100px; border-style: none; padding-right: 10px;" height="100" width="62.5" align="left" alt="This badge indicates Kubernetes version 1.8 certification for IBM Cloud Container Service."/> {{site.data.keyword.containerlong_notm}} is a Certified Kubernetes product for version 1.8 under the CNCF Kubernetes Software Conformance Certification program. _Kubernetes® is a registered trademark of The Linux Foundation in the United States and other countries, and is used pursuant to a license from The Linux Foundation._</p>
 
-Review changes you might need to make when updating to Kubernetes version 1.8.
+Review changes you might need to make when updating from the previous Kubernetes version to 1.8.
 
 <br/>
 
@@ -129,7 +131,7 @@ Review changes you might need to make when updating to Kubernetes version 1.8.
 
 <p><img src="images/certified_kubernetes_1x7.png" height="100" width="62.5" style="width:62px; height: 100px; border-style: none; padding-right: 10px;" align="left" alt="This badge indicates Kubernetes version 1.7 certification for IBM Cloud Container Service."/> {{site.data.keyword.containerlong_notm}} is a Certified Kubernetes product for version 1.7 under the CNCF Kubernetes Software Conformance Certification program.</p>
 
-Review changes you might need to make when updating to Kubernetes version 1.7.
+Review changes you might need to make when updating from the previous Kubernetes version to 1.7.
 
 <br/>
 

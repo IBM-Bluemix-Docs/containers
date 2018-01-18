@@ -15,9 +15,9 @@ lastupdated: "2018-01-09"
 {:tip: .tip}
 {:download: .download}
 
-# This page has moved!
+# The content that you are looking for moved.
 
-Find the security topics here:
+Check out the latest information in its new location:
  - [Security by cluster component](cs_secure.html#cluster)
    - [Kubernetes master](cs_secure.html#master)
    - [Worker nodes](cs_secure.html#worker)
