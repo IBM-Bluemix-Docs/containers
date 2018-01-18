@@ -16,9 +16,9 @@ lastupdated: "2018-01-11"
 {:download: .download}
 
 
-# This page has moved!
+# The content that you are looking for moved.
 
-Find the topics here:
+Check out the latest information in its new location:
  - [Docker containers](cs_tech.html#docker_containers)
  - [Kubernetes basics](cs_tech.html#kubernetes_basics)
  - [Benefits of using clusters](cs_why.html#benefits)
