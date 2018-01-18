@@ -121,8 +121,8 @@ From the previous tutorial, you have an account and a cluster with one worker no
         Example output:
 
         ```
-        Client Version: v1.7.4
-        Server Version: v1.7.4
+        Client Version: v1.8.6
+        Server Version: v1.8.6
         ```
         {: screen}
 

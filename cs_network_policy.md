@@ -137,6 +137,8 @@ To add network policies:
         calicoctl version
         ```
         {: pre}
+        
+    4.  If corporate network policies prevent access from your local system to public endpoints via proxies or firewalls, see [Running `calicoctl` commands from behind a firewall](cs_firewall.html#firewall) for instructions on how to allow TCP access for Calico commands.
 
 2.  Configure the Calico CLI.
 
