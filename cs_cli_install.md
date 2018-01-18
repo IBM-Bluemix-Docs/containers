@@ -35,7 +35,7 @@ This task includes the information for installing these CLIs and plug-ins:
 
 -   {{site.data.keyword.Bluemix_notm}} CLI version 0.5.0 or later
 -   {{site.data.keyword.containershort_notm}} plug-in
--   Kubernetes CLI version 1.7.4 or later
+-   Kubernetes CLI version 1.8.6 or later
 -   Optional: {{site.data.keyword.registryshort_notm}} plug-in
 -   Optional: Docker version 1.9 or later
 
@@ -71,7 +71,7 @@ To install the CLIs:
 
 4.  To view a local version of the Kubernetes dashboard and to deploy apps into your clusters, [install the Kubernetes CLI ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/tools/install-kubectl/). The prefix for running commands by using the Kubernetes CLI is `kubectl`.
 
-    1.  For complete functional compatibility, download the Kubernetes CLI version that matches the Kubernetes cluster version you plan to use. The current {{site.data.keyword.containershort_notm}} default Kubernetes version is 1.7.4.
+    1.  For complete functional compatibility, download the Kubernetes CLI version that matches the Kubernetes cluster version you plan to use. The current {{site.data.keyword.containershort_notm}} default Kubernetes version is 1.8.6.
 
         OS X:   [https://storage.googleapis.com/kubernetes-release/release/v1.7.4/bin/darwin/amd64/kubectl ![External link icon](../icons/launch-glyph.svg "External link icon")](https://storage.googleapis.com/kubernetes-release/release/v1.7.4/bin/darwin/amd64/kubectl)
 
@@ -143,7 +143,7 @@ For reference information about these CLIs, see the documentation for those tool
 ## Configuring the CLI to run `kubectl`
 {: #cs_cli_configure}
 
-You can use the commands that are provided with the Kubernetes CLI to manage clusters in {{site.data.keyword.Bluemix_notm}}. All `kubectl` commands that are available in Kubernetes 1.7.4 are supported for use with clusters in {{site.data.keyword.Bluemix_notm}}. After you create a cluster, set the context for your local CLI to that cluster with an environment variable. Then, you can run the Kubernetes `kubectl` commands to work with your cluster in {{site.data.keyword.Bluemix_notm}}.
+You can use the commands that are provided with the Kubernetes CLI to manage clusters in {{site.data.keyword.Bluemix_notm}}. All `kubectl` commands that are available in Kubernetes 1.8.6 are supported for use with clusters in {{site.data.keyword.Bluemix_notm}}. After you create a cluster, set the context for your local CLI to that cluster with an environment variable. Then, you can run the Kubernetes `kubectl` commands to work with your cluster in {{site.data.keyword.Bluemix_notm}}.
 {:shortdesc}
 
 Before you can run `kubectl` commands, [install the required CLIs](#cs_cli_install) and [create a cluster](cs_clusters.html#clusters_cli).
@@ -211,8 +211,8 @@ Before you can run `kubectl` commands, [install the required CLIs](#cs_cli_insta
       Example output:
 
       ```
-      Client Version: v1.7.4
-      Server Version: v1.7.4
+      Client Version: v1.8.6
+      Server Version: v1.8.6
       ```
       {: screen}
 
@@ -234,7 +234,7 @@ This task includes the information for updating these CLIs.
 
 -   {{site.data.keyword.Bluemix_notm}} CLI version 0.5.0 or later
 -   {{site.data.keyword.containershort_notm}} plug-in
--   Kubernetes CLI version 1.7.4 or later
+-   Kubernetes CLI version 1.8.6 or later
 -   {{site.data.keyword.registryshort_notm}} plug-in
 -   Docker version 1.9. or later
 
@@ -277,7 +277,7 @@ To update the CLIs:
         {: pre}
 
 4.  Update the Kubernetes CLI.
-    1.  Update to the Kubernetes CLI version that matches the Kubernetes cluster version you plan to use. The current {{site.data.keyword.containershort_notm}} default Kubernetes version is 1.7.4.
+    1.  Update to the Kubernetes CLI version that matches the Kubernetes cluster version you plan to use. The current {{site.data.keyword.containershort_notm}} default Kubernetes version is 1.8.6.
 
         OS X:   [https://storage.googleapis.com/kubernetes-release/release/v1.7.4/bin/darwin/amd64/kubectl ![External link icon](../icons/launch-glyph.svg "External link icon")](https://storage.googleapis.com/kubernetes-release/release/v1.7.4/bin/darwin/amd64/kubectl)
 
@@ -350,7 +350,7 @@ This task includes the information for removing these CLIs:
 
 
 -   {{site.data.keyword.containershort_notm}} plug-in
--   Kubernetes CLI version 1.7.4 or later
+-   Kubernetes CLI version 1.8.6 or later
 -   {{site.data.keyword.registryshort_notm}} plug-in
 -   Docker version 1.9. or later
 
