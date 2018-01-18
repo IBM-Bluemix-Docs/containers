@@ -468,7 +468,7 @@ For {{site.data.keyword.containershort_notm}}, the default owner of the volume m
 1.  Create a Dockerfile in a local directory. This example Dockerfile is creating a non-root user named `myguest`.
 
     ```
-    FROM registry.<region>.bluemix.net/ibmnode:latest
+    FROM registry.<region>.bluemix.net/ibmliberty:latest
 
     # Create group and user with GID & UID 1010.
     # In this case your are creating a group and user named myguest.

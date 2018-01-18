@@ -17,9 +17,9 @@ lastupdated: "2018-01-11"
 {:download: .download}
 
 
-# This page has moved!
+# The content that you are looking for moved.
 
-Find the topics here:
+Check out the latest information in its new location:
 - [Creating clusters with the GUI](cs_clusters.html#clusters_ui)
 - [Creating clusters with the CLI](cs_clusters.html#clusters_cli)
 - [Using private and public image registries](cs_images.html#images)
