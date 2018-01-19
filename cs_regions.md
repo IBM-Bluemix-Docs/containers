@@ -46,7 +46,7 @@ To check which {{site.data.keyword.Bluemix_notm}} region you are currently in, r
 
 {{site.data.keyword.Bluemix_notm}} regions can be accessed by specifying the API endpoint when you log in. If you do not specify a region, you are automatically logged in to the region that is closest to you.
 
-{{site.data.keyword.Bluemix_notm}} region API endpoints with example log in commands:
+{{site.data.keyword.Bluemix_notm}} region API endpoints with example login commands:
 
   * US South and US East
       ```
