@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-11"
+lastupdated: "2018-01-19"
 
 ---
 
@@ -131,18 +131,17 @@ A Kubernetes cluster is a set of worker nodes that are organized into a network.
 
 To create a cluster:
 1. In the catalog, select **Kubernetes Cluster**.
-2. Select a type of cluster plan. You can choose either **Lite** or **Pay-As-You-Go**. With the Pay-As-You-Go plan, you can provision a standard cluster with features like multiple worker nodes for a highly available environment.
-3. Configure your cluster details.
-    1. Give your cluster a name, choose a version of Kubernetes, and select a location in which to deploy. Select the location that is physically closest to you for the best performance. Keep in mind that you might require legal authorization before data can be physically stored in a foreign country if you select a location outside your country.
-    2. Select a type of machine and specify the number of worker nodes that you need. The machine type defines the amount of virtual CPU and memory that is set up in each worker node and made available to the containers.
-        - The micro machine type indicates the smallest option.
-        - A balanced machine has an equal amount of memory that is assigned to each CPU, which optimizes performance.
-        - By default, the host's Docker data is encrypted in the machine types. The `/var/lib/docker` directory, where all container data is stored, is encrypted with LUKS encryption. If the `disable-disk-encrypt` option is included during cluster creation, then the host's Docker data is not encrypted. [Learn more about the encryption.](cs_secure.html#encrypted_disks)
+2. Select a region in which to deploy your cluster.
+3. Select a type of cluster plan. You can choose either **Lite** or **Pay-As-You-Go**. With the Pay-As-You-Go plan, you can provision a standard cluster with features like multiple worker nodes for a highly available environment.
+4. Configure your cluster details.
+    1. Give your cluster a name, choose a version of Kubernetes, and select a location in which to deploy your cluster. For the best performance, select the location that is physically closest to you. Keep in mind that you might require legal authorization before data can be physically stored in a foreign country if you select a location that is outside your country.
+    2. Select a type of machine and specify the number of worker nodes that you need. The machine type defines the amount of virtual CPU, memory, and disk space that is set up in each worker node and made available to the containers.
     3. Select a Public and Private VLAN from your IBM Cloud infrastructure (SoftLayer) account. Both VLANs communicate between worker nodes but the public VLAN also communicates with the IBM-managed Kubernetes master. You can use the same VLAN for multiple clusters.
         **Note**: If you choose not to select a public VLAN, you must configure an alternative solution.
-    4. Select a type of hardware. Shared is a sufficient option for most situations.
-        - **Dedicated**: Ensure complete isolation of your physical resources.
-        - **Shared**: Allow storage of your physical resources on the same hardware as other IBM customers.
+    4. Select a type of hardware.
+        - **Dedicated**: Your worker nodes are hosted on infrastructure that is devoted to your account. Your resources are completely isolated.
+        - **Shared**: Infrastructure resources, such as the hypervisor and physical hardware, are distributed between you and other IBM customers, but each worker node is accessible only by you. Although this option is less expensive and sufficient in most cases, you might want to verify your performance and infrastructure requirements with your companies policies.
+    5. By default, **Encrypt local disk** is selected. If you choose to clear the check box, then the host's Docker data is not encrypted.[Learn more about the encryption](cs_secure.html#encrypted_disks).
 4. Click **Create cluster**. You can see the progress of the worker node deployment in the **Worker nodes** tab. When the deploy is done, you can see that your cluster is ready in the **Overview** tab.
     **Note:** Every worker node is assigned a unique worker node ID and domain name that must not be manually changed after the cluster is created. Changing the ID or domain name prevents the Kubernetes master from managing your cluster.
 
