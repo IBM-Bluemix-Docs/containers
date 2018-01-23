@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-11"
+lastupdated: "2018-01-22"
 
 ---
 
@@ -197,7 +197,7 @@ When you mount a secret volume to your pod, a file named binding is stored in th
 
 3.  Open your preferred editor.
 
-4.  Create a YAML file to configure a pod that can access the service details through a secret volume.
+4.  Create a YAML file to configure a pod that can access the service details through a secret volume. If you bound more than one service, verify that each secret is associated with the correct service.
 
     ```
     apiVersion: extensions/v1beta1
