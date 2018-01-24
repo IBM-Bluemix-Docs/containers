@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-18"
+lastupdated: "2018-01-24"
 
 ---
 
@@ -1356,6 +1356,8 @@ View a list of available machine types for your worker nodes. Each machine type 
 
 
 ### bx cs vlans LOCATION
+
+
 {: #cs_vlans}
 
 List the public and private VLANs that are available for a location in your IBM Cloud infrastructure (SoftLayer) account. To list available VLANs, you must have a paid account.
@@ -1365,6 +1367,7 @@ List the public and private VLANs that are available for a location in your IBM 
    <dl>
    <dt><code><em>LOCATION</em></code></dt>
    <dd>Enter the location where you want to list your private and public VLANs. This value is required. Review [available locations](cs_regions.html#locations).</dd>
+   
    </dl>
 
 **Example**:

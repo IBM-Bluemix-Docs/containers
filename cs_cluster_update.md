@@ -123,7 +123,7 @@ To update your worker nodes:
       </tr>
       <tr>
         <td><code>MaxUnavailablePercentage</code></td>
-        <td> The maximum amount of nodes that are allowed to be unavailable for a specified key, specified as a percentage. A node is unavailable when it is in the process of deploying, reloading, or provisioning. The queued worker nodes are blocked from upgrading if it exceeds any defined maximum available percentages. </td>
+        <td> The maximum amount of nodes that are allowed to be unavailable for a specified key, specified as a percentage. A node is unavailable when it is in the process of deploying, reloading, or provisioning. The queued worker nodes are blocked from upgrading if it exceeds any defined maximum unavailable percentages. </td>
       </tr>
       <tr>
         <td><code>NodeSelectorKey</code></td>
