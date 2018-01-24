@@ -22,10 +22,10 @@
        }
      }
    };
-  </script><!-- Licensed Materials - Property of IBM -->
-<!-- US Government Users Restricted Rights -->
-<!-- Use, duplication or disclosure restricted by -->
-<!-- GSA ADP Schedule Contract with IBM Corp. -->
+  </script>
+
+
+
 <link rel="stylesheet" type="text/css" href="./ibmdita.css">
 <title>Troubleshooting single and scalable containers</title>
 </head>
@@ -127,7 +127,7 @@ container to access the volume. </span> <ol type="a"><li>Create a new container 
 <li>Navigate to the volume mount path and review your log files. </li>
 </ol>
 </li>
-<li class="step stepexpand"><span class="cmd">If you need further support with debugging your containers, open a <a href="../support/index.html#contacting-support" rel="external" target="_blank" title="(Opens in a new tab or window)">support ticket</a>. </span></li>
+<li class="step stepexpand"><span class="cmd">If you need further support with debugging your containers, open a <a href="../get-support/howtogetsupport.html#getting-customer-support" rel="external" target="_blank" title="(Opens in a new tab or window)">support ticket</a>. </span></li>
 </ol>
 </div>
 <aside role="complementary" aria-labelledby="d81670e127"></aside></article><article class="topic concept nested1" role="article" aria-labelledby="d81670e391" lang="en-us" id="ts_ov_cli"><h2 class="topictitle2" id="d81670e391">Troubleshooting the CLI setup</h2>
@@ -1025,7 +1025,7 @@ Overflow posts tagged with boot2docker</a>.</p>
 determine whether an issue with the image exists, first verify that the image can be pushed to
 DockerHub. If no issue exists with the image, if possible, reduce the size of the image.</p>
 </dd>
-<dt class="dlterm"><a name="ki_images__image_size"><!-- --></a>An image's size in <span class="keyword">Cloud</span> does
+<dt class="dlterm"><a name="ki_images__image_size"></a>An image's size in <span class="keyword">Cloud</span> does
 match its size locally</dt>
 <dd><p><span class="ph" id="ki_images__image_size_ph">When you push an image to your private <span class="keyword">Cloud</span> registry, the size reported for the
 image is smaller than the size of the same image in your local Docker engine. The difference between
@@ -1075,13 +1075,13 @@ unit of measurement.</dd>
 data into the container and is counted toward a 64KB limit. When you create a container that exceeds
 this limit, you receive a message, <samp class="ph systemoutput">Resource CREATE failed... User data too
 large</samp>. If you see this message, remove a service from your container.</dd>
-<dt class="dlterm"><a name="ki_containers__port25"><!-- --></a>Port 25 is not available to expose in a container</dt>
+<dt class="dlterm"><a name="ki_containers__port25"></a>Port 25 is not available to expose in a container</dt>
 <dd>Port 25 is blocked from use by SoftLayer, which is part of the <span class="keyword">IBM
 Cloud Container Service</span> architecture. This issue affects the
 usage of some SMTP services in containers. For more information about why this port is blocked, see
 the article <a href="http://knowledgelayer.softlayer.com/content/outbound-email-port-25" rel="external" target="_blank" title="(Opens in a new tab or window)">Outbound Email on Port 25 </a> in the SoftLayer
 documentation.</dd>
-<dt class="dlterm"><a name="ki_containers__containerbuildingprocess"><!-- --></a>Container building or networking process does not complete</dt>
+<dt class="dlterm"><a name="ki_containers__containerbuildingprocess"></a>Container building or networking process does not complete</dt>
 <dd><div class="p">If a container remains in the building or networking state too long, you might need to remove the
 container and create a new container from the same image. You can use the following CLI <span class="ph"><samp class="ph codeph">bx ic</samp></span> commands:<ol><li><span class="ph">Retrieve a list of containers that are running in the space. By default,
 only running containers are displayed.</span> For
@@ -1127,10 +1127,10 @@ Overflow</a> and tag your question with <samp class="ph codeph">ibm-bluemix</sam
 <li>For questions about the service and getting started instructions, use the <a href="https://developer.ibm.com/answers/topics/containers/?smartspace=bluemix" rel="external" target="_blank" title="(Opens in a new tab or window)">IBM developerWorks dW Answers</a> forum. Include the <samp class="ph codeph">bluemix</samp>
 and <samp class="ph codeph">containers</samp> tags.</li>
 </ul>
-See <a href="../support/index.html#getting-help" rel="external" target="_blank" title="(Opens in a new tab or window)">Getting
+See <a href="../get-support/howtogetsupport.html#using-avatar" rel="external" target="_blank" title="(Opens in a new tab or window)">Getting
 help</a> for more details about using the forums.</li>
 <li>Contact IBM Support. For information about opening an IBM
-support ticket, or about support levels and ticket severities, see <a href="../support/index.html#contacting-support" rel="external" target="_blank" title="(Opens in a new tab or window)">Contacting
+support ticket, or about support levels and ticket severities, see <a href="../get-support/howtogetsupport.html#getting-customer-support" rel="external" target="_blank" title="(Opens in a new tab or window)">Contacting
 support</a>.</li>
 </ul>
 </div>
