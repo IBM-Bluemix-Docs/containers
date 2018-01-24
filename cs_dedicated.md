@@ -372,7 +372,7 @@ Before you begin: Configure the routing of network traffic into and out of your 
     bx cs cluster-user-subnet-add <cluster_name> <subnet_CIDR> <private_VLAN>
     ```
     {: pre}
-    Replace <em>&lt;cluster_name&gt;</em> with the name or ID of your cluster, <em>&lt;subnet_CIDR&&gt;</em> with one of the subnet CIDRs that you provided in the support ticket, and <em>&lt;private_VLAN&gt;</em> with an available private VLAN ID. You can find the ID of an available private VLAN by running `bx cs vlans`.
+    Replace <em>&lt;cluster_name&gt;</em> with the name or ID of your cluster, <em>&lt;subnet_CIDR&gt;</em> with one of the subnet CIDRs that you provided in the support ticket, and <em>&lt;private_VLAN&gt;</em> with an available private VLAN ID. You can find the ID of an available private VLAN by running `bx cs vlans`.
 
 3. Verify that the subnets were added to your cluster. The field **User-managed** for user-provided subnets is _true_.
 
