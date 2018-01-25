@@ -22,10 +22,10 @@
        }
      }
    };
-  </script><!-- Licensed Materials - Property of IBM -->
-<!-- US Government Users Restricted Rights -->
-<!-- Use, duplication or disclosure restricted by -->
-<!-- GSA ADP Schedule Contract with IBM Corp. -->
+  </script>
+
+
+
 <link rel="stylesheet" type="text/css" href="./ibmdita.css">
 <title>Storing persistent data in the IBM Cloud Container Service for single and scalable containers</title>
 </head>
@@ -502,14 +502,14 @@ access container and app-related files. To store files in a file share, you must
 volume and save the data into this volume.</span></span>
 </div>
 <div class="section prereq"><div class="p"><div class="steps note"><span class="notetitle">Note:</span> If you have already reached your maximum quota limits, you can
-request to add extra quota by opening a <a href="../support/index.html#contacting-support"><span class="keyword">Cloud</span> support
+request to add extra quota by opening a <a href="../get-support/howtogetsupport.html#getting-customer-support"><span class="keyword">Cloud</span> support
 ticket</a>.</div>
 </div>
 </div><div class="section context"><p>Since containers in <span class="keyword">Cloud</span> do not
 have access to the local host, volumes are mounted on provisioned NFS file shares. The volumes on a
 file share are similar to directories on a host computer. Both file shares and volumes are unique
 per space, so a container must be created in the same space to access the persistent data on the
-volume. For more on setting up organizations and spaces, see <a href="../admin/orgs_spaces.html">Managing IBM Cloud Public</a>. Upon the first creation of a volume in
+volume. For more on setting up organizations and spaces, see <a href="../account/orgs_spaces.html#orgsspacesusers">Managing IBM Cloud Public</a>. Upon the first creation of a volume in
 an organization, a file share of 20 GB and 4 IOPS is provisioned automatically to host the volume.
 To meet the performance needs for the data, the organization manager can create new <a href="http://knowledgelayer.softlayer.com/topic/endurance-storage" rel="external" target="_blank" title="(Opens in a new tab or window)">file shares sizes</a> from 20 GB to 12 TB and at IOPS per GB of 0.25, 2 or
 4.</p>
@@ -569,7 +569,7 @@ billing.<div class="p"><ol><li>Click on the user avatar.</li>
 <li>Expand your organization by clicking the <span class="ph uicontrol">+</span> button.</li>
 <li>Select <span class="ph uicontrol">Usage Dashboard</span> and review the usage and billing details. </li>
 </ol>
-<span class="ph">For more information, go to <span class="ph"><a href="../pricing/manage_billing.html#managebillingitems">Managing your account</a></span>.</span></div>
+<span class="ph">For more information, go to <span class="ph"><a href="../billing-usage/manage_billing.html#viewbilling">Managing your account</a></span>.</span></div>
 </div></div>
 <aside role="complementary" aria-labelledby="d87435e1869"></aside><article class="topic task nested2" role="article" aria-labelledby="d87435e2106" lang="en-us" id="container_fileshares_adding_cli"><h3 class="topictitle3" id="d87435e2106">Adding file shares with the command line interface (CLI)</h3>
 <div class="body taskbody"><div class="abstract"><p></p>
@@ -609,7 +609,7 @@ billing.<div class="p"><ol><li>Click on the user avatar.</li>
 <li>Expand your organization by clicking the <span class="ph uicontrol">+</span> button.</li>
 <li>Select <span class="ph uicontrol">Usage Dashboard</span> and review the usage and billing details. </li>
 </ol>
-<span class="ph">For more information, go to <span class="ph"><a href="../pricing/manage_billing.html#managebillingitems">Managing your account</a></span>.</span></div>
+<span class="ph">For more information, go to <span class="ph"><a href="../billing-usage/manage_billing.html#viewbilling">Managing your account</a></span>.</span></div>
 </div></div>
 <aside role="complementary" aria-labelledby="d87435e2106"></aside></article><article class="topic task nested2" role="article" aria-labelledby="d87435e2284" lang="en-us" id="container_filestorage_managing"><h3 class="topictitle3" id="d87435e2284"> Removing file shares</h3>
 <div class="body taskbody"><p class="shortdesc">An organization manager can remove existing file shares and view which volumes are
