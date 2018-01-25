@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-11"
+lastupdated: "2018-01-24"
 
 ---
 
@@ -92,7 +92,7 @@ In most cases, the default policies do not need to be changed. Only advanced sce
 Before you begin:
 
 1.  [Install the {{site.data.keyword.containershort_notm}} and Kubernetes CLIs.](cs_cli_install.html#cs_cli_install)
-2.  [Create a lite or standard cluster.](cs_clusters.html#clusters_ui)
+2.  [Create a free or standard cluster.](cs_clusters.html#clusters_ui)
 3.  [Target the Kubernetes CLI to the cluster](cs_cli_install.html#cs_cli_configure). Include the `--admin` option with the `bx cs cluster-config` command, which is used to download the certificates and permission files. This download also includes the keys for the Super User role, which you need to run Calico commands.
 
   ```
@@ -137,7 +137,7 @@ To add network policies:
         calicoctl version
         ```
         {: pre}
-        
+
     4.  If corporate network policies prevent access from your local system to public endpoints via proxies or firewalls, see [Running `calicoctl` commands from behind a firewall](cs_firewall.html#firewall) for instructions on how to allow TCP access for Calico commands.
 
 2.  Configure the Calico CLI.

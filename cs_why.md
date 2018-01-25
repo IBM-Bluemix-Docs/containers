@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-11"
+lastupdated: "2018-01-24"
 
 ---
 
@@ -41,13 +41,13 @@ Clusters are deployed on compute hosts that provide native Kubernetes and {{site
 <br />
 
 
-## Comparison of lite and standard clusters
+## Comparison of free and standard clusters
 {: #cluster_types}
 
-You can create lite or standard clusters. Try out lite clusters to get familiar and test a few Kubernetes capabilities, or create standard clusters to use the full capabilities of Kubernetes to deploy apps.
+You can create free or standard clusters. Try out free clusters to get familiar and test a few Kubernetes capabilities, or create standard clusters to use the full capabilities of Kubernetes to deploy apps.
 {:shortdesc}
 
-|Characteristics|Lite clusters|Standard clusters|
+|Characteristics|Free clusters|Standard clusters|
 |---------------|-------------|-----------------|
 |[Available in {{site.data.keyword.Bluemix_notm}}](cs_why.html)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
 |[In-cluster networking](cs_secure.html#in_cluster_network)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|

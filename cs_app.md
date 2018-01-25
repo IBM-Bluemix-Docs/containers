@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-11"
+lastupdated: "2018-01-24"
 
 ---
 
@@ -127,7 +127,7 @@ For more detail, review the options for <a href="cs_clusters.html#planning_clust
 ### Minimal app deployment
 {: #minimal_app_deployment}
 
-A basic app deployment in a lite or standard cluster might include the following components.
+A basic app deployment in a free or standard cluster might include the following components.
 {:shortdesc}
 
 ![Deployment setup](images/cs_app_tutorial_components1.png)

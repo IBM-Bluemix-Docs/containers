@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-12"
+lastupdated: "2018-01-24"
 
 ---
 
@@ -22,11 +22,11 @@ lastupdated: "2018-01-12"
 When you create a cluster, every cluster must be connected to a public VLAN. The public VLAN determines the public IP address that is assigned to a worker node during cluster creation.
 {:shortdesc}
 
-The public network interface for the worker nodes in both lite and standard clusters is protected by Calico network policies. These policies block most inbound traffic by default. However, inbound traffic that is necessary for Kubernetes to function is allowed, as are connections to NodePort, Loadbalancer, and Ingress services. For more information about these policies, inlcuding how to modify them, see [Network policies](cs_network_policy.html#network_policies).
+The public network interface for the worker nodes in both free and standard clusters is protected by Calico network policies. These policies block most inbound traffic by default. However, inbound traffic that is necessary for Kubernetes to function is allowed, as are connections to NodePort, Loadbalancer, and Ingress services. For more information about these policies, inlcuding how to modify them, see [Network policies](cs_network_policy.html#network_policies).
 
 |Cluster type|Manager of the public VLAN for the cluster|
 |------------|------------------------------------------|
-|Lite clusters in {{site.data.keyword.Bluemix_notm}}|{{site.data.keyword.IBM_notm}}|
+|Free clusters in {{site.data.keyword.Bluemix_notm}}|{{site.data.keyword.IBM_notm}}|
 |Standard clusters in {{site.data.keyword.Bluemix_notm}}|You in your IBM Cloud infrastructure (SoftLayer) account|
 {: caption="VLAN management responsibilities" caption-side="top"}
 
@@ -42,10 +42,10 @@ To make an app publicly available to the internet, you must update your configur
 
 ![{{site.data.keyword.containerlong_notm}} Kubernetes architecture](images/networking.png)
 
-The diagram shows how Kubernetes carries user network traffic in {{site.data.keyword.containershort_notm}}. Depending on whether you created a lite or a standard cluster, different ways exist to make your app accessible from the internet.
+The diagram shows how Kubernetes carries user network traffic in {{site.data.keyword.containershort_notm}}. Depending on whether you created a free or a standard cluster, different ways exist to make your app accessible from the internet.
 
 <dl>
-<dt><a href="#nodeport" target="_blank">NodePort service</a> (lite and standard clusters)</dt>
+<dt><a href="#nodeport" target="_blank">NodePort service</a> (free and standard clusters)</dt>
 <dd>
  <ul>
   <li>Expose a public port on every worker node and use the public IP address of any worker node to publicly access your service in the cluster.</li>

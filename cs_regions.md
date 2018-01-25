@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-23"
+lastupdated: "2018-01-24"
 
 ---
 
@@ -115,7 +115,7 @@ Locations are data centers that are available within a region.
   | US East      | mon01, tor01, wdc06, wdc07        | Montreal, Toronto, Washington DC |
   | US South     | dal10, dal12, dal13       | Dallas |
 
-**Note**: Milan (mil01) is available for lite clusters only.
+**Note**: Milan (mil01) is available for free clusters only.
 
 ### Using container service API commands
 {: #container_api}

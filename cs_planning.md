@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-10"
+lastupdated: "2018-01-24"
 
 ---
 
@@ -18,7 +18,7 @@ lastupdated: "2018-01-10"
 # The content that you are looking for moved
 
 Check out the latest information in its new location:
- - [Comparison of lite and standard clusters](cs_why.html#cluster_types)
+ - [Comparison of free and standard clusters](cs_why.html#cluster_types)
  - [Cluster configuration](cs_clusters.html#planning_clusters)
  - [Worker node configuration](cs_clusters.html#planning_worker_nodes)
  - [Cluster management responsibilities](cs_why.html#responsibilities)

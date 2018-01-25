@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-12"
+lastupdated: "2018-01-24"
 
 ---
 
@@ -25,7 +25,7 @@ Make your app available to internet access by using the public IP address of any
 ## Configuring public access to an app by using the NodePort service type
 {: #config}
 
-You can expose your app as a Kubernetes NodePort service for lite or standard clusters.
+You can expose your app as a Kubernetes NodePort service for free or standard clusters.
 {:shortdesc}
 
 **Note:** The public IP address of a worker node is not permanent. If the worker node must be re-created, a new public IP address is assigned to the worker node. If you need a stable public IP address and more availability for your service, expose your app by using a [LoadBalancer service](cs_loadbalancer.html) or [Ingress](cs_ingress.html).

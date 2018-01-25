@@ -41,20 +41,20 @@ So you want to deploy an app in container? Hold on! Start by creating a Kubernet
 
 And what is a cluster? A cluster is a set of resources, worker nodes, networks, and storage devices that keep apps highly available. After you have your cluster, then you can deploy your apps in containers.
 
-[Before you begin, you must have a Pay-As-You-Go or Subscription {{site.data.keyword.Bluemix_notm}} account to create a lite cluster.](https://console.bluemix.net/registration/)
+[Before you begin, you must have a Pay-As-You-Go or Subscription {{site.data.keyword.Bluemix_notm}} account to create a free cluster.](https://console.bluemix.net/registration/)
 
 
-To create a lite cluster:
+To create a free cluster:
 
 1.  From the [**catalog** ![External link icon](../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net/catalog/?category=containers), in the **Containers** category, click **Kubernetes cluster**.
 
-2.  Enter a **Cluster Name**. The default cluster type is lite. Next time, you can create a standard cluster and define additional customizations, like how many worker nodes are in the cluster.
+2.  Enter a **Cluster Name**. The default cluster type is free. Next time, you can create a standard cluster and define additional customizations, like how many worker nodes are in the cluster.
 
 3.  Click **Create Cluster**. The details for the cluster open, but the worker node in the cluster takes a few minutes to provision. You can see the status of the worker node in the **Worker nodes** tab. When the status reaches `Ready`, your worker node is ready to be used.
 
 Good work! You created your first cluster!
 
-*   The lite cluster has one worker node with 2 CPU and 4 GB memory available for your apps to use.
+*   The free cluster has one worker node with 2 CPU and 4 GB memory available for your apps to use.
 *   The worker node is centrally monitored and managed by a dedicated and highly available {{site.data.keyword.IBM_notm}}-owned Kubernetes master that controls and monitors all of the Kubernetes resources in the cluster. You can focus on your worker node and the apps that are deployed in the worker node without worrying about managing this master too.
 *   The resources that are required to run the cluster, such as VLANS and IP addresses, are managed in an {{site.data.keyword.IBM_notm}}-owned IBM Cloud infrastructure (SoftLayer) account. When you create a standard cluster, you manage these resources in your own IBM Cloud infrastructure (SoftLayer) account. You can learn more about these resources when you create a standard cluster.
 

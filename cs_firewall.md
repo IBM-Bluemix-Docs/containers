@@ -169,7 +169,7 @@ Before you begin, allow access to run [`bx` commands](#firewall_bx) and [`kubect
 ## Allowing the cluster to access infrastructure resources and other services
 {: #firewall_outbound}
 
-Let your cluster access infrastructure resources and services from behind a firewall, such as for {{.site.data.keyword.containershort_notm}} regions, {{site.data.keyword.registrylong_notm}}, {{site.data.keyword.monitoringlong_notm}}, {{site.data.keyword.loganalysislong_notm}}, IBM Cloud infrastructure (SoftLayer) private IPs, and egress for persistent volume claims.
+Let your cluster access infrastructure resources and services from behind a firewall, such as for {{site.data.keyword.containershort_notm}} regions, {{site.data.keyword.registrylong_notm}}, {{site.data.keyword.monitoringlong_notm}}, {{site.data.keyword.loganalysislong_notm}}, IBM Cloud infrastructure (SoftLayer) private IPs, and egress for persistent volume claims.
 {:shortdesc}
 
   1.  Note the public IP address for all your worker nodes in the cluster.
@@ -225,7 +225,7 @@ Let your cluster access infrastructure resources and services from behind a fire
 
   3.  Allow outgoing network traffic from the worker nodes to [{{site.data.keyword.registrylong_notm}} regions](/docs/services/Registry/registry_overview.html#registry_regions):
       - `TCP port 443 FROM <each_worker_node_publicIP> TO <registry_publicIP>`
-      - Replace <em>&lt;registry_publicIP&gt;</em> with the registry IP addresses to which you want to allow traffic. The international registry stores IBM-provided public images, and regional registries store your own private or public images.
+      - Replace <em>&lt;registry_publicIP&gt;</em> with the registry IP addresses to which you want to allow traffic. The global registry stores IBM-provided public images, and regional registries store your own private or public images.
         <p>
 <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
       <thead>
@@ -235,7 +235,7 @@ Let your cluster access infrastructure resources and services from behind a fire
       </thead>
       <tbody>
         <tr>
-          <td>International registry across container regions</td>
+          <td>Global registry across container regions</td>
           <td>registry.bluemix.net</td>
           <td><code>169.60.72.144/28</code><br><code>169.61.76.176/28</code></td>
         </tr>
