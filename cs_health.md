@@ -583,96 +583,96 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
     {:codeblock}
 
 
-    <table summary="Understanding the Config Map Components">
-    <caption>Understanding the config map components</caption>
-      <thead>
-        <th colspan=2><img src="images/idea.png"/>Understanding the config map components</th>
-      </thead>
-      <tbody>
-       <tr>
-          <td><code>name</code></td>
-          <td>The configuration name <code>ibm-worker-recovery-checks</code> is a constant and cannot be changed.</td>
-       </tr>
-       <tr>
-          <td><code>namespace</code></td>
-          <td>The <code>kube-system</code> namespace is a constant and cannot be changed.</td>
-       </tr>
-      <tr>
-          <td><code>checkhttp.json</code></td>
-          <td>Defines an HTTP check that checks that an HTTP server is running on every node's IP address on port 80 and returns a 200 response at path <code>/myhealth</code>. You can find the IP address for a node by running <code>kubectl get nodes</code>.
-               For example, consider two nodes in a cluster that have IP adresses of 10.10.10.1 and 10.10.10.2. In this example, two routes are checked for 200 OK responses: <code>http://10.10.10.1:80/myhealth</code> and <code>http://10.10.10.2:80/myhealth</code>.
-               The check in the above example YAML runs every 3 minutes. If it fails 3 consecutive times, the node is rebooted. This action is equivalent to running <code>bx cs worker-reboot</code>. The HTTP check is disabled until you set the <b>Enabled</b> field to <code>true</code>.</td>
-        </tr>
-        <tr>
-          <td><code>checknode.json</code></td>
-          <td>Defines a Kubernetes API node check that checks whether each node is in the <code>Ready</code> state. The check for a specific node counts as a failure if the node is not in the <code>Ready</code> state.
-               The check in the above example YAML runs every 3 minutes. If it fails 3 consecutive times, the node is reloaded. This action is equivalent to running <code>bx cs worker-reload</code>. The node check is enabled until you set the <b>Enabled</b> field to <code>false</code> or remove the check.</td>
-        </tr>
-        <tr>
-          <td><code>checkpod.json</code></td>
-          <td>Defines a Kubernetes API pod check that checks the total percentage of <code>NotReady</code> pods on a node based on the total pods assigned to that node. The check for a specific node counts as a failure if the total percentage of <code>NotReady</code> pods is greater than the defined <code>PodFailureThresholdPercent</code>.
-               The check in the above example YAML runs every 3 minutes. If it fails 3 consecutive times, the node is reloaded. This action is equivalent to running <code>bx cs worker-reload</code>. The pod check is enabled until you set the <b>Enabled</b> field to <code>false</code> or remove the check.</td>
-        </tr>
-      </tbody>
-    </table>
+<table summary="Understanding the Config Map Components">
+<caption>Understanding the config map components</caption>
+<thead>
+<th colspan=2><img src="images/idea.png"/>Understanding the config map components</th>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>The configuration name <code>ibm-worker-recovery-checks</code> is a constant and cannot be changed.</td>
+</tr>
+<tr>
+<td><code>namespace</code></td>
+<td>The <code>kube-system</code> namespace is a constant and cannot be changed.</td>
+</tr>
+<tr>
+<td><code>checkhttp.json</code></td>
+<td>Defines an HTTP check that checks that an HTTP server is running on every node's IP address on port 80 and returns a 200 response at path <code>/myhealth</code>. You can find the IP address for a node by running <code>kubectl get nodes</code>.
+For example, consider two nodes in a cluster that have IP adresses of 10.10.10.1 and 10.10.10.2. In this example, two routes are checked for 200 OK responses: <code>http://10.10.10.1:80/myhealth</code> and <code>http://10.10.10.2:80/myhealth</code>.
+The check in the above example YAML runs every 3 minutes. If it fails 3 consecutive times, the node is rebooted. This action is equivalent to running <code>bx cs worker-reboot</code>. The HTTP check is disabled until you set the <b>Enabled</b> field to <code>true</code>.</td>
+</tr>
+<tr>
+<td><code>checknode.json</code></td>
+<td>Defines a Kubernetes API node check that checks whether each node is in the <code>Ready</code> state. The check for a specific node counts as a failure if the node is not in the <code>Ready</code> state.
+The check in the above example YAML runs every 3 minutes. If it fails 3 consecutive times, the node is reloaded. This action is equivalent to running <code>bx cs worker-reload</code>. The node check is enabled until you set the <b>Enabled</b> field to <code>false</code> or remove the check.</td>
+</tr>
+<tr>
+<td><code>checkpod.json</code></td>
+<td>Defines a Kubernetes API pod check that checks the total percentage of <code>NotReady</code> pods on a node based on the total pods assigned to that node. The check for a specific node counts as a failure if the total percentage of <code>NotReady</code> pods is greater than the defined <code>PodFailureThresholdPercent</code>.
+The check in the above example YAML runs every 3 minutes. If it fails 3 consecutive times, the node is reloaded. This action is equivalent to running <code>bx cs worker-reload</code>. The pod check is enabled until you set the <b>Enabled</b> field to <code>false</code> or remove the check.</td>
+</tr>
+</tbody>
+</table>
 
 
-    <table summary="Understanding the Components of Individual Rules">
-    <caption>Understanding the components of individual rules</caption>
-      <thead>
-        <th colspan=2><img src="images/idea.png"/>Understanding the individual rule components </th>
-      </thead>
-      <tbody>
-       <tr>
-           <td><code>Check</code></td>
-           <td>Enter the type of check that you want Autorecovery to use. <ul><li><code>HTTP</code>: Autorecovery calls HTTP servers that run on each node to determine whether the nodes are running properly.</li><li><code>KUBEAPI</code>: Autorecovery calls the Kubernetes API server and reads the health status data reported by the worker nodes.</li></ul></td>
-           </tr>
-       <tr>
-           <td><code>Resource</code></td>
-           <td>When the check type is <code>KUBEAPI</code>, enter the type of resource that you want Autorecovery to check. Accepted values are <code>NODE</code> or <code>PODS</code>.</td>
-           </tr>
-       <tr>
-           <td><code>FailureThreshold</code></td>
-           <td>Enter the threshold for the number of consecutive failed checks. When this threshold is met, Autorecovery triggers the specified corrective action. For example, if the value is 3 and Autorecovery fails a configured check three consecutive times, Autorecovery triggers the corrective action that is associated with the check.</td>
-       </tr>
-       <tr>
-           <td><code>PodFailureThresholdPercent</code></td>
-           <td>When the resource type is <code>PODS</code>, enter the threshold for the percentage of pods on a worker node that can be in a [NotReady ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#define-readiness-probes) state. This percentage is based on the total number of pods that are scheduled to a worker node. When a check determines that the percentage of unhealthy pods is greater than the threshold, the check counts as one failure.</td>
-           </tr>
-        <tr>
-            <td><code>CorrectiveAction</code></td>
-            <td>Enter the action to run when the failure threshold is met. A corrective action runs only while no other workers are being repaired and when this worker node is not in a cool-off period from a previous action. <ul><li><code>REBOOT</code>: Reboots the worker node.</li><li><code>RELOAD</code>: Reloads all of the necessary configurations for the worker node from a clean OS.</li></ul></td>
-            </tr>
-        <tr>
-            <td><code>CooloffSeconds</code></td>
-            <td>Enter the number of seconds Autorecovery must wait to issue another corrective action for a node that was already issued a corrective action. The cooloff period starts at the time a corrective action is issued.</td>
-            </tr>
-        <tr>
-            <td><code>IntervalSeconds</code></td>
-            <td>Enter the number of seconds in between consecutive checks. For example, if the value is 180, Autorecovery runs the check on each node every 3 minutes.</td>
-            </tr>
-        <tr>
-            <td><code>TimeoutSeconds</code></td>
-            <td>Enter the maximum number of seconds that a check call to the database takes before Autorecovery terminates the call operation. The value for <code>TimeoutSeconds</code> must be less than the value for <code>IntervalSeconds</code>.</td>
-            </tr>
-        <tr>
-            <td><code>Port</code></td>
-            <td>When the check type is <code>HTTP</code>, enter the port that the HTTP server must bind to on the worker nodes. This port must be exposed on the IP of every worker node in the cluster. Autorecovery requires a constant port number across all nodes for checking servers. Use [DaemonSets ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)when deploying a custom server into a cluster.</td>
-            </tr>
-        <tr>
-            <td><code>ExpectedStatus</code></td>
-            <td>When the check type is <code>HTTP</code>, enter the HTTP server status that you expect to be returned from the check. For example, a value of 200 indicates that you expect an <code>OK</code> response from the server.</td>
-            </tr>
-        <tr>
-            <td><code>Route</code></td>
-            <td>When the check type is <code>HTTP</code>, enter the path that is requested from the HTTP server. This value is typically the metrics path for the server that is running on all of the worker nodes.</td>
-            </tr>
-        <tr>
-            <td><code>Enabled</code></td>
-            <td>Enter <code>true</code> to enable the check or <code>false</code> to disable the check.</td>
-            </tr>
-      </tbody>
-    </table>
+<table summary="Understanding the Components of Individual Rules">
+<caption>Understanding the components of individual rules</caption>
+<thead>
+<th colspan=2><img src="images/idea.png"/>Understanding the individual rule components </th>
+</thead>
+<tbody>
+<tr>
+<td><code>Check</code></td>
+<td>Enter the type of check that you want Autorecovery to use. <ul><li><code>HTTP</code>: Autorecovery calls HTTP servers that run on each node to determine whether the nodes are running properly.</li><li><code>KUBEAPI</code>: Autorecovery calls the Kubernetes API server and reads the health status data reported by the worker nodes.</li></ul></td>
+</tr>
+<tr>
+<td><code>Resource</code></td>
+<td>When the check type is <code>KUBEAPI</code>, enter the type of resource that you want Autorecovery to check. Accepted values are <code>NODE</code> or <code>PODS</code>.</td>
+</tr>
+<tr>
+<td><code>FailureThreshold</code></td>
+<td>Enter the threshold for the number of consecutive failed checks. When this threshold is met, Autorecovery triggers the specified corrective action. For example, if the value is 3 and Autorecovery fails a configured check three consecutive times, Autorecovery triggers the corrective action that is associated with the check.</td>
+</tr>
+<tr>
+<td><code>PodFailureThresholdPercent</code></td>
+<td>When the resource type is <code>PODS</code>, enter the threshold for the percentage of pods on a worker node that can be in a [NotReady ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#define-readiness-probes) state. This percentage is based on the total number of pods that are scheduled to a worker node. When a check determines that the percentage of unhealthy pods is greater than the threshold, the check counts as one failure.</td>
+</tr>
+<tr>
+<td><code>CorrectiveAction</code></td>
+<td>Enter the action to run when the failure threshold is met. A corrective action runs only while no other workers are being repaired and when this worker node is not in a cool-off period from a previous action. <ul><li><code>REBOOT</code>: Reboots the worker node.</li><li><code>RELOAD</code>: Reloads all of the necessary configurations for the worker node from a clean OS.</li></ul></td>
+</tr>
+<tr>
+<td><code>CooloffSeconds</code></td>
+<td>Enter the number of seconds Autorecovery must wait to issue another corrective action for a node that was already issued a corrective action. The cooloff period starts at the time a corrective action is issued.</td>
+</tr>
+<tr>
+<td><code>IntervalSeconds</code></td>
+<td>Enter the number of seconds in between consecutive checks. For example, if the value is 180, Autorecovery runs the check on each node every 3 minutes.</td>
+</tr>
+<tr>
+<td><code>TimeoutSeconds</code></td>
+<td>Enter the maximum number of seconds that a check call to the database takes before Autorecovery terminates the call operation. The value for <code>TimeoutSeconds</code> must be less than the value for <code>IntervalSeconds</code>.</td>
+</tr>
+<tr>
+<td><code>Port</code></td>
+<td>When the check type is <code>HTTP</code>, enter the port that the HTTP server must bind to on the worker nodes. This port must be exposed on the IP of every worker node in the cluster. Autorecovery requires a constant port number across all nodes for checking servers. Use [DaemonSets ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/)when deploying a custom server into a cluster.</td>
+</tr>
+<tr>
+<td><code>ExpectedStatus</code></td>
+<td>When the check type is <code>HTTP</code>, enter the HTTP server status that you expect to be returned from the check. For example, a value of 200 indicates that you expect an <code>OK</code> response from the server.</td>
+</tr>
+<tr>
+<td><code>Route</code></td>
+<td>When the check type is <code>HTTP</code>, enter the path that is requested from the HTTP server. This value is typically the metrics path for the server that is running on all of the worker nodes.</td>
+</tr>
+<tr>
+<td><code>Enabled</code></td>
+<td>Enter <code>true</code> to enable the check or <code>false</code> to disable the check.</td>
+</tr>
+</tbody>
+</table>
 
 2. Create the configuration map in your cluster.
 
@@ -688,7 +688,7 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
     ```
     {: pre}
 
-4. Ensure that you created a Docker pull secret with the name `international-registry-docker-secret` in the `kube-system` namespace. Autorecovery is hosted in {{site.data.keyword.registryshort_notm}}'s international Docker registry. If you have not created a Docker registry secret that contains valid credentials for the international registry, create one to run the Autorecovery system.
+4. Ensure that you created a Docker pull secret with the name `international-registry-docker-secret` in the `kube-system` namespace. Autorecovery is hosted in {{site.data.keyword.registryshort_notm}}'s global Docker registry. If you have not created a Docker registry secret that contains valid credentials for the global registry, create one to run the Autorecovery system.
 
     1. Install the {{site.data.keyword.registryshort_notm}} plug-in.
 
@@ -697,28 +697,28 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
         ```
         {: pre}
 
-    2. Target the international registry.
+    2. Target the global registry.
 
         ```
-        bx cr region-set international
-        ```
-        {: pre}
-
-    3. Create an international registry token.
-
-        ```
-        bx cr token-add --non-expiring --description internationalRegistryToken
+        bx cr region-set global
         ```
         {: pre}
 
-    4. Set the `INTERNATIONAL_REGISTRY_TOKEN` environment variable to the token you created.
+    3. Create a registry token for the global registry.
 
         ```
-        INTERNATIONAL_REGISTRY_TOKEN=$(bx cr token-get $(bx cr tokens | grep internationalRegistryToken | awk '{print $1}') -q)
+        bx cr token-add --non-expiring --description globalRegistryToken
         ```
         {: pre}
 
-    5. Set the `DOCKER_EMAIL` environment variable to the current user. You email address is needed only to run the `kubectl` command in the next step.
+    4. Set the `GLOBAL_REGISTRY_TOKEN` environment variable to the token you created.
+
+        ```
+        GLOBAL_REGISTRY_TOKEN=$(bx cr token-get $(bx cr tokens | grep globalRegistryToken | awk '{print $1}') -q)
+        ```
+        {: pre}
+
+    5. Set the `DOCKER_EMAIL` environment variable to the current user. Your email address is needed only to run the `kubectl` command in the next step.
 
         ```
         DOCKER_EMAIL=$(bx target | grep "User" | awk '{print $2}')
@@ -728,7 +728,7 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
     6. Create the Docker pull secret.
 
         ```
-        kubectl -n kube-system create secret docker-registry international-registry-docker-secret --docker-username=token --docker-password="$INTERNATIONAL_REGISTRY_TOKEN" --docker-server=registry.bluemix.net --docker-email="$DOCKER_EMAIL"
+        kubectl -n kube-system create secret docker-registry international-registry-docker-secret --docker-username=token --docker-password="$GLOBAL_REGISTRY_TOKEN" --docker-server=registry.bluemix.net --docker-email="$DOCKER_EMAIL"
         ```
         {: pre}
 

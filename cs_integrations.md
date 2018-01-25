@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-11"
+lastupdated: "2018-01-22"
 
 ---
 
@@ -91,12 +91,12 @@ Add an existing {{site.data.keyword.Bluemix_notm}} service instance to your clus
 Before you begin:
 
 1. [Target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
-2. [Request an instance of the {{site.data.keyword.Bluemix_notm}} service](/docs/manageapps/reqnsi.html#req_instance).
+2. [Request an instance of the {{site.data.keyword.Bluemix_notm}} service](/docs/apps/reqnsi.html#req_instance).
    **Note:** To create an instance of a service in the Washington DC location, you must use the CLI.
 
 **Note:**
 <ul><ul>
-<li>You can only add {{site.data.keyword.Bluemix_notm}} services that support service keys. If the service does not support service keys, see [Enabling external apps to use {{site.data.keyword.Bluemix_notm}} services](/docs/manageapps/reqnsi.html#accser_external).</li>
+<li>You can only add {{site.data.keyword.Bluemix_notm}} services that support service keys. If the service does not support service keys, see [Enabling external apps to use {{site.data.keyword.Bluemix_notm}} services](/docs/apps/reqnsi.html#accser_external).</li>
 <li>The cluster and the worker nodes must be deployed fully before you can add a service.</li>
 </ul></ul>
 
@@ -197,7 +197,7 @@ When you mount a secret volume to your pod, a file named binding is stored in th
 
 3.  Open your preferred editor.
 
-4.  Create a YAML file to configure a pod that can access the service details through a secret volume.
+4.  Create a YAML file to configure a pod that can access the service details through a secret volume. If you bound more than one service, verify that each secret is associated with the correct service.
 
     ```
     apiVersion: extensions/v1beta1
