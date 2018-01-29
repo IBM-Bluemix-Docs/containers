@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-29"
+lastupdated: "2018-01-24"
 
 ---
 
@@ -237,7 +237,7 @@ To create a cluster:
     4.  Run the `cluster-create` command. You can choose between a free cluster, which includes one worker node set up with 2vCPU and 4GB memory, or a standard cluster, which can include as many worker nodes as you choose in your IBM Cloud infrastructure (SoftLayer) account. When you create a standard cluster, by default, the worker node disks are encrypted, its hardware is shared by multiple IBM customers, and it is billed by hours of usage. </br>Example for a standard cluster:
 
         ```
-        bx cs cluster-create --location dal10 --machine-type u2c.2x4 --hardware <shared_or_dedicated> --public-vlan <public_vlan_id> --private-vlan <private_vlan_id> --workers 3 --name <cluster_name> --kube-version <major.minor.patch>
+        bx cs cluster-create --location dal10 --machine-type u2c.2x4 --hardware <shared_or_dedicated> --public-vlan <public_vlan_id> --private-vlan <private_vlan_id> --workers 3 --name <cluster_name> --kube-version <major.minor.patch> 
         ```
         {: pre}
 
@@ -410,7 +410,7 @@ You can view the current cluster state by running the `bx cs clusters` command a
 |-------------|------|
 
 |Critical|The Kubernetes master cannot be reached or all worker nodes in the cluster are down. <ol><li>List the worker nodes in your cluster.<pre class="pre"><code>bx cs workers &lt;cluser_name_or_id&gt;</code></pre><li>Get the details for each worker node.<pre class="pre"><code>bx cs worker-get &lt;worker_id&gt;</code></pre></li><li>Review the <strong>State</strong> and <strong>Status</strong> fields to find the root problem for why the worker node is down.<ul><li>If the worker node state shows <strong>Provision_failed</strong>, you might not have the required permissions to provision a worker node from the IBM Cloud infrastructure (SoftLayer) portfolio. To find the required permissions, see [Configure access to the IBM Cloud infrastructure (SoftLayer) portfolio to create standard Kubernetes clusters](cs_infrastructure.html#unify_accounts).</li><li>If the worker node state shows <strong>Critical</strong> and the status shows <strong>Not Ready</strong>, then your worker node might not be able to connect to IBM Cloud infrastructure (SoftLayer). Start troubleshooting by running <code>bx cs worker-reboot --hard CLUSTER WORKER</code> first. If that command is unsuccessful, then run <code>bx cs worker reload CLUSTER WORKER</code>.</li><li>If the worker node state shows <strong>Critical</strong> and the status shows <strong>Out of disk</strong>, then your worker node ran out of capacity. You can either reduce work load on your worker node or add a worker node to your cluster to help load balance the work load.</li><li>If the worker node state shows <strong>Critical</strong> and the status shows <strong>Unknown</strong>, then the Kubernetes master is not available. Contact {{site.data.keyword.Bluemix_notm}} support by opening an [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/get-support/howtogetsupport.html#using-avatar).</li></ul></li></ol>|
-
+ 
 |Deploying|The Kubernetes master is not fully deployed yet. You cannot access your cluster.|
 |Normal|All worker nodes in a cluster are up and running. You can access the cluster and deploy apps to the cluster.|
 |Pending|The Kubernetes master is deployed. The worker nodes are being provisioned and are not available in the cluster yet. You can access the cluster, but you cannot deploy apps to the cluster.|

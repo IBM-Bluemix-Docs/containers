@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-29"
+lastupdated: "2018-01-25"
 
 ---
 
@@ -327,7 +327,7 @@ When you mount a secret volume to your pod, a file named binding is stored in th
     ```
     {: screen}
 
-
+    
 
 9.  When implementing your app, configure it to find the secret file named **binding** in the mount directory, parse the JSON content and determine the URL and service credentials to access your {{site.data.keyword.Bluemix_notm}} service.
 
@@ -415,3 +415,4 @@ To use Weave Scope with a cluster:
 [Learn more about the Weave Scope features ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.weave.works/docs/scope/latest/features/).
 
 <br />
+
