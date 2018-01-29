@@ -55,30 +55,34 @@ Review the options to debug your clusters and find the root causes for failures.
     <th>Description</th>
     </thead>
     <tbody>
+  
+  <tr>
+      <td>Critical</td>
+      <td>The Kubernetes master cannot be reached or all worker nodes in the cluster are down.</td>
+     </tr>
+  
       <tr>
         <td>Deploying</td>
         <td>The Kubernetes master is not fully deployed yet. You cannot access your cluster.</td>
        </tr>
        <tr>
-        <td>Pending</td>
-        <td>The Kubernetes master is deployed. The worker nodes are being provisioned and are not available in the cluster yet. You can access the cluster, but you cannot deploy apps to the cluster.</td>
-      </tr>
-      <tr>
         <td>Normal</td>
         <td>All worker nodes in a cluster are up and running. You can access the cluster and deploy apps to the cluster.</td>
      </tr>
+       <tr>
+        <td>Pending</td>
+        <td>The Kubernetes master is deployed. The worker nodes are being provisioned and are not available in the cluster yet. You can access the cluster, but you cannot deploy apps to the cluster.</td>
+      </tr>
+  
      <tr>
         <td>Warning</td>
         <td>At least one worker node in the cluster is not available, but other worker nodes are available and can take over the workload.</td>
-     </tr>
-     <tr>
-      <td>Critical</td>
-      <td>The Kubernetes master cannot be reached or all worker nodes in the cluster are down.</td>
-     </tr>
+     </tr>  
     </tbody>
   </table>
 
-3.  If your cluster is in a **Warning** or **Critical** state, or is stuck in the **Pending** state for a long time, review the state of your worker nodes. If your cluster is in a **Deploying** state, wait until your cluster is fully deployed to review the health of your cluster. Clusters in a **Normal** state are considered healthy and do not require an action at the moment.
+3.  If your cluster is in a **Warning**, **Critical** or **Delete failed** state, or is stuck in the **Pending** state for a long time, review the state of your worker nodes. If your cluster is in a **Deploying** state, wait until your cluster is fully deployed to review the health of your cluster. Clusters in a **Normal** state do not require an action at the moment.  
+To review the state of your worker nodes: 
 
   ```
   bx cs workers <cluster_name_or_id>
@@ -572,7 +576,7 @@ Review the following reasons why logs are not appearing and the corresponding tr
  </tr>
  <tr>
  <td>The log storage quota has been hit.</td>
- <td>To increase your log storage limits, see the <a href="/docs/services/CloudLogAnalysis/troubleshooting/error_msgs.html#error_msgs">{{site.data.keyword.loganalysislong_notm}} documentation</a>.</td>
+ <td>To increase your log storage limits, see the <a href="/docs/services/CloudLogAnalysis/troubleshooting/error_msgs.html">{{site.data.keyword.loganalysislong_notm}} documentation</a>.</td>
  </tr>
  <tr>
  <td>If you specified a space at cluster creation, the account owner does not have Manager, Developer, or Auditor permissions to that space.</td>
