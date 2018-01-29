@@ -877,7 +877,7 @@ kube-version: <em>&lt;kube-version&gt;</em>
 
 **Examples**:
 
-
+  
 
   Example for a standard cluster:
   {: #example_cluster_create}
@@ -1336,7 +1336,7 @@ Remove IBM Cloud infrastructure (SoftLayer) account credentials from your {{site
 
 View a list of available machine types for your worker nodes. Each machine type includes the amount of virtual CPU, memory, and disk space for each worker node in the cluster.
 - By default, the host's Docker data is encrypted in the machine types. The `/var/lib/docker` directory, where all container data is stored, is encrypted with LUKS encryption. If the `disable-disk-encrypt` option is included during cluster creation, then the host's Docker data is not encrypted. [Learn more about the encryption.](cs_secure.html#encrypted_disks)
-- Machine types with `u2c` or `b2c` in the name use local disk instead of storage area networing (SAN) for reliability. Reliability benefits include higher throughput when serializing bytes to the local disk and reduced file system degradation due to network failures. These machine types contain 25GB local disk storage for the OS file system and 100GB local disk storage for `/var/lib/docker`, the directory that all the container data is written to.
+- Machine types with `u2c` or `b2c` in the name use local disk instead of storage area networking (SAN) for reliability. Reliability benefits include higher throughput when serializing bytes to the local disk and reduced file system degradation due to network failures. These machine types contain 25GB local disk storage for the OS file system and 100GB local disk storage for `/var/lib/docker`, the directory that all the container data is written to.
 - Machine types with `u1c` or `b1c` in the name are deprecated, such as `u1c.2x4`. To start using `u2c` and `b2c` machine types, use the `bx cs worker-add` command to add  worker nodes with the updated machine type. Then, remove the worker nodes that are using the deprecated machine types by using the `bx cs worker-rm` command.
 </p>
 
@@ -1354,7 +1354,7 @@ View a list of available machine types for your worker nodes. Each machine type 
   ```
   {: pre}
 
-### bx cs vlans LOCATION
+### bx cs vlans LOCATION 
 {: #cs_vlans}
 
 List the public and private VLANs that are available for a location in your IBM Cloud infrastructure (SoftLayer) account. To list available VLANs, you must have a paid account.
@@ -1364,7 +1364,7 @@ List the public and private VLANs that are available for a location in your IBM 
    <dl>
    <dt><code><em>LOCATION</em></code></dt>
    <dd>Enter the location where you want to list your private and public VLANs. This value is required. Review [available locations](cs_regions.html#locations).</dd>
-
+   
    </dl>
 
 **Example**:
