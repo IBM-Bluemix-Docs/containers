@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-24"
+lastupdated: "2018-01-25"
 
 ---
 
@@ -32,13 +32,29 @@ You can use various external services and services in the {{site.data.keyword.Bl
 </thead>
 <tbody>
 <tr>
+<td>Aqua Security</td>
+  <td>As a supplement to <a href="/docs/services/va/va_index.html" target="_blank">Vulnerability Advisor</a>, you can use <a href="https://www.aquasec.com/" target="_blank">Aqua Security <img src="../icons/launch-glyph.svg" alt="External link icon"></a> to improve the security of container deployments by reducing what your app is allowed to do. For more information, see <a href="https://www.ibm.com/blogs/bluemix/2017/06/protecting-container-deployments-bluemix-aqua-security/" target="_blank">Protecting container deployments on {{site.data.keyword.Bluemix_notm}} with Aqua Security <img src="../icons/launch-glyph.svg" alt="External link icon"></a>. </td>
+</tr>
+<tr>
 <td>Blockchain</td>
 <td>Deploy a publicly available development environment for IBM Blockchain to a Kubernetes cluster in {{site.data.keyword.containerlong_notm}}. Use this environment to develop and customize your own blockchain network to deploy apps that share an immutable ledger for recording the history of transactions. For more information, see <a href="https://ibm-blockchain.github.io" target="_blank">Develop in a cloud sandbox
 IBM Blockchain Platform <img src="../icons/launch-glyph.svg" alt="External link icon"></a>. </td>
 </tr>
 <tr>
-<td>Continuous Delivery</td>
+<td>Codeship</td>
+<td>You can use <a href="https://codeship.com" target="_blank">Codeship <img src="../icons/launch-glyph.svg" alt="External link icon"></a> for the continuous integration and delivery of containers. For more information, see <a href="https://www.ibm.com/blogs/bluemix/2017/10/using-codeship-pro-deploy-workloads-ibm-container-service/" target="_blank">Using Codeship Pro To Deploy Workloads to {{site.data.keyword.containershort_notm}} <img src="../icons/launch-glyph.svg" alt="External link icon"></a>. </td>
+</tr>
+<tr>
+<td>{{site.data.keyword.contdelivery_short}}</td>
 <td>Automate your app builds and container deployments to Kubernetes clusters by using a toolchain. For setup information, see the blog <a href="https://developer.ibm.com/recipes/tutorials/deploy-kubernetes-pods-to-the-bluemix-container-service-using-devops-pipelines/" target="_blank">Deploy Kubernetes pods to the {{site.data.keyword.containerlong_notm}} using DevOps Pipelines <img src="../icons/launch-glyph.svg" alt="External link icon"></a>. </td>
+</tr>
+<tr>
+<td>CoScale</td>
+<td>Monitor worker nodes, containers, replica sets, replication controllers, and services with <a href="https://www.coscale.com/" target="_blank">CoScale <img src="../icons/launch-glyph.svg" alt="External link icon"></a>. For more information, see <a href="https://www.ibm.com/blogs/bluemix/2017/06/monitoring-ibm-bluemix-container-service-coscale/" target="_blank">Monitoring {{site.data.keyword.containershort_notm}} with CoScale <img src="../icons/launch-glyph.svg" alt="External link icon"></a>. </td>
+</tr>
+<tr>
+<td>Datadog</td>
+<td>Monitor your cluster and view infrastructure and application performance metrics with <a href="https://www.datadoghq.com/" target="_blank">Datadog <img src="../icons/launch-glyph.svg" alt="External link icon"></a>. For more information, see <a href="https://www.ibm.com/blogs/bluemix/2017/07/monitoring-ibm-bluemix-container-service-datadog/" target="_blank">Monitoring {{site.data.keyword.containershort_notm}} with Datadog <img src="../icons/launch-glyph.svg" alt="External link icon"></a>. </td>
 </tr>
 <tr>
 <td>Helm</td>
@@ -46,11 +62,15 @@ IBM Blockchain Platform <img src="../icons/launch-glyph.svg" alt="External link 
 </tr>
 <tr>
 <td>Instana</td>
-<td> <a href="https://www.instana.com/" target="_blank">Instana <img src="../icons/launch-glyph.svg" alt="External link icon"></a> provides infrastructure and app performance monitoring with a GUI that automatically discovers and maps your apps. In addition, Istana captures every request to your apps, which lets you troubleshoot and perform root cause analysis to prevent the problems from happening again. Check out the blog post about <a href="https://www.instana.com/blog/precise-visibility-applications-ibm-bluemix-container-service/" target="_blank">deploying Istana in {{site.data.keyword.containershort_notm}} <img src="../icons/launch-glyph.svg" alt="External link icon"></a> to learn more.</td>
+<td> <a href="https://www.instana.com/" target="_blank">Instana <img src="../icons/launch-glyph.svg" alt="External link icon"></a> provides infrastructure and app performance monitoring with a GUI that automatically discovers and maps your apps. Istana captures every request to your apps, which lets you troubleshoot and perform root cause analysis to prevent the problems from happening again. Check out the blog post about <a href="https://www.instana.com/blog/precise-visibility-applications-ibm-bluemix-container-service/" target="_blank">deploying Istana in {{site.data.keyword.containershort_notm}} <img src="../icons/launch-glyph.svg" alt="External link icon"></a> to learn more.</td>
 </tr>
 <tr>
 <td>Istio</td>
 <td><a href="https://www.ibm.com/cloud/info/istio" target="_blank">Istio<img src="../icons/launch-glyph.svg" alt="External link icon"></a> is an open source service that gives developers a way to connect, secure, manage, and monitor a network of microservices, also known a service mesh, on cloud orchestration platforms like Kubernetes. Check out the blog post about <a href="https://developer.ibm.com/dwblog/2017/istio/" target="_blank">how IBM co-founded and launched Istio<img src="../icons/launch-glyph.svg" alt="External link icon"></a> to find out more about the open-source project. To install Istio on your Kubernetes cluster in {{site.data.keyword.containershort_notm}} and get started with a sample app, see [Tutorial: Managing microservices with Istio](cs_tutorials_istio.html#istio_tutorial).</td>
+</tr>
+<tr>
+<td>NeuVector</td>
+<td>Protect containers with a cloud-native firewall by using <a href="https://neuvector.com/" target="_blank">NeuVector <img src="../icons/launch-glyph.svg" alt="External link icon"></a>. For more information, see <a href="https://www.ibm.com/us-en/marketplace/neuvector-container-security" target="_blank">NeuVector Container Security <img src="../icons/launch-glyph.svg" alt="External link icon"></a>. </td>
 </tr>
 <tr>
 <td>Prometheus</td>
@@ -69,6 +89,18 @@ IBM Blockchain Platform <img src="../icons/launch-glyph.svg" alt="External link 
 <tr>
 <td>{{site.data.keyword.bpshort}}</td>
 <td>{{site.data.keyword.bplong}} is an automation tool that uses Terraform to deploy your infrastructure as code. When you deploy your infrastructure as a single unit, you can reuse those cloud resource definitions across any number of environments. To define a Kubernetes cluster as a resource with {{site.data.keyword.bpshort}}, try creating an environment with the [container-cluster template](https://console.bluemix.net/schematics/templates/details/Cloud-Schematics%2Fcontainer-cluster). For more information about Schematics, see [About {{site.data.keyword.bplong_notm}}](/docs/services/schematics/schematics_overview.html#about).</td>
+</tr>
+<tr>
+<td>Sematext</td>
+<td>View metrics and logs for your containerized applications by using <a href="https://sematext.com/" target="_blank">Sematext <img src="../icons/launch-glyph.svg" alt="External link icon"></a>. For more information, see <a href="https://www.ibm.com/blogs/bluemix/2017/09/monitoring-logging-ibm-bluemix-container-service-sematext/" target="_blank">Monitoring & logging for containers with Sematext <img src="../icons/launch-glyph.svg" alt="External link icon"></a>. </td>
+</tr>
+<tr>
+<td>Sysdig</td>
+<td>Capture app, container, statsd, and host metrics with a single instrumentation point by using <a href="https://sysdig.com/" target="_blank">Sysdig <img src="../icons/launch-glyph.svg" alt="External link icon"></a>. For more information, see <a href="https://www.ibm.com/blogs/bluemix/2017/08/monitoring-ibm-bluemix-container-service-sysdig-container-intelligence/" target="_blank">Monitoring {{site.data.keyword.containershort_notm}} with Sysdig Container Intelligence <img src="../icons/launch-glyph.svg" alt="External link icon"></a>. </td>
+</tr>
+<tr>
+<td>Twistlock</td>
+<td>As a supplement to <a href="/docs/services/va/va_index.html" target="_blank">Vulnerability Advisor</a>, you can use <a href="https://www.twistlock.com/" target="_blank">Twistlock <img src="../icons/launch-glyph.svg" alt="External link icon"></a> to manage firewalls, threat protection, and incident response. For more information, see <a href="https://www.ibm.com/blogs/bluemix/2017/07/twistlock-ibm-bluemix-container-service/" target="_blank">Twistlock on {{site.data.keyword.containershort_notm}} <img src="../icons/launch-glyph.svg" alt="External link icon"></a>. </td>
 </tr>
 <tr>
 <td>Weave Scope</td>
