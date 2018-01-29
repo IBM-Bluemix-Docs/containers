@@ -358,25 +358,7 @@ From the previous tutorial, you have an account and a cluster with one worker no
 
     You can give this URL to a co-worker to try or enter it in your cell phone's browser, so that you can see that the Hello World app really is publicly available.
 
-12. Launch your Kubernetes dashboard with the default port 8001.
-    1.  Set the proxy with the default port number.
-
-        ```
-        kubectl proxy
-        ```
-         {: pre}
-
-        ```
-        Starting to serve on 127.0.0.1:8001
-        ```
-        {: screen}
-
-    2.  Open the following URL in a web browser to see the Kubernetes dashboard.
-
-        ```
-        http://localhost:8001/ui
-        ```
-         {: pre}
+12. [Launch the Kubernetes dashboard](cs_app.html#cli_dashboard). Note that the steps differ depending on your version of Kubernetes.
 
 13. In the **Workloads** tab, you can see the resources that you created. When you are done exploring the Kubernetes dashboard, use CTRL+C to exit the `proxy` command.
 
