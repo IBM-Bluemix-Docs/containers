@@ -6,7 +6,7 @@ lastupdated: "2017-01-29"
 
 ---
 
-{:new_window: target="blank"}
+{:new_window: target="_blank"}
 {:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
@@ -52,7 +52,6 @@ This tutorial is intended for software developers and network administrators who
 -  A Pay-As-You-Go or Subscription [{{site.data.keyword.Bluemix_notm}} account ![External link icon](../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net/registration/)
 
 
-
 ## Lesson 1: Creating a cluster and setting up the CLI
 {: #cs_cluster_tutorial_lesson1}
 
@@ -73,7 +72,7 @@ The following CLIs and their prerequisites are used to manage clusters through t
 -   Docker CLI
 
 </br>
-To install the CLIs:
+To install the CLIs and their prerequisites:
 
 1.  As a prerequisite for the {{site.data.keyword.containershort_notm}} plug-in, install the [{{site.data.keyword.Bluemix_notm}} CLI ![External link icon](../icons/launch-glyph.svg "External link icon")](https://clis.ng.bluemix.net/ui/home.html). To run {{site.data.keyword.Bluemix_notm}} CLI commands, use the prefix `bx`.
 2.  Follow the prompts to select an account and an {{site.data.keyword.Bluemix_notm}} organization. Clusters are specific to an account, but are independent from an {{site.data.keyword.Bluemix_notm}} organization or space.
@@ -143,8 +142,7 @@ To install the CLIs:
 
 Congratulations! You've successfully installed the CLIs for the following lessons and tutorials. Next, set up your cluster environment and add the {{site.data.keyword.toneanalyzershort}} service.
 
-
-## Lesson 2: Setting up your cluster environment
+## Lesson 2: Setting up your private registry
 {: #cs_cluster_tutorial_lesson2}
 
 Set up a private image repository in {{site.data.keyword.registryshort_notm}} and add secrets to your cluster so that the app can access the {{site.data.keyword.toneanalyzershort}} service.
@@ -160,7 +158,7 @@ Set up a private image repository in {{site.data.keyword.registryshort_notm}} an
 
 2.  Set up your own private image repository in {{site.data.keyword.registryshort_notm}} to securely store and share Docker images with all cluster users. A private image repository in {{site.data.keyword.Bluemix_notm}} is identified by a namespace. The namespace is used to create a unique URL to your image repository that developers can use to access private Docker images.
 
-    In this example, the PR firm wants to create only one image repository in {{site.data.keyword.registryshort_notm}}, so they choose _pr_firm_ as their namespace to group all images in their account. Replace _&lt;your_namespace&gt;_ with a namespace of your choice and not something that is related to the tutorial.
+    In this example, the PR firm wants to create only one image repository in {{site.data.keyword.registryshort_notm}}, so they choose _pr_firm_ as their namespace to group all images in their account. Replace _&lt;your_namespace&gt;_ with a namespace of your choice that is unrelated to the tutorial.
 
     ```
     bx cr namespace-add <your_namespace>
@@ -174,7 +172,7 @@ Set up a private image repository in {{site.data.keyword.registryshort_notm}} an
     ```
      {: pre}
 
-    When the provisioning of your worker node is completed, the status changes to **Ready** and you can start binding {{site.data.keyword.Bluemix_notm}} services to use in a future tutorial.
+    When your worker node is finished provisioning, the status changes to **Ready** and you can start binding {{site.data.keyword.Bluemix_notm}} services.
 
     ```
     ID                                                 Public IP       Private IP       Machine Type   State    Status
@@ -182,86 +180,93 @@ Set up a private image repository in {{site.data.keyword.registryshort_notm}} an
     ```
     {: screen}
 
-4.  Set the context for your cluster in your CLI. Every time you log in to the container CLI to work with clusters, you must run these commands to set the path to the cluster's configuration file as a session variable. The Kubernetes CLI uses this variable to find a local configuration file and certificates that are necessary to connect with the cluster in {{site.data.keyword.Bluemix_notm}}.
+## Lesson 3: Setting up your cluster environment
+{: #cs_cluster_tutorial_lesson3}
 
-    1.  Get the command to set the environment variable and download the Kubernetes configuration files.
+Set the context for your cluster in your CLI. Every time you log in to the container CLI to work with clusters, you must run these commands to set the path to the cluster's configuration file as a session variable. The Kubernetes CLI uses this variable to find a local configuration file and certificates that are necessary to connect with the cluster in {{site.data.keyword.Bluemix_notm}}.
 
-        ```
-        bx cs cluster-config <cluster_name>
-        ```
-        {: pre}
+1.  Get the command to set the environment variable and download the Kubernetes configuration files.
 
-        When the download of the configuration files is finished, a command is displayed that you can use to set the path to the local Kubernetes configuration file as an environment variable.
+    ```
+    bx cs cluster-config <cluster_name>
+    ```
+    {: pre}
 
-        Example for OS X:
+    When the download of the configuration files is finished, a command is displayed that you can use to set the path to the local Kubernetes configuration file as an environment variable.
 
-        ```
-        export KUBECONFIG=/Users/<user_name>/.bluemix/plugins/container-service/clusters/pr_firm_cluster/kube-config-prod-par02-pr_firm_cluster.yml
-        ```
-        {: screen}
+    Example for OS X:
 
-    2.  Copy and paste the command that is displayed in your terminal to set the `KUBECONFIG` environment variable.
+    ```
+    export KUBECONFIG=/Users/<user_name>/.bluemix/plugins/container-service/clusters/pr_firm_cluster/kube-config-prod-par02-pr_firm_cluster.yml
+    ```
+    {: screen}
 
-    3.  Verify that the `KUBECONFIG` environment variable is set properly.
+2.  Copy and paste the command that is displayed in your terminal to set the `KUBECONFIG` environment variable.
 
-        Example for OS X:
+3.  Verify that the `KUBECONFIG` environment variable is set properly.
 
-        ```
-        echo $KUBECONFIG
-        ```
-        {: pre}
+    Example for OS X:
 
-        Output:
+    ```
+    echo $KUBECONFIG
+    ```
+    {: pre}
 
-        ```
-        /Users/<user_name>/.bluemix/plugins/container-service/clusters/pr_firm_cluster/kube-config-prod-par02-pr_firm_cluster.yml
-        ```
-        {: screen}
+    Output:
 
-    4.  Verify that the `kubectl` commands run properly with your cluster by checking the Kubernetes CLI server version.
+    ```
+    /Users/<user_name>/.bluemix/plugins/container-service/clusters/pr_firm_cluster/kube-config-prod-par02-pr_firm_cluster.yml
+    ```
+    {: screen}
 
-        ```
-        kubectl version  --short
-        ```
-        {: pre}
+4.  Verify that the `kubectl` commands run properly with your cluster by checking the Kubernetes CLI server version.
 
-        Example output:
+    ```
+    kubectl version  --short
+    ```
+    {: pre}
 
-        ```
-        Client Version: v1.8.6
-        Server Version: v1.8.6
-        ```
-        {: screen}
+    Example output:
 
-5.  Add the {{site.data.keyword.toneanalyzershort}} service to the cluster. With {{site.data.keyword.Bluemix_notm}} services, you can take advantage of already developed functionality in your apps. Any {{site.data.keyword.Bluemix_notm}} service that is bound to the cluster can be used by any app that is deployed in that cluster. Repeat the following steps for every {{site.data.keyword.Bluemix_notm}} service that you want to use with your apps.
-    1.  Add the {{site.data.keyword.toneanalyzershort}} service to your {{site.data.keyword.Bluemix_notm}} account.
+    ```
+    Client Version: v1.8.6
+    Server Version: v1.8.6
+    ```
+    {: screen}
 
-        **Note:** When you add the {{site.data.keyword.toneanalyzershort}} service to your account, a message is displayed that the service is not free. If you limit your API call, this tutorial does not incur charges from the {{site.data.keyword.watson}} service. [Review the pricing information for the {{site.data.keyword.watson}} {{site.data.keyword.toneanalyzershort}} service ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/watson/developercloud/tone-analyzer.html#pricing-block).
+## Lesson 4: Adding a service to your cluster
+{: #cs_cluster_tutorial_lesson4}
 
-        ```
-        bx service create tone_analyzer standard <mytoneanalyzer>
-        ```
-        {: pre}
+With {{site.data.keyword.Bluemix_notm}} services, you can take advantage of already developed functionality in your apps. Any {{site.data.keyword.Bluemix_notm}} service that is bound to the cluster can be used by any app that is deployed in that cluster. Repeat the following steps for every {{site.data.keyword.Bluemix_notm}} service that you want to use with your apps.
 
-    2.  Bind the {{site.data.keyword.toneanalyzershort}} instance to the `default` Kubernetes namespace for the cluster. Later, you can create your own namespaces to manage user access to Kubernetes resources, but for now, use the `default` namespace. Kubernetes namespaces are different from the registry namespace you created earlier.
+1.  Add the {{site.data.keyword.toneanalyzershort}} service to your {{site.data.keyword.Bluemix_notm}} account.
 
-        ```
-        bx cs cluster-service-bind <cluster_name> default <mytoneanalyzer>
-        ```
-        {: pre}
+    **Note:** When you add the {{site.data.keyword.toneanalyzershort}} service to your account, a message is displayed that the service is not free. If you limit your API call, this tutorial does not incur charges from the {{site.data.keyword.watson}} service. [Review the pricing information for the {{site.data.keyword.watson}} {{site.data.keyword.toneanalyzershort}} service ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/watson/developercloud/tone-analyzer.html#pricing-block).
 
-        Output:
+    ```
+    bx service create tone_analyzer standard <mytoneanalyzer>
+    ```
+    {: pre}
 
-        ```
-        bx cs cluster-service-bind <cluster_name> default <mytoneanalyzer>
-        Binding service instance to namespace...
-        OK
-        Namespace:	default
-        Secret name:	binding-mytoneanalyzer
-        ```
-        {: screen}
+2.  Bind the {{site.data.keyword.toneanalyzershort}} instance to the `default` Kubernetes namespace for the cluster. Later, you can create your own namespaces to manage user access to Kubernetes resources, but for now, use the `default` namespace. Kubernetes namespaces are different from the registry namespace you created earlier.
 
-6.  Verify that the Kubernetes secret was created in your cluster namespace. Every {{site.data.keyword.Bluemix_notm}} service is defined by a JSON file that includes confidential information about the service, such as the user name, password and URL that the container uses to access the service. To securely store this information, Kubernetes secrets are used. In this example, the secret includes the credentials for accessing the instance of the {{site.data.keyword.watson}} {{site.data.keyword.toneanalyzershort}} that is provisioned in your account.
+    ```
+    bx cs cluster-service-bind <cluster_name> default <mytoneanalyzer>
+    ```
+    {: pre}
+
+    Output:
+
+    ```
+    bx cs cluster-service-bind <cluster_name> default <mytoneanalyzer>
+    Binding service instance to namespace...
+    OK
+    Namespace:	default
+    Secret name:	binding-mytoneanalyzer
+    ```
+    {: screen}
+
+3.  Verify that the Kubernetes secret was created in your cluster namespace. Every {{site.data.keyword.Bluemix_notm}} service is defined by a JSON file that includes confidential information about the service, such as the user name, password and URL that the container uses to access the service. To securely store this information, Kubernetes secrets are used. In this example, the secret includes the credentials for accessing the instance of the {{site.data.keyword.watson}} {{site.data.keyword.toneanalyzershort}} that is provisioned in your account.
 
     ```
     kubectl get secrets --namespace=default
