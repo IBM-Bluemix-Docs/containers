@@ -1,0 +1,40 @@
+---
+
+copyright:
+  years: 2014, 2018
+lastupdated: "2018-01-24"
+
+---
+
+{:new_window: target="_blank"}
+{:shortdesc: .shortdesc}
+{:screen: .screen}
+{:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
+
+
+# High availability for {{site.data.keyword.containerlong_notm}}
+{: #hadr}
+
+High availability (HA) is a core discipline in an IT infrastructure to keep your apps up and running, even after a partial or full site failure. The main target of HA is to eliminate potential fault domains in an IT infrastructure, for example, by adding redundancy and setting up failover mechanisms. Simply put, high availability is the process in which a system is supposed to take over when another system stops working efficiently or at all.  For IT, this must occur with as minimal downtime as possible—so minimal that most users don’t even know there was a problem.  Data loss must also be negligible; 
+
+HA can be achieved on different levels in your IT infrastructure and within different components of your cluster. The level of HA that is right for you depends on your business requirements and the Service Level Agreements that you have with your customers.  
+
+## Overview of potential fault domains in {{site.data.keyword.containerlong_notm}}
+{: #fault_domains}
+
+The following image shows how you can achieve high availability for a stateful app in a single {{site.data.keyword.containerlong_notm}} region. By setting up multiple clusters within a region, you can protect your app from potential fault domains that are marked with an 'X'. Both clusters share data via the IBM Cloud Cloudant database service, so that one cluster can take over the workload without a downtime in case an entire data center is not reachable. 
+
+<img src="images/cs_cluster_ha.png" style="height: 100px; border-style: none;" height="500" align="left" alt="Overview of fault domains in a high availability cluster within an {{site.data.keyword.containershort_notm}} region."/>
+
+<p></p>
+
+|#|Fault domain name|Description|Link to docs
+|---|---|---|---|
+1|Container or pod failure|Containers and pods are, by design, short-lived and can fail unexpectedly. For example, a container or pod might crash if an error occurs in your app. To make your app highly available, you must ensure that you have enough instances of your app to handle the workload plus additional instances to failover. Ideally, these instances are distributed across multiple worker nodes to protect yourself from a worker node failure.|[Highly available apps](cs_app.html#highly_available_apps).|
+2|Worker node failure|A worker node is a VM that is running on top of a physical hardware. Failures include hardware outages, like for example power, cooling, or networking, and issues on the VM itself. You can account for a worker node failure by setting up multiple worker nodes in your cluster. <br/><br/>**Note**: Worker nodes in one data center are not guaranteed to be on separate physical compute hosts. For example, you might have a cluster with 3 worker nodes. All 3 worker nodes were created on the same physical compute host in this data center. If this physical compute host goes down, all your worker nodes are down. To protect against this failure, you must set up a second cluster in a different data center.|
+3|Cluster failure|
+
