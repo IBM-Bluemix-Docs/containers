@@ -21,9 +21,9 @@ lastupdated: "2018-01-24"
 
 [{{site.data.keyword.Bluemix_notm}} regions](#bluemix_regions) differ from [{{site.data.keyword.containershort_notm}} regions](#container_regions).
 
-![{{site.data.keyword.containershort_notm}} regions and datacenters](/images/regions.png)
+![{{site.data.keyword.containershort_notm}} regions and data centers](/images/regions.png)
 
-Figure 1. {{site.data.keyword.containershort_notm}} regions and datacenters
+Figure 1. {{site.data.keyword.containershort_notm}} regions and data centers
 
 Supported {{site.data.keyword.containershort_notm}} regions:
   * AP North
