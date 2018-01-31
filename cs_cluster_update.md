@@ -119,7 +119,7 @@ To update your worker nodes:
       </tr>
       <tr>
         <td><code>zonecheck.json</code></br><code>regioncheck.json</code></td>
-        <td> Examples of unique keys for which you want to set rules. The names of the keys can be anything you want them to be; the information is parsed by the configurations set within the key. For each key that you define, you can set only one value for <code>NodeSelectorKey</code> and <code>NodeSelectorValue</code>. If you want to set rules for more than one region, or location (datacenter), create a new key entry. </td>
+        <td> Examples of unique keys for which you want to set rules. The names of the keys can be anything you want them to be; the information is parsed by the configurations set within the key. For each key that you define, you can set only one value for <code>NodeSelectorKey</code> and <code>NodeSelectorValue</code>. If you want to set rules for more than one region, or location (data center), create a new key entry. </td>
       </tr>
       <tr>
         <td><code>MaxUnavailablePercentage</code></td>
