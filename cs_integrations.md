@@ -66,7 +66,7 @@ IBM Blockchain Platform <img src="../icons/launch-glyph.svg" alt="External link 
 </tr>
 <tr>
 <td>Istio</td>
-<td><a href="https://www.ibm.com/cloud/info/istio" target="_blank">Istio<img src="../icons/launch-glyph.svg" alt="External link icon"></a> is an open source service that gives developers a way to connect, secure, manage, and monitor a network of microservices, also known a service mesh, on cloud orchestration platforms like Kubernetes. Check out the blog post about <a href="https://developer.ibm.com/dwblog/2017/istio/" target="_blank">how IBM co-founded and launched Istio<img src="../icons/launch-glyph.svg" alt="External link icon"></a> to find out more about the open-source project. To install Istio on your Kubernetes cluster in {{site.data.keyword.containershort_notm}} and get started with a sample app, see [Tutorial: Managing microservices with Istio](cs_tutorials_istio.html#istio_tutorial).</td>
+<td><a href="https://www.ibm.com/cloud/info/istio" target="_blank">Istio <img src="../icons/launch-glyph.svg" alt="External link icon"></a> is an open source service that gives developers a way to connect, secure, manage, and monitor a network of microservices, also known a service mesh, on cloud orchestration platforms like Kubernetes. Check out the blog post about <a href="https://developer.ibm.com/dwblog/2017/istio/" target="_blank">how IBM co-founded and launched Istio<img src="../icons/launch-glyph.svg" alt="External link icon"></a> to find out more about the open-source project. To install Istio on your Kubernetes cluster in {{site.data.keyword.containershort_notm}} and get started with a sample app, see [Tutorial: Managing microservices with Istio](cs_tutorials_istio.html#istio_tutorial).</td>
 </tr>
 <tr>
 <td>NeuVector</td>
@@ -75,15 +75,8 @@ IBM Blockchain Platform <img src="../icons/launch-glyph.svg" alt="External link 
 <tr>
 <td>Prometheus</td>
 <td>Prometheus is an open source monitoring, logging, and alerting tool that was specifically designed for Kubernetes to retrieve detailed information about the cluster, worker nodes, and deployment health based on the Kubernetes logging information. The CPU, memory, I/O, and network activity of all running containers in a cluster are collected and can be used in custom queries or alerts to monitor performance and workloads in your cluster.
-<p>To use Prometheus:</p>
-<ol>
-<li>Install Prometheus by following <a href="https://github.com/coreos/prometheus-operator/tree/master/contrib/kube-prometheus" target="_blank">the CoreOS instructions <img src="../icons/launch-glyph.svg" alt="External link icon"></a>.
-<ol>
-<li>When you run the export command, use your kube-system namespace. <p><code>export NAMESPACE=kube-system hack/cluster-monitoring/deploy</code></p></li>
-</ol>
-</li>
-<li>After Prometheus is deployed in your cluster, edit the Prometheus data source in Grafana to refer to <code>prometheus.kube-system:30900</code>.</li>
-</ol>
+
+<p>To use Prometheus, follow the <a href="https://github.com/coreos/prometheus-operator/tree/master/contrib/kube-prometheus" target="_blank">the CoreOS instructions <img src="../icons/launch-glyph.svg" alt="External link icon"></a></p>.
 </td>
 </tr>
 <tr>
@@ -327,7 +320,7 @@ When you mount a secret volume to your pod, a file named binding is stored in th
     ```
     {: screen}
 
-
+    
 
 9.  When implementing your app, configure it to find the secret file named **binding** in the mount directory, parse the JSON content and determine the URL and service credentials to access your {{site.data.keyword.Bluemix_notm}} service.
 
@@ -415,3 +408,4 @@ To use Weave Scope with a cluster:
 [Learn more about the Weave Scope features ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.weave.works/docs/scope/latest/features/).
 
 <br />
+
