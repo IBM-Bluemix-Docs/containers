@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-24"
+lastupdated: "2018-01-31"
 
 ---
 
@@ -21,8 +21,6 @@ lastupdated: "2018-01-24"
 
 You can grant access to a cluster for other users in your organization to ensure that only authorized users can work with the cluster and deploy apps to the cluster.
 {:shortdesc}
-
-
 
 
 ## Managing cluster access
@@ -50,7 +48,7 @@ Every user that works with {{site.data.keyword.containershort_notm}} must be ass
 ## Access policies and permissions
 {: #access_policies}
 
-Review the access policies and permissions that you can grant to users in your {{site.data.keyword.Bluemix_notm}} account. The operator and editor roles have separate permissions. If you want a user to, for example, add worker nodes and bind services, then you must assign the user both the operator and editor roles.
+Review the access policies and permissions that you can grant to users in your {{site.data.keyword.Bluemix_notm}} account. The operator and editor roles have separate permissions. If you want a user to, for example, add worker nodes and bind services, then you must assign the user both the operator and editor roles. If you change a user's access policy, {{site.data.keyword.containershort_notm}} cleans up the RBAC policies associated with the change in your cluster for you.
 
 |{{site.data.keyword.containershort_notm}} access policy|Cluster management permissions|Kubernetes resource permissions|
 |-------------|------------------------------|-------------------------------|
