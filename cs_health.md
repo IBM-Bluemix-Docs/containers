@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-12"
+lastupdated: "2018-02-02"
 
 ---
 
@@ -578,7 +578,7 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
           "IntervalSeconds":180,
           "TimeoutSeconds":10,
           "Enabled":true
-      }
+        }
     ```
     {:codeblock}
 
