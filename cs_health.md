@@ -578,7 +578,7 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
           "IntervalSeconds":180,
           "TimeoutSeconds":10,
           "Enabled":true
-      }
+        }
     ```
     {:codeblock}
 
