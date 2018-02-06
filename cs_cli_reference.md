@@ -295,7 +295,7 @@ Example for deploying an application load balancer secret:
    ```
    bx cs alb-cert-deploy --secret-name my_alb_secret_name --cluster my_cluster --cert-crn crn:v1:staging:public:cloudcerts:us-south:a/06580c923e40314421d3b6cb40c01c68:0db4351b-0ee1-479d-af37-56a4da9ef30f:certificate:4bc35b7e0badb304e60aef00947ae7ff
    ```
- {: pre}
+   {: pre}
 
 Example for updating an existing application load balancer secret:
 
@@ -401,6 +401,8 @@ View a list of application load balancer secrets in a cluster.
  {: pre}
 
 
+
+  
 ### bx cs alb-configure --albID ALB_ID [--enable][--disable][--user-ip USERIP]
 {: #cs_alb_configure}
 
@@ -450,6 +452,8 @@ Enable or disable an application load balancer in your standard cluster. The pub
   bx cs alb-configure --albID my_private_alb_id --enable --user-ip user_ip
   ```
   {: pre}
+
+
 
 ### bx cs alb-get --albID ALB_ID
 {: #cs_alb_get}
@@ -744,7 +748,7 @@ bx cs cluster-config my_cluster
 ### bx cs cluster-create [--file FILE_LOCATION] [--hardware HARDWARE] --location LOCATION --machine-type MACHINE_TYPE --name NAME [--kube-version MAJOR.MINOR.PATCH] [--no-subnet] [--private-vlan PRIVATE_VLAN] [--public-vlan PUBLIC_VLAN] [--workers WORKER] [--disable-disk-encrypt]
 {: #cs_cluster_create}
 
-To create a cluster in your organization.
+Create a cluster in your organization.
 
 <strong>Command options</strong>
 
@@ -961,7 +965,7 @@ You might need to change your YAML files for future deployments. Review this [re
    <dd>The name or ID of the cluster. This value is required.</dd>
 
    <dt><code>--kube-version <em>MAJOR.MINOR.PATCH</em></code></dt>
-   <dd>The Kubernetes version of the cluster. If this flag is not specified, the Kubernetes master is update to the default API version. To see available versions, run [bx cs kube-versions](#cs_kube_versions). This value is optional.</dd>
+   <dd>The Kubernetes version of the cluster. If you do not specify a version, the Kubernetes master is updated to the default API version. To see available versions, run [bx cs kube-versions](#cs_kube_versions). This value is optional.</dd>
 
    <dt><code>-f</code></dt>
    <dd>Use this option to force the update of the master with no user prompts. This value is optional.</dd>
@@ -1021,7 +1025,7 @@ View a list of Kubernetes versions supported in {{site.data.keyword.containersho
 ### bx cs cluster-service-bind CLUSTER KUBERNETES_NAMESPACE SERVICE_INSTANCE_GUID
 {: #cs_cluster_service_bind}
 
-Add an {{site.data.keyword.Bluemix_notm}} service to a cluster.
+Add an {{site.data.keyword.Bluemix_notm}} service to a cluster. To view available {{site.data.keyword.Bluemix_notm}} services from the {{site.data.keyword.Bluemix_notm}} catalog, run `bx service offerings`. If you already provisioned {{site.data.keyword.Bluemix_notm}} service instances in an IBM Cloud space, you can list them by running `bx service list`. **Note**: You can only add {{site.data.keyword.Bluemix_notm}} services that support service keys.
 
 <strong>Command options</strong>:
 
@@ -1033,7 +1037,7 @@ Add an {{site.data.keyword.Bluemix_notm}} service to a cluster.
    <dd>The name of the Kubernetes namespace. This value is required.</dd>
 
    <dt><code><em>SERVICE_INSTANCE_GUID</em></code></dt>
-   <dd>The ID of the {{site.data.keyword.Bluemix_notm}} service instance that you want to bind. This value is required.</dd>
+   <dd>The ID of the {{site.data.keyword.Bluemix_notm}} service instance that you want to bind. To find the ID of the service instance, run `bx cs cluster-services <cluster_name_or_ID>`.This value is required.</dd>
    </dl>
 
 **Example**:
@@ -1061,7 +1065,7 @@ Remove an {{site.data.keyword.Bluemix_notm}} service from a cluster.
    <dd>The name of the Kubernetes namespace. This value is required.</dd>
 
    <dt><code><em>SERVICE_INSTANCE_GUID</em></code></dt>
-   <dd>The ID of the {{site.data.keyword.Bluemix_notm}} service instance that you want to remove. This value is required.</dd>
+   <dd>The ID of the {{site.data.keyword.Bluemix_notm}} service instance that you want to remove. To find the ID of the service instance, run `bx cs cluster-services <cluster_name_or_ID>`.This value is required.</dd>
    </dl>
 
 **Example**:
@@ -1175,7 +1179,7 @@ Create a subnet in an IBM Cloud infrastructure (SoftLayer) account and make it a
    <dd>The number of subnet IP addresses. This value is required. Possible values are 8, 16, 32, or 64.</dd>
 
    <dt><code><em>VLAN_ID</em></code></dt>
-   <dd>The VLAN in which to create the subnet. This value is required. To list available VLANS, use the `bx cs vlans <location>` [command](#cs_vlans).</dd>
+   <dd>The VLAN in which to create the subnet. This value is required. To list available VLANS, use the `bx cs vlans <location>` [command](#cs_vlans). </dd>
    </dl>
 
 **Example**:
