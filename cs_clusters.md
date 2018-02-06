@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-29"
+lastupdated: "2018-02-02"
 
 ---
 
@@ -102,7 +102,7 @@ When you create a free cluster, your worker node is automatically provisioned as
 
 When you create a cluster, every cluster is automatically connected to a VLAN from your IBM Cloud infrastructure (SoftLayer) account. A VLAN configures a group of worker nodes and pods as if they were attached to the same physical wire. The private VLAN determines the private IP address that is assigned to a worker node during cluster creation, and the public VLAN determines the public IP address that is assigned to a worker node during cluster creation.
 
-For lite clusters, the cluster's worker nodes are automatically connected to a public VLAN and to a private VLAN by default during cluster creation. For standard clusters, you can either connect your worker nodes to both a public VLAN and a private VLAN, or to a private VLAN only. If you want to connect your worker nodes to a private VLAN only, you can designate a private VLAN ID during cluster creation. If you choose to connect your worker nodes to a private VLAN only, you must you configure an alternative solution. For example, you can configure a Vyatta to pass traffic from the private VLAN worker nodes to the Kubernetes master. See "Configure the private VLAN using the CLI" in the [IBM Cloud infrastructure (SoftLayer) documentation](https://knowledgelayer.softlayer.com/procedure/basic-configuration-vyatta) for more information.
+For free clusters, the cluster's worker nodes are connected to an IBM-owned public VLAN and private VLAN by default during cluster creation. For standard clusters, you can either connect your worker nodes to both a public VLAN and a private VLAN, or to a private VLAN only. If you want to connect your worker nodes to a private VLAN only, you can designate the ID of an existing private VLAN during cluster creation. However, you must also configure an alternative solution to enable a secure connection between worker nodes and the Kubernetes master. For example, you can configure a Vyatta to pass traffic from the private VLAN worker nodes to the Kubernetes master. See "Set up a custom Vyatta to securely connect your worker nodes to the Kubernetes master" in the [IBM Cloud infrastructure (SoftLayer) documentation](https://knowledgelayer.softlayer.com/procedure/basic-configuration-vyatta) for more information.
 
 ### Worker node memory limits
 {: #resource_limit_node}
@@ -268,7 +268,7 @@ To create a cluster:
         </tr>
         <tr>
         <td><code>--hardware <em>&lt;shared_or_dedicated&gt;</em></code></td>
-        <td>The level of hardware isolation for your worker node. Use dedicated to have available physical resources dedicated to you only, or shared to allow physical resources to be shared with other IBM customers. The default is shared. This value is optional for standard clusters and is not available for lite clusters.</td>
+        <td>The level of hardware isolation for your worker node. Use dedicated to have available physical resources dedicated to you only, or shared to allow physical resources to be shared with other IBM customers. The default is shared. This value is optional for standard clusters and is not available for free clusters.</td>
         </tr>
         <tr>
         <td><code>--public-vlan <em>&lt;public_vlan_id&gt;</em></code></td>
@@ -454,6 +454,6 @@ When you delete a cluster, you are also deleting resources on the cluster, inclu
     3.  Follow the prompts and choose whether to delete cluster resources.
 
 When you remove a cluster, you can choose to remove the portable subnets and persistent storage associated with it:
-- Subnets are used to assign portable public IP addresses to load balancer services or your Ingress controller. If you keep them, you can reuse them in a new cluster or manually delete them later from your IBM Cloud infrastructure (SoftLayer) portfolio.
+- Subnets are used to assign portable public IP addresses to load balancer services or your Ingress application load balancer. If you keep them, you can reuse them in a new cluster or manually delete them later from your IBM Cloud infrastructure (SoftLayer) portfolio.
 - If you created a persistent volume claim by using an [existing file share](cs_storage.html#existing), then you cannot delete the file share when you delete the cluster. You must manually delete the file share later from your IBM Cloud infrastructure (SoftLayer) portfolio.
 - Persistent storage provides high availability for your data. If you delete it, you cannot recover your data.
