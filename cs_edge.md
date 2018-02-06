@@ -21,6 +21,8 @@ lastupdated: "2018-01-12"
 Edge worker nodes can improve the security of your cluster by allowing fewer worker nodes to be accessed externally and by isolating the networking workload. When these worker nodes are marked for networking only, other workloads cannot consume the CPU or memory of the worker node and interfere with networking.
 {:shortdesc}
 
+
+
 ## Label worker nodes as edge nodes
 {: #edge_nodes}
 
