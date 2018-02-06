@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-12"
+lastupdated: "2018-02-02"
 
 ---
 
@@ -578,7 +578,7 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
           "IntervalSeconds":180,
           "TimeoutSeconds":10,
           "Enabled":true
-      }
+        }
     ```
     {:codeblock}
 
@@ -688,58 +688,15 @@ The check in the above example YAML runs every 3 minutes. If it fails 3 consecut
     ```
     {: pre}
 
-4. Ensure that you created a Docker pull secret with the name `international-registry-docker-secret` in the `kube-system` namespace. Autorecovery is hosted in {{site.data.keyword.registryshort_notm}}'s global Docker registry. If you have not created a Docker registry secret that contains valid credentials for the global registry, create one to run the Autorecovery system.
 
-    1. Install the {{site.data.keyword.registryshort_notm}} plug-in.
-
-        ```
-        bx plugin install container-registry -r Bluemix
-        ```
-        {: pre}
-
-    2. Target the global registry.
-
-        ```
-        bx cr region-set global
-        ```
-        {: pre}
-
-    3. Create a registry token for the global registry.
-
-        ```
-        bx cr token-add --non-expiring --description globalRegistryToken
-        ```
-        {: pre}
-
-    4. Set the `GLOBAL_REGISTRY_TOKEN` environment variable to the token you created.
-
-        ```
-        GLOBAL_REGISTRY_TOKEN=$(bx cr token-get $(bx cr tokens | grep globalRegistryToken | awk '{print $1}') -q)
-        ```
-        {: pre}
-
-    5. Set the `DOCKER_EMAIL` environment variable to the current user. Your email address is needed only to run the `kubectl` command in the next step.
-
-        ```
-        DOCKER_EMAIL=$(bx target | grep "User" | awk '{print $2}')
-        ```
-        {: pre}
-
-    6. Create the Docker pull secret.
-
-        ```
-        kubectl -n kube-system create secret docker-registry international-registry-docker-secret --docker-username=token --docker-password="$GLOBAL_REGISTRY_TOKEN" --docker-server=registry.bluemix.net --docker-email="$DOCKER_EMAIL"
-        ```
-        {: pre}
-
-5. Deploy Autorecovery into your cluster by applying this YAML file.
+4. Deploy Autorecovery into your cluster by applying this YAML file.
 
    ```
    kubectl apply -f https://raw.githubusercontent.com/IBM-Bluemix/kube-samples/master/ibm-worker-recovery/ibm-worker-recovery.yml
    ```
    {: pre}
 
-6. After a few minutes, you can check the `Events` section in the output of the following command to see activity on the Autorecovery deployment.
+5. After a few minutes, you can check the `Events` section in the output of the following command to see activity on the Autorecovery deployment.
 
     ```
     kubectl -n kube-system describe deployment ibm-worker-recovery
