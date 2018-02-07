@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-12"
+lastupdated: "2018-02-02"
 
 ---
 
@@ -33,7 +33,7 @@ The following diagram shows the process that you can take to update your master.
 
 Figure 1. Updating Kubernetes master process diagram
 
-**Attention**: You cannot roll back a cluster to a previous version once the update process takes place. Be sure to use a test cluster and follow the instructions to address potential issues before updating your production master.
+**Attention**: You cannot roll back a cluster to a previous version after the update process takes place. Be sure to use a test cluster and follow the instructions to address potential issues before updating your production master.
 
 For _major_ or _minor_ updates, complete the following steps:
 
@@ -63,11 +63,11 @@ As part of the update process, specific nodes are going to go down for a period 
 
 How are the keys defined?
 
-In the configuration map there is a section that contains data information. You can define up to 10 separate rules to run at any given time. In order for a worker node to be upgraded, the nodes must pass every rule defined in the map.
+In the data information section of the configuration map, you can define up to 10 seperate rules to run at any given time. To be upgraded, worker nodes must pass every defined rule.
 
 The keys are defined. What now?
 
-Once you define your rules, you run the worker-upgrade command. If a successful response is returned, the worker nodes are queued to be upgraded. However, the nodes do not undergo the upgrade process until all of the rules are satisfied. While they're queued, the rules are checked on an interval to see if any of the nodes are able to be upgraded.
+After you define your rules, you run the `worker-upgrade` command. If a successful response is returned, the worker nodes are queued to be upgraded. However, the nodes do not undergo the upgrade process until all of the rules are satisfied. While they're queued, the rules are checked on an interval to see if any of the nodes are able to be upgraded.
 
 What if I chose to not define a configuration map?
 
@@ -115,7 +115,7 @@ To update your worker nodes:
     <tbody>
       <tr>
         <td><code>defaultcheck.json</code></td>
-        <td> As a default, if the ibm-cluster-update-configuration map is not defined in a valid way, only 20% of your clusters are able to be unavailable at one time. If one or more valid rules are defined with out a global default, the new default is to allow 100% of the workers to be unavailable at one time. You can control this by creating a default percentage. </td>
+        <td> As a default, if the ibm-cluster-update-configuration map is not defined in a valid way, only 20% of your clusters are able to be unavailable at one time. If one or more valid rules are defined without a global default, the new default is to allow 100% of the workers to be unavailable at one time. You can control this by creating a default percentage. </td>
       </tr>
       <tr>
         <td><code>zonecheck.json</code></br><code>regioncheck.json</code></td>
