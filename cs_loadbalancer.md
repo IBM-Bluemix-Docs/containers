@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-12"
+lastupdated: "2018-02-06"
 
 ---
 
@@ -22,6 +22,8 @@ lastupdated: "2018-01-12"
 Expose a port and use a portable IP address for the load balancer to access the app. Use a public IP address to make an app accessible on the internet, or a private IP address to make an app accessible on your private infrastructure network.
 {:shortdesc}
 
+
+
 ## Configuring access to an app by using the load balancer service type
 {: #config}
 
@@ -30,7 +32,7 @@ Unlike with a NodePort service, the portable IP address of the load balancer ser
 
 The portable IP address of the load balancer is assigned for you and does not change when you add or remove worker nodes. Therefore, load balancer services are more highly available than NodePort services. Users can select any port for the load balancer and are not limited to the NodePort port range. You can use load balancer services for TCP and UDP protocols.
 
-**Note:** Load balancer services do not support TLS termination. If your app requires TLS termination, you can expose your app by using [Ingress](cs_ingress.html), or configure your app to manage the TLS termination.
+**Note**: LoadBalancer services do not support TLS termination. If your app requires TLS termination, you can expose your app by using [Ingress](cs_ingress.html), or configure your app to manage the TLS termination.
 
 Before you begin:
 
@@ -43,6 +45,7 @@ To create a load balancer service:
 1.  [Deploy your app to the cluster](cs_app.html#app_cli). When you deploy your app to the cluster, one or more pods are created for you that run your app in a container. Ensure that you add a label to your deployment in the metadata section of your configuration file. This label is needed to identify all pods where your app is running so that they can be included in the load balancing.
 2.  Create a load balancer service for the app that you want to expose. To make your app available on the public internet or on a private network, create a Kubernetes service for your app. Configure your service to include all the pods that make up your app into the load balancing.
     1.  Create a service configuration file that is named, for example, `myloadbalancer.yaml`.
+
     2.  Define a load balancer service for the app that you want to expose.
         - If your cluster is on a public VLAN, a portable public IP address is used. Most clusters are on a public VLAN.
         - If your cluster is available on a private VLAN only, then a portable private IP address is used.
@@ -141,6 +144,7 @@ To create a load balancer service:
     Labels:                 <none>
     Selector:               <selectorkey>=<selectorvalue>
     Type:                   LoadBalancer
+    Location:               dal10
     IP:                     10.10.10.90
     LoadBalancer Ingress:   192.168.10.38
     Port:                   <unset> 8080/TCP
@@ -156,6 +160,7 @@ To create a load balancer service:
     {: screen}
 
     The **LoadBalancer Ingress** IP address is the portable IP address that was assigned to your load balancer service.
+
 4.  If you created a public load balancer, access your app from the internet.
     1.  Open your preferred web browser.
     2.  Enter the portable public IP address of the load balancer and port. In the example above, the portable public IP address `192.168.10.38` was assigned to the load balancer service.
