@@ -580,7 +580,7 @@ spec:
  </tr>
  <tr>
  <td><code>&lt;read_timeout&gt;</code></td>
- <td>The number of seconds to wait before the back-end app is read, for example <code>65s</code>.</td>
+ <td>The number of seconds to wait before the back-end app is read, for example <code>65s</code>. <strong>Note:</strong> A read-timeout cannot exceed 120 seconds.</td>
  </tr>
  </tbody></table>
 
