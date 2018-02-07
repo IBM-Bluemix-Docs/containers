@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-29"
+lastupdated: "2017-02-05"
 
 ---
 
@@ -19,16 +19,16 @@ lastupdated: "2018-01-29"
 # Tutorial: Deploying apps into clusters
 {: #cs_apps_tutorial}
 
-This second tutorial continues how you can use Kubernetes to deploy a containerized app that leverages the {{site.data.keyword.watson}} {{site.data.keyword.toneanalyzershort}} {{site.data.keyword.Bluemix_notm}} service. A fictional PR firm uses {{site.data.keyword.watson}} to analyze their press releases and receive feedback on the tone in their messages.
-{:shortdesc}
+You can learn how to use {{site.data.keyword.containershort_notm}} to deploy a containerized app that leverages {{site.data.keyword.watson}} {{site.data.keyword.toneanalyzershort}}.
+{: shortdesc}
 
-In this scenario, the PR firm's app developer deploys a Hello World version of the app into the Kubernetes cluster that the network administrator created in the [first tutorial](cs_tutorials.html#cs_cluster_tutorial).
+In this scenario, a fictional PR firm uses the {{site.data.keyword.Bluemix_notm}} service to analyze their press releases and receive feedback on the tone of their messages.
 
-Each lesson teaches you how to deploy progressively more complicated versions of the same app. The following diagram shows the tutorial's components of the app deployments, except the fourth part.
+Using the Kubernetes cluster created in the last tutorial, the PR firm's app developer deploys a Hello World version of the app. Building on each lesson in this tutorial, the app developer deploys progressively more complicated versions of the same app. The following diagram shows the components of each deployment by lesson.
 
 ![Lesson components](images/cs_app_tutorial_roadmap.png)
 
-As depicted in the diagram, Kubernetes uses several different types of resources to get your apps up and running in clusters. In Kubernetes, deployments and services work together. Deployments include the definitions for the app, like for example the image to use for the container and which port must be exposed for the app. When you create a deployment, a Kubernetes pod is created for each container that you defined in the deployment. To make your app more resilient, you can define multiple instances of the same app in your deployment and let Kubernetes automatically create a replica set for you. The replica set monitors the pods and assures that the desired number of pods is up and running at all times. If one of the pods becomes unresponsive, the pod is re-created automatically.
+As depicted in the diagram, Kubernetes uses several different types of resources to get your apps up and running in clusters. In Kubernetes, deployments and services work together. Deployments include the definitions for the app; for example the image to use for the container and which port must be exposed for the app. When you create a deployment, a Kubernetes pod is created for each container that you defined in the deployment. To make your app more resilient, you can define multiple instances of the same app in your deployment and let Kubernetes automatically create a replica set for you. The replica set monitors the pods and assures that the desired number of pods is up and running at all times. If one of the pods becomes unresponsive, the pod is re-created automatically.
 
 Services group a set of pods and provide network connection to these pods for other services in the cluster without exposing the actual private IP address of each pod. You can use Kubernetes services to make an app available to other pods inside the cluster or to expose an app to the internet. In this tutorial, you will use a Kubernetes service to access your running app from the internet by using a public IP address that is automatically assigned to a worker node and a public port.
 
@@ -55,30 +55,45 @@ Software developers and network administrators who have never deployed an app in
 
 ## Prerequisites
 
-[Tutorial: Creating Kubernetes clusters in {{site.data.keyword.containershort_notm}}](cs_tutorials.html#cs_cluster_tutorial).
+* [Tutorial: Creating Kubernetes clusters in {{site.data.keyword.containershort_notm}}](cs_tutorials.html#cs_cluster_tutorial).
 
 ## Lesson 1: Deploying single instance apps to Kubernetes clusters
 {: #cs_apps_tutorial_lesson1}
 
-In this lesson, you deploy a single instance of the Hello World app into a cluster. The following diagram includes the components that you deploy by completing this lesson.
+In the previous tutorial, you created a cluster with one worker node. In this lesson, you configure a deployment and deploy a single instance of the app into a Kubernetes pod within the worker node. The components that you deploy by completing this lesson are shown in the following diagram.
 {:shortdesc}
 
 ![Deployment setup](images/cs_app_tutorial_components1.png)
 
-From the previous tutorial, you have an account and a cluster with one worker node already. In this lesson, you configure a deployment and deploy the Hello World app in a Kubernetes pod in the worker node. To make it publicly available, you create a Kubernetes service.
+To deploy the app:
 
-
-1.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your {{site.data.keyword.Bluemix_notm}} credentials when prompted. To specify an {{site.data.keyword.Bluemix_notm}} region, [include the API endpoint](cs_regions.html#bluemix_regions).
+1.  Clone the source code for the [Hello world app ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/IBM/container-service-getting-started-wt) to your user home directory. The repository contains different versions of a similar app in folders that each start with `Lab`. Each version contains the following files:
+    * `Dockerfile`: The build definitions for the image.
+    * `app.js`: The Hello world app.
+    * `package.json`: Metadata about the app.
 
     ```
-    bx login
+    git clone https://github.com/IBM/container-service-getting-started-wt.git
     ```
     {: pre}
 
-    **Note:** If you have a federated ID, use `bx login --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
+2.  Navigate to the `Lab 1` directory.
 
-2.  Set the context for the cluster in your CLI.
-    1.  Get the command to set the environment variable and download the Kubernetes configuration files.
+    ```
+    cd 'container-service-getting-started-wt/Lab 1'
+    ```
+    {: pre}
+
+3. Log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your {{site.data.keyword.Bluemix_notm}} credentials when prompted. To specify an {{site.data.keyword.Bluemix_notm}} region, [include the API endpoint](cs_regions.html#bluemix_regions).
+  ```
+  bx login [--sso]
+  ```
+  {: pre}
+
+  **Note**: If the login command fails, you might have a federated ID. Try appending the `--sso` flag to the command. Use the provided URL in your CLI output to retrieve a one-time passcode.
+
+4. Set the context for the cluster in your CLI.
+    1. Get the command to set the environment variable and download the Kubernetes configuration files.
 
         ```
         bx cs cluster-config <pr_firm_cluster>
@@ -86,6 +101,7 @@ From the previous tutorial, you have an account and a cluster with one worker no
         {: pre}
 
         When the download of the configuration files is finished, a command is displayed that you can use to set the path to the local Kubernetes configuration file as an environment variable.
+    2.  Copy and paste the output to set the `KUBECONFIG` environment variable.
 
         Example for OS X:
 
@@ -94,56 +110,12 @@ From the previous tutorial, you have an account and a cluster with one worker no
         ```
         {: screen}
 
-    2.  Copy and paste the command that is displayed in your terminal to set the `KUBECONFIG` environment variable.
-    3.  Verify that the `KUBECONFIG` environment variable is set properly.
-
-        Example for OS X:
-
-        ```
-        echo $KUBECONFIG
-        ```
-        {: pre}
-
-        Output:
-
-        ```
-        /Users/<user_name>/.bluemix/plugins/container-service/clusters/<pr_firm_cluster>/kube-config-prod-dal10-pr_firm_cluster.yml
-        ```
-        {: screen}
-
-    4.  Verify that the `kubectl` commands run properly with your cluster by checking the Kubernetes CLI server version.
-
-        ```
-        kubectl version  --short
-        ```
-        {: pre}
-
-        Example output:
-
-        ```
-        Client Version: v1.8.6
-        Server Version: v1.8.6
-        ```
-        {: screen}
-
-3.  Start Docker.
-    * If you are using Docker CE, no action is needed.
-    * If you are using Linux, follow the [Docker documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.docker.com/engine/admin/) to find instructions about how to start Docker depending on the Linux distribution that you use.
-    * If you are using Docker Toolbox on Windows or OSX, you can use the Docker Quickstart Terminal, which starts Docker for you. Use the Docker Quickstart Terminal for the next few steps to run the Docker commands and then switch back to the CLI where you set the `KUBECONFIG` session variable.
-        * If you are using the Docker QuickStart Terminal, run the {{site.data.keyword.Bluemix_notm}} CLI log in command again.
-
-          ```
-          bx login
-          ```
-          {: pre}
-
-4.  Log in to the {{site.data.keyword.registryshort_notm}} CLI. **Note**: Ensure that you have the container-registry plugin [installed](/docs/services/Registry/index.html#registry_cli_install).
+5.  Log in to the {{site.data.keyword.registryshort_notm}} CLI. **Note**: Ensure that you have the container-registry plugin [installed](/docs/services/Registry/index.html#registry_cli_install).
 
     ```
     bx cr login
     ```
     {: pre}
-
     -   If you forgot your namespace in {{site.data.keyword.registryshort_notm}}, run the following command.
 
         ```
@@ -151,45 +123,24 @@ From the previous tutorial, you have an account and a cluster with one worker no
         ```
         {: pre}
 
-5.  Clone or download the source code for the [Hello world app ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/Osthanes/container-service-getting-started-wt) to your user home directory.
+6. Start Docker.
+    * If you are using Docker CE, no action is needed.
+    * If you are using Linux, follow the [Docker documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.docker.com/engine/admin/) to find instructions about how to start Docker depending on the Linux distribution that you use.
+    * If you are using Docker Toolbox on Windows or OSX, you can use the Docker Quickstart Terminal, which starts Docker for you. Use the Docker Quickstart Terminal for the next few steps to run the Docker commands and then switch back to the CLI where you set the `KUBECONFIG` session variable.
 
-    ```
-    git clone https://github.com/Osthanes/container-service-getting-started-wt.git
-    ```
-    {: pre}
+7.  Build a Docker image that includes the app files of the `Lab 1` directory. If you need to make a change to the app in the future, repeat these steps to create another version of the image.
 
-    If you downloaded the repository, extract the compressed file.
-
-    Examples:
-
-    * Windows: `C:Users\<my_username>\container-service-getting-started-wt`
-    * OS X: `/Users/<my_username>/container-service-getting-started-wt`
-
-    The repository contains three versions of a similar app in folders that are named `Stage1`, `Stage2`, and `Stage3`. Each version contains the following files:
-    * `Dockerfile`: The build definitions for the image
-    * `app.js`: The Hello world app
-    * `package.json`: Metadata about the app
-
-6.  Navigate to the first app directory, `Stage1`.
-
-    ```
-    cd <username_home_directory>/container-service-getting-started-wt/Stage1
-    ```
-    {: pre}
-
-7.  Build a Docker image that includes the app files of the `Stage1` directory. If you need to make a change to the app in the future, repeat these steps to create another version of the image.
-
-    1.  Build the image locally and tag it with the name and tag that you want to use, and the namespace that you created in {{site.data.keyword.registryshort_notm}} in the previous tutorial. Tagging the image with the namespace information tells Docker where to push the image in a later step. Use lowercase alphanumeric characters or underscores (`_`) only in the image name. Don't forget the period (`.`) at the end of the command. The period tells Docker to look inside the current directory for the Dockerfile and build artifacts to build the image.
+    1.  Build the image locally. Specify the name and tag that you want to use. Be sure to use the namespace that you created in {{site.data.keyword.registryshort_notm}} in the previous tutorial. Tagging the image with the namespace information tells Docker where to push the image in a later step. Use lowercase alphanumeric characters or underscores (`_`) only in the image name. Don't forget the period (`.`) at the end of the command. The period tells Docker to look inside the current directory for the Dockerfile and build artifacts to build the image.
 
         ```
         docker build -t registry.<region>.bluemix.net/<namespace>/hello-world:1 .
         ```
         {: pre}
 
-        When the build is complete, verify that you see the success message.
-
+        When the build is complete, verify that you see the following success message:
         ```
         Successfully built <image_id>
+        Successfully tagged <image_tag>
         ```
         {: screen}
 
@@ -219,28 +170,7 @@ From the previous tutorial, you have an account and a cluster with one worker no
         ```
         {: screen}
 
-        Wait for the image to be pushed before you continue to the next step.
-
-    3.  If you are using the Docker Quickstart Terminal, switch back to the CLI that you used to set the `KUBECONFIG` session variable.
-
-    4.  Verify that the image was successfully added to your namespace.
-
-        ```
-        bx cr images
-        ```
-        {: pre}
-
-        Output:
-
-        ```
-        Listing images...
-
-        REPOSITORY                                  NAMESPACE   TAG       DIGEST         CREATED        SIZE     VULNERABILITY STATUS
-        registry.<region>.bluemix.net/<namespace>/hello-world   <namespace>   1   0d90cb732881   1 minute ago   264 MB   OK
-        ```
-        {: screen}
-
-8.  Create a Kubernetes deployment that is named _hello-world-deployment_ to deploy the app to a pod in your cluster. Deployments are used to manage pods, which include containerized instances of an app. The following deployment deploys the app in single pod.
+8.  Deployments are used to manage pods, which include containerized instances of an app. The following command deploys the app in single pod. For the purposes of this tutorial, the deployment is named hello-world-deployment, but you can give it any name you want. If you used the Docker Quickstart terminal to run Docker commands, be sure that you switch back to the CLI that you used to set the `KUBECONFIG` session variable.
 
     ```
     kubectl run hello-world-deployment --image=registry.<region>.bluemix.net/<namespace>/hello-world:1
@@ -254,9 +184,7 @@ From the previous tutorial, you have an account and a cluster with one worker no
     ```
     {: screen}
 
-    Because this deployment creates only one instance of the app, the deployment creates more quickly than it does in later lessons where more than one instance of the app is created.
-
-9.  Make the app accessible to the world by exposing the deployment as a NodePort service. Services apply networking for the app. Because the cluster has one worker node rather than several, load balancing across worker nodes is not needed. Therefore, a NodePort can be used to provide users with external access to the app. Just as you might expose a port for a Cloud Foundry app, the NodePort you expose is the port on which the worker node listens for traffic. In a later step, you see which NodePort was randomly assigned to the service.
+9.  Make the app accessible to the world by exposing the deployment as a NodePort service. Just as you might expose a port for a Cloud Foundry app, the NodePort you expose is the port on which the worker node listens for traffic.
 
     ```
     kubectl expose deployment/hello-world-deployment --type=NodePort --port=8080 --name=hello-world-service --target-port=8080
@@ -303,9 +231,7 @@ From the previous tutorial, you have an account and a cluster with one worker no
     </tr>
     </tbody></table>
 
-    Now that all the deployment work is done, you can check to see how everything turned out.
-
-10. To test your app in a browser, get the details to form the URL.
+10. Now that all the deployment work is done, you can test your app in a browser. Get the details to form the URL.
     1.  Get information about the service to see which NodePort was assigned.
 
         ```
@@ -366,6 +292,7 @@ Congratulations! You deployed your first version of the app.
 
 Too many commands in this lesson? Agreed. How about using a configuration script to do some of the work for you? To use a configuration script for the second version of the app, and to create higher availability by deploying multiple instances of that app, continue to the next lesson.
 
+<br />
 
 
 ## Lesson 2: Deploying and updating apps with higher availability
@@ -378,18 +305,20 @@ The following diagram includes the components that you deploy by completing this
 
 ![Deployment setup](images/cs_app_tutorial_components2.png)
 
-From the previous tutorial, you have your account and a cluster with one worker node. In this lesson, you configure a deployment and deploy three instances of the Hello World app. Each instance is deployed in a Kubernetes pod as part of a replica set in the worker node. To make it publicly available, you also create a Kubernetes service.
+In the previous tutorial, you created your account and a cluster with one worker node. In this lesson, you configure a deployment and deploy three instances of the Hello World app. Each instance is deployed in a Kubernetes pod as part of a replica set in the worker node. To make it publicly available, you also create a Kubernetes service.
 
-As defined in the configuration script, Kubernetes can use an availability check to see whether a container in a pod is running or not. For example, these checks might catch deadlocks, where an app is running, but it is unable to make progress. Restarting a container that is in this condition can help to make the app more available despite bugs. Then, Kubernetes uses readiness check to know when a container is ready to start accepting traffic again. A pod is considered ready when its container is ready. When the pod is ready, it is started again. In the Stage2 app, every 15 seconds, the app times out. With a health check configured in the configuration script, containers are re-created if the health check finds an issue with an app.
+As defined in the configuration script, Kubernetes can use an availability check to see whether a container in a pod is running or not. For example, these checks might catch deadlocks, where an app is running, but it is unable to make progress. Restarting a container that is in this condition can help to make the app more available despite bugs. Then, Kubernetes uses readiness check to know when a container is ready to start accepting traffic again. A pod is considered ready when its container is ready. When the pod is ready, it is started again. In this version of the app, every 15 seconds it times out. With a health check configured in the configuration script, containers are re-created if the health check finds an issue with an app.
 
-1.  In a CLI, navigate to the second app directory, `Stage2`. If you are using Docker Toolbox for Windows or OS X, use Docker Quickstart Terminal.
+1.  In a CLI, navigate to the `Lab 2` directory.
 
   ```
   cd <username_home_directory>/container-service-getting-started-wt/Stage2
   ```
   {: pre}
 
-2.  Build and tag the second version of the app locally as an image. Again, don't forget the period (`.`) at the end of the command.
+2.  If you started a new CLI session, log in and set the cluster context.
+
+3.  Build and tag the second version of the app locally as an image. Again, don't forget the period (`.`) at the end of the command.
 
   ```
   docker build -t registry.<region>.bluemix.net/<namespace>/hello-world:2 .
@@ -403,7 +332,7 @@ As defined in the configuration script, Kubernetes can use an availability check
   ```
   {: screen}
 
-3.  Push the second version of the image in your registry namespace. Wait for the image to be pushed before you continue to the next step.
+4.  Push the second version of the image in your registry namespace. Wait for the image to be pushed before you continue to the next step.
 
   ```
   docker push registry.<region>.bluemix.net/<namespace>/hello-world:2
@@ -429,38 +358,18 @@ As defined in the configuration script, Kubernetes can use an availability check
   ```
   {: screen}
 
-4.  If you are using the Docker Quickstart Terminal, switch back to the CLI that you used to set the `KUBECONFIG` session variable.
-5.  Verify that the image was successfully added to your registry namespace.
-
-    ```
-    bx cr images
-    ```
-     {: pre}
-
-    Output:
-
-    ```
-    Listing images...
-
-    REPOSITORY                                 NAMESPACE  TAG  DIGEST        CREATED        SIZE     VULNERABILITY STATUS
-    registry.<region>.bluemix.net/<namespace>/hello-world  <namespace>  1    0d90cb732881  30 minutes ago 264 MB   OK
-    registry.<region>.bluemix.net/<namespace>/hello-world  <namespace>  2    c3b506bdf33e  1 minute ago   264 MB   OK
-    ```
-    {: screen}
-
-6.  Open the `<username_home_directory>/container-service-getting-started-wt/Stage2/healthcheck.yml` file with a text editor. This configuration script combines a few steps from the previous lesson to create a deployment and a service at the same time. The PR firm's app developers can use these scripts when updates are made or to troubleshoot issues by re-creating the pods.
-
-    1.  In the **Deployment** section, note the `replicas`. Replicas are the number instances of your app. Running three instances makes the app more highly available than just one instance.
-
-        ```
-        replicas: 3
-        ```
-        {: pre}
-
-    2.  Update the details for the image in your private registry namespace.
+5.  Open the `healthcheck.yml` file, in the `Lab 2` directory, with a text editor. This configuration script combines a few steps from the previous lesson to create a deployment and a service at the same time. The PR firm's app developers can use these scripts when updates are made or to troubleshoot issues by re-creating the pods.
+    1. Update the details for the image in your private registry namespace.
 
         ```
         image: "registry.<region>.bluemix.net/<namespace>/hello-world:2"
+        ```
+        {: pre}
+
+    2.  In the **Deployment** section, note the `replicas`. Replicas are the number instances of your app. Running three instances makes the app more highly available than just one instance.
+
+        ```
+        replicas: 3
         ```
         {: pre}
 
@@ -478,10 +387,10 @@ As defined in the configuration script, Kubernetes can use an availability check
 
     4.  In the **Service** section, note the `NodePort`. Rather than generating a random NodePort like you did in the previous lesson, you can specify a port in the 30000 - 32767 range. This example uses 30072.
 
-7.  Run the configuration script in the cluster. When the deployment and the service are created, the app is available for the PR firm's users to see.
+6.  Switch back to the CLI that you used to set your cluster context and run the configuration script. When the deployment and the service are created, the app is available for the PR firm's users to see.
 
   ```
-  kubectl apply -f <username_home_directory>/container-service-getting-started-wt/Stage2/healthcheck.yml
+  kubectl apply -f healthcheck.yml
   ```
   {: pre}
 
@@ -493,9 +402,7 @@ As defined in the configuration script, Kubernetes can use an availability check
   ```
   {: screen}
 
-  Now that all the deployment work is done, check how everything turned out. You might notice that because more instances are running, things might run a bit slower.
-
-8.  Open a browser and check out the app. To form the URL, take the same public IP address that you used in the previous lesson for your worker node and combine it with the NodePort that was specified in the configuration script. To get the public IP address for the worker node:
+7.  Now that the deployment work is done you can open a browser and check out the app. To form the URL, take the same public IP address that you used in the previous lesson for your worker node and combine it with the NodePort that was specified in the configuration script. To get the public IP address for the worker node:
 
   ```
   bx cs workers <pr_firm_cluster>
@@ -511,7 +418,7 @@ As defined in the configuration script, Kubernetes can use an availability check
 
   You can also check `http://169.47.227.138:30072/healthz` for status.
 
-  For the first 10 - 15 seconds, a 200 message is returned, so you know that the app is running successfully. After those 15 seconds, a timeout message is displayed, as is designed in the app.
+  For the first 10 - 15 seconds, a 200 message is returned, so you know that the app is running successfully. After those 15 seconds, a timeout message is displayed. This is an expected behavior.
 
   ```
   {
@@ -520,29 +427,9 @@ As defined in the configuration script, Kubernetes can use an availability check
   ```
   {: screen}
 
-9.  Launch your Kubernetes dashboard with the default port 8001.
-    1.  Set the proxy with the default port number.
+8.  [Launch the Kubernetes dashboard](cs_app.html#cli_dashboard). Note that the steps differ depending on your version of Kubernetes.
 
-        ```
-        kubectl proxy
-        ```
-        {: pre}
-
-        Output:
-
-        ```
-        Starting to serve on 127.0.0.1:8001
-        ```
-        {: screen}
-
-    2.  Open the following URL in a web browser to see the Kubernetes dashboard.
-
-        ```
-        http://localhost:8001/ui
-        ```
-        {: codeblock}
-
-10. In the **Workloads** tab, you can see the resources that you created. From this tab, you can continually refresh and see that the health check is working. In the **Pods** section, you can see how many times the pods are restarted when the containers in them are re-created. If you happen to catch the following error in the dashboard, this message indicates that the health check caught a problem. Give it a few minutes and refresh again. You see the number of restarts changes for each pod.
+9. In the **Workloads** tab, you can see the resources that you created. From this tab, you can continually refresh and see that the health check is working. In the **Pods** section, you can see how many times the pods are restarted when the containers in them are re-created. If you happen to catch the following error in the dashboard, this message indicates that the health check caught a problem. Give it a few minutes and refresh again. You see the number of restarts changes for each pod.
 
     ```
     Liveness probe failed: HTTP probe failed with statuscode: 500
@@ -554,47 +441,52 @@ As defined in the configuration script, Kubernetes can use an availability check
     When you are done exploring the Kubernetes dashboard, in your CLI, enter CTRL+C to exit the `proxy` command.
 
 
-Congratulations! You deployed the second version of the app. You had to use fewer commands, learned how health checks work, and edited a deployment, which is great! The Hello world app passed the test for the PR firm. Now, you can deploy a more useful app for PR firm to start analyzing press releases.
+Congratulations! You deployed the second version of the app. You had to use fewer commands, learned how health checks work, and edited a deployment, which is great! The Hello world app passed the test for the PR firm. Now, you can deploy a more useful app for the PR firm to start analyzing press releases.
 
-Ready to delete what you created before you continue? This time, you can use the same configuration script to delete both of the resources you created.
+Ready to delete what you created before you continue? This time, you can use the same configuration script to delete both of the resources that you created.
 
-```
-kubectl delete -f <username_home_directory>/container-service-getting-started-wt/Stage2/healthcheck.yml
-```
-{: pre}
+    ```
+    kubectl delete -f healthcheck.yml
+    ```
+    {: pre}
 
-Output:
+    Output:
 
-```
-deployment "hw-demo-deployment" deleted
-service "hw-demo-service" deleted
-```
-{: screen}
+    ```
+    deployment "hw-demo-deployment" deleted
+    service "hw-demo-service" deleted
+    ```
+    {: screen}
+
+<br />
+
 
 ## Lesson 3: Deploying and updating the Watson Tone Analyzer app
 {: #cs_apps_tutorial_lesson3}
 
-In the previous lessons, the apps were deployed as single components in one worker node. In this lesson, you deploy two components of an app into a cluster that use the Watson Tone Analyzer service that you added to your cluster in the previous tutorial. Separating components into different containers ensures that you can update one without affecting the others. Then, you will update the app to scale it up with more replicas to make it more highly available.
+In the previous lessons, the apps were deployed as single components in one worker node. In this lesson, you can deploy two components of an app into a cluster that use the {{site.data.keyword.watson}} {{site.data.keyword.toneanalyzershort}} service. Separating components into different containers ensures that you can update one without affecting the others. Then, you will update the app to scale it up with more replicas to make it more highly available.
 {:shortdesc}
 
 The following diagram includes the components that you deploy by completing this lesson.
 
 ![Deployment setup](images/cs_app_tutorial_components3.png)
 
-From the previous tutorial, you have your account and a cluster with one worker node. In this lesson, you create an instance of Watson Tone Analyzer service in your {{site.data.keyword.Bluemix_notm}} account and configure two deployments, one deployment for each component of the app. Each component is deployed in a Kubernetes pod in the worker node. To make both of those components publicly available, you also create a Kubernetes service for each component.
+From the previous tutorial, you have your account and a cluster with one worker node. In this lesson, you create an instance of {{site.data.keyword.watson}} {{site.data.keyword.toneanalyzershort}} service in your {{site.data.keyword.Bluemix_notm}} account and configure two deployments, one deployment for each component of the app. Each component is deployed in a Kubernetes pod in the worker node. To make both of those components publicly available, you also create a Kubernetes service for each component.
 
 
-### Lesson 3a: Deploying the Watson Tone Analyzer app
+### Lesson 3a: Deploying the {{site.data.keyword.watson}} {{site.data.keyword.toneanalyzershort}} app
 {: #lesson3a}
 
-1.  In a CLI, navigate to the third app directory, `Stage3`. If you are using Docker Toolbox for Windows or OS X, use Docker Quickstart Terminal.
+1.  In a CLI, navigate to the `Lab 3` directory.
 
   ```
-  cd <username_home_directory>/container-service-getting-started-wt/Stage3
+  cd 'container-service-getting-started-wt/Lab 3'
   ```
   {: pre}
 
-2.  Build the first {{site.data.keyword.watson}} image.
+2.  If you started a new CLI session, log in and set the cluster context.
+
+3.  Build the first {{site.data.keyword.watson}} image.
 
     1.  Navigate to the `watson` directory.
 
@@ -603,7 +495,7 @@ From the previous tutorial, you have your account and a cluster with one worker 
         ```
         {: pre}
 
-    2.  Build and tag the first part of the app locally as an image. Again, don't forget the period (`.`) at the end of the command.
+    2.  Build and tag the first part of the app locally as an image. Again, don't forget the period (`.`) at the end of the command. If you're using the Docker Quickstart terminal to run Docker commands, be sure that you switch CLIs.
 
         ```
         docker build -t registry.<region>.bluemix.net/<namespace>/watson .
@@ -624,12 +516,12 @@ From the previous tutorial, you have your account and a cluster with one worker 
         ```
         {: pre}
 
-3.  Build the second {{site.data.keyword.watson}}-talk image.
+3.  Build the {{site.data.keyword.watson}}-talk image.
 
     1.  Navigate to the `watson-talk` directory.
 
         ```
-        cd <username_home_directory>/container-service-getting-started-wt/Stage3/watson-talk
+        cd 'container-service-getting-started-wt/Lab 3/watson-talk'
         ```
         {: pre}
 
@@ -654,9 +546,7 @@ From the previous tutorial, you have your account and a cluster with one worker 
         ```
         {: pre}
 
-4.  If you are using the Docker Quickstart Terminal, switch back to the CLI that you used to set the `KUBECONFIG` session variable.
-
-5.  Verify that the images were successfully added to your registry namespace.
+4.  Verify that the images were successfully added to your registry namespace. If you used the Docker Quickstart terminal to run Docker commands, be sure that you switch back to the CLI that you used to set the `KUBECONFIG` session variable.
 
     ```
     bx cr images
@@ -676,7 +566,7 @@ From the previous tutorial, you have your account and a cluster with one worker 
     ```
     {: screen}
 
-6.  Open the `<username_home_directory>/container-service-getting-started-wt/Stage3/watson-deployment.yml` file with a text editor. This configuration script includes a deployment and a service for both the watson and watson-talk components of the app.
+5.  Open the `watson-deployment.yml` file, in the `Lab 3` directory, with a text editor. This configuration script includes a deployment and a service for both the watson and watson-talk components of the app.
 
     1.  Update the details for the image in your registry namespace for both deployments.
 
@@ -705,7 +595,7 @@ From the previous tutorial, you have your account and a cluster with one worker 
         ```
         {: codeblock}
 
-        If you forget what you named the secret, run the following command.
+        If you forgot what you named the secret, run the following command.
 
         ```
         kubectl get secrets --namespace=default
@@ -714,14 +604,14 @@ From the previous tutorial, you have your account and a cluster with one worker 
 
     3.  In the watson-talk service section, note the value that is set for the `NodePort`. This example uses 30080.
 
-7.  Run the configuration script.
+6.  Run the configuration script.
 
   ```
-  kubectl apply -f <username_home_directory>/container-service-getting-started-wt/Stage3/watson-deployment.yml
+  kubectl apply -f watson-deployment.yml
   ```
   {: pre}
 
-8.  Optional: Verify that the {{site.data.keyword.watson}} {{site.data.keyword.toneanalyzershort}} secret is mounted as a volume to the pod.
+7.  Optional: Verify that the {{site.data.keyword.watson}} {{site.data.keyword.toneanalyzershort}} secret is mounted as a volume to the pod.
 
     1.  To get the name of a watson pod, run the following command.
 
@@ -759,37 +649,20 @@ From the previous tutorial, you have your account and a cluster with one worker 
         ```
         {: codeblock}
 
-9.  Open a browser and analyze some text. With the example IP address, the format of the URL is `http://<worker_node_IP_address>:<watson-talk-nodeport>/analyze/"<text_to_analyze>"`. Example:
+8.  Open a browser and analyze some text. The format of the URL is `http://<worker_node_IP_address>:<watson-talk-nodeport>/analyze/"<text_to_analyze>"`.
+
+    Example:
 
     ```
     http://169.47.227.138:30080/analyze/"Today is a beautiful day"
     ```
-    {: codeblock}
+    {: screen}
 
     In a browser, you can see the JSON response for the text you entered.
 
-10. Launch your Kubernetes dashboard with the default port 8001.
+9.  [Launch the Kubernetes dashboard](cs_app.html#cli_dashboard). Note that the steps differ depending on your version of Kubernetes.
 
-    1.  Set the proxy with the default port number.
-
-        ```
-        kubectl proxy
-        ```
-        {: pre}
-
-        ```
-        Starting to serve on 127.0.0.1:8001
-        ```
-        {: screen}
-
-    2.  Open the following URL in a web browser to see the Kubernetes dashboard.
-
-        ```
-        http://localhost:8001/ui
-        ```
-        {: codeblock}
-
-11. In the **Workloads** tab, you can see the resources that you created. When you are done exploring the Kubernetes dashboard, use CTRL+C to exit the `proxy` command.
+10. In the **Workloads** tab, you can see the resources that you created. When you are done exploring the Kubernetes dashboard, use CTRL+C to exit the `proxy` command.
 
 ### Lesson 3b. Updating the running Watson Tone Analyzer deployment
 {: #lesson3b}
@@ -836,33 +709,37 @@ Change the name of the image:
 
 [Test your knowledge and take a quiz! ![External link icon](../icons/launch-glyph.svg "External link icon")](https://ibmcloud-quizzes.mybluemix.net/containers/apps_tutorial/quiz.php)
 
-Congratulations! You deployed the Watson Tone Analyzer app. The PR firm can definitely start using this deployment of the app to start analyzing their press releases.
+Congratulations! You deployed the {{site.data.keyword.watson}} {{site.data.keyword.toneanalyzershort}} app. The PR firm can definitely start using this deployment of the app to start analyzing their press releases.
 
 Ready to delete what you created? You can use the configuration script to delete the resources that you created.
 
-```
-kubectl delete -f <username_home_directory>/container-service-getting-started-wt/Stage3/watson-deployment.yml
-```
-{: pre}
+    ```
+    kubectl delete -f watson-deployment.yml
+    ```
+    {: pre}
 
-Output:
+    Output:
 
-```
-deployment "watson-pod" deleted
-deployment "watson-talk-pod" deleted
-service "watson-service" deleted
-service "watson-talk-service" deleted
-```
-{: screen}
+    ```
+    deployment "watson-pod" deleted
+    deployment "watson-talk-pod" deleted
+    service "watson-service" deleted
+    service "watson-talk-service" deleted
+    ```
+    {: screen}
 
-If you do not want to keep the cluster, you can delete that too.
+    If you do not want to keep the cluster, you can delete that too.
 
-```
-bx cs cluster-rm <pr_firm_cluster>
-```
-{: pre}
+    ```
+    bx cs cluster-rm <pr_firm_cluster>
+    ```
+    {: pre}
 
 ## What's next?
 {: #next}
 
-Try exploring the container orchestration journeys on [developerWorks ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/code/journey/category/container-orchestration/).
+Now that you conquered the basics, you can move to more advanced activities. Consider trying out one of the following:
+
+- Complete a more complicated lab in the repository
+- Automatically scale your apps with {{site.data.keyword.containershort_notm}}](cs_app.html#app_scaling)
+- Explore the container orchestration journeys on [developerWorks ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/code/journey/category/container-orchestration/)

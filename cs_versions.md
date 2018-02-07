@@ -18,20 +18,19 @@ lastupdated: "2018-01-15"
 # Kubernetes versions for {{site.data.keyword.containerlong_notm}}
 {: #cs_versions}
 
-Review the Kubernetes versions that are available on {{site.data.keyword.containerlong}}.
+{{site.data.keyword.containerlong}} concurrently supports multiple versions of Kubernetes: a latest version, a default version, and a supported version that is generally two versions behind the latest. The default version might be the same as the latest version, and is used when you create or update a cluster, unless you specify a different version.
 {:shortdesc}
 
-{{site.data.keyword.containershort_notm}} supports several versions of Kubernetes. The default version is used when you create or update a cluster, unless you specify a different version. The available Kubernetes versions are:
+The current supported Kubernetes versions are:
 
-- 1.8.6 (Default version)
-- 1.7.4
-- 1.5.6
+- Latest: 1.8.6
+- Default: 1.8.6
+- Supported: 1.5.6
 
-
-To check which version of the Kubernetes CLI that you are running locally or that your cluster is running, run the following command and check the version.
+If you are running clusters on a Kubernetes version that is not currently supported, [review potential impacts](#version_types) for updates and then immediately [update your cluster](cs_cluster_update.html#update) to continue receiving important security updates and support. To check the server version, run the following command.
 
 ```
-kubectl version  --short
+kubectl version  --short | grep -i server
 ```
 {: pre}
 
@@ -62,6 +61,9 @@ By default, you cannot update a Kubernetes master more than two minor versions a
 The following information summarizes updates that are likely to have impact on deployed apps when you update a cluster to a new version from the previous version. Review the [Kubernetes changelog ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG.md) for a complete list of changes in Kubernetes versions.
 
 For more information on the updating process, see [Updating clusters](cs_cluster_update.html#master) and [Updating worker nodes](cs_cluster_update.html#worker_node).
+
+
+
 
 ## Version 1.8
 {: #cs_v18}
