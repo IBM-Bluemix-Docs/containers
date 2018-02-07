@@ -34,9 +34,12 @@ You can use non-persistent storage options if your data is not required to be pe
 
 The following image shows available non-persistent data storage options in {{site.data.keyword.containerlong_notm}}. These options are available for free and standard clusters.
 <p>
-<img src="images/cs_storage_nonpersistent.png" alt="Non-persistent data storage options" width="400"/></p>
+<img src="images/cs_storage_nonpersistent.png" alt="Non-persistent data storage options" width="300" style="width:300px; border-style: none"/></p>
 
 <table summary="The table shows non-persistent storage options. Rows are to be read from the left to right, with the number of the option in column one, the title of the otion in column two and a description in column three.">
+<col width="1">
+<col width="30">
+<col width="400">
   <thead>
   <th>#</th>
   <th>Option</th>
@@ -71,6 +74,9 @@ The following image shows the options that you have in {{site.data.keyword.conta
 <img src="images/cs_storage_ha.png" alt="High availability options for persistent storage"/></p>
 
 <table summary="The table shows persistent storage options. Rows are to be read from the left to right, with the number of the option in column one, the title of the otion in column two and a description in column three.">
+<col width="1">
+<col width="30">
+<col width="400">
   <thead>
   <th>#</th>
   <th>Option</th>
