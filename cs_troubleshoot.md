@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-29"
+lastupdated: "2018-01-31"
 
 ---
 
@@ -580,7 +580,7 @@ Review the following reasons why logs are not appearing and the corresponding tr
  </tr>
  <tr>
  <td>If you specified a space at cluster creation, the account owner does not have Manager, Developer, or Auditor permissions to that space.</td>
- <td>To change access permissions for the account owner:<ol><li>To find out who the account owner for the cluster is, run <code>bx cs api-key-info &lt;cluster_name_or_id&gt;</code>.</li><li>To grant that account owner Manager, Developer, or Auditor {{site.data.keyword.containershort_notm}} access permissions to the space, see <a href="cs_users.html#managing">Managing cluster access</a>.</li><li>To refresh the logging token after permissions have been changed, run <code>bx cs logging-config-refresh &lt;cluster_name_or_id&gt;</code>.</li></ol></td>
+ <td>To change access permissions for the account owner:<ol><li>To find out who the account owner for the cluster is, run <code>bx cs api-key-info &lt;cluster_name_or_ID&gt;</code>.</li><li>To grant that account owner Manager, Developer, or Auditor {{site.data.keyword.containershort_notm}} access permissions to the space, see <a href="cs_users.html#managing">Managing cluster access</a>.</li><li>To refresh the logging token after permissions have been changed, run <code>bx cs logging-config-refresh &lt;cluster_name_or_ID&gt;</code>.</li></ol></td>
  </tr>
  </tbody></table>
 
@@ -613,9 +613,10 @@ To test changes you made during troubleshooting, you can deploy Noisy, a sample 
         {:pre}
 
   4. After a few minutes, you can view your logs in the Kibana dashboard. To access the Kibana dashboard, go to one of the following URLs and select the {{site.data.keyword.Bluemix_notm}} account where you created the cluster. If you specified a space at cluster creation, go to that space instead.
-        - US-South and US-East: https://logging.ng.bluemix.net
-        - UK-South and EU-Central: https://logging.eu-fra.bluemix.net
-        - AP-South: https://logging.au-syd.bluemix.net
+      - US-South and US-East: https://logging.ng.bluemix.net
+      - UK-South: https://logging.eu-gb.bluemix.net
+      - EU-Central: https://logging.eu-fra.bluemix.net
+      - AP-South: https://logging.au-syd.bluemix.net
 
 <br />
 
@@ -722,7 +723,7 @@ To troubleshoot your load balancer service:
 {: #cs_ingress_fails}
 
 {: tsSymptoms}
-You publicly exposed your app by creating an Ingress resource for your app in your cluster. When you tried to connect to your app via the public IP address or subdomain of the Ingress controller, the connection failed or timed out.
+You publicly exposed your app by creating an Ingress resource for your app in your cluster. When you tried to connect to your app via the public IP address or subdomain of the Ingress application load balancer, the connection failed or timed out.
 
 {: tsCauses}
 Ingress might not be working properly for the following reasons:
@@ -735,7 +736,7 @@ Ingress might not be working properly for the following reasons:
 {: tsResolve}
 To troubleshoot your Ingress:
 
-1.  Check that you set up a standard cluster that is fully deployed and has at least two worker nodes to assure high availability for your Ingress controller.
+1.  Check that you set up a standard cluster that is fully deployed and has at least two worker nodes to assure high availability for your Ingress application load balancer.
 
   ```
   bx cs workers <cluster_name_or_id>
@@ -744,7 +745,7 @@ To troubleshoot your Ingress:
 
     In your CLI output, make sure that the **Status** of your worker nodes displays **Ready** and that the **Machine Type** shows a machine type other than **free**.
 
-2.  Retrieve the Ingress controller subdomain and public IP address, and then ping each one.
+2.  Retrieve the Ingress application load balancer subdomain and public IP address, and then ping each one.
 
     1.  Retrieve the Ingress controller subdomain.
 
@@ -753,33 +754,33 @@ To troubleshoot your Ingress:
       ```
       {: pre}
 
-    2.  Ping the Ingress controller subdomain.
+    2.  Ping the Ingress application load balancer subdomain.
 
       ```
       ping <ingress_controller_subdomain>
       ```
       {: pre}
 
-    3.  Retrieve the public IP address of your Ingress controller.
+    3.  Retrieve the public IP address of your Ingress application load balancer.
 
       ```
       nslookup <ingress_controller_subdomain>
       ```
       {: pre}
 
-    4.  Ping the Ingress controller public IP address.
+    4.  Ping the Ingress application load balancer public IP address.
 
       ```
       ping <ingress_controller_ip>
       ```
       {: pre}
 
-    If the CLI returns a timeout for the public IP address or subdomain of the Ingress controller, and you have set up a custom firewall that is protecting your worker nodes, you might need to open additional ports and networking groups in your [firewall](#cs_firewall).
+    If the CLI returns a timeout for the public IP address or subdomain of the Ingress application load balancer, and you have set up a custom firewall that is protecting your worker nodes, you might need to open additional ports and networking groups in your [firewall](#cs_firewall).
 
-3.  If you are using a custom domain, make sure that your custom domain is mapped to the public IP address or subdomain of the IBM-provided Ingress controller with your Domain Name Service (DNS) provider.
-    1.  If you used the Ingress controller subdomain, check your Canonical Name record (CNAME).
-    2.  If you used the Ingress controller public IP address, check that your custom domain is mapped to the portable public IP address in the Pointer record (PTR).
-4.  Check your Ingress configuration file.
+3.  If you are using a custom domain, make sure that your custom domain is mapped to the public IP address or subdomain of the IBM-provided Ingress application load balancer with your Domain Name Service (DNS) provider.
+    1.  If you used the Ingress application load balancer subdomain, check your Canonical Name record (CNAME).
+    2.  If you used the Ingress application load balancer public IP address, check that your custom domain is mapped to the portable public IP address in the Pointer record (PTR).
+4.  Check your Ingress resource configuration file.
 
     ```
     apiVersion: extensions/v1beta1
@@ -802,7 +803,7 @@ To troubleshoot your Ingress:
     ```
     {: codeblock}
 
-    1.  Check that the Ingress controller subdomain and TLS certificate are correct. To find the IBM provided subdomain and TLS certificate, run bx cs cluster-get <cluster_name_or_id>.
+    1.  Check that the Ingress application load balancer subdomain and TLS certificate are correct. To find the IBM provided subdomain and TLS certificate, run bx cs cluster-get <cluster_name_or_id>.
     2.  Make sure that your app listens on the same path that is configured in the **path** section of your Ingress. If your app is set up to listen on the root path, include **/** as your path.
 5.  Check your Ingress deployment and look for potential error messages.
 

@@ -307,7 +307,12 @@ Let your cluster access infrastructure resources and services from behind a fire
             <td><code>169.48.79.236</code><br><code>169.46.186.113</code></td>
            </tr>
           <tr>
-           <td>EU Central, UK South</td>
+           <td>UK South</td>
+           <td>ingest.logging.eu-gb.bluemix.net</td>
+           <td><code>169.50.115.113</code></td>
+          </tr>
+          <tr>
+           <td>EU Central</td>
            <td>ingest-eu-fra.logging.bluemix.net</td>
            <td><code>158.177.88.43</code><br><code>159.122.87.107</code></td>
           </tr>

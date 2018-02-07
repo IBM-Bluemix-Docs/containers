@@ -513,7 +513,7 @@ spec:
   </tr>
   <tr>
   <td><code>servicePort</code></td>
-  <td>Replace <code>&lt;<em>service_port</em>&gt;</code> with this parameter is optional. When provided, the port is substituted to this value before traffic is sent to the backend app. Otherwise, the port remains same as the Ingress port.</td>
+  <td>This parameter is optional. When provided, the port is substituted to this value before traffic is sent to the backend app. Otherwise, the port remains same as the Ingress port.</td>
   </tr>
   </tbody></table>
   </dd>
@@ -580,7 +580,7 @@ spec:
  </tr>
  <tr>
  <td><code>&lt;read_timeout&gt;</code></td>
- <td>The number of seconds to wait before the back-end app is read, for example <code>65s</code>.</td>
+ <td>The number of seconds to wait before the back-end app is read, for example <code>65s</code>. <strong>Note:</strong> A read-timeout cannot exceed 120 seconds.</td>
  </tr>
  </tbody></table>
 

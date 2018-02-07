@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-12"
+lastupdated: "2018-02-02"
 
 ---
 
@@ -36,7 +36,7 @@ You can forward logs for log sources such as containers, applications, worker no
 |`application`|Logs for your own application that runs in a Kubernetes cluster.|`/var/log/apps/**/*.log`, `/var/log/apps/**/*.err`|
 |`worker`|Logs for virtual machine worker nodes within a Kubernetes cluster.|`/var/log/syslog`, `/var/log/auth.log`|
 |`kubernetes`|Logs for the Kubernetes system component.|`/var/log/kubelet.log`, `/var/log/kube-proxy.log`|
-|`ingress`|Logs for an application load balancer, managed by the Ingress controller, that manages network traffic coming into a Kubernetes cluster.|`/var/log/alb/ids/*.log`, `/var/log/alb/ids/*.err`, `/var/log/alb/customerlogs/*.log`, `/var/log/alb/customerlogs/*.err`|
+|`ingress`|Logs for an Ingress application load balancer that manages network traffic coming into a Kubernetes cluster.|`/var/log/alb/ids/*.log`, `/var/log/alb/ids/*.err`, `/var/log/alb/customerlogs/*.log`, `/var/log/alb/customerlogs/*.err`|
 {: caption="Log source characteristics" caption-side="top"}
 
 ## Enabling log forwarding
@@ -481,7 +481,8 @@ For standard clusters, logs are located in the {{site.data.keyword.Bluemix_notm}
 
 To access the Kibana dashboard, go to one of the following URLs and select the {{site.data.keyword.Bluemix_notm}} account or space where you created the cluster.
 - US-South and US-East: https://logging.ng.bluemix.net
-- UK-South and EU-Central: https://logging.eu-fra.bluemix.net
+- UK-South: https://logging.eu-gb.bluemix.net
+- EU-Central: https://logging.eu-fra.bluemix.net
 - AP-South: https://logging.au-syd.bluemix.net
 
 For more information about viewing logs, see [Navigating to Kibana from a web browser](/docs/services/CloudLogAnalysis/kibana/launch.html#launch_Kibana_from_browser).
@@ -578,7 +579,7 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
           "IntervalSeconds":180,
           "TimeoutSeconds":10,
           "Enabled":true
-      }
+        }
     ```
     {:codeblock}
 
@@ -688,58 +689,15 @@ The check in the above example YAML runs every 3 minutes. If it fails 3 consecut
     ```
     {: pre}
 
-4. Ensure that you created a Docker pull secret with the name `international-registry-docker-secret` in the `kube-system` namespace. Autorecovery is hosted in {{site.data.keyword.registryshort_notm}}'s global Docker registry. If you have not created a Docker registry secret that contains valid credentials for the global registry, create one to run the Autorecovery system.
 
-    1. Install the {{site.data.keyword.registryshort_notm}} plug-in.
-
-        ```
-        bx plugin install container-registry -r Bluemix
-        ```
-        {: pre}
-
-    2. Target the global registry.
-
-        ```
-        bx cr region-set global
-        ```
-        {: pre}
-
-    3. Create a registry token for the global registry.
-
-        ```
-        bx cr token-add --non-expiring --description globalRegistryToken
-        ```
-        {: pre}
-
-    4. Set the `GLOBAL_REGISTRY_TOKEN` environment variable to the token you created.
-
-        ```
-        GLOBAL_REGISTRY_TOKEN=$(bx cr token-get $(bx cr tokens | grep globalRegistryToken | awk '{print $1}') -q)
-        ```
-        {: pre}
-
-    5. Set the `DOCKER_EMAIL` environment variable to the current user. Your email address is needed only to run the `kubectl` command in the next step.
-
-        ```
-        DOCKER_EMAIL=$(bx target | grep "User" | awk '{print $2}')
-        ```
-        {: pre}
-
-    6. Create the Docker pull secret.
-
-        ```
-        kubectl -n kube-system create secret docker-registry international-registry-docker-secret --docker-username=token --docker-password="$GLOBAL_REGISTRY_TOKEN" --docker-server=registry.bluemix.net --docker-email="$DOCKER_EMAIL"
-        ```
-        {: pre}
-
-5. Deploy Autorecovery into your cluster by applying this YAML file.
+4. Deploy Autorecovery into your cluster by applying this YAML file.
 
    ```
    kubectl apply -f https://raw.githubusercontent.com/IBM-Bluemix/kube-samples/master/ibm-worker-recovery/ibm-worker-recovery.yml
    ```
    {: pre}
 
-6. After a few minutes, you can check the `Events` section in the output of the following command to see activity on the Autorecovery deployment.
+5. After a few minutes, you can check the `Events` section in the output of the following command to see activity on the Autorecovery deployment.
 
     ```
     kubectl -n kube-system describe deployment ibm-worker-recovery
