@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-24"
+lastupdated: "2018-02-06"
 
 ---
 
@@ -67,13 +67,12 @@ The diagram shows how Kubernetes carries user network traffic in {{site.data.key
  <ul>
   <li>Expose multiple apps in your cluster by creating one external HTTP or HTTPS load balancer that uses a secured and unique public entrypoint to route incoming requests to your apps.</li>
   <li>You can use one public route to expose multiple apps in your cluster as services.</li>
-  <li>Ingress consists of three main components: the Ingress resource, the Ingress controller, and the application load balancer.
+  <li>Ingress consists of two main components: the Ingress resource and the application load balancer.
    <ul>
     <li>The Ingress resource defines the rules for how to route and load balance incoming requests for an app.</li>
-    <li>The Ingress controller enables the application load balancer, which listens for incoming HTTP or HTTPS service requests and forwards requests based on the rules defined for each Ingress resource.</li>
-    <li>The application load balancer load balances requests across the apps's pods.
+    <li>The application load balancer listens for incoming HTTP or HTTPS service requests and forwards requests across the apps' pods based on the rules defined for each Ingress resource.</li>
    </ul>
-  <li>Use Ingress if you want to implement your own load balancer with custom routing rules and if you need SSL termination for your apps.</li>
+  <li>Use Ingress if you want to implement your own application load balancer with custom routing rules and if you need SSL termination for your apps.</li>
  </ul>
 </dd></dl>
 
@@ -137,6 +136,8 @@ Your options for IP addresses when you create a LoadBalancer service are as foll
 - If your cluster is available on a private VLAN only, then a portable private IP address is used.
 - You can request a portable public or private IP address for a LoadBalancer service by adding an annotation to the configuration file: `service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: <public_or_private>`.
 
+
+
 For instructions on how to create a LoadBalancer service with {{site.data.keyword.containershort_notm}}, see [Configuring public access to an app by using the load balancer service type](cs_loadbalancer.html#config).
 
 
@@ -150,17 +151,19 @@ For instructions on how to create a LoadBalancer service with {{site.data.keywor
 Ingress allows you to expose multiple services in your cluster and make them publicly available by using a single public entry point.
 {:shortdesc}
 
-Rather than creating a load balancer service for each app that you want to expose to the public, Ingress provides a unique public route that lets you forward public requests to apps inside and outside your cluster based on their individual paths. Ingress consists of two main components. The Ingress resource defines the rules for how to route incoming requests for an app. All Ingress resources must be registered with the Ingress controller that listens for incoming HTTP or HTTPS service requests and forwards requests based on the rules defined for each Ingress resource.
+Rather than creating a load balancer service for each app that you want to expose to the public, Ingress provides a unique public route that lets you forward public requests to apps inside and outside your cluster based on their individual paths. Ingress consists of two main components. The Ingress resource defines the rules for how to route incoming requests for an app. All Ingress resources must be registered with the Ingress application load balancer that listens for incoming HTTP or HTTPS service requests and forwards requests based on the rules defined for each Ingress resource.
 
-When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically creates a highly available Ingress controller for your cluster and assigns a unique public route with the format `<cluster_name>.<region>.containers.mybluemix.net` to it. The public route is linked to a portable public IP address that is provisioned into your IBM Cloud infrastructure (SoftLayer) account during cluster creation.
+When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically creates a highly available application load balancer for your cluster and assigns a unique public route with the format `<cluster_name>.<region>.containers.mybluemix.net` to it. The public route is linked to a portable public IP address that is provisioned into your IBM Cloud infrastructure (SoftLayer) account during cluster creation. A private application load balancer is also automatically created, but is not automatically enabled.
 
 The following diagram shows how Ingress directs communication from the internet to an app:
 
 ![Expose a service by using the {{site.data.keyword.containershort_notm}} ingress support](images/cs_ingress.png)
 
-To expose an app via Ingress, you must create a Kubernetes service for your app and register this service with the Ingress controller by defining an Ingress resource. The Ingress resource specifies the path that you want to append to the public route to form a unique URL for your exposed app, like for example: `mycluster.us-south.containers.mybluemix.net/myapp`. When you enter this route into your web browser, as depicted in the diagram, the request is sent to the linked portable public IP address of the Ingress controller. The Ingress controller checks if a routing rule for the `myapp` path in the `mycluster` cluster exists. If a matching rule is found, the request including the individual path is forwarded to the pod where the app is deployed, considering the rules that were defined in the original Ingress resource object. In order for the app to process incoming requests, make sure that your app listens on the individual path that you defined in the Ingress resource.
+To expose an app via Ingress, you must create a Kubernetes service for your app and register this service with the application load balancer by defining an Ingress resource. The Ingress resource specifies the path that you want to append to the public route to form a unique URL for your exposed app, such as `mycluster.us-south.containers.mybluemix.net/myapp`. When you enter this route into your web browser, as depicted in the diagram, the request is sent to the linked portable public IP address of the application load balancer. The application load balancer checks if a routing rule for the `myapp` path in the `mycluster` cluster exists. If a matching rule is found, the request including the individual path is forwarded to the pod where the app is deployed, considering the rules that were defined in the original Ingress resource object. In order for the app to process incoming requests, make sure that your app listens on the individual path that you defined in the Ingress resource.
 
-You can configure the Ingress controller to manage incoming network traffic for your apps for the following scenarios:
+
+
+You can configure the application load balancer to manage incoming network traffic for your apps for the following scenarios:
 
 -   Use the IBM-provided domain without TLS termination
 -   Use the IBM-provided domain with TLS termination
