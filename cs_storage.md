@@ -23,18 +23,18 @@ You can persist data for the case a component in your cluster fails and to share
 ## Planning highly available storage
 {: #planning}
 
-In {{site.data.keyword.containerlong_notm}} you can choose from several options to store your app data and share data across pods in your cluster. However, not all storage options offer the same level of persistence and availability in case a component in your cluster or a whole site fails. 
+In {{site.data.keyword.containerlong_notm}} you can choose from several options to store your app data and share data across pods in your cluster. However, not all storage options offer the same level of persistence and availability in case a component in your cluster or a whole site fails.
 {: shortdesc}
 
 ### Non-persistent data storage options
 {: #non_persistent}
 
-You can use non-persistent storage options if your data is not required to be persistently stored, so that you can recover it after a component in your cluster fails, or if data does not need to be shared across app instances. Non-persistent storage options can also be used to unit-test your app components or try out new features. 
+You can use non-persistent storage options if your data is not required to be persistently stored, so that you can recover it after a component in your cluster fails, or if data does not need to be shared across app instances. Non-persistent storage options can also be used to unit-test your app components or try out new features.
 {: shortdesc}
 
 The following image shows available non-persistent data storage options in {{site.data.keyword.containerlong_notm}}. These options are available for free and standard clusters.
 <p>
-<img src="images/cs_storage_nonpersistent.png" alt="Non-persistent data storage options" width="400"/></p>
+<img src="images/cs_storage_nonpersistent.png" alt="Non-persistent data storage options" width="400" style="width:400px; border-style: none"/></p>
 
 <table summary="The table shows non-persistent storage options. Rows are to be read from the left to right, with the number of the option in column one, the title of the otion in column two and a description in column three.">
   <thead>
@@ -44,9 +44,9 @@ The following image shows available non-persistent data storage options in {{sit
   </thead>
   <tbody>
     <tr>
-      <td>1</td>
-      <td>Inside the container or pod</td>
-      <td>Containers and pods are, by design, short-lived and can fail unexpectedly. However, you can write data to the local file system of the container to store data throughout the lifecycle of the container. Data inside a container cannot be shared with other containers or pods and is lost when the container crashes or is removed. For more information, see [Storing data in a container](https://docs.docker.com/storage/).</td>
+      <td width="5%">1</td>
+      <td width="20%">Inside the container or pod</td>
+      <td width="75%">Containers and pods are, by design, short-lived and can fail unexpectedly. However, you can write data to the local file system of the container to store data throughout the lifecycle of the container. Data inside a container cannot be shared with other containers or pods and is lost when the container crashes or is removed. For more information, see [Storing data in a container](https://docs.docker.com/storage/).</td>
     </tr>
   <tr>
     <td>2</td>
@@ -62,11 +62,11 @@ The following image shows available non-persistent data storage options in {{sit
 The main challenge when you create highly available stateful apps is to persist data across multiple app instances in multiple locations, and to keep data in sync at all times. For high available data, you want to make sure that you have a master database with multiple instances that are spread across multiple data centers or even multiple regions, and that data in this master is continuously replicated. All instances in your cluster must read from and write to this master database. In case one instance of the master is down, other instances can take over the workload, so that you do not experience downtime for your apps.
 {: shortdesc}
 
-The following image shows the options that you have in {{site.data.keyword.containerlong_notm}} to make your data highly available in a standard cluster. The option that is right for you depends on the following factors: 
+The following image shows the options that you have in {{site.data.keyword.containerlong_notm}} to make your data highly available in a standard cluster. The option that is right for you depends on the following factors:
   * **The type of app that you have:** For example, you might have an app that must store data on a file basis rather than inside a database.
-  * **Legal requirements for where to store and route the data:** For example, you might be obligated to store and route data in the United States only and you cannot use a service that is located in Europe. 
-  * **Backup and restore options:** Every storage options comes with capabilities to backup and restore data. Check that available backup and restore options meet the requirements of your disaster recovery plan, such as the frequency of backups or the capabilities of storing data outside your primary data center. 
-  * **Global replication:** For high availability, you might want to set up multiple instances of storage that are distributed and replicated across data centers worldwide.  
+  * **Legal requirements for where to store and route the data:** For example, you might be obligated to store and route data in the United States only and you cannot use a service that is located in Europe.
+  * **Backup and restore options:** Every storage options comes with capabilities to backup and restore data. Check that available backup and restore options meet the requirements of your disaster recovery plan, such as the frequency of backups or the capabilities of storing data outside your primary data center.
+  * **Global replication:** For high availability, you might want to set up multiple instances of storage that are distributed and replicated across data centers worldwide.
 <p>
 <img src="images/cs_storage_ha.png" alt="High availability options for persistent storage"/></p>
 
@@ -78,9 +78,9 @@ The following image shows the options that you have in {{site.data.keyword.conta
   </thead>
   <tbody>
   <tr>
-  <td>1</td>
-  <td>NFS file storage</td>
-  <td>With this option, you can persist app and container data by using Kubernetes persistent volumes. Volumes are hosted on [Endurance and Performance NFS-based file storage ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/cloud/file-storage/details) which can be used for apps that store data on a file basis rather than in a database. File storage is encrypted at REST and clustered by IBM to provide high availability.<p>{{site.data.keyword.containershort_notm}} provides predefined storage classes that define the range of sizes of the storage, IOPS, the delete policy, and the read and write permissions for the volume. To initiate a request for NFS-based file storage, you must create a [persistent volume claim](cs_storage.html#create). After you submit a persistent volume claim, {{site.data.keyword.containershort_notm}} dynamically provisions a persistent volume that is hosted on NFS-based file storage. [You can mount the persistent volume claim](cs_storage.html#app_volume_mount) as a volume to your deployment to allow the containers to read from and write to the volume. </p><p>Persistent volumes are provisioned in the data center where the worker node is located. You can share data across the same replica set or with other deployments in the same cluster. You cannot share data across clusters when they are located in different data centers or regions. </p><p>By default, NFS storage is not backed up automatically. You can set up a periodic backup for your cluster by using the provided backup and restore mechanisms. When a container crashes or a pod is removed from a worker node, the data is not removed and can still be accessed by other deployments that mount the volume. </p><p><strong>Note:</strong> Persistent NFS file share storage is charged on a monthly basis. If you provision persistent storage for your cluster and remove it immediately, you still pay the monthly charge for the persistent storage, even if you used it only for a short amount of time.</p></td>
+  <td width="5%">1</td>
+  <td width="20%">NFS file storage</td>
+  <td width="75%">With this option, you can persist app and container data by using Kubernetes persistent volumes. Volumes are hosted on [Endurance and Performance NFS-based file storage ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/cloud/file-storage/details) which can be used for apps that store data on a file basis rather than in a database. File storage is encrypted at REST and clustered by IBM to provide high availability.<p>{{site.data.keyword.containershort_notm}} provides predefined storage classes that define the range of sizes of the storage, IOPS, the delete policy, and the read and write permissions for the volume. To initiate a request for NFS-based file storage, you must create a [persistent volume claim](cs_storage.html#create). After you submit a persistent volume claim, {{site.data.keyword.containershort_notm}} dynamically provisions a persistent volume that is hosted on NFS-based file storage. [You can mount the persistent volume claim](cs_storage.html#app_volume_mount) as a volume to your deployment to allow the containers to read from and write to the volume. </p><p>Persistent volumes are provisioned in the data center where the worker node is located. You can share data across the same replica set or with other deployments in the same cluster. You cannot share data across clusters when they are located in different data centers or regions. </p><p>By default, NFS storage is not backed up automatically. You can set up a periodic backup for your cluster by using the provided backup and restore mechanisms. When a container crashes or a pod is removed from a worker node, the data is not removed and can still be accessed by other deployments that mount the volume. </p><p><strong>Note:</strong> Persistent NFS file share storage is charged on a monthly basis. If you provision persistent storage for your cluster and remove it immediately, you still pay the monthly charge for the persistent storage, even if you used it only for a short amount of time.</p></td>
   </tr>
   <tr>
     <td>2</td>
@@ -258,7 +258,7 @@ You successfully created a persistent volume object and bound it to a persistent
 Create a persistent volume claim (pvc) to provision NFS file storage for your cluster. Then, mount this claim to a deployment to ensure that data is available even if the pods crash or shut down.
 {:shortdesc}
 
-The NFS file storage that backs the persistent volume is clustered by IBM in order to provide high availability for your data.
+The NFS file storage that backs the persistent volume is clustered by IBM in order to provide high availability for your data. The storage classes describe the types of storage offerings available and define aspects such as the data retention policy, size in gigabytes, and IOPS when you create your persistent volume.
 
 **Note**: If you have a firewall, [allow egress access](cs_firewall.html#pvc) for the IBM Cloud infrastructure (SoftLayer) IP ranges of the locations (data centers) that your clusters are in, so that you can create persistent volume claims.
 
@@ -286,115 +286,114 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
 
 2.  Decide if you want to save your data and the NFS file share after you delete the pvc, called the reclaim policy. If you want to keep your data, then choose a `retain` storage class. If you want the data and your file share to be deleted when you delete the pvc, choose a storage class without `retain`.
 
-3.  Review the IOPS of a storage class and the available storage sizes. 
+3.  Get the details for a storage class. Review the IOPS per gigabyte and the size range in the **paramters** field in your CLI output. 
 
-    - The bronze, silver, and gold storage classes use [Endurance storage ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/topic/endurance-storage) and have a single defined IOPS per GB for each class. The total IOPS depends on the size of the storage. For example, a 1000Gi pvc at 4 IOPS per GB has a total of 4000 IOPS. 
+    -  When you use bronze, silver, or gold storage classes, you get [Endurance storage ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/topic/endurance-storage) that define the IOPS per GB for each class. However, you can determine the total IOPS by choosing a size within the available range. For example, if you select a 1000Gi file share size in the silver storage class of 4 IOPS per GB, your volume has a total of 4000 IOPS. The more IOPS your persistent volume has, the faster it processes input and output operations. <p>**Example command to describe storage class**:</p>
 
-      **Example command to describe storage class**:
+       ```
+       kubectl describe storageclasses ibmc-file-silver
+       ```
+       {: pre}
 
-      ```
-      kubectl describe storageclasses ibmc-file-silver
-      ```
-      {: pre}
+       The **parameters** field provides the IOPS per GB associated with the storage class and the available sizes in gigabytes.
 
-      The **parameters** field provides the IOPS per GB associated with the storage class and the available sizes in gigabytes.
+       ```
+       Parameters:	iopsPerGB=4,sizeRange=20Gi,40Gi,80Gi,100Gi,250Gi,500Gi,1000Gi,2000Gi,4000Gi,8000Gi,12000Gi
+       ```
+       {: screen}
+       
 
-      ```
-      Parameters:	iopsPerGB=4,sizeRange=20Gi,40Gi,80Gi,100Gi,250Gi,500Gi,1000Gi,2000Gi,4000Gi,8000Gi,12000Gi
-      ```
-      {: screen}
-      
-    - The custom storage classes use [Performance storage ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/topic/performance-storage) and have discrete options for total IOPS and size. 
+    -  With custom storage classes, you get [Performance storage ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/topic/performance-storage) and have more control over choosing the combination of IOPS and size. <p>**Example command to describe custom storage class**:</p>
 
-    **Example command to describe custom storage class**:
+       ```
+       kubectl describe storageclasses ibmc-file-retain-custom
+       ```
+       {: pre}
 
-    ```
-    kubectl describe storageclasses ibmc-file-retain-custom
-    ```
-    {: pre}
+       The **parameters** field provides the IOPS associated with the storage class and the available sizes in gigabytes. For example, a 40Gi pvc can select IOPS that is a multiple of 100 that is in the range of 100 - 2000 IOPS.
 
-    The **parameters** field provides the IOPS associated with the storage class and the available sizes in gigabytes. For example, a 40Gi pvc can select IOPS that is a multiple of 100 that is in the range of 100 - 2000 IOPS.
-
-    ```
-    Parameters:	Note=IOPS value must be a multiple of 100,reclaimPolicy=Retain,sizeIOPSRange=20Gi:[100-1000],40Gi:[100-2000],80Gi:[100-4000],100Gi:[100-6000],1000Gi[100-6000],2000Gi:[200-6000],4000Gi:[300-6000],8000Gi:[500-6000],12000Gi:[1000-6000]
-    ```
-    {: screen}
-    
+       ```
+       Parameters:	Note=IOPS value must be a multiple of 100,reclaimPolicy=Retain,sizeIOPSRange=20Gi:[100-1000],40Gi:[100-2000],80Gi:[100-4000],100Gi:[100-6000],1000Gi[100-6000],2000Gi:[200-6000],4000Gi:[300-6000],8000Gi:[500-6000],12000Gi:[1000-6000]
+       ```
+       {: screen}
+       
 4. Create a configuration file to define your persistent volume claim and save the configuration as a `.yaml` file.
 
-    **Example for bronze, silver, gold storage classes**: 
+    -  **Example for bronze, silver, gold storage classes**:
+       
 
-    ```
-    apiVersion: v1
-    kind: PersistentVolumeClaim
-    metadata:
-      name: mypvc
-      annotations:
-        volume.beta.kubernetes.io/storage-class: "ibmc-file-silver"
-      
-    spec:
-      accessModes:
-        - ReadWriteMany
-      resources:
-        requests:
-          storage: 20Gi
-    ```
-    {: codeblock}
+       ```
+       apiVersion: v1
+       kind: PersistentVolumeClaim
+       metadata:
+        name: mypvc
+        annotations:
+          volume.beta.kubernetes.io/storage-class: "ibmc-file-silver"
+          
+       spec:
+        accessModes:
+          - ReadWriteMany
+        resources:
+          requests:
+            storage: 20Gi
+        ```
+        {: codeblock}
 
-    **Example for custom storage classes**: 
+    -  **Example for custom storage classes**:
+       
 
-    ```
-    apiVersion: v1
-    kind: PersistentVolumeClaim
-    metadata:
-      name: mypvc
-      annotations:
-        volume.beta.kubernetes.io/storage-class: "ibmc-file-retain-custom"
-      
-    spec:
-      accessModes:
-        - ReadWriteMany
-      resources:
-        requests:
-          storage: 40Gi
-          iops: "500"
-    ```
-    {: codeblock}
+       ```
+       apiVersion: v1
+       kind: PersistentVolumeClaim
+       metadata:
+         name: mypvc
+         annotations:
+           volume.beta.kubernetes.io/storage-class: "ibmc-file-retain-custom"
+         
+       spec:
+         accessModes:
+           - ReadWriteMany
+         resources:
+           requests:
+             storage: 40Gi
+             iops: "500"
+        ```
+        {: codeblock}
 
-    <table>
-    <thead>
-    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
-    </thead>
-    <tbody>
-    <tr>
-    <td><code>metadata/name</code></td>
-    <td>Enter the name of the persistent volume claim.</td>
-    </tr>
-    <tr>
-    <td><code>metadata/annotations</code></td>
-    <td>Specify the storage class for the persistent volume:
-      <ul>
-      <li>ibmc-file-bronze / ibmc-file-retain-bronze : 2 IOPS per GB.</li>
-      <li>ibmc-file-silver / ibmc-file-retain-silver: 4 IOPS per GB.</li>
-      <li>ibmc-file-gold / ibmc-file-retain-gold: 10 IOPS per GB.</li>
-      <li>ibmc-file-custom / ibmc-file-retain-custom: Multiple values of IOPS available.</li>
-      <p>If you do not specify a storage class, the persistent volume is created with the bronze storage class.</p></td>
-    </tr>
-    <tr>
-      <td><code>metadata/labels/billingType</code></td>
-      <td>Specify the frequency for which your storage bill is calculated, "monthly" or "hourly". The default is "monthly".</td>
-    </tr>
-    <tr>
-    <td><code>spec/accessModes</code>
-    <code>resources/requests/storage</code></td>
-    <td>If you choose a size other than one that is listed, the size is rounded up. If you select a size larger than the largest size, then the size is rounded down.</td>
-    </tr>
-    <tr>
-    <td><code>spec/accessModes</code>
-    <code>resources/requests/iops</code></td>
-    <td>This option is for ibmc-file-custom / ibmc-file-retain-custom only. Specify the total IOPS for the storage. To see all options, run `kubectl describe storageclasses ibmc-file-custom`. If you choose an IOPS other than one that is listed, the IOPS is rounded up.</td>
-    </tr>
-    </tbody></table>
+        <table>
+        <thead>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
+        </thead>
+        <tbody>
+        <tr>
+        <td><code>metadata/name</code></td>
+        <td>Enter the name of the persistent volume claim.</td>
+        </tr>
+        <tr>
+        <td><code>metadata/annotations</code></td>
+        <td>Specify the storage class for the persistent volume:
+          <ul>
+          <li>ibmc-file-bronze / ibmc-file-retain-bronze : 2 IOPS per GB.</li>
+          <li>ibmc-file-silver / ibmc-file-retain-silver: 4 IOPS per GB.</li>
+          <li>ibmc-file-gold / ibmc-file-retain-gold: 10 IOPS per GB.</li>
+          <li>ibmc-file-custom / ibmc-file-retain-custom: Multiple values of IOPS available.</li>
+          <p>If you do not specify a storage class, the persistent volume is created with the bronze storage class.</p></td>
+        </tr>
+        <tr>
+          <td><code>metadata/labels/billingType</code></td>
+          <td>Specify the frequency for which your storage bill is calculated, "monthly" or "hourly". The default is "monthly".</td>
+        </tr>
+        <tr>
+        <td><code>spec/accessModes</code>
+        <code>resources/requests/storage</code></td>
+        <td>If you choose a size other than one that is listed, the size is rounded up. If you select a size larger than the largest size, then the size is rounded down.</td>
+        </tr>
+        <tr>
+        <td><code>spec/accessModes</code>
+        <code>resources/requests/iops</code></td>
+        <td>This option is for customer storage classes only (`ibmc-file-custom / ibmc-file-retain-custom`). Specify the total IOPS for the storage. To see all options, run `kubectl describe storageclasses ibmc-file-custom`. If you choose an IOPS other than one that is listed, the IOPS is rounded up.</td>
+        </tr>
+        </tbody></table>
 
 5.  Create the persistent volume claim.
 
@@ -406,14 +405,14 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
 6.  Verify that your persistent volume claim is created and bound to the persistent volume. This process can take a few minutes.
 
     ```
-    kubectl describe pvc <pvc_name>
+    kubectl describe pvc mypvc
     ```
     {: pre}
 
     Example output:
 
     ```
-    Name:		<pvc_name>
+    Name:		mypvc
     Namespace:	default
     StorageClass:	""
     Status:		Bound
@@ -480,19 +479,19 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
     </tr>
     <tr>
     <td><code>spec/containers/volumeMounts/mountPath</code></td>
-    <td>The absolute path of the directory to where the volume is mounted inside the container deployment.</td>
+    <td>The absolute path of the directory to where the volume is mounted inside the container.</td>
     </tr>
     <tr>
     <td><code>spec/containers/volumeMounts/name</code></td>
-    <td>The name of the volume to mount to your deployment.</td>
+    <td>The name of the volume to mount to your pod.</td>
     </tr>
     <tr>
     <td><code>volumes/name</code></td>
-    <td>The name of the volume to mount to your deployment. Typically this name is the same as <code>volumeMounts/name</code>.</td>
+    <td>The name of the volume to mount to your pod. Typically this name is the same as <code>volumeMounts/name</code>.</td>
     </tr>
     <tr>
     <td><code>volumes/persistentVolumeClaim/claimName</code></td>
-    <td>The name of the persistent volume claim that you want to use as your volume. When you mount the volume to the deployment, Kubernetes identifies the persistent volume that is bound to the persistent volume claim and enables the user to read from and write to the persistent volume.</td>
+    <td>The name of the persistent volume claim that you want to use as your volume. When you mount the volume to the pod, Kubernetes identifies the persistent volume that is bound to the persistent volume claim and enables the user to read from and write to the persistent volume.</td>
     </tr>
     </tbody></table>
 
@@ -527,7 +526,6 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
     {: screen}
 
 <br />
-
 
 
 
