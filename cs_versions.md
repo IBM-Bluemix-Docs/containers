@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-15"
+lastupdated: "2018-02-08"
 
 ---
 
@@ -37,7 +37,6 @@ kubectl version  --short | grep -i server
 Example output:
 
 ```
-Client Version: 1.8.6
 Server Version: 1.8.6
 ```
 {: screen}
