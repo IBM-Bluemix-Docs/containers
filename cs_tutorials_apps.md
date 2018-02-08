@@ -445,18 +445,18 @@ Congratulations! You deployed the second version of the app. You had to use fewe
 
 Ready to delete what you created before you continue? This time, you can use the same configuration script to delete both of the resources that you created.
 
-    ```
-    kubectl delete -f healthcheck.yml
-    ```
-    {: pre}
+  ```
+  kubectl delete -f healthcheck.yml
+  ```
+  {: pre}
 
-    Output:
+  Output:
 
-    ```
-    deployment "hw-demo-deployment" deleted
-    service "hw-demo-service" deleted
-    ```
-    {: screen}
+  ```
+  deployment "hw-demo-deployment" deleted
+  service "hw-demo-service" deleted
+  ```
+  {: screen}
 
 <br />
 
@@ -713,27 +713,27 @@ Congratulations! You deployed the {{site.data.keyword.watson}} {{site.data.keywo
 
 Ready to delete what you created? You can use the configuration script to delete the resources that you created.
 
-    ```
-    kubectl delete -f watson-deployment.yml
-    ```
-    {: pre}
+  ```
+  kubectl delete -f watson-deployment.yml
+  ```
+  {: pre}
 
-    Output:
+  Output:
 
-    ```
-    deployment "watson-pod" deleted
-    deployment "watson-talk-pod" deleted
-    service "watson-service" deleted
-    service "watson-talk-service" deleted
-    ```
-    {: screen}
+  ```
+  deployment "watson-pod" deleted
+  deployment "watson-talk-pod" deleted
+  service "watson-service" deleted
+  service "watson-talk-service" deleted
+  ```
+  {: screen}
 
-    If you do not want to keep the cluster, you can delete that too.
+  If you do not want to keep the cluster, you can delete that too.
 
-    ```
-    bx cs cluster-rm <pr_firm_cluster>
-    ```
-    {: pre}
+  ```
+  bx cs cluster-rm <pr_firm_cluster>
+  ```
+  {: pre}
 
 ## What's next?
 {: #next}
