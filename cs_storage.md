@@ -37,25 +37,17 @@ The following image shows available non-persistent data storage options in {{sit
 <img src="images/cs_storage_nonpersistent.png" alt="Non-persistent data storage options" width="450" style="width: 450px; border-style: none"/></p>
 
 <table summary="The table shows non-persistent storage options. Rows are to be read from the left to right, with the number of the option in column one, the title of the otion in column two and a description in column three." style="width: 100%">
-<colgroup>
-       <col span="1" style="width: 5%;"/>
-       <col span="1" style="width: 20%;"/>
-       <col span="1" style="width: 75%;"/>
-    </colgroup>
   <thead>
-  <th>#</th>
   <th>Option</th>
   <th>Description</th>
   </thead>
   <tbody>
     <tr>
-      <td>1</td>
-      <td>Inside the container or pod</td>
+      <td>1. Inside the container or pod</td>
       <td>Containers and pods are, by design, short-lived and can fail unexpectedly. However, you can write data to the local file system of the container to store data throughout the lifecycle of the container. Data inside a container cannot be shared with other containers or pods and is lost when the container crashes or is removed. For more information, see [Storing data in a container](https://docs.docker.com/storage/).</td>
     </tr>
   <tr>
-    <td>2</td>
-    <td>On the worker node</td>
+    <td>2. On the worker node</td>
     <td>Every worker node is set up with primary and secondary storage that is determined by the machine type that you select for your worker node. The primary storage is used to store data from the operating system and cannot be accessed by the user. The secondary storage is used to store data in <code>/var/lib/docker</code>, the directory that all the container data is written to. <br/><br/>To access the secondary storage of your worker node, you can create an <code>/emptyDir</code> volume. This empty volume is assigned to a pod in your cluster, so that containers in that pod can read from and write to that volume. Because the volume is assigned to one specific pod, data cannot be shared with other pods in a replica set.<br/><p>An <code>/emptyDir</code> volume and its data are removed when: <ul><li>The assigned pod is permanently deleted from the worker node.</li><li>The assigned pod is scheduled on another worker node.</li><li>The worker node is reloaded or updated.</li><li>The worker node is deleted.</li><li>The cluster is deleted.</li><li>The {{site.data.keyword.Bluemix_notm}} account reaches a suspended state. </li></ul></p><p><strong>Note:</strong> If the container inside the pod crashes, the data in the volume is still available on the worker node.</p><p>For more information, see [Kubernetes volumes ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/storage/volumes/).</p></td>
     </tr>
     </tbody>
@@ -295,24 +287,24 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
 3.  Get the details for a storage class. Review the IOPS per gigabyte and the size range in the **paramters** field in your CLI output. 
 
     <ul>
-      <li>When you use bronze, silver, or gold storage classes, you get [Endurance storage ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/topic/endurance-storage) that define the IOPS per GB for each class. However, you can determine the total IOPS by choosing a size within the available range. For example, if you select a 1000Gi file share size in the silver storage class of 4 IOPS per GB, your volume has a total of 4000 IOPS. The more IOPS your persistent volume has, the faster it processes input and output operations. <p>**Example command to describe storage class**:</p>
+      <li>When you use bronze, silver, or gold storage classes, you get [Endurance storage ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/topic/endurance-storage) that define the IOPS per GB for each class. However, you can determine the total IOPS by choosing a size within the available range. For example, if you select a 1000Gi file share size in the silver storage class of 4 IOPS per GB, your volume has a total of 4000 IOPS. The more IOPS your persistent volume has, the faster it processes input and output operations. <p>**Example command to describe storage class**:
 
-       <pre class="pre">kubectl describe storageclasses ibmc-file-silver</pre>
+         <pre class="pre">kubectl describe storageclasses ibmc-file-silver</pre></p>
 
-       The **parameters** field provides the IOPS per GB associated with the storage class and the available sizes in gigabytes.
-       <pre class="pre">Parameters:	iopsPerGB=4,sizeRange=20Gi,40Gi,80Gi,100Gi,250Gi,500Gi,1000Gi,2000Gi,4000Gi,8000Gi,12000Gi</pre>
-       
-       </li>
-      <li>With custom storage classes, you get [Performance storage ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/topic/performance-storage) and have more control over choosing the combination of IOPS and size. <p>**Example command to describe custom storage class**:</p>
+         The **parameters** field provides the IOPS per GB associated with the storage class and the available sizes in gigabytes.
+         <pre class="pre">Parameters:	iopsPerGB=4,sizeRange=20Gi,40Gi,80Gi,100Gi,250Gi,500Gi,1000Gi,2000Gi,4000Gi,8000Gi,12000Gi</pre>
+         
+         </li>
+      <li>With custom storage classes, you get [Performance storage ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/topic/performance-storage) and have more control over choosing the combination of IOPS and size. <p>**Example command to describe custom storage class**:
 
-       <pre class="pre">kubectl describe storageclasses ibmc-file-retain-custom</pre>
+         <pre class="pre">kubectl describe storageclasses ibmc-file-retain-custom</pre></p>
 
-       The **parameters** field provides the IOPS associated with the storage class and the available sizes in gigabytes. For example, a 40Gi pvc can select IOPS that is a multiple of 100 that is in the range of 100 - 2000 IOPS.
+         The **parameters** field provides the IOPS associated with the storage class and the available sizes in gigabytes. For example, a 40Gi pvc can select IOPS that is a multiple of 100 that is in the range of 100 - 2000 IOPS.
 
-       ```
-       Parameters:	Note=IOPS value must be a multiple of 100,reclaimPolicy=Retain,sizeIOPSRange=20Gi:[100-1000],40Gi:[100-2000],80Gi:[100-4000],100Gi:[100-6000],1000Gi[100-6000],2000Gi:[200-6000],4000Gi:[300-6000],8000Gi:[500-6000],12000Gi:[1000-6000]
-       ```
-       {: screen}
+         ```
+         Parameters:	Note=IOPS value must be a multiple of 100,reclaimPolicy=Retain,sizeIOPSRange=20Gi:[100-1000],40Gi:[100-2000],80Gi:[100-4000],100Gi:[100-6000],1000Gi[100-6000],2000Gi:[200-6000],4000Gi:[300-6000],8000Gi:[500-6000],12000Gi:[1000-6000]
+         ```
+         {: screen}
        </li></ul>
 4. Create a configuration file to define your persistent volume claim and save the configuration as a `.yaml` file.
 
