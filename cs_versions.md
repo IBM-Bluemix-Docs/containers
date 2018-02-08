@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-15"
+lastupdated: "2018-02-08"
 
 ---
 
@@ -23,9 +23,9 @@ lastupdated: "2018-01-15"
 
 The current supported Kubernetes versions are:
 
-- Latest: 1.8.6
+- Latest: 1.9.2
 - Default: 1.8.6
-- Supported: 1.5.6
+- Supported: 1.7.4
 
 If you are running clusters on a Kubernetes version that is not currently supported, [review potential impacts](#version_types) for updates and then immediately [update your cluster](cs_cluster_update.html#update) to continue receiving important security updates and support. To check the server version, run the following command.
 
@@ -37,7 +37,6 @@ kubectl version  --short | grep -i server
 Example output:
 
 ```
-Client Version: 1.8.6
 Server Version: 1.8.6
 ```
 {: screen}
@@ -62,7 +61,77 @@ The following information summarizes updates that are likely to have impact on d
 
 For more information on the updating process, see [Updating clusters](cs_cluster_update.html#master) and [Updating worker nodes](cs_cluster_update.html#worker_node).
 
+## Version 1.9
+{: #cs_v19}
 
+
+
+Review changes you might need to make when updating from the previous Kubernetes version to 1.9.
+
+<br/>
+
+### Update before master
+{: #19_before}
+
+<table summary="Kubernetes updates for version 1.9">
+<caption>Changes to make before you update the master to Kubernetes 1.9</caption>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Webhook admission API</td>
+<td>The admission API, which is used when the API server calls admission control webhooks, is moved from <code>admission.v1alpha1</code> to <code>admission.v1beta1</code>. <em>You must delete any existing webhooks before you upgrade your cluster</em>, and update the webhook configuration files to use the latest API. This change is not backward compatible.</td>
+</tr>
+</tbody>
+</table>
+
+### Update after master
+{: #19_after}
+
+<table summary="Kubernetes updates for version 1.9">
+<caption>Changes to make after you update the master to Kubernetes 1.9</caption>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>`kubectl` output</td>
+<td>Now, when you use the `kubectl` command to specify `-o custom-columns` and the column is not found in the object, you see an output of `<none>`.<br>
+Previously, the operation failed and you saw the error message `xxx is not found`. If your scripts rely on the previous behavior, update them.</td>
+</tr>
+<tr>
+<td>`kubectl patch`</td>
+<td>Now, when no changes are made to the resource that is patched, the `kubectl patch` command fails with `exit code 1`. If your scripts rely on the previous behavior, update them.</td>
+</tr>
+<tr>
+<td>Kubernetes dashboard permissions</td>
+<td>Users are now required to log in to the Kubernetes dashboard with their credentials to view cluster resources. The default Kubernetes dashboard `ClusterRoleBinding` RBAC authorization has been removed. For instructions, see [Launching the Kubernetes dashboard](cs_app.html#cli_dashboard).</td>
+</tr>
+<tr>
+<td>RBAC for `default` `ServiceAccount`</td>
+<td>The administrator `ClusterRoleBinding` for the `default` `ServiceAccount` in the `default` namespace is removed. If your applications rely on this RBAC policy to access the Kubernetes API, [update your RBAC policies](https://kubernetes.io/docs/admin/authorization/rbac/#api-overview).</td>
+</tr>
+<tr>
+<td>Taints and tolerations</td>
+<td>The `node.alpha.kubernetes.io/notReady` and `node.alpha.kubernetes.io/unreachable` taints have been changed to `node.kubernetes.io/not-ready` and `node.kubernetes.io/unreachable` respectively.<br>
+Although the taints are updated automatically, you must manually update the tolerations for these taints. For each namespace except `ibm-system` and `kube-system`, determine if you need to change tolerations:<br>
+<ul><li><code>kubectl get pods -n &lt;namespace&gt; -o yaml | grep "node.alpha.kubernetes.io/notReady" && echo "Action required"</code></li><li>
+<code>kubectl get pods -n &lt;namespace&gt; -o yaml | grep "node.alpha.kubernetes.io/unreachable" && echo "Action required"</code></li></ul><br>
+If `Action required` is returned, modify the pod tolerations accordingly.</td>
+</tr>
+<tr>
+<td>Webhook admission API</td>
+<td>If you deleted existing webhooks before you updated the cluster, create new webhooks.</td>
+</tr>
+</tbody>
+</table>
 
 
 ## Version 1.8
