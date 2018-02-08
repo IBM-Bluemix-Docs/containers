@@ -37,25 +37,17 @@ The following image shows available non-persistent data storage options in {{sit
 <img src="images/cs_storage_nonpersistent.png" alt="Non-persistent data storage options" width="450" style="width: 450px; border-style: none"/></p>
 
 <table summary="The table shows non-persistent storage options. Rows are to be read from the left to right, with the number of the option in column one, the title of the otion in column two and a description in column three." style="width: 100%">
-<colgroup>
-       <col span="1" style="width: 5%;"/>
-       <col span="1" style="width: 20%;"/>
-       <col span="1" style="width: 75%;"/>
-    </colgroup>
   <thead>
-  <th>#</th>
   <th>Option</th>
   <th>Description</th>
   </thead>
   <tbody>
     <tr>
-      <td>1</td>
-      <td>Inside the container or pod</td>
+      <td>1. Inside the container or pod</td>
       <td>Containers and pods are, by design, short-lived and can fail unexpectedly. However, you can write data to the local file system of the container to store data throughout the lifecycle of the container. Data inside a container cannot be shared with other containers or pods and is lost when the container crashes or is removed. For more information, see [Storing data in a container](https://docs.docker.com/storage/).</td>
     </tr>
   <tr>
-    <td>2</td>
-    <td>On the worker node</td>
+    <td>2. On the worker node</td>
     <td>Every worker node is set up with primary and secondary storage that is determined by the machine type that you select for your worker node. The primary storage is used to store data from the operating system and cannot be accessed by the user. The secondary storage is used to store data in <code>/var/lib/docker</code>, the directory that all the container data is written to. <br/><br/>To access the secondary storage of your worker node, you can create an <code>/emptyDir</code> volume. This empty volume is assigned to a pod in your cluster, so that containers in that pod can read from and write to that volume. Because the volume is assigned to one specific pod, data cannot be shared with other pods in a replica set.<br/><p>An <code>/emptyDir</code> volume and its data are removed when: <ul><li>The assigned pod is permanently deleted from the worker node.</li><li>The assigned pod is scheduled on another worker node.</li><li>The worker node is reloaded or updated.</li><li>The worker node is deleted.</li><li>The cluster is deleted.</li><li>The {{site.data.keyword.Bluemix_notm}} account reaches a suspended state. </li></ul></p><p><strong>Note:</strong> If the container inside the pod crashes, the data in the volume is still available on the worker node.</p><p>For more information, see [Kubernetes volumes ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/storage/volumes/).</p></td>
     </tr>
     </tbody>
@@ -78,24 +70,20 @@ The following image shows the options that you have in {{site.data.keyword.conta
 
 <table summary="The table shows persistent storage options. Rows are to be read from the left to right, with the number of the option in column one, the title of the otion in column two and a description in column three.">
   <thead>
-  <th>#</th>
   <th>Option</th>
   <th>Description</th>
   </thead>
   <tbody>
   <tr>
-  <td width="5%">1</td>
-  <td width="20%">NFS file storage</td>
-  <td width="75%">With this option, you can persist app and container data by using Kubernetes persistent volumes. Volumes are hosted on [Endurance and Performance NFS-based file storage ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/cloud/file-storage/details) which can be used for apps that store data on a file basis rather than in a database. File storage is encrypted at REST and clustered by IBM to provide high availability.<p>{{site.data.keyword.containershort_notm}} provides predefined storage classes that define the range of sizes of the storage, IOPS, the delete policy, and the read and write permissions for the volume. To initiate a request for NFS-based file storage, you must create a [persistent volume claim](cs_storage.html#create). After you submit a persistent volume claim, {{site.data.keyword.containershort_notm}} dynamically provisions a persistent volume that is hosted on NFS-based file storage. [You can mount the persistent volume claim](cs_storage.html#app_volume_mount) as a volume to your deployment to allow the containers to read from and write to the volume. </p><p>Persistent volumes are provisioned in the data center where the worker node is located. You can share data across the same replica set or with other deployments in the same cluster. You cannot share data across clusters when they are located in different data centers or regions. </p><p>By default, NFS storage is not backed up automatically. You can set up a periodic backup for your cluster by using the provided backup and restore mechanisms. When a container crashes or a pod is removed from a worker node, the data is not removed and can still be accessed by other deployments that mount the volume. </p><p><strong>Note:</strong> Persistent NFS file share storage is charged on a monthly basis. If you provision persistent storage for your cluster and remove it immediately, you still pay the monthly charge for the persistent storage, even if you used it only for a short amount of time.</p></td>
+  <td>1. NFS file storage</td>
+  <td>With this option, you can persist app and container data by using Kubernetes persistent volumes. Volumes are hosted on [Endurance and Performance NFS-based file storage ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/cloud/file-storage/details) which can be used for apps that store data on a file basis rather than in a database. File storage is encrypted at REST and clustered by IBM to provide high availability.<p>{{site.data.keyword.containershort_notm}} provides predefined storage classes that define the range of sizes of the storage, IOPS, the delete policy, and the read and write permissions for the volume. To initiate a request for NFS-based file storage, you must create a [persistent volume claim](cs_storage.html#create). After you submit a persistent volume claim, {{site.data.keyword.containershort_notm}} dynamically provisions a persistent volume that is hosted on NFS-based file storage. [You can mount the persistent volume claim](cs_storage.html#app_volume_mount) as a volume to your deployment to allow the containers to read from and write to the volume. </p><p>Persistent volumes are provisioned in the data center where the worker node is located. You can share data across the same replica set or with other deployments in the same cluster. You cannot share data across clusters when they are located in different data centers or regions. </p><p>By default, NFS storage is not backed up automatically. You can set up a periodic backup for your cluster by using the provided backup and restore mechanisms. When a container crashes or a pod is removed from a worker node, the data is not removed and can still be accessed by other deployments that mount the volume. </p><p><strong>Note:</strong> Persistent NFS file share storage is charged on a monthly basis. If you provision persistent storage for your cluster and remove it immediately, you still pay the monthly charge for the persistent storage, even if you used it only for a short amount of time.</p></td>
   </tr>
   <tr>
-    <td>2</td>
-    <td>Cloud database service</td>
+    <td>2. Cloud database service</td>
     <td>With this option, you can persist data by using an {{site.data.keyword.Bluemix_notm}} database cloud service, such as [IBM Cloudant NoSQL DB](/docs/services/Cloudant/getting-started.html#getting-started-with-cloudant). Data that is stored with this option can be accessed across clusters, locations, and regions. <p> You can choose to configure a single database instance that all your apps access, or to [set up multiple instances across data centers and replication](/docs/services/Cloudant/guides/active-active.html#configuring-cloudant-nosql-db-for-cross-region-disaster-recovery) between the instances for higher availability. In IBM Cloudant NoSQL database, data is not backed up automatically. You can use the provided [backup and restore mechanisms](/docs/services/Cloudant/guides/backup-cookbook.html#cloudant-nosql-db-backup-and-recovery) to protect your data from a site failure.</p> <p> To use a service in your cluster, you must [bind the {{site.data.keyword.Bluemix_notm}} service](cs_integrations.html#adding_app) to a namespace in your cluster. When you bind the service to the cluster, a Kubernetes secret is created. The Kubernetes secret holds confidential information about the service, such as the URL to the service, your user name, and password. You can mount the secret as a secret volume to your pod and access the service by using the credentials in the secret. By mounting the secret volume to other pods, you can also share data between pods. When a container crashes or a pod is removed from a worker node, the data is not removed and can still be accessed by other pods that mount the secret volume. <p>Most {{site.data.keyword.Bluemix_notm}} database services provide disk space for a small amount of data at no cost, so you can test its features.</p></td>
   </tr>
   <tr>
-    <td>3</td>
-    <td>On-prem database</td>
+    <td>3. On-prem database</td>
     <td>If your data must be stored on-site for legal reasons, you can [set up a VPN connection](cs_vpn.html#vpn) to your on-premise database and use existing storage, backup and replication mechanisms in your data center.</td>
   </tr>
   </tbody>
@@ -292,41 +280,7 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
 
 2.  Decide if you want to save your data and the NFS file share after you delete the pvc, called the reclaim policy. If you want to keep your data, then choose a `retain` storage class. If you want the data and your file share to be deleted when you delete the pvc, choose a storage class without `retain`.
 
-3.  Get the details for a storage class. Review the IOPS per gigabyte and the size range in the **paramters** field in your CLI output. 
-
-    <ul>
-      <li>When you use bronze, silver, or gold storage classes, you get [Endurance storage ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/topic/endurance-storage) that define the IOPS per GB for each class. However, you can determine the total IOPS by choosing a size within the available range. For example, if you select a 1000Gi file share size in the silver storage class of 4 IOPS per GB, your volume has a total of 4000 IOPS. The more IOPS your persistent volume has, the faster it processes input and output operations. <p>**Example command to describe storage class**:</p>
-
-       <pre class="pre">kubectl describe storageclasses ibmc-file-silver</pre>
-
-       The **parameters** field provides the IOPS per GB associated with the storage class and the available sizes in gigabytes.
-       <pre class="pre">Parameters:	iopsPerGB=4,sizeRange=20Gi,40Gi,80Gi,100Gi,250Gi,500Gi,1000Gi,2000Gi,4000Gi,8000Gi,12000Gi</pre>
-       
-       </li>
-      <li>With custom storage classes, you get [Performance storage ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/topic/performance-storage) and have more control over choosing the combination of IOPS and size. <p>**Example command to describe custom storage class**:</p>
-
-       <pre class="pre">kubectl describe storageclasses ibmc-file-retain-custom</pre>
-
-       The **parameters** field provides the IOPS associated with the storage class and the available sizes in gigabytes. For example, a 40Gi pvc can select IOPS that is a multiple of 100 that is in the range of 100 - 2000 IOPS.
-
-       ```
-       Parameters:	Note=IOPS value must be a multiple of 100,reclaimPolicy=Retain,sizeIOPSRange=20Gi:[100-1000],40Gi:[100-2000],80Gi:[100-4000],100Gi:[100-6000],1000Gi[100-6000],2000Gi:[200-6000],4000Gi:[300-6000],8000Gi:[500-6000],12000Gi:[1000-6000]
-       ```
-       {: screen}
-       </li></ul>
-4. Create a configuration file to define your persistent volume claim and save the configuration as a `.yaml` file.
-
-    -  **Example for bronze, silver, gold storage classes**:
-       
-
-       ```
-       apiVersion: v1
-       kind: PersistentVolumeClaim
-       metadata:
-        name: mypvc
-        annotations:
-          volume.beta.kubernetes.io/storage-class: "ibmc-file-silver"
-          
+3.  **If you choose a bronze, silver, or gold storage class**: You get [Endurance storage ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/topic/endurance-storage) that define the IOPS per GB for each class. However, you can determine the total IOPS by choosing a size within the available range. You can select any whole number of gigabyte sizes within the allowed size range; for example 20 Gi, 256 Gi, 11854 Gi. For example, if you select a 1000Gi file share size in the silver storage class of 4 IOPS per GB, your volume has a total of 4000 IOPS. The more IOPS your persistent volume has, the faster it processes input and output operations. 
        spec:
         accessModes:
           - ReadWriteMany
@@ -389,14 +343,14 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
         </tr>
         </tbody></table>
 
-5.  Create the persistent volume claim.
+7.  Create the persistent volume claim.
 
     ```
     kubectl apply -f <local_file_path>
     ```
     {: pre}
 
-6.  Verify that your persistent volume claim is created and bound to the persistent volume. This process can take a few minutes.
+8.  Verify that your persistent volume claim is created and bound to the persistent volume. This process can take a few minutes.
 
     ```
     kubectl describe pvc mypvc
@@ -424,7 +378,7 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
     ```
     {: screen}
 
-6.  {: #app_volume_mount}To mount the persistent volume claim to your deployment, create a configuration file. Save the configuration as a `.yaml` file.
+9.  {: #app_volume_mount}To mount the persistent volume claim to your deployment, create a configuration file. Save the configuration as a `.yaml` file.
 
     ```
     apiVersion: extensions/v1beta1
@@ -489,14 +443,14 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
     </tr>
     </tbody></table>
 
-8.  Create the deployment and mount the persistent volume claim.
+10.  Create the deployment and mount the persistent volume claim.
 
     ```
     kubectl apply -f <local_yaml_path>
     ```
     {: pre}
 
-9.  Verify that the volume is successfully mounted.
+11.  Verify that the volume is successfully mounted.
 
     ```
     kubectl describe deployment <deployment_name>
