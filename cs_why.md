@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-30"
+lastupdated: "2018-02-12"
 
 ---
 
@@ -92,6 +92,7 @@ Review the responsibilities that you share with IBM to manage your clusters.
 - [Recovering troubled worker nodes by running `kubectl` commands, such as `cordon` or `drain`, and by running `bx cs` commands, such as `reboot`, `reload`, or `delete`](cs_cli_reference.html#cs_worker_reboot)
 - [Adding or removing subnets in IBM Cloud infrastructure (SoftLayer) as needed](cs_subnets.html#subnets)
 - [Backing up and restoring data in persistent storage in IBM Cloud infrastructure (SoftLayer) ![External link icon](../icons/launch-glyph.svg "External link icon")](../services/RegistryImages/ibm-backup-restore/index.html)
+- [Configuring health monitoring for worker nodes with Autorecovery](cs_health.html#autorecovery)
 
 <br />
 
