@@ -18,7 +18,7 @@ lastupdated: "2018-02-12"
 
 # Saving data in your cluster
 {: #storage}
-You can persist data for the case a component in your cluster fails and to share data between app instances.
+You can persist data to share data between app instances and to protect your data from being lost if a component in your cluster fails.
 
 ## Planning highly available storage
 {: #planning}
