@@ -28,7 +28,7 @@ Configure cluster logging and monitoring to help you troubleshoot issues with yo
 You can send logs to a specific location for processing or long-term storage. On a Kubernetes cluster in {{site.data.keyword.containershort_notm}}, you can enable log forwarding for your cluster and choose where your logs are forwarded. **Note**: Log forwarding is supported only for standard clusters.
 {:shortdesc}
 
-You can forward logs for log sources such as containers, applications, worker nodes, Kubernetes clusters, and Ingress controllers. Review the following table for information about each log source.
+You can forward logs for log sources such as containers, applications, worker nodes, Kubernetes clusters, and Ingress application load balancers. Review the following table for information about each log source.
 
 |Log source|Characteristics|Log paths|
 |----------|---------------|-----|
