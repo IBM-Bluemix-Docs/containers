@@ -772,7 +772,7 @@ To troubleshoot your Ingress:
 
 2.  Retrieve the Ingress application load balancer subdomain and public IP address, and then ping each one.
 
-    1.  Retrieve the Ingress controller subdomain.
+    1.  Retrieve the application load balancer subdomain.
 
       ```
       bx cs cluster-get <cluster_name_or_id> | grep "Ingress subdomain"
@@ -837,7 +837,7 @@ To troubleshoot your Ingress:
   ```
   {: pre}
 
-6.  Check the logs for your Ingress controller.
+6.  Check the logs for your application load balancer.
     1.  Retrieve the ID of the Ingress pods that are running in your cluster.
 
       ```
@@ -852,7 +852,7 @@ To troubleshoot your Ingress:
       ```
       {: pre}
 
-    3.  Look for error messages in the Ingress controller logs.
+    3.  Look for error messages in the application load balancer logs.
 
 <br />
 
