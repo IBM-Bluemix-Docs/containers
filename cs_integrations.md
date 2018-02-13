@@ -241,7 +241,7 @@ To add a service:
     {: pre}
 
 
-To use the service in a pod that is deployed in the cluster, cluster users can access the service credentials of the {{site.data.keyword.Bluemix_notm}} service by [mounting the Kubernetes secret as a secret volume to a pod](cs_integrations.html#adding_app).
+To use the service in a pod that is deployed in the cluster, cluster users can access the service credentials of the {{site.data.keyword.Bluemix_notm}} service by [mounting the Kubernetes secret as a secret volume to a pod](cs_storage.html#app_volume_mount).
 
 <br />
 
