@@ -1308,7 +1308,7 @@ To privately expose an app using a custom domain with TLS:
 
 
 
-## Optional: Configuring an application load balancer
+## Optional application load balancer configurations
 {: #configure_alb}
 
 You can further configure an application load balancer with the following options.

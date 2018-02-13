@@ -55,12 +55,30 @@ Review the options to debug your clusters and find the root causes for failures.
     <th>Description</th>
     </thead>
     <tbody>
-  
+<tr>
+    <td>Aborted</td>
+    <td>The deletion of the cluster is requested by the user before the Kubernetes master is deployed.</td>
+    </tr>
   <tr>
       <td>Critical</td>
       <td>The Kubernetes master cannot be reached or all worker nodes in the cluster are down.</td>
      </tr>
-  
+    <tr>
+      <td>Delete failed</td>
+      <td>The Kubernetes master or at least one worker node cannot be deleted.</td>
+    </tr>
+    <tr>
+      <td>Deleted</td>
+      <td>The cluster is deleted but not yet removed from your dashboard. </td>
+    </tr>
+    <tr>
+    <td>Deleting</td>
+    <td>The cluster is being deleted and cluster infrastructure is being dismantled. You cannot access the cluster.</td>
+    </tr>
+    <tr>
+      <td>Deploy failed</td>
+      <td>The deployment of the Kubernetes master could not be completed.</td>
+    </tr>
       <tr>
         <td>Deploying</td>
         <td>The Kubernetes master is not fully deployed yet. You cannot access your cluster.</td>
@@ -73,7 +91,14 @@ Review the options to debug your clusters and find the root causes for failures.
         <td>Pending</td>
         <td>The Kubernetes master is deployed. The worker nodes are being provisioned and are not available in the cluster yet. You can access the cluster, but you cannot deploy apps to the cluster.</td>
       </tr>
-  
+    <tr>
+      <td>Requested</td>
+      <td>A request to create the cluster and order the infrastructure for the Kubernetes master and worker nodes is sent. </td>
+    </tr>
+    <tr>
+      <td>Updating</td>
+      <td>The Kubernetes master is being updated to a new Kubernetes API version. During the update you cannot access or change the cluster. Worker nodes, apps, and resources that have been deployed by the user are not modified and continue to run.</td>
+    </tr>
      <tr>
         <td>Warning</td>
         <td>At least one worker node in the cluster is not available, but other worker nodes are available and can take over the workload.</td>
@@ -81,7 +106,7 @@ Review the options to debug your clusters and find the root causes for failures.
     </tbody>
   </table>
 
-3.  If your cluster is in a **Warning**, **Critical** or **Delete failed** state, or is stuck in the **Pending** state for a long time, review the state of your worker nodes. If your cluster is in a **Deploying** state, wait until your cluster is fully deployed to review the health of your cluster. Clusters in a **Normal** state do not require an action at the moment. 
+3.  If your cluster is in a **Warning**, **Critical** or **Delete failed** state, or is stuck in the **Pending** state for a long time, review the state of your worker nodes. If your cluster is in a **Deploying** state, wait until your cluster is fully deployed to review the health of your cluster. Clusters in a **Normal**, **Aborted**, **Deleting** or **Updating** state do not require an action at the moment. Clusters in a **Deploy failed** state, or that are stuck in the **Requested** or **Deleted** state for a long time cannot be resolved by the user. For these clusters, open an [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/get-support/howtogetsupport.html#using-avatar).
 <p>To review the state of your worker nodes:</p>
 
   ```

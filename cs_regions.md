@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-24"
+lastupdated: "2018-02-12"
 
 ---
 
@@ -110,12 +110,10 @@ Locations are data centers that are available within a region.
   |--------|----------|------|
   | AP North | hkg02, sng01, tok02 | Hong Kong, Singapore, Tokyo |
   | AP South     | mel01, syd01, syd04        | Melbourne, Sydney |
-  | EU Central     | ams03, fra02, mil01, par01        | Amsterdam, Frankfurt, Milan, Paris |
+  | EU Central     | ams03, fra02, par01        | Amsterdam, Frankfurt, Paris |
   | UK South      | lon02, lon04         | London |
   | US East      | mon01, tor01, wdc06, wdc07        | Montreal, Toronto, Washington DC |
   | US South     | dal10, dal12, dal13       | Dallas |
-
-**Note**: Milan (mil01) is available for free clusters only.
 
 ### Using container service API commands
 {: #container_api}
