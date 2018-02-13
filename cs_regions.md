@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-24"
+lastupdated: "2018-02-13"
 
 ---
 
@@ -16,7 +16,7 @@ lastupdated: "2018-01-24"
 {:download: .download}
 
 # Regions and locations
-{{site.data.keyword.Bluemix}} is hosted worldwide. A region is a geographic area that is accessed by an endpoint. Locations are data centers within the region. Services within {{site.data.keyword.Bluemix_notm}} might be available globally, or within a specific region.
+{{site.data.keyword.Bluemix}} is hosted worldwide. A region is a geographic area that is accessed by an endpoint. Locations are data centers within the region. Services within {{site.data.keyword.Bluemix_notm}} might be available globally, or within a specific region. When you create a cluster in {{site.data.keyword.containershort_notm}}, its resources remain in the region that you deploy the cluster to.
 {:shortdesc}
 
 [{{site.data.keyword.Bluemix_notm}} regions](#bluemix_regions) differ from [{{site.data.keyword.containershort_notm}} regions](#container_regions).
@@ -110,12 +110,10 @@ Locations are data centers that are available within a region.
   |--------|----------|------|
   | AP North | hkg02, sng01, tok02 | Hong Kong, Singapore, Tokyo |
   | AP South     | mel01, syd01, syd04        | Melbourne, Sydney |
-  | EU Central     | ams03, fra02, mil01, par01        | Amsterdam, Frankfurt, Milan, Paris |
+  | EU Central     | ams03, fra02, par01        | Amsterdam, Frankfurt, Paris |
   | UK South      | lon02, lon04         | London |
   | US East      | mon01, tor01, wdc06, wdc07        | Montreal, Toronto, Washington DC |
   | US South     | dal10, dal12, dal13       | Dallas |
-
-**Note**: Milan (mil01) is available for free clusters only.
 
 ### Using container service API commands
 {: #container_api}
