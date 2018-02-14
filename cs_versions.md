@@ -116,7 +116,9 @@ Previously, the operation failed and you saw the error message `xxx is not found
 </tr>
 <tr>
 <td>RBAC for `default` `ServiceAccount`</td>
-<td>The administrator `ClusterRoleBinding` for the `default` `ServiceAccount` in the `default` namespace is removed. If your applications rely on this RBAC policy to access the Kubernetes API, [update your RBAC policies](https://kubernetes.io/docs/admin/authorization/rbac/#api-overview).</td>
+<td><p>The administrator `ClusterRoleBinding` for the `default` `ServiceAccount` in the `default` namespace is removed. If your applications rely on this RBAC policy to access the Kubernetes API, [update your RBAC policies](https://kubernetes.io/docs/admin/authorization/rbac/#api-overview).</p>
+  
+  </td>
 </tr>
 <tr>
 <td>Taints and tolerations</td>
@@ -269,7 +271,7 @@ Review changes you might need to make when updating from the previous Kubernetes
   </br></li>
   <li>If `"Action required"` is returned, use the [_PodSpec_ ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/api-reference/v1.7/#podspec-v1-core) _affinity_ field instead of the `scheduler.alpha.kubernetes.io/affinity` annotation.</li>
 </ol>
-</tr>
+</td></tr>
 <tr>
 <td>Network Policy</td>
 <td>The `net.beta.kubernetes.io/network-policy` annotation is no longer available.
@@ -299,7 +301,7 @@ Review changes you might need to make when updating from the previous Kubernetes
   kubectl annotate ns <namespace> --overwrite "net.beta.kubernetes.io/network-policy-"
   ```
   </li></ol>
-</tr>
+</td></tr>
 <tr>
 <td>Tolerations</td>
 <td>The `scheduler.alpha.kubernetes.io/tolerations` annotation is no longer available.
@@ -312,7 +314,7 @@ Review changes you might need to make when updating from the previous Kubernetes
 
   <li>If `"Action required"` is returned, use the [_PodSpec_ ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/api-reference/v1.7/#podspec-v1-core) _tolerations_ field instead of the `scheduler.alpha.kubernetes.io/tolerations` annotation
 </ol>
-</tr>
+</td></tr>
 <tr>
 <td>Taints</td>
 <td>The `scheduler.alpha.kubernetes.io/taints` annotation is no longer available.
@@ -326,10 +328,16 @@ Review changes you might need to make when updating from the previous Kubernetes
   <li>Add a taint to each node:</br>
   `kubectl taint node <node> <taint>`
   </li></ol>
-</tr>
+</td></tr>
 <tr>
 <td>StatefulSet pod DNS</td>
-<td>StatefulSet pods lose their Kubernetes DNS entries after updating the master. To restore the DNS entries, delete the StatefulSet pods. Kubernetes re-creates the pods and automatically restores the DNS entries. For more information, see the [Kubernetes issue ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/kubernetes/kubernetes/issues/48327).
+<td>StatefulSet pods lose their Kubernetes DNS entries after updating the master. To restore the DNS entries, delete the StatefulSet pods. Kubernetes re-creates the pods and automatically restores the DNS entries. For more information, see the [Kubernetes issue ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/kubernetes/kubernetes/issues/48327).</td>
+</tr>
+<tr>
+<td>Deployment `apiVersion`</td>
+<td>After you update the cluster from Kubernetes 1.5, use `apps/v1beta1` for the `apiVersion` field in new `Deployment` YAML files. Continue to use `extensions/v1beta1` for other resources, such as `Ingress`.</td>
 </tr>
 </tbody>
 </table>
+
+
