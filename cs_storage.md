@@ -23,7 +23,7 @@ You can persist data to share data between app instances and to protect your dat
 ## Planning highly available storage
 {: #planning}
 
-In {{site.data.keyword.containerlong_notm}} you can choose from several options to store your app data and share data across pods in your cluster. However, not all storage options offer the same level of persistence and availability in case a component in your cluster or a whole site fails.
+In {{site.data.keyword.containerlong_notm}} you can choose from several options to store your app data and share data across pods in your cluster. However, not all storage options offer the same level of persistence and availability in situations where a component in your cluster or a whole site fails.
 {: shortdesc}
 
 ### Non-persistent data storage options
@@ -117,8 +117,9 @@ To create a persistent volume and matching persistent volume claim, follow these
     1.  Log in to your IBM Cloud infrastructure (SoftLayer) account.
     2.  Click **Storage**.
     3.  Click **File Storage** and from the **Actions** menu, select **Authorize Host**.
-    4.  Click **Subnets**. After you authorize, every worker node on the subnet has access to the file storage.
-    5.  Select the subnet of your cluster's public VLAN from the menu and click **Submit**. If you need to find the subnet, run `bx cs cluster-get <cluster_name> --showResources`.
+    4.  Select **Subnets**. 
+    5.  From the drop down list, select the private VLAN subnet that your worker node is connected to. To find the subnet of your worker node, run `bx cs workers <cluster_name>` and compare the `Private IP` of your worker node with the subnet that you found in the drop down list. 
+    6.  Click **Submit**.
     6.  Click the name of the file storage.
     7.  Make note the **Mount Point** field. The field is displayed as `<server>:/<path>`.
 2.  Create a storage configuration file for your persistent volume. Include the server and path from the file storage **Mount Point** field.
@@ -425,7 +426,7 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
 6.  {: #app_volume_mount}To mount the persistent volume claim to your deployment, create a configuration file. Save the configuration as a `.yaml` file.
 
     ```
-    apiVersion: extensions/v1beta1
+    apiVersion: apps/v1beta1
     kind: Deployment
     metadata:
      name: <deployment_name>
