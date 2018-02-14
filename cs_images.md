@@ -71,7 +71,7 @@ To deploy a container into the **default** namespace of your cluster, create a c
     To use a private image from a namespace in {{site.data.keyword.registryshort_notm}}:
 
     ```
-    apiVersion: extensions/v1beta1
+    apiVersion: apps/v1beta1
     kind: Deployment
     metadata:
       name: ibmliberty-deployment
@@ -283,7 +283,7 @@ Create a deployment configuration file.
 2.  Define the deployment and the public image from Docker Hub that you want to use. The following configuration file uses the public NGINX image that is available on Docker Hub.
 
     ```
-    apiVersion: extensions/v1beta1
+    apiVersion: apps/v1beta1
     kind: Deployment
     metadata:
       name: nginx-deployment
