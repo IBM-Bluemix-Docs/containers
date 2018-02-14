@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en-us" xml:lang="en-us">
 <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="UTF-8">
-<meta name="dcterms.date" content="2017-11-10">
+<meta name="dcterms.date" content="2018-02-14">
 <meta name="dcterms.rights" content="© Copyright IBM Corporation 2014, 2018">
 
 <meta name="description" content="With IBM Cloud Container Service, manage your apps inside Docker containers, on the IBM cloud. A container is a standard way to package an app and all its dependencies, so that the app can be moved between environments and run without changes. And they have the benefits of resource isolation and allocation, but are more portable and efficient than, for example, virtual machines.">
@@ -246,7 +246,7 @@ options</a>.<pre class="codeblock"><code>    spec:
 </div>
 </div><div class="section postreq" id="migrate_groups__postreq_rm5_hcx_rz"><div class="p">With the values from the container group example command, use the following configuration file
 to deploy similar container pods in a
-cluster:<pre class="codeblock"><code>apiVersion: extensions/v1beta1
+cluster:<pre class="codeblock"><code>apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
  name: ibmliberty
@@ -406,7 +406,7 @@ options</a>.<pre class="codeblock"><code>    spec:
 </div>
 </div><div class="section postreq" id="migrate_single__postreq_wvj_vmq_wz"><div class="p">With the values from the single container example command, use the following configuration file
 to deploy a similar container pod in a
-cluster:<pre class="codeblock"><code>apiVersion: extensions/v1beta1
+cluster:<pre class="codeblock"><code>apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
  name: ibmliberty

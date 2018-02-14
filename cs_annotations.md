@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-16"
+lastupdated: "2018-02-14"
 
 ---
 
@@ -75,7 +75,7 @@ For general information about Ingress services and how to get started using them
   <tr>
   <td><a href="#proxy-connect-timeout">Custom connect-timeouts and read-timeouts</a></td>
   <td><code>proxy-connect-timeout</code></td>
-  <td>Adjust the time that the application load balancer waits to connect to and read from the back-end app before the back-end app is considered unavailable.</td>
+  <td>Set the time that the application load balancer waits to connect to and read from the back-end app before the back-end app is considered unavailable.</td>
   </tr>
   <tr>
   <td><a href="#keepalive-requests">Keepalive requests</a></td>
@@ -151,7 +151,7 @@ For general information about Ingress services and how to get started using them
 <tr>
 <td><a href="#client-max-body-size">Custom maximum client request body size</a></td>
 <td><code>client-max-body-size</code></td>
-<td>Adjust the size of the client request body that is allowed to be sent to the application load balancer.</td>
+<td>Set the size of the client request body that is allowed to be sent to the application load balancer.</td>
 </tr>
 </tbody></table>
 
@@ -205,7 +205,7 @@ For general information about Ingress services and how to get started using them
 <tr>
 <td><a href="#ssl-services">SSL services support</a></td>
 <td><code>ssl-services</code></td>
-<td>Allow SSL services support for load balancing.</td>
+<td>Allow SSL services support to encrypt traffic to your upstream apps that require HTTPS. </td>
 </tr>
 </tbody></table>
 
@@ -529,7 +529,7 @@ spec:
 ### Custom connect-timeouts and read-timeouts (proxy-connect-timeout, proxy-read-timeout)
 {: #proxy-connect-timeout}
 
-Set a custom connect-timeout and read-timeout for the application load balancer. Adjust the time that the application load balancer waits to connect to and read from the back-end app before the back-end app is considered unavailable.
+Set a custom connect-timeout and read-timeout for the application load balancer. Set the time that the application load balancer waits to connect to and read from the back-end app before the back-end app is considered unavailable.
 {:shortdesc}
 
 <dl>
@@ -717,7 +717,7 @@ Configure the maximum number of idle keepalive connections for an upstream serve
 <dl>
 <dt>Description</dt>
 <dd>
-Change the maximum number of idle keepalive connections to the upstream server of a given service. The upstream server has 64 idle keepalive connections by default.
+Set the maximum number of idle keepalive connections to the upstream server of a given service. The upstream server has 64 idle keepalive connections by default.
 </dd>
 
 
@@ -1139,7 +1139,7 @@ Remove header information that is included in the client response from the back-
 ### Custom maximum client request body size (client-max-body-size)
 {: #client-max-body-size}
 
-Adjust the maximum size of the body that the client can send as part of a request.
+Set the maximum size of the body that the client can send as part of a request.
 {:shortdesc}
 
 <dl>
@@ -1387,7 +1387,7 @@ Your CLI output looks similar to the following:
 <pre class="screen">
 <code>NAME                     CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
 public-ingress-ctl-svc   10.10.10.149   169.60.16.246   80:30776/TCP,443:30412/TCP   8d</code></pre></li>
-<li>Open the Ingress controller config map.
+<li>Open the application load balancer config map.
 <pre class="pre">
 <code>kubectl edit configmap ibm-cloud-provider-ingress-cm -n kube-system</code></pre></li>
 <li>Add the non-default HTTP and HTTPS ports to the config map. Replace &lt;port&gt; with the HTTP or HTTPS port that you want to open.
@@ -1403,7 +1403,7 @@ metadata:
  resourceVersion: "1320"
  selfLink: /api/v1/namespaces/kube-system/configmaps/ibm-cloud-provider-ingress-cm
  uid: &lt;uid&gt;</code></pre></li>
- <li>Verify that your Ingress controller is re-configured with the non-default ports.
+ <li>Verify that your application load balancer is re-configured with the non-default ports.
 <pre class="pre">
 <code>kubectl get service -n kube-system</code></pre>
 Your CLI output looks similar to the following:
@@ -1411,7 +1411,7 @@ Your CLI output looks similar to the following:
 <code>NAME                     CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
 public-ingress-ctl-svc   10.10.10.149   169.60.16.246   &lt;port1&gt;:30776/TCP,&lt;port2&gt;:30412/TCP   8d</code></pre></li>
 <li>Configure your Ingress to use the non-default ports when routing incoming network traffic to your services. Use the sample YAML file in this reference. </li>
-<li>Update your Ingress controller configuration.
+<li>Update your application load balancer configuration.
 <pre class="pre">
 <code>kubectl apply -f &lt;yaml_file&gt;</code></pre>
 </li>
@@ -1543,7 +1543,7 @@ Allow HTTPS requests and encrypt traffic to your upstream apps.
 <dl>
 <dt>Description</dt>
 <dd>
-Encrypt traffic to your upstream apps that require HTTPS with the application load balancers.
+Encrypt traffic to your upstream apps that require HTTPS.
 
 **Optional**: You can add [one-way authentication or mutual authentication](#ssl-services-auth) to this annotation.
 </dd>
@@ -1597,13 +1597,10 @@ spec:
 #### SSL Services support with authentication
 {: #ssl-services-auth}
 
-Allow HTTPS requests and encrypt traffic to your upstream apps with one-way or mutual authentication for additional security.
-{:shortdesc}
-
 <dl>
 <dt>Description</dt>
 <dd>
-Configure mutual authentication for load balancing apps that require HTTPS with the Ingress controllers.
+Allow HTTPS requests and encrypt traffic to your upstream apps with one-way or mutual authentication for additional security.
 
 **Note**: Before you begin, [convert the cert and key into base-64 ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.base64encode.org/).
 

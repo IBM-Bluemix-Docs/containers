@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-13"
+lastupdated: "2018-02-14"
 
 ---
 
@@ -108,7 +108,7 @@ Locations are data centers that are available within a region.
 
   | Region | Location | City |
   |--------|----------|------|
-  | AP North | hkg02, sng01, tok02 | Hong Kong, Singapore, Tokyo |
+  | AP North | hkg02, seo01, sng01, tok02 | Hong Kong, Seoul, Singapore, Tokyo |
   | AP South     | mel01, syd01, syd04        | Melbourne, Sydney |
   | EU Central     | ams03, fra02, par01        | Amsterdam, Frankfurt, Paris |
   | UK South      | lon02, lon04         | London |

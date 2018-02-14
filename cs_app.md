@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-24"
+lastupdated: "2018-02-14"
 
 ---
 
@@ -73,7 +73,7 @@ Every deployment keeps track of the revisions that were deployed. You can use th
 <strong>Note:</strong> The following YAML file enforces that every pod is deployed to a different worker node. When you have more replicas defined than you have available worker nodes in your cluster, only the number of replicas is deployed that can fulfill the anti-affinity requirement. Any additional replicas remain in a pending state until additional worker nodes are added to the cluster.
 
 <pre class="codeblock">
-<code>apiVersion: extensions/v1beta1
+<code>apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: wasliberty
@@ -134,7 +134,7 @@ A basic app deployment in a free or standard cluster might include the following
 
 To deploy the components for a minimal app as depicted in the diagram, you use a configuration file similar to the following example:
 ```
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: ibmliberty

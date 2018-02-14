@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-12"
+lastupdated: "2018-02-14"
 
 ---
 
@@ -1022,10 +1022,11 @@ View a list of Kubernetes versions supported in {{site.data.keyword.containersho
 ## Cluster commands: Services and integrations
 {: #cluster_services_commands}
 
-### bx cs cluster-service-bind CLUSTER KUBERNETES_NAMESPACE SERVICE_INSTANCE_GUID
+
+### bx cs cluster-service-bind CLUSTER KUBERNETES_NAMESPACE SERVICE_INSTANCE_NAME
 {: #cs_cluster_service_bind}
 
-Add an {{site.data.keyword.Bluemix_notm}} service to a cluster. To view available {{site.data.keyword.Bluemix_notm}} services from the {{site.data.keyword.Bluemix_notm}} catalog, run `bx service offerings`. If you already provisioned {{site.data.keyword.Bluemix_notm}} service instances in an IBM Cloud space, you can list them by running `bx service list`. **Note**: You can only add {{site.data.keyword.Bluemix_notm}} services that support service keys.
+Add an {{site.data.keyword.Bluemix_notm}} service to a cluster. To view available {{site.data.keyword.Bluemix_notm}} services from the {{site.data.keyword.Bluemix_notm}} catalog, run `bx service offerings`. **Note**: You can only add {{site.data.keyword.Bluemix_notm}} services that support service keys.
 
 <strong>Command options</strong>:
 
@@ -1036,14 +1037,14 @@ Add an {{site.data.keyword.Bluemix_notm}} service to a cluster. To view availabl
    <dt><code><em>KUBERNETES_NAMESPACE</em></code></dt>
    <dd>The name of the Kubernetes namespace. This value is required.</dd>
 
-   <dt><code><em>SERVICE_INSTANCE_GUID</em></code></dt>
-   <dd>The ID of the {{site.data.keyword.Bluemix_notm}} service instance that you want to bind. To find the ID of the service instance, run `bx cs cluster-services <cluster_name_or_ID>`.This value is required.</dd>
+   <dt><code><em>SERVICE_INSTANCE_NAME</em></code></dt>
+   <dd>The name of the {{site.data.keyword.Bluemix_notm}} service instance that you want to bind. To find the name of your service instance, run <code>bx service list</code>. If more than one instance has the same name in the account, use the service instance ID instead of the name. To find the ID, run <code>bx service show <service instance name> --guid</code>. One of these values is required.</dd>
    </dl>
 
 **Example**:
 
   ```
-  bx cs cluster-service-bind my_cluster my_namespace my_service_instance_GUID
+  bx cs cluster-service-bind my_cluster my_namespace my_service_instance
   ```
   {: pre}
 
