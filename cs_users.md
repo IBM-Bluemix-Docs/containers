@@ -98,11 +98,58 @@ When you set infrastructure policies in Identity and Access Management, a user i
 
 For example, **Basic Users** can reboot a worker node, but they cannot reload a worker node. Without giving that person **Super User** permissions, you can adjust the IBM Cloud infrastructure (SoftLayer) permissions and add the permission to run a reload command.
 
+1.  Log in to your [{{site.data.keyword.Bluemix_notm}} account](https://console.bluemix.net/), then from the menu select **Infrastructure**.
 
-1.  Log in to your IBM Cloud infrastructure (SoftLayer) account.
-2.  Select a user profile to update.
-3.  In the **Portal Permissions**, customize the user's access. For example, to add reload permission, in the **Devices** tab, select **Issue OS Reloads and Initiate Rescue Kernel**.
-9.  Save your changes.
+2.  Go to **Account** > **Users** > **User List**.
 
+3.  To modify permissions, select a user profile's name or the **Device Access** column.
 
+4.  In the **Portal Permissions** tab, customize the user's access. The permissions that users need depend on what infrastructure resources they need to use:
 
+    * Use the **Quick Permissions** dropdown list to assign the **Super User** role, which gives the user all permissions.
+    * Use the **Quick Permissions** dropdown list to assign the **Basic User** role, which gives the user some, but not all, needed permissions.
+    * If you don't want to grant all permissions with the **Super User** role or need to add permissions beyond the **Basic User** role, review the following table that describes permissions needed to perform common tasks in {{site.data.keyword.containershort_notm}}.
+
+    <table summary="Infrastructure permissions for common {{site.data.keyword.containershort_notm}} scenarios.">
+     <caption>Commonly required infrastructure permissions for {{site.data.keyword.containershort_notm}}</caption>
+     <thead>
+     <th>Common tasks in {{site.data.keyword.containershort_notm}}</th>
+     <th>Required infrastructure permissions by tab</th>
+     </thead>
+     <tbody>
+     <tr>
+     <td><strong>Minimum permissions</strong>: <ul><li>Create a cluster.</li></ul></td>
+     <td><strong>Devices</strong>:<ul><li>View Virtual Server Details</li><li>Reboot server and view IPMI system information</li><li>Issue OS Reloads and Initiate Rescue Kernel</li></ul><strong>Account</strong>: <ul><li>Add/Upgrade Cloud Instances</li><li>Add Server</li></ul></td>
+     </tr>
+     <tr>
+     <td><strong>Cluster Administration</strong>: <ul><li>Create, update, and delete clusters.</li><li>Add, reload, and reboot worker nodes.</li><li>View VLANs.</li><li>Create subnets.</li><li>Deploy pods and load balancer services.</li></ul></td>
+     <td><strong>Support</strong>:<ul><li>View Tickets</li><li>Add Tickets</li><li>Edit Tickets</li></ul>
+     <strong>Devices</strong>:<ul><li>View Virtual Server Details</li><li>Reboot server and view IPMI system information</li><li>Upgrade Server</li><li>Issue OS Reloads and Initiate Rescue Kernel</li></ul>
+     <strong>Services</strong>:<ul><li>Manage SSH Keys</li></ul>
+     <strong>Account</strong>:<ul><li>View Account Summary</li><li>Add/Upgrade Cloud Instances</li><li>Cancel Server</li><li>Add Server</li></ul></td>
+     </tr>
+     <tr>
+     <td><strong>Storage</strong>: <ul><li>Create persistent volume claims to provision persistent volumes.</li><li>Create and manage storage infrastructure resources.</li></ul></td>
+     <td><strong>Services</strong>:<ul><li>Manage Storage</li></ul><strong>Account</strong>:<ul><li>Add Storage</li></ul></td>
+     </tr>
+     <tr>
+     <td><strong>Private Networking</strong>: <ul><li>Manage private VLANs for in-cluster networking.</li><li>Set up VPN connectivity to private networks.</li></ul></td>
+     <td><strong>Network</strong>:<ul><li>Manage Network Subnet Routes</li><li>Manage Network VLAN Spanning</li><li>Manage IPSEC Network Tunnels</li><li>Manage Network Gateways</li><li>VPN Administration</li></ul></td>
+     </tr>
+     <tr>
+     <td><strong>Public Networking</strong>:<ul><li>Set up public load balancer or Ingress networking to expose apps.</li></ul></td>
+     <td><strong>Devices</strong>:<ul><li>Manage Load Balancers</li><li>Edit Hostname/Domain</li><li>Manage Port Control</li></ul>
+     <strong>Network</strong>:<ul><li>Add Compute with Public Network Port</li><li>Manage Network Subnet Routes</li><li>Manage Network VLAN Spanning</li><li>Add IP Addresses</li></ul>
+     <strong>Services</strong>:<ul><li>Manage DNS, Reverse DNS, and WHOIS</li><li>View Certificates (SSL)</li><li>Manage Certificates (SSL)</li></ul></td>
+     </tr>
+     </tbody></table>
+
+5.  To save your changes, click **Edit Portal Permissions**.
+
+6.  In the **Device Access** tab, select the devices to grant access to.
+
+    * In the **Device Type** dropdown, you can grant access to **All Virtual Servers**.
+    * To allow users access to new devices that are created, check **Automatically grant access when new devices are added**.
+    * To save your changes, click **Update Device Access**.
+
+7.  Return to the user profile list and verify that **Device Access** is granted.
