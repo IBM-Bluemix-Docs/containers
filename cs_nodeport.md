@@ -79,26 +79,26 @@ If you do not already have an app ready, you can use a Kubernetes example app ca
      </tbody></table>
 
 
-      For the Guestbook example, a front-end service section already exists in the configuration file. To make the Guestbook app available externally, add the NodePort type and a NodePort in the range 30000 - 32767 to the front-end service section.
+    * For the Guestbook example, a front-end service section already exists in the configuration file. To make the Guestbook app available externally, add the NodePort type and a NodePort in the range 30000 - 32767 to the front-end service section.
 
-    ```
-    apiVersion: v1
-    kind: Service
-    metadata:
-      name: frontend
-      labels:
-        app: guestbook
-        tier: frontend
-    spec:
-      type: NodePort
-      ports:
-      - port: 80
-        nodePort: 31513
-      selector:
-        app: guestbook
-        tier: frontend
-    ```
-    {: codeblock}
+      ```
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: frontend
+        labels:
+          app: guestbook
+          tier: frontend
+      spec:
+        type: NodePort
+        ports:
+        - port: 80
+          nodePort: 31513
+        selector:
+          app: guestbook
+          tier: frontend
+      ```
+      {: codeblock}
 
 2.  Save the updated configuration file.
 
