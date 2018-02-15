@@ -149,10 +149,10 @@ For general information about Ingress services and how to get started using them
 <td>Remove header information from a client response before forwarding the response to the client.</td>
 </tr>
 <tr>
-<td><a href="#client-max-body-size">Custom maximum client request body size</a></td>
+<td><a href="#client-max-body-size">Client request body size</a></td>
 <td><code>client-max-body-size</code></td>
-<td>Set the size of the client request body that is allowed to be sent to the application load balancer.</td>
-</tr>
+<td>Set the maximum size of the body that the client can send as part of a request.</td>
+</tr> 
 </tbody></table>
 
 <table>
@@ -1136,7 +1136,7 @@ Remove header information that is included in the client response from the back-
 <br />
 
 
-### Custom maximum client request body size (client-max-body-size)
+### Client request body size (client-max-body-size)
 {: #client-max-body-size}
 
 Set the maximum size of the body that the client can send as part of a request.
@@ -1188,6 +1188,7 @@ spec:
  </dd></dl>
 
 <br />
+
 
 
 
