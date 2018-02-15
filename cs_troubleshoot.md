@@ -61,11 +61,11 @@ Review the options to debug your clusters and find the root causes for failures.
     </tr>
   <tr>
       <td>Critical</td>
-      <td>The Kubernetes master cannot be reached or all worker nodes in the cluster are down. </td>
+      <td>The Kubernetes master cannot be reached or all worker nodes in the cluster are down. Continue with the next step to find the reason for why your worker node is down.</td>
      </tr>
     <tr>
       <td>Delete failed</td>
-      <td>The Kubernetes master or at least one worker node cannot be deleted.</td>
+      <td>The Kubernetes master or at least one worker node cannot be deleted. Continue with the next step to find the reason for why your worker node cannot be deleted. </td>
     </tr>
     <tr>
       <td>Deleted</td>
@@ -73,23 +73,23 @@ Review the options to debug your clusters and find the root causes for failures.
     </tr>
     <tr>
     <td>Deleting</td>
-    <td>The cluster is being deleted and cluster infrastructure is being dismantled. You cannot access the cluster.</td>
+    <td>The cluster is being deleted and cluster infrastructure is being dismantled. You cannot access the cluster. If your cluster is stuck in this state for a long time, continue with the next step to see if an error occured during the deletion. </td>
     </tr>
     <tr>
       <td>Deploy failed</td>
-      <td>The deployment of the Kubernetes master could not be completed. You cannot resolve this state. Contact IBM Cloud support by opening an IBM Cloud support ticket.</td>
+      <td>The deployment of the Kubernetes master could not be completed. You cannot resolve this state. Contact IBM Cloud support by opening an [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/get-support/howtogetsupport.html#using-avatar).</td>
     </tr>
       <tr>
         <td>Deploying</td>
-        <td>The Kubernetes master is not fully deployed yet. You cannot access your cluster.</td>
+        <td>The Kubernetes master is not fully deployed yet. You cannot access your cluster. Wait until your cluster is fully deployed to review the health of your cluster.</td>
        </tr>
        <tr>
         <td>Normal</td>
-        <td>All worker nodes in a cluster are up and running. You can access the cluster and deploy apps to the cluster. This state is considered healthy and does not require an action from the user.</td>
+        <td>All worker nodes in a cluster are up and running. You can access the cluster and deploy apps to the cluster. This state is considered healthy and does not require an action from you.</td>
      </tr>
        <tr>
         <td>Pending</td>
-        <td>The Kubernetes master is deployed. The worker nodes are being provisioned and are not available in the cluster yet. You can access the cluster, but you cannot deploy apps to the cluster. </td>
+        <td>The Kubernetes master is deployed. The worker nodes are being provisioned and are not available in the cluster yet. You can access the cluster, but you cannot deploy apps to the cluster. If your cluster is stuck in this state for a long time, continue with the next step to see the current status of the provisioning process or to review errors that occured during the provisioning.  </td>
       </tr>
     <tr>
       <td>Requested</td>
@@ -97,72 +97,86 @@ Review the options to debug your clusters and find the root causes for failures.
     </tr>
     <tr>
       <td>Updating</td>
-      <td>The Kubernetes API server that runs in your Kubernetes master is being updated to a new Kubernetes API version. During the update you cannot access or change the cluster. Worker nodes, apps, and resources that have been deployed by the user are not modified and continue to run. </td>
+      <td>The Kubernetes API server that runs in your Kubernetes master is being updated to a new Kubernetes API version. During the update you cannot access or change the cluster. Worker nodes, apps, and resources that have been deployed by the user are not modified and continue to run. Wait for the update to complete to review the health of your cluster. </td>
     </tr>
      <tr>
         <td>Warning</td>
-        <td>At least one worker node in the cluster is not available, but other worker nodes are available and can take over the workload.</td>
+        <td>At least one worker node in the cluster is not available, but other worker nodes are available and can take over the workload. Continue with the next step to find the reason for why your worker node is not available.</td>
      </tr>
     </tbody>
   </table>
 
-3.  If your cluster is in a **Warning**, **Critical** or **Delete failed** state, or is stuck in the **Pending** state for a long time, review the state of your worker nodes. If your cluster is in a **Deploying** state, wait until your cluster is fully deployed to review the health of your cluster. Clusters in a **Normal**, **Aborted**, **Deleting** or **Updating** state do not require an action at the moment. Clusters in a **Deploy failed** state, or that are stuck in the **Requested** or **Deleted** state for a long time cannot be resolved by the user. For these clusters, open an [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/get-support/howtogetsupport.html#using-avatar).
-<p>To review the state of your worker nodes:</p>
+3.  If your cluster is in a **Critical**, **Delete failed**, or **Warning** state, or is stuck in the **Pending** state for a long time, review the state of your worker nodes.
 
   ```
   bx cs workers <cluster_name_or_id>
   ```
   {: pre}
-
+  
+4.  Review the `State` and `Status` field for every worker node in your CLI output. 
+   
   <table summary="Every table row should be read left to right, with the cluster state in column one and a description in column two.">
     <thead>
     <th>Worker node state</th>
     <th>Description</th>
     </thead>
     <tbody>
+  <tr>
+      <td>Critical</td>
+      <td><ul><li>If the worker node state shows <strong>Critical</strong> and the status shows <strong>Not Ready</strong>, then your worker node might not be able to connect to your IBM Cloud infrastructure (SoftLayer) account. Start troubleshooting by running <code>bx cs worker-reboot --hard CLUSTER WORKER</code> first. If that command is unsuccessful, then run <code>bx cs worker reload CLUSTER WORKER</code>. If that command is unsuccessful as well, go to the next step to continue troubleshooting your worker node.</li><li>If the worker node state shows <strong>Critical</strong> and the status shows <strong>Out of disk</strong>, then your worker node ran out of capacity. You can either reduce work load on your worker node or add a worker node to your cluster to help load balance the work load.</li><li>If the worker node state shows <strong>Critical</strong> and the status shows <strong>Unknown</strong>, then the Kubernetes master is not available. Contact IBM Cloud support by opening [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/get-support/howtogetsupport.html#using-avatar).</li></ul></td>
+     </tr>
       <tr>
-       <td>Unknown</td>
-       <td>The Kubernetes master is not reachable for one of the following reasons:<ul><li>You requested an update of your Kubernetes master. The state of the worker node cannot be retrieved during the update.</li><li>You might have an additional firewall that is protecting your worker nodes, or changed firewall settings recently. {{site.data.keyword.containershort_notm}} requires certain IP addresses and ports to be opened to allow communication from the worker node to the Kubernetes master and vice versa. For more information, see [Firewall prevents worker nodes from connecting](#cs_firewall).</li><li>The Kubernetes master is down. Contact {{site.data.keyword.Bluemix_notm}} support by opening an [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/get-support/howtogetsupport.html#getting-customer-support).</li></ul></td>
-      </tr>
-      <tr>
+        <td>Deploying</td>
+        <td>When you update the Kubernetes version of your worker node, your worker node is redeployed to install the updates. If your worker node is stuck in this state for a long time, continue with the next step to see if a problem occurred during the deployment. </td>
+     </tr>
+        <tr>
+        <td>Normal</td>
+        <td>Your worker node is fully provisioned and ready to be used in the cluster. This state is considered healthy and does not require an action from the user.</td>
+     </tr>
+   <tr>
         <td>Provisioning</td>
-        <td>Your worker node is being provisioned and is not available in the cluster yet. You can monitor the provisioning process in the **Status** column of your CLI output. If your worker node is stuck in this state for a long time, and you cannot see any progress in the **Status** column, continue with the next step to see if a problem occurred during the provisioning.</td>
+        <td>Your worker node is being provisioned and is not available in the cluster yet. You can monitor the provisioning process in the <strong>Status</strong> column of your CLI output. If your worker node is stuck in this state for a long time, and you cannot see any progress in the <strong>Status</strong> column, continue with the next step to see if a problem occurred during the provisioning.</td>
       </tr>
       <tr>
         <td>Provision_failed</td>
         <td>Your worker node could not be provisioned. Continue with the next step to find the details for the failure.</td>
       </tr>
-      <tr>
+   <tr>
         <td>Reloading</td>
-        <td>Your worker node is being reloaded and is not available in the cluster. You can monitor the reloading process in the **Status** column of your CLI output. If your worker node is stuck in this state for a long time, and you cannot see any progress in the **Status** column, continue with the next step to see if a problem occurred during the reloading.</td>
+        <td>Your worker node is being reloaded and is not available in the cluster. You can monitor the reloading process in the <strong>Status</strong> column of your CLI output. If your worker node is stuck in this state for a long time, and you cannot see any progress in the <strong>Status</strong> column, continue with the next step to see if a problem occurred during the reloading.</td>
        </tr>
        <tr>
-        <td>Reloading_failed</td>
+        <td>Reloading_failed </td>
         <td>Your worker node could not be reloaded. Continue with the next step to find the details for the failure.</td>
       </tr>
       <tr>
-        <td>Normal</td>
-        <td>Your worker node is fully provisioned and ready to be used in the cluster.</td>
-     </tr>
+        <td>Reload_pending </td>
+        <td>A request to reload or to update the Kubernetes version of your worker node is sent. When the worker node is being reloaded, the state changes to <code>Reloading</code>. </td>
+      </tr>
+      <tr>
+       <td>Unknown</td>
+       <td>The Kubernetes master is not reachable for one of the following reasons:<ul><li>You requested an update of your Kubernetes master. The state of the worker node cannot be retrieved during the update.</li><li>You might have an additional firewall that is protecting your worker nodes, or changed firewall settings recently. {{site.data.keyword.containershort_notm}} requires certain IP addresses and ports to be opened to allow communication from the worker node to the Kubernetes master and vice versa. For more information, see [Firewall prevents worker nodes from connecting](#cs_firewall).</li><li>The Kubernetes master is down. Contact {{site.data.keyword.Bluemix_notm}} support by opening an [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/get-support/howtogetsupport.html#getting-customer-support).</li></ul></td>
+  </tr>
      <tr>
         <td>Warning</td>
-        <td>Your worker node is reaching the limit for memory or disk space.</td>
-     </tr>
-     <tr>
-      <td>Critical</td>
-      <td>Your worker node ran out of disk space.</td>
-     </tr>
+        <td>Your worker node is reaching the limit for memory or disk space. You can either reduce work load on your worker node or add a worker node to your cluster to help load balance the work load.</td>
+  </tr>
     </tbody>
   </table>
 
-4.  List the details for the worker node.
+5.  List the details for the worker node.  
+
+   ```
+   bx cs worker-get <worker_id>
+   ```
+   {: pre}
 
   ```
   bx cs worker-get [<cluster_name_or_id>] <worker_node_id>
   ```
   {: pre}
 
-5.  Review common error messages and learn how to resolve them.
+6.  Review common error messages and learn how to resolve them.
 
   <table>
     <thead>
@@ -188,14 +202,14 @@ Review the options to debug your clusters and find the root causes for failures.
        </tr>
        <tr>
         <td>{{site.data.keyword.Bluemix_notm}} Infrastructure Exception: The user does not have the necessary {{site.data.keyword.Bluemix_notm}} Infrastructure permissions to add servers
-
         </br></br>
         {{site.data.keyword.Bluemix_notm}} Infrastructure Exception: 'Item' must be ordered with permission.</td>
         <td>You might not have the required permissions to provision a worker node from the IBM Cloud infrastructure (SoftLayer) portfolio. See [Configure access to the IBM Cloud infrastructure (SoftLayer) portfolio to create standard Kubernetes clusters](cs_infrastructure.html#unify_accounts).</td>
       </tr>
     </tbody>
   </table>
-
+  
+ 7.  Continue to work with your cluster by repeating the create, update, or delete action that previously failed.  
 <br />
 
 
