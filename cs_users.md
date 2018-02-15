@@ -2,7 +2,8 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-12"
+lastupdated: "2018-02-15"
+
 
 ---
 
@@ -23,6 +24,20 @@ You can grant access to a cluster for other users in your organization to ensure
 {:shortdesc}
 
 
+## Planning communication processes
+As a cluster administrator, consider how you might establish a communication process for the members of your organization to communicate access requests to you so that you can stay organized. 
+{:shortdesc}
+
+Provide instructions to your cluster users about how to request access to a cluster or how to get help with any kinds of common tasks from a cluster administrator. Because Kubernetes does not facilitate this kind of communication, each team can have variations on their preferred process.
+
+You might choose any of the following methods or establish your own method.
+- Create a ticket system
+- Create a form template
+- Create a wiki page
+- Require an email request
+- Use the issue tracking method you already use to track your team's daily work
+
+
 ## Managing cluster access
 {: #managing}
 
@@ -39,7 +54,7 @@ Every user that works with {{site.data.keyword.containershort_notm}} must be ass
 <dt>Cloud Foundry roles</dt>
 <dd>In Identity and Access Management, every user must be assigned a Cloud Foundry user role. This role determines the actions that the user can perform on the {{site.data.keyword.Bluemix_notm}} account, such as inviting other users, or viewing the quota usage. [Learn more about the available Cloud Foundry roles](/docs/iam/cfaccess.html#cfaccess).</dd>
 <dt>Kubernetes RBAC roles</dt>
-<dd>Every user who is assigned an {{site.data.keyword.containershort_notm}} access policy is automatically assigned a Kubernetes RBAC role. In Kubernetes, RBAC roles determine the actions that you can perform on Kubernetes resources inside the cluster. RBAC roles are set up for the default namespace only. The cluster administrator can add RBAC roles for other namespaces in the cluster. See [Using RBAC Authorization ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/admin/authorization/rbac/#api-overview) in the Kubernetes documentation for more information.</dd>
+<dd>Every user who is assigned an {{site.data.keyword.containershort_notm}} access policy is automatically assigned a Kubernetes RBAC role.  In Kubernetes, RBAC roles determine the actions that you can perform on Kubernetes resources inside the cluster. RBAC roles are set up for the default namespace only. The cluster administrator can add RBAC roles for other namespaces in the cluster. See the following table in the [Access policies and permissions](#access_policies) section to see which RBAC role correcsponds to which {site.data.keyword.containershort_notm}} access policy. For more information about RBAC roles in general, see [Using RBAC Authorization ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/admin/authorization/rbac/#api-overview) in the Kubernetes documentation.</dd>
 </dl>
 
 <br />
