@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-06"
+lastupdated: "2018-02-15"
 
 ---
 
@@ -637,7 +637,46 @@ Before you begin:
 
 You can route incoming network traffic on the IBM-provided domain to apps that are located outside your cluster. If you want to use a custom domain and TLS certificate instead, replace the IBM-provided domain and TLS certificate with your [custom domain and TLS certificate](#custom_domain_cert).
 
-1.  Configure a Kubernetes endpoint that defines the external location of the app that you want to include into the cluster load balancing.
+1.  Create a Kubernetes service for your cluster that will forward incoming requests to an external endpoint that you will created.
+    1.  Open your preferred editor and create a service configuration file that is named, for example, `myexternalservice.yaml`.
+    2.  Define the application load balancer service.
+
+        ```
+        apiVersion: v1
+        kind: Service
+        metadata:
+          name: <myservicename>
+        spec:
+          ports:
+           - protocol: TCP
+             port: 8080
+        ```
+        {: codeblock}
+
+        <table>
+        <caption>Understanding the application load balancer service file components</caption>
+        <thead>
+        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
+        </thead>
+        <tbody>
+        <tr>
+        <td><code>metadata/name</code></td>
+        <td>Replace <em>&lt;myservicename&gt;</em> with a name for your service.</td>
+        </tr>
+        <tr>
+        <td><code>port</code></td>
+        <td>The port that the service listens on.</td>
+        </tr></tbody></table>
+
+    3.  Save your changes.
+    4.  Create the Kubernetes service for your cluster.
+
+        ```
+        kubectl apply -f myexternalservice.yaml
+        ```
+        {: pre}
+
+2.  Configure a Kubernetes endpoint that defines the external location of the app that you want to include into the cluster load balancing.
     1.  Open your preferred editor and create an endpoint configuration file that is named, for example, `myexternalendpoint.yaml`.
     2.  Define your external endpoint. Include all public IP addresses and ports that you can use to access your external app.
 
@@ -645,7 +684,7 @@ You can route incoming network traffic on the IBM-provided domain to apps that a
         kind: Endpoints
         apiVersion: v1
         metadata:
-          name: <myendpointname>
+          name: <myservicename>
         subsets:
           - addresses:
               - ip: <externalIP1>
@@ -662,7 +701,7 @@ You can route incoming network traffic on the IBM-provided domain to apps that a
         <tbody>
         <tr>
         <td><code>name</code></td>
-        <td>Replace <em>&lt;myendpointname&gt;</em> with the name for your Kubernetes endpoint.</td>
+        <td>Replace <em>&lt;myendpointname&gt;</em> with the name of the Kubernetes service that you created earlier.</td>
         </tr>
         <tr>
         <td><code>ip</code></td>
@@ -677,51 +716,6 @@ You can route incoming network traffic on the IBM-provided domain to apps that a
 
         ```
         kubectl apply -f myexternalendpoint.yaml
-        ```
-        {: pre}
-
-2.  Create a Kubernetes service for your cluster and configure it to forward incoming requests to the external endpoint that you created earlier.
-    1.  Open your preferred editor and create a service configuration file that is named, for example, `myexternalservice.yaml`.
-    2.  Define the application load balancer service.
-
-        ```
-        apiVersion: v1
-        kind: Service
-        metadata:
-          name: <myexternalservice>
-          labels:
-              name: <myendpointname>
-        spec:
-          ports:
-           - protocol: TCP
-             port: 8080
-        ```
-        {: codeblock}
-
-        <table>
-        <caption>Understanding the application load balancer service file components</caption>
-        <thead>
-        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
-        </thead>
-        <tbody>
-        <tr>
-        <td><code>metadata/name</code></td>
-        <td>Replace <em>&lt;myexternalservice&gt;</em> with the name for your application load balancer service.</td>
-        </tr>
-        <tr>
-        <td><code>labels/name</code></td>
-        <td>Replace <em>&lt;myendpointname&gt;</em> with the name of the Kubernetes endpoint that you created earlier.</td>
-        </tr>
-        <tr>
-        <td><code>port</code></td>
-        <td>The port that the service listens on.</td>
-        </tr></tbody></table>
-
-    3.  Save your changes.
-    4.  Create the Kubernetes service for your cluster.
-
-        ```
-        kubectl apply -f myexternalservice.yaml
         ```
         {: pre}
 
@@ -1385,56 +1379,56 @@ For more information about config map resources, see the [Kubernetes documentati
 
 Enable SSL protocols and ciphers at the global HTTP level by editing the `ibm-cloud-provider-ingress-cm` config map.
 
-By default, the following values are used for ssl-protocols and ssl-ciphers:
+**Note**: When specifying the enabled protocols for all hosts, the TLSv1.1 and TLSv1.2 parameters (1.1.13, 1.0.12) work only when OpenSSL 1.0.1 or higher is used and the TLSv1.3 parameter (1.13.0) works only when OpenSSL 1.1.1 built with TLSv1.3 support is used.
 
-```
-ssl-protocols : "TLSv1 TLSv1.1 TLSv1.2"
-ssl-ciphers : "HIGH:!aNULL:!MD5"
-```
-{: codeblock}
+To edit the config map to enable SSL protocols and ciphers:
 
-For more information about these parameters, see the NGINX documentation for [ssl-protocols ![External link icon](../icons/launch-glyph.svg "External link icon")](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_protocols) and [ssl-ciphers ![External link icon](../icons/launch-glyph.svg "External link icon")](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_ciphers).
+1. Create and open a local version of the configuration file for the ibm-cloud-provider-ingress-cm config map resource.
 
-To change the default values:
-1. Create a local version of the configuration file for the ibm-cloud-provider-ingress-cm config map resource.
+    ```
+    kubectl edit cm ibm-cloud-provider-ingress-cm -n kube-system
+    ```
+    {: pre}
 
- ```
- apiVersion: v1
- data:
-   ssl-protocols: "TLSv1 TLSv1.1 TLSv1.2"
-   ssl-ciphers: "HIGH:!aNULL:!MD5"
- kind: ConfigMap
- metadata:
-   name: ibm-cloud-provider-ingress-cm
-   namespace: kube-system
- ```
- {: codeblock}
+2. Add the SSL protocols and ciphers. Format ciphers according to the [OpenSSL library cipher list format ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.openssl.org/docs/man1.0.2/apps/ciphers.html).
+
+   ```
+   apiVersion: v1
+   data:
+     ssl-protocols: "TLSv1 TLSv1.1 TLSv1.2"
+     ssl-ciphers: "HIGH:!aNULL:!MD5"
+   kind: ConfigMap
+   metadata:
+     name: ibm-cloud-provider-ingress-cm
+     namespace: kube-system
+   ```
+   {: codeblock}
 
 2. Apply the configuration file.
 
- ```
- kubectl apply -f <path/to/configmap.yaml>
- ```
- {: pre}
+   ```
+   kubectl apply -f <path/to/configmap.yaml>
+   ```
+   {: pre}
 
 3. Verify that the configuration file is applied.
 
- ```
- kubectl describe cm ibm-cloud-provider-ingress-cm -n kube-system
- ```
- {: pre}
+   ```
+   kubectl describe cm ibm-cloud-provider-ingress-cm -n kube-system
+   ```
+   {: pre}
 
- Output:
- ```
- Name:        ibm-cloud-provider-ingress-cm
- Namespace:    kube-system
- Labels:        <none>
- Annotations:    <none>
+   Output:
+   ```
+   Name:        ibm-cloud-provider-ingress-cm
+   Namespace:    kube-system
+   Labels:        <none>
+   Annotations:    <none>
 
- Data
- ====
+   Data
+   ====
 
-  ssl-protocols: "TLSv1 TLSv1.1 TLSv1.2"
-  ssl-ciphers: "HIGH:!aNULL:!MD5"
- ```
- {: screen}
+    ssl-protocols: "TLSv1 TLSv1.1 TLSv1.2"
+    ssl-ciphers: "HIGH:!aNULL:!MD5"
+   ```
+   {: screen}
