@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-13"
+lastupdated: "2018-02-16"
 
 ---
 
@@ -23,7 +23,7 @@ Design your cluster setup for maximum availability and capacity.
 {:shortdesc}
 
 
-## Cluster configuration planning 
+## Cluster configuration planning
 {: #planning_clusters}
 
 Use standard clusters to increase app availability. Your users are less likely to experience downtime when you distribute your setup across multiple worker nodes and clusters. Built-in capabilities, like load balancing and isolation, increase resiliency against potential failures with hosts, networks, or apps.
@@ -141,14 +141,15 @@ To create a cluster:
 2. Select a region in which to deploy your cluster.
 3. Select a type of cluster plan. You can choose either **Free** or **Standard**. With a standard cluster you have access to features like multiple worker nodes for a highly available environment.
 4. Configure your cluster details.
-    1. Give your cluster a name, choose a version of Kubernetes, and select a location in which to deploy your cluster. For the best performance, select the location that is physically closest to you. Keep in mind that you might require legal authorization before data can be physically stored in a foreign country if you select a location that is outside your country.
-    2. Select a type of machine and specify the number of worker nodes that you need. The machine type defines the amount of virtual CPU, memory, and disk space that is set up in each worker node and made available to the containers.
-    3. Select a Public and Private VLAN from your IBM Cloud infrastructure (SoftLayer) account. Both VLANs communicate between worker nodes but the public VLAN also communicates with the IBM-managed Kubernetes master. You can use the same VLAN for multiple clusters.
+    1. Give your cluster a name. The name must start with a letter, can contain letters, numbers, and -, and must be 35 characters or fewer. Note that the {{site.data.keyword.IBM_notm}}-assigned Ingress subdomain is derived from the cluster name. The cluster name and Ingress subdomain together form the fully qualified domain name, which must be unique within a region and have 63 characters or fewer. To meet these requirements, the cluster name might be truncated or the subdomain might be assigned random character values.
+    2. Choose a version of Kubernetes, and select a location in which to deploy your cluster. For the best performance, select the location that is physically closest to you. Keep in mind that you might require legal authorization before data can be physically stored in a foreign country if you select a location that is outside your country.
+    3. Select a type of machine and specify the number of worker nodes that you need. The machine type defines the amount of virtual CPU, memory, and disk space that is set up in each worker node and made available to the containers.
+    4. Select a Public and Private VLAN from your IBM Cloud infrastructure (SoftLayer) account. Both VLANs communicate between worker nodes but the public VLAN also communicates with the IBM-managed Kubernetes master. You can use the same VLAN for multiple clusters.
         **Note**: If you choose not to select a public VLAN, you must configure an alternative solution. See [VLAN connection for worker nodes](#worker_vlan_connection) for more information.
-    4. Select a type of hardware.
+    5. Select a type of hardware.
         - **Dedicated**: Your worker nodes are hosted on infrastructure that is devoted to your account. Your resources are completely isolated.
         - **Shared**: Infrastructure resources, such as the hypervisor and physical hardware, are distributed between you and other IBM customers, but each worker node is accessible only by you. Although this option is less expensive and sufficient in most cases, you might want to verify your performance and infrastructure requirements with your companies policies.
-    5. By default, **Encrypt local disk** is selected. If you choose to clear the check box, then the host's Docker data is not encrypted.[Learn more about the encryption](cs_secure.html#encrypted_disks).
+    6. By default, **Encrypt local disk** is selected. If you choose to clear the check box, then the host's Docker data is not encrypted.[Learn more about the encryption](cs_secure.html#encrypted_disks).
 4. Click **Create cluster**. You can see the progress of the worker node deployment in the **Worker nodes** tab. When the deploy is done, you can see that your cluster is ready in the **Overview** tab.
     **Note:** Every worker node is assigned a unique worker node ID and domain name that must not be manually changed after the cluster is created. Changing the ID or domain name prevents the Kubernetes master from managing your cluster.
 
@@ -286,7 +287,7 @@ To create a cluster:
         </tr>
         <tr>
         <td><code>--name <em>&lt;name&gt;</em></code></td>
-        <td>Replace <em>&lt;name&gt;</em> with a name for your cluster.</td>
+        <td>Replace <em>&lt;name&gt;</em> with a name for your cluster. The name must start with a letter, can contain letters, numbers, and -, and must be 35 characters or fewer. Note that the {{site.data.keyword.IBM_notm}}-assigned Ingress subdomain is derived from the cluster name. The cluster name and Ingress subdomain together form the fully qualified domain name, which must be unique within a region and have 63 characters or fewer. To meet these requirements, the cluster name might be truncated or the subdomain might be assigned random character values.</td>
         </tr>
         <tr>
         <td><code>--workers <em>&lt;number&gt;</em></code></td>
@@ -408,7 +409,7 @@ To create a cluster:
 You can view the current cluster state by running the `bx cs clusters` command and locating the **State** field. The cluster state gives you information about the availability and capacity of the cluster, and potential problems that might have occurred.
 {:shortdesc}
 
-To troubleshoot your cluster and worker nodes, see [Troubleshooting clusters](cs_troubleshoot.html#debug_clusters). 
+To troubleshoot your cluster and worker nodes, see [Troubleshooting clusters](cs_troubleshoot.html#debug_clusters).
 
 |Cluster state|Reason|
 |-------------|------|
