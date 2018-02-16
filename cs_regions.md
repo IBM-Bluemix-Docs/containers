@@ -23,7 +23,7 @@ lastupdated: "2018-02-14"
 
 ![{{site.data.keyword.containershort_notm}} regions and data centers](/images/regions.png)
 
-Figure 1. {{site.data.keyword.containershort_notm}} regions and data centers
+Figure. {{site.data.keyword.containershort_notm}} regions and data centers
 
 Supported {{site.data.keyword.containershort_notm}} regions:
   * AP North
@@ -93,6 +93,9 @@ To use the API with the global endpoint, in all your requests, pass the region n
 ### Logging in to a different container service region
 {: #container_login_endpoints}
 
+You can change locations by using the {{site.data.keyword.containershort_notm}} CLI.
+{:shortdesc}
+
 You might want to log in to another {{site.data.keyword.containershort_notm}} region for the following reasons:
   * You created {{site.data.keyword.Bluemix_notm}} services or private Docker images in one region and want to use them with {{site.data.keyword.containershort_notm}} in another region.
   * You want to access a cluster in a region that is different from the default {{site.data.keyword.Bluemix_notm}} region you are logged in to.
@@ -101,24 +104,32 @@ You might want to log in to another {{site.data.keyword.containershort_notm}} re
 
 To quickly switch regions, run `bx cs region-set`.
 
-### Locations available for the container service
+### Locations available in {{site.data.keyword.containershort_notm}}
 {: #locations}
 
-Locations are data centers that are available within a region.
+Locations are physical data centers that are available within an {{site.data.keyword.Bluemix_notm}} region. Regions can include locations (data centers) in different countries. Review how data is exchanged within regions that include multiple countries.
+{:shortdesc}
 
-  | Region | Location | City |
-  |--------|----------|------|
-  | AP North | hkg02, seo01, sng01, tok02 | Hong Kong, Seoul, Singapore, Tokyo |
-  | AP South     | mel01, syd01, syd04        | Melbourne, Sydney |
-  | EU Central     | ams03, fra02, par01        | Amsterdam, Frankfurt, Paris |
-  | UK South      | lon02, lon04         | London |
-  | US East      | mon01, tor01, wdc06, wdc07        | Montreal, Toronto, Washington DC |
-  | US South     | dal10, dal12, dal13       | Dallas |
+
+
+| Region | Location | City |
+|--------|----------|------|
+| AP North | hkg02, seo01, sng01, tok02 | Hong Kong, Seoul, Singapore, Tokyo |
+| AP South     | mel01, syd01, syd04        | Melbourne, Sydney |
+| EU Central     | ams03, fra02, par01        | Amsterdam, Frankfurt, Paris |
+| UK South      | lon02, **lon04         | London |
+| US East      | mon01, tor01, wdc06, wdc07        | Montreal, Toronto, Washington DC |
+| US South     | dal10, dal12, dal13       | Dallas |
+
+
+
+
 
 ### Using container service API commands
 {: #container_api}
 
 To interact with the {{site.data.keyword.containershort_notm}} API, enter the command type and append `/v1/command` to the global endpoint.
+{:shortdesc}
 
 Example of `GET /clusters` API:
   ```
