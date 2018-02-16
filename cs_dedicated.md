@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-01"
+lastupdated: "2018-02-16"
 
 ---
 
@@ -201,7 +201,7 @@ Design your {{site.data.keyword.Bluemix_dedicated_notm}} cluster setup for maxim
 2. Select the **Also log in to {{site.data.keyword.Bluemix_notm}} Public** check box and click **Log in**.
 3. Follow the prompts to log in with your IBMid. If this is your first time to log in to your Dedicated account, then follow the prompts to log in to {{site.data.keyword.Bluemix_dedicated_notm}}.
 4.  From the catalog, select **Containers** and click **Kubernetes cluster**.
-5.  Enter a **Cluster Name**.
+5.  Enter a **Cluster Name**. The name must start with a letter, can contain letters, numbers, and -, and must be 35 characters or fewer. Note that the {{site.data.keyword.IBM_notm}}-assigned Ingress subdomain is derived from the cluster name. The cluster name and Ingress subdomain together form the fully qualified domain name, which must be unique within a region and have 63 characters or fewer. To meet these requirements, the cluster name might be truncated or the subdomain might be assigned random character values.
 6.  Select a **Machine type**. The machine type defines the amount of virtual CPU and memory that is set up in each worker node. This virtual CPU and memory is available for all the containers that you deploy in your nodes.
     -   The micro machine type indicates the smallest option.
     -   A balanced machine type has an equal amount of memory that is assigned to each CPU, which optimizes performance.
@@ -252,7 +252,7 @@ Design your {{site.data.keyword.Bluemix_dedicated_notm}} cluster setup for maxim
     </tr>
     <tr>
     <td><code>--name <em>&lt;name&gt;</em></code></td>
-    <td>Replace <em>&lt;name&gt;</em> with a name for your cluster.</td>
+    <td>Replace <em>&lt;name&gt;</em> with a name for your cluster. The name must start with a letter, can contain letters, numbers, and -, and must be 35 characters or fewer. Note that the {{site.data.keyword.IBM_notm}}-assigned Ingress subdomain is derived from the cluster name. The cluster name and Ingress subdomain together form the fully qualified domain name, which must be unique within a region and have 63 characters or fewer. To meet these requirements, the cluster name might be truncated or the subdomain might be assigned random character values.</td>
     </tr>
     <tr>
     <td><code>--workers <em>&lt;number&gt;</em></code></td>

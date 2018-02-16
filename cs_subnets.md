@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-12"
+lastupdated: "2018-02-16"
 
 ---
 
@@ -238,16 +238,21 @@ Before you begin:
 ## Managing IP addresses and subnets
 {: #manage}
 
-You can use portable public and private subnets and IP addresses to expose apps in your cluster and make them accessible from the internet or on a private network.
-{:shortdesc}
+Review the following options for listing available public IP addresses, freeing up used IP addresses, and routing between multiple subnets on the same VLAN.
 
-In {{site.data.keyword.containershort_notm}}, you can add stable, portable IPs for Kubernetes services by adding network subnets to the cluster. When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically provisions a portable public subnet with 5 portable public IP addressed and a portable private subnet with 5 portable private IP addresses. Portable IP addresses are static and do not change when a worker node, or even the cluster, is removed.
+### Viewing available portable public IP addresses
+{: #review_ip}
 
-Two of the portable IP addresses, one public and one private, are used for [Ingress application load balancers](cs_ingress.html) that you can use to expose multiple apps in your cluster. 4 portable public and 4 portable private IP addresses can be used to expose apps by [creating a load balancer service](cs_loadbalancer.html).
+To list all of the IP addresses in your cluster, both used and available, you can run:
 
-**Note:** Portable public IP addresses are charged on a monthly basis. If you choose to remove portable public IP addresses after your cluster is provisioned, you still have to pay the monthly charge, even if you used them only for a short amount of time.
+  ```
+  kubectl get cm ibm-cloud-provider-vlan-ip-config -n kube-system -o yaml
+  ```
+  {: pre}
 
+To list only available public IP addresses for your cluster, you can use the following steps:
 
+Before you begin, [set the context for the cluster you want to use.](cs_cli_install.html#cs_cli_configure)
 
 1.  Create a Kubernetes service configuration file that is named `myservice.yaml` and define a service of type `LoadBalancer` with a dummy load balancer IP address. The following example uses the IP address 1.1.1.1 as the load balancer IP address.
 
@@ -293,12 +298,7 @@ Two of the portable IP addresses, one public and one private, are used for [Ingr
     ```
     {: screen}
 
-<br />
-
-
-
-
-## Freeing up used IP addresses
+### Freeing up used IP addresses
 {: #free}
 
 You can free up a used portable IP address by deleting the load balancer service that is using the portable IP address.
@@ -318,3 +318,10 @@ Before you begin, [set the context for the cluster you want to use.](cs_cli_inst
     kubectl delete service <myservice>
     ```
     {: pre}
+
+### Enabling routing between subnets on the same VLAN
+{: #vlan-spanning}
+
+When you create a cluster, a subnet ending in `/26` is provisioned in the same VLAN that the cluster is on. This primary subnet can hold up to 62 worker nodes. This 62 worker node limit might be exceeded by a large cluster or by several smaller clusters in a single region that are on the same VLAN. When the 62 worker node limit is reached, a second primary subnet in the same VLAN is ordered.
+
+To route between subnets on the same VLAN, you must turn on VLAN spanning. For instructions, see [Enable or disable VLAN spanning](docs/infrastructure/vlans/vlan-spanning.html#enable-or-disable-vlan-spanning).
