@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-06"
+lastupdated: "2018-02-15"
 
 ---
 
@@ -1385,56 +1385,56 @@ For more information about config map resources, see the [Kubernetes documentati
 
 Enable SSL protocols and ciphers at the global HTTP level by editing the `ibm-cloud-provider-ingress-cm` config map.
 
-By default, the following values are used for ssl-protocols and ssl-ciphers:
+**Note**: When specifying the enabled protocols for all hosts, the TLSv1.1 and TLSv1.2 parameters (1.1.13, 1.0.12) work only when OpenSSL 1.0.1 or higher is used and the TLSv1.3 parameter (1.13.0) works only when OpenSSL 1.1.1 built with TLSv1.3 support is used.
 
-```
-ssl-protocols : "TLSv1 TLSv1.1 TLSv1.2"
-ssl-ciphers : "HIGH:!aNULL:!MD5"
-```
-{: codeblock}
+To edit the config map to enable SSL protocols and ciphers:
 
-For more information about these parameters, see the NGINX documentation for [ssl-protocols ![External link icon](../icons/launch-glyph.svg "External link icon")](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_protocols) and [ssl-ciphers ![External link icon](../icons/launch-glyph.svg "External link icon")](http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_ciphers).
+1. Create and open a local version of the configuration file for the ibm-cloud-provider-ingress-cm config map resource.
 
-To change the default values:
-1. Create a local version of the configuration file for the ibm-cloud-provider-ingress-cm config map resource.
+    ```
+    kubectl edit cm ibm-cloud-provider-ingress-cm -n kube-system
+    ```
+    {: pre}
 
- ```
- apiVersion: v1
- data:
-   ssl-protocols: "TLSv1 TLSv1.1 TLSv1.2"
-   ssl-ciphers: "HIGH:!aNULL:!MD5"
- kind: ConfigMap
- metadata:
-   name: ibm-cloud-provider-ingress-cm
-   namespace: kube-system
- ```
- {: codeblock}
+2. Add the SSL protocols and ciphers. Format ciphers according to the [OpenSSL library cipher list format ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.openssl.org/docs/man1.0.2/apps/ciphers.html).
+
+   ```
+   apiVersion: v1
+   data:
+     ssl-protocols: "TLSv1 TLSv1.1 TLSv1.2"
+     ssl-ciphers: "HIGH:!aNULL:!MD5"
+   kind: ConfigMap
+   metadata:
+     name: ibm-cloud-provider-ingress-cm
+     namespace: kube-system
+   ```
+   {: codeblock}
 
 2. Apply the configuration file.
 
- ```
- kubectl apply -f <path/to/configmap.yaml>
- ```
- {: pre}
+   ```
+   kubectl apply -f <path/to/configmap.yaml>
+   ```
+   {: pre}
 
 3. Verify that the configuration file is applied.
 
- ```
- kubectl describe cm ibm-cloud-provider-ingress-cm -n kube-system
- ```
- {: pre}
+   ```
+   kubectl describe cm ibm-cloud-provider-ingress-cm -n kube-system
+   ```
+   {: pre}
 
- Output:
- ```
- Name:        ibm-cloud-provider-ingress-cm
- Namespace:    kube-system
- Labels:        <none>
- Annotations:    <none>
+   Output:
+   ```
+   Name:        ibm-cloud-provider-ingress-cm
+   Namespace:    kube-system
+   Labels:        <none>
+   Annotations:    <none>
 
- Data
- ====
+   Data
+   ====
 
-  ssl-protocols: "TLSv1 TLSv1.1 TLSv1.2"
-  ssl-ciphers: "HIGH:!aNULL:!MD5"
- ```
- {: screen}
+    ssl-protocols: "TLSv1 TLSv1.1 TLSv1.2"
+    ssl-ciphers: "HIGH:!aNULL:!MD5"
+   ```
+   {: screen}

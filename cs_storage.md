@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-12"
+lastupdated: "2018-02-16"
 
 ---
 
@@ -147,23 +147,23 @@ To create a persistent volume and matching persistent volume claim, follow these
     </thead>
     <tbody>
     <tr>
-    <td><code>name</code></td>
+    <td><code>metadata/name</code></td>
     <td>Enter the name of the persistent volume object that you want to create.</td>
     </tr>
     <tr>
-    <td><code>storage</code></td>
+    <td><code>spec/capacity/storage</code></td>
     <td>Enter the storage size of the existing NFS file share. The storage size must be written in gigabytes, for example, 20Gi (20 GB) or 1000Gi (1 TB), and the size must match the size of the existing file share.</td>
     </tr>
     <tr>
-    <td><code>accessMode</code></td>
+    <td><code>spec/accessMode</code></td>
     <td>Access modes define the way that the persistent volume claim can be mounted to a worker node.<ul><li>ReadWriteOnce (RWO): The persistent volume can be mounted to deployments in a single worker node only. Containers in deployments that are mounted to this persistent volume can read from and write to the volume.</li><li>ReadOnlyMany (ROX): The persistent volume can be mounted to deployments that are hosted on multiple worker nodes. Deployments that are mounted to this persistent volume can only read from the volume.</li><li>ReadWriteMany (RWX): This persistent volume can be mounted to deployments that are hosted on multiple worker nodes. Deployments that are mounted to this persistent volume can read from and write to the volume.</li></ul></td>
     </tr>
     <tr>
-    <td><code>server</code></td>
+    <td><code>spec/nfs/server</code></td>
     <td>Enter the NFS file share server ID.</td>
     </tr>
     <tr>
-    <td><code>path</code></td>
+    <td><code>spec/nfs/path</code></td>
     <td>Enter the path to the NFS file share where you want to create the persistent volume object.</td>
     </tr>
     </tbody></table>
@@ -523,6 +523,8 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
 
 
 <br />
+
+
 
 
 ## Setting up backup and restore solutions for NFS file shares
