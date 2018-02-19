@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-02"
+lastupdated: "2018-02-16"
 
 ---
 
@@ -51,7 +51,7 @@ Before you begin:
   * Set up and manage your own server or have a provider manage it for you. If a provider manages the server for you, get the logging endpoint from the logging provider.
   * Run syslog from a container. For example, you can use this [deployment .yaml file ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/IBM-Bluemix/kube-samples/blob/master/deploy-apps-clusters/deploy-syslog-from-kube.yaml) to fetch a Docker public image that runs a container in a Kubernetes cluster. The image publishes the port `514` on the public cluster IP address, and uses this public cluster IP address to configure the syslog host.
 
-2. [Target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster where the log source is located.
+2. [Target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster where the log source is located. **Note**: If you are using a Dedicated account, you must log in to the public {{site.data.keyword.cloud_notm}} endpoint and target your public org and space in order to enable log forwarding.
 
 To enable log forwarding for a container, worker node, Kubernetes system component, application, or Ingress application load balancer:
 
@@ -197,7 +197,7 @@ Review the following aspects of application log forwarding:
 * When you mount the `/var/log/apps` host path volume to containers, the containers all write to this same directory. This means that if your containers are writing to the same file name, the containers will write to the exact same file on the host. If this is not your intention, you can prevent your containers from overwriting the same log files by naming the log files from each container differently.
 * Because all containers write to the same file name, do not use this method to forward application logs for ReplicaSets. Instead, you can write logs from the application to STDOUT and STDERR, which are picked up as container logs. To forward application logs written to STDOUT and STDERR, follow the steps in [Enabling log forwarding](cs_health.html#log_sources_enable).
 
-Before you start, [target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster where the log source is located.
+Before you start, [target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster where the log source is located. **Note**: If you are using a Dedicated account, you must log in to the public {{site.data.keyword.cloud_notm}} endpoint and target your public org and space in order to enable log forwarding.
 
 1. Open the `.yaml` configuration file for the application's pod.
 
@@ -374,7 +374,7 @@ Before you begin:
 
 1. Set up a remote logging server where you can forward the logs. For example, you can [use Logstash with Kubernetes ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/debug-application-cluster/audit/#use-logstash-to-collect-and-distribute-audit-events-from-webhook-backend) to collect audit events.
 
-2. [Target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster that you want to collect API server audit logs from.
+2. [Target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster that you want to collect API server audit logs from. **Note**: If you are using a Dedicated account, you must log in to the public {{site.data.keyword.cloud_notm}} endpoint and target your public org and space in order to enable log forwarding.
 
 To forward Kubernetes API audit logs:
 
