@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-12"
+lastupdated: "2018-02-16"
 
 ---
 
@@ -76,7 +76,7 @@ The following image shows the options that you have in {{site.data.keyword.conta
   <tbody>
   <tr>
   <td>1. NFS file storage</td>
-  <td>With this option, you can persist app and container data by using Kubernetes persistent volumes. Volumes are hosted on [Endurance and Performance NFS-based file storage ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/cloud/file-storage/details) which can be used for apps that store data on a file basis rather than in a database. File storage is encrypted at REST and clustered by IBM to provide high availability.<p>{{site.data.keyword.containershort_notm}} provides predefined storage classes that define the range of sizes of the storage, IOPS, the delete policy, and the read and write permissions for the volume. To initiate a request for NFS-based file storage, you must create a [persistent volume claim](cs_storage.html#create). After you submit a persistent volume claim, {{site.data.keyword.containershort_notm}} dynamically provisions a persistent volume that is hosted on NFS-based file storage. [You can mount the persistent volume claim](cs_storage.html#app_volume_mount) as a volume to your deployment to allow the containers to read from and write to the volume. </p><p>Persistent volumes are provisioned in the data center where the worker node is located. You can share data across the same replica set or with other deployments in the same cluster. You cannot share data across clusters when they are located in different data centers or regions. </p><p>By default, NFS storage is not backed up automatically. You can set up a periodic backup for your cluster by using the provided [backup and restore mechanisms](cs_storage.html#backup_restore). When a container crashes or a pod is removed from a worker node, the data is not removed and can still be accessed by other deployments that mount the volume. </p><p><strong>Note:</strong> Persistent NFS file share storage is charged on a monthly basis. If you provision persistent storage for your cluster and remove it immediately, you still pay the monthly charge for the persistent storage, even if you used it only for a short amount of time.</p></td>
+  <td>With this option, you can persist app and container data by using Kubernetes persistent volumes. Volumes are hosted on [Endurance and Performance NFS-based file storage ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/cloud/file-storage/details) which can be used for apps that store data on a file basis rather than in a database. File storage is encrypted at REST and clustered by IBM to provide high availability.<p>{{site.data.keyword.containershort_notm}} provides predefined storage classes that define the range of sizes of the storage, IOPS, the delete policy, and the read and write permissions for the volume. To initiate a request for NFS-based file storage, you must create a [persistent volume claim (PVC)](cs_storage.html#create). After you submit a PVC, {{site.data.keyword.containershort_notm}} dynamically provisions a persistent volume that is hosted on NFS-based file storage. [You can mount the PVC](cs_storage.html#app_volume_mount) as a volume to your deployment to allow the containers to read from and write to the volume. </p><p>Persistent volumes are provisioned in the data center where the worker node is located. You can share data across the same replica set or with other deployments in the same cluster. You cannot share data across clusters when they are located in different data centers or regions. </p><p>By default, NFS storage is not backed up automatically. You can set up a periodic backup for your cluster by using the provided [backup and restore mechanisms](cs_storage.html#backup_restore). When a container crashes or a pod is removed from a worker node, the data is not removed and can still be accessed by other deployments that mount the volume. </p><p><strong>Note:</strong> Persistent NFS file share storage is charged on a monthly basis. If you provision persistent storage for your cluster and remove it immediately, you still pay the monthly charge for the persistent storage, even if you used it only for a short amount of time.</p></td>
   </tr>
   <tr>
     <td>2. Cloud database service</td>
@@ -98,22 +98,22 @@ The following image shows the options that you have in {{site.data.keyword.conta
 ## Using existing NFS file shares in clusters
 {: #existing}
 
-If you already have existing NFS file shares in your IBM Cloud infrastructure (SoftLayer) account that you want to use with Kubernetes, you can do so by creating persistent volumes on your existing NFS file share. A persistent volume is a piece of actual hardware that serves as a Kubernetes cluster resource and can be consumed by the cluster user.
+If you already have existing NFS file shares in your IBM Cloud infrastructure (SoftLayer) account that you want to use with Kubernetes, you can do so by creating a persistent volumes on your existing NFS file share. A persistent volume is a piece of actual hardware that serves as a Kubernetes cluster resource and can be consumed by the cluster user.
 {:shortdesc}
 
-Kubernetes differentiates between persistent volumes that represent the actual hardware and persistent volume claims that are requests for storage usually initiated by the cluster user. The following diagram illustrates the relationship between persistent volumes and persistent volume claims.
+Kubernetes differentiates between a persistent volume (PV) that represents the actual hardware and a persistent volume claim (PVC) that is a request for storage usually initiated by the cluster user. The following diagram illustrates the relationship between PVs and PVCs.
 
 ![Create persistent volumes and persistent volume claims](images/cs_cluster_pv_pvc.png)
 
- As depicted in the diagram, to enable existing NFS file shares to be used with Kubernetes, you must create persistent volumes with a certain size and access mode and create a persistent volume claim that matches the persistent volume specification. If persistent volume and persistent volume claim match, they are bound to each other. Only bound persistent volume claims can be used by the cluster user to mount the volume to a deployment. This process is referred to as static provisioning of persistent storage.
+ As depicted in the diagram, to enable existing NFS file shares to be used with Kubernetes, you must create PVs with a certain size and access mode and create a PVC that matches the PV specification. If the PV and PVC match, they are bound to each other. Only bound PVCs can be used by the cluster user to mount the volume to a deployment. This process is referred to as static provisioning of persistent storage.
 
-Before you begin, make sure that you have an existing NFS file share that you can use to create your persistent volume.
+Before you begin, make sure that you have an existing NFS file share that you can use to create your PV.
 
-**Note:** Static provisioning of persistent storage only applies to existing NFS file shares. If you do not have existing NFS file shares, cluster users can use the [dynamic provisioning](cs_storage.html#create) process to add persistent volumes.
+**Note:** Static provisioning of persistent storage only applies to existing NFS file shares. If you do not have existing NFS file shares, cluster users can use the [dynamic provisioning](cs_storage.html#create) process to add PVs.
 
-To create a persistent volume and matching persistent volume claim, follow these steps.
+To create a PV and matching PVC, follow these steps.
 
-1.  In your IBM Cloud infrastructure (SoftLayer) account, look up the ID and path of the NFS file share where you want to create your persistent volume object. In addition, authorize the file storage to the subnets in the cluster. This authorization gives your cluster access to the storage.
+1.  In your IBM Cloud infrastructure (SoftLayer) account, look up the ID and path of the NFS file share where you want to create your PV object. In addition, authorize the file storage to the subnets in the cluster. This authorization gives your cluster access to the storage.
     1.  Log in to your IBM Cloud infrastructure (SoftLayer) account.
     2.  Click **Storage**.
     3.  Click **File Storage** and from the **Actions** menu, select **Authorize Host**.
@@ -122,7 +122,7 @@ To create a persistent volume and matching persistent volume claim, follow these
     6.  Click **Submit**.
     6.  Click the name of the file storage.
     7.  Make note the **Mount Point** field. The field is displayed as `<server>:/<path>`.
-2.  Create a storage configuration file for your persistent volume. Include the server and path from the file storage **Mount Point** field.
+2.  Create a storage configuration file for your PV. Include the server and path from the file storage **Mount Point** field.
 
     ```
     apiVersion: v1
@@ -148,27 +148,27 @@ To create a persistent volume and matching persistent volume claim, follow these
     <tbody>
     <tr>
     <td><code>name</code></td>
-    <td>Enter the name of the persistent volume object that you want to create.</td>
+    <td>Enter the name of the PV object that you want to create.</td>
     </tr>
     <tr>
-    <td><code>storage</code></td>
+    <td><code>spec/capacity/storage</code></td>
     <td>Enter the storage size of the existing NFS file share. The storage size must be written in gigabytes, for example, 20Gi (20 GB) or 1000Gi (1 TB), and the size must match the size of the existing file share.</td>
     </tr>
     <tr>
     <td><code>accessMode</code></td>
-    <td>Access modes define the way that the persistent volume claim can be mounted to a worker node.<ul><li>ReadWriteOnce (RWO): The persistent volume can be mounted to deployments in a single worker node only. Containers in deployments that are mounted to this persistent volume can read from and write to the volume.</li><li>ReadOnlyMany (ROX): The persistent volume can be mounted to deployments that are hosted on multiple worker nodes. Deployments that are mounted to this persistent volume can only read from the volume.</li><li>ReadWriteMany (RWX): This persistent volume can be mounted to deployments that are hosted on multiple worker nodes. Deployments that are mounted to this persistent volume can read from and write to the volume.</li></ul></td>
+    <td>Access modes define the way that the PVC can be mounted to a worker node.<ul><li>ReadWriteOnce (RWO): The PV can be mounted to deployments in a single worker node only. Containers in deployments that are mounted to this PV can read from and write to the volume.</li><li>ReadOnlyMany (ROX): The PV can be mounted to deployments that are hosted on multiple worker nodes. Deployments that are mounted to this PV can only read from the volume.</li><li>ReadWriteMany (RWX): This PV can be mounted to deployments that are hosted on multiple worker nodes. Deployments that are mounted to this PV can read from and write to the volume.</li></ul></td>
     </tr>
     <tr>
-    <td><code>server</code></td>
+    <td><code>spec/nfs/server</code></td>
     <td>Enter the NFS file share server ID.</td>
     </tr>
     <tr>
     <td><code>path</code></td>
-    <td>Enter the path to the NFS file share where you want to create the persistent volume object.</td>
+    <td>Enter the path to the NFS file share where you want to create the PV object.</td>
     </tr>
     </tbody></table>
 
-3.  Create the persistent volume object in your cluster.
+3.  Create the PV object in your cluster.
 
     ```
     kubectl apply -f <yaml_path>
@@ -182,14 +182,14 @@ To create a persistent volume and matching persistent volume claim, follow these
     ```
     {: pre}
 
-4.  Verify that the persistent volume is created.
+4.  Verify that the PV is created.
 
     ```
     kubectl get pv
     ```
     {: pre}
 
-5.  Create another configuration file to create your persistent volume claim. In order for the persistent volume claim to match the persistent volume object that you created earlier, you must choose the same value for `storage` and `accessMode`. The `storage-class` field must be empty. If any of these fields do not match the persistent volume, then a new persistent volume is created automatically instead.
+5.  Create another configuration file to create your PVC. In order for the PVC to match the PV object that you created earlier, you must choose the same value for `storage` and `accessMode`. The `storage-class` field must be empty. If any of these fields do not match the PV, then a new PV is created automatically instead.
 
     ```
     kind: PersistentVolumeClaim
@@ -207,14 +207,14 @@ To create a persistent volume and matching persistent volume claim, follow these
     ```
     {: codeblock}
 
-6.  Create your persistent volume claim.
+6.  Create your PVC.
 
     ```
     kubectl apply -f deploy/kube-config/mypvc.yaml
     ```
     {: pre}
 
-7.  Verify that your persistent volume claim is created and bound to the persistent volume object. This process can take a few minutes.
+7.  Verify that your PVC is created and bound to the PV object. This process can take a few minutes.
 
     ```
     kubectl describe pvc mypvc
@@ -242,7 +242,7 @@ To create a persistent volume and matching persistent volume claim, follow these
     {: screen}
 
 
-You successfully created a persistent volume object and bound it to a persistent volume claim. Cluster users can now [mount the persistent volume claim](#app_volume_mount) to their deployments and start reading from and writing to the persistent volume object.
+You successfully created a PV object and bound it to a PVC. Cluster users can now [mount the PVC](#app_volume_mount) to their deployments and start reading from and writing to the PV object.
 
 <br />
 
@@ -250,12 +250,12 @@ You successfully created a persistent volume object and bound it to a persistent
 ## Creating persistent storage for apps
 {: #create}
 
-Create a persistent volume claim (pvc) to provision NFS file storage for your cluster. Then, mount this claim to a deployment to ensure that data is available even if the pods crash or shut down.
+Create a persistent volume claim (PVC) to provision NFS file storage for your cluster. Then, mount this claim to a persistent volume (PV) deployment to ensure that data is available even if the pods crash or shut down.
 {:shortdesc}
 
-The NFS file storage that backs the persistent volume is clustered by IBM in order to provide high availability for your data. The storage classes describe the types of storage offerings available and define aspects such as the data retention policy, size in gigabytes, and IOPS when you create your persistent volume.
+The NFS file storage that backs the PV is clustered by IBM in order to provide high availability for your data. The storage classes describe the types of storage offerings available and define aspects such as the data retention policy, size in gigabytes, and IOPS when you create your PV.
 
-**Note**: If you have a firewall, [allow egress access](cs_firewall.html#pvc) for the IBM Cloud infrastructure (SoftLayer) IP ranges of the locations (data centers) that your clusters are in, so that you can create persistent volume claims.
+**Note**: If you have a firewall, [allow egress access](cs_firewall.html#pvc) for the IBM Cloud infrastructure (SoftLayer) IP ranges of the locations (data centers) that your clusters are in, so that you can create PVCs.
 
 
 1.  Review the available storage classes. {{site.data.keyword.containerlong}} provides eight pre-defined storage classes so that the cluster admin does not have to create any storage classes. The `ibmc-file-bronze` storage class is the same as the `default` storage class.
@@ -316,7 +316,7 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
     ```
     {: screen}
 
-4. Create a configuration file to define your persistent volume claim and save the configuration as a `.yaml` file.
+4. Create a configuration file to define your PVC and save the configuration as a `.yaml` file.
 
     **Example for bronze, silver, gold storage classes**:
 
@@ -364,17 +364,17 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
     <tbody>
     <tr>
     <td><code>metadata/name</code></td>
-    <td>Enter the name of the persistent volume claim.</td>
+    <td>Enter the name of the PVC.</td>
     </tr>
     <tr>
     <td><code>metadata/annotations</code></td>
-    <td>Specify the storage class for the persistent volume:
+    <td>Specify the storage class for the PV:
       <ul>
       <li>ibmc-file-bronze / ibmc-file-retain-bronze : 2 IOPS per GB.</li>
       <li>ibmc-file-silver / ibmc-file-retain-silver: 4 IOPS per GB.</li>
       <li>ibmc-file-gold / ibmc-file-retain-gold: 10 IOPS per GB.</li>
       <li>ibmc-file-custom / ibmc-file-retain-custom: Multiple values of IOPS available.</li>
-      <p>If you do not specify a storage class, the persistent volume is created with the bronze storage class.</p></td>
+      <p>If you do not specify a storage class, the PV is created with the bronze storage class.</p></td>
     </tr>
     <tr>
     <td><code>spec/accessModes</code>
@@ -388,14 +388,14 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
     </tr>
     </tbody></table>
 
-5.  Create the persistent volume claim.
+5.  Create the PVC.
 
     ```
     kubectl apply -f <local_file_path>
     ```
     {: pre}
 
-6.  Verify that your persistent volume claim is created and bound to the persistent volume. This process can take a few minutes.
+6.  Verify that your PVC is created and bound to the PV. This process can take a few minutes.
 
     ```
     kubectl describe pvc mypvc
@@ -423,7 +423,7 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
     ```
     {: screen}
 
-6.  {: #app_volume_mount}To mount the persistent volume claim to your deployment, create a configuration file. Save the configuration as a `.yaml` file.
+6.  {: #app_volume_mount}To mount the PVC to your deployment, create a configuration file. Save the configuration as a `.yaml` file.
 
     ```
     apiVersion: apps/v1beta1
@@ -484,11 +484,11 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
     </tr>
     <tr>
     <td><code>volumes/persistentVolumeClaim/claimName</code></td>
-    <td>The name of the persistent volume claim that you want to use as your volume. When you mount the volume to the pod, Kubernetes identifies the persistent volume that is bound to the persistent volume claim and enables the user to read from and write to the persistent volume.</td>
+    <td>The name of the PVC that you want to use as your volume. When you mount the volume to the pod, Kubernetes identifies the PV that is bound to the PVC and enables the user to read from and write to the PV.</td>
     </tr>
     </tbody></table>
 
-8.  Create the deployment and mount the persistent volume claim.
+8.  Create the deployment and mount the PVC.
 
     ```
     kubectl apply -f <local_yaml_path>
@@ -525,6 +525,8 @@ The NFS file storage that backs the persistent volume is clustered by IBM in ord
 <br />
 
 
+
+
 ## Setting up backup and restore solutions for NFS file shares
 {: #backup_restore}
 
@@ -539,7 +541,7 @@ Review the following backup and restore options for your NFS file shares:
   <dt>Replicate snapshots to an NFS file share in another location (data center)</dt>
  <dd>To protect your data from a location failure, you can [replicate snapshots](/docs/infrastructure/FileStorage/replication.html#working-with-replication) to an NFS file share that is set up in another location. Data can be replicated from the primary NFS file share to the backup NFS file share only. You cannot mount a replicated NFS file share to a cluster. When your primary NFS file share fails, you can manually set your backup NFS file share to be the primary one. Then, you can mount it to your cluster. After your primary NFS file share is restored, you can restore the data from the backup NFS file share.</dd>
   <dt>Backup data to Object Storage</dt>
-  <dd>You can use the [**ibm-backup-restore image**](/docs/services/RegistryImages/ibm-backup-restore/index.html#ibmbackup_restore_starter) to spin up a backup and restore pod in your cluster. This pod contains a script to run a one-time or periodic backup for any persistent volume claim in your cluster. Data is stored in your {{site.data.keyword.objectstoragefull}} instance that you set up in a location. To make your data even more highly available and protect your app from a location failure, set up a second {{site.data.keyword.objectstoragefull}} instance and replicate data across locations. If you need to restore data from your {{site.data.keyword.objectstoragefull}} instance, use the restore script that is provided with the image.</dd>
+  <dd>You can use the [**ibm-backup-restore image**](/docs/services/RegistryImages/ibm-backup-restore/index.html#ibmbackup_restore_starter) to spin up a backup and restore pod in your cluster. This pod contains a script to run a one-time or periodic backup for any persistent volume claim (PVC) in your cluster. Data is stored in your {{site.data.keyword.objectstoragefull}} instance that you set up in a location. To make your data even more highly available and protect your app from a location failure, set up a second {{site.data.keyword.objectstoragefull}} instance and replicate data across locations. If you need to restore data from your {{site.data.keyword.objectstoragefull}} instance, use the restore script that is provided with the image.</dd>
   </dl>
 
 ## Adding non-root user access to persistent storage
@@ -642,7 +644,7 @@ For {{site.data.keyword.containershort_notm}}, the default owner of the volume m
     ```
     {: pre}
 
-6.  Create a persistent volume claim by creating a configuration `.yaml` file. This example uses a lower performance storage class. Run `kubectl get storageclasses` to see available storage classes.
+6.  Create a persistent volume claim (PVC) by creating a configuration `.yaml` file. This example uses a lower performance storage class. Run `kubectl get storageclasses` to see available storage classes.
 
     ```
     apiVersion: v1
@@ -660,7 +662,7 @@ For {{site.data.keyword.containershort_notm}}, the default owner of the volume m
     ```
     {: codeblock}
 
-7.  Create the persistent volume claim.
+7.  Create the PVC.
 
     ```
     kubectl apply -f <local_file_path>
@@ -688,7 +690,7 @@ For {{site.data.keyword.containershort_notm}}, the default owner of the volume m
     ```
     {: codeblock}
 
-9.  Create the pod and mount the persistent volume claim to your pod.
+9.  Create the pod and mount the PVC to your pod.
 
     ```
     kubectl apply -f <local_yaml_path>
