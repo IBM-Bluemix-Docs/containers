@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-01"
+lastupdated: "2018-02-16"
 
 ---
 
@@ -26,14 +26,14 @@ If you do not have an {{site.data.keyword.Bluemix_dedicated_notm}} account, you 
 ## About the Dedicated cloud environment
 {: #dedicated_environment}
 
-With an {{site.data.keyword.Bluemix_dedicated_notm}} account, available physical resources are dedicated to your cluster only and are not shared with clusters from other {{site.data.keyword.IBM_notm}} customers. You might choose to set up an {{site.data.keyword.Bluemix_dedicated_notm}} environment when you want isolation for your cluster and you also require such isolation for the other {{site.data.keyword.Bluemix_notm}} services that you use. If you do not have a Dedicated account, you can create clusters with dedicated hardware in {{site.data.keyword.Bluemix_notm}} public.
+With an {{site.data.keyword.Bluemix_dedicated_notm}} account, available physical resources are dedicated to your cluster only and are not shared with clusters from other {{site.data.keyword.IBM_notm}} customers. You might choose to set up an {{site.data.keyword.Bluemix_dedicated_notm}} environment when you want isolation for your cluster and you also require such isolation for the other {{site.data.keyword.Bluemix_notm}} services that you use. If you do not have a Dedicated account, you can [create clusters with dedicated hardware in {{site.data.keyword.Bluemix_notm}} public](cs_clusters.html#clusters_ui).
 
 With {{site.data.keyword.Bluemix_dedicated_notm}}, you can create clusters from the catalog in the Dedicated console or by using the {{site.data.keyword.containershort_notm}} CLI. When you use the Dedicated console, you log in to both your Dedicated and public accounts simultaneously using your IBMid. This dual login lets you access your public clusters using your Dedicated console. When you use the CLI, you log in using your Dedicated endpoint (`api.<my-dedicated-cloud-instance>.bluemix.net.`) and target the {{site.data.keyword.containershort_notm}} API endpoint of the public region that is associated with the Dedicated environment.
 
 The most significant differences between {{site.data.keyword.Bluemix_notm}} public and Dedicated are as follows.
 
-*   {{site.data.keyword.IBM_notm}} owns and manages the IBM Cloud infrastructure (SoftLayer) account that the worker nodes, VLANs, and subnets are deployed into, rather than in an account that is owned by you.
-*   Specifications for those VLANs and subnets are determined when the Dedicated environment is enabled, not when the cluster is created.
+*   In {{site.data.keyword.Bluemix_dedicated}}, {{site.data.keyword.IBM_notm}} owns and manages the IBM Cloud infrastructure (SoftLayer) account that the worker nodes, VLANs, and subnets are deployed into. In {{site.data.keyword.Bluemix_notm}} public, you own the IBM Cloud infrastructure (SoftLayer) account.
+*   In {{site.data.keyword.Bluemix_dedicated}}, specifications for the VLANs and subnets in the {{site.data.keyword.IBM_notm}}-managed IBM Cloud infrastructure (SoftLayer) account are determined when the Dedicated environment is enabled. In {{site.data.keyword.Bluemix_notm}} public, specifications for VLANs and subnets are determined when the cluster is created.
 
 ### Differences in cluster management between the cloud environments
 {: #dedicated_env_differences}
@@ -201,7 +201,7 @@ Design your {{site.data.keyword.Bluemix_dedicated_notm}} cluster setup for maxim
 2. Select the **Also log in to {{site.data.keyword.Bluemix_notm}} Public** check box and click **Log in**.
 3. Follow the prompts to log in with your IBMid. If this is your first time to log in to your Dedicated account, then follow the prompts to log in to {{site.data.keyword.Bluemix_dedicated_notm}}.
 4.  From the catalog, select **Containers** and click **Kubernetes cluster**.
-5.  Enter a **Cluster Name**.
+5.  Enter a **Cluster Name**. The name must start with a letter, can contain letters, numbers, and -, and must be 35 characters or fewer. Note that the {{site.data.keyword.IBM_notm}}-assigned Ingress subdomain is derived from the cluster name. The cluster name and Ingress subdomain together form the fully qualified domain name, which must be unique within a region and have 63 characters or fewer. To meet these requirements, the cluster name might be truncated or the subdomain might be assigned random character values.
 6.  Select a **Machine type**. The machine type defines the amount of virtual CPU and memory that is set up in each worker node. This virtual CPU and memory is available for all the containers that you deploy in your nodes.
     -   The micro machine type indicates the smallest option.
     -   A balanced machine type has an equal amount of memory that is assigned to each CPU, which optimizes performance.
@@ -252,7 +252,7 @@ Design your {{site.data.keyword.Bluemix_dedicated_notm}} cluster setup for maxim
     </tr>
     <tr>
     <td><code>--name <em>&lt;name&gt;</em></code></td>
-    <td>Replace <em>&lt;name&gt;</em> with a name for your cluster.</td>
+    <td>Replace <em>&lt;name&gt;</em> with a name for your cluster. The name must start with a letter, can contain letters, numbers, and -, and must be 35 characters or fewer. Note that the {{site.data.keyword.IBM_notm}}-assigned Ingress subdomain is derived from the cluster name. The cluster name and Ingress subdomain together form the fully qualified domain name, which must be unique within a region and have 63 characters or fewer. To meet these requirements, the cluster name might be truncated or the subdomain might be assigned random character values.</td>
     </tr>
     <tr>
     <td><code>--workers <em>&lt;number&gt;</em></code></td>
@@ -409,6 +409,7 @@ Review the following options for other cluster configurations:
   * [Updating the Kubernetes master](cs_cluster_update.html#master)
   * [Updating worker nodes](cs_cluster_update.html#worker_node)
   * [Configuring cluster logging](cs_health.html#logging)
+      * **Note**: Log enablement is not supported from the Dedicated endpoint. You must log in to the public {{site.data.keyword.cloud_notm}} endpoint and target your public org and space in order to enable log forwarding.
   * [Configuring cluster monitoring](cs_health.html#monitoring)
       * **Note**: An `ibm-monitoring` cluster exists within each {{site.data.keyword.Bluemix_dedicated_notm}} account. This cluster continuously monitors the health of the {{site.data.keyword.containerlong_notm}} in the Dedicated environment, checking the stability and connectivity of the environment. Do not remove this cluster from the environment.
   * [Visualizing Kubernetes cluster resources](cs_integrations.html#weavescope)
