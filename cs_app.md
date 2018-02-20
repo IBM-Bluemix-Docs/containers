@@ -51,7 +51,7 @@ Review the following potential app setups that are ordered with increasing degre
 3.  A deployment with n+2 pods that are managed by a replica set and spread across multiple nodes (anti-affinity) in different locations.
 4.  A deployment with n+2 pods that are managed by a replica set and spread across multiple nodes (anti-affinity) in different regions.
 
-Learn more about the techniques to increase the availability of your app:
+### Increasing the availability of your app
 
 <dl>
 <dt>Use deployments and replica sets to deploy your app and its dependencies</dt>

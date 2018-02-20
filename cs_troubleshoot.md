@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-14"
+lastupdated: "2018-02-15"
 
 ---
 
@@ -112,9 +112,9 @@ Review the options to debug your clusters and find the root causes for failures.
   bx cs workers <cluster_name_or_id>
   ```
   {: pre}
-  
-4.  Review the `State` and `Status` field for every worker node in your CLI output. 
-   
+
+4.  Review the `State` and `Status` field for every worker node in your CLI output.
+
   <table summary="Every table row should be read left to right, with the cluster state in column one and a description in column two.">
     <thead>
     <th>Worker node state</th>
@@ -208,7 +208,7 @@ Review the options to debug your clusters and find the root causes for failures.
       </tr>
     </tbody>
   </table>
-  
+
 7.  Continue to work with your cluster by repeating the create, update, or delete action that previously failed.  
 <br />
 
@@ -915,6 +915,67 @@ Review the following reasons why the application load balancer secret might fail
 
 <br />
 
+
+## Cannot establish VPN connectivity with the strongSwan Helm chart
+{: #cs_vpn_fails}
+
+{: tsSymptoms}
+When you check VPN connectivity by running `kubectl exec -n kube-system  $STRONGSWAN_POD -- ipsec status`, you do not see a status of `ESTABLISHED`, or the VPN pod is in an `ERROR` state or continues to crash and restart.
+
+{: tsCauses}
+Your Helm chart configuration file has incorrect values, missing values, or syntax errors.
+
+{: tsResolve}
+When you first attempt to establish VPN connectivity with the stringSwan Helm chart, it is likely that the VPN status will not `ESTABLISHED`. You might need to check for several types of issues and change your configuration file accordingly. To troubleshoot your strongSwan VPN connectivity:
+
+1. Check the on-premises VPN endpoint settings against the settings in your configuration file. If there are mismatches:
+
+    <ol>
+    <li>Delete the existing Helm chart.</br><pre class="codeblock"><code>helm delete --purge <release_name></code></pre></li>
+    <li>Fix the incorrect values in the `config.yaml` file and save the updated file.</li>
+    <li>Install the new Helm chart.</br><pre class="codeblock"><code>helm install -f config.yaml --namespace=kube-system --name=<release_name> bluemix/strongswan</code></pre></li>
+    </ol>
+
+2. If the VPN pod is in an `ERROR` state or continues to crash and restart, it might be due to parameter validation of the `ipsec.conf` settings in the chart's config map.
+
+    <ol>
+    <li>Check for any validation errors in the Strongswan pod logs.</br><pre class="codeblock"><code>kubectl logs -n kube-system $STRONGSWAN_POD</code></pre></li>
+    <li>If there are validation errors, delete the existing Helm chart.</br><pre class="codeblock"><code>helm delete --purge <release_name></code></pre></li>
+    <li>Fix the incorrect values in the `config.yaml` file and save the updated file.</li>
+    <li>Install the new Helm chart.</br><pre class="codeblock"><code>helm install -f config.yaml --namespace=kube-system --name=<release_name> bluemix/strongswan</code></pre></li>
+    </ol>
+
+3. Run the 5 Helm tests included in the strongSwan chart definition.
+
+    <ol>
+    <li>Run the Helm tests.</br><pre class="codeblock"><code>helm test vpn</code></pre></li>
+    <li>If any test fails, refer to [Understanding the Helm VPN connectivity tests](cs_vpn.html#vpn_tests_table) for information about each test and why it might fail. <b>Note</b>: Some of the tests have requirements that are optional settings in the VPN configuration. If some of the tests fail, the failures might be acceptable depending on whether you specified these optional settings.</li>
+    <li>View the output of a failed test by looking at the logs of the test pod.<br><pre class="codeblock"><code>kubectl logs -n kube-system <test_program></code></pre></li>
+    <li>Delete the existing Helm chart.</br><pre class="codeblock"><code>helm delete --purge <release_name></code></pre></li>
+    <li>Fix the incorrect values in the `config.yaml` file and save the updated file.</li>
+    <li>Install the new Helm chart.</br><pre class="codeblock"><code>helm install -f config.yaml --namespace=kube-system --name=<release_name> bluemix/strongswan</code></pre></li>
+    <li>To check your changes:<ol><li>Get the current test pods.</br><pre class="codeblock"><code>kubectl get pods -a -n kube-system -l app=strongswan-test</code></pre></li><li>Clean up the current test pods.</br><pre class="codeblock"><code>kubectl delete pods -n kube-system -l app=strongswan-test</code></pre></li><li>Run the tests again.</br><pre class="codeblock"><code>helm test vpn</code></pre></li>
+    </ol></ol>
+
+4. Run the VPN debugging tool packaged inside of the VPN pod image.
+
+    1. Set the `STRONGSWAN_POD` environment variable.
+
+        ```
+        export STRONGSWAN_POD=$(kubectl get pod -n kube-system -l app=strongswan,release=vpn -o jsonpath='{ .items[0].metadata.name }')
+        ```
+        {: pre}
+
+    2. Run the debugging tool.
+
+        ```
+        kubectl exec -n kube-system  $STRONGSWAN_POD -- vpnDebug
+        ```
+        {: pre}
+
+        The tool outputs several pages of information as it runs various tests for common networking issues. Output lines that begin with `ERROR`, `WARNING`, `VERIFY`, or `CHECK` indicate possible errors with the VPN connectivity.
+
+    <br />
 
 
 ## Cannot retrieve the ETCD URL for Calico CLI configuration
