@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-14"
+lastupdated: "2018-02-15"
 
 ---
 
@@ -99,6 +99,14 @@ IBM Blockchain Platform <img src="../icons/launch-glyph.svg" alt="External link 
 <tr>
 <td>Datadog</td>
 <td>Monitor your cluster and view infrastructure and application performance metrics with <a href="https://www.datadoghq.com/" target="_blank">Datadog <img src="../icons/launch-glyph.svg" alt="External link icon"></a>. For more information, see <a href="https://www.ibm.com/blogs/bluemix/2017/07/monitoring-ibm-bluemix-container-service-datadog/" target="_blank">Monitoring {{site.data.keyword.containershort_notm}} with Datadog <img src="../icons/launch-glyph.svg" alt="External link icon"></a>. </td>
+</tr>
+<tr>
+<td>{{site.data.keyword.loganalysisfull}}</td>
+<td>Expand your log collection, retention, and search abilities with {{site.data.keyword.loganalysisfull_notm}}. For more information, see <a href="../services/CloudLogAnalysis/containers/containers_kube_other_logs.html" target="_blank">Enabling automatic collection of cluster logs <img src="../icons/launch-glyph.svg" alt="External link icon"></a>. </td>
+</tr>
+<tr>
+<td>{{site.data.keyword.monitoringlong}}</td>
+<td>Expand your metrics collection and retention capabilities by defining rules and alerts with {{site.data.keyword.monitoringlong_notm}}. For more information, see <a href="../services/cloud-monitoring/tutorials/container_service_metrics.html" target="_blank">Analyze metrics in Grafana for an app that is deployed in a Kubernetes cluster <img src="../icons/launch-glyph.svg" alt="External link icon"></a>. </td>
 </tr>
 <tr>
 <td>Instana</td>
