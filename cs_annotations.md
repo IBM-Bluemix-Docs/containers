@@ -152,7 +152,12 @@ For general information about Ingress services and how to get started using them
 <td><a href="#client-max-body-size">Client request body size</a></td>
 <td><code>client-max-body-size</code></td>
 <td>Set the maximum size of the body that the client can send as part of a request.</td>
-</tr> 
+</tr>
+<tr>
+<td><a href="#large-client-header-buffers">Large client header buffers</a></td>
+<td><code>large-client-header-buffers</code></td>
+<td>Set the maximum number and size of buffers that read large client request headers.</td>
+</tr>
 </tbody></table>
 
 <table>
@@ -1190,6 +1195,59 @@ spec:
 <br />
 
 
+### Large client header buffers (large-client-header-buffers)
+{: #large-client-header-buffers}
+
+Set the maximum number and size of buffers that read large client request headers.
+{:shortdesc}
+
+<dl>
+<dt>Description</dt>
+<dd>Buffers that read large client request headers are allocated only by demand: If a connection is transitioned into the keepalive state after the end-of-request processing, these buffers are released. By default, the buffer size is equal to <code>8K</code> bytes. If a request line exceeds the set maximum size of one buffer, the <code>414 Request-URI Too Large</code> error is returned to the client. Additionally, if a request header field exceeds the set maximum size of one buffer, the <code>400 Bad Request</code> error is returned to the client. You can adjust the maximum number and size of buffers that are used for reading large client request headers. 
+
+<dt>Sample Ingress resource YAML</dt>
+<dd>
+
+<pre class="codeblock">
+<code>apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+ name: myingress
+ annotations:
+   ingress.bluemix.net/large-client-header-buffers: "number=&lt;number&gt; size=&lt;size&gt;"
+spec:
+ tls:
+ - hosts:
+   - mydomain
+   secretName: mytlssecret
+ rules:
+ - host: mydomain
+   http:
+     paths:
+     - path: /
+       backend:
+         serviceName: myservice
+         servicePort: 8080</code></pre>
+
+<table>
+ <thead>
+ <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
+ </thead>
+ <tbody>
+ <tr>
+ <td><code>&lt;number&gt;</code></td>
+ <td>The maximum number of buffers that should be allocated to read large client request header. For example, to set it to 4, define <code>4</code>.</td>
+ </tr>
+ <tr>
+ <td><code>&lt;size&gt;</code></td>
+ <td>The maximum size of buffers that read large client request header. For example, to set it to 16 kilobytes, define <code>16k</code>.
+   <strong>Note:</strong> The size must end with a <code>k</code> for kilobyte or <code>m</code> for megabyte.</td>
+ </tr>
+</tbody></table>
+</dd>
+</dl>
+
+<br />
 
 
 ## Service limit annotations
