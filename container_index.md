@@ -19,8 +19,10 @@ lastupdated: "2018-02-12"
 # Getting started with {{site.data.keyword.containerlong_notm}}
 {: #container_index}
 
-Hit the ground running with {{site.data.keyword.Bluemix_notm}} by deploying highly available apps in Docker containers that run in Kubernetes clusters. Containers are a standard way to package apps and all their dependencies so that you can seamlessly move the apps between environments. Unlike virtual machines, containers do not bundle the operating system. Only the app code, run time, system tools, libraries, and settings are packaged inside containers. Containers are more lightweight, portable, and efficient than virtual machines.
+Hit the ground running with {{site.data.keyword.Bluemix_notm}} by deploying highly available apps in Docker containers that run in Kubernetes clusters. 
 {:shortdesc}
+
+Containers are a standard way to package apps and all their dependencies so that you can seamlessly move the apps between environments. Unlike virtual machines, containers do not bundle the operating system. Only the app code, run time, system tools, libraries, and settings are packaged inside containers. Containers are more lightweight, portable, and efficient than virtual machines.
 
 
 Click an option to get started:

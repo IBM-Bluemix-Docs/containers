@@ -225,6 +225,42 @@ Review changes you might need to make when updating from the previous Kubernetes
 <td>`kubectl stop`</td>
 <td>The `kubectl stop` command is no longer available.</td>
 </tr>
+<tr>
+<td>RBAC for `default` `ServiceAccount`</td>
+<td><p>The administrator `ClusterRoleBinding` for the `default` `ServiceAccount` in the `default` namespace is removed. If your applications rely on this RBAC policy to access the Kubernetes API, [update your RBAC policies](https://kubernetes.io/docs/admin/authorization/rbac/#api-overview).</p>
+  <p>As you update your app RBAC policies, you might want to revert temporarily to the previous policy `default`. Copy, save, and apply the following files with the `kubectl apply -f FILENAME` command. <strong>Note</strong>: Revert to give yourself time to update all your app RBAC policies, and not as a long-term solution.</p>
+
+  <p><pre class="codeblock">
+  <code>
+  kind: ClusterRoleBinding
+  apiVersion: rbac.authorization.k8s.io/v1
+  metadata:
+   name: admin-binding-nonResourceURLSs-default
+  subjects:
+    - kind: ServiceAccount
+      name: default
+      namespace: default
+  roleRef:
+   kind: ClusterRole
+   name: admin-role-nonResourceURLSs
+   apiGroup: rbac.authorization.k8s.io
+  ---
+  kind: ClusterRoleBinding
+  apiVersion: rbac.authorization.k8s.io/v1
+  metadata:
+   name: admin-binding-resourceURLSs-default
+  subjects:
+    - kind: ServiceAccount
+      name: default
+      namespace: default
+  roleRef:
+   kind: ClusterRole
+   name: admin-role-resourceURLSs
+   apiGroup: rbac.authorization.k8s.io
+  </code>
+  </pre></p>
+  </td>
+</tr>
 </tbody>
 </table>
 
@@ -280,6 +316,10 @@ Review changes you might need to make when updating from the previous Kubernetes
 </thead>
 <tbody>
 <tr>
+<td>Deployment `apiVersion`</td>
+<td>After you update the cluster from Kubernetes 1.5, use `apps/v1beta1` for the `apiVersion` field in new `Deployment` YAML files. Continue to use `extensions/v1beta1` for other resources, such as `Ingress`.</td>
+</tr>
+<tr>
 <td>kubectl</td>
 <td>After the `kubectl` CLI update, these `kubectl create` commands must use multiple flags instead of comma separated arguments:<ul>
  <li>`role`
@@ -290,18 +330,6 @@ Review changes you might need to make when updating from the previous Kubernetes
  </ul>
 </br>  For example, run `kubectl create role --resource-name <x> --resource-name <y>` and not `kubectl create role --resource-name <x>,<y>`.</td>
 </tr>
-<tr>
-<td>Pod Affinity Scheduling</td>
-<td> The `scheduler.alpha.kubernetes.io/affinity` annotation is deprecated.
-<ol>
-  <li>For each namespace except `ibm-system` and `kube-system`, determine whether you need to update pod affinity scheduling:</br>
-  ```
-  kubectl get pods -n <namespace> -o yaml | grep "scheduler.alpha.kubernetes.io/affinity" && echo "Action required"
-  ```
-  </br></li>
-  <li>If `"Action required"` is returned, use the [_PodSpec_ ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/api-reference/v1.7/#podspec-v1-core) _affinity_ field instead of the `scheduler.alpha.kubernetes.io/affinity` annotation.</li>
-</ol>
-</td></tr>
 <tr>
 <td>Network Policy</td>
 <td>The `net.beta.kubernetes.io/network-policy` annotation is no longer available.
@@ -333,6 +361,58 @@ Review changes you might need to make when updating from the previous Kubernetes
   </li></ol>
 </td></tr>
 <tr>
+<td>Pod Affinity Scheduling</td>
+<td> The `scheduler.alpha.kubernetes.io/affinity` annotation is deprecated.
+<ol>
+  <li>For each namespace except `ibm-system` and `kube-system`, determine whether you need to update pod affinity scheduling:</br>
+  ```
+  kubectl get pods -n <namespace> -o yaml | grep "scheduler.alpha.kubernetes.io/affinity" && echo "Action required"
+  ```
+  </br></li>
+  <li>If `"Action required"` is returned, use the [_PodSpec_ ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/api-reference/v1.7/#podspec-v1-core) _affinity_ field instead of the `scheduler.alpha.kubernetes.io/affinity` annotation.</li>
+</ol>
+</td></tr>
+<tr>
+<td>RBAC for `default` `ServiceAccount`</td>
+<td><p>The administrator `ClusterRoleBinding` for the `default` `ServiceAccount` in the `default` namespace is removed. If your applications rely on this RBAC policy to access the Kubernetes API, [update your RBAC policies](https://kubernetes.io/docs/admin/authorization/rbac/#api-overview).</p>
+  <p>As you update your app RBAC policies, you might want to revert temporarily to the previous policy `default`. Copy, save, and apply the following files with the `kubectl apply -f FILENAME` command. <strong>Note</strong>: Revert to give yourself time to update all your app RBAC policies, and not as a long-term solution.</p>
+
+  <p><pre class="codeblock">
+  <code>
+  kind: ClusterRoleBinding
+  apiVersion: rbac.authorization.k8s.io/v1
+  metadata:
+   name: admin-binding-nonResourceURLSs-default
+  subjects:
+    - kind: ServiceAccount
+      name: default
+      namespace: default
+  roleRef:
+   kind: ClusterRole
+   name: admin-role-nonResourceURLSs
+   apiGroup: rbac.authorization.k8s.io
+  ---
+  kind: ClusterRoleBinding
+  apiVersion: rbac.authorization.k8s.io/v1
+  metadata:
+   name: admin-binding-resourceURLSs-default
+  subjects:
+    - kind: ServiceAccount
+      name: default
+      namespace: default
+  roleRef:
+   kind: ClusterRole
+   name: admin-role-resourceURLSs
+   apiGroup: rbac.authorization.k8s.io
+  </code>
+  </pre></p>
+  </td>
+</tr>
+<tr>
+<td>StatefulSet pod DNS</td>
+<td>StatefulSet pods lose their Kubernetes DNS entries after updating the master. To restore the DNS entries, delete the StatefulSet pods. Kubernetes re-creates the pods and automatically restores the DNS entries. For more information, see the [Kubernetes issue ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/kubernetes/kubernetes/issues/48327).</td>
+</tr>
+<tr>
 <td>Tolerations</td>
 <td>The `scheduler.alpha.kubernetes.io/tolerations` annotation is no longer available.
 <ol>
@@ -359,14 +439,6 @@ Review changes you might need to make when updating from the previous Kubernetes
   `kubectl taint node <node> <taint>`
   </li></ol>
 </td></tr>
-<tr>
-<td>StatefulSet pod DNS</td>
-<td>StatefulSet pods lose their Kubernetes DNS entries after updating the master. To restore the DNS entries, delete the StatefulSet pods. Kubernetes re-creates the pods and automatically restores the DNS entries. For more information, see the [Kubernetes issue ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/kubernetes/kubernetes/issues/48327).</td>
-</tr>
-<tr>
-<td>Deployment `apiVersion`</td>
-<td>After you update the cluster from Kubernetes 1.5, use `apps/v1beta1` for the `apiVersion` field in new `Deployment` YAML files. Continue to use `extensions/v1beta1` for other resources, such as `Ingress`.</td>
-</tr>
 </tbody>
 </table>
 
