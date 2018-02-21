@@ -19,6 +19,9 @@ lastupdated: "2018-02-12"
 # High availability for {{site.data.keyword.containerlong_notm}}
 {: #ha}
 
+Use the built-in features to make your cluster more highly available and to protect your app from downtime when a component in your cluster fails.
+{: shortdesc}
+
 High availability is a core discipline in an IT infrastructure to keep your apps up and running, even after a partial or full site failure. The main purpose of high availability is to eliminate potential points of failures in an IT infrastructure. For example, you can prepare for the failure of one system by adding redundancy and setting up failover mechanisms.
 
 You can achieve high availability on different levels in your IT infrastructure and within different components of your cluster. The level of availability that is right for you depends on several factors, such as your business requirements, the Service Level Agreements that you have with your customers, and the money that you want to spend.
@@ -26,7 +29,8 @@ You can achieve high availability on different levels in your IT infrastructure 
 ## Overview of potential points of failure in {{site.data.keyword.containerlong_notm}}
 {: #fault_domains}
 
-The {{site.data.keyword.containerlong_notm}} architecture and infrastructure is designed to ensure reliability, low processing latency and a maximum uptime of the service. However, failures can happen. Depending on the service that you host in {{site.data.keyword.Bluemix_notm}}, you might not be able to tolerate failures, even if failures last for only a few minutes.
+The {{site.data.keyword.containerlong_notm}} architecture and infrastructure is designed to ensure reliability, low processing latency, and a maximum uptime of the service. However, failures can happen. Depending on the service that you host in {{site.data.keyword.Bluemix_notm}}, you might not be able to tolerate failures, even if failures last for only a few minutes.
+{: shortdesc}
 
 {{site.data.keyword.containershort_notm}} provides several approaches to add more availability to your cluster by adding redundancy and anti-affinity. Review the following image to learn about potential points of failure and how to eliminate them.
 

@@ -202,7 +202,7 @@ Let your cluster access infrastructure resources and services from behind a fire
       <tr>
          <td>EU Central</td>
          <td>ams03<br>fra02<br>mil01<br>par01</td>
-         <td><code>169.50.169.106, 169.50.154.194</code><br><code>169.50.56.170</code><br><code>159.122.190.98</code><br><code>159.8.86.149, 159.8.98.170</code></td>
+         <td><code>169.50.169.106, 169.50.154.194</code><br><code>169.50.56.174</code><br><code>159.122.190.98</code><br><code>159.8.86.149, 159.8.98.170</code></td>
         </tr>
       <tr>
         <td>UK South</td>
