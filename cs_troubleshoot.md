@@ -224,7 +224,7 @@ Review common error messages and learn how to resolve them.
     </tbody>
   </table>
 
-  
+
 
 <br />
 
@@ -932,6 +932,68 @@ Review the following reasons why the application load balancer secret might fail
 <br />
 
 
+## Cannot install a Helm chart with updated configuration values
+{: #cs_helm_install}
+
+{: tsSymptoms}
+When you try to install an updated Helm chart by running `helm install -f config.yaml --namespace=kube-system --name=<release_name> bluemix/<chart_name>`, you get the `Error: failed to download "bluemix/<chart_name>` error message.
+
+{: tsCauses}
+The URL for the {{site.data.keyword.bluemix_notm}} repository in your Helm instance might be incorrect.
+
+{: tsResolve}
+
+1. List the repositories currently available in your Helm instance.
+
+    ```
+    helm repo list
+    ```
+    {: pre}
+
+2. In the output, verify that the URL for the {{site.data.keyword.bluemix_notm}} repository, `bluemix`, is `https://registry.bluemix.net/helm/ibm`.
+
+    ```
+    NAME    URL
+    stable  https://kubernetes-charts.storage.googleapis.com
+    local   http://127.0.0.1:8888/charts
+    bluemix https://registry.bluemix.net/helm/ibm
+    ```
+    {: screen}
+
+    * If the URL is incorrect:
+
+        1. Remove the {{site.data.keyword.bluemix_notm}} repository.
+
+            ```
+            helm repo remove bluemix
+            ```
+            {: pre}
+
+        2. Add the {{site.data.keyword.bluemix_notm}} repository again.
+
+            ```
+            helm repo add bluemix  https://registry.bluemix.net/helm/ibm
+            ```
+            {: pre}
+
+    * If the URL is correct, get the latest updates from the repository.
+
+        ```
+        helm repo update
+        ```
+        {: pre}
+
+3. Install the Helm chart with your updates.
+
+    ```
+    helm install -f config.yaml --namespace=kube-system --name=<release_name> bluemix/<chart_name>
+    ```
+    {: pre}
+
+
+<br />
+
+
 ## Cannot establish VPN connectivity with the strongSwan Helm chart
 {: #cs_vpn_fails}
 
@@ -942,13 +1004,13 @@ When you check VPN connectivity by running `kubectl exec -n kube-system  $STRONG
 Your Helm chart configuration file has incorrect values, missing values, or syntax errors.
 
 {: tsResolve}
-When you first attempt to establish VPN connectivity with the stringSwan Helm chart, it is likely that the VPN status will not `ESTABLISHED`. You might need to check for several types of issues and change your configuration file accordingly. To troubleshoot your strongSwan VPN connectivity:
+When you establish VPN connectivity with the strongSwan Helm chart, it is likely that the VPN status will not be `ESTABLISHED` on the first try. You might need to check for several types of issues and change your configuration file accordingly. To troubleshoot your strongSwan VPN connectivity:
 
 1. Check the on-premises VPN endpoint settings against the settings in your configuration file. If there are mismatches:
 
     <ol>
     <li>Delete the existing Helm chart.</br><pre class="codeblock"><code>helm delete --purge <release_name></code></pre></li>
-    <li>Fix the incorrect values in the `config.yaml` file and save the updated file.</li>
+    <li>Fix the incorrect values in the <code>config.yaml</code> file and save the updated file.</li>
     <li>Install the new Helm chart.</br><pre class="codeblock"><code>helm install -f config.yaml --namespace=kube-system --name=<release_name> bluemix/strongswan</code></pre></li>
     </ol>
 
@@ -968,7 +1030,7 @@ When you first attempt to establish VPN connectivity with the stringSwan Helm ch
     <li>If any test fails, refer to [Understanding the Helm VPN connectivity tests](cs_vpn.html#vpn_tests_table) for information about each test and why it might fail. <b>Note</b>: Some of the tests have requirements that are optional settings in the VPN configuration. If some of the tests fail, the failures might be acceptable depending on whether you specified these optional settings.</li>
     <li>View the output of a failed test by looking at the logs of the test pod.<br><pre class="codeblock"><code>kubectl logs -n kube-system <test_program></code></pre></li>
     <li>Delete the existing Helm chart.</br><pre class="codeblock"><code>helm delete --purge <release_name></code></pre></li>
-    <li>Fix the incorrect values in the `config.yaml` file and save the updated file.</li>
+    <li>Fix the incorrect values in the <code>config.yaml</code> file and save the updated file.</li>
     <li>Install the new Helm chart.</br><pre class="codeblock"><code>helm install -f config.yaml --namespace=kube-system --name=<release_name> bluemix/strongswan</code></pre></li>
     <li>To check your changes:<ol><li>Get the current test pods.</br><pre class="codeblock"><code>kubectl get pods -a -n kube-system -l app=strongswan-test</code></pre></li><li>Clean up the current test pods.</br><pre class="codeblock"><code>kubectl delete pods -n kube-system -l app=strongswan-test</code></pre></li><li>Run the tests again.</br><pre class="codeblock"><code>helm test vpn</code></pre></li>
     </ol></ol>
