@@ -44,45 +44,7 @@ Before you begin:
 
 To configure the Helm chart:
 
-1. If it is not already enabled, install and initialize Helm for your cluster.
-
-    1. Install the <a href="https://docs.helm.sh/using_helm/#installing-helm" target="_blank">Helm CLI <img src="../icons/launch-glyph.svg" alt="External link icon"></a>.
-
-    2. Initialize Helm and install `tiller`.
-
-        ```
-        helm init
-        ```
-        {: pre}
-
-    3. Verify that the `tiller-deploy` pod has status `Running` in your cluster.
-
-        ```
-        kubectl get pods -n kube-system -l app=helm
-        ```
-        {: pre}
-
-        Example output:
-
-        ```
-        NAME                            READY     STATUS    RESTARTS   AGE
-        tiller-deploy-352283156-nzbcm   1/1       Running   0          10m
-        ```
-        {: screen}
-
-    4. Add the {{site.data.keyword.containershort_notm}} Helm repository to your Helm instance.
-
-        ```
-        helm repo add bluemix  https://registry.bluemix.net/helm/ibm
-        ```
-        {: pre}
-
-    5. Verify that the strongSwan chart is listed in the Helm repository.
-
-        ```
-        helm search bluemix
-        ```
-        {: pre}
+1. [Install Helm for your cluster and add the {{site.data.keyword.bluemix_notm}} repository to your Helm instance](cs_integrations.html#helm).
 
 2. Save the default configuration settings for the strongSwan Helm chart in a local YAML file.
 
@@ -397,8 +359,6 @@ Additionally, certain `ipsec.conf` timeout settings that were hardcoded in 1.0.0
   <td>9m</td>
   </tr>
   </tbody></table>
-
-<br />
 
 
 ## Disabling the strongSwan IPSec VPN service
