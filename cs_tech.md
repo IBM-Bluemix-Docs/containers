@@ -20,7 +20,7 @@ lastupdated: "2018-01-11"
 ## Docker containers
 {: #docker_containers}
 
-Docker is an open source project that was released by dotCloud in 2013. Built on features of existing Linux container technology (LXC), Docker became a software platform for building, testing, deploying, and scaling apps quickly. Docker packages software into standardized units, called containers, that include all of the elements that an app needs to run.
+Built on existing Linux container technology (LXC), the open source project named Docker became a software platform for building, testing, deploying, and scaling apps quickly. Docker packages software into standardized units, called containers, that include all of the elements that an app needs to run.
 {:shortdesc}
 
 Learn about some basic Docker concepts:
@@ -57,7 +57,7 @@ Learn about some basic Docker concepts:
 ## Kubernetes basics
 {: #kubernetes_basics}
 
-Kubernetes was developed by Google as part of the Borg project and handed off to the open source community in 2014. Kubernetes combines more than 15 years of Google research in running a containerized infrastructure with production work loads, open source contributions, and Docker container management tools to provide an isolated and secure app platform for managing containers that is portable, extensible, and self-healing in case of failovers.
+The open source project named Kubernetes combines running a containerized infrastructure with production work loads, open source contributions, and Docker container management tools. The Kubernetes infrastructure provides an isolated and secure app platform for managing containers that is portable, extensible, and self-healing in case of failovers.
 {:shortdesc}
 
 Learn about some basic Kubernetes concepts as shown in the following diagram.
@@ -96,7 +96,7 @@ To learn more about Kubernetes terminology, <a href="cs_tutorials.html#cs_cluste
 ## Service architecture
 {: #architecture}
 
-Each worker node is set up with an {{site.data.keyword.IBM_notm}} managed Docker Engine, separate compute resources, networking, and volume service, as well as built-in security features that provide isolation, resource management capabilities, and worker node security compliance. The worker node communicates with the master by using secure TLS certificates and openVPN connection.
+Each worker node has an {{site.data.keyword.IBM_notm}} managed Docker Engine, networking service, volume service, and separate compute resources. Built-in security features provide isolation, resource management capabilities, and security compliance. Worker nodes communicate with the master by using secure TLS certificates and openVPN connection.
 {:shortdesc}
 
 ![{{site.data.keyword.containerlong_notm}} Kubernetes architecture](images/cs_org_ov.png)

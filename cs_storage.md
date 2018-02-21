@@ -98,10 +98,10 @@ The following image shows the options that you have in {{site.data.keyword.conta
 ## Using existing NFS file shares in clusters
 {: #existing}
 
-If you already have existing NFS file shares in your IBM Cloud infrastructure (SoftLayer) account that you want to use with Kubernetes, you can do so by creating a persistent volumes on your existing NFS file share. A persistent volume is a piece of actual hardware that serves as a Kubernetes cluster resource and can be consumed by the cluster user.
+If you already have existing NFS file shares in your IBM Cloud infrastructure (SoftLayer) account that you want to use with Kubernetes, you can do so by creating a persistent volume (PV) for your existing storage. 
 {:shortdesc}
 
-Kubernetes differentiates between a persistent volume (PV) that represents the actual hardware and a persistent volume claim (PVC) that is a request for storage usually initiated by the cluster user. The following diagram illustrates the relationship between PVs and PVCs.
+A persistent volume (PV) is a Kubernetes resource that represents an actual storage device that is provisioned in a data center. Persistent volumes abstract the details of how a specific storage type is provisioned by IBM Cloud Storage. To mount a PV to your cluster, you must request persistent storage for your pod by creating a persistent volume claim (PVC). The following diagram illustrates the relationship between PVs and PVCs.
 
 ![Create persistent volumes and persistent volume claims](images/cs_cluster_pv_pvc.png)
 
@@ -247,10 +247,12 @@ You successfully created a PV object and bound it to a PVC. Cluster users can no
 <br />
 
 
-## Creating persistent storage for apps
+
+
+## Adding NFS file storage to apps
 {: #create}
 
-Create a persistent volume claim (PVC) to provision NFS file storage for your cluster. Then, mount this claim to a persistent volume (PV) deployment to ensure that data is available even if the pods crash or shut down.
+Create a persistent volume claim (PVC) to provision NFS file storage for your cluster. Then, mount this claim to a persistent volume (PV) to ensure that data is available even if the pods crash or shut down.
 {:shortdesc}
 
 The NFS file storage that backs the PV is clustered by IBM in order to provide high availability for your data. The storage classes describe the types of storage offerings available and define aspects such as the data retention policy, size in gigabytes, and IOPS when you create your PV.
@@ -523,6 +525,8 @@ The NFS file storage that backs the PV is clustered by IBM in order to provide h
 
 
 <br />
+
+
 
 
 
