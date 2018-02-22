@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-15"
+lastupdated: "2018-02-21"
 
 ---
 
@@ -61,7 +61,7 @@ IBM Blockchain Platform <img src="../icons/launch-glyph.svg" alt="External link 
 </tr>
 <tr>
 <td>Helm</td>
-<td> <a href="https://helm.sh/" target="_blank">Helm <img src="../icons/launch-glyph.svg" alt="External link icon"></a> is a Kubernetes package manager. Create Helm Charts to define, install, and upgrade complex Kubernetes applications running in {{site.data.keyword.containerlong_notm}} clusters. Learn more about how you can <a href="https://developer.ibm.com/recipes/tutorials/increase-deployment-velocity-with-kubernetes-helm-charts/" target="_blank">increase deployment velocity with Kubernetes Helm Charts <img src="../icons/launch-glyph.svg" alt="External link icon"></a>. </td>
+<td> <a href="https://helm.sh/" target="_blank">Helm <img src="../icons/launch-glyph.svg" alt="External link icon"></a> is a Kubernetes package manager. You can create new Helm charts or use preexisting Helm charts to define, install, and upgrade complex Kubernetes applications that run in {{site.data.keyword.containerlong_notm}} clusters. <p>For more information, see [Setting up Helm in {{site.data.keyword.containershort_notm}}](cs_integrations.html#helm).</p></td>
 </tr>
 <tr>
 <td>{{site.data.keyword.contdelivery_full}}</td>
@@ -394,6 +394,60 @@ You can now access the {{site.data.keyword.Bluemix_notm}} service details and cr
 <br />
 
 
+## Setting up Helm in {{site.data.keyword.containershort_notm}}
+{: #helm}
+
+[Helm ![External link icon](../icons/launch-glyph.svg "External link icon")](https://helm.sh/) is a Kubernetes package manager. You can create Helm charts or use preexisting Helm charts to define, install, and upgrade complex Kubernetes applications that run in {{site.data.keyword.containerlong_notm}} clusters.
+{:shortdesc}
+
+Before using Helm charts with {{site.data.keyword.containershort_notm}}, you must install and initialize a Helm instance your cluster. You can then add the {{site.data.keyword.Bluemix_notm}} Helm repository to your Helm instance.
+
+Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster where you want to use a Helm chart.
+
+1. Install the <a href="https://docs.helm.sh/using_helm/#installing-helm" target="_blank">Helm CLI <img src="../icons/launch-glyph.svg" alt="External link icon"></a>.
+
+2. Initialize Helm and install `tiller`.
+
+    ```
+    helm init
+    ```
+    {: pre}
+
+3. Verify that the `tiller-deploy` pod has a **Status** of `Running` in your cluster.
+
+    ```
+    kubectl get pods -n kube-system -l app=helm
+    ```
+    {: pre}
+
+    Example output:
+
+    ```
+    NAME                            READY     STATUS    RESTARTS   AGE
+    tiller-deploy-352283156-nzbcm   1/1       Running   0          2m
+    ```
+    {: screen}
+
+4. Add the {{site.data.keyword.Bluemix_notm}} Helm repository to your Helm instance.
+
+    ```
+    helm repo add bluemix  https://registry.bluemix.net/helm/ibm
+    ```
+    {: pre}
+
+5. List the Helm charts currently available in the {{site.data.keyword.Bluemix_notm}} repository.
+
+    ```
+    helm search bluemix
+    ```
+    {: pre}
+
+    * To use the strongSwan Helm chart, see [Setting up VPN connectivity with the strongSwan IPSec VPN service Helm chart](cs_vpn.html#vpn-setup).
+
+
+For more information about the Helm commands that are used to set up and manage Helm charts, see the <a href="https://docs.helm.sh/helm/" target="_blank">Helm documentation <img src="../icons/launch-glyph.svg" alt="External link icon"></a>.
+
+Learn more about how you can [increase deployment velocity with Kubernetes Helm Charts ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/recipes/tutorials/increase-deployment-velocity-with-kubernetes-helm-charts/).
 
 ## Visualizing Kubernetes cluster resources
 {: #weavescope}
