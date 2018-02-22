@@ -98,7 +98,7 @@ The following image shows the options that you have in {{site.data.keyword.conta
 ## Using existing NFS file shares in clusters
 {: #existing}
 
-If you already have existing NFS file shares in your IBM Cloud infrastructure (SoftLayer) account that you want to use with Kubernetes, you can do so by creating a persistent volume (PV) for your existing storage. 
+If you already have existing NFS file shares in your IBM Cloud infrastructure (SoftLayer) account that you want to use with Kubernetes, you can do so by creating a persistent volume (PV) for your existing storage.
 {:shortdesc}
 
 A persistent volume (PV) is a Kubernetes resource that represents an actual storage device that is provisioned in a data center. Persistent volumes abstract the details of how a specific storage type is provisioned by IBM Cloud Storage. To mount a PV to your cluster, you must request persistent storage for your pod by creating a persistent volume claim (PVC). The following diagram illustrates the relationship between PVs and PVCs.
@@ -257,7 +257,7 @@ Create a persistent volume claim (PVC) to provision NFS file storage for your cl
 
 The NFS file storage that backs the PV is clustered by IBM in order to provide high availability for your data. The storage classes describe the types of storage offerings available and define aspects such as the data retention policy, size in gigabytes, and IOPS when you create your PV.
 
-**Note**: If you have a firewall, [allow egress access](cs_firewall.html#pvc) for the IBM Cloud infrastructure (SoftLayer) IP ranges of the locations (data centers) that your clusters are in, so that you can create PVCs.
+
 
 
 1.  Review the available storage classes. {{site.data.keyword.containerlong}} provides eight pre-defined storage classes so that the cluster admin does not have to create any storage classes. The `ibmc-file-bronze` storage class is the same as the `default` storage class.
@@ -556,13 +556,13 @@ Non-root users do not have write permission on the volume mount path for NFS-bac
 
 Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
 
-If you are designing an app with a non-root user that requires write permission to the volume, you must add the following processes to your Dockerfile and entrypoint script:
+If you are designing an app with a non-root user that requires write permission to the volume, you must add the following processes to your image's Dockerfile and entrypoint script:
 
 -   Create a non-root user.
 -   Temporarily add the user to the root group.
 -   Create a directory in the volume mount path with the correct user permissions.
 
-For {{site.data.keyword.containershort_notm}}, the default owner of the volume mount path is the owner `nobody`. With NFS storage, if the owner does not exist locally in the pod, then the `nobody` user is created. The volumes are set up to recognize the root user in the container, which for some apps, is the only user inside a container. However, many apps specify a non-root user other than `nobody` that writes to the container mount path. Some apps specify that the volume must be owned by the root user. Typically apps do not use the root user due to security concerns. However, if your app requires a root user you can contact [{{site.data.keyword.Bluemix_notm}} support](/docs/get-support/howtogetsupport.html#getting-customer-support) for assistance.
+For {{site.data.keyword.containershort_notm}}, the default owner of the volume mount path is the owner `nobody`. With NFS storage, if the owner does not exist locally in the pod, then the `nobody` user is created in the file shares. The volumes are set up to recognize the root user in the container, which for some apps, is the only user inside a container. However, many apps specify a non-root user other than `nobody` that writes to the container mount path. Some apps specify that the volume must be owned by the root user. Typically apps do not use the root user due to security concerns. However, if your app requires a root user you can contact [{{site.data.keyword.Bluemix_notm}} support](/docs/get-support/howtogetsupport.html#getting-customer-support) for assistance.
 
 
 1.  Create a Dockerfile in a local directory. This example Dockerfile is creating a non-root user named `myguest`.
