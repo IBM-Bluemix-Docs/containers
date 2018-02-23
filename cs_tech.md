@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-11"
+lastupdated: "2018-02-23"
 
 ---
 
@@ -32,7 +32,7 @@ Learn about some basic Docker concepts:
 <dd>An image registry is a place to store, retrieve, and share Docker images. Images that are stored in a registry can either be publicly available (public registry) or accessible by a small group of users (private registry). {{site.data.keyword.containershort_notm}} offers public images, such as ibmliberty, that you can use to create your first containerized app. When it comes to enterprise applications, use a private registry like the one that is provided in {{site.data.keyword.Bluemix_notm}} to protect your images from being used by unauthorized users.
 </dd>
 <dt>Container</dt>
-<dd>Every container is created from an image. A container is a packaged app with all of its dependencies so that the app can be moved between environments and run without changes. Unlike virtual machines, containers do not virtualize a device, its operating system, and the underlying hardware. Only the app code, run time, system tools, libraries, and settings are packaged inside the container. Containers run as isolated processes on compute hosts and share the host operating system and its hardware resources. This approach makes a container more lightweight, portable, and efficient than a virtual machine.</dd>
+<dd>Every container is created from an image. A container is a packaged app with all of its dependencies so that the app can be moved between environments and run without changes. Unlike virtual machines, containers do not virtualize a device, its operating system, and the underlying hardware. Only the app code, run time, system tools, libraries, and settings are packaged inside the container. Containers run as isolated processes on Ubuntu compute hosts and share the host operating system and its hardware resources. This approach makes a container more lightweight, portable, and efficient than a virtual machine.</dd>
 </dl>
 
 ### Key benefits of using containers
@@ -96,12 +96,20 @@ To learn more about Kubernetes terminology, <a href="cs_tutorials.html#cs_cluste
 ## Service architecture
 {: #architecture}
 
-Each worker node has an {{site.data.keyword.IBM_notm}} managed Docker Engine, networking service, volume service, and separate compute resources. Built-in security features provide isolation, resource management capabilities, and security compliance. Worker nodes communicate with the master by using secure TLS certificates and openVPN connection.
-{:shortdesc}
+In a Kubernetes cluster that runs on {{site.data.keyword.containershort_notm}}, your containerized apps are hosted on compute hosts that are called worker nodes. Well, to be more specific, they run in pods and the pods are hosted on worker nodes. Worker nodes are managed by the Kubernetes master. The Kubernetes master and the worker nodes communicate with each other through secure TLS certificates and an openVPN connection to orchestrate your cluster configurations.
+{: shortdesc}
+
+What's the difference between the Kubernetes master and a worker node? Glad you asked.
+
+<dl>
+  <dt>Kubernetes master</dt>
+    <dd>The Kubernetes master is tasked with managing all compute, network, and storage resources in the cluster. The Kubernetes master ensures that your containerized apps and services are equally deployed to the worker nodes in the cluster. Depending on how you configure your app and services the master determines the worker node that has sufficient resources to fulfill the app's requirements.</dd>
+  <dt>Worker node</dt>
+    <dd>Each worker node is a virtual machine that runs on physical hardware, that is managed in a cloud environment. When you provision a worker node, you determine the resources that are available to the containers hosted on that worker node. Out of the box, your worker nodes are set up with an {{site.data.keyword.IBM_notm}} managed Docker Engine, separate compute resources, networking, and a volume service. The built-in security features provide isolation, resource management capabilities, and worker node security compliance.</dd>
+</dl>
 
 ![{{site.data.keyword.containerlong_notm}} Kubernetes architecture](images/cs_org_ov.png)
-
-The diagram outlines what you maintain and what IBM maintains in a cluster. For more details about these maintenance tasks, see [Cluster management responsibilities](cs_why.html#responsibilities).
+Figure. {{site.data.keyword.containershort_notm}} architecture
 
 <br />
 
