@@ -40,6 +40,8 @@ Clusters are deployed on compute hosts that provide native Kubernetes and {{site
 <br />
 
 
+
+
 ## Comparison of free and standard clusters
 {: #cluster_types}
 
