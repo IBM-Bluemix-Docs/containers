@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-14"
+lastupdated: "2018-02-22"
 
 ---
 
@@ -25,7 +25,7 @@ lastupdated: "2018-02-14"
 Periodically, Kubernetes releases updates. This could be a [major, minor, or patch update](cs_versions.html#version_types). Updates can affect the Kubernetes API server version or other components in your Kubernetes master. Depending on the type of update, you could be responsible for updating the Kubernetes master components. You are always responsible for keeping your worker nodes up to date. When making updates, the Kubernetes master is updated before your worker nodes.
 {:shortdesc}
 
-By default, we limit your ability to update the Kubernetes API server in your Kubernetes master more than two minor versions ahead of your current version. For example, if your current Kubernetes API server version is 1.5 and you want to update to 1.8, you must first update to 1.7. You can force the update to occur, but updating more than two minor versions might cause unexpected results.
+By default, we limit your ability to update the Kubernetes API server in your Kubernetes master more than two minor versions ahead of your current version. For example, if your current Kubernetes API server version is 1.5 and you want to update to 1.8, you must first update to 1.7. You can force the update to occur, but updating more than two minor versions might cause unexpected results. If your cluster is running an unsupported Kubernetes version, you might have to force the update.
 
 The following diagram shows the process that you can take to update your master.
 
