@@ -32,8 +32,8 @@ With {{site.data.keyword.Bluemix_dedicated_notm}}, you can create clusters from 
 
 The most significant differences between {{site.data.keyword.Bluemix_notm}} public and Dedicated are as follows.
 
-*   In {{site.data.keyword.Bluemix_dedicated}}, {{site.data.keyword.IBM_notm}} owns and manages the IBM Cloud infrastructure (SoftLayer) account that the worker nodes, VLANs, and subnets are deployed into. In {{site.data.keyword.Bluemix_notm}} public, you own the IBM Cloud infrastructure (SoftLayer) account.
-*   In {{site.data.keyword.Bluemix_dedicated}}, specifications for the VLANs and subnets in the {{site.data.keyword.IBM_notm}}-managed IBM Cloud infrastructure (SoftLayer) account are determined when the Dedicated environment is enabled. In {{site.data.keyword.Bluemix_notm}} public, specifications for VLANs and subnets are determined when the cluster is created.
+*   In {{site.data.keyword.Bluemix_dedicated_notm}}, {{site.data.keyword.IBM_notm}} owns and manages the IBM Cloud infrastructure (SoftLayer) account that the worker nodes, VLANs, and subnets are deployed into. In {{site.data.keyword.Bluemix_notm}} public, you own the IBM Cloud infrastructure (SoftLayer) account.
+*   In {{site.data.keyword.Bluemix_dedicated_notm}}, specifications for the VLANs and subnets in the {{site.data.keyword.IBM_notm}}-managed IBM Cloud infrastructure (SoftLayer) account are determined when the Dedicated environment is enabled. In {{site.data.keyword.Bluemix_notm}} public, specifications for VLANs and subnets are determined when the cluster is created.
 
 ### Differences in cluster management between the cloud environments
 {: #dedicated_env_differences}

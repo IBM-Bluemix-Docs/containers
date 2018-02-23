@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-15"
+lastupdated: "2018-02-22"
 
 ---
 
@@ -23,12 +23,11 @@ lastupdated: "2018-02-15"
 {: #cs_troubleshoot}
 
 As you use {{site.data.keyword.containershort_notm}}, consider these techniques for troubleshooting and getting help. You can also check the [status of the {{site.data.keyword.Bluemix_notm}} system ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/bluemix/support/#status).
+{: shortdesc}
 
 You can take some general steps to ensure that your clusters are up-to-date:
 - [Reboot your worker nodes](cs_cli_reference.html#cs_worker_reboot) regularly to ensure the installation of updates and security patches that IBM automatically deploys to the operating system
 - Update your cluster to [the latest default version of Kubernetes](cs_versions.html) for {{site.data.keyword.containershort_notm}}
-
-{: shortdesc}
 
 <br />
 
@@ -49,7 +48,7 @@ Review the options to debug your clusters and find the root causes for failures.
 
 2.  Review the `State` of your cluster. If your cluster is in a **Critical**, **Delete failed**, or **Warning** state, or is stuck in the **Pending** state for a long time, start [debugging the worker nodes](#debug_worker_nodes).
 
-<table summary="Every table row should be read left to right, with the cluster state in column one and a description in column two.">
+  <table summary="Every table row should be read left to right, with the cluster state in column one and a description in column two.">
    <thead>
    <th>Cluster state</th>
    <th>Description</th>
@@ -132,7 +131,7 @@ Review the options to debug your worker nodes and find the root causes for failu
     <tbody>
   <tr>
       <td>Critical</td>
-      <td><ul><li>If the worker node state shows <strong>Critical</strong> and the status shows <strong>Not Ready</strong>, then your worker node might not be able to connect to your IBM Cloud infrastructure (SoftLayer) account. Start troubleshooting by running <code>bx cs worker-reboot --hard CLUSTER WORKER</code> first. If that command is unsuccessful, then run <code>bx cs worker reload CLUSTER WORKER</code>. If that command is unsuccessful as well, go to the next step to continue troubleshooting your worker node.</li><li>If the worker node state shows <strong>Critical</strong> and the status shows <strong>Out of disk</strong>, then your worker node ran out of capacity. You can either reduce work load on your worker node or add a worker node to your cluster to help load balance the work load.</li><li>If the worker node state shows <strong>Critical</strong> and the status shows <strong>Unknown</strong>, then the Kubernetes master is not available. Contact IBM Cloud support by opening [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/get-support/howtogetsupport.html#using-avatar).</li></ul></td>
+      <td>If your worker node is in Critical state, check its status:<ul><li><strong>Not Ready</strong>: Your worker node might not be able to connect to your IBM Cloud infrastructure (SoftLayer) account. Start troubleshooting by running <code>bx cs worker-reboot --hard CLUSTER WORKER</code> first. If that command is unsuccessful, then run <code>bx cs worker reload CLUSTER WORKER</code>. If that command is unsuccessful as well, go to the next step to continue troubleshooting your worker node.</li><li><strong>Out of disk</strong>: Your worker node ran out of capacity. You can either reduce the work load on your worker node or add a worker node to your cluster to help load balance the work load.</li><li><strong>Unknown</strong>: The Kubernetes master is not available. Contact IBM Cloud support by opening [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/get-support/howtogetsupport.html#using-avatar).</li></ul></td>
      </tr>
       <tr>
         <td>Deploying</td>
@@ -221,10 +220,14 @@ Review common error messages and learn how to resolve them.
         {{site.data.keyword.Bluemix_notm}} Infrastructure Exception: 'Item' must be ordered with permission.</td>
         <td>You might not have the required permissions to provision a worker node from the IBM Cloud infrastructure (SoftLayer) portfolio. See [Configure access to the IBM Cloud infrastructure (SoftLayer) portfolio to create standard Kubernetes clusters](cs_infrastructure.html#unify_accounts).</td>
       </tr>
+      <tr>
+  <td>Cannot create IMS portal token, as no IMS account is linked to the selected BSS account</br></br>Provided user not found or active</br></br>SoftLayer_Exception_User_Customer_InvalidUserStatus: User account is currently cancel_pending.</td>
+  <td>The api key that is used to access the IBM Cloud infrastructure (SoftLayer) portolio does not have the required permissions to perform the action, or is pending deletion from the {{site.data.keyword.Bluemix_notm}} account. <ol><li>If you have access to multiple accounts, make sure that you are logged in to the account where you want to work with {{site.data.keyword.containerlong_notm}}. </li><li>Run <code>bx cs api-key-info</code> to view the current api key owner that is used to access the IBM Cloud infrastructure (SoftLayer) portolio. </li><li>Run <code>bx account list</code> to view the owner of the {{site.data.keyword.Bluemix_notm}} account that you currently use. </li><li>Contact the owner of the {{site.data.keyword.Bluemix_notm}} account and report that the api key owner that you retrieved earlier has insufficient permissions in IBM Cloud infrastructure (SoftLayer) or might be pending to be deleted. Review the [required permissions in IBM Cloud infrastructure (SoftLayer)](cs_users.html#managing) to perform the action that you were trying to complete. </li><li>After the account owner updated the permissions, repeat the action that previously failed. </li></ol></td>
+  </tr>
     </tbody>
   </table>
 
-  
+
 
 <br />
 
@@ -932,6 +935,69 @@ Review the following reasons why the application load balancer secret might fail
 <br />
 
 
+## Cannot install a Helm chart with updated configuration values
+{: #cs_helm_install}
+
+{: tsSymptoms}
+When you try to install an updated Helm chart by running `helm install -f config.yaml --namespace=kube-system --name=<release_name> bluemix/<chart_name>`, you get the `Error: failed to download "bluemix/<chart_name>"` error message.
+
+{: tsCauses}
+The URL for the {{site.data.keyword.Bluemix_notm}} repository in your Helm instance might be incorrect.
+
+{: tsResolve}
+To troubleshoot your Helm chart:
+
+1. List the repositories currently available in your Helm instance.
+
+    ```
+    helm repo list
+    ```
+    {: pre}
+
+2. In the output, verify that the URL for the {{site.data.keyword.Bluemix_notm}} repository, `bluemix`, is `https://registry.bluemix.net/helm/ibm`.
+
+    ```
+    NAME    URL
+    stable  https://kubernetes-charts.storage.googleapis.com
+    local   http://127.0.0.1:8888/charts
+    bluemix https://registry.bluemix.net/helm/ibm
+    ```
+    {: screen}
+
+    * If the URL is incorrect:
+
+        1. Remove the {{site.data.keyword.Bluemix_notm}} repository.
+
+            ```
+            helm repo remove bluemix
+            ```
+            {: pre}
+
+        2. Add the {{site.data.keyword.Bluemix_notm}} repository again.
+
+            ```
+            helm repo add bluemix  https://registry.bluemix.net/helm/ibm
+            ```
+            {: pre}
+
+    * If the URL is correct, get the latest updates from the repository.
+
+        ```
+        helm repo update
+        ```
+        {: pre}
+
+3. Install the Helm chart with your updates.
+
+    ```
+    helm install -f config.yaml --namespace=kube-system --name=<release_name> bluemix/<chart_name>
+    ```
+    {: pre}
+
+
+<br />
+
+
 ## Cannot establish VPN connectivity with the strongSwan Helm chart
 {: #cs_vpn_fails}
 
@@ -942,13 +1008,13 @@ When you check VPN connectivity by running `kubectl exec -n kube-system  $STRONG
 Your Helm chart configuration file has incorrect values, missing values, or syntax errors.
 
 {: tsResolve}
-When you first attempt to establish VPN connectivity with the stringSwan Helm chart, it is likely that the VPN status will not `ESTABLISHED`. You might need to check for several types of issues and change your configuration file accordingly. To troubleshoot your strongSwan VPN connectivity:
+When you try to establish VPN connectivity with the strongSwan Helm chart, it is likely that the VPN status will not be `ESTABLISHED` the first time. You might need to check for several types of issues and change your configuration file accordingly. To troubleshoot your strongSwan VPN connectivity:
 
 1. Check the on-premises VPN endpoint settings against the settings in your configuration file. If there are mismatches:
 
     <ol>
     <li>Delete the existing Helm chart.</br><pre class="codeblock"><code>helm delete --purge <release_name></code></pre></li>
-    <li>Fix the incorrect values in the `config.yaml` file and save the updated file.</li>
+    <li>Fix the incorrect values in the <code>config.yaml</code> file and save the updated file.</li>
     <li>Install the new Helm chart.</br><pre class="codeblock"><code>helm install -f config.yaml --namespace=kube-system --name=<release_name> bluemix/strongswan</code></pre></li>
     </ol>
 
@@ -968,7 +1034,7 @@ When you first attempt to establish VPN connectivity with the stringSwan Helm ch
     <li>If any test fails, refer to [Understanding the Helm VPN connectivity tests](cs_vpn.html#vpn_tests_table) for information about each test and why it might fail. <b>Note</b>: Some of the tests have requirements that are optional settings in the VPN configuration. If some of the tests fail, the failures might be acceptable depending on whether you specified these optional settings.</li>
     <li>View the output of a failed test by looking at the logs of the test pod.<br><pre class="codeblock"><code>kubectl logs -n kube-system <test_program></code></pre></li>
     <li>Delete the existing Helm chart.</br><pre class="codeblock"><code>helm delete --purge <release_name></code></pre></li>
-    <li>Fix the incorrect values in the `config.yaml` file and save the updated file.</li>
+    <li>Fix the incorrect values in the <code>config.yaml</code> file and save the updated file.</li>
     <li>Install the new Helm chart.</br><pre class="codeblock"><code>helm install -f config.yaml --namespace=kube-system --name=<release_name> bluemix/strongswan</code></pre></li>
     <li>To check your changes:<ol><li>Get the current test pods.</br><pre class="codeblock"><code>kubectl get pods -a -n kube-system -l app=strongswan-test</code></pre></li><li>Clean up the current test pods.</br><pre class="codeblock"><code>kubectl delete pods -n kube-system -l app=strongswan-test</code></pre></li><li>Run the tests again.</br><pre class="codeblock"><code>helm test vpn</code></pre></li>
     </ol></ol>

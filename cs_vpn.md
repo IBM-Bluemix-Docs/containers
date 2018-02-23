@@ -44,45 +44,7 @@ Before you begin:
 
 To configure the Helm chart:
 
-1. If it is not already enabled, install and initialize Helm for your cluster.
-
-    1. Install the <a href="https://docs.helm.sh/using_helm/#installing-helm" target="_blank">Helm CLI <img src="../icons/launch-glyph.svg" alt="External link icon"></a>.
-
-    2. Initialize Helm and install `tiller`.
-
-        ```
-        helm init
-        ```
-        {: pre}
-
-    3. Verify that the `tiller-deploy` pod has status `Running` in your cluster.
-
-        ```
-        kubectl get pods -n kube-system -l app=helm
-        ```
-        {: pre}
-
-        Example output:
-
-        ```
-        NAME                            READY     STATUS    RESTARTS   AGE
-        tiller-deploy-352283156-nzbcm   1/1       Running   0          10m
-        ```
-        {: screen}
-
-    4. Add the {{site.data.keyword.containershort_notm}} Helm repository to your Helm instance.
-
-        ```
-        helm repo add bluemix  https://registry.bluemix.net/helm/ibm
-        ```
-        {: pre}
-
-    5. Verify that the strongSwan chart is listed in the Helm repository.
-
-        ```
-        helm search bluemix
-        ```
-        {: pre}
+1. [Install Helm for your cluster and add the {{site.data.keyword.Bluemix_notm}} repository to your Helm instance](cs_integrations.html#helm).
 
 2. Save the default configuration settings for the strongSwan Helm chart in a local YAML file.
 
@@ -221,7 +183,7 @@ After you have deployed your Helm chart, test the VPN connectivity.
     **Note**:
 
     <ul>
-    <li>It is likely that the VPN status is not `ESTABLISHED` the first time you use this Helm chart. You might need to check the on-premises VPN endpoint settings change the configuration file several times before the connection is successful: <ol><li>Run `helm delete --purge <release_name>`</li><li>Fix the incorrect values in the configuration file.</li><li>Run `helm install -f config.yaml --namespace=kube-system --name=<release_name> bluemix/strongswan`</li></ol>You can also run additional checks in the next step.</li>
+    <li>When you try to establish VPN connectivity with the strongSwan Helm chart, it is likely that the VPN status will not be `ESTABLISHED` the first time. You might need to check the on-premises VPN endpoint settings and change the configuration file several times before the connection is successful: <ol><li>Run `helm delete --purge <release_name>`</li><li>Fix the incorrect values in the configuration file.</li><li>Run `helm install -f config.yaml --namespace=kube-system --name=<release_name> bluemix/strongswan`</li></ol>You can also run additional checks in the next step.</li>
     <li>If the VPN pod is in an `ERROR` state or continues to crash and restart, it might be due to parameter validation of the `ipsec.conf` settings in the chart's config map.<ol><li>Check for any validation errors in the Strongswan pod logs by running `kubectl logs -n kube-system $STRONGSWAN_POD`.</li><li>If there are validation errors, run `helm delete --purge <release_name>`<li>Fix the incorrect values in the configuration file.</li><li>Run `helm install -f config.yaml --namespace=kube-system --name=<release_name> bluemix/strongswan`</li></ol>If your cluster has a high number of worker nodes, you can also use `helm upgrade` to more quickly apply your changes instead of running `helm delete` and `helm install`.</li>
     </ul>
 
@@ -397,8 +359,6 @@ Additionally, certain `ipsec.conf` timeout settings that were hardcoded in 1.0.0
   <td>9m</td>
   </tr>
   </tbody></table>
-
-<br />
 
 
 ## Disabling the strongSwan IPSec VPN service
