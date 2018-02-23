@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-14"
+lastupdated: "2018-02-23"
 
 ---
 
@@ -461,7 +461,90 @@ With Kubernetes, you can enable [Horizontal Pod Autoscaling ![External link icon
     </tr>
     </tbody></table>
 
+<staging>
 
+You can use the built-in [Kubernetes Horizontal Pod Autoscaling](#horizontal_pod_autoscaling) or the [ibm-cluster-autoscaler](#cluster_autoscaler) to conserve resources by automatically scaling your apps based on changes in demand.
+{:shortdesc}
+
+Are you looking for information about scaling Cloud Foundry applications? Check out [IBM Auto-Scaling for {{site.data.keyword.Bluemix_notm}}](/docs/services/Auto-Scaling/index.html).
+{: tip}
+
+
+### Kubernetes horizontal pod autoscaling
+{: #horizontal_pod_autoscaling}
+
+With Kubernetes, you can enable [horizontal pod autoscaling ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) to automatically increase or decrease the number of instances of your apps based on CPU. Heapster monitoring must be deployed in the cluster that you want to autoscale.
+{:shortdesc}
+
+Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
+
+1.  Deploy your app to your cluster from the CLI. When you deploy your app, you must request CPU.
+
+    ```
+    kubectl run <name> --image=<image> --requests=cpu=<cpu> --expose --port=<port_number>
+    ```
+    {: pre}
+
+    <table>
+    <thead>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command&apos;s components</th>
+    </thead>
+    <tbody>
+    <tr>
+    <td><code>--image</code></td>
+    <td>The application that you want to deploy.</td>
+    </tr>
+    <tr>
+    <td><code>--request=cpu</code></td>
+    <td>The required CPU for the container, which is specified in milli-cores. As an example, <code>--requests=200m</code>.</td>
+    </tr>
+    <tr>
+    <td><code>--expose</code></td>
+    <td>When true, creates an external service.</td>
+    </tr>
+    <tr>
+    <td><code>--port</code></td>
+    <td>The port where your app is available externally.</td>
+    </tr></tbody></table>
+
+    **Note:** For more complex deployments, you might need to create a [configuration file](#app_cli).
+2.  Create a Horizontal Pod Autoscaler and define your policy. For more information about working with the `kubetcl autoscale` command, see [the Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://v1-8.docs.kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#autoscale).
+
+    ```
+    kubectl autoscale deployment <deployment_name> --cpu-percent=<percentage> --min=<min_value> --max=<max_value>
+    ```
+    {: pre}
+
+    <table>
+    <thead>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command&apos;s components</th>
+    </thead>
+    <tbody>
+    <tr>
+    <td><code>--cpu-percent</code></td>
+    <td>The average CPU utilization that is maintained by the Horizontal Pod Autoscaler, which is specified as a percentage.</td>
+    </tr>
+    <tr>
+    <td><code>--min</code></td>
+    <td>The minimum number of deployed pods that are used to maintain the specified CPU utilization percentage.</td>
+    </tr>
+    <tr>
+    <td><code>--max</code></td>
+    <td>The maximum number of deployed pods that are used to maintain the specified CPU utilization percentage.</td>
+    </tr>
+    </tbody></table>
+
+
+### ibm-cluster-autoscaler (alpha)
+{: #cluster_autoscaler}
+
+With the ibm-cluster-autoscaler and {{site.data.keyword.containershort_notm}}, you can scale worker nodes that are provisioned on virtual server instances within your Kubernetes cluster up or down, across any specified autoscaling group.
+{:shortdesc}
+
+The alpha version currently supports single zone availability only and is not available for worker nodes on physical bare metal servers.
+{: tip}
+
+The ibm-cluster-autoscaler monitors the pods in your cluster by watching the Kubernetes API server and can automatically scale the size of your cluster up or down. To configure the autoscaler or learn more about how the autoscaler works, see [Getting started with the ibm-cluster-autoscaler image](/docs/services/RegistryImages/ibm-cluster-autoscaler/index.html).
 
 <br />
 
