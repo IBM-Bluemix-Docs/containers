@@ -60,8 +60,10 @@ Software developers and network administrators who have never deployed an app in
 ## Lesson 1: Deploying single instance apps to Kubernetes clusters
 {: #cs_apps_tutorial_lesson1}
 
-In the previous tutorial, you created a cluster with one worker node. In this lesson, you configure a deployment and deploy a single instance of the app into a Kubernetes pod within the worker node. The components that you deploy by completing this lesson are shown in the following diagram.
+In the previous tutorial, you created a cluster with one worker node. In this lesson, you configure a deployment and deploy a single instance of the app into a Kubernetes pod within the worker node. 
 {:shortdesc}
+
+The components that you deploy by completing this lesson are shown in the following diagram.
 
 ![Deployment setup](images/cs_app_tutorial_components1.png)
 
@@ -298,10 +300,10 @@ Too many commands in this lesson? Agreed. How about using a configuration script
 ## Lesson 2: Deploying and updating apps with higher availability
 {: #cs_apps_tutorial_lesson2}
 
-In this lesson, you deploy three instances of the Hello World app into a cluster for higher availability than the first version of the app. Higher availability means that user access is divided between the three instances. When too many users are trying to access the same app instance, they might notice slow response times. Multiple instances can mean faster response times for your users. In this lesson, you will also learn how health checks and deployment updates can work with Kubernetes.
+In this lesson, you deploy three instances of the Hello World app into a cluster for higher availability than the first version of the app. 
 {:shortdesc}
 
-The following diagram includes the components that you deploy by completing this lesson.
+Higher availability means that user access is divided between the three instances. When too many users are trying to access the same app instance, they might notice slow response times. Multiple instances can mean faster response times for your users. In this lesson, you will also learn how health checks and deployment updates can work with Kubernetes. The following diagram includes the components that you deploy by completing this lesson.
 
 ![Deployment setup](images/cs_app_tutorial_components2.png)
 
@@ -464,10 +466,10 @@ Ready to delete what you created before you continue? This time, you can use the
 ## Lesson 3: Deploying and updating the Watson Tone Analyzer app
 {: #cs_apps_tutorial_lesson3}
 
-In the previous lessons, the apps were deployed as single components in one worker node. In this lesson, you can deploy two components of an app into a cluster that use the {{site.data.keyword.watson}} {{site.data.keyword.toneanalyzershort}} service. Separating components into different containers ensures that you can update one without affecting the others. Then, you will update the app to scale it up with more replicas to make it more highly available.
+In the previous lessons, the apps were deployed as single components in one worker node. In this lesson, you can deploy two components of an app into a cluster that use the {{site.data.keyword.watson}} {{site.data.keyword.toneanalyzershort}} service. 
 {:shortdesc}
 
-The following diagram includes the components that you deploy by completing this lesson.
+Separating components into different containers ensures that you can update one without affecting the others. Then, you will update the app to scale it up with more replicas to make it more highly available. The following diagram includes the components that you deploy by completing this lesson.
 
 ![Deployment setup](images/cs_app_tutorial_components3.png)
 
