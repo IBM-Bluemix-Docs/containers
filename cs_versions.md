@@ -23,8 +23,8 @@ lastupdated: "2018-02-15"
 
 The current supported Kubernetes versions are:
 
-- Latest: 1.9.2
-- Default: 1.8.6
+- Latest: </staging>1.9.2
+- Default: </staging>1.8.6
 - Supported: 1.7.4
 
 If you are running clusters on a Kubernetes version that is not currently supported, [review potential impacts](#version_types) for updates and then immediately [update your cluster](cs_cluster_update.html#update) to continue receiving important security updates and support. To check the server version, run the following command.

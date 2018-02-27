@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-15"
+lastupdated: "2018-02-27"
 
 ---
 
@@ -22,7 +22,10 @@ lastupdated: "2018-02-15"
 ## Configuring access to an app by using Ingress
 {: #config}
 
-Expose multiple apps in your cluster by creating Ingress resources that are managed by the IBM-provided application load balancer. An application load balancer is an external HTTP or HTTPS load balancer that uses a secured and unique public or private entrypoint to route incoming requests to your apps inside or outside your cluster. With Ingress, you can define individual routing rules for every app that you expose to the public or to private networks. For general information about Ingress services, see [Planning external networking with Ingress](cs_network_planning.html#ingress).
+Expose multiple apps in your cluster by creating Ingress resources that are managed by the IBM-provided application load balancer.
+{:shortdesc}
+
+An application load balancer is an external HTTP or HTTPS load balancer that uses a secured and unique public or private entrypoint to route incoming requests to your apps inside or outside your cluster. With Ingress, you can define individual routing rules for every app that you expose to the public or to private networks. For general information about Ingress services, see [Planning external networking with Ingress](cs_network_planning.html#ingress).
 
 **Note:** Ingress is available for standard clusters only and requires at least two worker nodes in the cluster to ensure high availability and that periodic updates are applied. Setting up Ingress requires an [Administrator access policy](cs_users.html#access_policies). Verify your current [access policy](cs_users.html#infra_access).
 
@@ -44,7 +47,10 @@ To choose the best configuration for Ingress, you can follow this decision tree:
 ## Exposing apps to the public
 {: #ingress_expose_public}
 
-When you create a standard cluster, an IBM-provided application load balancer is automatically enabled and is assigned a portable public IP address and a public route. Every app that is exposed to the public via Ingress is assigned a unique path that is appended to the public route, so that you can use a unique URL to access an app publicly in your cluster. To expose your app to the public, you can configure Ingress for the following scenarios.
+When you create a standard cluster, an IBM-provided application load balancer is automatically enabled and is assigned a portable public IP address and a public route.
+{:shortdesc}
+
+Every app that is exposed to the public via Ingress is assigned a unique path that is appended to the public route, so that you can use a unique URL to access an app publicly in your cluster. To expose your app to the public, you can configure Ingress for the following scenarios.
 
 -   [Publicly expose apps using the IBM-provided domain without TLS](#ibm_domain)
 -   [Publicly expose apps using the IBM-provided domain with TLS](#ibm_domain_cert)
@@ -55,6 +61,7 @@ When you create a standard cluster, an IBM-provided application load balancer is
 {: #ibm_domain}
 
 You can configure the application load balancer to load balance incoming HTTP network traffic to the apps in your cluster and use the IBM-provided domain to access your apps from the internet.
+{:shortdesc}
 
 Before you begin:
 
@@ -228,6 +235,7 @@ To expose an app by using the IBM-provided domain:
 {: #ibm_domain_cert}
 
 You can configure the Ingress control to manage incoming TLS connections for your apps, decrypt the network traffic by using the IBM-provided TLS certificate, and forward the unencrypted request to the apps that are exposed in your cluster.
+{:shortdesc}
 
 Before you begin:
 
@@ -627,7 +635,8 @@ To expose an app by using a custom domain with TLS:
 ### Publicly expose apps that are outside your cluster using the IBM-provided or a custom domain with TLS
 {: #external_endpoint}
 
-You can configure the application load balancer to include apps into the cluster load balancing that are located outside your cluster. Incoming requests on the IBM-provided or your custom domain are forwarded automatically to the external app.
+You can configure the application load balancer to include apps that are located outside your cluster. Incoming requests on the IBM-provided or your custom domain are forwarded automatically to the external app.
+{:shortdesc}
 
 Before you begin:
 
@@ -858,15 +867,20 @@ You can route incoming network traffic on the IBM-provided domain to apps that a
 ## Exposing apps to a private network
 {: #ingress_expose_private}
 
-When you create a standard cluster, an IBM-provided application load balancer is automatically created and assigned a portable private IP address and a private route. However, the default private application load balancer is not automatically enabled. To expose your app to private networks, first [enable the default private application load balancer](#private_ingress). You can then configure Ingress for the following scenarios.
+When you create a standard cluster, an IBM-provided application load balancer is created and assigned a portable private IP address and a private route. However, the default private application load balancer is not automatically enabled. To expose your app to private networks, first [enable the default private application load balancer](#private_ingress).
+{:shortdesc}
 
+You can then configure Ingress for the following scenarios.
 -   [Privately expose apps using a custom domain without TLS](#private_ingress_no_tls)
 -   [Privately expose apps using a custom domain with TLS](#private_ingress_tls)
 
 ### Enabling the default private application load balancer
 {: #private_ingress}
 
-Before you can use the default private application load balancer, you must enable it with either the IBM-provided portable private IP address or your own portable private IP address. **Note**: If you used the `--no-subnet` flag when you created the cluster, then you must add a portable private subnet or a user-managed subnet before you can enable the private application load balancer. For more information, see [Requesting additional subnets for your cluster](cs_subnets.html#request).
+Before you can use the default private application load balancer, you must enable it with either the IBM-provided portable private IP address or your own portable private IP address.
+{:shortdesc}
+
+**Note**: If you used the `--no-subnet` flag when you created the cluster, then you must add a portable private subnet or a user-managed subnet before you can enable the private application load balancer. For more information, see [Requesting additional subnets for your cluster](cs_subnets.html#request).
 
 Before you begin:
 
@@ -1101,7 +1115,7 @@ To privately expose an app using a custom domain without TLS:
 ### Privately expose apps using a custom domain with TLS
 {: #private_ingress_tls}
 
-You can use private application load balancers to route incoming network traffic to the apps in your cluster and use your own TLS certificate to manage the TLS termination, while using your custom domain.
+You can use private application load balancers to route incoming network traffic to apps in your cluster. Also, use your own TLS certificate to manage the TLS termination while using your custom domain.
 {:shortdesc}
 
 Before you begin, [enable the default private application load balancer](#private_ingress).
@@ -1317,6 +1331,7 @@ You can further configure an application load balancer with the following option
 {: #opening_ingress_ports}
 
 By default, only ports 80 and 443 are exposed in the Ingress application load balancer. To expose other ports, you can edit the `ibm-cloud-provider-ingress-cm` config map resource.
+{:shortdesc}
 
 1.  Create a local version of the configuration file for the `ibm-cloud-provider-ingress-cm` config map resource. Add a <code>data</code> section and specify public ports 80, 443, and any other ports you want to add to the config map file separated by a semi-colon (;).
 
@@ -1378,6 +1393,7 @@ For more information about config map resources, see the [Kubernetes documentati
 {: #ssl_protocols_ciphers}
 
 Enable SSL protocols and ciphers at the global HTTP level by editing the `ibm-cloud-provider-ingress-cm` config map.
+{:shortdesc}
 
 **Note**: When specifying the enabled protocols for all hosts, the TLSv1.1 and TLSv1.2 parameters (1.1.13, 1.0.12) work only when OpenSSL 1.0.1 or higher is used and the TLSv1.3 parameter (1.13.0) works only when OpenSSL 1.1.1 built with TLSv1.3 support is used.
 

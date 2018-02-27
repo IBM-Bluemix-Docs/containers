@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2017-01-29"
+lastupdated: "2017-02-27"
 
 ---
 
@@ -19,7 +19,7 @@ lastupdated: "2017-01-29"
 # Tutorial: Creating clusters
 {: #cs_cluster_tutorial}
 
-Deploy and manage your own Kubernetes cluster in {{site.data.keyword.Bluemix_short}}. You can automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of independent compute hosts called worker nodes.
+Deploy and manage a Kubernetes cluster in {{site.data.keyword.Bluemix_short}}. You can automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster.
 {:shortdesc}
 
 In this tutorial series, you can see how a fictional public relations firm uses Kubernetes capabilities to deploy a containerized app in {{site.data.keyword.Bluemix_notm}}. Leveraging {{site.data.keyword.toneanalyzerfull}}, the PR firm analyzes their press releases and receives feedback.
@@ -146,6 +146,7 @@ Congratulations! You've successfully installed the CLIs for the following lesson
 {: #cs_cluster_tutorial_lesson2}
 
 Set up a private image repository in {{site.data.keyword.registryshort_notm}} and add secrets to your cluster so that the app can access the {{site.data.keyword.toneanalyzershort}} service.
+{: shortdesc}
 
 1.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI by using your {{site.data.keyword.Bluemix_notm}} credentials, when prompted.
 
@@ -183,7 +184,10 @@ Set up a private image repository in {{site.data.keyword.registryshort_notm}} an
 ## Lesson 3: Setting up your cluster environment
 {: #cs_cluster_tutorial_lesson3}
 
-Set the context for your cluster in your CLI. Every time you log in to the container CLI to work with clusters, you must run these commands to set the path to the cluster's configuration file as a session variable. The Kubernetes CLI uses this variable to find a local configuration file and certificates that are necessary to connect with the cluster in {{site.data.keyword.Bluemix_notm}}.
+Set the context for your cluster in your CLI.
+{: shortdesc}
+
+Every time you log in to the container CLI to work with clusters, you must run these commands to set the path to the cluster's configuration file as a session variable. The Kubernetes CLI uses this variable to find a local configuration file and certificates that are necessary to connect with the cluster in {{site.data.keyword.Bluemix_notm}}.
 
 1.  Get the command to set the environment variable and download the Kubernetes configuration files.
 
