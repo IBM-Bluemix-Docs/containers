@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2017-01-29"
+lastupdated: "2017-02-27"
 
 ---
 
@@ -19,7 +19,7 @@ lastupdated: "2017-01-29"
 # Tutorial: Creating clusters
 {: #cs_cluster_tutorial}
 
-Deploy and manage your own Kubernetes cluster in {{site.data.keyword.Bluemix_short}}. You can automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of independent compute hosts called worker nodes.
+Deploy and manage a Kubernetes cluster in {{site.data.keyword.Bluemix_short}}. You can automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster.
 {:shortdesc}
 
 In this tutorial series, you can see how a fictional public relations firm uses Kubernetes capabilities to deploy a containerized app in {{site.data.keyword.Bluemix_notm}}. Leveraging {{site.data.keyword.toneanalyzerfull}}, the PR firm analyzes their press releases and receives feedback.
@@ -85,13 +85,13 @@ To install the CLIs and their prerequisites:
     {: pre}
 
 5.  To view a local version of the Kubernetes dashboard and deploy apps into your clusters, [install the Kubernetes CLI ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/tools/install-kubectl/). To run commands by using the Kubernetes CLI, use the prefix `kubectl`.
-    1.  For complete functional compatibility, download the Kubernetes CLI version that matches the Kubernetes cluster version you plan to use. The current {{site.data.keyword.containershort_notm}} default Kubernetes version is 1.8.6.
+    1.  For complete functional compatibility, download the Kubernetes CLI version that matches the Kubernetes cluster version you plan to use. The current {{site.data.keyword.containershort_notm}} default Kubernetes version is 1.8.8.
 
-        OS X:   [https://storage.googleapis.com/kubernetes-release/release/v1.8.6/bin/darwin/amd64/kubectl ![External link icon](../icons/launch-glyph.svg "External link icon")](https://storage.googleapis.com/kubernetes-release/release/v1.8.6/bin/darwin/amd64/kubectl)
+        OS X:   [https://storage.googleapis.com/kubernetes-release/release/v1.8.8/bin/darwin/amd64/kubectl ![External link icon](../icons/launch-glyph.svg "External link icon")](https://storage.googleapis.com/kubernetes-release/release/v1.8.8/bin/darwin/amd64/kubectl)
 
-        Linux:   [https://storage.googleapis.com/kubernetes-release/release/v1.8.6/bin/linux/amd64/kubectl ![External link icon](../icons/launch-glyph.svg "External link icon")](https://storage.googleapis.com/kubernetes-release/release/v1.8.6/bin/linux/amd64/kubectl)
+        Linux:   [https://storage.googleapis.com/kubernetes-release/release/v1.8.8/bin/linux/amd64/kubectl ![External link icon](../icons/launch-glyph.svg "External link icon")](https://storage.googleapis.com/kubernetes-release/release/v1.8.8/bin/linux/amd64/kubectl)
 
-        Windows:   [https://storage.googleapis.com/kubernetes-release/release/v1.8.6/bin/windows/amd64/kubectl.exe ![External link icon](../icons/launch-glyph.svg "External link icon")](https://storage.googleapis.com/kubernetes-release/release/v1.8.6/bin/windows/amd64/kubectl.exe)
+        Windows:   [https://storage.googleapis.com/kubernetes-release/release/v1.8.8/bin/windows/amd64/kubectl.exe ![External link icon](../icons/launch-glyph.svg "External link icon")](https://storage.googleapis.com/kubernetes-release/release/v1.8.8/bin/windows/amd64/kubectl.exe)
 
           **Tip:** If you are using Windows, install the Kubernetes CLI in the same directory as the {{site.data.keyword.Bluemix_notm}} CLI. This setup saves you some filepath changes when you run commands later.
 
@@ -146,6 +146,7 @@ Congratulations! You've successfully installed the CLIs for the following lesson
 {: #cs_cluster_tutorial_lesson2}
 
 Set up a private image repository in {{site.data.keyword.registryshort_notm}} and add secrets to your cluster so that the app can access the {{site.data.keyword.toneanalyzershort}} service.
+{: shortdesc}
 
 1.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI by using your {{site.data.keyword.Bluemix_notm}} credentials, when prompted.
 
@@ -183,7 +184,10 @@ Set up a private image repository in {{site.data.keyword.registryshort_notm}} an
 ## Lesson 3: Setting up your cluster environment
 {: #cs_cluster_tutorial_lesson3}
 
-Set the context for your cluster in your CLI. Every time you log in to the container CLI to work with clusters, you must run these commands to set the path to the cluster's configuration file as a session variable. The Kubernetes CLI uses this variable to find a local configuration file and certificates that are necessary to connect with the cluster in {{site.data.keyword.Bluemix_notm}}.
+Set the context for your cluster in your CLI.
+{: shortdesc}
+
+Every time you log in to the container CLI to work with clusters, you must run these commands to set the path to the cluster's configuration file as a session variable. The Kubernetes CLI uses this variable to find a local configuration file and certificates that are necessary to connect with the cluster in {{site.data.keyword.Bluemix_notm}}.
 
 1.  Get the command to set the environment variable and download the Kubernetes configuration files.
 
@@ -229,8 +233,8 @@ Set the context for your cluster in your CLI. Every time you log in to the conta
     Example output:
 
     ```
-    Client Version: v1.8.6
-    Server Version: v1.8.6
+    Client Version: v1.8.8
+    Server Version: v1.8.8
     ```
     {: screen}
 

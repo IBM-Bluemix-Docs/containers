@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-05"
+lastupdated: "2018-02-27"
 
 ---
 
@@ -19,8 +19,7 @@ lastupdated: "2018-02-05"
 # Tutorial: Installing Istio on {{site.data.keyword.containerlong_notm}}
 {: #istio_tutorial}
 
-[Istio](https://www.ibm.com/cloud/info/istio) is an open platform that gives developers a uniform way to connect, secure, and manage a network of microservices, also known as a service mesh, on cloud platforms such as Kubernetes. Istio provides the capability to manage network traffic, load balance across microservices, enforce access policies, verify service identity on the service mesh, and much more.
-
+[Istio](https://www.ibm.com/cloud/info/istio) is an open platform to connect, secure, and manage a network of microservices, also known as a service mesh, on cloud platforms such as Kubernetes. With Istio, manage network traffic, load balance across microservices, enforce access policies, verify service identity on the service mesh, and more.
 {:shortdesc}
 
 In this tutorial, you can see how to install Istio alongside four microservices for a simple mock bookstore app called BookInfo. The microservices include a product web page, book details, reviews, and ratings. When you deploy BookInfo's microservices into an {{site.data.keyword.containershort}} cluster where Istio is installed, you inject the Istio Envoy sidecar proxies in the pods of each microservice.
@@ -52,6 +51,7 @@ This tutorial is intended for software developers and network administrators who
 {: #istio_tutorial1}
 
 Download and install Istio in your cluster.
+{:shortdesc}
 
 1. Either download Istio directly from [https://github.com/istio/istio/releases ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/istio/istio/releases) or get the latest version by using curl:
 
@@ -122,7 +122,10 @@ Congratulations! You successfully installed Istio into your cluster. Next, deplo
 ## Lesson 2: Deploy the BookInfo app
 {: #istio_tutorial2}
 
-Deploy the BookInfo sample app's microservices to your Kubernetes cluster. These four microservices include a product web page, book details, reviews (with several versions of the review microservice), and ratings. You can find all files that are used in this example in your Istio installation's `samples/bookinfo` directory.
+Deploy the BookInfo sample app's microservices to your Kubernetes cluster.
+{:shortdesc}
+
+These four microservices include a product web page, book details, reviews (with several versions of the review microservice), and ratings. You can find all files that are used in this example in your Istio installation's `samples/bookinfo` directory.
 
 When you deploy BookInfo, Envoy sidecar proxies are injected as containers into your app microservices' pods before the microservice pods are deployed. Istio uses an extended version of the Envoy proxy to mediate all inbound and outbound traffic for all microservices in the service mesh. For more about Envoy, see the [Istio documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://istio.io/docs/concepts/what-is-istio/overview.html#envoy).
 
@@ -221,6 +224,7 @@ Congratulations! You successfully deployed the BookInfo sample app with Istio En
 {: #istio_tutorial_cleanup}
 
 If you don't want to explore more Istio functionality that is provided in [What's next?](#istio_tutorial_whatsnext), then you can clean up your Istio resources in your cluster.
+{:shortdesc}
 
 1. Delete all BookInfo services, pods, and deployments in the cluster.
 
