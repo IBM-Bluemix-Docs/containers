@@ -25,8 +25,11 @@ Configure cluster logging and monitoring to help you troubleshoot issues with yo
 ## Configuring cluster logging
 {: #logging}
 
-You can send logs to a specific location for processing or long-term storage. On a Kubernetes cluster in {{site.data.keyword.containershort_notm}}, you can enable log forwarding for your cluster and choose where your logs are forwarded. **Note**: Log forwarding is supported only for standard clusters.
+You can send logs to a specific location for processing or long-term storage. On a Kubernetes cluster in {{site.data.keyword.containershort_notm}}, you can enable log forwarding for your cluster and choose where your logs are forwarded. 
 {:shortdesc}
+
+**Note**: Log forwarding is supported only for standard clusters.
+
 
 You can forward logs for log sources such as containers, applications, worker nodes, Kubernetes clusters, and Ingress application load balancers. Review the following table for information about each log source.
 
@@ -42,8 +45,10 @@ You can forward logs for log sources such as containers, applications, worker no
 ## Enabling log forwarding
 {: #log_sources_enable}
 
-You can forward logs to {{site.data.keyword.loganalysislong_notm}} or to an external syslog server. If you want to forward logs from one log source to both log collector servers, then you must create two logging configurations. **Note**: To forward logs for applications, see [Enabling log forwarding for applications](#apps_enable).
+You can forward logs to {{site.data.keyword.loganalysislong_notm}} or to an external syslog server. To forward logs from one log source to both log collector servers, create two logging configurations. 
 {:shortdesc}
+
+**Note**: To forward logs for applications, see [Enabling log forwarding for applications](#apps_enable).
 
 Before you begin:
 
@@ -188,7 +193,10 @@ To enable log forwarding for a container, worker node, Kubernetes system compone
 ### Enabling log forwarding for applications
 {: #apps_enable}
 
-Logs from applications must be constrained to a specific directory on the host node. You can do this by mounting a host path volume to your containers with a mount path. This mount path serves as the directory on your containers where application logs are sent. The predefined host path directory, `/var/log/apps`, is automatically created when you create the volume mount.
+Logs from applications must be constrained to a specific directory on the host node. You can do this by mounting a host path volume to your containers with a mount path. 
+{:shortdesc}
+
+This mount path serves as the directory on your containers where application logs are sent. The predefined host path directory, `/var/log/apps`, is automatically created when you create the volume mount.
 
 Review the following aspects of application log forwarding:
 * Logs are read recursively from the /var/log/apps path. This means that you can put application logs in subdirectories of the /var/log/apps path.
@@ -344,6 +352,7 @@ To change the details of a logging configuration:
 {: #log_sources_delete}
 
 You can stop forwarding logs by deleting the logging configuration.
+{:shortdesc}
 
 Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster where the log source is located.
 
@@ -361,7 +370,10 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to you
 ## Configuring log forwarding for Kubernetes API audit logs
 {: #app_forward}
 
-Kubernetes API audit logs capture any calls to the Kubernetes API server from your cluster. To start collecting Kubernetes API audit logs, you can configure the Kubernetes API server to set up a webhook backend for your cluster. This webhook backend enables logs to be sent to a remote server. For more information about Kubernetes audit logs, see the <a href="https://kubernetes.io/docs/tasks/debug-application-cluster/audit/" target="_blank">auditing topic <img src="../icons/launch-glyph.svg" alt="External link icon"></a> in the Kubernetes documentation.
+Kubernetes API audit logs capture any calls to the Kubernetes API server from your cluster. To start collecting Kubernetes API audit logs, you can configure the Kubernetes API server to set up a webhook backend for your cluster. This webhook backend enables logs to be sent to a remote server. 
+{:shortdesc}
+
+For more information about Kubernetes audit logs, see the <a href="https://kubernetes.io/docs/tasks/debug-application-cluster/audit/" target="_blank">auditing topic <img src="../icons/launch-glyph.svg" alt="External link icon"></a> in the Kubernetes documentation.
 
 **Note**:
 * Forwarding for Kubernetes API audit logs is only supported for Kubernetes version 1.7 and newer.
@@ -446,6 +458,7 @@ To forward Kubernetes API audit logs:
 {: #audit_delete}
 
 You can stop forwarding audit logs by disabling the webhook backend configuration for the cluster's API server.
+{:shortdesc}
 
 Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster that you want to stop collecting API server audit logs from.
 
@@ -475,7 +488,10 @@ To view logs for clusters and containers, you can use the standard Kubernetes an
 ### {{site.data.keyword.loganalysislong_notm}}
 {: #view_logs_k8s}
 
-For standard clusters, logs are located in the {{site.data.keyword.Bluemix_notm}} account you were logged in to when you created the Kubernetes cluster. If you specified an {{site.data.keyword.Bluemix_notm}} space when you created the cluster or when you created the logging configuration, then logs are located in that space. Logs are monitored and forwarded outside of the container. You can access logs for a container using the Kibana dashboard. For more information about logging, see [Logging for the {{site.data.keyword.containershort_notm}}](/docs/services/CloudLogAnalysis/containers/containers_kubernetes.html#containers_kubernetes).
+For standard clusters, logs are located in the {{site.data.keyword.Bluemix_notm}} account you were logged in to when you created the Kubernetes cluster. 
+{:shortdesc}
+
+If you specified an {{site.data.keyword.Bluemix_notm}} space when you created the cluster or when you created the logging configuration, then logs are located in that space. Logs are monitored and forwarded outside of the container. You can access logs for a container using the Kibana dashboard. For more information about logging, see [Logging for the {{site.data.keyword.containershort_notm}}](/docs/services/CloudLogAnalysis/containers/containers_kubernetes.html#containers_kubernetes).
 
 **Note**: If you specified a space when you created the cluster or the logging configuration, then the account owner needs Manager, Developer, or Auditor permissions to that space to view logs. For more information about changing {{site.data.keyword.containershort_notm}} access policies and permissions, see [Managing cluster access](cs_users.html#managing). Once permissions are changed, it can take up to 24 hours for logs to start appearing.
 
@@ -490,7 +506,10 @@ For more information about viewing logs, see [Navigating to Kibana from a web br
 ### Docker logs
 {: #view_logs_docker}
 
-You can leverage the built-in Docker logging capabilities to review activities on the standard STDOUT and STDERR output streams. For more information, see [Viewing container logs for a container that runs in a Kubernetes cluster](/docs/services/CloudLogAnalysis/containers/containers_kubernetes.html#containers_kubernetes).
+You can leverage the built-in Docker logging capabilities to review activities on the standard STDOUT and STDERR output streams.
+{:shortdesc}
+
+For more information, see [Viewing container logs for a container that runs in a Kubernetes cluster](/docs/services/CloudLogAnalysis/containers/containers_kubernetes.html#containers_kubernetes).
 
 <br />
 
@@ -498,8 +517,11 @@ You can leverage the built-in Docker logging capabilities to review activities o
 ## Configuring cluster monitoring
 {: #monitoring}
 
-Metrics help you monitor the health and performance of your clusters. You can configure health monitoring for worker nodes to automatically detect and correct any workers that enter a degraded or nonoperational state. **Note**: Monitoring is supported only for standard clusters.
+Metrics help you monitor the health and performance of your clusters. You can configure health monitoring for worker nodes to automatically detect and correct any workers that enter a degraded or nonoperational state. 
 {:shortdesc}
+
+**Note**: Monitoring is supported only for standard clusters.
+
 
 ## Viewing metrics
 {: #view_metrics}
@@ -519,6 +541,8 @@ You can use the standard Kubernetes and Docker features to monitor the health of
 {: #health_tools}
 
 You can configure other tools for more monitoring capabilities.
+{:shortdesc}
+
 <dl>
 <dt>Prometheus</dt>
 <dd>Prometheus is an open source monitoring, logging, and alerting tool that was designed for Kubernetes. The tool retrieves detailed information about the cluster, worker nodes, and deployment health based on the Kubernetes logging information. For setup information, see [Integrating services with {{site.data.keyword.containershort_notm}}](cs_integrations.html#integrations).</dd>
@@ -530,7 +554,10 @@ You can configure other tools for more monitoring capabilities.
 ## Configuring health monitoring for worker nodes with Autorecovery
 {: #autorecovery}
 
-The {{site.data.keyword.containerlong_notm}} Autorecovery system can be deployed into existing clusters of Kubernetes version 1.7 or later. The Autorecovery system uses various checks to query worker node health status. If Autorecovery detects an unhealthy worker node based on the configured checks, Autorecovery triggers a corrective action like an OS reload on the worker node. Only one worker node undergoes a corrective action at a time. The worker node must successfully complete the corrective action before any other worker node undergoes a corrective action. For more information, see this [Autorecovery blog post ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/blogs/bluemix/2017/12/autorecovery-utilizes-consistent-hashing-high-availability/).
+The {{site.data.keyword.containerlong_notm}} Autorecovery system can be deployed into existing clusters of Kubernetes version 1.7 or later.
+{:shortdesc}
+
+The Autorecovery system uses various checks to query worker node health status. If Autorecovery detects an unhealthy worker node based on the configured checks, Autorecovery triggers a corrective action like an OS reload on the worker node. Only one worker node undergoes a corrective action at a time. The worker node must successfully complete the corrective action before any other worker node undergoes a corrective action. For more information, see this [Autorecovery blog post ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/blogs/bluemix/2017/12/autorecovery-utilizes-consistent-hashing-high-availability/).
 **NOTE**: Autorecovery requires at least one healthy node to function properly. Configure Autorecovery with active checks only in clusters with two or more worker nodes.
 
 Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster where you want to check worker node statuses.
