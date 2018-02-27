@@ -18,10 +18,10 @@ lastupdated: "2018-01-24"
 # Controlling traffic with network policies
 {: #network_policies}
 
-Every Kubernetes cluster is set up with a network plug-in that is called Calico. Default network policies are set up to secure the public network interface of every worker node. You can use Calico and native Kubernetes capabilities to configure more network policies for a cluster when you have unique security requirements. These network policies specify the network traffic that you want to allow or block to and from a pod in a cluster.
+Every Kubernetes cluster is set up with a network plug-in that is called Calico. Default network policies are set up to secure the public network interface of every worker node. 
 {: shortdesc}
 
-You can choose between Calico and native Kubernetes capabilities to create network policies for your cluster. You might use Kubernetes network policies to get started, but for more robust capabilities, use the Calico network policies.
+You can use Calico and native Kubernetes capabilities to configure more network policies for a cluster when you have unique security requirements. These network policies specify the network traffic that you want to allow or block to and from a pod in a cluster. You might use Kubernetes network policies to get started, but for more robust capabilities, use the Calico network policies.
 
 <ul>
   <li>[Kubernetes network policies ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/services-networking/network-policies/): Some basic options are provided, such as specifying which pods can communicate with each other. Incoming network traffic can be allowed or blocked for a protocol and port. This traffic can be filtered based on the labels and Kubernetes namespaces of the pod that is trying to connect to other pods.</br>These policies can be applied by using `kubectl` commands or the Kubernetes APIs. When these policies are applied, they are converted into Calico network policies and Calico enforces these policies.</li>
@@ -39,7 +39,7 @@ These policies are applied by using `calicoctl` commands. Calico enforces these 
 ## Default policy configuration
 {: #default_policy}
 
-When a cluster is created, default network policies are automatically set up for the public network interface of each worker node to limit incoming traffic for a worker node from the public internet. These policies do not affect pod to pod traffic and are set up to allow access to the Kubernetes nodeport, load balancer, and Ingress services.
+When a cluster is created, default network policies are set for the public network interface of each worker node to limit incoming traffic from the public internet. These policies don't affect pod to pod traffic and allow access to the Kubernetes nodeport, load balancer, and Ingress services.
 {:shortdesc}
 
 Default policies are not applied to pods directly; they are applied to the public network interface of a worker node by using a Calico host endpoint. When a host endpoint is created in Calico, all traffic to and from that worker node's network interface is blocked, unless that traffic is allowed by a policy.
@@ -321,7 +321,7 @@ To add network policies:
 ## Block incoming traffic to LoadBalancer or NodePort services.
 {: #block_ingress}
 
-By default, Kubernetes `NodePort` and `LoadBalancer` services are designed to make your app available on all public and private cluster interfaces. However, you can block incoming traffic to your services based on traffic source or destination. To block traffic, create Calico `preDNAT` network policies.
+By default, Kubernetes `NodePort` and `LoadBalancer` services are designed to make your app available on all public and private cluster interfaces. However, you can block incoming traffic to your services based on traffic source or destination. 
 {:shortdesc}
 
 A Kubernetes LoadBalancer service is also a NodePort service. A LoadBalancer service makes your app available over the load balancer IP address and port and makes your app available over the service's node port(s). Node ports are accessible on every IP address (public and private) for every node within the cluster.
