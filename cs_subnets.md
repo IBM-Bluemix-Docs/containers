@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-16"
+lastupdated: "2018-02-27"
 
 ---
 
@@ -32,6 +32,7 @@ When you create a standard cluster, {{site.data.keyword.containershort_notm}} au
 {: #request}
 
 You can add stable, portable public or private IPs to the cluster by assigning subnets to the cluster.
+{:shortdesc}
 
 **Note:** When you make a subnet available to a cluster, IP addresses of this subnet are used for cluster networking purposes. To avoid IP address conflicts, make sure that you use a subnet with one cluster only. Do not use a subnet for multiple clusters or for other purposes outside of {{site.data.keyword.containershort_notm}} at the same time.
 
@@ -84,6 +85,7 @@ To create a subnet in an IBM Cloud infrastructure (SoftLayer) account and make i
 {: #custom}
 
 You can add existing portable public or private subnets to your Kubernetes cluster.
+{:shortdesc}
 
 Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
 
@@ -174,7 +176,8 @@ If you have an existing subnet in your IBM Cloud infrastructure (SoftLayer) port
 ## Adding user-managed subnets and IP addresses to Kubernetes clusters
 {: #user_managed}
 
-Provide your own subnet from an on-premises network that you want {{site.data.keyword.containershort_notm}} to access. Then, you can add private IP addresses from that subnet to load balancer services in your Kubernetes cluster.
+Provide a subnet from an on-premises network that you want {{site.data.keyword.containershort_notm}} to access. Then, you can add private IP addresses from that subnet to load balancer services in your Kubernetes cluster.
+{:shortdesc}
 
 Requirements:
 - User-managed subnets can be added to private VLANs only.
@@ -239,6 +242,7 @@ Before you begin:
 {: #manage}
 
 Review the following options for listing available public IP addresses, freeing up used IP addresses, and routing between multiple subnets on the same VLAN.
+{:shortdesc}
 
 ### Viewing available portable public IP addresses
 {: #review_ip}
@@ -302,6 +306,7 @@ Before you begin, [set the context for the cluster you want to use.](cs_cli_inst
 {: #free}
 
 You can free up a used portable IP address by deleting the load balancer service that is using the portable IP address.
+{:shortdesc}
 
 Before you begin, [set the context for the cluster you want to use.](cs_cli_install.html#cs_cli_configure)
 
@@ -322,6 +327,9 @@ Before you begin, [set the context for the cluster you want to use.](cs_cli_inst
 ### Enabling routing between subnets on the same VLAN
 {: #vlan-spanning}
 
-When you create a cluster, a subnet ending in `/26` is provisioned in the same VLAN that the cluster is on. This primary subnet can hold up to 62 worker nodes. This 62 worker node limit might be exceeded by a large cluster or by several smaller clusters in a single region that are on the same VLAN. When the 62 worker node limit is reached, a second primary subnet in the same VLAN is ordered.
+When you create a cluster, a subnet ending in `/26` is provisioned in the same VLAN that the cluster is on. This primary subnet can hold up to 62 worker nodes.
+{:shortdesc}
+
+This 62 worker node limit might be exceeded by a large cluster or by several smaller clusters in a single region that are on the same VLAN. When the 62 worker node limit is reached, a second primary subnet in the same VLAN is ordered.
 
 To route between subnets on the same VLAN, you must turn on VLAN spanning. For instructions, see [Enable or disable VLAN spanning](/docs/infrastructure/vlans/vlan-spanning.html#enable-or-disable-vlan-spanning).

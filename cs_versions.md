@@ -37,7 +37,7 @@ kubectl version  --short | grep -i server
 Example output:
 
 ```
-Server Version: 1.8.6
+Server Version: 1.8.8
 ```
 {: screen}
 

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-22"
+lastupdated: "2018-02-27"
 
 ---
 
@@ -222,7 +222,7 @@ Review common error messages and learn how to resolve them.
       </tr>
       <tr>
   <td>Cannot create IMS portal token, as no IMS account is linked to the selected BSS account</br></br>Provided user not found or active</br></br>SoftLayer_Exception_User_Customer_InvalidUserStatus: User account is currently cancel_pending.</td>
-  <td>The owner of the api key that is used to access the IBM Cloud infrastructure (SoftLayer) portolio does not have the required permissions to perform the action, or is pending deletion from the {{site.data.keyword.Bluemix_notm}} account. <ol><li>If you have access to multiple accounts, make sure that you are logged in to the account where you want to work with {{site.data.keyword.containerlong_notm}}. </li><li>Run <code>bx cs api-key-info</code> to view the current api key owner that is used to access the IBM Cloud infrastructure (SoftLayer) portolio. </li><li>Run <code>bx account list</code> to view the owner of the {{site.data.keyword.Bluemix_notm}} account that you currently use. </li><li>Contact the owner of the {{site.data.keyword.Bluemix_notm}} account and report that the api key owner that you retrieved earlier has insufficient permissions in IBM Cloud infrastructure (SoftLayer) or might be pending to be deleted. Review the [required permissions in IBM Cloud infrastructure (SoftLayer)](cs_users.html#managing) to perform the action that you were trying to complete. </li><li>After the account owner updated the permissions, repeat the action that previously failed. </li></ol></td>
+  <td>The owner of the API key that is used to access the IBM Cloud infrastructure (SoftLayer) portolio does not have the required permissions to perform the action, or is pending deletion from the {{site.data.keyword.Bluemix_notm}} account. <ol><li>If you have access to multiple accounts, make sure that you are logged in to the account where you want to work with {{site.data.keyword.containerlong_notm}}. </li><li>Run <code>bx cs api-key-info</code> to view the current API key owner that is used to access the IBM Cloud infrastructure (SoftLayer) portolio. </li><li>Run <code>bx account list</code> to view the owner of the {{site.data.keyword.Bluemix_notm}} account that you currently use. </li><li>Contact the owner of the {{site.data.keyword.Bluemix_notm}} account and report that the API key owner that you retrieved earlier has insufficient permissions in IBM Cloud infrastructure (SoftLayer) or might be pending to be deleted. Review the [required permissions in IBM Cloud infrastructure (SoftLayer)](cs_users.html#managing) to perform the action that you were trying to complete. </li><li>After the account owner updated the permissions, repeat the action that previously failed. </li></ol></td>
   </tr>
     </tbody>
   </table>
@@ -699,6 +699,8 @@ Delete the `kube-dashboard` pod to force a restart. The pod is re-created with R
   {: pre}
 
 <br />
+
+
 
 
 ## Cannot connect to an app via a load balancer service
