@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-19"
+lastupdated: "2018-02-27"
 
 ---
 
@@ -30,8 +30,11 @@ To connect your worker nodes and apps to an on-premises data center, you can con
 ## Setting up VPN connectivity with the strongSwan IPSec VPN service Helm chart
 {: #vpn-setup}
 
-Use a Helm chart to configure and deploy the strongSwan IPSec VPN service inside of a Kubernetes pod. All VPN traffic is then routed through this pod. For more information about the Helm commands that are used to set up the strongSwan chart, see the <a href="https://docs.helm.sh/helm/" target="_blank">Helm documentation <img src="../icons/launch-glyph.svg" alt="External link icon"></a>.
+Use a Helm chart to configure and deploy the strongSwan IPSec VPN service inside of a Kubernetes pod. All VPN traffic is then routed through this pod.
 {:shortdesc}
+
+For more information about the Helm commands that are used to set up the strongSwan chart, see the <a href="https://docs.helm.sh/helm/" target="_blank">Helm documentation <img src="../icons/launch-glyph.svg" alt="External link icon"></a>.
+
 
 ### Configure the strongSwan Helm chart
 {: #vpn_configure}
@@ -153,6 +156,7 @@ To configure the Helm chart:
 {: #vpn_test}
 
 After you have deployed your Helm chart, test the VPN connectivity.
+{:shortdesc}
 
 1. If the VPN on the on-premises gateway is not active, start the VPN.
 
@@ -293,6 +297,9 @@ After you have deployed your Helm chart, test the VPN connectivity.
 ## Upgrading the strongSwan Helm chart
 {: #vpn_upgrade}
 
+Make sure your strongSwan Helm chart is up to date by upgrading it.
+{:shortdesc}
+
 To upgrade your strongSwan Helm chart to the latest version:
 
   ```
@@ -304,7 +311,10 @@ To upgrade your strongSwan Helm chart to the latest version:
 ### Upgrading from version 1.0.0
 {: #vpn_upgrade_1.0.0}
 
-Due to some of the settings that are used in the version 1.0.0 Helm chart, it is not possible to use `helm upgrade` to update from 1.0.0 to the latest version. To upgrade from version 1.0.0, you must delete the 1.0.0 chart and install the latest version:
+Due to some of the settings that are used in the version 1.0.0 Helm chart, it is not possible to use `helm upgrade` to update from 1.0.0 to the latest version.
+{:shortdesc}
+
+To upgrade from version 1.0.0, you must delete the 1.0.0 chart and install the latest version:
 
 1. Delete the 1.0.0 Helm chart.
 
@@ -365,6 +375,7 @@ Additionally, certain `ipsec.conf` timeout settings that were hardcoded in 1.0.0
 {: vpn_disable}
 
 You can disable the VPN connection by deleting the Helm chart.
+{:shortdesc}
 
   ```
   helm delete --purge <release_name>
