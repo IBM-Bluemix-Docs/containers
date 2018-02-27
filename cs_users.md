@@ -20,7 +20,7 @@ lastupdated: "2018-02-15"
 # Assigning user access to clusters
 {: #users}
 
-You can grant access to a cluster for other users in your organization to ensure that only authorized users can work with the cluster and deploy apps to the cluster.
+You can grant access to a cluster to ensure that only authorized users can work with the cluster and deploy apps to the cluster.
 {:shortdesc}
 
 
@@ -63,7 +63,10 @@ Every user that works with {{site.data.keyword.containershort_notm}} must be ass
 ## Access policies and permissions
 {: #access_policies}
 
-Review the access policies and permissions that you can grant to users in your {{site.data.keyword.Bluemix_notm}} account. The operator and editor roles have separate permissions. If you want a user to, for example, add worker nodes and bind services, then you must assign the user both the operator and editor roles. For more details on corresponding infrastructure access policies, see [Customizing infrastructure permissions for a user](#infra_access).<br/><br/>If you change a user's access policy, {{site.data.keyword.containershort_notm}} cleans up the RBAC policies associated with the change in your cluster for you. </br></br>**Note:** When you downgrade permissions, for example you want to assign viewer access to a former cluster admin, you must wait a few minutes for the downgrade to complete.
+Review the access policies and permissions that you can grant to users in your {{site.data.keyword.Bluemix_notm}} account.
+{:shortdesc}
+
+The operator and editor roles have separate permissions. If you want a user to, for example, add worker nodes and bind services, then you must assign the user both the operator and editor roles. For more details on corresponding infrastructure access policies, see [Customizing infrastructure permissions for a user](#infra_access).<br/><br/>If you change a user's access policy, {{site.data.keyword.containershort_notm}} cleans up the RBAC policies associated with the change in your cluster for you. </br></br>**Note:** When you downgrade permissions, for example you want to assign viewer access to a former cluster admin, you must wait a few minutes for the downgrade to complete.
 
 |{{site.data.keyword.containershort_notm}} access policy|Cluster management permissions|Kubernetes resource permissions|
 |-------------|------------------------------|-------------------------------|
@@ -83,7 +86,8 @@ Review the access policies and permissions that you can grant to users in your {
 ## Adding users to an {{site.data.keyword.Bluemix_notm}} account
 {: #add_users}
 
-You can add additional users to an {{site.data.keyword.Bluemix_notm}} account to grant access to your clusters.
+You can add users to an {{site.data.keyword.Bluemix_notm}} account to grant access to your clusters.
+{:shortdesc}
 
 Before you begin, verify that you have been assigned the Manager Cloud Foundry role for an {{site.data.keyword.Bluemix_notm}} account.
 
@@ -108,7 +112,7 @@ Before you begin, verify that you have been assigned the Manager Cloud Foundry r
 ## Customizing infrastructure permissions for a user
 {: #infra_access}
 
-When you set infrastructure policies in Identity and Access Management, a user is given permissions associated with a role. To customize those permissions, you must log in to IBM Cloud infrastructure (SoftLayer) and adjust the permissions there.
+When you set infrastructure policies in Identity and Access Management, a user is given permissions that are associated with a role. To customize those permissions, you must log in to IBM Cloud infrastructure (SoftLayer) and adjust the permissions there.
 {: #view_access}
 
 For example, **Basic Users** can reboot a worker node, but they cannot reload a worker node. Without giving that person **Super User** permissions, you can adjust the IBM Cloud infrastructure (SoftLayer) permissions and add the permission to run a reload command.
