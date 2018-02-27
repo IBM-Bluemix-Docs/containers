@@ -22,10 +22,12 @@ lastupdated: "2018-02-22"
 ## Updating the Kubernetes master
 {: #master}
 
-Periodically, Kubernetes releases updates. This could be a [major, minor, or patch update](cs_versions.html#version_types). Updates can affect the Kubernetes API server version or other components in your Kubernetes master. Depending on the type of update, you could be responsible for updating the Kubernetes master components. You are always responsible for keeping your worker nodes up to date. When making updates, the Kubernetes master is updated before your worker nodes.
+Periodically, Kubernetes releases [major, minor, or patch updates](cs_versions.html#version_types). Depending on the type of update, you could be responsible for updating the Kubernetes master components.
 {:shortdesc}
 
-By default, we limit your ability to update the Kubernetes API server in your Kubernetes master more than two minor versions ahead of your current version. For example, if your current Kubernetes API server version is 1.5 and you want to update to 1.8, you must first update to 1.7. You can force the update to occur, but updating more than two minor versions might cause unexpected results. If your cluster is running an unsupported Kubernetes version, you might have to force the update.
+Updates can affect the Kubernetes API server version or other components in your Kubernetes master.  You are always responsible for keeping your worker nodes up to date. When making updates, the Kubernetes master is updated before the worker nodes.
+
+By default, your ability to update the Kubernetes API server is limited in your Kubernetes master more than two minor versions ahead of your current version. For example, if your current Kubernetes API server version is 1.5 and you want to update to 1.8, you must first update to 1.7. You can force the update to occur, but updating more than two minor versions might cause unexpected results. If your cluster is running an unsupported Kubernetes version, you might have to force the update.
 
 The following diagram shows the process that you can take to update your master.
 
@@ -49,8 +51,10 @@ When the Kubernetes API server update is complete, you can update your worker no
 ## Updating worker nodes
 {: #worker_node}
 
-So, you received a notification to update your worker nodes. What does that mean? Your data is stored inside of the pods within your worker nodes. As security updates and patches are put in place for the Kubernetes API server and other Kubernetes master components, you need to be sure that your worker nodes remain in sync. The worker node Kubernetes version cannot be higher than the Kubernetes API server version that runs in your Kubernetes master.
+You received a notification to update your worker nodes. What does that mean? As security updates and patches are put in place for the Kubernetes API server and other Kubernetes master components, you must be sure that your worker nodes remain in sync. 
 {: shortdesc}
+
+The worker node Kubernetes version cannot be higher than the Kubernetes API server version that runs in your Kubernetes master.
 
 <ul>**Attention**:</br>
 <li>Updates to worker nodes can cause downtime for your apps and services.</li>
