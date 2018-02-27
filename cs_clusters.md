@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-21"
+lastupdated: "2018-02-23"
 
 ---
 
@@ -80,22 +80,29 @@ Increase the availability of your cluster with these techniques:
 A Kubernetes cluster consists of worker nodes and is centrally monitored and managed by the Kubernetes master. Cluster admins decide how to set up the cluster of worker nodes to ensure that cluster users have all the resources to deploy and run apps in the cluster.
 {:shortdesc}
 
+
 When you create a standard cluster, worker nodes are ordered in IBM Cloud infrastructure (SoftLayer) on your behalf and set up in {{site.data.keyword.Bluemix_notm}}. Every worker node is assigned a unique worker node ID and domain name that must not be changed after the cluster is created. Depending on the level of hardware isolation that you choose, worker nodes can be set up as shared or dedicated nodes. You can also choose whether you want worker nodes to connect to a public VLAN and private VLAN, or only to a private VLAN. Every worker node is provisioned with a specific machine type that determines the number of vCPUs, memory, and disk space that are available to the containers that are deployed to the worker node. Kubernetes limits the maximum number of worker nodes that you can have in a cluster. Review [worker node and pod quotas ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/admin/cluster-large/) for more information.
+
+
+
 
 
 ### Hardware for worker nodes
 {: #shared_dedicated_node}
 
+
 Every worker node is set up as a virtual machine on physical hardware. When you create a standard cluster in {{site.data.keyword.Bluemix_notm}}, you must choose whether you want the underlying hardware to be shared by multiple {{site.data.keyword.IBM_notm}} customers (multi tenancy) or to be dedicated to you only (single tenancy).
 {:shortdesc}
 
-In a multi-tenant set up, physical resources, such as CPU and memory, are shared across all virtual machines that are deployed to the same physical hardware. To ensure that every virtual machine can run independently, a virtual machine monitor, also referred to as the hypervisor, segments the physical resources into isolated entities and allocates them as dedicated resources to a virtual machine (hypervisor isolation).
-
-In a single-tenant set up, all physical resources are dedicated to you only. You can deploy multiple worker nodes as virtual machines on the same physical host. Similar to the multi-tenant set up, the hypervisor assures that every worker node gets its share of the available physical resources.
-
-Shared nodes are usually cheaper than dedicated nodes because the costs for the underlying hardware are shared among multiple customers. However, when you decide between shared and dedicated nodes, you might want to check with your legal department to discuss the level of infrastructure isolation and compliance that your app environment requires.
+- In a multi-tenant set up, physical resources, such as CPU and memory, are shared across all virtual machines that are deployed to the same physical hardware. To ensure that every virtual machine can run independently, a virtual machine monitor, also referred to as the hypervisor, segments the physical resources into isolated entities and allocates them as dedicated resources to a virtual machine (hypervisor isolation).
+- In a single-tenant set up, all physical resources are dedicated to you only. You can deploy multiple worker nodes as virtual machines on the same physical host. Similar to the multi-tenant set up, the hypervisor assures that every worker node gets its share of the available physical resources.
+- Shared nodes are usually cheaper than dedicated nodes because the costs for the underlying hardware are shared among multiple customers. However, when you decide between shared and dedicated nodes, you might want to check with your legal department to discuss the level of infrastructure isolation and compliance that your app environment requires.
 
 When you create a free cluster, your worker node is automatically provisioned as a shared node in the IBM Cloud infrastructure (SoftLayer) account.
+
+
+
+
 
 ### VLAN connection for worker nodes
 {: #worker_vlan_connection}
@@ -136,6 +143,8 @@ To review how much memory is used on your worker node, run [kubectl top node ![E
 A Kubernetes cluster is a set of worker nodes that are organized into a network. The purpose of the cluster is to define a set of resources, nodes, networks, and storage devices that keep applications highly available. Before you can deploy an app, you must create a cluster and set the definitions for the worker nodes in that cluster. The create options vary depending on whether you create a free or standard cluster.
 {:shortdesc}
 
+
+
 To create a cluster:
 1. In the catalog, select **Kubernetes Cluster**.
 2. Select a region in which to deploy your cluster.
@@ -152,6 +161,9 @@ To create a cluster:
     6. By default, **Encrypt local disk** is selected. If you choose to clear the check box, then the host's Docker data is not encrypted.[Learn more about the encryption](cs_secure.html#encrypted_disks).
 4. Click **Create cluster**. You can see the progress of the worker node deployment in the **Worker nodes** tab. When the deploy is done, you can see that your cluster is ready in the **Overview** tab.
     **Note:** Every worker node is assigned a unique worker node ID and domain name that must not be manually changed after the cluster is created. Changing the ID or domain name prevents the Kubernetes master from managing your cluster.
+
+
+
 
 
 **What's next?**
@@ -175,7 +187,9 @@ A cluster is a set of worker nodes that are organized into a network. The purpos
 Before you begin, [make sure you have the minimum required permissions in IBM Cloud infrastructure (SoftLayer) to provision a standard cluster](cs_users.html#infra_access).
 
 To create a cluster:
+
 1.  Install the {{site.data.keyword.Bluemix_notm}} CLI and the [{{site.data.keyword.containershort_notm}} plug-in](cs_cli_install.html#cs_cli_install).
+
 2.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your {{site.data.keyword.Bluemix_notm}} credentials when prompted.
 
     ```
@@ -190,6 +204,7 @@ To create a cluster:
 4.  If you want to create or access Kubernetes clusters in a region other than the {{site.data.keyword.Bluemix_notm}} region that you selected earlier, run `bx cs region-set`.
 
 6.  Create a cluster.
+
     1.  **Standard clusters**: Review the locations that are available. The locations that are shown depend on the {{site.data.keyword.containershort_notm}} region that you are logged in.
 
         ```
@@ -199,25 +214,9 @@ To create a cluster:
 
         Your CLI output matches the [locations for the container region](cs_regions.html#locations).
 
-    2.  **Standard clusters**: Choose a location and review the machine types available in that location. The machine type specifies the virtual compute resources that are available to each worker node.
+    2.  **Standard clusters**: Choose a location and review the machine types available in that location. The machine type specifies the virtualcompute hosts that are available to each worker node.
 
-        ```
-        bx cs machine-types <location>
-        ```
-        {: pre}
-
-        ```
-        Getting machine types list...
-        OK
-        Machine Types
-        Name         Cores   Memory   Network Speed   OS             Storage   Server Type
-        u2c.2x4      2       4GB      1000Mbps        UBUNTU_16_64   100GB     virtual
-        b2c.4x16     4       16GB     1000Mbps        UBUNTU_16_64   100GB     virtual
-        b2c.16x64    16      64GB     1000Mbps        UBUNTU_16_64   100GB     virtual
-        b2c.32x128   32      128GB    1000Mbps        UBUNTU_16_64   100GB     virtual
-        b2c.56x242   56      242GB    1000Mbps        UBUNTU_16_64   100GB     virtual
-        ```
-        {: screen}
+        <p><pre class="pre">bx cs machine-types &lt;location&gt;</pre></p>
 
     3.  **Standard clusters**: Check to see if a public and private VLAN already exists in the IBM Cloud infrastructure (SoftLayer) for this account.
 
@@ -227,10 +226,10 @@ To create a cluster:
         {: pre}
 
         ```
-        ID        Name                Number   Type      Router
+        ID        Name   Number   Type      Router
         1519999   vlan   1355     private   bcr02a.dal10
         1519898   vlan   1357     private   bcr02a.dal10
-        1518787   vlan   1252     public   fcr02a.dal10
+        1518787   vlan   1252     public    fcr02a.dal10
         1518888   vlan   1254     public    fcr02a.dal10
         ```
         {: screen}
@@ -269,7 +268,7 @@ To create a cluster:
         </tr>
         <tr>
         <td><code>--machine-type <em>&lt;machine_type&gt;</em></code></td>
-        <td>**Standard clusters**: Choose a machine type. The machine type specifies the virtual compute resources that are available to each worker node. Review [Comparison of free and standard clusters for {{site.data.keyword.containershort_notm}}](cs_why.html#cluster_types) for more information. For free clusters, you do not have to define the machine type.</td>
+        <td>**Standard clusters**: Choose a machine type. You can deploy your worker nodes as virtual machines on shared or dedicated hardware, or as physical machines on bare metal. Available physical and virtual machines types vary by the location in which you deploy the cluster. For more information, see the documentation for the `bx cs machine-type` [command](cs_cli_reference.html#cs_machine_types). For free clusters, you do not have to define the machine type.</td>
         </tr>
         <tr>
         <td><code>--hardware <em>&lt;shared_or_dedicated&gt;</em></code></td>
@@ -312,7 +311,7 @@ To create a cluster:
     ```
     {: pre}
 
-    **Note:** It can take up to 15 minutes for the worker node machines to be ordered, and for the cluster to be set up and provisioned in your account.
+    **Note:** For virtual machines, it can take a few minutes for the worker node machines to be ordered, and for the cluster to be set up and provisioned in your account. 
 
     When the provisioning of your cluster is completed, the status of your cluster changes to **deployed**.
 
