@@ -254,14 +254,14 @@ To use the service in a pod that is deployed in the cluster, cluster users can a
 ## Adding services to apps
 {: #adding_app}
 
-Encrypted Kubernetes secrets are used to store {{site.data.keyword.Bluemix_notm}} service details and credentials and allow secure communication between the service and the cluster. As the cluster user, you can access this secret by mounting it as a volume to a pod.
+Encrypted Kubernetes secrets are used to store {{site.data.keyword.Bluemix_notm}} service details and credentials and allow secure communication between the service and the cluster.
 {:shortdesc}
 
-Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster. Make sure that the {{site.data.keyword.Bluemix_notm}} service that you want to use in your app was [added to the cluster](cs_integrations.html#adding_cluster) by the cluster admin.
-
-Kubernetes secrets are a secure way to store confidential information, such as user names, passwords, or keys. Rather than exposing confidential information via environment variables or directly in the Dockerfile, secrets must be mounted as a secret volume to a pod in order to be accessible by a running container in a pod.
+Kubernetes secrets are a secure way to store confidential information, such as user names, passwords, or keys. Rather than exposing confidential information via environment variables or directly in the Dockerfile, cluster users can mount secrets to a pod. Then, those secrets can be accessed by a running container in a pod.
 
 When you mount a secret volume to your pod, a file named binding is stored in the volume mount directory that includes all information and credentials that you need to access the {{site.data.keyword.Bluemix_notm}} service.
+
+Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster. Make sure that the {{site.data.keyword.Bluemix_notm}} service that you want to use in your app was [added to the cluster](cs_integrations.html#adding_cluster) by the cluster admin.
 
 1.  List available secrets in your cluster namespace.
 
@@ -448,7 +448,7 @@ Learn more about how you can [increase deployment velocity with Kubernetes Helm 
 ## Visualizing Kubernetes cluster resources
 {: #weavescope}
 
-Weave Scope provides a visual diagram of your resources within a Kubernetes cluster, including services, pods, containers, processes, nodes, and more. Weave Scope provides interactive metrics for CPU and memory and also provides tools to tail and exec into a container.
+Weave Scope provides a visual diagram of your resources within a Kubernetes cluster, including services, pods, containers, and more. Weave Scope provides interactive metrics for CPU and memory and tools to tail and exec into a container.
 {:shortdesc}
 
 Before you begin:

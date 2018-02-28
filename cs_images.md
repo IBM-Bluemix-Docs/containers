@@ -19,15 +19,21 @@ lastupdated: "2018-02-14"
 # Building containers from images
 {: #images}
 
-A Docker image is the basis for every container that you create. An image is created from a Dockerfile, which is a file that contains instructions to build the image. A Dockerfile might reference build artifacts in its instructions that are stored separately, such as an app, the app's configuration, and its dependencies.
+A Docker image is the basis for every container that you create. 
 {:shortdesc}
+
+An image is created from a Dockerfile, which is a file that contains instructions to build the image. A Dockerfile might reference build artifacts in its instructions that are stored separately, such as an app, the app's configuration, and its dependencies.
+
 
 
 ## Planning image registries
 {: #planning}
 
-Images are typically stored in a registry that can either be accessible by the public (public registry) or set up with limited access for a small group of users (private registry). Public registries, such as Docker Hub, can be used to get started with Docker and Kubernetes to create your first containerized app in a cluster. But when it comes to enterprise applications, use a private registry, like the one provided in {{site.data.keyword.registryshort_notm}} to protect your images from being used and changed by unauthorized users. Private registries must be set up by the cluster admin to ensure that the credentials to access the private registry are available to the cluster users.
+Images are typically stored in a registry that can either be accessible by the public (public registry) or set up with limited access for a small group of users (private registry). 
 {:shortdesc}
+
+Public registries, such as Docker Hub, can be used to get started with Docker and Kubernetes to create your first containerized app in a cluster. But when it comes to enterprise applications, use a private registry, like the one provided in {{site.data.keyword.registryshort_notm}} to protect your images from being used and changed by unauthorized users. Private registries must be set up by the cluster admin to ensure that the credentials to access the private registry are available to the cluster users.
+
 
 You can use multiple registries with {{site.data.keyword.containershort_notm}} to deploy apps to your cluster.
 
@@ -321,7 +327,7 @@ Create a deployment configuration file.
 ## Accessing images that are stored in other private registries
 {: #private_images}
 
-If you already have a private registry that you want to use, you must store the registry credentials in a Kubernetes imagePullSecret and reference this secret in your configuration file.
+If you already have a private registry to use, you must store the registry credentials in a Kubernetes imagePullSecret and reference this secret in your configuration file.
 {:shortdesc}
 
 Before you begin:

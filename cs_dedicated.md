@@ -55,8 +55,11 @@ The most significant differences between {{site.data.keyword.Bluemix_notm}} publ
 ### Service architecture
 {: #dedicated_ov_architecture}
 
-Each worker node is set up with an {{site.data.keyword.IBM_notm}}-managed Docker Engine, separate compute resources, networking, and volume service. Built-in security features provide isolation, resource management capabilities, and worker node security compliance. The worker node communicates with the master by using secure TLS certificates and openVPN connection.
+Each worker node is set up with an {{site.data.keyword.IBM_notm}}-managed Docker Engine, separate compute resources, networking, and volume service. 
 {:shortdesc}
+
+Built-in security features provide isolation, resource management capabilities, and worker node security compliance. The worker node communicates with the master by using secure TLS certificates and openVPN connection.
+
 
 *Kubernetes architecture and networking in the {{site.data.keyword.Bluemix_dedicated_notm}}*
 
@@ -68,7 +71,8 @@ Each worker node is set up with an {{site.data.keyword.IBM_notm}}-managed Docker
 ## Setting up {{site.data.keyword.containershort_notm}} on Dedicated
 {: #dedicated_setup}
 
-Each {{site.data.keyword.Bluemix_dedicated_notm}} environment has a public, client-owned, corporate account in {{site.data.keyword.Bluemix_notm}}. In order for users in the Dedicated environment to create clusters, the administrator must add the users to this public corporate account for the Dedicated environment.
+Each {{site.data.keyword.Bluemix_dedicated_notm}} environment has a public, client-owned, corporate account in {{site.data.keyword.Bluemix_notm}}. For users in the Dedicated environment to create clusters, the administrator must add the users to a public corporate account.
+{:shortdesc}
 
 Before you begin:
   * [Set up an {{site.data.keyword.Bluemix_dedicated_notm}} environment](/docs/dedicated/index.html#setupdedicated).
