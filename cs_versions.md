@@ -59,14 +59,14 @@ By default, you cannot update a Kubernetes master more than two minor versions a
 
 The following information summarizes updates that are likely to have impact on deployed apps when you update a cluster to a new version from the previous version. Review the [Kubernetes changelog ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG.md) for a complete list of changes in Kubernetes versions.
 
-For more information on the updating process, see [Updating clusters](cs_cluster_update.html#master) and [Updating worker nodes](cs_cluster_update.html#worker_node).
+For more information about the updating process, see [Updating clusters](cs_cluster_update.html#master) and [Updating worker nodes](cs_cluster_update.html#worker_node).
 
 ## Version 1.9
 {: #cs_v19}
 
 <p><img src="images/certified_kubernetes_1x9.png" style="width:62px; height: 100px; border-style: none; padding-right: 10px;" height="100" width="63" align="left" alt="This badge indicates Kubernetes version 1.9 certification for IBM Cloud Container Service."/> {{site.data.keyword.containerlong_notm}} is a Certified Kubernetes product for version 1.9 under the CNCF Kubernetes Software Conformance Certification program. _Kubernetes® is a registered trademark of The Linux Foundation in the United States and other countries, and is used pursuant to a license from The Linux Foundation._</p>
 
-Review changes you might need to make when updating from the previous Kubernetes version to 1.9.
+Review changes that you might need to make when you are updating from the previous Kubernetes version to 1.9.
 
 <br/>
 
@@ -112,7 +112,7 @@ Previously, the operation failed and you saw the error message `xxx is not found
 </tr>
 <tr>
 <td>Kubernetes dashboard permissions</td>
-<td>Users are now required to log in to the Kubernetes dashboard with their credentials to view cluster resources. The default Kubernetes dashboard `ClusterRoleBinding` RBAC authorization has been removed. For instructions, see [Launching the Kubernetes dashboard](cs_app.html#cli_dashboard).</td>
+<td>Users are required to log in to the Kubernetes dashboard with their credentials to view cluster resources. The default Kubernetes dashboard `ClusterRoleBinding` RBAC authorization is removed. For instructions, see [Launching the Kubernetes dashboard](cs_app.html#cli_dashboard).</td>
 </tr>
 <tr>
 <td>RBAC for `default` `ServiceAccount`</td>
@@ -152,8 +152,8 @@ Previously, the operation failed and you saw the error message `xxx is not found
 </tr>
 <tr>
 <td>Taints and tolerations</td>
-<td>The `node.alpha.kubernetes.io/notReady` and `node.alpha.kubernetes.io/unreachable` taints have been changed to `node.kubernetes.io/not-ready` and `node.kubernetes.io/unreachable` respectively.<br>
-Although the taints are updated automatically, you must manually update the tolerations for these taints. For each namespace except `ibm-system` and `kube-system`, determine if you need to change tolerations:<br>
+<td>The `node.alpha.kubernetes.io/notReady` and `node.alpha.kubernetes.io/unreachable` taints were changed to `node.kubernetes.io/not-ready` and `node.kubernetes.io/unreachable` respectively.<br>
+Although the taints are updated automatically, you must manually update the tolerations for these taints. For each namespace except `ibm-system` and `kube-system`, determine whether you need to change tolerations:<br>
 <ul><li><code>kubectl get pods -n &lt;namespace&gt; -o yaml | grep "node.alpha.kubernetes.io/notReady" && echo "Action required"</code></li><li>
 <code>kubectl get pods -n &lt;namespace&gt; -o yaml | grep "node.alpha.kubernetes.io/unreachable" && echo "Action required"</code></li></ul><br>
 If `Action required` is returned, modify the pod tolerations accordingly.</td>
@@ -171,7 +171,7 @@ If `Action required` is returned, modify the pod tolerations accordingly.</td>
 
 <p><img src="images/certified_kubernetes_1x8.png" style="width:62px; height: 100px; border-style: none; padding-right: 10px;" height="100" width="62.5" align="left" alt="This badge indicates Kubernetes version 1.8 certification for IBM Cloud Container Service."/> {{site.data.keyword.containerlong_notm}} is a Certified Kubernetes product for version 1.8 under the CNCF Kubernetes Software Conformance Certification program. _Kubernetes® is a registered trademark of The Linux Foundation in the United States and other countries, and is used pursuant to a license from The Linux Foundation._</p>
 
-Review changes you might need to make when updating from the previous Kubernetes version to 1.8.
+Review changes that you might need to make when you are updating from the previous Kubernetes version to 1.8.
 
 <br/>
 
@@ -188,7 +188,7 @@ Review changes you might need to make when updating from the previous Kubernetes
 </thead>
 <tbody>
 <tr>
-<td colspan='2'>No changes required before you update the master</td>
+<td colspan='2'>No changes are required before you update the master</td>
 </tr>
 </tbody>
 </table>
@@ -207,7 +207,7 @@ Review changes you might need to make when updating from the previous Kubernetes
 <tbody>
 <tr>
 <td>Kubernetes dashboard login</td>
-<td>The URL for accessing the Kubernetes dashboard in version 1.8 has changed, and the login process includes a new authentication step. See [accessing the Kubernetes dashboard](cs_app.html#cli_dashboard) for more information.</td>
+<td>The URL for accessing the Kubernetes dashboard in version 1.8 changed, and the login process includes a new authentication step. See [accessing the Kubernetes dashboard](cs_app.html#cli_dashboard) for more information.</td>
 </tr>
 <tr>
 <td>Kubernetes dashboard permissions</td>
@@ -215,11 +215,11 @@ Review changes you might need to make when updating from the previous Kubernetes
 </tr>
 <tr>
 <td>`kubectl delete`</td>
-<td>The `kubectl delete` command no longer scales down workload API objects, like pods, before the object is deleted. If you require the object to scale down, use [kubectl scale ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#scale) before you delete the object.</td>
+<td>The `kubectl delete` command no longer scales down workload API objects, like pods, before the object is deleted. If you require the object to scale down, use [`kubectl scale` ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#scale) before you delete the object.</td>
 </tr>
 <tr>
 <td>`kubectl run`</td>
-<td>The `kubectl run` command must use multiple flags for `--env` instead of comma separated arguments. For example, run <code>kubectl run --env &lt;x&gt;=&lt;y&gt; --env &lt;z&gt;=&lt;a&gt;</code> and not <code>kubectl run --env &lt;x&gt;=&lt;y&gt;,&lt;z&gt;=&lt;a&gt;</code>. </td>
+<td>The `kubectl run` command must use multiple flags for `--env` instead of comma-separated arguments. For example, run <code>kubectl run --env &lt;x&gt;=&lt;y&gt; --env &lt;z&gt;=&lt;a&gt;</code> and not <code>kubectl run --env &lt;x&gt;=&lt;y&gt;,&lt;z&gt;=&lt;a&gt;</code>. </td>
 </tr>
 <tr>
 <td>`kubectl stop`</td>
@@ -270,7 +270,7 @@ Review changes you might need to make when updating from the previous Kubernetes
 
 <p><img src="images/certified_kubernetes_1x7.png" height="100" width="62.5" style="width:62px; height: 100px; border-style: none; padding-right: 10px;" align="left" alt="This badge indicates Kubernetes version 1.7 certification for IBM Cloud Container Service."/> {{site.data.keyword.containerlong_notm}} is a Certified Kubernetes product for version 1.7 under the CNCF Kubernetes Software Conformance Certification program.</p>
 
-Review changes you might need to make when updating from the previous Kubernetes version to 1.7.
+Review changes that you might need to make when you are updating from the previous Kubernetes version to 1.7.
 
 <br/>
 
@@ -321,7 +321,7 @@ Review changes you might need to make when updating from the previous Kubernetes
 </tr>
 <tr>
 <td>kubectl</td>
-<td>After the `kubectl` CLI update, these `kubectl create` commands must use multiple flags instead of comma separated arguments:<ul>
+<td>After the `kubectl` CLI update, these `kubectl create` commands must use multiple flags instead of comma-separated arguments:<ul>
  <li>`role`
  <li>`clusterrole`
  <li>`rolebinding`
