@@ -18,8 +18,11 @@ lastupdated: "2018-02-07"
 # Restricting network traffic to edge worker nodes
 {: #edge}
 
-Edge worker nodes can improve the security of your cluster by allowing fewer worker nodes to be accessed externally and by isolating the networking workload. When these worker nodes are marked for networking only, other workloads cannot consume the CPU or memory of the worker node and interfere with networking.
+Edge worker nodes can improve the security of your cluster by allowing fewer worker nodes to be accessed externally and by isolating the networking workload. 
 {:shortdesc}
+
+When these worker nodes are marked for networking only, other workloads cannot consume the CPU or memory of the worker node and interfere with networking.
+
 
 
 
@@ -27,6 +30,7 @@ Edge worker nodes can improve the security of your cluster by allowing fewer wor
 {: #edge_nodes}
 
 Add the `dedicated=edge` label to two or more worker nodes in your cluster to ensure that Ingress and load balancers are deployed to those worker nodes only.
+{:shortdesc}
 
 Before you begin:
 
@@ -81,8 +85,11 @@ You labeled worker nodes with `dedicated=edge` and redeployed all existing load 
 ## Prevent workloads from running on edge worker nodes
 {: #edge_workloads}
 
-One benefit of edge worker nodes is that they can be specified to run networking services only. Using the `dedicated=edge` toleration means that all load balancer and Ingress services are deployed to the labeled worker nodes only. However, to prevent other workloads from running on edge worker nodes and consuming worker node resources, you must use [Kubernetes taints ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/).
-{:shortdesc}
+One benefit of edge worker nodes is that they can be specified to run networking services only.
+{:shortdesc} 
+
+Using the `dedicated=edge` toleration means that all load balancer and Ingress services are deployed to the labeled worker nodes only. However, to prevent other workloads from running on edge worker nodes and consuming worker node resources, you must use [Kubernetes taints ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/).
+
 
 1. List all worker nodes with the `edge` label.
 

@@ -23,7 +23,7 @@ With VPN connectivity, you can securely connect apps in a Kubernetes cluster to 
 
 To connect your worker nodes and apps to an on-premises data center, you can configure a VPN IPSec endpoint with a strongSwan service or with a Vyatta Gateway Appliance or a Fortigate Appliance.
 
-- **strongSwan IPSec VPN Service**: You can set up a [strongSwan IPSec VPN service ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.strongswan.org/) that securely connects your Kubernetes cluster with an on-premises network. The strongSwan IPSec VPN service provides a secure end-to-end communication channel over the internet that is based on the industry-standard Internet Protocol Security (IPsec) protocol suite. To set up a secure connection between your cluster and an on-premises network, you must have an IPsec VPN gateway installed in your on-premises data center. Then you can [configure and deploy the strongSwan IPSec VPN service](#vpn-setup) in a Kubernetes pod.
+- **strongSwan IPSec VPN Service**: You can set up a [strongSwan IPSec VPN service ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.strongswan.org/) that securely connects your Kubernetes cluster with an on-premises network. The strongSwan IPSec VPN service provides a secure end-to-end communication channel over the internet that is based on the industry-standard Internet Protocol Security (IPsec) protocol suite. To set up a secure connection between your cluster and an on-premises network, you must install an IPsec VPN gateway in your on-premises data center. Then, you can [configure and deploy the strongSwan IPSec VPN service](#vpn-setup) in a Kubernetes pod.
 
 - **Vyatta Gateway Appliance or Fortigate Appliance**: If you have a larger cluster, want to access non-Kubernetes resources over the VPN, or want to access multiple clusters over a single VPN, you might choose to set up a Vyatta Gateway Appliance or Fortigate Appliance to configure an IPSec VPN endpoint. For more information, see this blog post on [Connecting a cluster to an on-premise data center ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/blogs/bluemix/2017/07/kubernetes-and-bluemix-container-based-workloads-part4/).
 
@@ -40,7 +40,7 @@ For more information about the Helm commands that are used to set up the strongS
 {: #vpn_configure}
 
 Before you begin:
-* You must have an IPsec VPN gateway installed in your on-premises data center.
+* You must install an IPsec VPN gateway in your on-premises data center.
 * Either [create a standard cluster](cs_clusters.html#clusters_cli) or [update an existing cluster to version 1.7.4 or later](cs_cluster_update.html#master).
 * The cluster must have at least one available public Load Balancer IP address. [You can check to see your available public IP addresses](cs_subnets.html#manage) or [free up a used IP address](cs_subnets.html#free).
 * [Target the Kubernetes CLI to the cluster](cs_cli_install.html#cs_cli_configure).
@@ -75,7 +75,7 @@ To configure the Helm chart:
     </tr>
     <tr>
     <td><code>loadBalancerIP</code></td>
-    <td>Add a portable public IP address from a subnet assigned to this cluster that you want to use for the strongSwan VPN service. If the VPN connection is initiated from the on-premises gateway (<code>ipsec.auto</code> is set to <code>add</code>), this property allows a persistent public IP address to be configured on the on-premises gateway for the cluster. This value is optional.</td>
+    <td>Add a portable public IP address from a subnet that is assigned to this cluster that you want to use for the strongSwan VPN service. If the VPN connection is initiated from the on-premises gateway (<code>ipsec.auto</code> is set to <code>add</code>), this property allows a persistent public IP address to be configured on the on-premises gateway for the cluster. This value is optional.</td>
     </tr>
     <tr>
     <td><code>nodeSelector</code></td>
@@ -118,7 +118,7 @@ To configure the Helm chart:
     </tr>
     <tr>
     <td><code>remote.privateIPtoPing</code></td>
-    <td>Add the private IP address in the remote subnet that will be used by the Helm test validation programs for VPN ping connectivity tests. This value is optional.</td>
+    <td>Add the private IP address in the remote subnet to be used by the Helm test validation programs for VPN ping connectivity tests. This value is optional.</td>
     </tr>
     <tr>
     <td><code>preshared.secret</code></td>
@@ -130,7 +130,7 @@ To configure the Helm chart:
 
 5. Install the Helm chart to your cluster with the updated `config.yaml` file. The updated properties are stored in a config map for your chart.
 
-    **Note**: If you have multiple VPN deployments in a single cluster, you can avoid naming conflicts and differentiate between your deployments by choosing more descriptive release names than `vpn`. To avoid the release name being automatically truncated, limit the release name to 35 characters or less.
+    **Note**: If you have multiple VPN deployments in a single cluster, you can avoid naming conflicts and differentiate between your deployments by choosing more descriptive release names than `vpn`. To avoid the truncation of the release name, limit the release name to 35 characters or less.
 
     ```
     helm install -f config.yaml --namespace=kube-system --name=vpn bluemix/strongswan
@@ -155,7 +155,7 @@ To configure the Helm chart:
 ### Test and verify the VPN connectivity
 {: #vpn_test}
 
-After you have deployed your Helm chart, test the VPN connectivity.
+After you deploy your Helm chart, test the VPN connectivity.
 {:shortdesc}
 
 1. If the VPN on the on-premises gateway is not active, start the VPN.
@@ -187,11 +187,11 @@ After you have deployed your Helm chart, test the VPN connectivity.
     **Note**:
 
     <ul>
-    <li>When you try to establish VPN connectivity with the strongSwan Helm chart, it is likely that the VPN status will not be `ESTABLISHED` the first time. You might need to check the on-premises VPN endpoint settings and change the configuration file several times before the connection is successful: <ol><li>Run `helm delete --purge <release_name>`</li><li>Fix the incorrect values in the configuration file.</li><li>Run `helm install -f config.yaml --namespace=kube-system --name=<release_name> bluemix/strongswan`</li></ol>You can also run additional checks in the next step.</li>
-    <li>If the VPN pod is in an `ERROR` state or continues to crash and restart, it might be due to parameter validation of the `ipsec.conf` settings in the chart's config map.<ol><li>Check for any validation errors in the Strongswan pod logs by running `kubectl logs -n kube-system $STRONGSWAN_POD`.</li><li>If there are validation errors, run `helm delete --purge <release_name>`<li>Fix the incorrect values in the configuration file.</li><li>Run `helm install -f config.yaml --namespace=kube-system --name=<release_name> bluemix/strongswan`</li></ol>If your cluster has a high number of worker nodes, you can also use `helm upgrade` to more quickly apply your changes instead of running `helm delete` and `helm install`.</li>
+    <li>When you try to establish VPN connectivity with the strongSwan Helm chart, it is likely that the VPN status is not `ESTABLISHED` the first time. You might need to check the on-premises VPN endpoint settings and change the configuration file several times before the connection is successful: <ol><li>Run `helm delete --purge <release_name>`</li><li>Fix the incorrect values in the configuration file.</li><li>Run `helm install -f config.yaml --namespace=kube-system --name=<release_name> bluemix/strongswan`</li></ol>You can also run additional checks in the next step.</li>
+    <li>If the VPN pod is in an `ERROR` state or continues to crash and restart, it might be due to parameter validation of the `ipsec.conf` settings in the chart's config map.<ol><li>Check for any validation errors in the Strongswan pod logs by running `kubectl logs -n kube-system $STRONGSWAN_POD`.</li><li>If validation errors exist, run `helm delete --purge <release_name>`<li>Fix the incorrect values in the configuration file.</li><li>Run `helm install -f config.yaml --namespace=kube-system --name=<release_name> bluemix/strongswan`</li></ol>If your cluster has a high number of worker nodes, you can also use `helm upgrade` to more quickly apply your changes instead of running `helm delete` and `helm install`.</li>
     </ul>
 
-4. You can further test the VPN connectivity by running the 5 Helm tests included in the strongSwan chart definition.
+4. You can further test the VPN connectivity by running the five Helm tests included in the strongSwan chart definition.
 
     ```
     helm test vpn
@@ -224,7 +224,7 @@ After you have deployed your Helm chart, test the VPN connectivity.
     </tr>
     <tr>
     <td><code>vpn-strongswan-check-state</code></td>
-    <td>Checks that the VPN connection has a status of <code>ESTABLISHED</code>. This test might fail for the following reasons:<ul><li>Differences between the values in the <code>config.yaml</code> file and the on-premises VPN endpoint settings.</li><li>If the cluster is in "listen" mode (<code>ipsec.auto</code> is set to <code>add</code>), the on-premises side has not established the connection.</li></ul></td>
+    <td>Checks that the VPN connection has a status of <code>ESTABLISHED</code>. This test might fail for the following reasons:<ul><li>Differences between the values in the <code>config.yaml</code> file and the on-premises VPN endpoint settings.</li><li>If the cluster is in "listen" mode (<code>ipsec.auto</code> is set to <code>add</code>), the connection is not established on the on-premises side.</li></ul></td>
     </tr>
     <tr>
     <td><code>vpn-strongswan-ping-remote-gw</code></td>
@@ -232,11 +232,11 @@ After you have deployed your Helm chart, test the VPN connectivity.
     </tr>
     <tr>
     <td><code>vpn-strongswan-ping-remote-ip-1</code></td>
-    <td>Pings the <code>remote.privateIPtoPing</code> private IP address of the on-premises VPN gateway from the VPN pod in the cluster. This test might fail for the following reasons:<ul><li>You did not specify a <code>remote.privateIPtoPing</code> IP address. If you intentionally did not specify an IP address, this is an acceptable failure.</li><li>You did not specify the cluster pod subnet CIDR, <code>172.30.0.0/16</code>, in the <code>local.subnet</code> list.</li></ul></td>
+    <td>Pings the <code>remote.privateIPtoPing</code> private IP address of the on-premises VPN gateway from the VPN pod in the cluster. This test might fail for the following reasons:<ul><li>You did not specify a <code>remote.privateIPtoPing</code> IP address. If you intentionally did not specify an IP address, this failure is acceptable.</li><li>You did not specify the cluster pod subnet CIDR, <code>172.30.0.0/16</code>, in the <code>local.subnet</code> list.</li></ul></td>
     </tr>
     <tr>
     <td><code>vpn-strongswan-ping-remote-ip-2</code></td>
-    <td>Pings the <code>remote.privateIPtoPing</code> private IP address of the on-premises VPN gateway from the worker node in the cluster. This test might fail for the following reasons:<ul><li>You did not specify a <code>remote.privateIPtoPing</code> IP address. If you intentionally did not specify an IP address, this is an acceptable failure.</li><li>You did not specify the cluster worker node private subnet CIDR in the <code>local.subnet</code> list.</li></ul></td>
+    <td>Pings the <code>remote.privateIPtoPing</code> private IP address of the on-premises VPN gateway from the worker node in the cluster. This test might fail for the following reasons:<ul><li>You did not specify a <code>remote.privateIPtoPing</code> IP address. If you intentionally did not specify an IP address, this failure is acceptable.</li><li>You did not specify the cluster worker node private subnet CIDR in the <code>local.subnet</code> list.</li></ul></td>
     </tr>
     </tbody></table>
 
@@ -352,21 +352,21 @@ Additionally, certain `ipsec.conf` timeout settings that were hardcoded in 1.0.0
   <tbody>
   <tr>
   <td><code>ikelifetime</code></td>
-  <td>60m</td>
+  <td>60 m</td>
   <td><code>ikelifetime</code></td>
-  <td>3h</td>
+  <td>3 h</td>
   </tr>
   <tr>
   <td><code>keylife</code></td>
-  <td>20m</td>
+  <td>20 m</td>
   <td><code>lifetime</code></td>
-  <td>1h</td>
+  <td>1 h</td>
   </tr>
   <tr>
   <td><code>rekeymargin</code></td>
-  <td>3m</td>
+  <td>3 m</td>
   <td><code>margintime</code></td>
-  <td>9m</td>
+  <td>9 m</td>
   </tr>
   </tbody></table>
 
