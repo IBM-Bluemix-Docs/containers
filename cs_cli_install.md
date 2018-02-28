@@ -143,8 +143,10 @@ For reference information about these CLIs, see the documentation for those tool
 ## Configuring the CLI to run `kubectl`
 {: #cs_cli_configure}
 
-You can use the commands that are provided with the Kubernetes CLI to manage clusters in {{site.data.keyword.Bluemix_notm}}. All `kubectl` commands that are available in Kubernetes 1.8.6 are supported for use with clusters in {{site.data.keyword.Bluemix_notm}}. After you create a cluster, set the context for your local CLI to that cluster with an environment variable. Then, you can run the Kubernetes `kubectl` commands to work with your cluster in {{site.data.keyword.Bluemix_notm}}.
+You can use the commands that are provided with the Kubernetes CLI to manage clusters in {{site.data.keyword.Bluemix_notm}}. 
 {:shortdesc}
+
+All `kubectl` commands that are available in Kubernetes 1.8.6 are supported for use with clusters in {{site.data.keyword.Bluemix_notm}}. After you create a cluster, set the context for your local CLI to that cluster with an environment variable. Then, you can run the Kubernetes `kubectl` commands to work with your cluster in {{site.data.keyword.Bluemix_notm}}.
 
 Before you can run `kubectl` commands, [install the required CLIs](#cs_cli_install) and [create a cluster](cs_clusters.html#clusters_cli).
 

@@ -61,5 +61,6 @@ Check out what container developers are interested in.
 {: #slack}
 
 You can see what others are talking about and ask your own questions in the [{{site.data.keyword.containershort_notm}} Slack. ![External link icon](../icons/launch-glyph.svg "External link icon")](https://ibm-container-service.slack.com)
+{:shortdesc}
 
 Tip: If you are not using an IBM ID for your {{site.data.keyword.Bluemix_notm}} account, [request an invitation](https://bxcs-slack-invite.mybluemix.net/) to this Slack.
