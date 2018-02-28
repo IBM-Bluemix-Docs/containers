@@ -701,6 +701,19 @@ Delete the `kube-dashboard` pod to force a restart. The pod is re-created with R
 <br />
 
 
+## Adding non-root user access to persistent storage fails
+{: #cs_storage_nonroot}
+
+{: tsSymptoms}
+After [adding non-root user access to persistent storage](cs_storage.html#nonroot) or deploying a Helm chart with a non-root user ID specified, the user cannot write to the mounted storage.
+
+{: tsCauses}
+The deployment or Helm chart configuration specifies the [security context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) for the pod's `fsGroup` (group ID) and `runAsUser` (user ID). Currently, {{site.data.keyword.containershort_notm}} does not support the `fsGroup` specification, and only supports `runAsUser` set as `0` (root permissions).
+
+{: tsResolve}
+Remove the configuration's `securityContext` fields for `fsGroup` and `runAsUser` from the image, deployment or Helm chart configuration file and redeploy. If you need to change the ownership of the mount path from `nobody`, [add non-root user access](cs_storage.html#nonroot).
+
+<br />
 
 
 ## Cannot connect to an app via a load balancer service
