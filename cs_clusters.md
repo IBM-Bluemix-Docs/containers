@@ -26,8 +26,10 @@ Design your cluster setup for maximum availability and capacity.
 ## Cluster configuration planning
 {: #planning_clusters}
 
-Use standard clusters to increase app availability. Your users are less likely to experience downtime when you distribute your setup across multiple worker nodes and clusters. Built-in capabilities, like load balancing and isolation, increase resiliency against potential failures with hosts, networks, or apps.
+Use standard clusters to increase app availability. 
 {:shortdesc}
+
+Your users are less likely to experience downtime when you distribute your setup across multiple worker nodes and clusters. Built-in capabilities, like load balancing and isolation, increase resiliency against potential failures with hosts, networks, or apps.
 
 Review these potential cluster setups that are ordered with increasing degrees of availability:
 
@@ -107,7 +109,10 @@ When you create a free cluster, your worker node is automatically provisioned as
 ### VLAN connection for worker nodes
 {: #worker_vlan_connection}
 
-When you create a cluster, every cluster is automatically connected to a VLAN from your IBM Cloud infrastructure (SoftLayer) account. A VLAN configures a group of worker nodes and pods as if they were attached to the same physical wire. The private VLAN determines the private IP address that is assigned to a worker node during cluster creation, and the public VLAN determines the public IP address that is assigned to a worker node during cluster creation.
+When you create a cluster, every cluster is automatically connected to a VLAN from your IBM Cloud infrastructure (SoftLayer) account.
+{:shortdesc}
+
+A VLAN configures a group of worker nodes and pods as if they were attached to the same physical wire. The private VLAN determines the private IP address that is assigned to a worker node during cluster creation, and the public VLAN determines the public IP address that is assigned to a worker node during cluster creation.
 
 For free clusters, the cluster's worker nodes are connected to an IBM-owned public VLAN and private VLAN by default during cluster creation. For standard clusters, you must connect your worker nodes to a private VLAN. You can either connect your worker nodes to both a public VLAN and the private VLAN, or to the private VLAN only. If you want to connect your worker nodes to a private VLAN only, you can designate the ID of an existing private VLAN during cluster creation or [create a new private VLAN](/docs/cli/reference/softlayer/index.html#sl_vlan_create). However, you must also configure an alternative solution to enable a secure connection between worker nodes and the Kubernetes master. For example, you can configure a Vyatta to pass traffic from the private VLAN worker nodes to the Kubernetes master. See "Set up a custom Vyatta to securely connect your worker nodes to the Kubernetes master" in the [IBM Cloud infrastructure (SoftLayer) documentation](https://knowledgelayer.softlayer.com/procedure/basic-configuration-vyatta) for more information.
 
@@ -140,7 +145,7 @@ To review how much memory is used on your worker node, run [kubectl top node ![E
 ## Creating clusters with the GUI
 {: #clusters_ui}
 
-A Kubernetes cluster is a set of worker nodes that are organized into a network. The purpose of the cluster is to define a set of resources, nodes, networks, and storage devices that keep applications highly available. Before you can deploy an app, you must create a cluster and set the definitions for the worker nodes in that cluster. The create options vary depending on whether you create a free or standard cluster.
+The purpose of the Kubernetes cluster is to define a set of resources, nodes, networks, and storage devices that keep apps highly available. Before you can deploy an app, you must create a cluster and set the definitions for the worker nodes in that cluster.
 {:shortdesc}
 
 
@@ -179,7 +184,7 @@ When the cluster is up and running, you can check out the following tasks:
 ## Creating clusters with the CLI
 {: #clusters_cli}
 
-A cluster is a set of worker nodes that are organized into a network. The purpose of the cluster is to define a set of resources, nodes, networks, and storage devices that keep applications highly available. Before you can deploy an app, you must create a cluster and set the definitions for the worker nodes in that cluster. The create options vary depending on whether you create a free or standard cluster.
+The purpose of the Kubernetes cluster is to define a set of resources, nodes, networks, and storage devices that keep apps highly available. Before you can deploy an app, you must create a cluster and set the definitions for the worker nodes in that cluster. 
 {:shortdesc}
 
 Before you begin, [make sure you have the minimum required permissions in IBM Cloud infrastructure (SoftLayer) to provision a standard cluster](cs_users.html#infra_access).
@@ -403,10 +408,10 @@ To create a cluster:
 ## Cluster states
 {: #states}
 
-You can view the current cluster state by running the `bx cs clusters` command and locating the **State** field. The cluster state gives you information about the availability and capacity of the cluster, and potential problems that might have occurred.
+Review the state of a Kubernetes cluster to get information about the availability and capacity of the cluster, and potential problems that might have occurred.
 {:shortdesc}
 
-To troubleshoot your cluster and worker nodes, see [Troubleshooting clusters](cs_troubleshoot.html#debug_clusters).
+You can view the current cluster state by running the `bx cs clusters` command and locating the **State** field. To troubleshoot your cluster and worker nodes, see [Troubleshooting clusters](cs_troubleshoot.html#debug_clusters).
 
 <table summary="Every table row should be read left to right, with the cluster state in column one and a description in column two.">
    <thead>
