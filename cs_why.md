@@ -90,7 +90,7 @@ Review the responsibilities that you share with IBM to manage your clusters.
 - [Leveraging the capabilities of the service and Kubernetes to ensure high availability of apps](cs_app.html#highly_available_apps)
 - [Adding or removing capacity by using the CLI to add or remove worker nodes](cs_cli_reference.html#cs_worker_add)
 - [Creating public and private VLANs in IBM Cloud infrastructure (SoftLayer) for network isolation of your cluster](/docs/infrastructure/vlans/getting-started.html#getting-started-with-vlans)
-- [Ensuring that all worker nodes have network connectivity to the Kubernetes master URL](cs_firewall.html#firewall) <p>**Note**: If a worker node has both public and private VLANs, then network connectivity is configured. If the worker node has a private VLAN only set up, then a Vyatta is required to provide network connectivity.</p>
+- [Ensuring that all worker nodes have network connectivity to the Kubernetes master URL](cs_firewall.html#firewall) <p>**Note**: If a worker node has both public and private VLANs, then network connectivity is configured. If the worker node has a private VLAN only set-up, then a Vyatta is required to provide network connectivity.</p>
 - [Updating the master kube-apiserver and worker nodes when Kubernetes major or minor version updates are available](cs_cluster_update.html#master)
 - [Recovering troubled worker nodes by running `kubectl` commands, such as `cordon` or `drain`, and by running `bx cs` commands, such as `reboot`, `reload`, or `delete`](cs_cli_reference.html#cs_worker_reboot)
 - [Adding or removing subnets in IBM Cloud infrastructure (SoftLayer) as needed](cs_subnets.html#subnets)
