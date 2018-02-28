@@ -18,7 +18,7 @@ lastupdated: "2018-02-07"
 # Restricting network traffic to edge worker nodes
 {: #edge}
 
-Edge worker nodes can improve the security of your cluster by allowing fewer worker nodes to be accessed externally and by isolating the networking workload. 
+Edge worker nodes can improve the security of your Kubernetes cluster by allowing fewer worker nodes to be accessed externally and by isolating the networking workload in {{site.data.keyword.containerlong}}. 
 {:shortdesc}
 
 When these worker nodes are marked for networking only, other workloads cannot consume the CPU or memory of the worker node and interfere with networking.

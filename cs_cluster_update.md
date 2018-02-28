@@ -19,6 +19,9 @@ lastupdated: "2018-02-22"
 # Updating clusters and worker nodes
 {: #update}
 
+You can install updates to keep your Kubernetes clusters up-to-date in {{site.data.keyword.containerlong}}.
+{:shortdesc}
+
 ## Updating the Kubernetes master
 {: #master}
 

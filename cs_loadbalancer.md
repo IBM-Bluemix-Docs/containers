@@ -19,7 +19,7 @@ lastupdated: "2018-02-06"
 # Setting up Load Balancer services
 {: #loadbalancer}
 
-Expose a port and use a portable IP address for the load balancer to access the app. Use a public IP address to make an app accessible on the internet, or a private IP address to make an app accessible on your private infrastructure network.
+Expose a port and use a portable IP address for the load balancer to access a containerized app. Use a public IP address to make an app accessible on the internet, or a private IP address to make an app accessible on your private infrastructure network in {{site.data.keyword.containerlong}}.
 {:shortdesc}
 
 

@@ -20,7 +20,7 @@ lastupdated: "2018-02-28"
 # Assigning user access to clusters
 {: #users}
 
-You can grant access to a cluster to ensure that only authorized users can work with the cluster and deploy apps to the cluster.
+You can grant access to a Kubernetes cluster to ensure that only authorized users can work with the cluster and deploy containers to the cluster in {{site.data.keyword.containerlong}}.
 {:shortdesc}
 
 

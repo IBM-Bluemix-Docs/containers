@@ -19,7 +19,7 @@ lastupdated: "2018-02-23"
 # Deploying apps in clusters
 {: #app}
 
-You can use Kubernetes techniques to deploy apps and to ensure your apps are up and running at all times. For example, you can perform rolling updates and rollbacks without downtime for your users.
+You can use Kubernetes techniques in {{site.data.keyword.containerlong}} to deploy apps in containers and ensure that those apps are up and running at all times. For example, you can perform rolling updates and rollbacks without downtime for your users.
 {:shortdesc}
 
 Learn the general steps for deploying apps by clicking an area of the following image.

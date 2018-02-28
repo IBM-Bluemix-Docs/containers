@@ -19,7 +19,7 @@ lastupdated: "2018-02-21"
 # Integrating services
 {: #integrations}
 
-You can use various external services and services in the {{site.data.keyword.Bluemix_notm}} Catalog with a standard cluster in {{site.data.keyword.containershort_notm}}.
+You can use various external services and catalog services with a standard Kubernetes cluster in {{site.data.keyword.containerlong}}.
 {:shortdesc}
 
 

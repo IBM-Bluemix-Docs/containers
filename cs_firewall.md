@@ -18,7 +18,7 @@ lastupdated: "2018-02-14"
 # Opening required ports and IP addresses in your firewall
 {: #firewall}
 
-Review these situations in which you might need to open specific ports and IP addresses in your firewalls.
+Review these situations in which you might need to open specific ports and IP addresses in your firewalls for {{site.data.keyword.containerlong}}.
 {:shortdesc}
 
 * [To run `bx` commands](#firewall_bx) from your local system when corporate network policies prevent access to public internet endpoints via proxies or firewalls.

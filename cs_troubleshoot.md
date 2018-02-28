@@ -22,7 +22,7 @@ lastupdated: "2018-02-27"
 # Troubleshooting clusters
 {: #cs_troubleshoot}
 
-As you use {{site.data.keyword.containershort_notm}}, consider these techniques for troubleshooting and getting help. You can also check the [status of the {{site.data.keyword.Bluemix_notm}} system ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/bluemix/support/#status).
+As you use {{site.data.keyword.containerlong}}, consider these techniques for troubleshooting and getting help. You can also check the [status of the {{site.data.keyword.Bluemix_notm}} system ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/bluemix/support/#status).
 {: shortdesc}
 
 You can take some general steps to ensure that your clusters are up-to-date:

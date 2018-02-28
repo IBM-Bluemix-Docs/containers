@@ -19,7 +19,7 @@ lastupdated: "2018-02-27"
 # Tutorial: Installing Istio on {{site.data.keyword.containerlong_notm}}
 {: #istio_tutorial}
 
-[Istio](https://www.ibm.com/cloud/info/istio) is an open platform to connect, secure, and manage a network of microservices, also known as a service mesh, on cloud platforms such as Kubernetes. With Istio, manage network traffic, load balance across microservices, enforce access policies, verify service identity on the service mesh, and more.
+[Istio](https://www.ibm.com/cloud/info/istio) is an open platform to connect, secure, and manage a network of microservices, also known as a service mesh, on cloud platforms such as Kubernetes in {{site.data.keyword.containerlong}}. With Istio, manage network traffic, load balance across microservices, enforce access policies, verify service identity on the service mesh, and more.
 {:shortdesc}
 
 In this tutorial, you can see how to install Istio alongside four microservices for a simple mock bookstore app called BookInfo. The microservices include a product web page, book details, reviews, and ratings. When you deploy BookInfo's microservices into an {{site.data.keyword.containershort}} cluster where Istio is installed, you inject the Istio Envoy sidecar proxies in the pods of each microservice.

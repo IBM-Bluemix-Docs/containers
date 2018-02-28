@@ -19,7 +19,7 @@ lastupdated: "2018-01-24"
 # Setting up NodePort services
 {: #nodeport}
 
-Make your app available to internet access by using the public IP address of any worker node in a cluster and exposing a node port. Use this option for testing and short-term public access.
+Make your containerized app available to internet access by using the public IP address of any worker node in a Kubernetes cluster and exposing a node port. Use this option for testing {{site.data.keyword.containerlong}} and short-term public access.
 {:shortdesc}
 
 ## Configuring public access to an app by using the NodePort service type

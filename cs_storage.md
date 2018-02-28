@@ -18,7 +18,7 @@ lastupdated: "2018-02-19"
 
 # Saving data in your cluster
 {: #storage}
-You can persist data to share data between app instances and to protect your data from being lost if a component in your cluster fails.
+You can persist data in {{site.data.keyword.containerlong}} to share data between app instances and to protect your data from being lost if a component in your Kubernetes cluster fails.
 
 ## Planning highly available storage
 {: #planning}

@@ -19,7 +19,7 @@ lastupdated: "2018-02-27"
 # Configuring subnets for clusters
 {: #subnets}
 
-Change the pool of available portable public or private IP addresses by adding subnets to your cluster.
+Change the pool of available portable public or private IP addresses by adding subnets to your Kubernetes cluster in {{site.data.keyword.containerlong}}.
 {:shortdesc}
 
 In {{site.data.keyword.containershort_notm}}, you can add stable, portable IPs for Kubernetes services by adding network subnets to the cluster. In this case, subnets are not being used with netmasking to create connectivity across one or more clusters. Instead, the subnets are used to provide permanent fixed IPs for a service from a cluster that can be used to access that service.

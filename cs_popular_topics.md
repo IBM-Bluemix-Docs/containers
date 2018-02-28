@@ -19,7 +19,7 @@ lastupdated: "2017-12-14"
 # Popular topics for {{site.data.keyword.containershort_notm}}
 {: #cs_popular_topics}
 
-Check out what container developers are interested in.
+Check out what container developers are interested in learning about in {{site.data.keyword.containerlong}}.
 {:shortdesc}
 
 <table>

@@ -18,7 +18,7 @@ lastupdated: "2018-02-27"
 # Security for {{site.data.keyword.containerlong_notm}}
 {: #security}
 
-You can use built-in security features for risk analysis and security protection. These features help you to protect your cluster infrastructure and network communication, isolate your compute resources, and ensure security compliance across your infrastructure components and container deployments.
+You can use built-in security features in {{site.data.keyword.containerlong}} for risk analysis and security protection. These features help you to protect your Kubernetes cluster infrastructure and network communication, isolate your compute resources, and ensure security compliance across your infrastructure components and container deployments.
 {: shortdesc}
 
 ## Security by cluster component
