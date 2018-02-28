@@ -22,7 +22,7 @@ lastupdated: "2018-02-27"
 ## Configuring access to an app by using Ingress
 {: #config}
 
-Expose multiple apps in your cluster by creating Ingress resources that are managed by the IBM-provided application load balancer.
+Expose multiple apps in your Kubernetes cluster by creating Ingress resources that are managed by the IBM-provided application load balancer in {{site.data.keyword.containerlong}}.
 {:shortdesc}
 
 An application load balancer is an external HTTP or HTTPS load balancer that uses a secured and unique public or private entrypoint to route incoming requests to your apps inside or outside your cluster. With Ingress, you can define individual routing rules for every app that you expose to the public or to private networks. For general information about Ingress services, see [Planning external networking with Ingress](cs_network_planning.html#ingress).

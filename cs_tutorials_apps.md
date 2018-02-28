@@ -19,7 +19,7 @@ lastupdated: "2017-02-27"
 # Tutorial: Deploying apps into clusters
 {: #cs_apps_tutorial}
 
-You can learn how to use {{site.data.keyword.containershort_notm}} to deploy a containerized app that leverages {{site.data.keyword.watson}} {{site.data.keyword.toneanalyzershort}}.
+You can learn how to use {{site.data.keyword.containerlong}} to deploy a containerized app that leverages {{site.data.keyword.watson}} {{site.data.keyword.toneanalyzershort}}.
 {: shortdesc}
 
 In this scenario, a fictional PR firm uses the {{site.data.keyword.Bluemix_notm}} service to analyze their press releases and receive feedback on the tone of their messages.

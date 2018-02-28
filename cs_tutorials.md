@@ -19,7 +19,7 @@ lastupdated: "2017-02-27"
 # Tutorial: Creating clusters
 {: #cs_cluster_tutorial}
 
-Deploy and manage a Kubernetes cluster in {{site.data.keyword.Bluemix_short}}. You can automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster.
+Deploy and manage a Kubernetes cluster in {{site.data.keyword.containerlong}}. You can automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster.
 {:shortdesc}
 
 In this tutorial series, you can see how a fictional public relations firm uses Kubernetes capabilities to deploy a containerized app in {{site.data.keyword.Bluemix_notm}}. Leveraging {{site.data.keyword.toneanalyzerfull}}, the PR firm analyzes their press releases and receives feedback.

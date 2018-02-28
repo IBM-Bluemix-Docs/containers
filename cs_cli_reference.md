@@ -19,7 +19,7 @@ lastupdated: "2018-02-27"
 # CLI reference for managing clusters
 {: #cs_cli_reference}
 
-Refer to these commands to create and manage clusters on {{site.data.keyword.Bluemix_notm}}.
+Refer to these commands to create and manage Kubernetes clusters in {{site.data.keyword.containerlong}}.
 {:shortdesc}
 
 ## bx cs commands

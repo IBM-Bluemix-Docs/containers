@@ -17,6 +17,9 @@ lastupdated: "2018-02-23"
 
 # {{site.data.keyword.containerlong_notm}} technology
 
+Learn more about the technology behind {{site.data.keyword.containerlong}}.
+{:shortdesc}
+
 ## Docker containers
 {: #docker_containers}
 

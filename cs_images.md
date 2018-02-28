@@ -19,7 +19,7 @@ lastupdated: "2018-02-14"
 # Building containers from images
 {: #images}
 
-A Docker image is the basis for every container that you create. 
+A Docker image is the basis for every container that you create with {{site.data.keyword.containerlong}}. 
 {:shortdesc}
 
 An image is created from a Dockerfile, which is a file that contains instructions to build the image. A Dockerfile might reference build artifacts in its instructions that are stored separately, such as an app, the app's configuration, and its dependencies.

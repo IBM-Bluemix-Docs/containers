@@ -19,7 +19,7 @@ lastupdated: "2018-01-29"
 # Setting up the CLI and API
 {: #cs_cli_install}
 
-You can use the {{site.data.keyword.containershort_notm}} CLI or API to create and manage your Kubernetes clusters.
+You can use the {{site.data.keyword.containerlong}} CLI or API to create and manage your Kubernetes clusters.
 {:shortdesc}
 
 <br />

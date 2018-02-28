@@ -19,7 +19,7 @@ lastupdated: "2018-01-24"
 # Accessing the IBM Cloud Infrastructure (SoftLayer) portfolio
 {: #infrastructure}
 
-To create a standard Kubernetes cluster, you must have access to the IBM Cloud infrastructure (SoftLayer) portfolio. This access is needed to request paid infrastructure resources, such as worker nodes, portable public IP addresses, or persistent storage for your cluster.
+To create a standard Kubernetes cluster, you must have access to the IBM Cloud infrastructure (SoftLayer) portfolio. This access is needed to request paid infrastructure resources, such as worker nodes, portable public IP addresses, or persistent storage for your Kubernetes cluster in {{site.data.keyword.containerlong}}.
 {:shortdesc}
 
 ## Access the IBM Cloud infrastructure (SoftLayer) portfolio

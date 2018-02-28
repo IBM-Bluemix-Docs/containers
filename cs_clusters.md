@@ -19,7 +19,7 @@ lastupdated: "2018-02-27"
 # Setting up clusters
 {: #clusters}
 
-Design your cluster setup for maximum availability and capacity.
+Design your Kubernetes cluster setup for maximum container availability and capacity with {{site.data.keyword.containerlong}}.
 {:shortdesc}
 
 

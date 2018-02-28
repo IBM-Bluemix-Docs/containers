@@ -19,7 +19,7 @@ lastupdated: "2018-02-16"
 # Logging and monitoring clusters
 {: #health}
 
-Configure cluster logging and monitoring to help you troubleshoot issues with your clusters and apps and monitor the health and performance of your clusters.
+Set up logging and monitoring in {{site.data.keyword.containerlong}} to help you troubleshoot issues and improve the health and performance of your Kubernetes clusters and apps.
 {:shortdesc}
 
 ## Configuring cluster logging

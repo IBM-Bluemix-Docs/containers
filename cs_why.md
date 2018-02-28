@@ -18,7 +18,7 @@ lastupdated: "2018-02-27"
 # Why {{site.data.keyword.containerlong_notm}}
 {: #cs_ov}
 
-{{site.data.keyword.containershort}} delivers powerful tools by combining Docker and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
+{{site.data.keyword.containerlong}} delivers powerful tools by combining Docker and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.
 {:shortdesc}
 
 ## Benefits of using the service

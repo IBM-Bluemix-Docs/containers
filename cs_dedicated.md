@@ -18,7 +18,7 @@ lastupdated: "2018-02-16"
 # Getting started with clusters in {{site.data.keyword.Bluemix_dedicated_notm}}
 {: #dedicated}
 
-If you have an {{site.data.keyword.Bluemix_dedicated}} account, you can deploy clusters in a dedicated cloud environment (`https://<my-dedicated-cloud-instance>.bluemix.net`) and connect with the preselected {{site.data.keyword.Bluemix}} services that are also running there.
+If you have an {{site.data.keyword.Bluemix_dedicated}} account to use {{site.data.keyword.containerlong}}, you can deploy Kubernetes clusters in a dedicated cloud environment (`https://<my-dedicated-cloud-instance>.bluemix.net`) and connect with the preselected {{site.data.keyword.Bluemix}} services that are also running there.
 {:shortdesc}
 
 If you do not have an {{site.data.keyword.Bluemix_dedicated_notm}} account, you can [get started with {{site.data.keyword.containershort_notm}}](container_index.html#container_index) in a public {{site.data.keyword.Bluemix_notm}} account.
