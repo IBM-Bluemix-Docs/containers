@@ -25,7 +25,8 @@ To create a standard Kubernetes cluster, you must have access to the IBM Cloud i
 ## Access the IBM Cloud infrastructure (SoftLayer) portfolio
 {: #unify_accounts}
 
-{{site.data.keyword.Bluemix_notm}} Pay-As-You-Go accounts that were created after automatic account linking was enabled are already set up with access to the IBM Cloud infrastructure (SoftLayer) portfolio, so that you can purchase infrastructure resources for your cluster without additional configuration.
+{{site.data.keyword.Bluemix_notm}} Pay-As-You-Go accounts that were created after automatic account linking was enabled are already set up with access to the IBM Cloud infrastructure (SoftLayer) portfolio. You can purchase infrastructure resources for your cluster without additional configuration.
+{:shortdesc}
 
 Users with other {{site.data.keyword.Bluemix_notm}} account types or users that have an existing IBM Cloud infrastructure (SoftLayer) account that is not linked to their {{site.data.keyword.Bluemix_notm}} account, must configure their accounts to create standard clusters.
 {:shortdesc}
@@ -45,7 +46,7 @@ Review the following table to find available options for each account type.
 ## Generating an IBM Cloud infrastructure (SoftLayer) API key to use with {{site.data.keyword.Bluemix_notm}} accounts
 {: #old_account}
 
-If you want to continue using your old Pay-As-You-Go or Subscription account to create standard clusters, you must generate an API key with your new Pay-As-You-Go account and set the API key for your old account.
+To continue using your old Pay-As-You-Go or Subscription account to create standard clusters, generate an API key with your new Pay-As-You-Go account and set the API key for your old account.
 {:shortdesc}
 
 Before you begin, create an {{site.data.keyword.Bluemix_notm}} Pay-As-You-Go account that is automatically set up with access to the IBM Cloud infrastructure (SoftLayer) portfolio.
