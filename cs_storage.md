@@ -264,12 +264,12 @@ The NFS file storage that backs the PV is clustered by IBM in order to provide h
 To add persistent storage:
 
 1.  Review the available storage classes. {{site.data.keyword.containerlong}} provides eight pre-defined storage classes so that the cluster admin does not have to create any storage classes. The `ibmc-file-bronze` storage class is the same as the `default` storage class.
-	
+
     ```
     kubectl get storageclasses
     ```
     {: pre}
-    
+
     ```
     $ kubectl get storageclasses
     NAME                         TYPE
@@ -284,9 +284,9 @@ To add persistent storage:
     ibmc-file-silver             ibm.io/ibmc-file
     ```
     {: screen}
-    
+
     **Tip:** If you want to change the default storage class, run `kubectl patch storageclass <storageclass> -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'` and replace `<storageclass>` with the name of the storage class.
-    
+
 2.  Decide if you want to save your data and the NFS file share after you delete the pvc, called the reclaim policy. If you want to keep your data, then choose a `retain` storage class. If you want the data and your file share to be deleted when you delete the pvc, choose a storage class without `retain`.
 
 3.  Review the IOPS of a storage class and the available storage sizes.
@@ -362,7 +362,7 @@ To add persistent storage:
           storage: 40Gi
           iops: "500"
     ```
-    {: codeblock} 
+    {: codeblock}
 
     <table>
     <caption>Table. Understanding the YAML file components</caption>
