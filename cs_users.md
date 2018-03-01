@@ -83,6 +83,8 @@ The operator and editor roles have separate permissions. If you want a user to, 
 <br />
 
 
+
+
 ## Adding users to an {{site.data.keyword.Bluemix_notm}} account
 {: #add_users}
 
