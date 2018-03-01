@@ -1413,7 +1413,7 @@ List the public and private VLANs that are available for a location in your IBM 
 ## Logging commands
 {: #logging_commands}
 
-### bx cs logging-config-create CLUSTER --logsource LOG_SOURCE [--namespace KUBERNETES_NAMESPACE] [--hostname LOG_SERVER_HOSTNAME_OR_IP] [--port LOG_SERVER_PORT] [--space CLUSTER_SPACE] [--org CLUSTER_ORG] --type LOG_TYPE [--json]
+### bx cs logging-config-create CLUSTER --logsource LOG_SOURCE [--namespace KUBERNETES_NAMESPACE] [--hostname LOG_SERVER_HOSTNAME_OR_IP] [--port LOG_SERVER_PORT] [--space CLUSTER_SPACE] [--org CLUSTER_ORG] --type LOG_TYPE [--json] [--skip-validation]
 {: #cs_logging_create}
 
 Create a logging configuration. You can use this command to forward logs for containers, applications, worker nodes, Kubernetes clusters, and Ingress application load balancers to {{site.data.keyword.loganalysisshort_notm}} or to an external syslog server.
@@ -1439,6 +1439,8 @@ Create a logging configuration. You can use this command to forward logs for con
 <dd>The log forwarding protocol that you want to use. Currently, <code>syslog</code> and <code>ibm</code> are supported. This value is required.</dd>
 <dt><code>--json</code></dt>
 <dd>Optionally prints the command output in JSON format.</dd>
+<dt><code>--skip-validation</code></dt>
+<dd>Optionally skips validation of the org and space names when they are specified. Skipping validation decreases processing time, but an invalid logging configuration will not correctly forward logs.</dd>
 </dl>
 
 **Examples**:
@@ -1530,7 +1532,7 @@ Delete a log forwarding configuration. This stops log forwarding to a remote sys
   {: pre}
 
 
-### bx cs logging-config-update CLUSTER --id LOG_CONFIG_ID [--hostname LOG_SERVER_HOSTNAME_OR_IP] [--port LOG_SERVER_PORT] [--space CLUSTER_SPACE] [--org CLUSTER_ORG] --type LOG_TYPE [--json]
+### bx cs logging-config-update CLUSTER --id LOG_CONFIG_ID [--hostname LOG_SERVER_HOSTNAME_OR_IP] [--port LOG_SERVER_PORT] [--space CLUSTER_SPACE] [--org CLUSTER_ORG] --type LOG_TYPE [--json] [--skipValidation]
 {: #cs_logging_update}
 
 Update the details of a log forwarding configuration.
@@ -1554,6 +1556,8 @@ Update the details of a log forwarding configuration.
    <dd>The log forwarding protocol that you want to use. Currently, <code>syslog</code> and <code>ibm</code> are supported. This value is required.</dd>
    <dt><code>--json</code></dt>
    <dd>Optionally prints the command output in JSON format.</dd>
+   <dt><code>--skipValidation</code></dt>
+   <dd>Optionally skips validation of the org and space names when they are specified. Skipping validation decreases processing time, but an invalid logging configuration will not correctly forward logs.</dd>
    </dl>
 
 **Example for log type `ibm`**:
