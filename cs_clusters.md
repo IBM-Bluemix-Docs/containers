@@ -26,7 +26,7 @@ Design your Kubernetes cluster setup for maximum container availability and capa
 ## Cluster configuration planning
 {: #planning_clusters}
 
-Use standard clusters to increase app availability. 
+Use standard clusters to increase app availability.
 {:shortdesc}
 
 Your users are less likely to experience downtime when you distribute your setup across multiple worker nodes and clusters. Built-in capabilities, like load balancing and isolation, increase resiliency against potential failures with hosts, networks, or apps.
@@ -184,7 +184,7 @@ When the cluster is up and running, you can check out the following tasks:
 ## Creating clusters with the CLI
 {: #clusters_cli}
 
-The purpose of the Kubernetes cluster is to define a set of resources, nodes, networks, and storage devices that keep apps highly available. Before you can deploy an app, you must create a cluster and set the definitions for the worker nodes in that cluster. 
+The purpose of the Kubernetes cluster is to define a set of resources, nodes, networks, and storage devices that keep apps highly available. Before you can deploy an app, you must create a cluster and set the definitions for the worker nodes in that cluster.
 {:shortdesc}
 
 Before you begin, [make sure you have the minimum required permissions in IBM Cloud infrastructure (SoftLayer) to provision a standard cluster](cs_users.html#infra_access).
