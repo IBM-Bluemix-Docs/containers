@@ -54,7 +54,7 @@ Every user that works with {{site.data.keyword.containershort_notm}} must be ass
 <dt>Cloud Foundry roles</dt>
 <dd>In Identity and Access Management, every user must be assigned a Cloud Foundry user role. This role determines the actions that the user can perform on the {{site.data.keyword.Bluemix_notm}} account, such as inviting other users, or viewing the quota usage. [Learn more about the available Cloud Foundry roles](/docs/iam/cfaccess.html#cfaccess).</dd>
 <dt>Kubernetes RBAC roles</dt>
-<dd>Every user who is assigned an {{site.data.keyword.containershort_notm}} access policy is automatically assigned a Kubernetes RBAC role.  In Kubernetes, RBAC roles determine the actions that you can perform on Kubernetes resources inside the cluster. RBAC roles are set up for the default namespace only. The cluster administrator can add RBAC roles for other namespaces in the cluster. See the following table in the [Access policies and permissions](#access_policies) section to see which RBAC role correcsponds to which {{site.data.keyword.containershort_notm}} access policy. For more information about RBAC roles in general, see [Using RBAC Authorization ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/admin/authorization/rbac/#api-overview) in the Kubernetes documentation.</dd>
+<dd>Every user who is assigned an {{site.data.keyword.containershort_notm}} access policy is automatically assigned a Kubernetes RBAC role.  In Kubernetes, RBAC roles determine the actions that you can perform on Kubernetes resources inside the cluster. RBAC roles are set up for the default namespace only. The cluster administrator can add RBAC roles for other namespaces in the cluster. See the following table in the [Access policies and permissions](#access_policies) section to see which RBAC role corresponds to which {{site.data.keyword.containershort_notm}} access policy. For more information about RBAC roles in general, see [Using RBAC Authorization ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/admin/authorization/rbac/#api-overview) in the Kubernetes documentation.</dd>
 </dl>
 
 <br />
@@ -81,6 +81,21 @@ The operator and editor roles have separate permissions. If you want a user to, 
 |Space role: Developer|<ul><li>Create {{site.data.keyword.Bluemix_notm}} service instances</li><li>Bind {{site.data.keyword.Bluemix_notm}} service instances to clusters</li></ul>| 
 
 <br />
+
+
+
+## Understanding the IAM API key and the `bx cs credentials-set` command
+{: #api_key}
+
+To succesfully provision and work with clusters in your account, you must ensure that your account is correctly set up to access the IBM Cloud infrastructure (SoftLayer) portfolio. Depending on your account setup, you either use the IAM API key or infrastructure credentials that you manually set by using the `bx cs credentials-set` command. 
+
+<dl>
+  <dt>IAM API key</dt>
+  <dd>The Identity and Access Management (IAM) API key is automatically set for a region when the first action that requires the {{site.data.keyword.containershort_notm}} admin access policy is performed. For example, one of your admin users creates the first cluster in the <code>us-south</code> region. By doing that, the IAM API key for this user is stored in the account for this region. The API key is used to order IBM Cloud infrastructure (SoftLayer), such as new worker nodes or VLANs. </br></br>
+When a different user performs an action in this region that requires interaction with the IBM Cloud infrastructure (SoftLayer) portfolio, such as creating a new cluster or reloading a worker node, the stored API key is used to determine if sufficient permissions exist to perform that action. To make sure that infrastructure-related actions in your cluster can be successfully performed, assign your {{site.data.keyword.containershort_notm}} admin users the <strong>Super user</strong> infrastructure access policy. </br></br>You can find the current API key owner by running [<code>bx cs api-key-info</code>](cs_cli_reference.html#cs_api_key_info). If you find that you need to update the API key that is stored for a region, you can do so by running the [<code>bx cs api-key-reset</code>](cs_cli_reference.html#cs_api_key_reset) command. This command requires the {{site.data.keyword.containershort_notm}} admin access policy and stores the API key of the user that executes this command in the account. </br></br> <strong>Note:</strong> The API key that is stored for the region might not be used if IBM Cloud infrastructure (SoftLayer) credentials were manually set by using the <code>bx cs credentials-set</code> command. </dd>
+<dt>IBM Cloud infrastructure (SoftLayer) credentials via <code>bx cs credentials-set</code></dt>
+<dd>If you have an {{site.data.keyword.Bluemix_notm}} Pay-As-You-Go account, you have access to the IBM Cloud infrastructure (SoftLayer) portfolio by default. However, you might want to use a different IBM Cloud infrastructure (SoftLayer) account that you already have to order infrastructure. You can link this infrastructure account to your {{site.data.keyword.Bluemix_notm}} account by using the [<code>bx cs credentials-set</code> command](cs_cli_reference.html#cs_credentials_set). </br></br>If IBM Cloud infrastructure (SoftLayer) credentials are manually set, these credentials are used to order infrastructure, even if an IAM API key already exists for the account. If the user whose credentials are stored does not have the required permissions to order infrastructure, then infrastructure-related actions, such as creating a cluster or reloading a worker node can fail. </br></br> To remove IBM Cloud infrastructure (SoftLayer) credentials that were manually set, you can use the [<code>bx cs credentials-unset</code> command](cs_cli_reference.html#cs_credentials_unset). After the credentials are removed, the IAM API key is used to order infrastructure. </dd>
+</dl>
 
 
 ## Adding users to an {{site.data.keyword.Bluemix_notm}} account
