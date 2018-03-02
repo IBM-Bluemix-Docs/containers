@@ -19,13 +19,27 @@ lastupdated: "2018-02-27"
 # Setting up Ingress services
 {: #ingress}
 
-## Configuring access to an app by using Ingress
-{: #config}
+Expose multiple apps in your Kubernetes cluster by creating Ingress resources that are managed by the IBM-provided application load balancer in {{site.data.keyword.containerlong}}. {:shortdesc}
 
-Expose multiple apps in your Kubernetes cluster by creating Ingress resources that are managed by the IBM-provided application load balancer in {{site.data.keyword.containerlong}}.
+## Planning networking with Ingress services
+{: #planning}
+
+Ingress allows you to expose multiple services in your cluster and make them publicly available by using a single public entry point.
 {:shortdesc}
 
-An application load balancer is an external HTTP or HTTPS load balancer that uses a secured and unique public or private entrypoint to route incoming requests to your apps inside or outside your cluster. With Ingress, you can define individual routing rules for every app that you expose to the public or to private networks. For general information about Ingress services, see [Planning external networking with Ingress](cs_network_planning.html#ingress).
+Rather than creating a load balancer service for each app that you want to expose to the public, Ingress provides a unique public route that lets you forward public requests to apps inside and outside your cluster based on their individual paths. Ingress consists of two main components: the Ingress resource, and the application load balancer.
+
+The Ingress resource defines the rules for how to route incoming requests for an app. All Ingress resources must be registered with the Ingress application load balancer. An application load balancer is an external load balancer that uses a secured and unique public or private entrypoint to route incoming requests to your apps inside or outside your cluster. The application load balancer listens for incoming HTTP or HTTPS, TCP, or UDP service requests and forwards requests based on the individual routing rules that you define with Ingress resources.
+
+When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically creates a highly available application load balancer for your cluster and assigns a unique public route with the format `<cluster_name>.<region>.containers.mybluemix.net` to it. The public route is linked to a portable public IP address that is provisioned into your IBM Cloud infrastructure (SoftLayer) account during cluster creation. A private application load balancer is also automatically created, but is not automatically enabled.
+
+The following diagram shows how Ingress directs communication from the internet to an app:
+
+![Expose a service by using the {{site.data.keyword.containershort_notm}} ingress support](images/cs_ingress.png)
+
+To expose an app via Ingress, you must create a Kubernetes service for your app and register this service with the application load balancer by defining an Ingress resource. The Ingress resource specifies the path that you want to append to the public route to form a unique URL for your exposed app, such as `mycluster.us-south.containers.mybluemix.net/myapp`. When you enter this route into your web browser, as depicted in the diagram, the request is sent to the linked portable public IP address of the application load balancer. The application load balancer checks if a routing rule for the `myapp` path in the `mycluster` cluster exists. If a matching rule is found, the request including the individual path is forwarded to the pod where the app is deployed, considering the rules that were defined in the original Ingress resource object. In order for the app to process incoming requests, make sure that your app listens on the individual path that you defined in the Ingress resource.
+
+
 
 **Note:** Ingress is available for standard clusters only and requires at least two worker nodes in the cluster to ensure high availability and that periodic updates are applied. Setting up Ingress requires an [Administrator access policy](cs_users.html#access_policies). Verify your current [access policy](cs_users.html#infra_access).
 
@@ -454,19 +468,10 @@ To expose an app by using a custom domain with TLS:
 
     * If you do not have a TLS certificate ready, follow these steps:
         1. Create a TLS certificate and key for your domain that is encoded in PEM format.
-        2.  Open your preferred editor and create a Kubernetes secret configuration file that is named, for example, `mysecret.yaml`.
-        3.  Define a secret that uses your TLS certificate and key. Replace <em>&lt;mytlssecret&gt;</em> with a name for your Kubernetes secret, <em>&lt;tls_key_filepath&gt;</em> with the path to your custom TLS key file, and <em>&lt;tls_cert_filepath&gt;</em> with the path to your custom TLS certificate file.
+        2. Create a secret that uses your TLS certificate and key. Replace <em>&lt;mytlssecret&gt;</em> with a name for your Kubernetes secret, <em>&lt;tls_key_filepath&gt;</em> with the path to your custom TLS key file, and <em>&lt;tls_cert_filepath&gt;</em> with the path to your custom TLS certificate file.
 
             ```
             kubectl create secret tls <mytlssecret> --key <tls_key_filepath> --cert <tls_cert_filepath>
-            ```
-            {: pre}
-
-        4.  Save your configuration file.
-        5.  Create the TLS secret for your cluster.
-
-            ```
-            kubectl apply -f mysecret.yaml
             ```
             {: pre}
 
