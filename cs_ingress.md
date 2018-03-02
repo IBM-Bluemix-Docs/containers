@@ -454,19 +454,10 @@ To expose an app by using a custom domain with TLS:
 
     * If you do not have a TLS certificate ready, follow these steps:
         1. Create a TLS certificate and key for your domain that is encoded in PEM format.
-        2.  Open your preferred editor and create a Kubernetes secret configuration file that is named, for example, `mysecret.yaml`.
-        3.  Define a secret that uses your TLS certificate and key. Replace <em>&lt;mytlssecret&gt;</em> with a name for your Kubernetes secret, <em>&lt;tls_key_filepath&gt;</em> with the path to your custom TLS key file, and <em>&lt;tls_cert_filepath&gt;</em> with the path to your custom TLS certificate file.
+        2. Create a secret that uses your TLS certificate and key. Replace <em>&lt;mytlssecret&gt;</em> with a name for your Kubernetes secret, <em>&lt;tls_key_filepath&gt;</em> with the path to your custom TLS key file, and <em>&lt;tls_cert_filepath&gt;</em> with the path to your custom TLS certificate file.
 
             ```
             kubectl create secret tls <mytlssecret> --key <tls_key_filepath> --cert <tls_cert_filepath>
-            ```
-            {: pre}
-
-        4.  Save your configuration file.
-        5.  Create the TLS secret for your cluster.
-
-            ```
-            kubectl apply -f mysecret.yaml
             ```
             {: pre}
 
