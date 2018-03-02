@@ -54,7 +54,7 @@ Every user that works with {{site.data.keyword.containershort_notm}} must be ass
 <dt>Cloud Foundry roles</dt>
 <dd>In Identity and Access Management, every user must be assigned a Cloud Foundry user role. This role determines the actions that the user can perform on the {{site.data.keyword.Bluemix_notm}} account, such as inviting other users, or viewing the quota usage. [Learn more about the available Cloud Foundry roles](/docs/iam/cfaccess.html#cfaccess).</dd>
 <dt>Kubernetes RBAC roles</dt>
-<dd>Every user who is assigned an {{site.data.keyword.containershort_notm}} access policy is automatically assigned a Kubernetes RBAC role.  In Kubernetes, RBAC roles determine the actions that you can perform on Kubernetes resources inside the cluster. RBAC roles are set up for the default namespace only. The cluster administrator can add RBAC roles for other namespaces in the cluster. See the following table in the [Access policies and permissions](#access_policies) section to see which RBAC role correcsponds to which {{site.data.keyword.containershort_notm}} access policy. For more information about RBAC roles in general, see [Using RBAC Authorization ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/admin/authorization/rbac/#api-overview) in the Kubernetes documentation.</dd>
+<dd>Every user who is assigned an {{site.data.keyword.containershort_notm}} access policy is automatically assigned a Kubernetes RBAC role.  In Kubernetes, RBAC roles determine the actions that you can perform on Kubernetes resources inside the cluster. RBAC roles are set up for the default namespace only. The cluster administrator can add RBAC roles for other namespaces in the cluster. See the following table in the [Access policies and permissions](#access_policies) section to see which RBAC role corresponds to which {{site.data.keyword.containershort_notm}} access policy. For more information about RBAC roles in general, see [Using RBAC Authorization ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/admin/authorization/rbac/#api-overview) in the Kubernetes documentation.</dd>
 </dl>
 
 <br />
@@ -81,6 +81,8 @@ The operator and editor roles have separate permissions. If you want a user to, 
 |Space role: Developer|<ul><li>Create {{site.data.keyword.Bluemix_notm}} service instances</li><li>Bind {{site.data.keyword.Bluemix_notm}} service instances to clusters</li></ul>| 
 
 <br />
+
+
 
 
 ## Adding users to an {{site.data.keyword.Bluemix_notm}} account
