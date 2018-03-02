@@ -520,7 +520,15 @@ View the status of all application load balancers in a cluster. If no applicatio
 ### bx cs api-key-info CLUSTER
 {: #cs_api_key_info}
 
-View the name and email address for the owner of the cluster's IAM API key.
+View the name and email address for the owner of the IAM API key in a {{site.data.keyword.containershort_notm}} region.
+
+The Identity and Access Management (IAM) API key is automatically set for a region when the first action that requires the {{site.data.keyword.containershort_notm}} admin access policy is performed. For example, one of your admin users creates the first cluster in the `us-south` region. By doing that, the IAM API key for this user is stored in the account for this region. The API key is used to order resources in IBM Cloud infrastructure (SoftLayer), such as new worker nodes or VLANs. 
+
+When a different user performs an action in this region that requires interaction with the IBM Cloud infrastructure (SoftLayer) portfolio, such as creating a new cluster or reloading a worker node, the stored API key is used to determine if sufficient permissions exist to perform that action. To make sure that infrastructure-related actions in your cluster can be successfully performed, assign your {{site.data.keyword.containershort_notm}} admin users the **Super user** infrastructure access policy. For more information, see [Managing user access](cs_users.html#infra_access).
+
+If you find that you need to update the API key that is stored for a region, you can do so by running the [bx cs api-key-reset](#cs_api_key_reset) command. This command requires the {{site.data.keyword.containershort_notm}} admin access policy and stores the API key of the user that executes this command in the account. 
+
+**Tip:** The API key that is returned in this command might not be used if IBM Cloud infrastructure (SoftLayer) credentials were manually set by using the [bx cs credentials-set](#cs_credentials_set) command.
 
 <strong>Command options</strong>:
 
@@ -540,7 +548,11 @@ View the name and email address for the owner of the cluster's IAM API key.
 ### bx cs api-key-reset
 {: #cs_api_key_reset}
 
-Replace the API key. The API key is required to manage your clusters. To avoid service interruptions, do not replace the API key unless your existing key is compromised.
+Replace the current IAM API key in a {{site.data.keyword.containershort_notm}} region. 
+
+This command requires the {{site.data.keyword.containershort_notm}} admin access policy and stores the API key of the user that executes this command in the account. The IAM API key is required to order infrastructure from the IBM Cloud infrastructure (SoftLayer) portfolio. Once stored, the API key is used for every action in a region that requires infrastructure permissions independent of the user that executes this command. For more information about how IAM API keys work, see the [`bx cs api-key-info` command](#cs_api_key_info).
+
+**Important** Before you use this command, make sure that the user who executes this command has the required [{{site.data.keyword.containershort_notm}} and IBM Cloud infrastructure (SoftLayer) permissions](cs_users.html#users). 
 
 **Example**:
 
@@ -1278,9 +1290,15 @@ View a list of subnets that are available in an IBM Cloud infrastructure (SoftLa
 ### bx cs credentials-set --infrastructure-api-key API_KEY --infrastructure-username USERNAME
 {: #cs_credentials_set}
 
-Set IBM Cloud infrastructure (SoftLayer) account credentials for your {{site.data.keyword.containershort_notm}} account. These credentials allow you to access the IBM Cloud infrastructure (SoftLayer) portfolio through your {{site.data.keyword.containershort_notm}} account.
+Set IBM Cloud infrastructure (SoftLayer) account credentials for your {{site.data.keyword.containershort_notm}} account.
 
-**Note:** Do not set multiple credentials for one {{site.data.keyword.containershort_notm}} account. Every {{site.data.keyword.containershort_notm}} account is linked to one IBM Cloud infrastructure (SoftLayer) portfolio only.
+If you have an {{site.data.keyword.Bluemix_notm}} Pay-As-You-Go account, you have access to the IBM Cloud infrastructure (SoftLayer) portfolio by default. However, you might want to use a different IBM Cloud infrastructure (SoftLayer) account that you already have to order infrastructure. You can link this infrastructure account to your {{site.data.keyword.Bluemix_notm}} account by using this command.
+
+If IBM Cloud infrastructure (SoftLayer) credentials are manually set, these credentials are used to order infrastructure, even if an [IAM API key](#cs_api_key_info) already exists for the account. If the user whose credentials are stored does not have the required permissions to order infrastructure, then infrastructure-related actions, such as creating a cluster or reloading a worker node can fail. 
+
+You cannot set multiple credentials for one {{site.data.keyword.containershort_notm}} account. Every {{site.data.keyword.containershort_notm}} account is linked to one IBM Cloud infrastructure (SoftLayer) portfolio only.
+
+**Important:** Before you use this command, make sure that the user whose credentials are used has the required [{{site.data.keyword.containershort_notm}} and IBM Cloud infrastructure (SoftLayer) permissions](cs_users.html#users). 
 
 <strong>Command options</strong>:
 
@@ -1323,7 +1341,9 @@ Set IBM Cloud infrastructure (SoftLayer) account credentials for your {{site.dat
 ### bx cs credentials-unset
 {: #cs_credentials_unset}
 
-Remove IBM Cloud infrastructure (SoftLayer) account credentials from your {{site.data.keyword.containershort_notm}} account. After removing the credentials, you cannot access the IBM Cloud infrastructure (SoftLayer) portfolio through your {{site.data.keyword.containershort_notm}} account anymore.
+Remove IBM Cloud infrastructure (SoftLayer) account credentials from your {{site.data.keyword.containershort_notm}} account. 
+
+After you remove the credentials, the [IAM API key](#cs_api_key_info) is used to order resources in IBM Cloud infrastructure (SoftLayer). 
 
 <strong>Command options</strong>:
 
@@ -1413,7 +1433,7 @@ List the public and private VLANs that are available for a location in your IBM 
 ## Logging commands
 {: #logging_commands}
 
-### bx cs logging-config-create CLUSTER --logsource LOG_SOURCE [--namespace KUBERNETES_NAMESPACE] [--hostname LOG_SERVER_HOSTNAME_OR_IP] [--port LOG_SERVER_PORT] [--space CLUSTER_SPACE] [--org CLUSTER_ORG] --type LOG_TYPE [--json]
+### bx cs logging-config-create CLUSTER --logsource LOG_SOURCE [--namespace KUBERNETES_NAMESPACE] [--hostname LOG_SERVER_HOSTNAME_OR_IP] [--port LOG_SERVER_PORT] [--space CLUSTER_SPACE] [--org CLUSTER_ORG] --type LOG_TYPE [--json] [--skip-validation]
 {: #cs_logging_create}
 
 Create a logging configuration. You can use this command to forward logs for containers, applications, worker nodes, Kubernetes clusters, and Ingress application load balancers to {{site.data.keyword.loganalysisshort_notm}} or to an external syslog server.
@@ -1424,7 +1444,7 @@ Create a logging configuration. You can use this command to forward logs for con
 <dt><code><em>CLUSTER</em></code></dt>
 <dd>The name or ID of the cluster.</dd>
 <dt><code>--logsource <em>LOG_SOURCE</em></code></dt>
-<dd>The log source that you want to enable log forwarding for. Accepted values are <code>container</code>, <code>application</code>, <code>worker</code>, <code>kubernetes</code>, and <code>ingress</code>. This value is required.</dd>
+<dd>The log source that you want to enable log forwarding for. This argument supports a comma-separated list of log sources to apply the configuration for. Accepted values are <code>container</code>, <code>application</code>, <code>worker</code>, <code>kubernetes</code>, and <code>ingress</code>. If you do not provide a log source, logging configurations are created for <code>container</code> and <code>ingress</code> log sources.</dd>
 <dt><code>--namespace <em>KUBERNETES_NAMESPACE</em></code></dt>
 <dd>The Kubernetes namespace that you want to forward logs from. Log forwarding is not supported for the <code>ibm-system</code> and <code>kube-system</code> Kubernetes namespaces. This value is valid only for the container log source and is optional. If you do not specify a namespace, then all namespaces in the cluster use this configuration.</dd>
 <dt><code>--hostname <em>LOG_SERVER_HOSTNAME</em></code></dt>
@@ -1439,6 +1459,8 @@ Create a logging configuration. You can use this command to forward logs for con
 <dd>The log forwarding protocol that you want to use. Currently, <code>syslog</code> and <code>ibm</code> are supported. This value is required.</dd>
 <dt><code>--json</code></dt>
 <dd>Optionally prints the command output in JSON format.</dd>
+<dt><code>--skip-validation</code></dt>
+<dd>Optionally skips validation of the org and space names when they are specified. Skipping validation decreases processing time, but an invalid logging configuration will not correctly forward logs.</dd>
 </dl>
 
 **Examples**:
@@ -1508,10 +1530,10 @@ Refresh the logging configuration for the cluster. This refreshes the logging to
   {: pre}
 
 
-### bx cs logging-config-rm CLUSTER --id LOG_CONFIG_ID
+### bx cs logging-config-rm CLUSTER [--id LOG_CONFIG_ID] [--all]
 {: #cs_logging_rm}
 
-Delete a log forwarding configuration. This stops log forwarding to a remote syslog server or to {{site.data.keyword.loganalysisshort_notm}}.
+Delete one log forwarding configuration or all logging configurations for a cluster. This stops log forwarding to a remote syslog server or to {{site.data.keyword.loganalysisshort_notm}}.
 
 <strong>Command options</strong>:
 
@@ -1519,7 +1541,9 @@ Delete a log forwarding configuration. This stops log forwarding to a remote sys
    <dt><code><em>CLUSTER</em></code></dt>
    <dd>The name or ID of the cluster. This value is required.</dd>
    <dt><code>--id <em>LOG_CONFIG_ID</em></code></dt>
-   <dd>The logging configuration ID that you want to remove from the log source. This value is required.</dd>
+   <dd>If you want to remove a single logging configuration, the logging configuration ID.</dd>
+   <dt><code>--all</code></dt>
+   <dd>The flag to remove all logging configurations in a cluster.</dd>
    </dl>
 
 **Example**:
@@ -1530,7 +1554,7 @@ Delete a log forwarding configuration. This stops log forwarding to a remote sys
   {: pre}
 
 
-### bx cs logging-config-update CLUSTER --id LOG_CONFIG_ID [--hostname LOG_SERVER_HOSTNAME_OR_IP] [--port LOG_SERVER_PORT] [--space CLUSTER_SPACE] [--org CLUSTER_ORG] --type LOG_TYPE [--json]
+### bx cs logging-config-update CLUSTER --id LOG_CONFIG_ID [--hostname LOG_SERVER_HOSTNAME_OR_IP] [--port LOG_SERVER_PORT] [--space CLUSTER_SPACE] [--org CLUSTER_ORG] --type LOG_TYPE [--json] [--skipValidation]
 {: #cs_logging_update}
 
 Update the details of a log forwarding configuration.
@@ -1554,6 +1578,8 @@ Update the details of a log forwarding configuration.
    <dd>The log forwarding protocol that you want to use. Currently, <code>syslog</code> and <code>ibm</code> are supported. This value is required.</dd>
    <dt><code>--json</code></dt>
    <dd>Optionally prints the command output in JSON format.</dd>
+   <dt><code>--skipValidation</code></dt>
+   <dd>Optionally skips validation of the org and space names when they are specified. Skipping validation decreases processing time, but an invalid logging configuration will not correctly forward logs.</dd>
    </dl>
 
 **Example for log type `ibm`**:

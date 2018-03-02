@@ -65,7 +65,7 @@ The diagram shows how Kubernetes carries user network traffic in {{site.data.key
 <dt><a href="#ingress" target="_blank">Ingress</a> (standard clusters only)</dt>
 <dd>
  <ul>
-  <li>Expose multiple apps in your cluster by creating one external HTTP or HTTPS load balancer that uses a secured and unique public entrypoint to route incoming requests to your apps.</li>
+  <li>Expose multiple apps in your cluster by creating one external HTTP or HTTPS, TCP, or UDP load balancer that uses a secured and unique public entrypoint to route incoming requests to your apps.</li>
   <li>You can use one public route to expose multiple apps in your cluster as services.</li>
   <li>Ingress consists of two main components: the Ingress resource and the application load balancer.
    <ul>
