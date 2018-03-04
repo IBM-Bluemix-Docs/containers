@@ -190,7 +190,8 @@ Review changes that you might need to make when you are updating from the previo
 </thead>
 <tbody>
 <tr>
-<td colspan='2'>No changes are required before you update the master</td>
+<td>None</td>
+<td>No changes are required before you update the master</td>
 </tr>
 </tbody>
 </table>

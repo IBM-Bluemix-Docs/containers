@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-23"
+lastupdated: "2018-02-28"
 
 ---
 
@@ -396,14 +396,15 @@ To deploy your app:
 ## Scaling apps
 {: #app_scaling}
 
-Deploy cloud applications that respond to changes in demand for your applications and that use resources only when needed. Autoscaling automatically increases or decreases the number of instances of your apps based on CPU.
+With Kubernetes, you can enable [horizontal pod autoscaling ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) to automatically increase or decrease the number of instances of your apps based on CPU.
 {:shortdesc}
 
-Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
+Looking for information about scaling Cloud Foundry applications? Check out [IBM Auto-Scaling for {{site.data.keyword.Bluemix_notm}}](/docs/services/Auto-Scaling/index.html). 
+{: tip}
 
-**Note:** Are you looking for information about scaling Cloud Foundry applications? Check out [IBM Auto-Scaling for {{site.data.keyword.Bluemix_notm}}](/docs/services/Auto-Scaling/index.html).
-
-With Kubernetes, you can enable [Horizontal Pod Autoscaling ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#autoscale) to scale your apps based on CPU.
+Before you begin:
+- [Target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
+- Heapster monitoring must be deployed in the cluster that you want to autoscale.
 
 1.  Deploy your app to your cluster from the CLI. When you deploy your app, you must request CPU.
 
@@ -434,8 +435,10 @@ With Kubernetes, you can enable [Horizontal Pod Autoscaling ![External link icon
     <td>The port where your app is available externally.</td>
     </tr></tbody></table>
 
-    **Note:** For more complex deployments, you might need to create a [configuration file](#app_cli).
-2.  Create a Horizontal Pod Autoscaler and define your policy. For more information about working with the `kubectl autoscale` command, see [the Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#autoscale).
+    For more complex deployments, you might need to create a [configuration file](#app_cli).
+    {: tip}
+
+2.  Create an autoscaler and define your policy. For more information about working with the `kubetcl autoscale` command, see [the Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://v1-8.docs.kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#autoscale).
 
     ```
     kubectl autoscale deployment <deployment_name> --cpu-percent=<percentage> --min=<min_value> --max=<max_value>
@@ -460,7 +463,6 @@ With Kubernetes, you can enable [Horizontal Pod Autoscaling ![External link icon
     <td>The maximum number of deployed pods that are used to maintain the specified CPU utilization percentage.</td>
     </tr>
     </tbody></table>
-
 
 
 <br />
