@@ -138,7 +138,7 @@ To create a PV and matching PVC, follow these steps.
        - ReadWriteMany
      nfs:
        server: "nfslon0410b-fz.service.networklayer.com"
-       path: "/IBM01SEV8491247_0908"
+       path: "/IBM01SEV8491247_0908/data01"
     ```
     {: codeblock}
 
