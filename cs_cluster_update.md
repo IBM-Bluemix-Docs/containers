@@ -117,7 +117,7 @@ To update your worker nodes:
     {:pre}
   <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the parameter in column one and the description that matches in column two.">
     <thead>
-      <th colspan=2><img src="images/idea.png"/> Understanding the components </th>
+      <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the components </th>
     </thead>
     <tbody>
       <tr>

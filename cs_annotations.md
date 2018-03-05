@@ -22,7 +22,7 @@ lastupdated: "2018-02-14"
 To add capabilities to your application load balancer, you can specify annotations as metadata in an Ingress resource.
 {: shortdesc}
 
-For general information about Ingress services and how to get started using them, see [Configuring public access to an app by using Ingress](cs_ingress.html#config).
+For general information about Ingress services and how to get started using them, see [Configuring public access to an app by using Ingress](cs_ingress.html#configure_alb).
 
 <table>
 <col width="20%">
