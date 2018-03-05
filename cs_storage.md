@@ -138,7 +138,7 @@ To create a PV and matching PVC, follow these steps.
        - ReadWriteMany
      nfs:
        server: "nfslon0410b-fz.service.networklayer.com"
-       path: "/IBM01SEV8491247_0908"
+       path: "/IBM01SEV8491247_0908/data01"
     ```
     {: codeblock}
 
@@ -555,7 +555,7 @@ Review the following backup and restore options for your NFS file shares:
   <dd>You can use the [**ibm-backup-restore image**](/docs/services/RegistryImages/ibm-backup-restore/index.html#ibmbackup_restore_starter) to spin up a backup and restore pod in your cluster. This pod contains a script to run a one-time or periodic backup for any persistent volume claim (PVC) in your cluster. Data is stored in your {{site.data.keyword.objectstoragefull}} instance that you set up in a location. To make your data even more highly available and protect your app from a location failure, set up a second {{site.data.keyword.objectstoragefull}} instance and replicate data across locations. If you need to restore data from your {{site.data.keyword.objectstoragefull}} instance, use the restore script that is provided with the image.</dd>
   </dl>
 
-## Adding non-root user access to persistent storage
+## Adding non-root user access to NFS file storage
 {: #nonroot}
 
 Non-root users do not have write permission on the volume mount path for NFS-backed storage. To grant write permission, you must edit the Dockerfile of the image to create a directory on the mount path with the correct permission.
