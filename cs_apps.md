@@ -24,7 +24,7 @@ Check out the latest information in its new location:
 - [Allowing public access to apps](cs_network_planning.html#planning)
   - [Configuring public access to an app by using the NodePort service type](cs_nodeport.html#config)
   - [Configuring access to an app by using the load balancer service type](cs_loadbalancer.html#config)
-  - [Configuring access to an app by using Ingress](cs_ingress.html#config)
+  - [Configuring access to an app by using Ingress](cs_ingress.html#configure_alb)
     - [Using the IBM-provided domain without TLS termination](cs_ingress.html#ibm_domain)
     - [Using the IBM-provided domain with TLS termination](cs_ingress.html#ibm_domain_cert)
     - [Using a custom domain and TLS certificate to do TLS termination](cs_ingress.html#custom_domain_cert)
