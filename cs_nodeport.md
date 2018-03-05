@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-24"
+lastupdated: "2018-03-02"
 
 ---
 
@@ -22,13 +22,30 @@ lastupdated: "2018-01-24"
 Make your containerized app available to internet access by using the public IP address of any worker node in a Kubernetes cluster and exposing a node port. Use this option for testing {{site.data.keyword.containerlong}} and short-term public access.
 {:shortdesc}
 
-## Configuring public access to an app by using the NodePort service type
+## Planning external networking with NodePort services
+{: #planning}
+
+Expose a public port on your worker node and use the public IP address of the worker node to access your service in the cluster publicly from the internet.
+{:shortdesc}
+
+When you expose your app by creating a Kubernetes service of type NodePort, a NodePort in the range of 30000 - 32767 and an internal cluster IP address is assigned to the service. The NodePort service serves as the external entry point for incoming requests for your app. The assigned NodePort is publicly exposed in the kubeproxy settings of each worker node in the cluster. Every worker node starts listening on the assigned NodePort for incoming requests for the service. To access the service from the internet, you can use the public IP address of any worker node that was assigned during cluster creation and the NodePort in the format `<ip_address>:<nodeport>`. In addition to the public IP address, a NodePort service is available over the private IP address of a worker node.
+
+The following diagram shows how communication is directed from the internet to an app when a NodePort service is configured.
+
+![Expose a service by using a Kubernetes NodePort service](images/cs_nodeport.png)
+
+As depicted in the diagram, when a request arrives at the NodePort service, it is automatically forwarded to the internal cluster IP of the service and further forwarded from the `kube-proxy` component to the private IP address of the pod where the app is deployed. The cluster IP is accessible inside the cluster only. If you have multiple replicas of your app running in different pods, the `kube-proxy` component load balances incoming requests across all replicas.
+
+**Note:** The public IP address of the worker node is not permanent. When a worker node is removed or re-created, a new public IP address is assigned to the worker node. You can use the NodePort service for testing the public access for your app or when public access is needed for a short amount of time only. When you require a stable public IP address and more availability for your service, expose your app by using a [LoadBalancer service](cs_loadbalancer.html#planning) or [Ingress](cs_ingress.html#planning).
+
+<br />
+
+
+## Configuring public access to an app by using the NodePort service
 {: #config}
 
 You can expose your app as a Kubernetes NodePort service for free or standard clusters.
 {:shortdesc}
-
-**Note:** The public IP address of a worker node is not permanent. If the worker node must be re-created, a new public IP address is assigned to the worker node. If you need a stable public IP address and more availability for your service, expose your app by using a [LoadBalancer service](cs_loadbalancer.html) or [Ingress](cs_ingress.html).
 
 If you do not already have an app ready, you can use a Kubernetes example app called [Guestbook ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/kubernetes/kubernetes/blob/master/examples/guestbook/all-in-one/guestbook-all-in-one.yaml).
 

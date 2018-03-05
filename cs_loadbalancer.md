@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-06"
+lastupdated: "2018-03-02"
 
 ---
 
@@ -22,17 +22,41 @@ lastupdated: "2018-02-06"
 Expose a port and use a portable IP address for the load balancer to access a containerized app. Use a public IP address to make an app accessible on the internet, or a private IP address to make an app accessible on your private infrastructure network in {{site.data.keyword.containerlong}}.
 {:shortdesc}
 
+## Planning external networking with LoadBalancer services
+{: #planning}
+
+Expose a port and use the public or private IP address for the load balancer to access the app.
+{:shortdesc}
+
+
+When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically requests five portable public and five portable private IP addresses and provisions them into your IBM Cloud infrastructure (SoftLayer) account during cluster creation. Two of the portable IP addresses, one public and one private, are used for [Ingress application load balancers](cs_ingress.html#planning). Four portable public and four portable private IP addresses can be used to expose apps by creating a LoadBalancer service.
+
+When you create a Kubernetes LoadBalancer service in a cluster on a public VLAN, an external load balancer is created. One of the four available public IP addresses is assigned to the load balancer. If no portable public IP address is available, the creation of your LoadBalancer service fails. The LoadBalancer service serves as the external entry point for incoming requests for the app. Unlike with NodePort services, you can assign any port to your load balancer and are not bound to a certain port range. The portable public IP address that is assigned to your LoadBalancer service is permanent and does not change when a worker node is removed or re-created. Therefore, the LoadBalancer service is more available than the NodePort service. To access the LoadBalancer service from the internet, use the public IP address of your load balancer and the assigned port in the format `<ip_address>:<port>`.
+
+The following diagram shows how the LoadBalancer directs communication from the internet to an app:
+
+![Expose a service by using a Kubernetes LoadBalancer service type](images/cs_loadbalancer.png)
+
+As depicted in the diagram, when a request arrives at the LoadBalancer service, the request is automatically forwarded to the internal cluster IP address that is assigned to the LoadBalancer service during service creation. The cluster IP address is accessible inside the cluster only. From the cluster IP address, incoming requests are further forwarded to the `kube-proxy` component of your worker node. Then the requests are forwarded to the private IP address of the pod where the app is deployed. If you have multiple replicas of your app that are running in different pods, the `kube-proxy` component load balances incoming requests across all replicas.
+
+If you use a LoadBalancer service, a node port is also available on each IP address of any worker node. To block access to node port while you are using a LoadBalancer service, see [Blocking incoming traffic](cs_network_policy.html#block_ingress).
+
+Your options for IP addresses when you create a LoadBalancer service are as follows:
+
+- If your cluster is on a public VLAN, a portable public IP address is used.
+- If your cluster is available on a private VLAN only, then a portable private IP address is used.
+- You can request a portable public or private IP address for a LoadBalancer service by adding an annotation to the configuration file: `service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: <public_or_private>`.
+
+
+
+
+<br />
+
+
 
 
 ## Configuring access to an app by using the load balancer service type
 {: #config}
-
-Unlike with a NodePort service, the portable IP address of the load balancer service is not dependent on the worker node that the app is deployed on. However, a Kubernetes LoadBalancer service is also a NodePort service. A LoadBalancer service makes your app available over the load balancer IP address and port and makes your app available over the service's node ports.
-{:shortdesc}
-
-The portable IP address of the load balancer is assigned for you and does not change when you add or remove worker nodes. Therefore, load balancer services are more highly available than NodePort services. Users can select any port for the load balancer and are not limited to the NodePort port range. You can use load balancer services for TCP and UDP protocols.
-
-**Note**: LoadBalancer services do not support TLS termination. If your app requires TLS termination, you can expose your app by using [Ingress](cs_ingress.html), or configure your app to manage the TLS termination.
 
 Before you begin:
 
