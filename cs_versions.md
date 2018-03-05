@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-15"
+lastupdated: "2018-03-05"
 
 ---
 
@@ -18,7 +18,7 @@ lastupdated: "2018-02-15"
 # Kubernetes versions for {{site.data.keyword.containerlong_notm}}
 {: #cs_versions}
 
-{{site.data.keyword.containerlong}} concurrently supports multiple versions of Kubernetes: a latest version, a default version, and a supported version that is generally two versions behind the latest. 
+{{site.data.keyword.containerlong}} concurrently supports multiple versions of Kubernetes: a latest version, a default version, and a supported version that is generally two versions behind the latest.
 {:shortdesc}
 
 The default version might be the same as the latest version, and is used when you create or update a cluster, unless you specify a different version.
@@ -190,7 +190,8 @@ Review changes that you might need to make when you are updating from the previo
 </thead>
 <tbody>
 <tr>
-<td colspan='2'>No changes are required before you update the master</td>
+<td>None</td>
+<td>No changes are required before you update the master</td>
 </tr>
 </tbody>
 </table>
@@ -444,4 +445,12 @@ Review changes that you might need to make when you are updating from the previo
 </tbody>
 </table>
 
+## Archive
+{: #k8s_version_archive}
 
+### Version 1.5 (Deprecated)
+{: #cs_v1-5}
+
+As of March 5, 2018, {{site.data.keyword.containershort_notm}} clusters that run [Kubernetes version 1.5](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.5.md) are deprecated. After April 4, 2018, version 1.5 clusters cannot receive security updates or support unless they are updated to the next most recent version ([Kubernetes 1.7](#cs_v17)).
+
+[Review potential impact](cs_versions.html#cs_versions) of each Kubernetes version update, and then [update your clusters](cs_cluster_update.html#update) immediately. Note that you update from one version to the next most recent, such as 1.5 to 1.7 or 1.8 to 1.9.
