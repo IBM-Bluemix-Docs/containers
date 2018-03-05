@@ -22,6 +22,7 @@ lastupdated: "2017-12-14"
 Check out what container developers are interested in learning about in {{site.data.keyword.containerlong}}.
 {:shortdesc}
 
+
 <table>
 <thead>
 <th colspan=2><img src="images/idea.png" alt="Idea icon"/>Popular topics for containers and Kubernetes clusters</th>
@@ -56,6 +57,9 @@ Check out what container developers are interested in learning about in {{site.d
 <td>View the API documentation to manage the {{site.data.keyword.containershort_notm}}.</td>
 </tr>
 </tbody></table>
+
+
+
 
 ## Chat with like-minded developers on Slack
 {: #slack}
