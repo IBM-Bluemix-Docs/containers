@@ -387,7 +387,7 @@ To add persistent storage:
     <tr>
     <td><code>spec/accessModes</code>
     <code>resources/requests/storage</code></td>
-    <td>If you choose a size other than one that is listed, the size is rounded up. If you select a size larger than the largest size, then the size is rounded down.</td>
+    <td>If you choose a size other than one that is listed, the size is rounded up. If you select a size larger than the largest size, then the size is rounded down.</br></br><strong>Note: </strong> After your storage is provisioned, you cannot change the size of your NFS file share. Make sure to specify a size that matches the amount of data that you want to store. </td>
     </tr>
     <tr>
     <td><code>spec/accessModes</code>
@@ -529,12 +529,199 @@ To add persistent storage:
 
 
 
+. Make sure to specify a size that matches the amount of data that you want to store. </td>
+        </tr>
+        <tr>
+        <td><code>spec/resources/requests/iops</code></td>
+        <td>This option is for custom storage classes only (`ibmc-file-custom / ibmc-file-retain-custom / ibmc-block-custom / ibmc-block-retain-custom`). Specify the total IOPS for the storage, selecting a multiple of 100 within the allowable range. To see all options, run `kubectl describe storageclasses <storageclass>`. If you choose an IOPS other than one that is listed, the IOPS is rounded up.</td>
+        </tr>
+        </tbody></table>
 
+7.  Create the PVC.
+
+    ```
+    kubectl apply -f <local_file_path>
+    ```
+    {: pre}
+
+8.  Verify that your PVC is created and bound to the PV. This process can take a few minutes.
+
+    ```
+    kubectl describe pvc mypvc
+    ```
+    {: pre}
+
+    Example output:
+
+    ```
+    Name:		mypvc
+    Namespace:	default
+    StorageClass:	""
+    Status:		Bound
+    Volume:		pvc-0d787071-3a67-11e7-aafc-eef80dd2dea2
+    Labels:		<none>
+    Capacity:	20Gi
+    Access Modes:	RWX
+    Events:
+      FirstSeen	LastSeen	Count	From								SubObjectPath	Type		Reason			Message
+      ---------	--------	-----	----								-------------	--------	------			-------
+      3m		3m		1	{ibm.io/ibmc-file 31898035-3011-11e7-a6a4-7a08779efd33 }			Normal		Provisioning		External provisioner is provisioning volume for claim "default/my-persistent-volume-claim"
+      3m		1m		10	{persistentvolume-controller }							Normal		ExternalProvisioning	cannot find provisioner "ibm.io/ibmc-file", expecting that a volume for the claim is provisioned either manually or via external software
+      1m		1m		1	{ibm.io/ibmc-file 31898035-3011-11e7-a6a4-7a08779efd33 }			Normal		ProvisioningSucceeded	Successfully provisioned volume pvc-0d787071-3a67-11e7-aafc-eef80dd2dea2
+
+    ```
+    {: screen}
+
+9.  {: #app_volume_mount}To mount the PVC to your deployment, create a configuration file. Save the configuration as a `.yaml` file.
+
+    ```
+    apiVersion: apps/v1beta1
+    kind: Deployment
+    metadata:
+      name: <deployment_name>
+      labels:
+        app: <deployment_label>
+    spec:
+      selector:
+        matchLabels:
+          app: <app_name>
+      template:
+        metadata:
+          labels:
+            app: <app_name>
+        spec:
+          containers:
+          - image: <image_name>
+            name: <container_name>
+            volumeMounts:
+            - name: <volume_name>
+              mountPath: /<file_path>
+          volumes:
+          - name: <volume_name>
+            persistentVolumeClaim:
+              claimName: <pvc_name>
+    ```
+    {: codeblock}
+
+    <table>
+    <caption>Table. Understanding the YAML file components</caption>
+    <thead>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
+    </thead>
+    <tbody>
+        <tr>
+    <td><code>metadata/labels/app</code></td>
+    <td>A label for the deployment.</td>
+      </tr>
+      <tr>
+        <td><code>spec/selector/matchLabels/app</code> <br/> <code>spec/template/metadata/labels/app</code></td>
+        <td>A label for your app.</td>
+      </tr>
+    <tr>
+    <td><code>template/metadata/labels/app</code></td>
+    <td>A label for the deployment.</td>
+      </tr>
+    <tr>
+    <td><code>spec/containers/image</code></td>
+    <td>The name of the image that you want to use. To list available images in your {{site.data.keyword.registryshort_notm}} account, run `bx cr image-list`.</td>
+    </tr>
+    <tr>
+    <td><code>spec/containers/name</code></td>
+    <td>The name of the container that you want to deploy to your cluster.</td>
+    </tr>
+    <tr>
+    <td><code>spec/containers/volumeMounts/mountPath</code></td>
+    <td>The absolute path of the directory to where the volume is mounted inside the container.</td>
+    </tr>
+    <tr>
+    <td><code>spec/containers/volumeMounts/name</code></td>
+    <td>The name of the volume to mount to your pod.</td>
+    </tr>
+    <tr>
+    <td><code>volumes/name</code></td>
+    <td>The name of the volume to mount to your pod. Typically this name is the same as <code>volumeMounts/name</code>.</td>
+    </tr>
+    <tr>
+    <td><code>volumes/persistentVolumeClaim/claimName</code></td>
+    <td>The name of the PVC that you want to use as your volume. When you mount the volume to the pod, Kubernetes identifies the PV that is bound to the PVC and enables the user to read from and write to the PV.</td>
+    </tr>
+    </tbody></table>
+
+10.  Create the deployment and mount the PVC.
+     ```
+     kubectl apply -f <local_yaml_path>
+     ```
+     {: pre}
+
+11.  Verify that the volume is successfully mounted.
+
+     ```
+     kubectl describe deployment <deployment_name>
+     ```
+     {: pre}
+
+     The mount point is in the **Volume Mounts** field and the volume is in the **Volumes** field.
+
+     ```
+      Volume Mounts:
+           /var/run/secrets/kubernetes.io/serviceaccount from default-token-tqp61 (ro)
+           /volumemount from myvol (rw)
+     ...
+     Volumes:
+       myvol:
+         Type:	PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+         ClaimName:	mypvc
+         ReadOnly:	false
+     ```
+     {: screen}
+
+</staging>
 
 <br />
 
 
+. Make sure to specify a size that matches the amount of data that you want to store.
 
+    1.  **Example PVC to specify a zone for multizone clusters**:
+        The following `.yaml` file creates a claim that is named `mypvc` based off the customized storage class named `ibmc-file-silver-mycustom-storageclass`, billed `"hourly"`, with a gigabyte size of `24Gi`.
+
+        ```
+        apiVersion: v1
+        kind: PersistentVolumeClaim
+        metadata:
+          name: mypvc
+          labels:
+            billingType: "hourly"
+        spec:
+          accessModes:
+            - ReadWriteMany
+          resources:
+            requests:
+              storage: 24Gi
+          storageClassName: ibmc-file-silver-mycustom-storageclass
+         ```
+         {: codeblock}
+
+    2.  Create the PVC.
+
+        ```
+        kubectl apply -f <local_file_path>
+        ```
+        {: pre}
+
+    3.  Verify that your persistent volume claim is created and bound to the persistent volume. This process can take a few minutes.
+
+        ```
+        kubectl describe pvc mypvc
+        ```
+        {: pre}
+
+4.  [Mount the PVC to your deployment](#app_volume_mount).
+
+<br />
+
+
+</staging>
 
 
 
