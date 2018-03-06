@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-28"
+lastupdated: "2018-03-06"
 
 
 ---
@@ -46,7 +46,7 @@ Every user that works with {{site.data.keyword.containershort_notm}} must be ass
 
 <dl>
 <dt>{{site.data.keyword.containershort_notm}} access policies</dt>
-<dd>In Identity and Access Management, {{site.data.keyword.containershort_notm}} access policies determine the cluster management actions that you can perform on a cluster, such as creating or removing clusters, and adding or removing extra worker nodes. These policies must be set in conjunction with infrastructure policies.</dd>
+<dd>In Identity and Access Management, {{site.data.keyword.containershort_notm}} access policies determine the cluster management actions that you can perform on a cluster, such as creating or removing clusters, and adding or removing extra worker nodes. These policies must be set in conjunction with infrastructure policies. You can grant access to clusters on a regional basis.</dd>
 <dt>Infrastructure access policies</dt>
 <dd>In Identity and Access Management, infrastructure access policies allow the actions that are requested from the {{site.data.keyword.containershort_notm}} user interface or the CLI to be completed in IBM Cloud infrastructure (SoftLayer). These policies must be set in conjunction with {{site.data.keyword.containershort_notm}} access policies. [Learn more about the available infrastructure roles](/docs/iam/infrastructureaccess.html#infrapermission).</dd>
 <dt>Resource groups</dt>
@@ -66,7 +66,7 @@ Every user that works with {{site.data.keyword.containershort_notm}} must be ass
 Review the access policies and permissions that you can grant to users in your {{site.data.keyword.Bluemix_notm}} account.
 {:shortdesc}
 
-The operator and editor roles have separate permissions. If you want a user to, for example, add worker nodes and bind services, then you must assign the user both the operator and editor roles. For more details on corresponding infrastructure access policies, see [Customizing infrastructure permissions for a user](#infra_access).<br/><br/>If you change a user's access policy, {{site.data.keyword.containershort_notm}} cleans up the RBAC policies associated with the change in your cluster for you. </br></br>**Note:** When you downgrade permissions, for example you want to assign viewer access to a former cluster admin, you must wait a few minutes for the downgrade to complete.
+The {{site.data.keyword.Bluemix_notm}} Identity Access and Management (IAM) operator and editor roles have separate permissions. If you want a user to, for example, add worker nodes and bind services, then you must assign the user both the operator and editor roles. For more details on corresponding infrastructure access policies, see [Customizing infrastructure permissions for a user](#infra_access).<br/><br/>If you change a user's access policy, the RBAC policies associated with the change in your cluster are cleaned up for you. </br></br>**Note:** When you downgrade permissions, for example you want to assign viewer access to a former cluster admin, you must wait a few minutes for the downgrade to complete.
 
 |{{site.data.keyword.containershort_notm}} access policy|Cluster management permissions|Kubernetes resource permissions|
 |-------------|------------------------------|-------------------------------|
@@ -97,7 +97,6 @@ When a different user performs an action in this region that requires interactio
 <dd>If you have an {{site.data.keyword.Bluemix_notm}} Pay-As-You-Go account, you have access to the IBM Cloud infrastructure (SoftLayer) portfolio by default. However, you might want to use a different IBM Cloud infrastructure (SoftLayer) account that you already have to order infrastructure. You can link this infrastructure account to your {{site.data.keyword.Bluemix_notm}} account by using the [<code>bx cs credentials-set</code>](cs_cli_reference.html#cs_credentials_set) command. </br></br>If IBM Cloud infrastructure (SoftLayer) credentials are manually set, these credentials are used to order infrastructure, even if an IAM API key already exists for the account. If the user whose credentials are stored does not have the required permissions to order infrastructure, then infrastructure-related actions, such as creating a cluster or reloading a worker node can fail. </br></br> To remove IBM Cloud infrastructure (SoftLayer) credentials that were manually set, you can use the [<code>bx cs credentials-unset</code>](cs_cli_reference.html#cs_credentials_unset) command. After the credentials are removed, the IAM API key is used to order infrastructure. </dd>
 </dl>
 
-
 ## Adding users to an {{site.data.keyword.Bluemix_notm}} account
 {: #add_users}
 
@@ -111,7 +110,7 @@ Before you begin, verify that you have been assigned the Manager Cloud Foundry r
 3.  Assign an {{site.data.keyword.containershort_notm}} access role. From the **Assign access to** drop-down list, decide whether you want to grant access only to your {{site.data.keyword.containershort_notm}} account (**Resource**), or to a collection of various resources within your account (**Resource group**).
   -  For **Resource**:
       1. From the **Services** drop-down list, select **{{site.data.keyword.containershort_notm}}**.
-      2. From the **Region** drop-down list, select the region to invite the user to.
+      2. From the **Region** drop-down list, select the region to invite the user to. **Note**: For access to clusters in the [AP North region](cs_regions.html#locations), see [Granting IAM access to users for clusters within the AP North region](#iam_cluster_region).
       3. From the **Service instance** drop-down list, select the cluster to invite the user to. To find the ID of a specific cluster, run `bx cs clusters`.
       4. In the **Select roles** section, choose a role. To find a list of supported actions per role, see [Access policies and permissions](#access_policies).
   - For **Resource group**:
@@ -123,6 +122,61 @@ Before you begin, verify that you have been assigned the Manager Cloud Foundry r
 
 <br />
 
+
+### Granting IAM access to users for clusters within the AP North region
+{: #iam_cluster_region}
+
+When you [add users to your {{site.data.keyword.Bluemix_notm}} account](#add_users), you select the regions to which they are granted access. However, some regions, such as AP North, might not not be available in the console, and must be added by using the CLI.
+{:shortdesc}
+
+Before you begin, verify that you are an admin for the {{site.data.keyword.Bluemix_notm}} account.
+
+1.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI. Select the account that you want to use.
+
+    ```
+    bx login [--sso]
+    ```
+    {: pre}
+
+    **Note:** If you have a federated ID, use `bx login --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
+
+2.  Target the environment that you want to grant permissions to, such as the AP North region (`jp-tok`). For more details about the command options such as organization and space, see the [`bluemix target` command](../cli/reference/bluemix_cli/bx_cli.html#bluemix_target).
+
+    ```
+    bx target -r jp-tok
+    ```
+    {: pre}
+
+3.  Get the name or IDs of the region's clusters that you want to grant access to.
+
+    ```
+    bx cs clusters
+    ```
+    {: pre}
+
+4.  Get the user IDs that you want to grant access to.
+
+    ```
+    bx account users
+    ```
+    {: pre}
+
+5.  Select the roles for the access policy.
+
+    ```
+    bx iam roles --service containers-kubernetes
+    ```
+    {: pre}
+
+6.  Grant the user access to the cluster with the appropriate role. This example assigns `user@example.com` the `Operator` and `Editor` roles for three clusters.
+
+    ```
+    bx iam user-policy-create user@example.com --roles Operator,Editor --service-name containers-kubernetes --region jp-tok --service-instance cluster1,cluster2,cluster3
+    ```
+    {: pre}
+
+    To grant access to existing and future clusters in the region, do not specify the `--service-instance` flag. For more information, see the [`bluemix iam user-policy-create` command](../cli/reference/bluemix_cli/bx_cli.html#bluemix_iam_user_policy_create).
+    {:tip}
 
 ## Customizing infrastructure permissions for a user
 {: #infra_access}
