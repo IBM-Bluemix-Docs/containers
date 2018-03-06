@@ -456,6 +456,31 @@ There are no service disruptions due to these duplicates, but you should remove 
 
 
 
+## File systems for worker nodes change to read-only
+{: #readonly_nodes}
+
+{: tsSymptoms}
+{: #stuck_creating_state}
+You might see one of the following symptoms:
+- When you run `kubectl get pods -o wide`, you see that multiple pods that are running on the same worker node are stuck in the `ContainerCreating` state.
+- When you run a `kubectl describe` command, you see the following error in the events section: `MountVolume.SetUp failed for volume ... read-only file system`.
+
+{: tsCauses}
+The file system on the worker node is read-only.
+
+{: tsResolve}
+1. Back up any data that might be stored on the worker node or in your containers.
+2. For a short-term fix to the existing worker node, reload the worker node.
+
+<pre class="pre"><code>bx cs worker-reload &lt;cluster_name&gt; &lt;worker_id&gt;</code></pre>
+
+For a long-term fix, [update the machine type by adding another worker node](cs_cluster_update.html#machine_type).
+
+<br />
+
+
+
+
 ## Accessing a pod on a new worker node fails with a timeout
 {: #cs_nodes_duplicate_ip}
 
@@ -580,26 +605,6 @@ If this cluster is an existing one, check your cluster capacity.
   {: pre}
 
 5.  If your pods still stay in a **pending** state after the worker node is fully deployed, review the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-pod-replication-controller/#my-pod-stays-pending) to further troubleshoot the pending state of your pod.
-
-<br />
-
-
-
-
-## Pods are stuck in the creating state
-{: #stuck_creating_state}
-
-{: tsSymptoms}
-When you run `kubectl get pods -o wide`, you see that multiple pods that are running on the same worker node are stuck in the `ContainerCreating` state.
-
-{: tsCauses}
-The file system on the worker node is read-only.
-
-{: tsResolve}
-1. Back up any data that might be stored on the worker node or in your containers.
-2. Rebuild the worker node by running the following command.
-
-<pre class="pre"><code>bx cs worker-reload &lt;cluster_name&gt; &lt;worker_id&gt;</code></pre>
 
 <br />
 

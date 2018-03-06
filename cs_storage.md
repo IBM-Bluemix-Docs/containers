@@ -387,7 +387,7 @@ To add persistent storage:
     <tr>
     <td><code>spec/accessModes</code>
     <code>resources/requests/storage</code></td>
-    <td>If you choose a size other than one that is listed, the size is rounded up. If you select a size larger than the largest size, then the size is rounded down.</td>
+    <td>If you choose a size other than one that is listed, the size is rounded up. If you select a size larger than the largest size, then the size is rounded down.</br></br><strong>Note: </strong> After your storage is provisioned, you cannot change the size of your NFS file share. Make sure to specify a size that matches the amount of data that you want to store. </td>
     </tr>
     <tr>
     <td><code>spec/accessModes</code>
@@ -534,7 +534,48 @@ To add persistent storage:
 <br />
 
 
+. Make sure to specify a size that matches the amount of data that you want to store.
 
+    1.  **Example PVC to specify a zone for multizone clusters**:
+        The following `.yaml` file creates a claim that is named `mypvc` based off the customized storage class named `ibmc-file-silver-mycustom-storageclass`, billed `"hourly"`, with a gigabyte size of `24Gi`.
+
+        ```
+        apiVersion: v1
+        kind: PersistentVolumeClaim
+        metadata:
+          name: mypvc
+          labels:
+            billingType: "hourly"
+        spec:
+          accessModes:
+            - ReadWriteMany
+          resources:
+            requests:
+              storage: 24Gi
+          storageClassName: ibmc-file-silver-mycustom-storageclass
+         ```
+         {: codeblock}
+
+    2.  Create the PVC.
+
+        ```
+        kubectl apply -f <local_file_path>
+        ```
+        {: pre}
+
+    3.  Verify that your persistent volume claim is created and bound to the persistent volume. This process can take a few minutes.
+
+        ```
+        kubectl describe pvc mypvc
+        ```
+        {: pre}
+
+4.  [Mount the PVC to your deployment](#app_volume_mount).
+
+<br />
+
+
+</staging>
 
 
 

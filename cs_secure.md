@@ -76,9 +76,10 @@ Review the built-in Kubernetes master security features to protect the Kubernete
   <dt>OpenVPN secured network connectivity for all Kubernetes master to worker node communication</dt>
     <dd>Although Kubernetes secures the communication between the Kubernetes master and worker nodes by using the `https` protocol, no authentication is provided on the worker node by default. To secure this communication, {{site.data.keyword.containershort_notm}} automatically sets up an OpenVPN connection between the Kubernetes master and the worker node when the cluster is created.</dd>
   <dt>Continuous Kubernetes master network monitoring</dt>
-    <dd>Every Kubernetes master is continuously monitored by IBM to control and remediate process level Denial-Of-Service (DOS) attacks.</dd>
+    <dd>Every Kubernetes master is continuously monitore
+      d by IBM to control and remediate process level Denial-Of-Service (DOS) attacks.</dd>
   <dt>Kubernetes master node security compliance</dt>
-    <dd>{{site.data.keyword.containershort_notm}} automatically scans every node where the Kubernetes master is deployed for vulnerabilities found in Kubernetes and OS-sepcific security fixes that need to be applied to assure master node protection. If vulnerabilities are found, {{site.data.keyword.containershort_notm}} automatically applies fixes and resolves vulnerabilities on behalf of the user.</dd>
+    <dd>{{site.data.keyword.containershort_notm}} automatically scans every node where the Kubernetes master is deployed for vulnerabilities found in Kubernetes and OS-specific security fixes that need to be applied to assure master node protection. If vulnerabilities are found, {{site.data.keyword.containershort_notm}} automatically applies fixes and resolves vulnerabilities on behalf of the user.</dd>
 </dl>
 
 <br />
