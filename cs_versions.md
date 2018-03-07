@@ -21,15 +21,16 @@ lastupdated: "2018-03-05"
 {{site.data.keyword.containerlong}} concurrently supports multiple versions of Kubernetes: a latest version, a default version, and a supported version that is generally two versions behind the latest.
 {:shortdesc}
 
-The default version might be the same as the latest version, and is used when you create or update a cluster, unless you specify a different version.
-
 The current supported Kubernetes versions are:
 
 - Latest: 1.9.3
 - Default: 1.8.8
 - Supported: 1.7.4
 
-If you are running clusters on a Kubernetes version that is not currently supported, [review potential impacts](#version_types) for updates and then immediately [update your cluster](cs_cluster_update.html#update) to continue receiving important security updates and support. To check the server version, run the following command.
+The default version might be the same as the latest version, and is used when you create or update a cluster, unless you specify a different version.
+
+
+**Unsupported Versions**: If you are running clusters on a Kubernetes version that is not supported, [review potential impacts](#version_types) for updates and then immediately [update your cluster](cs_cluster_update.html#update) to continue receiving important security updates and support. To check the server version, run the following command.
 
 ```
 kubectl version  --short | grep -i server
