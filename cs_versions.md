@@ -30,7 +30,9 @@ The current supported Kubernetes versions are:
 The default version might be the same as the latest version, and is used when you create or update a cluster, unless you specify a different version.
 
 
-**Unsupported Versions**: If you are running clusters on a Kubernetes version that is not supported, [review potential impacts](#version_types) for updates and then immediately [update your cluster](cs_cluster_update.html#update) to continue receiving important security updates and support. To check the server version, run the following command.
+**Unsupported Versions**: If you are running clusters on a Kubernetes version that is not supported, [review potential impacts](#version_types) for updates and then immediately [update your cluster](cs_cluster_update.html#update) to continue receiving important security updates and support.
+
+To check the server version, run the following command.
 
 ```
 kubectl version  --short | grep -i server

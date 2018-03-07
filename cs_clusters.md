@@ -90,6 +90,8 @@ When you create a standard cluster, worker nodes are ordered in IBM Cloud infras
 
 
 
+
+
 ### Hardware for worker nodes
 {: #shared_dedicated_node}
 
