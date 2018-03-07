@@ -194,7 +194,7 @@ You can update the machine types that are used in worker nodes by adding new wor
     ```
     {: pre}
     
-3. Add a worker node by using the [bx cs worker-add](cs_cli_reference.html#cs_worker_add). and specify one of the machine types listed in the output of the previous command.
+3. Add a worker node by using the [bx cs worker-add](cs_cli_reference.html#cs_worker_add) command and specify one of the machine types listed in the output of the previous command.
 
     ```
     bx cs worker-add --cluster <cluster_name> --machine-type <machine_type> --number <number_of_worker_nodes> --private-vlan <private_vlan> --public-vlan <public_vlan>

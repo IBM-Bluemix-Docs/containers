@@ -18,7 +18,7 @@ lastupdated: "2018-03-05"
 # Kubernetes versions for {{site.data.keyword.containerlong_notm}}
 {: #cs_versions}
 
-{{site.data.keyword.containerlong}} concurrently supports multiple versions of Kubernetes: a latest version, a default version, and a supported version that is generally two versions behind the latest.
+{{site.data.keyword.containerlong}} concurrently supports multiple versions of Kubernetes. When a latest version (n) is released, versions up to 2 behind (n-2) are supported. Versions more than 2 behind the latest (n-3) are first deprecated and then unsupported.
 {:shortdesc}
 
 The current supported Kubernetes versions are:
@@ -26,11 +26,13 @@ The current supported Kubernetes versions are:
 - Latest: 1.9.3
 - Default: 1.8.8
 - Supported: 1.7.4
+- Deprecated: 1.5.x, unsupported 4 April 2018
 
-The default version might be the same as the latest version, and is used when you create or update a cluster, unless you specify a different version.
+**Deprecated Versions**: When clusters are running on a deprecated Kubernetes, you have 30 days to review and update to a supported Kubernetes version before the version becomes unsupported. During the deprecation period, you can run limited commands in your clusters to add workers, reload workers, and update the cluster. You cannot create new clusters in the deprecated version.
 
+**Unsupported Versions**: If you are running clusters on a Kubernetes version that is not supported, [review potential impacts](#version_types) for updates and then immediately [update your cluster](cs_cluster_update.html#update) to continue receiving important security updates and support.
 
-**Unsupported Versions**: If you are running clusters on a Kubernetes version that is not supported, [review potential impacts](#version_types) for updates and then immediately [update your cluster](cs_cluster_update.html#update) to continue receiving important security updates and support. To check the server version, run the following command.
+To check the server version, run the following command.
 
 ```
 kubectl version  --short | grep -i server
@@ -452,6 +454,6 @@ Review changes that you might need to make when you are updating from the previo
 ### Version 1.5 (Deprecated)
 {: #cs_v1-5}
 
-As of March 5, 2018, {{site.data.keyword.containershort_notm}} clusters that run [Kubernetes version 1.5](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.5.md) are deprecated. After April 4, 2018, version 1.5 clusters cannot receive security updates or support unless they are updated to the next most recent version ([Kubernetes 1.7](#cs_v17)).
+As of 5 March 2018, {{site.data.keyword.containershort_notm}} clusters that run [Kubernetes version 1.5](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.5.md) are deprecated. After 4 April 2018, version 1.5 clusters cannot receive security updates or support unless they are updated to the next most recent version ([Kubernetes 1.7](#cs_v17)).
 
 [Review potential impact](cs_versions.html#cs_versions) of each Kubernetes version update, and then [update your clusters](cs_cluster_update.html#update) immediately. Note that you update from one version to the next most recent, such as 1.5 to 1.7 or 1.8 to 1.9.
