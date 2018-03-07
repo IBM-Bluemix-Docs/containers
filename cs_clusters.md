@@ -77,18 +77,14 @@ Increase the availability of your cluster with these techniques:
 
 
 
-## Worker node configuration planning
-{: #planning_worker_nodes}
+### Worker node pools
+{: #worker_pools}
 
-A Kubernetes cluster consists of worker nodes and is centrally monitored and managed by the Kubernetes master. Cluster admins decide how to set up the cluster of worker nodes to ensure that cluster users have all the resources to deploy and run apps in the cluster.
-{:shortdesc}
+Every cluster is set up with a default worker pool that groups worker nodes with the same configuration that you defined during cluster creation, such as the machine type and `kubelet` version. A worker node pool is initially set up in one zone only. You can add more zones to your worker node pool to replicate worker nodes evenly across zones. For example, if you add a second zone to a worker node pool that consists of 3 worker nodes, then 3 worker nodes are provisioned into the second zone which leaves you with a cluster of 6 worker nodes in total.
 
+If you want to add different machine type flavors to your cluster, you can create another worker node pool. 
 
-When you create a standard cluster, worker nodes are ordered in IBM Cloud infrastructure (SoftLayer) on your behalf and set up in {{site.data.keyword.Bluemix_notm}}. Every worker node is assigned a unique worker node ID and domain name that must not be changed after the cluster is created. Depending on the level of hardware isolation that you choose, worker nodes can be set up as shared or dedicated nodes. You can also choose whether you want worker nodes to connect to a public VLAN and private VLAN, or only to a private VLAN. Every worker node is provisioned with a specific machine type that determines the number of vCPUs, memory, and disk space that are available to the containers that are deployed to the worker node. Kubernetes limits the maximum number of worker nodes that you can have in a cluster. Review [worker node and pod quotas ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/admin/cluster-large/) for more information.
-
-
-
-
+</staging>
 
 ### Hardware for worker nodes
 {: #shared_dedicated_node}
