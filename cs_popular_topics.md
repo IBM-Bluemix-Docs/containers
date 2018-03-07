@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2017-12-14"
+lastupdated: "2018-03-07"
 
 ---
 
@@ -22,38 +22,78 @@ lastupdated: "2017-12-14"
 Check out what container developers are interested in learning about in {{site.data.keyword.containerlong}}.
 {:shortdesc}
 
-<table>
+## Popular topics in February 2018
+{: #feb18}
+
+<table summary="The table shows popular topics. Rows are to be read from the left to right, with the date in column one, the title of the feature in column two and a description in column three.">
+<caption>Popular topics for containers and Kubernetes clusters in February 2018</caption>
 <thead>
-<th colspan=2><img src="images/idea.png" alt="Idea icon"/>Popular topics for containers and Kubernetes clusters</th>
+<th>Date</th>
+<th>Title</th>
+<th>Description</th>
 </thead>
 <tbody>
 <tr>
-<td>[Getting started](container_index.html)</td>
-<td>You manage highly available apps inside Docker containers and Kubernetes clusters on the IBM cloud.</td>
+<td>27 February</td>
+<td>Hardware virtual machine (HVM) images for worker nodes</td>
+<td>Increase the I/O performance of your workloads with HVM images. Activate on each existing worker node by using the `bx cs worker-reload` [command](cs_cli_reference.html#cs_worker_reload) or the `bx cs worker-update` [command](cs_cli_reference.html#cs_worker_update).</td>
 </tr>
 <tr>
-<td>[About containers and clusters](cs_ov.html)</td>
-<td>Docker and Kubernetes deliver built-in security and isolation, and they automate deployment, operation, scaling, and monitoring of containerized apps in a cluster of independent compute hosts.</td>
+<td>26 February</td>
+<td>[KubeDNS autoscaling](https://kubernetes.io/docs/tasks/administer-cluster/dns-horizontal-autoscaling/)</td>
+<td>KubeDNS now scales with your cluster as it grows. You can adjust the scaling rations by using the following command: `kubectl -n kube-system edit cm kube-dns-autoscaler`.</td>
 </tr>
 <tr>
-<td>[Deploying apps in clusters](cs_app.html)</td>
-<td>You can use Kubernetes techniques to deploy apps and to ensure your apps are up and running at all times. For example, you can perform rolling updates and rollbacks without downtime for your users.</td>
+<td>23 February</td>
+<td>View the web UI for [logging](cs_health.html#view_logs) and [metrics](cs_health.html#view_metrics)</td>
+<td>Easily view log and metric data on your cluster and its components with an improved web UI. See your cluster detail page for access.</td>
 </tr>
 <tr>
-<td>[Setting up the CLI](cs_cli_install.html)</td>
-<td>With the CLI, you create and manage your Kubernetes clusters.</td>
+<td>20 February</td>
+<td>Encrypted images and [signed, trusted content](../services/Registry/registry_trusted_content.html#registry_trustedcontent)</td>
+<td>In {{site.data.keyword.registryshort_notm}}, you can sign and encrypt images to ensure their integrity when storing in your registry namespace. Build containers using only trusted content.</td>
 </tr>
 <tr>
-<td>[Opening required ports and IP addresses in your firewall](cs_firewall.html#firewall)</td>
-<td>You might need to open specific ports and IP addresses in your firewalls to run CLI commands or to allow communication between the Kubernetes master and the worker nodes.</td>
+<td>19 February</td>
+<td>[Set up the strongSwan IPSec VPN](cs_vpn.html#vpn-setup)</td>
+<td>Quickly deploy the strongSwan IPSec VPN Helm chart to connect your {{site.data.keyword.containershort_notm}} cluster securely to your on-premises data center without a Vyatta.</td>
 </tr>
 <tr>
-<td>[Update Kubernetes](cs_versions.html)</td>
-<td>Review the changes to make to your clusters before updating Kubernetes.</td>
+<td>14 February</td>
+<td>[Location available in Seoul](cs_regions.html)</td>
+<td>Just in time for the Olympics, deploy a Kubernetes cluster to Seoul in the AP North region. If you have a firewall, be sure to [open the required firewall ports](cs_firewall.html#firewall) for this location as well as the others within the region that your cluster is in.</td>
 </tr>
 <tr>
-<td>[REST API for clusters ![External link icon](../icons/launch-glyph.svg "External link icon")](https://containers.bluemix.net/swagger)</td>
-<td>View the API documentation to manage the {{site.data.keyword.containershort_notm}}.</td>
+<td>8 February</td>
+<td>[Update Kubernetes 1.9](cs_versions.html#cs_v19)</td>
+<td>Review the changes to make to your clusters before updating Kubernetes 1.9.</td>
+</tr>
+</tbody></table>
+
+## Popular topics in January 2018
+{: #jan18}
+
+<table summary="The table shows popular topics. Rows are to be read from the left to right, with the date in column one, the title of the feature in column two and a description in column three.">
+<caption>Popular topics for containers and Kubernetes clusters in January 2018</caption>
+<thead>
+<th>Date</th>
+<th>Title</th>
+<th>Description</th>
+</thead>
+<tbody>
+<td>25 January</td>
+<td>[Global registry available](../services/Registry/registry_overview.html#registry_regions)</td>
+<td>With the {{site.data.keyword.registryshort_notm}}, you can use the global `registry.bluemix.net` to pull IBM-provided public images.</td>
+</tr>
+<tr>
+<td>23 January</td>
+<td>[Locations available in Singapore and Montreal, CA](cs_regions.html)</td>
+<td>Singapore and Montreal are locations available in the {{site.data.keyword.containershort_notm}} AP North and US East regions. If you have a firewall, be sure to [open the required firewall ports](cs_firewall.html#firewall) for these locations as well as the others within the region that your cluster is in.</td>
+</tr>
+<tr>
+<td>8 January</td>
+<td>[Enhanced machine types available](cs_cli_reference.html#cs_machine_types)</td>
+<td>Series 2 machine types include local SSD storage and disk encryption. [Migrate your workloads](cs_cluster_update.html#machine_type) to these machine types for improved performance and stability.</td>
 </tr>
 </tbody></table>
 
