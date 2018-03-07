@@ -918,7 +918,7 @@ To enable the private ALB using the pre-assigned, IBM-provided portable private 
 2. Enable the private ALB. Replace <em>&lt;private_ALB_ID&gt;</em> with the ID for private ALB from the output in the previous step.
 
    ```
-   bx cs bx cs alb-configure --albID <private_ALB_ID> --enable
+   bx cs alb-configure --albID <private_ALB_ID> --enable
    ```
    {: pre}
 
@@ -950,7 +950,7 @@ To enable the private ALB using your own portable private IP address:
 3. Enable the private ALB. Replace <em>&lt;private_ALB_ID&gt;</em> with the ID for private ALB from the output in the previous step and <em>&lt;user_ip&gt;</em> with the IP address from your user-managed subnet that you want to use.
 
    ```
-   bx cs bx cs alb-configure --albID <private_ALB_ID> --enable --user-ip <user_ip>
+   bx cs alb-configure --albID <private_ALB_ID> --enable --user-ip <user_ip>
    ```
    {: pre}
 
