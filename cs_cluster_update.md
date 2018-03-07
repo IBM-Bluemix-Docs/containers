@@ -169,5 +169,52 @@ Next steps:
   - Repeat the update process with other clusters.
   - Inform developers who work in the cluster to update their `kubectl` CLI to the version of the Kubernetes master.
   - If the Kubernetes dashboard does not display utilization graphs, [delete the `kube-dashboard` pod](cs_troubleshoot.html#cs_dashboard_graphs).
+
+
 <br />
 
+
+
+## Updating machine types
+{: #machine_type}
+
+You can update the machine types that are used in worker nodes by adding new worker nodes and removing the old ones. For example, if you have virtual worker nodes on deprecated machine types with `u1c` or `b1c` in the names, create worker nodes that use machine types with `u2c` or `b2c` in the names.
+{: shortdesc}
+
+1. Note the names and locations of the worker nodes to update.
+
+    ```
+    bx cs workers <cluster_name>
+    ```
+    {: pre}
+
+2. View the available machine types.
+    ```
+    bx cs machine-types <location> 
+    ```
+    {: pre}
+    
+3. Add a worker node by using the [bx cs worker-add](cs_cli_reference.html#cs_worker_add). and specify one of the machine types listed in the output of the previous command.
+
+    ```
+    bx cs worker-add --cluster <cluster_name> --machine-type <machine_type> --number <number_of_worker_nodes> --private-vlan <private_vlan> --public-vlan <public_vlan>
+    ```
+    {: pre}
+
+4. Verify that the worker node is added.
+
+    ```
+    bx cs workers <cluster_name>
+    ```
+    {: pre}
+    
+5. When the added worker node is in the `Normal` state, you can remove the outdated worker node.
+
+    ```
+    bx cs worker-rm <cluster_name> <worker_node> 
+    ```
+    {: pre}
+    
+    
+
+6. Repeat these steps to upgrade other worker nodes to different machine types.
