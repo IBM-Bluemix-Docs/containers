@@ -109,7 +109,7 @@ A persistent volume (PV) is a Kubernetes resource that represents an actual stor
 
  As depicted in the diagram, to enable existing NFS file shares to be used with Kubernetes, you must create PVs with a certain size and access mode and create a PVC that matches the PV specification. If the PV and PVC match, they are bound to each other. Only bound PVCs can be used by the cluster user to mount the volume to a deployment. This process is referred to as static provisioning of persistent storage.
 
-Before you begin, make sure that you have an existing NFS file share that you can use to create your PV.
+Before you begin, make sure that you have an existing NFS file share that you can use to create your PV. For example, if you previously [created a PVC with a `retain` storage class policy](#create), you can use that retained data in the existing NFS file share for this new PVC.
 
 **Note:** Static provisioning of persistent storage only applies to existing NFS file shares. If you do not have existing NFS file shares, cluster users can use the [dynamic provisioning](cs_storage.html#create) process to add PVs.
 
