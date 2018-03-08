@@ -18,7 +18,7 @@ lastupdated: "2018-03-05"
 # Kubernetes versions for {{site.data.keyword.containerlong_notm}}
 {: #cs_versions}
 
-{{site.data.keyword.containerlong}} concurrently supports multiple versions of Kubernetes: a latest version, a default version, and a supported version that is generally two versions behind the latest.
+{{site.data.keyword.containerlong}} concurrently supports multiple versions of Kubernetes. When a latest version (n) is released, versions up to 2 behind (n-2) are supported. Versions more than 2 behind the latest (n-3) are first deprecated and then unsupported.
 {:shortdesc}
 
 The current supported Kubernetes versions are:
@@ -26,11 +26,13 @@ The current supported Kubernetes versions are:
 - Latest: 1.9.3
 - Default: 1.8.8
 - Supported: 1.7.4
+- Deprecated: 1.5.x, unsupported 4 April 2018
 
-The default version might be the same as the latest version, and is used when you create or update a cluster, unless you specify a different version.
+**Deprecated Versions**: When clusters are running on a deprecated Kubernetes, you have 30 days to review and update to a supported Kubernetes version before the version becomes unsupported. During the deprecation period, you can run limited commands in your clusters to add workers, reload workers, and update the cluster. You cannot create new clusters in the deprecated version.
 
+**Unsupported Versions**: If you are running clusters on a Kubernetes version that is not supported, [review potential impacts](#version_types) for updates and then immediately [update your cluster](cs_cluster_update.html#update) to continue receiving important security updates and support.
 
-**Unsupported Versions**: If you are running clusters on a Kubernetes version that is not supported, [review potential impacts](#version_types) for updates and then immediately [update your cluster](cs_cluster_update.html#update) to continue receiving important security updates and support. To check the server version, run the following command.
+To check the server version, run the following command.
 
 ```
 kubectl version  --short | grep -i server
@@ -118,42 +120,6 @@ Previously, the operation failed and you saw the error message `xxx is not found
 <td>Users are required to log in to the Kubernetes dashboard with their credentials to view cluster resources. The default Kubernetes dashboard `ClusterRoleBinding` RBAC authorization is removed. For instructions, see [Launching the Kubernetes dashboard](cs_app.html#cli_dashboard).</td>
 </tr>
 <tr>
-<td>RBAC for `default` `ServiceAccount`</td>
-<td><p>The administrator `ClusterRoleBinding` for the `default` `ServiceAccount` in the `default` namespace is removed. If your applications rely on this RBAC policy to access the Kubernetes API, [update your RBAC policies](https://kubernetes.io/docs/admin/authorization/rbac/#api-overview).</p>
-  <p>As you update your app RBAC policies, you might want to revert temporarily to the previous policy `default`. Copy, save, and apply the following files with the `kubectl apply -f FILENAME` command. <strong>Note</strong>: Revert to give yourself time to update all your app RBAC policies, and not as a long-term solution.</p>
-
-  <p><pre class="codeblock">
-  <code>
-  kind: ClusterRoleBinding
-  apiVersion: rbac.authorization.k8s.io/v1
-  metadata:
-   name: admin-binding-nonResourceURLSs-default
-  subjects:
-    - kind: ServiceAccount
-      name: default
-      namespace: default
-  roleRef:
-   kind: ClusterRole
-   name: admin-role-nonResourceURLSs
-   apiGroup: rbac.authorization.k8s.io
-  ---
-  kind: ClusterRoleBinding
-  apiVersion: rbac.authorization.k8s.io/v1
-  metadata:
-   name: admin-binding-resourceURLSs-default
-  subjects:
-    - kind: ServiceAccount
-      name: default
-      namespace: default
-  roleRef:
-   kind: ClusterRole
-   name: admin-role-resourceURLSs
-   apiGroup: rbac.authorization.k8s.io
-  </code>
-  </pre></p>
-  </td>
-</tr>
-<tr>
 <td>Taints and tolerations</td>
 <td>The `node.alpha.kubernetes.io/notReady` and `node.alpha.kubernetes.io/unreachable` taints were changed to `node.kubernetes.io/not-ready` and `node.kubernetes.io/unreachable` respectively.<br>
 Although the taints are updated automatically, you must manually update the tolerations for these taints. For each namespace except `ibm-system` and `kube-system`, determine whether you need to change tolerations:<br>
@@ -228,42 +194,6 @@ Review changes that you might need to make when you are updating from the previo
 <tr>
 <td>`kubectl stop`</td>
 <td>The `kubectl stop` command is no longer available.</td>
-</tr>
-<tr>
-<td>RBAC for `default` `ServiceAccount`</td>
-<td><p>The administrator `ClusterRoleBinding` for the `default` `ServiceAccount` in the `default` namespace is removed. If your applications rely on this RBAC policy to access the Kubernetes API, [update your RBAC policies](https://kubernetes.io/docs/admin/authorization/rbac/#api-overview).</p>
-  <p>As you update your app RBAC policies, you might want to revert temporarily to the previous policy `default`. Copy, save, and apply the following files with the `kubectl apply -f FILENAME` command. <strong>Note</strong>: Revert to give yourself time to update all your app RBAC policies, and not as a long-term solution.</p>
-
-  <p><pre class="codeblock">
-  <code>
-  kind: ClusterRoleBinding
-  apiVersion: rbac.authorization.k8s.io/v1
-  metadata:
-   name: admin-binding-nonResourceURLSs-default
-  subjects:
-    - kind: ServiceAccount
-      name: default
-      namespace: default
-  roleRef:
-   kind: ClusterRole
-   name: admin-role-nonResourceURLSs
-   apiGroup: rbac.authorization.k8s.io
-  ---
-  kind: ClusterRoleBinding
-  apiVersion: rbac.authorization.k8s.io/v1
-  metadata:
-   name: admin-binding-resourceURLSs-default
-  subjects:
-    - kind: ServiceAccount
-      name: default
-      namespace: default
-  roleRef:
-   kind: ClusterRole
-   name: admin-role-resourceURLSs
-   apiGroup: rbac.authorization.k8s.io
-  </code>
-  </pre></p>
-  </td>
 </tr>
 </tbody>
 </table>
@@ -378,8 +308,8 @@ Review changes that you might need to make when you are updating from the previo
 </td></tr>
 <tr>
 <td>RBAC for `default` `ServiceAccount`</td>
-<td><p>The administrator `ClusterRoleBinding` for the `default` `ServiceAccount` in the `default` namespace is removed. If your applications rely on this RBAC policy to access the Kubernetes API, [update your RBAC policies](https://kubernetes.io/docs/admin/authorization/rbac/#api-overview).</p>
-  <p>As you update your app RBAC policies, you might want to revert temporarily to the previous policy `default`. Copy, save, and apply the following files with the `kubectl apply -f FILENAME` command. <strong>Note</strong>: Revert to give yourself time to update all your app RBAC policies, and not as a long-term solution.</p>
+<td><p>The administrator `ClusterRoleBinding` for the `default` `ServiceAccount` in the `default` namespace is removed for improved cluster security. Applications that run in the `default` namespace no longer have cluster administrator privileges to the Kubernetes API, and might encounter RBAC DENY permission errors. If your applications rely on these privileges, [create RBAC authorization resources](https://kubernetes.io/docs/admin/authorization/rbac/#api-overview) for your apps.</p>
+  <p>As you update your app RBAC policies, you might want to revert temporarily to the previous `default`. Copy, save, and apply the following files with the `kubectl apply -f FILENAME` command. <strong>Note</strong>: Revert to give yourself time to update all your application resources, and not as a long-term solution.</p>
 
   <p><pre class="codeblock">
   <code>
@@ -452,6 +382,6 @@ Review changes that you might need to make when you are updating from the previo
 ### Version 1.5 (Deprecated)
 {: #cs_v1-5}
 
-As of March 5, 2018, {{site.data.keyword.containershort_notm}} clusters that run [Kubernetes version 1.5](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.5.md) are deprecated. After April 4, 2018, version 1.5 clusters cannot receive security updates or support unless they are updated to the next most recent version ([Kubernetes 1.7](#cs_v17)).
+As of 5 March 2018, {{site.data.keyword.containershort_notm}} clusters that run [Kubernetes version 1.5](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.5.md) are deprecated. After 4 April 2018, version 1.5 clusters cannot receive security updates or support unless they are updated to the next most recent version ([Kubernetes 1.7](#cs_v17)).
 
 [Review potential impact](cs_versions.html#cs_versions) of each Kubernetes version update, and then [update your clusters](cs_cluster_update.html#update) immediately. Note that you update from one version to the next most recent, such as 1.5 to 1.7 or 1.8 to 1.9.

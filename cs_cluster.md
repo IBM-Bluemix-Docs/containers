@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-11"
+lastupdated: "2018-03-08"
 
 ---
 
@@ -40,9 +40,8 @@ Check out the latest information in its new location:
     - [Adding user-managed subnets and IP addresses to Kubernetes clusters](cs_subnets.html#user_managed)
 - [Using existing NFS file shares in clusters](cs_storage.html#existing)
 - [Configuring cluster logging](cs_health.html#logging)
-    - [Enabling log forwarding](cs_health.html#log_sources_enable)
-    - [Enabling log forwarding for applications](cs_health.html#apps_enable)
-    - [Updating the log forwarding configuration](cs_health.html#log_sources_update)
+    - [Enabling log forwarding](cs_health.html#logging)
+    - [Updating the log forwarding configuration](cs_health.html#logging)
     - [Stopping log forwarding](cs_health.html#log_sources_delete)
     - [Configuring log forwarding for Kubernetes API audit logs](cs_health.html#app_forward)
     - [Enabling Kubernetes API audit log forwarding](cs_health.html#audit_enable)
