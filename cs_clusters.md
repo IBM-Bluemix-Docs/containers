@@ -84,7 +84,9 @@ A Kubernetes cluster consists of worker nodes and is centrally monitored and man
 {:shortdesc}
 
 
-When you create a standard cluster, worker nodes are ordered in IBM Cloud infrastructure (SoftLayer) on your behalf and set up in {{site.data.keyword.Bluemix_notm}}. Every worker node is assigned a unique worker node ID and domain name that must not be changed after the cluster is created. Depending on the level of hardware isolation that you choose, worker nodes can be set up as shared or dedicated nodes. You can also choose whether you want worker nodes to connect to a public VLAN and private VLAN, or only to a private VLAN. Every worker node is provisioned with a specific machine type that determines the number of vCPUs, memory, and disk space that are available to the containers that are deployed to the worker node. Kubernetes limits the maximum number of worker nodes that you can have in a cluster. Review [worker node and pod quotas ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/admin/cluster-large/) for more information.
+  When you create a standard cluster, worker nodes are ordered in IBM Cloud infrastructure (SoftLayer) on your behalf and set up in {{site.data.keyword.Bluemix_notm}}. Every worker node is assigned a unique worker node ID and domain name that must not be changed after the cluster is created. Depending on the level of hardware isolation that you choose, worker nodes can be set up as shared or dedicated nodes. You can also choose whether you want worker nodes to connect to a public VLAN and private VLAN, or only to a private VLAN. Every worker node is provisioned with a specific machine type that determines the number of vCPUs, memory, and disk space that are available to the containers that are deployed to the worker node. Kubernetes limits the maximum number of worker nodes that you can have in a cluster. Review [worker node and pod quotas ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/admin/cluster-large/) for more information.
+
+
 
 
 

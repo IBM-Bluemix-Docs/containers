@@ -16,16 +16,19 @@ lastupdated: "2018-03-02"
 {:download: .download}
 
 
-# CLI reference for managing clusters
+# {{site.data.keyword.containerlong_notm}} CLI reference
 {: #cs_cli_reference}
 
 Refer to these commands to create and manage Kubernetes clusters in {{site.data.keyword.containerlong}}.
 {:shortdesc}
 
+To install the CLI plug-in, see [Installing the CLI](cs_cli_install.html#cs_cli_install_steps).
+
+Looking for `bx cr` commands? See the [{{site.data.keyword.registryshort_notm}} CLI reference](/docs/cli/plugins/registry/index.html). Looking for `kubectl` commands? See the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands).
+{:tip}
+
 ## bx cs commands
 {: #cs_commands}
-
-**Tip:** Looking for `bx cr` commands? See the [{{site.data.keyword.registryshort_notm}} CLI reference](/docs/cli/plugins/registry/index.html). Looking for `kubectl` commands? See the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands).
 
 **Tip:** To see the version of the {{site.data.keyword.containershort_notm}} plug-in, run the following command.
 
