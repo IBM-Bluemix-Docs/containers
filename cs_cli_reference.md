@@ -16,16 +16,19 @@ lastupdated: "2018-03-02"
 {:download: .download}
 
 
-# CLI reference for managing clusters
+# {{site.data.keyword.containerlong_notm}} CLI reference
 {: #cs_cli_reference}
 
 Refer to these commands to create and manage Kubernetes clusters in {{site.data.keyword.containerlong}}.
 {:shortdesc}
 
+To install the CLI plug-in, see [Installing the CLI](cs_cli_install.html#cs_cli_install_steps).
+
+Looking for `bx cr` commands? See the [{{site.data.keyword.registryshort_notm}} CLI reference](/docs/cli/plugins/registry/index.html). Looking for `kubectl` commands? See the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands).
+{:tip}
+
 ## bx cs commands
 {: #cs_commands}
-
-**Tip:** Looking for `bx cr` commands? See the [{{site.data.keyword.registryshort_notm}} CLI reference](/docs/cli/plugins/registry/index.html). Looking for `kubectl` commands? See the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands).
 
 **Tip:** To see the version of the {{site.data.keyword.containershort_notm}} plug-in, run the following command.
 
@@ -931,16 +934,45 @@ View information about a cluster in your organization.
    <dd>The name or ID of the cluster. This value is required.</dd>
 
    <dt><code><em>--showResources</em></code></dt>
-   <dd>Shows the VLANs and subnets for a cluster.</dd>
+   <dd>Show more cluster resources such as add-ons, VLANs, subnets, and storage.</dd>
    </dl>
 
-**Example**:
+**Example command**:
 
   ```
-  bx cs cluster-get my_cluster
+  bx cs cluster-get my_cluster --showResources
   ```
   {: pre}
 
+**Example output**:
+
+  ```
+  Name:			mycluster
+  ID:			abc1234567
+  State:			normal
+  Created:		2018-01-01T17:19:28+0000
+  Location:		dal10
+  Master URL:		https://169.xx.x.xxx:xxxxx
+  Ingress subdomain:	mycluster.us-south.containers.mybluemix.net
+  Ingress secret:		mycluster
+  Workers:		3
+  Version:		1.7.4_1509* (1.8.8_1507 latest)
+  Owner Email:		name@example.com
+  Monitoring dashboard:	https://metrics.ng.bluemix.net/app/#/grafana4/dashboard/db/link
+
+  Addons
+  Name                   Enabled
+  customer-storage-pod   true
+  basic-ingress-v2       true
+  storage-watcher-pod    true
+
+  Subnet VLANs
+  VLAN ID   Subnet CIDR         Public   User-managed
+  2234947   10.xxx.xxx.x/29     false    false
+  2234945   169.xx.xxx.xxx/29   true     false
+
+  ```
+  {: screen}
 
 ### bx cs cluster-rm [-f] CLUSTER
 {: #cs_cluster_rm}
