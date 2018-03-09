@@ -427,14 +427,14 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
 4. Add the {{site.data.keyword.Bluemix_notm}} Helm repository to your Helm instance.
 
     ```
-    helm repo add bluemix  https://registry.bluemix.net/helm/ibm
+    helm repo add ibm  https://registry.bluemix.net/helm/ibm
     ```
     {: pre}
 
 5. List the Helm charts currently available in the {{site.data.keyword.Bluemix_notm}} repository.
 
     ```
-    helm search bluemix
+    helm search ibm
     ```
     {: pre}
 
