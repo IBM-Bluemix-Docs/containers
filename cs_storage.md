@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-08"
+lastupdated: "2018-02-19"
 
 ---
 
@@ -745,6 +745,7 @@ Review the following backup and restore options for your NFS file shares:
 ## Adding non-root user access to NFS file storage
 {: #nonroot}
 
+
 Non-root users do not have write permission on the volume mount path for NFS-backed storage. To grant write permission, you must edit the Dockerfile of the image to create a directory on the mount path with the correct permission.
 {:shortdesc}
 
@@ -942,5 +943,197 @@ For {{site.data.keyword.containershort_notm}}, the default owner of the volume m
     {: screen}
 
     This output shows that root has read, write, and execute permissions on the volume mount path `mnt/myvol/`, but the non-root myguest user has permission to read and write to the `mnt/myvol/mydata` folder. Because of these updated permissions, the non-root user can now write data to the persistent volume.
+
+
+
+
+
+Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
+
+1.  Create a Dockerfile in a local directory. This example Dockerfile is creating a non-root user named `myguest`.
+
+    ```
+    FROM registry.<region>.bluemix.net/ibmliberty:latest
+
+    # Create group and user with GID & UID 1010.
+    # In this case your are creating a group and user named myguest.
+    # The GUID and UID 1010 is unlikely to create a conflict with any existing user GUIDs or UIDs in the image.
+    # The GUID and UID must be between 0 and 65536. Otherwise, container creation fails.
+    RUN groupadd --gid 1010 myguest
+    RUN useradd --uid 1010 --gid 1010 -m --shell /bin/bash myguest
+
+    ENV MY_USER=myguest
+
+    COPY entrypoint.sh /sbin/entrypoint.sh
+    RUN chmod 755 /sbin/entrypoint.sh
+
+    EXPOSE 22
+    ENTRYPOINT ["/sbin/entrypoint.sh"]
+    ```
+    {: codeblock}
+
+2.  Create the entrypoint script in the same local folder as the Dockerfile. This example entrypoint script is specifying `/mnt/myvol` as the volume mount path.
+
+    ```
+    #!/bin/bash
+    set -e
+
+    # This is the mount point for the shared volume.
+    # By default the mount point is owned by the root user.
+    MOUNTPATH="/mnt/myvol"
+    MY_USER=${MY_USER:-"myguest"}
+
+    # This function creates a subdirectory that is owned by
+    # the non-root user under the shared volume mount path.
+    create_data_dir() {
+      #Add the non-root user to primary group of root user.
+      usermod -aG root $MY_USER
+
+      # Provide read-write-execute permission to the group for the shared volume mount path.
+      chmod 775 $MOUNTPATH
+
+      # Create a directory under the shared path owned by non-root user myguest.
+      su -c "mkdir -p ${MOUNTPATH}/mydata" -l $MY_USER
+      su -c "chmod 700 ${MOUNTPATH}/mydata" -l $MY_USER
+      ls -al ${MOUNTPATH}
+
+      # For security, remove the non-root user from root user group.
+      deluser $MY_USER root
+
+      # Change the shared volume mount path back to its original read-write-execute permission.
+      chmod 755 $MOUNTPATH
+      echo "Created Data directory..."
+    }
+
+    create_data_dir
+
+    # This command creates a long-running process for the purpose of this example.
+    tail -F /dev/null
+    ```
+    {: codeblock}
+
+3.  Log in to {{site.data.keyword.registryshort_notm}}.
+
+    ```
+    bx cr login
+    ```
+    {: pre}
+
+4.  Build the image locally. Remember to replace _&lt;my_namespace&gt;_ with the namespace to your private images registry. Run `bx cr namespace-get` if you need to find your namespace.
+
+    ```
+    docker build -t registry.<region>.bluemix.net/<my_namespace>/nonroot .
+    ```
+    {: pre}
+
+5.  Push the image to your namespace in {{site.data.keyword.registryshort_notm}}.
+
+    ```
+    docker push registry.<region>.bluemix.net/<my_namespace>/nonroot
+    ```
+    {: pre}
+
+6.  Create a persistent volume claim (PVC) by creating a configuration `.yaml` file. This example uses a lower performance storage class. Run `kubectl get storageclasses` to see available storage classes.
+
+    ```
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: mypvc
+      annotations:
+        volume.beta.kubernetes.io/storage-class: "ibmc-file-bronze"
+    spec:
+      accessModes:
+        - ReadWriteMany
+      resources:
+        requests:
+          storage: 20Gi
+    ```
+    {: codeblock}
+
+7.  Create the PVC.
+
+    ```
+    kubectl apply -f <local_file_path>
+    ```
+    {: pre}
+
+8.  Create a configuration file to mount the volume and run the pod from the nonroot image. The volume mount path `/mnt/myvol` matches the mount path that is specified in the Dockerfile. Save the configuration as a `.yaml` file.
+
+    ```
+    apiVersion: v1
+    kind: Pod
+    metadata:
+     name: mypod
+    spec:
+     containers:
+     - image: registry.<region>.bluemix.net/<my_namespace>/nonroot
+       name: mycontainer
+       volumeMounts:
+       - mountPath: /mnt/myvol
+         name: myvol
+     volumes:
+     - name: myvol
+       persistentVolumeClaim:
+         claimName: mypvc
+    ```
+    {: codeblock}
+
+9.  Create the pod and mount the PVC to your pod.
+
+    ```
+    kubectl apply -f <local_yaml_path>
+    ```
+    {: pre}
+
+10. Verify that the volume is successfully mounted to your pod.
+
+    ```
+    kubectl describe pod mypod
+    ```
+    {: pre}
+
+    The mount point is listed in the **Volume Mounts** field and the volume is listed in the **Volumes** field.
+
+    ```
+     Volume Mounts:
+          /var/run/secrets/kubernetes.io/serviceaccount from default-token-tqp61 (ro)
+          /mnt/myvol from myvol (rw)
+    ...
+    Volumes:
+      myvol:
+        Type:	PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+        ClaimName:	mypvc
+        ReadOnly:	false
+
+    ```
+    {: screen}
+
+11. Log in to the pod after the pod is running.
+
+    ```
+    kubectl exec -it mypod /bin/bash
+    ```
+    {: pre}
+
+12. View permissions of your volume mount path.
+
+    ```
+    ls -al /mnt/myvol/
+    ```
+    {: pre}
+
+    ```
+    root@instance-006ff76b:/# ls -al /mnt/myvol/
+    total 12
+    drwxr-xr-x 3 root    root    4096 Jul 13 19:03 .
+    drwxr-xr-x 3 root    root    4096 Jul 13 19:03 ..
+    drwx------ 2 myguest myguest 4096 Jul 13 19:03 mydata
+    ```
+    {: screen}
+
+    This output shows that root has read, write, and execute permissions on the volume mount path `mnt/myvol/`, but the non-root myguest user has permission to read and write to the `mnt/myvol/mydata` folder. Because of these updated permissions, the non-root user can now write data to the persistent volume.
+
+</staging>
 
 

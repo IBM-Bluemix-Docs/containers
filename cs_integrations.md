@@ -168,10 +168,10 @@ IBM Blockchain Platform <img src="../icons/launch-glyph.svg" alt="External link 
 
 
 
-## Adding services to clusters
+## Adding Cloud Foundry services to clusters
 {: #adding_cluster}
 
-Add an existing {{site.data.keyword.Bluemix_notm}} service instance to your cluster to enable your cluster users to access and use the {{site.data.keyword.Bluemix_notm}} service when they deploy an app to the cluster.
+Add an existing {{site.data.keyword.Bluemix_notm}} Cloud Foundry service instance to your cluster to enable your cluster users to access and use the {{site.data.keyword.Bluemix_notm}} service when they deploy an app to the cluster.
 {:shortdesc}
 
 Before you begin:
@@ -179,6 +179,7 @@ Before you begin:
 1. [Target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
 2. [Request an instance of the {{site.data.keyword.Bluemix_notm}} service](/docs/apps/reqnsi.html#req_instance).
    **Note:** To create an instance of a service in the Washington DC location, you must use the CLI.
+
 
 **Note:**
 <ul><ul>
@@ -247,8 +248,11 @@ To add a service:
 
 To use the service in a pod that is deployed in the cluster, cluster users can access the service credentials of the {{site.data.keyword.Bluemix_notm}} service by [mounting the Kubernetes secret as a secret volume to a pod](cs_storage.html#app_volume_mount).
 
-<br />
 
+
+
+
+<br />
 
 
 ## Adding services to apps
@@ -427,14 +431,14 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
 4. Add the {{site.data.keyword.Bluemix_notm}} Helm repository to your Helm instance.
 
     ```
-    helm repo add bluemix  https://registry.bluemix.net/helm/ibm
+    helm repo add ibm  https://registry.bluemix.net/helm/ibm
     ```
     {: pre}
 
 5. List the Helm charts currently available in the {{site.data.keyword.Bluemix_notm}} repository.
 
     ```
-    helm search bluemix
+    helm search ibm
     ```
     {: pre}
 
