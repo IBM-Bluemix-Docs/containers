@@ -52,7 +52,7 @@ To configure the Helm chart:
 2. Save the default configuration settings for the strongSwan Helm chart in a local YAML file.
 
     ```
-    helm inspect values bluemix/strongswan > config.yaml
+    helm inspect values ibm/strongswan > config.yaml
     ```
     {: pre}
 
@@ -133,7 +133,7 @@ To configure the Helm chart:
     **Note**: If you have multiple VPN deployments in a single cluster, you can avoid naming conflicts and differentiate between your deployments by choosing more descriptive release names than `vpn`. To avoid the truncation of the release name, limit the release name to 35 characters or less.
 
     ```
-    helm install -f config.yaml --namespace=kube-system --name=vpn bluemix/strongswan
+    helm install -f config.yaml --namespace=kube-system --name=vpn ibm/strongswan
     ```
     {: pre}
 
