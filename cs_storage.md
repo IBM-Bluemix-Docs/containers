@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-08"
+lastupdated: "2018-02-19"
 
 ---
 
@@ -745,6 +745,7 @@ Review the following backup and restore options for your NFS file shares:
 ## Adding non-root user access to NFS file storage
 {: #nonroot}
 
+
 Non-root users do not have write permission on the volume mount path for NFS-backed storage. To grant write permission, you must edit the Dockerfile of the image to create a directory on the mount path with the correct permission.
 {:shortdesc}
 
@@ -942,5 +943,189 @@ For {{site.data.keyword.containershort_notm}}, the default owner of the volume m
     {: screen}
 
     This output shows that root has read, write, and execute permissions on the volume mount path `mnt/myvol/`, but the non-root myguest user has permission to read and write to the `mnt/myvol/mydata` folder. Because of these updated permissions, the non-root user can now write data to the persistent volume.
+
+
+
+
+
+When you include an [init container![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/pods/init-containers/) in your deployment, you can give a non-root user that is specified in your app's image write permissions to the NFS file. The init container mounts the volume, changes the mount path to be owned by the correct (non-root) user, and closes. Then, your app's main pod runs and because the path is already owned by the non-root user, the non-root user app can write to mount path. If you do not want to use an init container, you can modify the image to add non-root user access to NFS file storage.
+
+Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
+
+1.  Open the app image's Dockerfile and get the user ID (UID) and group ID (GID). In the example from a Jenkins Dockerfile, the information is:
+    - UID: `1000`
+    - GID: `1000`
+
+    **Example**:
+
+    ```
+    FROM openjdk:8-jdk
+
+    RUN apt-get update && apt-get install -y git curl && rm -rf /var/lib/apt/lists/*
+
+    ARG user=jenkins
+    ARG group=jenkins
+    ARG uid=1000
+    ARG gid=1000
+    ARG http_port=8080
+    ARG agent_port=50000
+
+    ENV JENKINS_HOME /var/jenkins_home
+    ENV JENKINS_SLAVE_AGENT_PORT ${agent_port}
+    ```
+    {:screen}
+
+2.  Create a persistent volume claim (PVC) by creating a configuration `.yaml` file. This example uses a lower performance storage class. Run `kubectl get storageclasses` to see available storage classes.
+
+    ```
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: mypvc
+      annotations:
+        volume.beta.kubernetes.io/storage-class: "ibmc-file-bronze"
+    spec:
+      accessModes:
+        - ReadWriteMany
+      resources:
+        requests:
+          storage: 20Gi
+    ```
+    {: codeblock}
+
+3.  Create the PVC.
+
+    ```
+    kubectl apply -f <local_file_path>
+    ```
+    {: pre}
+
+4.  In your deployment `.yaml` file, add the init container. Include the UID and GID that you previously retrieved.
+
+    ```
+    initContainers:
+    - name: initContainer # Or you can replace with any name
+      image: alpine:latest
+      command: ["/bin/sh", "-c"]
+      args:
+        - chown <UID>:<GID> /mount; # Replace UID and GID with values from the Dockerfile
+      volumeMounts:
+      - name: volume # Or you can replace with any name
+        mountPath: /mount # Must match the mount path in the args line
+    ```
+    {: codeblock}
+
+    **Example** for a Jenkins deployment:
+
+    ```
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: mypod
+    spec:
+      replicas: 1
+      template:
+        metadata:
+          labels:
+            app: jenkins
+        spec:
+          containers:
+          - name: jenkins
+            image: jenkins
+            volumeMounts:
+            - mountPath: /var/jenkins_home
+              name: volume
+          volumes:
+          - name: volume
+            persistentVolumeClaim:
+              claimName: mypvc
+          initContainers:
+          - name: permissionsfix
+            image: alpine:latest
+            command: ["/bin/sh", "-c"]
+            args:
+              - chown 1000:1000 /mount;
+            volumeMounts:
+            - name: volume
+              mountPath: /mount
+    ```
+    {: screen}
+
+5.  Create the pod and mount the PVC to your pod.
+
+    ```
+    kubectl apply -f <local_yaml_path>
+    ```
+    {: pre}
+
+6. Verify that the volume is successfully mounted to your pod.
+
+    ```
+    kubectl describe pod mypod
+    ```
+    {: pre}
+
+    Note the pod name and **Containers/Mounts** path. Verify the **Init Containers** and **Volumes** information.
+
+    ```
+    Name:		mypod-123456789
+    Namespace:	default
+    ...
+    Init Containers:
+    ...
+    Mounts:
+      /mount from volume (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-cp9f0 (ro)
+    ...
+    Containers:
+      jenkins:
+        Container ID:
+        Image:		jenkins
+        Image ID:
+        Port:		<none>
+        State:		Waiting
+          Reason:		PodInitializing
+        Ready:		False
+        Restart Count:	0
+        Environment:	<none>
+        Mounts:
+          /var/jenkins_home from volume (rw)
+          /var/run/secrets/kubernetes.io/serviceaccount from default-token-cp9f0 (ro)
+    ...
+    Volumes:
+      myvol:
+        Type:	PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+        ClaimName:	mypvc
+        ReadOnly:	false
+
+    ```
+    {: screen}
+
+7.  Log in to the pod, using the pod name that you previously noted.
+
+    ```
+    kubectl exec -it mypod-123456789 /bin/bash
+    ```
+    {: pre}
+
+8. View permissions of your container's mount path. In the example, the mount path is `/var/jenkins_home`.
+
+    ```
+    ls -ln /var/jenkins_home
+    ```
+    {: pre}
+
+    ```
+    jenkins@mypod-123456789:/$ ls -ln /var/jenkins_home
+    total 12
+    -rw-r--r-- 1 1000 1000  102 Mar  9 19:58 copy_reference_file.log
+    drwxr-xr-x 2 1000 1000 4096 Mar  9 19:58 init.groovy.d
+    drwxr-xr-x 9 1000 1000 4096 Mar  9 20:16 war
+    ```
+    {: screen}
+
+    This output shows that the GID and UID match the values that are in the image Dockerfile (in this example, `1000` and `1000`).
+
+</staging>
 
 
