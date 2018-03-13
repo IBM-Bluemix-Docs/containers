@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-08"
+lastupdated: "2018-03-07"
 
 ---
 
@@ -45,6 +45,7 @@ For _major_ or _minor_ updates, complete the following steps:
 1. Review the [Kubernetes changes](cs_versions.html) and make any updates marked _Update before master_.
 2. Update your Kubernetes API server and associated Kubernetes master components by using the GUI or running the [CLI command](cs_cli_reference.html#cs_cluster_update). When you update the Kubernetes API server, the API server is down for about 5 - 10 minutes. During the update, you cannot access or change the cluster. However, worker nodes, apps, and resources that cluster users have deployed are not modified and continue to run.
 3. Confirm that the update is complete. Review the Kubernetes API server version on the {{site.data.keyword.Bluemix_notm}} Dashboard or run `bx cs clusters`.
+4. Install the version of the [`kubectl cli`](cs_cli_install.html#kubectl) that matches the Kubernetes API server version that runs in the Kubernetes master.
 
 When the Kubernetes API server update is complete, you can update your worker nodes.
 
@@ -54,10 +55,10 @@ When the Kubernetes API server update is complete, you can update your worker no
 ## Updating worker nodes
 {: #worker_node}
 
-You received a notification to update your worker nodes. What does that mean? As security updates and patches are put in place for the Kubernetes API server and other Kubernetes master components, you must be sure that your worker nodes remain in sync. 
+You received a notification to update your worker nodes. What does that mean? As security updates and patches are put in place for the Kubernetes API server and other Kubernetes master components, you must be sure that your worker nodes remain in sync.
 {: shortdesc}
 
-The worker node Kubernetes version cannot be higher than the Kubernetes API server version that runs in your Kubernetes master.
+The worker node Kubernetes version cannot be higher than the Kubernetes API server version that runs in your Kubernetes master. Before you begin, [update the Kubernetes master](#master).
 
 <ul>**Attention**:</br>
 <li>Updates to worker nodes can cause downtime for your apps and services.</li>
@@ -82,11 +83,9 @@ When the configuration map is not defined, the default is used. By default, a ma
 
 To update your worker nodes:
 
-1. Install the version of the [`kubectl cli` ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/tools/install-kubectl/) that matches the Kubernetes API server version that runs in the Kubernetes master.
+1. Make any changes that are marked _Update after master_ in [Kubernetes changes](cs_versions.html).
 
-2. Make any changes that are marked _Update after master_ in [Kubernetes changes](cs_versions.html).
-
-3. Optional: Define your configuration map.
+2. Optional: Define your configuration map.
     Example:
 
     ```
@@ -190,10 +189,10 @@ You can update the machine types that are used in worker nodes by adding new wor
 
 2. View the available machine types.
     ```
-    bx cs machine-types <location> 
+    bx cs machine-types <location>
     ```
     {: pre}
-    
+
 3. Add a worker node by using the [bx cs worker-add](cs_cli_reference.html#cs_worker_add) command and specify one of the machine types listed in the output of the previous command.
 
     ```
@@ -207,12 +206,12 @@ You can update the machine types that are used in worker nodes by adding new wor
     bx cs workers <cluster_name>
     ```
     {: pre}
-    
+
 5. When the added worker node is in the `Normal` state, you can remove the outdated worker node. 
 
     ```
-    bx cs worker-rm <cluster_name> <worker_node> 
+    bx cs worker-rm <cluster_name> <worker_node>
     ```
     {: pre}
-    
+
 6. Repeat these steps to upgrade other worker nodes to different machine types.
