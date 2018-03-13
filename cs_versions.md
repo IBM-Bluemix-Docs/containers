@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-08"
+lastupdated: "2018-03-05"
 
 ---
 
@@ -46,6 +46,7 @@ Server Version: 1.8.8
 ```
 {: screen}
 
+
 ## Update types
 {: #version_types}
 
@@ -65,6 +66,9 @@ By default, you cannot update a Kubernetes master more than two minor versions a
 The following information summarizes updates that are likely to have impact on deployed apps when you update a cluster to a new version from the previous version. Review the [Kubernetes changelog ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG.md) for a complete list of changes in Kubernetes versions.
 
 For more information about the updating process, see [Updating clusters](cs_cluster_update.html#master) and [Updating worker nodes](cs_cluster_update.html#worker_node).
+
+If you use a `kubectl` CLI version that does match at least the `major.minor` version of your clusters, you might experience unexpected results. Make sure to keep your Kubernetes cluster and [CLI versions](cs_cli_install.html#kubectl) up-to-date.
+{:tip}
 
 ## Version 1.9
 {: #cs_v19}
