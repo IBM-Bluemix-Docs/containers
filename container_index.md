@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-27"
+lastupdated: "2018-03-12"
 
 ---
 
@@ -43,7 +43,10 @@ So you want to deploy an app in a container? Hold on! Start by creating a Kubern
 
 And what is a cluster? A cluster is a set of resources, worker nodes, networks, and storage devices that keep apps highly available. After you have your cluster, then you can deploy your apps in containers.
 
-Before you begin, you must have a Pay-As-You-Go or Subscription [{{site.data.keyword.Bluemix_notm}} account](https://console.bluemix.net/registration/) to create a free cluster.
+Before you begin, you must have a Trial, Pay-As-You-Go, or Subscription [{{site.data.keyword.Bluemix_notm}} account](https://console.bluemix.net/registration/) to create a free cluster.
+
+**What {{site.data.keyword.Bluemix_notm}} account type should I get?** With Pay-As-You-Go and Subscription accounts, you can provision IBM Cloud infrastructure (SoftLayer) resources for your Kubernetes clusters and create one free cluster or standard clusters. With a Trial account, you can create one free, 21-day cluster but no standard clusters. After 21 days, your free cluster is deleted. To continue with Kubernetes clusters, create another free cluster until your Trial account ends, or upgrade your account to a Pay-As-You-Go or Subscription.
+{:tip}
 
 To create a free cluster:
 
