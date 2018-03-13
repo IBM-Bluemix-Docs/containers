@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-08"
+lastupdated: "2018-03-13"
 
 ---
 
@@ -943,8 +943,6 @@ When you list information about the application load balancer secret, the status
 Review the following reasons why the application load balancer secret might fail and the corresponding troubleshooting steps:
 
 <table>
-<col width="40%">
-<col width="60%">
  <thead>
  <th>Why it's happening</th>
  <th>How to fix it</th>
@@ -960,11 +958,11 @@ Review the following reasons why the application load balancer secret might fail
  </tr>
  <tr>
  <td>The certificate CRN provided at time of create is incorrect.</td>
- <td><ol><li>Check the accuracy of the certificate CRN string you provide.</li><li>If the certificate CRN is found to be accurate, then try to update the secret. <pre class="pre"><code>bx cs alb-cert-deploy --update --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></pre></li><li>If this command results in the <code>update_failed</code> status, then remove the secret. <pre class="pre"><code>bx cs alb-cert-rm --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt;</code></pre></li><li>Deploy the secret again. <pre class="pre"><code>bx cs alb-cert-deploy --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></pre></li></ol></td>
+ <td><ol><li>Check the accuracy of the certificate CRN string you provide.</li><li>If the certificate CRN is found to be accurate, then try to update the secret: <code>bx cs alb-cert-deploy --update --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></li><li>If this command results in the <code>update_failed</code> status, then remove the secret: <code>bx cs alb-cert-rm --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt;</code></li><li>Deploy the secret again: <code>bx cs alb-cert-deploy --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></li></ol></td>
  </tr>
  <tr>
  <td>The certificate CRN provided at time of update is incorrect.</td>
- <td><ol><li>Check the accuracy of the certificate CRN string you provide.</li><li>If the certificate CRN is found to be accurate, then remove the secret. <pre class="pre"><code>bx cs alb-cert-rm --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt;</code></pre></li><li>Deploy the secret again. <pre class="pre"><code>bx cs alb-cert-deploy --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></pre></li><li>Try to update the secret. <pre class="pre"><code>bx cs alb-cert-deploy --update --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></pre></li></ol></td>
+ <td><ol><li>Check the accuracy of the certificate CRN string you provide.</li><li>If the certificate CRN is found to be accurate, then remove the secret: <code>bx cs alb-cert-rm --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt;</code></li><li>Deploy the secret again: <code>bx cs alb-cert-deploy --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></li><li>Try to update the secret: <code>bx cs alb-cert-deploy --update --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></li></ol></td>
  </tr>
  <tr>
  <td>The {{site.data.keyword.cloudcerts_long_notm}} service is experiencing downtime.</td>
@@ -979,7 +977,7 @@ Review the following reasons why the application load balancer secret might fail
 {: #cs_helm_install}
 
 {: tsSymptoms}
-When you try to install an updated Helm chart by running `helm install -f config.yaml --namespace=kube-system --name=<release_name> bluemix/<chart_name>`, you get the `Error: failed to download "bluemix/<chart_name>"` error message.
+When you try to install an updated Helm chart by running `helm install -f config.yaml --namespace=kube-system --name=<release_name> ibm/<chart_name>`, you get the `Error: failed to download "ibm/<chart_name>"` error message.
 
 {: tsCauses}
 The URL for the {{site.data.keyword.Bluemix_notm}} repository in your Helm instance might be incorrect.
@@ -994,13 +992,13 @@ To troubleshoot your Helm chart:
     ```
     {: pre}
 
-2. In the output, verify that the URL for the {{site.data.keyword.Bluemix_notm}} repository, `bluemix`, is `https://registry.bluemix.net/helm/ibm`.
+2. In the output, verify that the URL for the {{site.data.keyword.Bluemix_notm}} repository, `ibm`, is `https://registry.bluemix.net/helm/ibm`.
 
     ```
     NAME    URL
     stable  https://kubernetes-charts.storage.googleapis.com
     local   http://127.0.0.1:8888/charts
-    bluemix https://registry.bluemix.net/helm/ibm
+    ibm     https://registry.bluemix.net/helm/ibm
     ```
     {: screen}
 
@@ -1009,14 +1007,14 @@ To troubleshoot your Helm chart:
         1. Remove the {{site.data.keyword.Bluemix_notm}} repository.
 
             ```
-            helm repo remove bluemix
+            helm repo remove ibm
             ```
             {: pre}
 
         2. Add the {{site.data.keyword.Bluemix_notm}} repository again.
 
             ```
-            helm repo add bluemix  https://registry.bluemix.net/helm/ibm
+            helm repo add ibm  https://registry.bluemix.net/helm/ibm
             ```
             {: pre}
 
@@ -1030,7 +1028,7 @@ To troubleshoot your Helm chart:
 3. Install the Helm chart with your updates.
 
     ```
-    helm install -f config.yaml --namespace=kube-system --name=<release_name> bluemix/<chart_name>
+    helm install -f config.yaml --namespace=kube-system --name=<release_name> ibm/<chart_name>
     ```
     {: pre}
 
@@ -1050,7 +1048,7 @@ Your Helm chart configuration file has incorrect values, missing values, or synt
 {: tsResolve}
 When you try to establish VPN connectivity with the strongSwan Helm chart, it is likely that the VPN status will not be `ESTABLISHED` the first time. You might need to check for several types of issues and change your configuration file accordingly. To troubleshoot your strongSwan VPN connectivity:
 
-1. Check the on-premises VPN endpoint settings against the settings in your configuration file. If there are mismatches:
+1. Check the on-prem VPN endpoint settings against the settings in your configuration file. If there are mismatches:
 
     <ol>
     <li>Delete the existing Helm chart.</br><pre class="codeblock"><code>helm delete --purge <release_name></code></pre></li>
@@ -1098,6 +1096,8 @@ When you try to establish VPN connectivity with the strongSwan Helm chart, it is
         The tool outputs several pages of information as it runs various tests for common networking issues. Output lines that begin with `ERROR`, `WARNING`, `VERIFY`, or `CHECK` indicate possible errors with the VPN connectivity.
 
     <br />
+
+
 
 
 ## Cannot retrieve the ETCD URL for Calico CLI configuration
