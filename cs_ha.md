@@ -27,7 +27,7 @@ High availability is a core discipline in an IT infrastructure to keep your apps
 You can achieve high availability on different levels in your IT infrastructure and within different components of your cluster. The level of availability that is right for you depends on several factors, such as your business requirements, the Service Level Agreements that you have with your customers, and the money that you want to spend.
 
 ## Overview of potential points of failure in {{site.data.keyword.containerlong_notm}}
-{: #fault_domains}
+{: #fault_domains} 
 
 The {{site.data.keyword.containerlong_notm}} architecture and infrastructure is designed to ensure reliability, low processing latency, and a maximum uptime of the service. However, failures can happen. Depending on the service that you host in {{site.data.keyword.Bluemix_notm}}, you might not be able to tolerate failures, even if failures last for only a few minutes.
 {: shortdesc}
