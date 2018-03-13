@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-08"
+lastupdated: "2018-03-12"
 
 ---
 
@@ -745,6 +745,7 @@ Review the following backup and restore options for your NFS file shares:
 ## Adding non-root user access to NFS file storage
 {: #nonroot}
 
+
 Non-root users do not have write permission on the volume mount path for NFS-backed storage. To grant write permission, you must edit the Dockerfile of the image to create a directory on the mount path with the correct permission.
 {:shortdesc}
 
@@ -942,5 +943,9 @@ For {{site.data.keyword.containershort_notm}}, the default owner of the volume m
     {: screen}
 
     This output shows that root has read, write, and execute permissions on the volume mount path `mnt/myvol/`, but the non-root myguest user has permission to read and write to the `mnt/myvol/mydata` folder. Because of these updated permissions, the non-root user can now write data to the persistent volume.
+
+
+
+
 
 

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-08"
+lastupdated: "2018-03-12"
 
 ---
 
@@ -943,8 +943,6 @@ When you list information about the application load balancer secret, the status
 Review the following reasons why the application load balancer secret might fail and the corresponding troubleshooting steps:
 
 <table>
-<col width="40%">
-<col width="60%">
  <thead>
  <th>Why it's happening</th>
  <th>How to fix it</th>
@@ -1050,7 +1048,7 @@ Your Helm chart configuration file has incorrect values, missing values, or synt
 {: tsResolve}
 When you try to establish VPN connectivity with the strongSwan Helm chart, it is likely that the VPN status will not be `ESTABLISHED` the first time. You might need to check for several types of issues and change your configuration file accordingly. To troubleshoot your strongSwan VPN connectivity:
 
-1. Check the on-premises VPN endpoint settings against the settings in your configuration file. If there are mismatches:
+1. Check the on-prem VPN endpoint settings against the settings in your configuration file. If there are mismatches:
 
     <ol>
     <li>Delete the existing Helm chart.</br><pre class="codeblock"><code>helm delete --purge <release_name></code></pre></li>
@@ -1098,6 +1096,8 @@ When you try to establish VPN connectivity with the strongSwan Helm chart, it is
         The tool outputs several pages of information as it runs various tests for common networking issues. Output lines that begin with `ERROR`, `WARNING`, `VERIFY`, or `CHECK` indicate possible errors with the VPN connectivity.
 
     <br />
+
+
 
 
 ## Cannot retrieve the ETCD URL for Calico CLI configuration
