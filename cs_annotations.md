@@ -192,6 +192,7 @@ For general information about Ingress services and how to get started using them
 <th>Description</th>
 </thead>
 <tbody>
+
 <tr>
 <td><a href="#custom-port">Custom HTTP and HTTPS ports</a></td>
 <td><code>custom-port</code></td>
@@ -1386,6 +1387,8 @@ Limit the request processing rate and the number of connections for specific ser
 {: #https-auth}
 
 
+
+
 ### Custom HTTP and HTTPS ports (custom-port)
 {: #custom-port}
 
@@ -1714,7 +1717,6 @@ spec:
 
   </dd>
   </dl>
-
 
 <br />
 
