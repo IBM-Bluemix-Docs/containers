@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-08"
+lastupdated: "2018-03-02"
 
 ---
 
@@ -39,12 +39,12 @@ bx plugin list
 
 
 
-<table summary="Application load balancer commands">
+<table summary="Application load balancer (ALB) commands">
 <col width="25%">
 <col width="25%">
 <col width="25%">
  <thead>
-    <th colspan=4>Application load balancer commands</th>
+    <th colspan=4>Application load balancer (ALB) commands</th>
  </thead>
  <tbody>
   <tr>
@@ -116,6 +116,7 @@ bx plugin list
     <th colspan=4>Cluster commands: Management</th>
  </thead>
  <tbody>
+  
   <tr>
     <td>[bx cs cluster-config](#cs_cluster_config)</td>
     <td>[bx cs cluster-create](#cs_cluster_create)</td>
@@ -263,13 +264,13 @@ bx plugin list
 </tbody>
 </table>
 
-## Application load balancer commands
+## Application load balancer (ALB) commands
 {: #alb_commands}
 
 ### bx cs alb-cert-deploy [--update] --cluster CLUSTER --secret-name SECRET_NAME --cert-crn CERTIFICATE_CRN
 {: #cs_alb_cert_deploy}
 
-Deploy or update a certificate from your {{site.data.keyword.cloudcerts_long_notm}} instance to the application load balancer in a cluster.
+Deploy or update a certificate from your {{site.data.keyword.cloudcerts_long_notm}} instance to the ALB in a cluster.
 
 **Note:**
 * Only a user with the Administrator access role can execute this command.
@@ -282,10 +283,10 @@ Deploy or update a certificate from your {{site.data.keyword.cloudcerts_long_not
    <dd>The name or ID of the cluster. This value is required.</dd>
 
    <dt><code>--update</code></dt>
-   <dd>Include this flag to update the certificate for an application load balancer secret in a cluster. This value is optional.</dd>
+   <dd>Include this flag to update the certificate for an ALB secret in a cluster. This value is optional.</dd>
 
    <dt><code>--secret-name <em>SECRET_NAME</em></code></dt>
-   <dd>The name of the application load balancer secret. This value is required.</dd>
+   <dd>The name of the ALB secret. This value is required.</dd>
 
    <dt><code>--cert-crn <em>CERTIFICATE_CRN</em></code></dt>
    <dd>The certificate CRN. This value is required.</dd>
@@ -293,14 +294,14 @@ Deploy or update a certificate from your {{site.data.keyword.cloudcerts_long_not
 
 **Examples**:
 
-Example for deploying an application load balancer secret:
+Example for deploying an ALB secret:
 
    ```
    bx cs alb-cert-deploy --secret-name my_alb_secret_name --cluster my_cluster --cert-crn crn:v1:staging:public:cloudcerts:us-south:a/06580c923e40314421d3b6cb40c01c68:0db4351b-0ee1-479d-af37-56a4da9ef30f:certificate:4bc35b7e0badb304e60aef00947ae7ff
    ```
    {: pre}
 
-Example for updating an existing application load balancer secret:
+Example for updating an existing ALB secret:
 
  ```
  bx cs alb-cert-deploy --update --secret-name my_alb_secret_name --cluster my_cluster --cert-crn crn:v1:staging:public:cloudcerts:us-south:a/06580c923e40314421d3b6cb40c01c68:0db4351b-0ee1-479d-af37-56a4da9ef30f:certificate:7e21fde8ee84a96d29240327daee3eb2
@@ -311,7 +312,7 @@ Example for updating an existing application load balancer secret:
 ### bx cs alb-cert-get --cluster CLUSTER [--secret-name SECRET_NAME] [--cert-crn CERTIFICATE_CRN]
 {: #cs_alb_cert_get}
 
-View information about an application load balancer secret in a cluster.
+View information about an ALB secret in a cluster.
 
 **Note:** Only a user with the Administrator access role can execute this command.
 
@@ -322,22 +323,22 @@ View information about an application load balancer secret in a cluster.
   <dd>The name or ID of the cluster. This value is required.</dd>
 
   <dt><code>--secret-name <em>SECRET_NAME</em></code></dt>
-  <dd>The name of the application load balancer secret. This value is required to get information on a specific application load balancer secret in the cluster.</dd>
+  <dd>The name of the ALB secret. This value is required to get information on a specific ALB secret in the cluster.</dd>
 
   <dt><code>--cert-crn <em>CERTIFICATE_CRN</em></code></dt>
-  <dd>The certificate CRN. This value is required to get information on all application load balancer secrets matching a specific certificate CRN in the cluster.</dd>
+  <dd>The certificate CRN. This value is required to get information on all ALB secrets matching a specific certificate CRN in the cluster.</dd>
   </dl>
 
 **Examples**:
 
- Example for fetching information on an application load balancer secret:
+ Example for fetching information on an ALB secret:
 
  ```
  bx cs alb-cert-get --cluster my_cluster --secret-name my_alb_secret_name
  ```
  {: pre}
 
- Example for fetching information on all application load balancer secrets that match a specified certificate CRN:
+ Example for fetching information on all ALB secrets that match a specified certificate CRN:
 
  ```
  bx cs alb-cert-get --cluster my_cluster --cert-crn  crn:v1:staging:public:cloudcerts:us-south:a/06580c923e40314421d3b6cb40c01c68:0db4351b-0ee1-479d-af37-56a4da9ef30f:certificate:4bc35b7e0badb304e60aef00947ae7ff
@@ -348,7 +349,7 @@ View information about an application load balancer secret in a cluster.
 ### bx cs alb-cert-rm --cluster CLUSTER [--secret-name SECRET_NAME] [--cert-crn CERTIFICATE_CRN]
 {: #cs_alb_cert_rm}
 
-Remove an application load balancer secret in a cluster.
+Remove an ALB secret in a cluster.
 
 **Note:** Only a user with the Administrator access role can execute this command.
 
@@ -359,22 +360,22 @@ Remove an application load balancer secret in a cluster.
   <dd>The name or ID of the cluster. This value is required.</dd>
 
   <dt><code>--secret-name <em>SECRET_NAME</em></code></dt>
-  <dd>The name of the ALB secret. This value is required to remove a specific application load balancer secret in the cluster.</dd>
+  <dd>The name of the ALB secret. This value is required to remove a specific ALB secret in the cluster.</dd>
 
   <dt><code>--cert-crn <em>CERTIFICATE_CRN</em></code></dt>
-  <dd>The certificate CRN. This value is required to remove all application load balancer secrets matching a specific certificate CRN in the cluster.</dd>
+  <dd>The certificate CRN. This value is required to remove all ALB secrets matching a specific certificate CRN in the cluster.</dd>
   </dl>
 
 **Examples**:
 
- Example for removing an application load balancer secret:
+ Example for removing an ALB secret:
 
  ```
  bx cs alb-cert-rm --cluster my_cluster --secret-name my_alb_secret_name
  ```
  {: pre}
 
- Example for removing all application load balancer secrets that match a specified certificate CRN:
+ Example for removing all ALB secrets that match a specified certificate CRN:
 
  ```
  bx cs alb-cert-rm --cluster my_cluster --cert-crn crn:v1:staging:public:cloudcerts:us-south:a/06580c923e40314421d3b6cb40c01c68:0db4351b-0ee1-479d-af37-56a4da9ef30f:certificate:4bc35b7e0badb304e60aef00947ae7ff
@@ -385,7 +386,7 @@ Remove an application load balancer secret in a cluster.
 ### bx cs alb-certs --cluster CLUSTER
 {: #cs_alb_certs}
 
-View a list of application load balancer secrets in a cluster.
+View a list of ALB secrets in a cluster.
 
 **Note:** Only a user with the Administrator access role can execute this command.
 
@@ -409,47 +410,47 @@ View a list of application load balancer secrets in a cluster.
 ### bx cs alb-configure --albID ALB_ID [--enable][--disable][--user-ip USERIP]
 {: #cs_alb_configure}
 
-Enable or disable an application load balancer in your standard cluster. The public application load balancer is enabled by default.
+Enable or disable an ALB in your standard cluster. The public ALB is enabled by default.
 
 **Command options**:
 
    <dl>
    <dt><code><em>--albID </em>ALB_ID</code></dt>
-   <dd>The ID for an application load balancer. Run <code>bx cs albs <em>--cluster </em>CLUSTER</code> to view the IDs for the application load balancers in a cluster. This value is required.</dd>
+   <dd>The ID for an ALB. Run <code>bx cs albs <em>--cluster </em>CLUSTER</code> to view the IDs for the ALBs in a cluster. This value is required.</dd>
 
    <dt><code>--enable</code></dt>
-   <dd>Include this flag to enable an application load balancer in a cluster.</dd>
+   <dd>Include this flag to enable an ALB in a cluster.</dd>
 
    <dt><code>--disable</code></dt>
-   <dd>Include this flag to disable an application load balancer in a cluster.</dd>
+   <dd>Include this flag to disable an ALB in a cluster.</dd>
 
    <dt><code>--user-ip <em>USER_IP</em></code></dt>
    <dd>
 
    <ul>
-    <li>This parameter is available for a private application load balancer only</li>
-    <li>The private application load balancer is deployed with an IP address from a user-provided private subnet. If no IP address is provided, the application load balancer is deployed with a private IP address from the portable private subnet that was provisioned automatically when you created the cluster.</li>
+    <li>This parameter is available for a private ALB only</li>
+    <li>The private ALB is deployed with an IP address from a user-provided private subnet. If no IP address is provided, the ALB is deployed with a private IP address from the portable private subnet that was provisioned automatically when you created the cluster.</li>
    </ul>
    </dd>
    </dl>
 
 **Examples**:
 
-  Example for enabling an application load balancer:
+  Example for enabling an ALB:
 
   ```
   bx cs alb-configure --albID my_alb_id --enable
   ```
   {: pre}
 
-  Example for disabling an application load balancer:
+  Example for disabling an ALB:
 
   ```
   bx cs alb-configure --albID my_alb_id --disable
   ```
   {: pre}
 
-  Example for enabling an application load balancer with a user-provided IP address:
+  Example for enabling an ALB with a user-provided IP address:
 
   ```
   bx cs alb-configure --albID my_private_alb_id --enable --user-ip user_ip
@@ -461,13 +462,13 @@ Enable or disable an application load balancer in your standard cluster. The pub
 ### bx cs alb-get --albID ALB_ID
 {: #cs_alb_get}
 
-View the details of an application load balancer.
+View the details of an ALB.
 
 <strong>Command options</strong>:
 
    <dl>
    <dt><code><em>--albID </em>ALB_ID</code></dt>
-   <dd>The ID for an application load balancer. Run <code>bx cs albs --cluster <em>CLUSTER</em></code> to view the IDs for the application load balancers in a cluster. This value is required.</dd>
+   <dd>The ID for an ALB. Run <code>bx cs albs --cluster <em>CLUSTER</em></code> to view the IDs for the ALBs in a cluster. This value is required.</dd>
    </dl>
 
 **Example**:
@@ -480,7 +481,7 @@ View the details of an application load balancer.
 ### bx cs alb-types
 {: #cs_alb_types}
 
-View the application load balancer types that are supported in the region.
+View the ALB types that are supported in the region.
 
 <strong>Command options</strong>:
 
@@ -497,13 +498,13 @@ View the application load balancer types that are supported in the region.
 ### bx cs albs --cluster CLUSTER
 {: #cs_albs}
 
-View the status of all application load balancers in a cluster. If no application load balancer IDs are returned, then the cluster does not have a portable subnet. You can [create](#cs_cluster_subnet_create) or [add](#cs_cluster_subnet_add) subnets to a cluster.
+View the status of all ALBs in a cluster. If no ALB IDs are returned, then the cluster does not have a portable subnet. You can [create](#cs_cluster_subnet_create) or [add](#cs_cluster_subnet_add) subnets to a cluster.
 
 <strong>Command options</strong>:
 
    <dl>
    <dt><code><em>--cluster </em>CLUSTER</code></dt>
-   <dd>The name or ID of the cluster where you list available application load balancers. This value is required.</dd>
+   <dd>The name or ID of the cluster where you list available ALBs. This value is required.</dd>
    </dl>
 
 **Example**:
@@ -760,7 +761,7 @@ bx cs cluster-config my_cluster
 {: pre}
 
 
-### bx cs cluster-create [--file FILE_LOCATION] [--hardware HARDWARE] --location LOCATION --machine-type MACHINE_TYPE --name NAME [--kube-version MAJOR.MINOR.PATCH] [--no-subnet] [--private-vlan PRIVATE_VLAN] [--public-vlan PUBLIC_VLAN] [--workers WORKER] [--disable-disk-encrypt]
+### bx cs cluster-create [--file FILE_LOCATION] [--hardware HARDWARE] --location LOCATION --machine-type MACHINE_TYPE --name NAME [--kube-version MAJOR.MINOR.PATCH] [--no-subnet] [--private-vlan PRIVATE_VLAN] [--public-vlan PUBLIC_VLAN] [--workers WORKER] [--disable-disk-encrypt] 
 {: #cs_cluster_create}
 
 Create a cluster in your organization. For free clusters, you specify the cluster name; everything else is set to a default value. You can have one free cluster at a time. To take advantage of the full capabilities of Kubernetes, create a standard cluster.
@@ -784,7 +785,7 @@ public-vlan: <em>&lt;public_vlan&gt;</em>
 hardware: <em>&lt;shared_or_dedicated&gt;</em>
 workerNum: <em>&lt;number_workers&gt;</em>
 kube-version: <em>&lt;kube-version&gt;</em>
-
+diskEncryption: <em>false</em>
 </code></pre>
 
 
@@ -893,6 +894,8 @@ kube-version: <em>&lt;kube-version&gt;</em>
 
 <dt><code>--disable-disk-encrypt</code></dt>
 <dd>Worker nodes feature disk encryption by default; [learn more](cs_secure.html#worker). To disable encryption, include this option.</dd>
+
+
 </dl>
 
 **Examples**:
@@ -922,6 +925,7 @@ kube-version: <em>&lt;kube-version&gt;</em>
   {: pre}
 
 
+
 ### bx cs cluster-get CLUSTER [--showResources]
 {: #cs_cluster_get}
 
@@ -947,14 +951,15 @@ View information about a cluster in your organization.
 **Example output**:
 
   ```
-  Name:			mycluster
-  ID:			abc1234567
-  State:			normal
-  Created:		2018-01-01T17:19:28+0000
-  Location:		dal10
-  Master URL:		https://169.xx.x.xxx:xxxxx
-  Ingress subdomain:	mycluster.us-south.containers.mybluemix.net
-  Ingress secret:		mycluster
+  Name:			   mycluster
+  ID:			     abc1234567
+  State:			 normal
+  Trust ready: false
+  Created:		 2018-01-01T17:19:28+0000
+  Location:		 dal10
+  Master URL:	 https://169.xx.x.xxx:xxxxx
+  Ingress subdomain: mycluster.us-south.containers.mybluemix.net
+  Ingress secret:		 mycluster
   Workers:		3
   Version:		1.7.4_1509* (1.8.8_1507 latest)
   Owner Email:		name@example.com
@@ -1862,13 +1867,29 @@ View details of a worker node.
    <dd>The ID for a worker node. Run <code>bx cs workers <em>CLUSTER</em></code> to view the IDs for the worker nodes in a cluster. This value is required.</dd>
    </dl>
 
-**Example**:
+**Example command**:
 
   ```
   bx cs worker-get [CLUSTER_NAME_OR_ID] WORKER_NODE_ID
   ```
   {: pre}
 
+**Example output**:
+
+  ```
+  ID:				    kube-dal10-123456789-w1
+  State:				normal
+  Status:				Ready
+  Trust:        disabled
+  Private VLAN:			223xxxx
+  Public VLAN:			223xxxx
+  Private IP:			10.xxx.xx.xx
+  Public IP:			169.xx.xxx.xxx
+  Hardware:			shared
+  Zone:				dal10
+  Version:			1.8.8_1507
+  ```
+  {: screen}
 
 ### bx cs worker-reboot [-f] [--hard] CLUSTER WORKER [WORKER]
 {: #cs_worker_reboot}

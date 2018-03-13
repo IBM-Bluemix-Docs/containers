@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-21"
+lastupdated: "2018-03-11"
 
 ---
 
@@ -145,6 +145,7 @@ IBM Blockchain Platform <img src="../icons/launch-glyph.svg" alt="External link 
 </tr>
 </thead>
 <tbody>
+  
 <tr>
 <td>Aqua Security</td>
   <td>As a supplement to <a href="/docs/services/va/va_index.html" target="_blank">Vulnerability Advisor</a>, you can use <a href="https://www.aquasec.com/" target="_blank">Aqua Security <img src="../icons/launch-glyph.svg" alt="External link icon"></a> to improve the security of container deployments by reducing what your app is allowed to do. For more information, see <a href="https://www.ibm.com/blogs/bluemix/2017/06/protecting-container-deployments-bluemix-aqua-security/" target="_blank">Protecting container deployments on {{site.data.keyword.Bluemix_notm}} with Aqua Security <img src="../icons/launch-glyph.svg" alt="External link icon"></a>. </td>
@@ -168,10 +169,10 @@ IBM Blockchain Platform <img src="../icons/launch-glyph.svg" alt="External link 
 
 
 
-## Adding services to clusters
+## Adding Cloud Foundry services to clusters
 {: #adding_cluster}
 
-Add an existing {{site.data.keyword.Bluemix_notm}} service instance to your cluster to enable your cluster users to access and use the {{site.data.keyword.Bluemix_notm}} service when they deploy an app to the cluster.
+Add an existing Cloud Foundry service instance to your cluster to enable your cluster users to access and use the service when they deploy an app to the cluster.
 {:shortdesc}
 
 Before you begin:
@@ -179,6 +180,7 @@ Before you begin:
 1. [Target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
 2. [Request an instance of the {{site.data.keyword.Bluemix_notm}} service](/docs/apps/reqnsi.html#req_instance).
    **Note:** To create an instance of a service in the Washington DC location, you must use the CLI.
+3. Cloud Foundry services are supported to bind with clusters, but other services are not. You can see the different service types after you create the service instance and the services are grouped in the dashboard as **Cloud Foundry Services** and **Services**. To bind the services in the **Services** section with clusters, [first create Cloud Foundry aliases](#adding_resource_cluster).
 
 **Note:**
 <ul><ul>
@@ -247,8 +249,53 @@ To add a service:
 
 To use the service in a pod that is deployed in the cluster, cluster users can access the service credentials of the {{site.data.keyword.Bluemix_notm}} service by [mounting the Kubernetes secret as a secret volume to a pod](cs_storage.html#app_volume_mount).
 
+
+
+
 <br />
 
+
+## Creating Cloud Foundry aliases for other {{site.data.keyword.Bluemix_notm}} service resources
+{: #adding_resource_cluster}
+
+Cloud Foundry services are supported for binding with clusters. To bind a {{site.data.keyword.Bluemix_notm}} service that is not a Cloud Foundry service to your cluster, create a Cloud Foundry alias for the service instance.
+{:shortdesc}
+
+Before you begin, [request an instance of the {{site.data.keyword.Bluemix_notm}} service](/docs/apps/reqnsi.html#req_instance).
+
+To create a Cloud Foundry alias for the service instance:
+
+1. Target the org and a space where the service instance is created.
+
+    ```
+    bx target -o <org_name> -s <space_name>
+    ```
+    {: pre}
+
+2. Note the service instance name.
+    ```
+    bx resource service-instances
+    ```
+    {: pre}
+
+3. Create a Cloud Foundry alias for the service instance.
+    ```
+    bx resource service-alias-create <service_alias_name> --instance-name <service_instance>
+    ```
+    {: pre}
+
+4. Verify that the service alias was created.
+
+    ```
+    bx service list
+    ```
+    {: pre}
+
+5. [Bind the Cloud Foundry alias to the cluster](#adding_cluster).
+
+
+
+<br />
 
 
 ## Adding services to apps
@@ -427,23 +474,25 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
 4. Add the {{site.data.keyword.Bluemix_notm}} Helm repository to your Helm instance.
 
     ```
-    helm repo add bluemix  https://registry.bluemix.net/helm/ibm
+    helm repo add ibm  https://registry.bluemix.net/helm/ibm
     ```
     {: pre}
 
 5. List the Helm charts currently available in the {{site.data.keyword.Bluemix_notm}} repository.
 
     ```
-    helm search bluemix
+    helm search ibm
     ```
     {: pre}
 
-    * To use the strongSwan Helm chart, see [Setting up VPN connectivity with the strongSwan IPSec VPN service Helm chart](cs_vpn.html#vpn-setup).
 
+### Related Helm links
+{: #helm_links}
 
-For more information about the Helm commands that are used to set up and manage Helm charts, see the <a href="https://docs.helm.sh/helm/" target="_blank">Helm documentation <img src="../icons/launch-glyph.svg" alt="External link icon"></a>.
-
-Learn more about how you can [increase deployment velocity with Kubernetes Helm Charts ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/recipes/tutorials/increase-deployment-velocity-with-kubernetes-helm-charts/).
+* To use the strongSwan Helm chart, see [Setting up VPN connectivity with the strongSwan IPSec VPN service Helm chart](cs_vpn.html#vpn-setup).
+* View available Helm charts that you can use with {{site.data.keyword.Bluemix_notm}} in the [Helm Charts Catalog ![External link icon](../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net/containers-kubernetes/solutions/helm-charts) GUI.
+* Learn more about the Helm commands that are used to set up and manage Helm charts in the <a href="https://docs.helm.sh/helm/" target="_blank">Helm documentation <img src="../icons/launch-glyph.svg" alt="External link icon"></a>.
+* Learn more about how you can [increase deployment velocity with Kubernetes Helm Charts ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/recipes/tutorials/increase-deployment-velocity-with-kubernetes-helm-charts/).
 
 ## Visualizing Kubernetes cluster resources
 {: #weavescope}
