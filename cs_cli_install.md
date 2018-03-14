@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-13"
+lastupdated: "2018-03-14"
 
 ---
 
@@ -415,7 +415,7 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     <tr>
     <td>Body for {{site.data.keyword.Bluemix_notm}} user name and password</td>
     <td><ul><li>grant_type: password</li>
-    <li>response_type: cloud_iam, uaa</li>
+    <li>response_type: cloud_iam uaa</li>
     <li>username: <em>&lt;my_username&gt;</em></li>
     <li>password: <em>&lt;my_password&gt;</em></li>
     <li>uaa_client_id: cf</li>
@@ -536,7 +536,7 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     <tr>
     <td>Body for {{site.data.keyword.Bluemix_notm}} user name and password</td>
     <td><ul><li>grant_type: password</li>
-    <li>response_type: cloud_iam, uaa</li>
+    <li>response_type: cloud_iam uaa</li>
     <li>username: <em>&lt;my_username&gt;</em></li>
     <li>password: <em>&lt;my_password&gt;</em></li>
     <li>uaa_client_id: cf</li>
@@ -642,7 +642,7 @@ Use the following steps if you want to refresh your IAM token.
     <tr>
     <td>Body</td>
     <td><ul><li>grant_type: refresh_token</li>
-    <li>response_type: cloud_iam, uaa</li>
+    <li>response_type: cloud_iam uaa</li>
     <li>refresh_token: <em>&lt;iam_refresh_token&gt;</em></li>
     <li>uaa_client_id: cf</li>
     <li>uaa_client_secret:</li>
