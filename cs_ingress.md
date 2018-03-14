@@ -1408,6 +1408,8 @@ For more information about config map resources, see the [Kubernetes documentati
 Enable SSL protocols and ciphers at the global HTTP level by editing the `ibm-cloud-provider-ingress-cm` config map.
 {:shortdesc}
 
+
+
 **Note**: When specifying the enabled protocols for all hosts, the TLSv1.1 and TLSv1.2 parameters (1.1.13, 1.0.12) work only when OpenSSL 1.0.1 or higher is used and the TLSv1.3 parameter (1.13.0) works only when OpenSSL 1.1.1 built with TLSv1.3 support is used.
 
 To edit the config map to enable SSL protocols and ciphers:

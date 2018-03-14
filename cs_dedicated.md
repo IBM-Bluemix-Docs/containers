@@ -55,7 +55,7 @@ The most significant differences between {{site.data.keyword.Bluemix_notm}} publ
 ### Service architecture
 {: #dedicated_ov_architecture}
 
-Each worker node is set up with an {{site.data.keyword.IBM_notm}}-managed Docker Engine, separate compute resources, networking, and volume service. 
+Each worker node is set up with an {{site.data.keyword.IBM_notm}}-managed Docker Engine, separate compute resources, networking, and volume service.
 {:shortdesc}
 
 Built-in security features provide isolation, resource management capabilities, and worker node security compliance. The worker node communicates with the master by using secure TLS certificates and openVPN connection.
@@ -401,7 +401,9 @@ Before you begin: Configure the routing of network traffic into and out of your 
     ```
     {: screen}
 
-4. To configure on-premises and internal account connectivity, choose between these options:
+4. Optional: [Enable routing between subnets on the same VLAN](cs_subnets.html#vlan-spanning).
+
+5. To configure on-premises and internal account connectivity, choose between these options:
   - If you used a 10.x.x.x private IP address range for the subnet, use valid IPs from that range to configure on-premises and internal account connectivity with Ingress and a load balancer. For more information, see [Configuring access to an app](cs_network_planning.html#planning).
   - If you did not use a 10.x.x.x private IP address range for the subnet, use valid IPs from that range to configure on-premises connectivity with Ingress and a load balancer. For more information, see [Configuring access to an app](cs_network_planning.html#planning). However, you must use an IBM Cloud infrastructure (SoftLayer) portable private subnet to configure internal account connectivity between your cluster and other Cloud Foundry-based services. You can create a portable private subnet with the [`bx cs cluster-subnet-add`](cs_cli_reference.html#cs_cluster_subnet_add) command. For this scenario, your cluster has both a user-managed subnet for on-premises connectivity and an IBM Cloud infrastructure (SoftLayer) portable private subnet for internal account connectivity.
 
