@@ -213,6 +213,11 @@ For general information about Ingress services and how to get started using them
 <td>Redirect insecure HTTP requests on your domain to HTTPS.</td>
 </tr>
 <tr>
+<td><a href="#hsts">HTTP Strict Transport Security (HSTS)</a></td>
+<td><code>hsts</code></td>
+<td>Set the browser to only access the domain using HTTPS.</td>
+</tr>
+<tr>
 <td><a href="#mutual-auth">Mutual authentication</a></td>
 <td><code>mutual-auth</code></td>
 <td>Configure mutual authentication for the ALB.</td>
@@ -1667,6 +1672,70 @@ spec:
 
 <br />
 
+
+### HTTP Strict Transport Security (hsts)
+{: #hsts}
+
+<dl>
+<dt>Description</dt>
+<dd>
+HSTS instructs the browser to only access a domain by using HTTPS. Even if the user enters or follows a plain HTTP link, the browser strictly upgrades the connection to HTTPS.
+</dd>
+
+
+<dt>Sample Ingress resource YAML</dt>
+<dd>
+
+<pre class="codeblock">
+<code>apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: myingress
+  annotations:
+    ingress.bluemix.net/hsts: enabled=&lt;true&gt; maxAge=&lt;31536000&gt; includeSubdomains=&lt;true&gt;
+spec:
+  tls:
+  - hosts:
+    - mydomain
+    secretName: mysecret
+  rules:
+  - host: mydomain
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: myservice1
+          servicePort: 8443
+      - path: /
+        backend:
+          serviceName: myservice2
+          servicePort: 8444
+          </code></pre>
+
+<table>
+  <thead>
+  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
+  </thead>
+  <tbody>
+  <tr>
+  <td><code>enabled</code></td>
+  <td>Use <code>true</code> to enable HSTS.</td>
+  </tr>
+    <tr>
+  <td><code>maxAge</code></td>
+  <td>Replace <code>&lt;<em>31536000</em>&gt;</code> with an integer representing how long in seconds a browser will cache sending requests straight to HTTPS. The default is <code>31536000</code>, which is equal to 1 year.</td>
+  </tr>
+  <tr>
+  <td><code>includeSubdomains</code></td>
+  <td>Use <code>true</code> to tell the browser that the HSTS policy also applies to all subdomains of the current domain. The default is <code>true</code>. </td>
+  </tr>
+  </tbody></table>
+
+  </dd>
+  </dl>
+
+
+<br />
 
 
 ### Mutual authentication (mutual-auth)
