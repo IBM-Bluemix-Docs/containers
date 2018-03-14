@@ -529,11 +529,6 @@ To add persistent storage:
 
 
 
-
-
-<br />
-
-
 . Make sure to specify a size that matches the amount of data that you want to store.
 
     1.  **Example PVC to specify a zone for multizone clusters**:
@@ -575,9 +570,132 @@ To add persistent storage:
 <br />
 
 
+## Installing the IBM Cloud Block Storage plug-in on your cluster
+{: #install_block}
+
+Install the IBM Cloud Block Storage plug-in to set up pre-defined storage classes for block storage. You can use these storage classes to create a PVC to provision block storage for your cluster.
+{: shortdesc}
+
+**Note:** Block storage support is internal only and not available to the public yet.
+
+1. Install the [Helm CLI ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.helm.sh/using_helm/#installing-helm).
+2. If you do not have one already, [create a cluster](cs_clusters.html#clusters_cli).
+3. Note the cluster name or ID where you want to install the IBM Cloud Block Storage plug-in.
+   ```
+   bx cs clusters
+   ```
+   {: pre}
+
+4. Set the cluster as the context for this session.
+   1. Get the command to set the environment variable and download the Kubernetes configuration files.
+      ```
+      bx cs cluster-config <cluster_name_or_id>
+      ```
+      {: pre}
+
+   2. Copy and paste the command that is displayed in your terminal to set the `KUBECONFIG` environment variable. <p> Example: </p>
+      ```
+      export KUBECONFIG=/Users/<user_name>/.bluemix/plugins/container-service/clusters/<cluster_name>/kube-config-prod-dal10-<cluster_name>.yml
+      ```
+      {: pre}
+
+5. Initialize Helm to set up a Helm server in your cluster.
+   ```
+   helm init
+   ```
+   {: pre}
+
+6. Verify your Helm set up.
+   ```
+   helm ls
+   ```
+   {: pre}
+
+7. Install the IBM Cloud Block Storage plug-in on your cluster.
+    1. Clone the Github repository.
+       ```
+       git clone git@github.ibm.com:alchemy-containers/armada-storage-block-plugin.git
+       ```
+       {: pre}
+
+    2. Navigate in to the installation directory.
+       ```
+       cd armada-storage-block-plugin/deploy/helm
+       ```
+       {: pre}
+
+    3. Install the plug-in.
+       ```
+       helm install ./ibm-block-plugin
+       ```
+       {: pre}
+
+       Your output looks similar to the following:
+       ```
+       NAME:   imprecise-rottweiler
+       LAST DEPLOYED: Tue Oct 10 16:41:40 2017
+       NAMESPACE: default
+       STATUS: DEPLOYED
+
+       RESOURCES:
+       ==> v1beta1/DaemonSet
+       NAME                     DESIRED  CURRENT  READY  UP-TO-DATE  AVAILABLE  NODE-SELECTOR  AGE
+       ibm-block-plugin-driver  1        1        1      1           1          <none>         3s
+
+       ==> v1beta1/Deployment
+       NAME              DESIRED  CURRENT  UP-TO-DATE  AVAILABLE  AGE
+       ibm-block-plugin  1        1        1           0          3s
+
+       ==> v1/StorageClass
+       NAME                      TYPE
+       ibmc-block-retain-bronze  ibm.io/ibmc-block
+       ibmc-block-custom         ibm.io/ibmc-block
+       ibmc-block-bronze         ibm.io/ibmc-block
+       ibmc-block-silver         ibm.io/ibmc-block
+       ibmc-block-retain-silver  ibm.io/ibmc-block
+       ibmc-block-retain-gold    ibm.io/ibmc-block
+       ibmc-block-retain-custom  ibm.io/ibmc-block
+       ibmc-block-gold           ibm.io/ibmc-block
+       ```
+       {: screen}
+
+8. Verify that the installation was successful.
+   ```
+   kubectl get pod -n kube-system | grep ibm-block-plugin
+   ```
+   {: pre}
+
+   Your output looks similar to the following:
+   ```
+   ibmcloud-block-storage-plugin-2864820594-8cgx7          1/1       Running            0          3m
+   ibmcloud-block-storage-plugin-driver-9fqn9              1/1       Running            0          3m
+   ibmcloud-block-storage-plugin-driver-h103v              1/1       Running            0          3m
+   ```
+   {: screen}
+
+9. Verify that the storage classes for block storage were added to your cluster.
+   ```
+   kubectl get storageclasses | grep block
+   ```
+   {: pre}
+
+   Your output looks similar to the following:
+   ```
+   ibmc-block-bronze            ibm.io/ibmc-block
+   ibmc-block-custom            ibm.io/ibmc-block
+   ibmc-block-gold              ibm.io/ibmc-block
+   ibmc-block-retain-bronze     ibm.io/ibmc-block
+   ibmc-block-retain-custom     ibm.io/ibmc-block
+   ibmc-block-retain-gold       ibm.io/ibmc-block
+   ibmc-block-retain-silver     ibm.io/ibmc-block
+   ibmc-block-silver            ibm.io/ibmc-block
+   ```
+   {: screen}
+
+10. Repeat these steps for every cluster where you want to provision block storage.
+
+You can now continue to [create a PVC](#create) to provision block storage for your app.
 </staging>
-
-
 
 ## Setting up backup and restore solutions for NFS file shares
 {: #backup_restore}

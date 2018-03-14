@@ -78,6 +78,8 @@ To create a subnet in an IBM Cloud infrastructure (SoftLayer) account and make i
     ```
     {: pre}
 
+3. Optional: [Enable routing between subnets on the same VLAN](#vlan-spanning).
+
 <br />
 
 
@@ -170,6 +172,8 @@ If you have an existing subnet in your IBM Cloud infrastructure (SoftLayer) port
     ```
     {: pre}
 
+7. Optional: [Enable routing between subnets on the same VLAN](#vlan-spanning).
+
 <br />
 
 
@@ -187,6 +191,8 @@ Requirements:
 Before you begin:
 - Configure the routing of network traffic into and out of the external subnet.
 - Confirm that you have VPN connectivity between the on-premises data center gateway device and either the private network Vyatta in your IBM Cloud infrastructure (SoftLayer) portfolio or the Strongswan VPN service running in your cluster. To use a Vyatta, see this [blog post ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/blogs/bluemix/2017/07/kubernetes-and-bluemix-container-based-workloads-part4/)]. To use Strongswan, see [Setting up VPN connectivity with the Strongswan IPSec VPN service](cs_vpn.html).
+
+To add a subnet from an on-prem network:
 
 1. View the ID of your cluster's Private VLAN. Locate the **VLANs** section. In the field **User-managed**, identify the VLAN ID with _false_.
 
@@ -233,7 +239,9 @@ Before you begin:
     ```
     {: screen}
 
-4. Add a private load balancer service or a private Ingress application load balancer to access your app over the private network. If you want to use a private IP address from the subnet that you added when you create a private load balancer or a private Ingress application load balancer, you must specify an IP address. Otherwise, an IP address is chosen at random from the IBM Cloud infrastructure (SoftLayer) subnets or user-provided subnets on the private VLAN. For more information, see [Configuring access to an app by using the load balancer service type](cs_loadbalancer.html#config) or [Enabling the private application load balancer](cs_ingress.html#private_ingress).
+4. Optional: [Enable routing between subnets on the same VLAN](#vlan-spanning).
+
+5. Add a private load balancer service or a private Ingress application load balancer to access your app over the private network. If you want to use a private IP address from the subnet that you added when you create a private load balancer or a private Ingress application load balancer, you must specify an IP address. Otherwise, an IP address is chosen at random from the IBM Cloud infrastructure (SoftLayer) subnets or user-provided subnets on the private VLAN. For more information, see [Configuring access to an app by using the load balancer service type](cs_loadbalancer.html#config) or [Enabling the private application load balancer](cs_ingress.html#private_ingress).
 
 <br />
 
