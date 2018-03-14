@@ -40,6 +40,11 @@ For general information about Ingress services and how to get started using them
  <td>Add path definitions to external services, such as a service hosted in {{site.data.keyword.Bluemix_notm}}.</td>
  </tr>
  <tr>
+ <td><a href="#location-modifier">Location modifier</a></td>
+ <td><code>location-modifier</code></td>
+ <td>Modify the way the ALB matches the request URI against the app path.</td>
+ </tr>
+ <tr>
  <td><a href="#alb-id">Private ALB routing</a></td>
  <td><code>ALB-ID</code></td>
  <td>Route incoming requests to your apps with a private ALB.</td>
@@ -192,7 +197,11 @@ For general information about Ingress services and how to get started using them
 <th>Description</th>
 </thead>
 <tbody>
-
+<tr>
+<td><a href="#appid-auth">{{site.data.keyword.appid_short}} Authentication</a></td>
+<td><code>appid-auth</code></td>
+<td>Use {{site.data.keyword.appid_full_notm}} to authenticate with your app.</td>
+</tr>
 <tr>
 <td><a href="#custom-port">Custom HTTP and HTTPS ports</a></td>
 <td><code>custom-port</code></td>
@@ -279,6 +288,72 @@ spec:
 
 <br />
 
+
+### Location modifier (location-modifier)
+{: #location-modifier}
+
+Modify the way the ALB matches the request URI against the app path.
+{:shortdesc}
+
+<dl>
+<dt>Description</dt>
+<dd>By default, ALBs process paths that your apps listen on as prefixes. When an ALB receives a request to an app, the ALB checks the Ingress resource for a path (as a prefix) that matches the beginning of the request URI. If a match is found, the request is forwarded to the IP address of the pod where the app is deployed.
+<br><br>The `location-modifier` annotation changes the way the ALB searches for matches by modifying the location block configuration. The location block determines how requests are handled for the app path. **Note**: To handle regular expression (regex) paths, this annotation is required.
+</dd>
+</dl>
+
+<dl>
+<dt>Supported modifiers</dt>
+<ul>
+<li><code>=</code>: The equal sign modifier restricts matching to exact matches. When an exact match is found, the search stops and the matching path is selected.</li>
+<li><code>~</code>: The tilde modifier causes the ALB to process paths as case-sensitive regex paths during matching.</li>
+<li><code>~*</code>: The tilde followed by an asterisk modifier causes the ALB to process paths as case-insensitive regex paths during matching.</li>
+<li><code>^~</code>: The carat followed by a tilde modifier causes the ALB to select the best non-regex match instead of a regex path.</li>
+</ul>
+</dl>
+
+<dt>Sample Ingress resource YAML</dt>
+<dd>
+
+<pre class="codeblock">
+<code>apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+name: myingress
+annotations:
+  ingress.bluemix.net/location-modifier: "modifier='&lt;location_modifier&gt' serviceName=&lt;myservice&gt;;modifier='&lt;location_modifier&gt' serviceName=&lt;myservice2&gt;"
+spec:
+  tls:
+  - hosts:
+    - mydomain
+    secretName: mysecret
+  rules:
+  - host: mydomain
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: &lt;myservice&gt;
+          servicePort: 80</code></pre>
+
+ <table>
+  <thead>
+  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
+  </thead>
+  <tbody>
+  <tr>
+  <td><code>modifier</code></td>
+  <td>Replace <code>&lt;<em>location_modifier</em>&gt;</code> with the location modifier you want to use for the path. Supported modifiers are <code>'='</code>,<code>'~'</code>,<code>'~*'</code>, and <code>'^~'</code>. You must surround the modifiers in single quotes.</td>
+  </tr>
+  <tr>
+  <td><code>serviceName</code></td>
+  <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the Kubernetes service you created for your app.</td>
+  </tr>
+  </tbody></table>
+  </dd>
+  </dl>
+
+<br />
 
 
 ### Private ALB routing (ALB-ID)
@@ -526,7 +601,6 @@ spec:
   </dl>
 
 <br />
-
 
 
 ## Connection annotations
