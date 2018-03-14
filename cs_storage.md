@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-12"
+lastupdated: "2018-03-14"
 
 ---
 
@@ -745,105 +745,43 @@ Review the following backup and restore options for your NFS file shares:
 ## Adding non-root user access to NFS file storage
 {: #nonroot}
 
-
-Non-root users do not have write permission on the volume mount path for NFS-backed storage. To grant write permission, you must edit the Dockerfile of the image to create a directory on the mount path with the correct permission.
+By default, non-root users do not have write permission on the volume mount path for NFS-backed storage. Some common images, such as Jenkins and Nexus3, specify a non-root user that owns the mount path in the Dockerfile. When you create a container from this Dockerfile, the creation of the container fails due to insufficient permissions of the non-root user on the mount path. To grant write permission, you can modify the Dockerfile to temporarily add the non-root user to the root user group before changing the mount path permissions, or use an init container.
 {:shortdesc}
+
+If you are using a Helm chart to deploy an image with a non-root user that you want to have write permissions on the NFS file share, first edit the Helm deployment to use an init container.
+{:tip}
+
+
+
+When you include an [init container![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/pods/init-containers/) in your deployment, you can give a non-root user that is specified in your Dockerfile write permissions to the volume mount path inside the container that points to your NFS file share. The init container starts before your app container starts. The init container creates the volume mount path inside the container, changes the mount path to be owned by the correct (non-root) user, and closes. Then, your app container starts, which includes the non-root user that must write to the mount path. Because the path is already owned by the non-root user, writing to the mount path is successful. If you do not want to use an init container, you can modify the Dockerfile to add non-root user access to NFS file storage.
 
 Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
 
-If you are designing an app with a non-root user that requires write permission to the volume, you must add the following processes to your image's Dockerfile and entrypoint script:
+1.  Open the Dockerfile for your app and get the user ID (UID) and group ID (GID) from the user that you want to give writer permission on the volume mount path. In the example from a Jenkins Dockerfile, the information is:
+    - UID: `1000`
+    - GID: `1000`
 
--   Create a non-root user.
--   Temporarily add the user to the root group.
--   Create a directory in the volume mount path with the correct user permissions.
-
-For {{site.data.keyword.containershort_notm}}, the default owner of the volume mount path is the owner `nobody`. With NFS storage, if the owner does not exist locally in the pod, then the `nobody` user is created in the file shares. The volumes are set up to recognize the root user in the container, which for some apps, is the only user inside a container. However, many apps specify a non-root user other than `nobody` that writes to the container mount path. Some apps specify that the volume must be owned by the root user. Typically apps do not use the root user due to security concerns. However, if your app requires a root user you can contact [{{site.data.keyword.Bluemix_notm}} support](/docs/get-support/howtogetsupport.html#getting-customer-support) for assistance.
-
-
-1.  Create a Dockerfile in a local directory. This example Dockerfile is creating a non-root user named `myguest`.
+    **Example**:
 
     ```
-    FROM registry.<region>.bluemix.net/ibmliberty:latest
+    FROM openjdk:8-jdk
 
-    # Create group and user with GID & UID 1010.
-    # In this case your are creating a group and user named myguest.
-    # The GUID and UID 1010 is unlikely to create a conflict with any existing user GUIDs or UIDs in the image.
-    # The GUID and UID must be between 0 and 65536. Otherwise, container creation fails.
-    RUN groupadd --gid 1010 myguest
-    RUN useradd --uid 1010 --gid 1010 -m --shell /bin/bash myguest
+    RUN apt-get update && apt-get install -y git curl && rm -rf /var/lib/apt/lists/*
 
-    ENV MY_USER=myguest
+    ARG user=jenkins
+    ARG group=jenkins
+    ARG uid=1000
+    ARG gid=1000
+    ARG http_port=8080
+    ARG agent_port=50000
 
-    COPY entrypoint.sh /sbin/entrypoint.sh
-    RUN chmod 755 /sbin/entrypoint.sh
-
-    EXPOSE 22
-    ENTRYPOINT ["/sbin/entrypoint.sh"]
+    ENV JENKINS_HOME /var/jenkins_home
+    ENV JENKINS_SLAVE_AGENT_PORT ${agent_port}
+    ...
     ```
-    {: codeblock}
+    {:screen}
 
-2.  Create the entrypoint script in the same local folder as the Dockerfile. This example entrypoint script is specifying `/mnt/myvol` as the volume mount path.
-
-    ```
-    #!/bin/bash
-    set -e
-
-    # This is the mount point for the shared volume.
-    # By default the mount point is owned by the root user.
-    MOUNTPATH="/mnt/myvol"
-    MY_USER=${MY_USER:-"myguest"}
-
-    # This function creates a subdirectory that is owned by
-    # the non-root user under the shared volume mount path.
-    create_data_dir() {
-      #Add the non-root user to primary group of root user.
-      usermod -aG root $MY_USER
-
-      # Provide read-write-execute permission to the group for the shared volume mount path.
-      chmod 775 $MOUNTPATH
-
-      # Create a directory under the shared path owned by non-root user myguest.
-      su -c "mkdir -p ${MOUNTPATH}/mydata" -l $MY_USER
-      su -c "chmod 700 ${MOUNTPATH}/mydata" -l $MY_USER
-      ls -al ${MOUNTPATH}
-
-      # For security, remove the non-root user from root user group.
-      deluser $MY_USER root
-
-      # Change the shared volume mount path back to its original read-write-execute permission.
-      chmod 755 $MOUNTPATH
-      echo "Created Data directory..."
-    }
-
-    create_data_dir
-
-    # This command creates a long-running process for the purpose of this example.
-    tail -F /dev/null
-    ```
-    {: codeblock}
-
-3.  Log in to {{site.data.keyword.registryshort_notm}}.
-
-    ```
-    bx cr login
-    ```
-    {: pre}
-
-4.  Build the image locally. Remember to replace _&lt;my_namespace&gt;_ with the namespace to your private images registry. Run `bx cr namespace-get` if you need to find your namespace.
-
-    ```
-    docker build -t registry.<region>.bluemix.net/<my_namespace>/nonroot .
-    ```
-    {: pre}
-
-5.  Push the image to your namespace in {{site.data.keyword.registryshort_notm}}.
-
-    ```
-    docker push registry.<region>.bluemix.net/<my_namespace>/nonroot
-    ```
-    {: pre}
-
-6.  Create a persistent volume claim (PVC) by creating a configuration `.yaml` file. This example uses a lower performance storage class. Run `kubectl get storageclasses` to see available storage classes.
+2.  Add persistent storage to your app by creating a persistent volume claim (PVC). This example uses the `ibmc-file-bronze` storage class. To review available storage classes, run `kubectl get storageclasses`.
 
     ```
     apiVersion: v1
@@ -861,91 +799,139 @@ For {{site.data.keyword.containershort_notm}}, the default owner of the volume m
     ```
     {: codeblock}
 
-7.  Create the PVC.
+3.  Create the PVC.
 
     ```
     kubectl apply -f <local_file_path>
     ```
     {: pre}
 
-8.  Create a configuration file to mount the volume and run the pod from the nonroot image. The volume mount path `/mnt/myvol` matches the mount path that is specified in the Dockerfile. Save the configuration as a `.yaml` file.
+4.  In your deployment `.yaml` file, add the init container. Include the UID and GID that you previously retrieved.
 
     ```
-    apiVersion: v1
-    kind: Pod
-    metadata:
-     name: mypod
-    spec:
-     containers:
-     - image: registry.<region>.bluemix.net/<my_namespace>/nonroot
-       name: mycontainer
-       volumeMounts:
-       - mountPath: /mnt/myvol
-         name: myvol
-     volumes:
-     - name: myvol
-       persistentVolumeClaim:
-         claimName: mypvc
+    initContainers:
+    - name: initContainer # Or you can replace with any name
+      image: alpine:latest
+      command: ["/bin/sh", "-c"]
+      args:
+        - chown <UID>:<GID> /mount; # Replace UID and GID with values from the Dockerfile
+      volumeMounts:
+      - name: volume # Or you can replace with any name
+        mountPath: /mount # Must match the mount path in the args line
     ```
     {: codeblock}
 
-9.  Create the pod and mount the PVC to your pod.
+    **Example** for a Jenkins deployment:
+
+    ```
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: my_pod
+    spec:
+      replicas: 1
+      template:
+        metadata:
+          labels:
+            app: jenkins
+        spec:
+          containers:
+          - name: jenkins
+            image: jenkins
+            volumeMounts:
+            - mountPath: /var/jenkins_home
+              name: volume
+          volumes:
+          - name: volume
+            persistentVolumeClaim:
+              claimName: mypvc
+          initContainers:
+          - name: permissionsfix
+            image: alpine:latest
+            command: ["/bin/sh", "-c"]
+            args:
+              - chown 1000:1000 /mount;
+            volumeMounts:
+            - name: volume
+              mountPath: /mount
+    ```
+    {: codeblock}
+
+5.  Create the pod and mount the PVC to your pod.
 
     ```
     kubectl apply -f <local_yaml_path>
     ```
     {: pre}
 
-10. Verify that the volume is successfully mounted to your pod.
+6. Verify that the volume is successfully mounted to your pod. Note the pod name and **Containers/Mounts** path.
 
     ```
-    kubectl describe pod mypod
+    kubectl describe pod <my_pod>
     ```
     {: pre}
 
-    The mount point is listed in the **Volume Mounts** field and the volume is listed in the **Volumes** field.
+    **Example output**:
 
     ```
-     Volume Mounts:
-          /var/run/secrets/kubernetes.io/serviceaccount from default-token-tqp61 (ro)
-          /mnt/myvol from myvol (rw)
+    Name:		    mypod-123456789
+    Namespace:	default
+    ...
+    Init Containers:
+    ...
+    Mounts:
+      /mount from volume (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-cp9f0 (ro)
+    ...
+    Containers:
+      jenkins:
+        Container ID:
+        Image:		jenkins
+        Image ID:
+        Port:		  <none>
+        State:		Waiting
+          Reason:		PodInitializing
+        Ready:		False
+        Restart Count:	0
+        Environment:	<none>
+        Mounts:
+          /var/jenkins_home from volume (rw)
+          /var/run/secrets/kubernetes.io/serviceaccount from default-token-cp9f0 (ro)
     ...
     Volumes:
       myvol:
         Type:	PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
         ClaimName:	mypvc
-        ReadOnly:	false
+        ReadOnly:	  false
 
     ```
     {: screen}
 
-11. Log in to the pod after the pod is running.
+7.  Log in to the pod by using the pod name that you previously noted.
 
     ```
-    kubectl exec -it mypod /bin/bash
+    kubectl exec -it <my_pod-123456789> /bin/bash
     ```
     {: pre}
 
-12. View permissions of your volume mount path.
+8. Verify the permissions of your container's mount path. In the example, the mount path is `/var/jenkins_home`.
 
     ```
-    ls -al /mnt/myvol/
+    ls -ln /var/jenkins_home
     ```
     {: pre}
 
+    **Example output**:
+
     ```
-    root@instance-006ff76b:/# ls -al /mnt/myvol/
+    jenkins@mypod-123456789:/$ ls -ln /var/jenkins_home
     total 12
-    drwxr-xr-x 3 root    root    4096 Jul 13 19:03 .
-    drwxr-xr-x 3 root    root    4096 Jul 13 19:03 ..
-    drwx------ 2 myguest myguest 4096 Jul 13 19:03 mydata
+    -rw-r--r-- 1 1000 1000  102 Mar  9 19:58 copy_reference_file.log
+    drwxr-xr-x 2 1000 1000 4096 Mar  9 19:58 init.groovy.d
+    drwxr-xr-x 9 1000 1000 4096 Mar  9 20:16 war
     ```
     {: screen}
 
-    This output shows that root has read, write, and execute permissions on the volume mount path `mnt/myvol/`, but the non-root myguest user has permission to read and write to the `mnt/myvol/mydata` folder. Because of these updated permissions, the non-root user can now write data to the persistent volume.
-
-
-
-
+    This output shows that the GID and UID from your Dockerfile (in this example, `1000` and `1000`) own the mount path inside the container.
 
 
