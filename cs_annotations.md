@@ -40,6 +40,11 @@ For general information about Ingress services and how to get started using them
  <td>Add path definitions to external services, such as a service hosted in {{site.data.keyword.Bluemix_notm}}.</td>
  </tr>
  <tr>
+ <td><a href="#location-modifier">Location modifier</a></td>
+ <td><code>location-modifier</code></td>
+ <td>Modify the way the ALB matches the request URI against the app path.</td>
+ </tr>
+ <tr>
  <td><a href="#alb-id">Private ALB routing</a></td>
  <td><code>ALB-ID</code></td>
  <td>Route incoming requests to your apps with a private ALB.</td>
@@ -192,7 +197,11 @@ For general information about Ingress services and how to get started using them
 <th>Description</th>
 </thead>
 <tbody>
-
+<tr>
+<td><a href="#appid-auth">{{site.data.keyword.appid_short}} Authentication</a></td>
+<td><code>appid-auth</code></td>
+<td>Use {{site.data.keyword.appid_full_notm}} to authenticate with your app.</td>
+</tr>
 <tr>
 <td><a href="#custom-port">Custom HTTP and HTTPS ports</a></td>
 <td><code>custom-port</code></td>
@@ -279,6 +288,72 @@ spec:
 
 <br />
 
+
+### Location modifier (location-modifier)
+{: #location-modifier}
+
+Modify the way the ALB matches the request URI against the app path.
+{:shortdesc}
+
+<dl>
+<dt>Description</dt>
+<dd>By default, ALBs process the paths that apps listen on as prefixes. When an ALB receives a request to an app, the ALB checks the Ingress resource for a path (as a prefix) that matches the beginning of the request URI. If a match is found, the request is forwarded to the IP address of the pod where the app is deployed.
+<br><br>The `location-modifier` annotation changes the way the ALB searches for matches by modifying the location block configuration. The location block determines how requests are handled for the app path. **Note**: To handle regular expression (regex) paths, this annotation is required.
+</dd>
+</dl>
+
+<dl>
+<dt>Supported modifiers</dt>
+<ul>
+<li><code>=</code> : The equal sign modifier causes the ALB to select exact matches only. When an exact match is found, the search stops and the matching path is selected.</li>
+<li><code>~</code> : The tilde modifier causes the ALB to process paths as case-sensitive regex paths during matching.</li>
+<li><code>~*</code> : The tilde followed by an asterisk modifier causes the ALB to process paths as case-insensitive regex paths during matching.</li>
+<li><code>^~</code> : The carat followed by a tilde modifier causes the ALB to select the best non-regex match instead of a regex path.</li>
+</ul>
+</dl>
+
+<dt>Sample Ingress resource YAML</dt>
+<dd>
+
+<pre class="codeblock">
+<code>apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+name: myingress
+annotations:
+  ingress.bluemix.net/location-modifier: "modifier='&lt;location_modifier&gt' serviceName=&lt;myservice&gt;;modifier='&lt;location_modifier&gt' serviceName=&lt;myservice2&gt;"
+spec:
+  tls:
+  - hosts:
+    - mydomain
+    secretName: mysecret
+  rules:
+  - host: mydomain
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: &lt;myservice&gt;
+          servicePort: 80</code></pre>
+
+ <table>
+  <thead>
+  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
+  </thead>
+  <tbody>
+  <tr>
+  <td><code>modifier</code></td>
+  <td>Replace <code>&lt;<em>location_modifier</em>&gt;</code> with the location modifier you want to use for the path. Supported modifiers are <code>'='</code>,<code>'~'</code>,<code>'~*'</code>, and <code>'^~'</code>. You must surround the modifiers in single quotes.</td>
+  </tr>
+  <tr>
+  <td><code>serviceName</code></td>
+  <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the Kubernetes service you created for your app.</td>
+  </tr>
+  </tbody></table>
+  </dd>
+  </dl>
+
+<br />
 
 
 ### Private ALB routing (ALB-ID)
@@ -526,7 +601,6 @@ spec:
   </dl>
 
 <br />
-
 
 
 ## Connection annotations
@@ -1386,6 +1460,81 @@ Limit the request processing rate and the number of connections for specific ser
 ## HTTPS and TLS/SSL authentication annotations
 {: #https-auth}
 
+### {{site.data.keyword.appid_short_notm}} Authentication (appid-auth)
+{: #appid-auth}
+
+  Use {{site.data.keyword.appid_full_notm}} to authenticate with your application.
+  {:shortdesc}
+
+  <dl>
+  <dt>Description</dt>
+  <dd>
+  Authenticate web or API HTTP/HTTPS requests with {{site.data.keyword.appid_short_notm}}.
+
+  <p>If you set the request type to <code>web</code>, a web request that contains an {{site.data.keyword.appid_short_notm}} access token is validated. If token validation fails, the web request is rejected. If the request does not contain an access token, then the request is redirected to the {{site.data.keyword.appid_short_notm}} login page. **Note**: For {{site.data.keyword.appid_short_notm}} web authentication to work, cookies must be enabled in the user's browser.</p>
+
+  <p>If you set the request type to <code>api</code>, an API request that contains an {{site.data.keyword.appid_short_notm}} access token is validated. If the request does not contain an access token, a <code>401: Unauthorized</code> error message is returned to the user.</p>
+  </dd>
+
+   <dt>Sample Ingress resource YAML</dt>
+   <dd>
+
+   <pre class="codeblock">
+   <code>apiVersion: extensions/v1beta1
+   kind: Ingress
+   metadata:
+    name: myingress
+    annotations:
+      ingress.bluemix.net/appid-auth: "bindSecret=&lt;bind_secret&gt; namespace=&lt;namespace&gt; requestType=&lt;request_type&gt; serviceName=&lt;myservice&gt;"
+   spec:
+    tls:
+    - hosts:
+      - mydomain
+      secretName: mytlssecret
+    rules:
+    - host: mydomain
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: myservice
+            servicePort: 8080</code></pre>
+
+   <table>
+    <thead>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
+    </thead>
+    <tbody>
+    <tr>
+    <td><code>bindSecret</code></td>
+    <td>Replace <em><code>&lt;bind_secret&gt;</code></em> with the Kubernetes secret which stores the bind secret.</td>
+    </tr>
+    <tr>
+    <td><code>namespace</code></td>
+    <td>Replace <em><code>&lt;namespace&gt;</code></em> with the namespace of the bind secret. This field defaults to the `default` namespace.</td>
+    </tr>
+    <tr>
+    <td><code>requestType</code></td>
+    <td>Replace <code><em>&lt;request_type&gt;</em></code> with the type of request you want to send to {{site.data.keyword.appid_short_notm}}. Accepted values are `web` or `api`. The default is `api`.</td>
+    </tr>
+    <tr>
+    <td><code>serviceName</code></td>
+    <td>Replace <code><em>&lt;myservice&gt</em></code> with the name of the Kubernetes service that you created for your app. This field is optional. If a service name is not included, then the annotation is enabled for all services.  If a service name is included, then the annotation is enabled only for that service. Separate multiple services with a semi-colon (;).</td>
+    </tr>
+    </tbody></table>
+    </dd>
+    <dt>Usage</dt>
+    <dd>Because the application uses {{site.data.keyword.appid_short_notm}} for authenication, you must provision an {{site.data.keyword.appid_short_notm}} instance, configure the instance with valid redirect URIs, and generate a bind secret.
+    <ol>
+    <li>Provision an [{{site.data.keyword.appid_short_notm}} instance](https://console.bluemix.net/catalog/services/app-id).</li>
+    <li>In the {{site.data.keyword.appid_short_notm}} management console, add redirectURIs for your app.</li>
+    <li>Create a bind secret.
+    <pre class="pre"><code>bx cs cluster-service-bind &lt;my_cluster&gt; &lt;my_namespace&gt; &lt;my_service_instance_GUID&gt;</code></pre> </li>
+    <li>Configure the <code>appid-auth</code> annotation.</li>
+    </ol></dd>
+    </dl>
+
+<br />
 
 
 
@@ -1442,7 +1591,7 @@ spec:
 
  </dd>
  <dt>Usage</dt>
- <dd><ol><li>Review open ports for your ALB. 
+ <dd><ol><li>Review open ports for your ALB.
 <pre class="pre">
 <code>kubectl get service -n kube-system</code></pre>
 Your CLI output looks similar to the following:
