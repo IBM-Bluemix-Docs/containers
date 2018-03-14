@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-07"
+lastupdated: "2018-03-13"
 
 ---
 
@@ -21,6 +21,29 @@ lastupdated: "2018-03-07"
 
 Check out what container developers are interested in learning about in {{site.data.keyword.containerlong}}.
 {:shortdesc}
+
+## Popular topics in March 2018
+{: #mar18}
+
+<table summary="The table shows popular topics. Rows are to be read from the left to right, with the date in column one, the title of the feature in column two and a description in column three.">
+<caption>Popular topics for containers and Kubernetes clusters in February 2018</caption>
+<thead>
+<th>Date</th>
+<th>Title</th>
+<th>Description</th>
+</thead>
+<tbody>
+<tr>
+<td>13 March</td>
+<td>[Location available in São Paulo](cs_regions.html)</td>
+<td>Welcome São Paulo, Brazil as a new location in the US South region. If you have a firewall, be sure to [open the required firewall ports](cs_firewall.html#firewall) for this location as well as the others within the region that your cluster is in.</td>
+</tr>
+<tr>
+<td>12 March</td>
+<td>[Just joined the {{site.data.keyword.Bluemix_notm}} with a Trial account? Try out a free Kubernetes cluster!](container_index.html#clusters)</td>
+<td>With a Trial [{{site.data.keyword.Bluemix_notm}} account](https://console.bluemix.net/registration/), you can deploy 1 free cluster for 21 days to test out Kubernetes capabilities.</td>
+</tr>
+</tbody></table>
 
 ## Popular topics in February 2018
 {: #feb18}
