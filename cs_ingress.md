@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-14"
+lastupdated: "2018-03-15"
 
 ---
 
@@ -245,7 +245,8 @@ To expose an app by using the IBM-provided domain:
     ```
     {: pre}
 
-  **Note:** It might take a few minutes for the Ingress resource to be created and for the app to be available on the public internet.
+    1. If there are messages in the events that describe an error in your resource configuration, change the values in your resource file and reapply the file for the resource.
+
 6.  In a web browser, enter the URL of the app service to access.
 
     ```
@@ -259,7 +260,7 @@ To expose an app by using the IBM-provided domain:
 ### Publicly expose apps using the IBM-provided domain with TLS
 {: #ibm_domain_cert}
 
-You can configure the Ingress control to manage incoming TLS connections for your apps, decrypt the network traffic by using the IBM-provided TLS certificate, and forward the unencrypted request to the apps that are exposed in your cluster.
+You can configure the Ingress ALB to manage incoming TLS connections for your apps, decrypt the network traffic by using the IBM-provided TLS certificate, and forward the unencrypted request to the apps that are exposed in your cluster.
 {:shortdesc}
 
 Before you begin:
@@ -443,7 +444,8 @@ To expose an app by using the IBM-provided domain with TLS:
     ```
     {: pre}
 
-    **Note:** It might take a few minutes for the Ingress resource to be created properly and for the app to be available on the public internet.
+    1. If there are messages in the events that describe an error in your resource configuration, change the values in your resource file and reapply the file for the resource.
+
 6.  In a web browser, enter the URL of the app service to access.
 
     ```
@@ -538,7 +540,7 @@ To expose an app by using a custom domain with TLS:
     5.  Repeat these steps for every app that you want to expose to the public.
 6.  Create an Ingress resource. Ingress resources define the routing rules for the Kubernetes service that you created for your app and are used by the ALB to route incoming network traffic to the service. You must use one Ingress resource to define routing rules for multiple apps if every app is exposed via a Kubernetes service inside the cluster.
     1.  Open your preferred editor and create an Ingress configuration file that is named, for example, `myingress.yaml`.
-    2.  Define an Ingress resource in your configuration file that uses your custom domain to route incoming network traffic to your services, and your custom certificate to manage the TLS termination. For every service you can define an individual path that is appended to your custom domain to create a unique path to your app, for example `https://mydomain/myapp`. When you enter this route into a web browser, network traffic is routed to the ALB. The ALB looks up the associated service and sends network traffic to the service, and further to the pods where the app is running.
+    2.  Define an Ingress resource in your configuration file that uses your custom domain to route incoming network traffic to your services, and your custom certificate to manage the TLS termination. For every service you can define an individual path that is appended to your custom domain to create a unique path to your app; for example, `https://mydomain/myapp`. When you enter this route into a web browser, network traffic is routed to the ALB. The ALB looks up the associated service and sends network traffic to the service, and further to the pods where the app is running.
 
         **Note:** It is important that the app listens on the path that you defined in the Ingress resource. Otherwise, network traffic cannot be forwarded to the app. Most apps do not listen on a specific path, but use the root path and a specific port. In this case, define the root path as `/` and do not specify an individual path for your app.
 
@@ -636,7 +638,7 @@ To expose an app by using a custom domain with TLS:
     ```
     {: pre}
 
-    **Note:** It might take a few minutes for the Ingress resource to be created properly and for the app to be available on the public internet.
+    1. If there are messages in the events that describe an error in your resource configuration, change the values in your resource file and reapply the file for the resource.
 
 8.  Access your app from the internet.
     1.  Open your preferred web browser.
@@ -870,7 +872,7 @@ You can route incoming network traffic on the IBM-provided domain to apps that a
     ```
     {: pre}
 
-    **Note:** It might take a few minutes for the Ingress resource to be created properly and for the app to be available on the public internet.
+    1. If there are messages in the events that describe an error in your resource configuration, change the values in your resource file and reapply the file for the resource.
 
 6.  Access your external app.
     1.  Open your preferred web browser.
@@ -1111,14 +1113,14 @@ To privately expose an app using a custom domain without TLS:
         ```
         {: pre}
 
-8.  Verify that the Ingress resource was created successfully. Replace <em>&lt;myingressname&gt;</em> with the name of the Ingress resource that you created in the previous step.
+8.  Verify that the Ingress resource was created successfully. Replace _&lt;myingressname&gt;_ with the name of the Ingress resource that you created earlier.
 
     ```
     kubectl describe ingress <myingressname>
     ```
     {: pre}
 
-    **Note:** It might take a few seconds for the Ingress resource to be created properly and for the app to be available.
+    1. If there are messages in the events that describe an error in your resource configuration, change the values in your resource file and reapply the file for the resource.
 
 9.  Access your app from the internet.
     1.  Open your preferred web browser.
@@ -1304,14 +1306,14 @@ To privately expose an app using a custom domain with TLS:
         ```
         {: pre}
 
-7.  Verify that the Ingress resource was created successfully. Replace <em>&lt;myingressname&gt;</em> with the name of the Ingress resource that you created earlier.
+7.  Verify that the Ingress resource was created successfully. Replace _&lt;myingressname&gt;_ with the name of the Ingress resource that you created earlier.
 
     ```
     kubectl describe ingress <myingressname>
     ```
     {: pre}
 
-    **Note:** It might take a few seconds for the Ingress resource to be created properly and for the app to be available.
+    1. If there are messages in the events that describe an error in your resource configuration, change the values in your resource file and reapply the file for the resource.
 
 8.  Access your app from the internet.
     1.  Open your preferred web browser.
@@ -1407,6 +1409,8 @@ For more information about config map resources, see the [Kubernetes documentati
 
 Enable SSL protocols and ciphers at the global HTTP level by editing the `ibm-cloud-provider-ingress-cm` config map.
 {:shortdesc}
+
+
 
 **Note**: When specifying the enabled protocols for all hosts, the TLSv1.1 and TLSv1.2 parameters (1.1.13, 1.0.12) work only when OpenSSL 1.0.1 or higher is used and the TLSv1.3 parameter (1.13.0) works only when OpenSSL 1.1.1 built with TLSv1.3 support is used.
 

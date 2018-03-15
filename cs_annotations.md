@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-14"
+lastupdated: "2018-03-15"
 
 ---
 
@@ -79,7 +79,7 @@ For general information about Ingress services and how to get started using them
   <tbody>
   <tr>
   <td><a href="#proxy-connect-timeout">Custom connect-timeouts and read-timeouts</a></td>
-  <td><code>proxy-connect-timeout</code></td>
+  <td><code>proxy-connect-timeout, proxy-read-timeout</code></td>
   <td>Set the time that the ALB waits to connect to and read from the back-end app before the back-end app is considered unavailable.</td>
   </tr>
   <tr>
@@ -98,6 +98,49 @@ For general information about Ingress services and how to get started using them
   <td>Configure the maximum number of idle keepalive connections for an upstream server.</td>
   </tr>
   </tbody></table>
+
+  <table>
+  <col width="20%">
+  <col width="20%">
+  <col width="60%">
+  <thead>
+  <th>HTTPS and TLS/SSL authentication annotations</th>
+  <th>Name</th>
+  <th>Description</th>
+  </thead>
+  <tbody>
+  <tr>
+  <td><a href="#appid-auth">{{site.data.keyword.appid_short}} Authentication</a></td>
+  <td><code>appid-auth</code></td>
+  <td>Use {{site.data.keyword.appid_full_notm}} to authenticate with your app.</td>
+  </tr>
+  <tr>
+  <td><a href="#custom-port">Custom HTTP and HTTPS ports</a></td>
+  <td><code>custom-port</code></td>
+  <td>Change the default ports for HTTP (port 80) and HTTPS (port 443) network traffic.</td>
+  </tr>
+  <tr>
+  <td><a href="#redirect-to-https">HTTP redirects to HTTPS</a></td>
+  <td><code>redirect-to-https</code></td>
+  <td>Redirect insecure HTTP requests on your domain to HTTPS.</td>
+  </tr>
+  <tr>
+  <td><a href="#hsts">HTTP Strict Transport Security (HSTS)</a></td>
+  <td><code>hsts</code></td>
+  <td>Set the browser to only access the domain using HTTPS.</td>
+  </tr>
+  <tr>
+  <td><a href="#mutual-auth">Mutual authentication</a></td>
+  <td><code>mutual-auth</code></td>
+  <td>Configure mutual authentication for the ALB.</td>
+  </tr>
+  <tr>
+  <td><a href="#ssl-services">SSL services support</a></td>
+  <td><code>ssl-services</code></td>
+  <td>Allow SSL services support to encrypt traffic to your upstream apps that require HTTPS. </td>
+  </tr>
+  </tbody></table>
+
 
 
 <table>
@@ -145,7 +188,7 @@ For general information about Ingress services and how to get started using them
 <tbody>
 <tr>
 <td><a href="#proxy-add-headers">Additional client request or response header</a></td>
-<td><code>proxy-add-headers</code></td>
+<td><code>proxy-add-headers, response-add-headers</code></td>
 <td>Add header information to a client request before forwarding the request to your back-end app or to a client response before sending the response to the client.</td>
 </tr>
 <tr>
@@ -184,43 +227,6 @@ For general information about Ingress services and how to get started using them
 <td><a href="#service-rate-limit">Service rate limits</a></td>
 <td><code>service-rate-limit</code></td>
 <td>Limit the request processing rate and the number of connections per a defined key for specific services.</td>
-</tr>
-</tbody></table>
-
-<table>
-<col width="20%">
-<col width="20%">
-<col width="60%">
-<thead>
-<th>HTTPS and TLS/SSL authentication annotations</th>
-<th>Name</th>
-<th>Description</th>
-</thead>
-<tbody>
-<tr>
-<td><a href="#appid-auth">{{site.data.keyword.appid_short}} Authentication</a></td>
-<td><code>appid-auth</code></td>
-<td>Use {{site.data.keyword.appid_full_notm}} to authenticate with your app.</td>
-</tr>
-<tr>
-<td><a href="#custom-port">Custom HTTP and HTTPS ports</a></td>
-<td><code>custom-port</code></td>
-<td>Change the default ports for HTTP (port 80) and HTTPS (port 443) network traffic.</td>
-</tr>
-<tr>
-<td><a href="#redirect-to-https">HTTP redirects to HTTPS</a></td>
-<td><code>redirect-to-https</code></td>
-<td>Redirect insecure HTTP requests on your domain to HTTPS.</td>
-</tr>
-<tr>
-<td><a href="#mutual-auth">Mutual authentication</a></td>
-<td><code>mutual-auth</code></td>
-<td>Configure mutual authentication for the ALB.</td>
-</tr>
-<tr>
-<td><a href="#ssl-services">SSL services support</a></td>
-<td><code>ssl-services</code></td>
-<td>Allow SSL services support to encrypt traffic to your upstream apps that require HTTPS. </td>
 </tr>
 </tbody></table>
 
@@ -317,7 +323,7 @@ kind: Ingress
 metadata:
 name: myingress
 annotations:
-  ingress.bluemix.net/location-modifier: "modifier='&lt;location_modifier&gt' serviceName=&lt;myservice&gt;;modifier='&lt;location_modifier&gt' serviceName=&lt;myservice2&gt;"
+  ingress.bluemix.net/location-modifier: "modifier='&lt;location_modifier&gt;' serviceName=&lt;myservice&gt;;modifier='&lt;location_modifier&gt;' serviceName=&lt;myservice2&gt;"
 spec:
   tls:
   - hosts:
@@ -841,6 +847,484 @@ Set the maximum number of idle keepalive connections to the upstream server of a
 <br />
 
 
+## HTTPS and TLS/SSL authentication annotations
+{: #https-auth}
+
+### {{site.data.keyword.appid_short_notm}} Authentication (appid-auth)
+{: #appid-auth}
+
+  Use {{site.data.keyword.appid_full_notm}} to authenticate with your application.
+  {:shortdesc}
+
+  <dl>
+  <dt>Description</dt>
+  <dd>
+  Authenticate web or API HTTP/HTTPS requests with {{site.data.keyword.appid_short_notm}}.
+
+  <p>If you set the request type to <code>web</code>, a web request that contains an {{site.data.keyword.appid_short_notm}} access token is validated. If token validation fails, the web request is rejected. If the request does not contain an access token, then the request is redirected to the {{site.data.keyword.appid_short_notm}} login page. **Note**: For {{site.data.keyword.appid_short_notm}} web authentication to work, cookies must be enabled in the user's browser.</p>
+
+  <p>If you set the request type to <code>api</code>, an API request that contains an {{site.data.keyword.appid_short_notm}} access token is validated. If the request does not contain an access token, a <code>401: Unauthorized</code> error message is returned to the user.</p>
+  </dd>
+
+   <dt>Sample Ingress resource YAML</dt>
+   <dd>
+
+   <pre class="codeblock">
+   <code>apiVersion: extensions/v1beta1
+   kind: Ingress
+   metadata:
+    name: myingress
+    annotations:
+      ingress.bluemix.net/appid-auth: "bindSecret=&lt;bind_secret&gt; namespace=&lt;namespace&gt; requestType=&lt;request_type&gt; serviceName=&lt;myservice&gt;"
+   spec:
+    tls:
+    - hosts:
+      - mydomain
+      secretName: mytlssecret
+    rules:
+    - host: mydomain
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: myservice
+            servicePort: 8080</code></pre>
+
+   <table>
+    <thead>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
+    </thead>
+    <tbody>
+    <tr>
+    <td><code>bindSecret</code></td>
+    <td>Replace <em><code>&lt;bind_secret&gt;</code></em> with the Kubernetes secret which stores the bind secret.</td>
+    </tr>
+    <tr>
+    <td><code>namespace</code></td>
+    <td>Replace <em><code>&lt;namespace&gt;</code></em> with the namespace of the bind secret. This field defaults to the `default` namespace.</td>
+    </tr>
+    <tr>
+    <td><code>requestType</code></td>
+    <td>Replace <code><em>&lt;request_type&gt;</em></code> with the type of request you want to send to {{site.data.keyword.appid_short_notm}}. Accepted values are `web` or `api`. The default is `api`.</td>
+    </tr>
+    <tr>
+    <td><code>serviceName</code></td>
+    <td>Replace <code><em>&lt;myservice&gt</em></code> with the name of the Kubernetes service that you created for your app. This field is optional. If a service name is not included, then the annotation is enabled for all services.  If a service name is included, then the annotation is enabled only for that service. Separate multiple services with a semi-colon (;).</td>
+    </tr>
+    </tbody></table>
+    </dd>
+    <dt>Usage</dt>
+    <dd>Because the application uses {{site.data.keyword.appid_short_notm}} for authenication, you must provision an {{site.data.keyword.appid_short_notm}} instance, configure the instance with valid redirect URIs, and generate a bind secret.
+    <ol>
+    <li>Provision an [{{site.data.keyword.appid_short_notm}} instance](https://console.bluemix.net/catalog/services/app-id).</li>
+    <li>In the {{site.data.keyword.appid_short_notm}} management console, add redirectURIs for your app.</li>
+    <li>Create a bind secret.
+    <pre class="pre"><code>bx cs cluster-service-bind &lt;my_cluster&gt; &lt;my_namespace&gt; &lt;my_service_instance_GUID&gt;</code></pre> </li>
+    <li>Configure the <code>appid-auth</code> annotation.</li>
+    </ol></dd>
+    </dl>
+
+<br />
+
+
+
+### Custom HTTP and HTTPS ports (custom-port)
+{: #custom-port}
+
+Change the default ports for HTTP (port 80) and HTTPS (port 443) network traffic.
+{:shortdesc}
+
+<dl>
+<dt>Description</dt>
+<dd>By default, the Ingress ALB is configured to listen for incoming HTTP network traffic on port 80 and for incoming HTTPS network traffic on port 443. You can change the default ports to add security to your ALB domain, or to enable only an HTTPS port.
+</dd>
+
+
+<dt>Sample Ingress resource YAML</dt>
+<dd>
+
+<pre class="codeblock">
+<code>apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+ name: myingress
+ annotations:
+   ingress.bluemix.net/custom-port: "protocol=&lt;protocol1&gt; port=&lt;port1&gt;;protocol=&lt;protocol2&gt; port=&lt;port2&gt;"
+spec:
+ tls:
+ - hosts:
+   - mydomain
+   secretName: mytlssecret
+ rules:
+ - host: mydomain
+   http:
+     paths:
+     - path: /
+       backend:
+         serviceName: myservice
+         servicePort: 8080</code></pre>
+
+<table>
+ <thead>
+ <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
+ </thead>
+ <tbody>
+ <tr>
+ <td><code>&lt;protocol&gt;</code></td>
+ <td>Enter <code>http</code> or <code>https</code> to change the default port for incoming HTTP or HTTPS network traffic.</td>
+ </tr>
+ <tr>
+ <td><code>&lt;port&gt;</code></td>
+ <td>Enter the port number that you want to use for incoming HTTP or HTTPS network traffic.  <p><strong>Note:</strong> When a custom port is specified for either HTTP or HTTPS, the default ports are no longer valid for both HTTP and HTTPS. For example, to change the default port for HTTPS to 8443, but use the default port for HTTP, you must set custom ports for both: <code>custom-port: "protocol=http port=80; protocol=https port=8443"</code>.</p></td>
+ </tr>
+ </tbody></table>
+
+ </dd>
+ <dt>Usage</dt>
+ <dd><ol><li>Review open ports for your ALB.
+<pre class="pre">
+<code>kubectl get service -n kube-system</code></pre>
+Your CLI output looks similar to the following:
+<pre class="screen">
+<code>NAME                     CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
+public-ingress-ctl-svc   10.10.10.149   169.60.16.246   80:30776/TCP,443:30412/TCP   8d</code></pre></li>
+<li>Open the ALB config map.
+<pre class="pre">
+<code>kubectl edit configmap ibm-cloud-provider-ingress-cm -n kube-system</code></pre></li>
+<li>Add the non-default HTTP and HTTPS ports to the config map. Replace &lt;port&gt; with the HTTP or HTTPS port that you want to open.
+<pre class="codeblock">
+<code>apiVersion: v1
+kind: ConfigMap
+data:
+ public-ports: &lt;port1&gt;;&lt;port2&gt;
+metadata:
+ creationTimestamp: 2017-08-22T19:06:51Z
+ name: ibm-cloud-provider-ingress-cm
+ namespace: kube-system
+ resourceVersion: "1320"
+ selfLink: /api/v1/namespaces/kube-system/configmaps/ibm-cloud-provider-ingress-cm
+ uid: &lt;uid&gt;</code></pre></li>
+ <li>Verify that your ALB is re-configured with the non-default ports.
+<pre class="pre">
+<code>kubectl get service -n kube-system</code></pre>
+Your CLI output looks similar to the following:
+<pre class="screen">
+<code>NAME                     CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
+public-ingress-ctl-svc   10.10.10.149   169.60.16.246   &lt;port1&gt;:30776/TCP,&lt;port2&gt;:30412/TCP   8d</code></pre></li>
+<li>Configure your Ingress to use the non-default ports when routing incoming network traffic to your services. Use the sample YAML file in this reference. </li>
+<li>Update your ALB configuration.
+<pre class="pre">
+<code>kubectl apply -f &lt;yaml_file&gt;</code></pre>
+</li>
+<li>Open your preferred web browser to access your app. Example: <code>https://&lt;ibmdomain&gt;:&lt;port&gt;/&lt;service_path&gt;/</code></li></ol></dd></dl>
+
+<br />
+
+
+
+### HTTP redirects to HTTPS (redirect-to-https)
+{: #redirect-to-https}
+
+Convert insecure HTTP client requests to HTTPS.
+{:shortdesc}
+
+<dl>
+<dt>Description</dt>
+<dd>You set up your Ingress ALB to secure your domain with the IBM-provided TLS certificate or your custom TLS certificate. Some users might try to access your apps by using an insecure <code>http</code> request to your ALB domain, for example <code>http://www.myingress.com</code>, instead of using <code>https</code>. You can use the redirect annotation to always convert insecure HTTP requests to HTTPS. If you do not use this annotation, insecure HTTP requests are not converted into HTTPS requests by default and might expose unencrypted confidential information to the public.
+
+</br></br>
+Redirecting HTTP requests to HTTPS is disabled by default.</dd>
+
+<dt>Sample Ingress resource YAML</dt>
+<dd>
+<pre class="codeblock">
+<code>apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+ name: myingress
+ annotations:
+   ingress.bluemix.net/redirect-to-https: "True"
+spec:
+ tls:
+ - hosts:
+   - mydomain
+   secretName: mytlssecret
+ rules:
+ - host: mydomain
+   http:
+     paths:
+     - path: /
+       backend:
+         serviceName: myservice
+         servicePort: 8080</code></pre>
+</dd></dl>
+
+<br />
+
+
+### HTTP Strict Transport Security (hsts)
+{: #hsts}
+
+<dl>
+<dt>Description</dt>
+<dd>
+HSTS instructs the browser to only access a domain by using HTTPS. Even if the user enters or follows a plain HTTP link, the browser strictly upgrades the connection to HTTPS.
+</dd>
+
+
+<dt>Sample Ingress resource YAML</dt>
+<dd>
+
+<pre class="codeblock">
+<code>apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: myingress
+  annotations:
+    ingress.bluemix.net/hsts: enabled=&lt;true&gt; maxAge=&lt;31536000&gt; includeSubdomains=&lt;true&gt;
+spec:
+  tls:
+  - hosts:
+    - mydomain
+    secretName: mysecret
+  rules:
+  - host: mydomain
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: myservice1
+          servicePort: 8443
+      - path: /
+        backend:
+          serviceName: myservice2
+          servicePort: 8444
+          </code></pre>
+
+<table>
+  <thead>
+  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
+  </thead>
+  <tbody>
+  <tr>
+  <td><code>enabled</code></td>
+  <td>Use <code>true</code> to enable HSTS.</td>
+  </tr>
+    <tr>
+  <td><code>maxAge</code></td>
+  <td>Replace <code>&lt;<em>31536000</em>&gt;</code> with an integer representing how many seconds a browser will cache sending requests straight to HTTPS. The default is <code>31536000</code>, which is equal to 1 year.</td>
+  </tr>
+  <tr>
+  <td><code>includeSubdomains</code></td>
+  <td>Use <code>true</code> to tell the browser that the HSTS policy also applies to all subdomains of the current domain. The default is <code>true</code>. </td>
+  </tr>
+  </tbody></table>
+
+  </dd>
+  </dl>
+
+
+<br />
+
+
+### Mutual authentication (mutual-auth)
+{: #mutual-auth}
+
+Configure mutual authentication for the ALB.
+{:shortdesc}
+
+<dl>
+<dt>Description</dt>
+<dd>
+Configure mutual authentication for the Ingress ALB. The client authenticates the server and the server also authenticates the client by using certificates. Mutual authentication is also known as certificate-based authentication or two-way authentication.
+</dd>
+
+<dt>Pre-requisites</dt>
+<dd>
+<ul>
+<li>[You must have a valid secret that contains the required certificate authority (CA)](cs_app.html#secrets). The <code>client.key</code> and <code>client.crt</code> are also needed to authenticate with mutual authentication.</li>
+<li>To enable mutual authentication on a port other than 443, [configure the load balancer to open the valid port](cs_ingress.html#opening_ingress_ports).</li>
+</ul>
+</dd>
+
+
+<dt>Sample Ingress resource YAML</dt>
+<dd>
+
+<pre class="codeblock">
+<code>apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+name: myingress
+annotations:
+  ingress.bluemix.net/mutual-auth: "secretName=&lt;mysecret&gt; port=&lt;port&gt; serviceName=&lt;servicename1&gt;,&lt;servicename2&gt;"
+spec:
+  tls:
+  - hosts:
+    - mydomain
+    secretName: mytlssecret
+  rules:
+  - host: mydomain
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: myservice
+          servicePort: 8080
+          </code></pre>
+
+<table>
+<thead>
+<th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
+</thead>
+<tbody>
+<tr>
+<td><code>secretName</code></td>
+<td>Replace <code>&lt;<em>mysecret</em>&gt;</code> with a name for the secret resource.</td>
+</tr>
+<tr>
+<td><code>&lt;port&gt;</code></td>
+<td>The ALB port number.</td>
+</tr>
+<tr>
+<td><code>&lt;serviceName&gt;</code></td>
+<td>The name of one or more Ingress resources. This parameter is optional.</td>
+</tr>
+</tbody></table>
+
+</dd>
+</dl>
+
+<br />
+
+
+
+### SSL services support (ssl-services)
+{: #ssl-services}
+
+Allow HTTPS requests and encrypt traffic to your upstream apps.
+{:shortdesc}
+
+<dl>
+<dt>Description</dt>
+<dd>
+Encrypt traffic to your upstream apps that require HTTPS.
+
+**Optional**: You can add [one-way authentication or mutual authentication](#ssl-services-auth) to this annotation.
+</dd>
+
+
+<dt>Sample Ingress resource YAML</dt>
+<dd>
+
+<pre class="codeblock">
+<code>apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: &lt;myingressname&gt;
+  annotations:
+    ingress.bluemix.net/ssl-services: "ssl-service=&lt;myservice1&gt; [ssl-secret=&lt;service1-ssl-secret&gt;];ssl-service=&lt;myservice2&gt; [ssl-secret=&lt;service2-ssl-secret&gt;]
+spec:
+  rules:
+  - host: mydomain
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: myservice1
+          servicePort: 8443
+      - path: /
+        backend:
+          serviceName: myservice2
+          servicePort: 8444</code></pre>
+
+<table>
+  <thead>
+  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
+  </thead>
+  <tbody>
+  <tr>
+  <td><code>ssl-service</code></td>
+  <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the service that represents your app. Traffic is encrypted from ALB to this app.</td>
+  </tr>
+  <tr>
+  <td><code>ssl-secret</code></td>
+  <td>Replace <code>&lt;<em>service-ssl-secret</em>&gt;</code> with the secret for the service. This parameter is optional. If the parameter is provided, the value must contain the key and the certificate that your app is expecting from the client.</td>
+  </tr>
+  </tbody></table>
+
+  </dd>
+</dl>
+
+<br />
+
+
+#### SSL Services support with authentication
+{: #ssl-services-auth}
+
+<dl>
+<dt>Description</dt>
+<dd>
+Allow HTTPS requests and encrypt traffic to your upstream apps with one-way or mutual authentication for additional security.
+
+**Note**: Before you begin, [convert the cert and key into base-64 ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.base64encode.org/).
+
+</dd>
+
+
+<dt>Sample Ingress resource YAML</dt>
+<dd>
+
+<pre class="codeblock">
+<code>apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: &lt;myingressname&gt;
+  annotations:
+    ingress.bluemix.net/ssl-services: |
+      ssl-service=&lt;myservice1&gt; ssl-secret=&lt;service1-ssl-secret&gt;;
+      ssl-service=&lt;myservice2&gt; ssl-secret=&lt;service2-ssl-secret&gt;
+spec:
+  tls:
+  - hosts:
+    - mydomain
+    secretName: mysecret
+  rules:
+  - host: mydomain
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: myservice1
+          servicePort: 8443
+      - path: /
+        backend:
+          serviceName: myservice2
+          servicePort: 8444
+          </code></pre>
+
+<table>
+  <thead>
+  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
+  </thead>
+  <tbody>
+  <tr>
+  <td><code>ssl-service</code></td>
+  <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the service that represents your app. Traffic is encrypted from ALB to this app.</td>
+  </tr>
+  <tr>
+  <td><code>ssl-secret</code></td>
+  <td>Replace <code>&lt;<em>service-ssl-secret</em>&gt;</code> with the secret for the service. This parameter is optional. If the parameter is provided, the value must contain the key and the certificate that your app is expecting from the client.</td>
+  </tr>
+  </tbody></table>
+
+  </dd>
+  </dl>
+
+<br />
+
+
+
 
 ## Proxy buffer annotations
 {: #proxy-buffer}
@@ -1071,7 +1555,7 @@ spec:
 {: #request-response}
 
 
-### Additional client request or response header (proxy-add-headers)
+### Additional client request or response header (proxy-add-headers, response-add-headers)
 {: #proxy-add-headers}
 
 Add extra header information to a client request before sending the request to the back-end app or to a client response before sending the response to the client.
@@ -1079,10 +1563,14 @@ Add extra header information to a client request before sending the request to t
 
 <dl>
 <dt>Description</dt>
-<dd>The Ingress ALB acts as a proxy between the client app and your back-end app. Client requests that are sent to the ALB are processed (proxied) and put into a new request that is then sent from the ALB to your back-end app. Proxying a request removes http header information, such as the user name, that was initially sent from the client. If your back-end app requires this information, you can use the <strong>ingress.bluemix.net/proxy-add-headers</strong> annotation to add header information to the client request before the request is forwarded from the ALB to your back-end app.
+<dd>The Ingress ALB acts as a proxy between the client app and your back-end app. Client requests that are sent to the ALB are processed (proxied) and put into a new request that is then sent to your back-end app. Similarly, backend app responses that are sent to the ALB are processed (proxied) and put into a new response that is then sent to the client. Proxying a request or response removes HTTP header information, such as the user name, that was initially sent from the client or back-end app.
+
+<br><br>
+If your back-end app requires HTTP header information, you can use the <code>proxy-add-headers</code> annotation to add header information to the client request before the request is forwarded by the ALB to the back-end app.
 
 </br></br>
-When a back-end app sends a response to the client, the response is proxied by the ALB and http headers are removed from the response. The client web app might require this header information to successfully process the response. You can use the <strong>ingress.bluemix.net/response-add-headers</strong> annotation to add header information to the client response before the response is forwarded from the ALB to client web app.</dd>
+If the client web app requires HTTP header information, you can use the <code>response-add-headers</code> annotation to add header information to the response before the response is forwarded by the ALB to the client web app.</dd>
+
 <dt>Sample Ingress resource YAML</dt>
 <dd>
 
@@ -1102,11 +1590,11 @@ metadata:
       }
     ingress.bluemix.net/response-add-headers: |
       serviceName=&lt;myservice1&gt; {
-      "&lt;header1&gt;: &lt;value1&gt;";
-      "&lt;header2&gt;: &lt;value2&gt;";
+      &lt;header1&gt;: &lt;value1&gt;;
+      &lt;header2&gt;: &lt;value2&gt;;
       }
       serviceName=&lt;myservice2&gt; {
-      "&lt;header3&gt;: &lt;value3&gt;";
+      &lt;header3&gt;: &lt;value3&gt;;
       }
 spec:
   tls:
@@ -1450,420 +1938,6 @@ Limit the request processing rate and the number of connections for specific ser
   </dl>
 
   <br />
-
-
-
-## HTTPS and TLS/SSL authentication annotations
-{: #https-auth}
-
-### {{site.data.keyword.appid_short_notm}} Authentication (appid-auth)
-{: #appid-auth}
-
-  Use {{site.data.keyword.appid_full_notm}} to authenticate with your application.
-  {:shortdesc}
-
-  <dl>
-  <dt>Description</dt>
-  <dd>
-  Authenticate web or API HTTP/HTTPS requests with {{site.data.keyword.appid_short_notm}}.
-
-  <p>If you set the request type to <code>web</code>, a web request that contains an {{site.data.keyword.appid_short_notm}} access token is validated. If token validation fails, the web request is rejected. If the request does not contain an access token, then the request is redirected to the {{site.data.keyword.appid_short_notm}} login page. **Note**: For {{site.data.keyword.appid_short_notm}} web authentication to work, cookies must be enabled in the user's browser.</p>
-
-  <p>If you set the request type to <code>api</code>, an API request that contains an {{site.data.keyword.appid_short_notm}} access token is validated. If the request does not contain an access token, a <code>401: Unauthorized</code> error message is returned to the user.</p>
-  </dd>
-
-   <dt>Sample Ingress resource YAML</dt>
-   <dd>
-
-   <pre class="codeblock">
-   <code>apiVersion: extensions/v1beta1
-   kind: Ingress
-   metadata:
-    name: myingress
-    annotations:
-      ingress.bluemix.net/appid-auth: "bindSecret=&lt;bind_secret&gt; namespace=&lt;namespace&gt; requestType=&lt;request_type&gt; serviceName=&lt;myservice&gt;"
-   spec:
-    tls:
-    - hosts:
-      - mydomain
-      secretName: mytlssecret
-    rules:
-    - host: mydomain
-      http:
-        paths:
-        - path: /
-          backend:
-            serviceName: myservice
-            servicePort: 8080</code></pre>
-
-   <table>
-    <thead>
-    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
-    </thead>
-    <tbody>
-    <tr>
-    <td><code>bindSecret</code></td>
-    <td>Replace <em><code>&lt;bind_secret&gt;</code></em> with the Kubernetes secret which stores the bind secret.</td>
-    </tr>
-    <tr>
-    <td><code>namespace</code></td>
-    <td>Replace <em><code>&lt;namespace&gt;</code></em> with the namespace of the bind secret. This field defaults to the `default` namespace.</td>
-    </tr>
-    <tr>
-    <td><code>requestType</code></td>
-    <td>Replace <code><em>&lt;request_type&gt;</em></code> with the type of request you want to send to {{site.data.keyword.appid_short_notm}}. Accepted values are `web` or `api`. The default is `api`.</td>
-    </tr>
-    <tr>
-    <td><code>serviceName</code></td>
-    <td>Replace <code><em>&lt;myservice&gt</em></code> with the name of the Kubernetes service that you created for your app. This field is optional. If a service name is not included, then the annotation is enabled for all services.  If a service name is included, then the annotation is enabled only for that service. Separate multiple services with a semi-colon (;).</td>
-    </tr>
-    </tbody></table>
-    </dd>
-    <dt>Usage</dt>
-    <dd>Because the application uses {{site.data.keyword.appid_short_notm}} for authenication, you must provision an {{site.data.keyword.appid_short_notm}} instance, configure the instance with valid redirect URIs, and generate a bind secret.
-    <ol>
-    <li>Provision an [{{site.data.keyword.appid_short_notm}} instance](https://console.bluemix.net/catalog/services/app-id).</li>
-    <li>In the {{site.data.keyword.appid_short_notm}} management console, add redirectURIs for your app.</li>
-    <li>Create a bind secret.
-    <pre class="pre"><code>bx cs cluster-service-bind &lt;my_cluster&gt; &lt;my_namespace&gt; &lt;my_service_instance_GUID&gt;</code></pre> </li>
-    <li>Configure the <code>appid-auth</code> annotation.</li>
-    </ol></dd>
-    </dl>
-
-<br />
-
-
-
-### Custom HTTP and HTTPS ports (custom-port)
-{: #custom-port}
-
-Change the default ports for HTTP (port 80) and HTTPS (port 443) network traffic.
-{:shortdesc}
-
-<dl>
-<dt>Description</dt>
-<dd>By default, the Ingress ALB is configured to listen for incoming HTTP network traffic on port 80 and for incoming HTTPS network traffic on port 443. You can change the default ports to add security to your ALB domain, or to enable only an HTTPS port.
-</dd>
-
-
-<dt>Sample Ingress resource YAML</dt>
-<dd>
-
-<pre class="codeblock">
-<code>apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
- name: myingress
- annotations:
-   ingress.bluemix.net/custom-port: "protocol=&lt;protocol1&gt; port=&lt;port1&gt;;protocol=&lt;protocol2&gt; port=&lt;port2&gt;"
-spec:
- tls:
- - hosts:
-   - mydomain
-   secretName: mytlssecret
- rules:
- - host: mydomain
-   http:
-     paths:
-     - path: /
-       backend:
-         serviceName: myservice
-         servicePort: 8080</code></pre>
-
-<table>
- <thead>
- <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
- </thead>
- <tbody>
- <tr>
- <td><code>&lt;protocol&gt;</code></td>
- <td>Enter <strong>http</strong> or <strong>https</strong> to change the default port for incoming HTTP or HTTPS network traffic.</td>
- </tr>
- <tr>
- <td><code>&lt;port&gt;</code></td>
- <td>Enter the port number that you want to use for incoming HTTP or HTTPS network traffic.  <p><strong>Note:</strong> When a custom port is specified for either HTTP or HTTPS, the default ports are no longer valid for both HTTP and HTTPS. For example, to change the default port for HTTPS to 8443, but use the default port for HTTP, you must set custom ports for both: <code>custom-port: "protocol=http port=80; protocol=https port=8443"</code>.</p></td>
- </tr>
- </tbody></table>
-
- </dd>
- <dt>Usage</dt>
- <dd><ol><li>Review open ports for your ALB.
-<pre class="pre">
-<code>kubectl get service -n kube-system</code></pre>
-Your CLI output looks similar to the following:
-<pre class="screen">
-<code>NAME                     CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
-public-ingress-ctl-svc   10.10.10.149   169.60.16.246   80:30776/TCP,443:30412/TCP   8d</code></pre></li>
-<li>Open the ALB config map.
-<pre class="pre">
-<code>kubectl edit configmap ibm-cloud-provider-ingress-cm -n kube-system</code></pre></li>
-<li>Add the non-default HTTP and HTTPS ports to the config map. Replace &lt;port&gt; with the HTTP or HTTPS port that you want to open.
-<pre class="codeblock">
-<code>apiVersion: v1
-kind: ConfigMap
-data:
- public-ports: &lt;port1&gt;;&lt;port2&gt;
-metadata:
- creationTimestamp: 2017-08-22T19:06:51Z
- name: ibm-cloud-provider-ingress-cm
- namespace: kube-system
- resourceVersion: "1320"
- selfLink: /api/v1/namespaces/kube-system/configmaps/ibm-cloud-provider-ingress-cm
- uid: &lt;uid&gt;</code></pre></li>
- <li>Verify that your ALB is re-configured with the non-default ports.
-<pre class="pre">
-<code>kubectl get service -n kube-system</code></pre>
-Your CLI output looks similar to the following:
-<pre class="screen">
-<code>NAME                     CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
-public-ingress-ctl-svc   10.10.10.149   169.60.16.246   &lt;port1&gt;:30776/TCP,&lt;port2&gt;:30412/TCP   8d</code></pre></li>
-<li>Configure your Ingress to use the non-default ports when routing incoming network traffic to your services. Use the sample YAML file in this reference. </li>
-<li>Update your ALB configuration.
-<pre class="pre">
-<code>kubectl apply -f &lt;yaml_file&gt;</code></pre>
-</li>
-<li>Open your preferred web browser to access your app. Example: <code>https://&lt;ibmdomain&gt;:&lt;port&gt;/&lt;service_path&gt;/</code></li></ol></dd></dl>
-
-<br />
-
-
-
-### HTTP redirects to HTTPS (redirect-to-https)
-{: #redirect-to-https}
-
-Convert insecure HTTP client requests to HTTPS.
-{:shortdesc}
-
-<dl>
-<dt>Description</dt>
-<dd>You set up your Ingress ALB to secure your domain with the IBM-provided TLS certificate or your custom TLS certificate. Some users might try to access your apps by using an insecure http request to your ALB domain, for example <code>http://www.myingress.com</code>, instead of using <code>https</code>. You can use the redirect annotation to always convert insecure HTTP requests to HTTPS. If you do not use this annotation, insecure HTTP requests are not converted into HTTPS requests by default and might expose unencrypted confidential information to the public.
-
-</br></br>
-Redirecting HTTP requests to HTTPS is disabled by default.</dd>
-
-<dt>Sample Ingress resource YAML</dt>
-<dd>
-<pre class="codeblock">
-<code>apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
- name: myingress
- annotations:
-   ingress.bluemix.net/redirect-to-https: "True"
-spec:
- tls:
- - hosts:
-   - mydomain
-   secretName: mytlssecret
- rules:
- - host: mydomain
-   http:
-     paths:
-     - path: /
-       backend:
-         serviceName: myservice
-         servicePort: 8080</code></pre>
-</dd></dl>
-
-<br />
-
-
-
-### Mutual authentication (mutual-auth)
-{: #mutual-auth}
-
-Configure mutual authentication for the ALB.
-{:shortdesc}
-
-<dl>
-<dt>Description</dt>
-<dd>
-Configure mutual authentication for the Ingress ALB. The client authenticates the server and the server also authenticates the client by using certificates. Mutual authentication is also known as certificate-based authentication or two-way authentication.
-</dd>
-
-<dt>Pre-requisites</dt>
-<dd>
-<ul>
-<li>[You must have a valid secret that contains the required certificate authority (CA)](cs_app.html#secrets). The <code>client.key</code> and <code>client.crt</code> are also needed to authenticate with mutual authentication.</li>
-<li>To enable mutual authentication on a port other than 443, [configure the load balancer to open the valid port](cs_ingress.html#opening_ingress_ports).</li>
-</ul>
-</dd>
-
-
-<dt>Sample Ingress resource YAML</dt>
-<dd>
-
-<pre class="codeblock">
-<code>apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-name: myingress
-annotations:
-  ingress.bluemix.net/mutual-auth: "secretName=&lt;mysecret&gt; port=&lt;port&gt; serviceName=&lt;servicename1&gt;,&lt;servicename2&gt;"
-spec:
-  tls:
-  - hosts:
-    - mydomain
-    secretName: mytlssecret
-  rules:
-  - host: mydomain
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: myservice
-          servicePort: 8080
-          </code></pre>
-
-<table>
-<thead>
-<th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
-</thead>
-<tbody>
-<tr>
-<td><code>secretName</code></td>
-<td>Replace <code>&lt;<em>mysecret</em>&gt;</code> with a name for the secret resource.</td>
-</tr>
-<tr>
-<td><code>&lt;port&gt;</code></td>
-<td>The ALB port number.</td>
-</tr>
-<tr>
-<td><code>&lt;serviceName&gt;</code></td>
-<td>The name of one or more Ingress resources. This parameter is optional.</td>
-</tr>
-</tbody></table>
-
-</dd>
-</dl>
-
-<br />
-
-
-
-### SSL services support (ssl-services)
-{: #ssl-services}
-
-Allow HTTPS requests and encrypt traffic to your upstream apps.
-{:shortdesc}
-
-<dl>
-<dt>Description</dt>
-<dd>
-Encrypt traffic to your upstream apps that require HTTPS.
-
-**Optional**: You can add [one-way authentication or mutual authentication](#ssl-services-auth) to this annotation.
-</dd>
-
-
-<dt>Sample Ingress resource YAML</dt>
-<dd>
-
-<pre class="codeblock">
-<code>apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: &lt;myingressname&gt;
-  annotations:
-    ingress.bluemix.net/ssl-services: "ssl-service=&lt;myservice1&gt; [ssl-secret=&lt;service1-ssl-secret&gt;];ssl-service=&lt;myservice2&gt; [ssl-secret=&lt;service2-ssl-secret&gt;]
-spec:
-  rules:
-  - host: mydomain
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: myservice1
-          servicePort: 8443
-      - path: /
-        backend:
-          serviceName: myservice2
-          servicePort: 8444</code></pre>
-
-<table>
-  <thead>
-  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
-  </thead>
-  <tbody>
-  <tr>
-  <td><code>ssl-service</code></td>
-  <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the service that represents your app. Traffic is encrypted from ALB to this app.</td>
-  </tr>
-  <tr>
-  <td><code>ssl-secret</code></td>
-  <td>Replace <code>&lt;<em>service-ssl-secret</em>&gt;</code> with the secret for the service. This parameter is optional. If the parameter is provided, the value must contain the key and the certificate that your app is expecting from the client.</td>
-  </tr>
-  </tbody></table>
-
-  </dd>
-</dl>
-
-<br />
-
-
-#### SSL Services support with authentication
-{: #ssl-services-auth}
-
-<dl>
-<dt>Description</dt>
-<dd>
-Allow HTTPS requests and encrypt traffic to your upstream apps with one-way or mutual authentication for additional security.
-
-**Note**: Before you begin, [convert the cert and key into base-64 ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.base64encode.org/).
-
-</dd>
-
-
-<dt>Sample Ingress resource YAML</dt>
-<dd>
-
-<pre class="codeblock">
-<code>apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: &lt;myingressname&gt;
-  annotations:
-    ingress.bluemix.net/ssl-services: |
-      ssl-service=&lt;myservice1&gt; ssl-secret=&lt;service1-ssl-secret&gt;;
-      ssl-service=&lt;myservice2&gt; ssl-secret=&lt;service2-ssl-secret&gt;
-spec:
-  tls:
-  - hosts:
-    - mydomain
-    secretName: mysecret
-  rules:
-  - host: mydomain
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: myservice1
-          servicePort: 8443
-      - path: /
-        backend:
-          serviceName: myservice2
-          servicePort: 8444
-          </code></pre>
-
-<table>
-  <thead>
-  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
-  </thead>
-  <tbody>
-  <tr>
-  <td><code>ssl-service</code></td>
-  <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the service that represents your app. Traffic is encrypted from ALB to this app.</td>
-  </tr>
-  <tr>
-  <td><code>ssl-secret</code></td>
-  <td>Replace <code>&lt;<em>service-ssl-secret</em>&gt;</code> with the secret for the service. This parameter is optional. If the parameter is provided, the value must contain the key and the certificate that your app is expecting from the client.</td>
-  </tr>
-  </tbody></table>
-
-  </dd>
-  </dl>
-
-<br />
 
 
 

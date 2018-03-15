@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-14"
+lastupdated: "2018-03-15"
 
 ---
 
@@ -131,7 +131,8 @@ Review the options to debug your worker nodes and find the root causes for failu
     <tbody>
   <tr>
       <td>Critical</td>
-      <td>If your worker node is in Critical state, check its status:<ul><li><strong>Not Ready</strong>: Your worker node might not be able to connect to your IBM Cloud infrastructure (SoftLayer) account. Start troubleshooting by running <code>bx cs worker-reboot --hard CLUSTER WORKER</code> first. If that command is unsuccessful, then run <code>bx cs worker reload CLUSTER WORKER</code>. If that command is unsuccessful as well, go to the next step to continue troubleshooting your worker node.</li><li><strong>Out of disk</strong>: Your worker node ran out of capacity. You can either reduce the work load on your worker node or add a worker node to your cluster to help load balance the work load.</li><li><strong>Unknown</strong>: The Kubernetes master is not available. Contact IBM Cloud support by opening [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/get-support/howtogetsupport.html#using-avatar).</li></ul></td>
+      <td>A worker node can go into a Critical state for many reasons. The most common reasons are the following: <ul><li>You initiated a reboot for your worker node without cordoning and draining your worker node. Rebooting a worker node can cause data corruption in <code>docker</code>, <code>kubelet</code>, <code>kube-proxy</code>, and <code>calico</code>. </li><li>The pods that are deployed to your worker node do not use resource limits for [memory ![External link icon](https://kubernetes.io/docs/tasks/configure-pod-container/assign-memory-resource/)] and [CPU ![External link icon](https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-resource/)]. Without resource limits, pods can consume all available resources, leaving no resources for other pods to run on this worker node. This overcommitment of workload causes the worker node to fail. </li><li><code>Docker</code>, <code>kubelet</code> or <code>calico</code> went into an unrecoverable state after running hundreds or thousands of containers over time. </li><li>You set up a Vyatta for your worker node that went down and cut off the communication between your worker node and the Kubernetes master. </li><li> Current networking issues in {{site.data.keyword.containershort_notm}} or IBM Cloud infrastructure (SoftLayer) that causes the communication between your worker node and the Kubernetes master to fail.</li><li>Your worker node ran out of capacity. Check the <strong>Status</strong> of the worker node to see if it shows <strong>Out of disk</strong> or <strong>Out of memory</strong>. If your worker node is out of capacity, consider to either reduce the workload on your worker node or add a worker node to your cluster to help load balance the workload.</li></ul> In many cases, [reloading](cs_cli_reference.html#cs_worker_reload) your worker node can solve the problem. Before you reload your worker node, make sure to cordon and drain your worker node to ensure that existing pods are terminated gracefully and rescheduled onto remaining worker nodes. </br></br> If reloading the worker node does not resolve the issue, go to the next step to continue troubleshooting your worker node. </br></br><strong>Tip:</strong> You can [configure health checks for your worker node and enable Autorecovery](cs_health.html#autorecovery). If Autorecovery detects an unhealthy worker node based on the configured checks, Autorecovery triggers a corrective action like an OS reload on the worker node. For more information about how Autorecovery works, see the [Autorecovery blog ![External link icon](https://www.ibm.com/blogs/bluemix/2017/12/autorecovery-utilizes-consistent-hashing-high-availability/)].
+      </td>
      </tr>
       <tr>
         <td>Deploying</td>
@@ -903,12 +904,41 @@ To troubleshoot your Ingress:
 
     1.  Check that the Ingress application load balancer subdomain and TLS certificate are correct. To find the IBM provided subdomain and TLS certificate, run bx cs cluster-get <cluster_name_or_id>.
     2.  Make sure that your app listens on the same path that is configured in the **path** section of your Ingress. If your app is set up to listen on the root path, include **/** as your path.
-5.  Check your Ingress deployment and look for potential error messages.
+5.  Check your Ingress deployment and look for potential warning or error messages.
 
   ```
   kubectl describe ingress <myingress>
   ```
   {: pre}
+
+  For example, in the **Events** section of the output, you might see warning messages about invalid values in your Ingress resource or in certain annotations you used.
+
+  ```
+  Name:             myingress
+  Namespace:        default
+  Address:          169.xx.xxx.xx,169.xx.xxx.xx
+  Default backend:  default-http-backend:80 (<none>)
+  Rules:
+    Host                                             Path  Backends
+    ----                                             ----  --------
+    mycluster.us-south.containers.mybluemix.net
+                                                     /tea      myservice1:80 (<none>)
+                                                     /coffee   myservice2:80 (<none>)
+  Annotations:
+    custom-port:        protocol=http port=7490; protocol=https port=4431
+    location-modifier:  modifier='~' serviceName=myservice1;modifier='^~' serviceName=myservice2
+  Events:
+    Type     Reason             Age   From                                                            Message
+    ----     ------             ----  ----                                                            -------
+    Normal   Success            1m    public-cr87c198fcf4bd458ca61402bb4c7e945a-alb1-258623678-gvf9n  Successfully applied ingress resource.
+    Warning  TLSSecretNotFound  1m    public-cr87c198fcf4bd458ca61402bb4c7e945a-alb1-258623678-gvf9n  Failed to apply ingress resource.
+    Normal   Success            59s   public-cr87c198fcf4bd458ca61402bb4c7e945a-alb1-258623678-gvf9n  Successfully applied ingress resource.
+    Warning  AnnotationError    40s   public-cr87c198fcf4bd458ca61402bb4c7e945a-alb1-258623678-gvf9n  Failed to apply ingress.bluemix.net/custom-port annotation. Error annotation format error : One of the mandatory fields not valid/missing for annotation ingress.bluemix.net/custom-port
+    Normal   Success            40s   public-cr87c198fcf4bd458ca61402bb4c7e945a-alb1-258623678-gvf9n  Successfully applied ingress resource.
+    Warning  AnnotationError    2s    public-cr87c198fcf4bd458ca61402bb4c7e945a-alb1-258623678-gvf9n  Failed to apply ingress.bluemix.net/custom-port annotation. Invalid port 7490. Annotation cannot use ports 7481 - 7490
+    Normal   Success            2s    public-cr87c198fcf4bd458ca61402bb4c7e945a-alb1-258623678-gvf9n  Successfully applied ingress resource.
+  ```
+  {: screen}
 
 6.  Check the logs for your application load balancer.
     1.  Retrieve the ID of the Ingress pods that are running in your cluster.
