@@ -805,7 +805,7 @@ diskEncryption: <em>false</em>
      </tr>
      <tr>
      <td><code><em>no-subnet</em></code></td>
-     <td>By default, both a public and a private portable subnets are created on the VLAN associated with the cluster. Replace <code><em>&lt;no-subnet&gt;</em></code> with <code><em>true</em></code> to avoid creating subnets with the cluster. You can [create](#cs_cluster_subnet_create) or [add](#cs_cluster_subnet_add) subnets to a cluster later.</td>
+     <td>By default, a public and a private portable subnet are created on the VLAN associated with the cluster. Replace <code><em>&lt;no-subnet&gt;</em></code> with <code><em>true</em></code> to avoid creating subnets with the cluster. You can [create](#cs_cluster_subnet_create) or [add](#cs_cluster_subnet_add) subnets to a cluster later.</td>
       </tr>
      <tr>
      <td><code><em>machine-type</em></code></td>
@@ -860,7 +860,7 @@ diskEncryption: <em>false</em>
 <dd>The Kubernetes version for the cluster master node. This value is optional. Unless specified, the cluster is created with the default of supported Kubernetes versions. To see available versions, run <code>bx cs kube-versions</code>.</dd>
 
 <dt><code>--no-subnet</code></dt>
-<dd>By default, both a public and a private portable subnets are created on the VLAN associated with the cluster. Include the <code>--no-subnet</code> flag to avoid creating subnets with the cluster. You can [create](#cs_cluster_subnet_create) or [add](#cs_cluster_subnet_add) subnets to a cluster later.</dd>
+<dd>By default, a public and a private portable subnet are created on the VLAN associated with the cluster. Include the <code>--no-subnet</code> flag to avoid creating subnets with the cluster. You can [create](#cs_cluster_subnet_create) or [add](#cs_cluster_subnet_add) subnets to a cluster later.</dd>
 
 <dt><code>--private-vlan <em>PRIVATE_VLAN</em></code></dt>
 <dd>
@@ -1194,7 +1194,9 @@ Register a webhook.
 
 Make a subnet in an IBM Cloud infrastructure (SoftLayer) account available to a specified cluster.
 
-**Note:** When you make a subnet available to a cluster, IP addresses of this subnet are used for cluster networking purposes. To avoid IP address conflicts, make sure that you use a subnet with one cluster only. Do not use a subnet for multiple clusters or for other purposes outside of {{site.data.keyword.containershort_notm}} at the same time.
+**Note:**
+* When you make a subnet available to a cluster, IP addresses of this subnet are used for cluster networking purposes. To avoid IP address conflicts, make sure that you use a subnet with one cluster only. Do not use a subnet for multiple clusters or for other purposes outside of {{site.data.keyword.containershort_notm}} at the same time.
+* To route between subnets on the same VLAN, you must [turn on VLAN spanning](/docs/infrastructure/vlans/vlan-spanning.html#enable-or-disable-vlan-spanning).
 
 <strong>Command options</strong>:
 
@@ -1219,7 +1221,9 @@ Make a subnet in an IBM Cloud infrastructure (SoftLayer) account available to a 
 
 Create a subnet in an IBM Cloud infrastructure (SoftLayer) account and make it available to a specified cluster in {{site.data.keyword.containershort_notm}}.
 
-**Note:** When you make a subnet available to a cluster, IP addresses of this subnet are used for cluster networking purposes. To avoid IP address conflicts, make sure that you use a subnet with one cluster only. Do not use a subnet for multiple clusters or for other purposes outside of {{site.data.keyword.containershort_notm}} at the same time.
+**Note:**
+* When you make a subnet available to a cluster, IP addresses of this subnet are used for cluster networking purposes. To avoid IP address conflicts, make sure that you use a subnet with one cluster only. Do not use a subnet for multiple clusters or for other purposes outside of {{site.data.keyword.containershort_notm}} at the same time.
+* To route between subnets on the same VLAN, you must [turn on VLAN spanning](/docs/infrastructure/vlans/vlan-spanning.html#enable-or-disable-vlan-spanning).
 
 <strong>Command options</strong>:
 
@@ -1249,7 +1253,9 @@ Bring your own private subnet to your {{site.data.keyword.containershort_notm}} 
 
 This private subnet is not one provided by IBM Cloud infrastructure (SoftLayer). As such, you must configure any inbound and outbound network traffic routing for the subnet. To add an IBM Cloud infrastructure (SoftLayer) subnet, use the `bx cs cluster-subnet-add` [command](#cs_cluster_subnet_add).
 
-**Note**: When you add a private user subnet to a cluster, IP addresses of this subnet are used for private Load Balancers in the cluster. To avoid IP address conflicts, make sure that you use a subnet with one cluster only. Do not use a subnet for multiple clusters or for other purposes outside of {{site.data.keyword.containershort_notm}} at the same time.
+**Note**:
+* When you add a private user subnet to a cluster, IP addresses of this subnet are used for private Load Balancers in the cluster. To avoid IP address conflicts, make sure that you use a subnet with one cluster only. Do not use a subnet for multiple clusters or for other purposes outside of {{site.data.keyword.containershort_notm}} at the same time.
+* To route between subnets on the same VLAN, you must [turn on VLAN spanning](/docs/infrastructure/vlans/vlan-spanning.html#enable-or-disable-vlan-spanning).
 
 <strong>Command options</strong>:
 
@@ -1894,7 +1900,46 @@ View details of a worker node.
 ### bx cs worker-reboot [-f] [--hard] CLUSTER WORKER [WORKER]
 {: #cs_worker_reboot}
 
-Reboot the worker nodes in a cluster. If a problem exists with a worker node, first try rebooting the worker node, which restarts it. If the reboot does not solve the issue, then try the `worker-reload` command. The state of the workers does not change during the reboot. The state remains `deployed`, but the status updates.
+Reboot a worker node in a cluster. During the reboot, the state of your worker nodes does not change. 
+
+**Attention:** Rebooting a worker node can cause data corruption on the worker node. Use this command with caution and when you know that a reboot can help recover your worker node. In all other cases, [reload your worker node](#cs_worker_reload) instead.   
+
+Before you reboot your worker node, make sure that pods are rescheduled on other worker nodes to help avoid a downtime for your app or data corruption on your worker node. 
+
+1. List all worker nodes in your cluster and note the `name` of the worker node that you want to reboot. 
+   ```
+   kubectl get nodes
+   ```
+   The `name` that is returned in this command is the private IP address that is assigned to your worker node. You can find more information about your worker node when you run the `bx cs workers <cluster_name_or_id>` command and look for the worker node with the same **Private IP** address. 
+2. Mark the worker node as unschedulable in a process that is known as cordoning. When you cordon a worker node, you make it unavailable for future pod scheduling. Use the `name` of the worker node that you retrieved in the previous step.
+   ```
+   kubectl cordon <worker_name>
+   ```
+   {: pre}
+   
+3. Verify that pod scheduling is disabled for your worker node. 
+   ```
+   kubectl get nodes
+   ```
+   {: pre}
+   Your worker node is disabled for pod scheduling if the status displays **SchedulingDisabled**. 
+ 4. Force pods to be removed from your worker node and rescheduled onto remaining worker nodes in the cluster. 
+    ```
+    kubectl drain <worker_name>
+    ```
+    {: pre}
+    This process can take a few minutes. 
+ 5. Reboot the worker node. Use the worker name or ID that is returned from the `bx cs workers <cluster_name_or_id>` command. 
+    ```
+    bx cs worker-reboot <cluster_name_or_id> <worker_name_or_id>
+    ```
+    {: pre}
+ 6. Wait about 5 minutes before you make your worker node available for pod scheduling to ensure that the reboot is finished. During the reboot, the state of your worker nodes does not change. The reboot of a worker node is usually completed in a few seconds.
+ 7. Make your worker node available for pod scheduling. Use the `name` for your worker node that is returned from the `kubectl get nodes` command. 
+    ```
+    kubectl uncordon <worker_name>
+    ```
+    {: pre}
 
 <strong>Command options</strong>:
 
@@ -1923,7 +1968,43 @@ Reboot the worker nodes in a cluster. If a problem exists with a worker node, fi
 ### bx cs worker-reload [-f] CLUSTER WORKER [WORKER]
 {: #cs_worker_reload}
 
-Reload the worker nodes in a cluster. If a problem exists with a worker node, first try rebooting the worker node. If the reboot does not solve the problem, try the `worker-reload` command, which re-loads all of the necessary configurations for the worker node.
+Reload all the necessary configurations for a worker node. A reload can be useful if your worker node experiences problems, such as slow performance or if your worker node is stuck in an unhealthy state. 
+
+Before you reload your worker node, make sure that pods are rescheduled on other worker nodes to help avoid a downtime for your app or data corruption on your worker node. 
+
+1. List all worker nodes in your cluster and note the `name` of the worker node that you want to reload. 
+   ```
+   kubectl get nodes
+   ```
+   The `name` that is returned in this command is the private IP address that is assigned to your worker node. You can find more information about your worker node when you run the `bx cs workers <cluster_name_or_id>` command and look for the worker node with the same **Private IP** address. 
+2. Mark the worker node as unschedulable in a process that is known as cordoning. When you cordon a worker node, you make it unavailable for future pod scheduling. Use the `name` of the worker node that you retrieved in the previous step.
+   ```
+   kubectl cordon <worker_name>
+   ```
+   {: pre}
+      
+3. Verify that pod scheduling is disabled for your worker node. 
+   ```
+   kubectl get nodes
+   ```
+   {: pre}
+   Your worker node is disabled for pod scheduling if the status displays **SchedulingDisabled**. 
+ 4. Force pods to be removed from your worker node and rescheduled onto remaining worker nodes in the cluster. 
+    ```
+    kubectl drain <worker_name>
+    ```
+    {: pre}
+    This process can take a few minutes. 
+ 5. Reload the worker node. Use the worker name or ID that is returned from the `bx cs workers <cluster_name_or_id>` command. 
+    ```
+    bx cs worker-reload <cluster_name_or_id> <worker_name_or_id>
+    ```
+    {: pre}
+ 6. Wait for the reload to complete. 
+ 7. Make your worker node available for pod scheduling. Use the `name` for your worker node that is returned from the `kubectl get nodes` command. 
+    ```
+    kubectl uncordon <worker_name>
+    ```
 
 <strong>Command options</strong>:
 
@@ -1949,6 +2030,42 @@ Reload the worker nodes in a cluster. If a problem exists with a worker node, fi
 {: #cs_worker_rm}
 
 Remove one or more worker nodes from a cluster.
+
+Before you remove your worker node, make sure that pods are rescheduled on other worker nodes to help avoid a downtime for your app or data corruption on your worker node. 
+
+1. List all worker nodes in your cluster and note the `name` of the worker node that you want to remove. 
+   ```
+   kubectl get nodes
+   ```
+   The `name` that is returned in this command is the private IP address that is assigned to your worker node. You can find more information about your worker node when you run the `bx cs workers <cluster_name_or_id>` command and look for the worker node with the same **Private IP** address. 
+2. Mark the worker node as unschedulable in a process that is known as cordoning. When you cordon a worker node, you make it unavailable for future pod scheduling. Use the `name` of the worker node that you retrieved in the previous step.
+   ```
+   kubectl cordon <worker_name>
+   ```
+   {: pre}
+      
+3. Verify that pod scheduling is disabled for your worker node. 
+   ```
+   kubectl get nodes
+   ```
+   {: pre}
+   Your worker node is disabled for pod scheduling if the status displays **SchedulingDisabled**. 
+4. Force pods to be removed from your worker node and rescheduled onto remaining worker nodes in the cluster. 
+   ```
+   kubectl drain <worker_name>
+   ```
+   {: pre}
+   This process can take a few minutes. 
+5. Remove the worker node. Use the worker name or ID that is returned from the `bx cs workers <cluster_name_or_id>` command. 
+   ```
+   bx cs worker-rm <cluster_name_or_id> <worker_name_or_id>
+   ```
+   {: pre}
+   
+6. Verify that the worker node is removed. 
+   ```
+   bx cs workers <cluster_name_or_id>
+   ```
 
 <strong>Command options</strong>:
 
