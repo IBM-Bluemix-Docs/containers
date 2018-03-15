@@ -1900,7 +1900,7 @@ View details of a worker node.
 ### bx cs worker-reboot [-f] [--hard] CLUSTER WORKER [WORKER]
 {: #cs_worker_reboot}
 
-Reboot a worker node in a cluster. During the reboot, the state of your worker nodes does not change.
+Reboot a worker node in a cluster. During the reboot, the state of your worker node does not change.
 
 **Attention:** Rebooting a worker node can cause data corruption on the worker node. Use this command with caution and when you know that a reboot can help recover your worker node. In all other cases, [reload your worker node](#cs_worker_reload) instead.
 
@@ -1934,7 +1934,7 @@ Before you reboot your worker node, make sure that pods are rescheduled on other
     bx cs worker-reboot <cluster_name_or_id> <worker_name_or_id>
     ```
     {: pre}
- 6. Wait about 5 minutes before you make your worker node available for pod scheduling to ensure that the reboot is finished. During the reboot, the state of your worker nodes does not change. The reboot of a worker node is usually completed in a few seconds.
+ 6. Wait about 5 minutes before you make your worker node available for pod scheduling to ensure that the reboot is finished. During the reboot, the state of your worker node does not change. The reboot of a worker node is usually completed in a few seconds.
  7. Make your worker node available for pod scheduling. Use the `name` for your worker node that is returned from the `kubectl get nodes` command.
     ```
     kubectl uncordon <worker_name>
