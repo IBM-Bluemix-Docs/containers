@@ -1900,18 +1900,18 @@ View details of a worker node.
 ### bx cs worker-reboot [-f] [--hard] CLUSTER WORKER [WORKER]
 {: #cs_worker_reboot}
 
-Reboot a worker node in a cluster. During the reboot, the state of your worker nodes does not change.
+Reboot a worker node in a cluster. During the reboot, the state of your worker node does not change.
 
 **Attention:** Rebooting a worker node can cause data corruption on the worker node. Use this command with caution and when you know that a reboot can help recover your worker node. In all other cases, [reload your worker node](#cs_worker_reload) instead.
 
 Before you reboot your worker node, make sure that pods are rescheduled on other worker nodes to help avoid a downtime for your app or data corruption on your worker node.
 
-1. List all worker nodes in your cluster and note the `name` of the worker node that you want to reboot.
+1. List all worker nodes in your cluster and note the **name** of the worker node that you want to reboot.
    ```
    kubectl get nodes
    ```
-   The `name` that is returned in this command is the private IP address that is assigned to your worker node. You can find more information about your worker node when you run the `bx cs workers <cluster_name_or_id>` command and look for the worker node with the same **Private IP** address.
-2. Mark the worker node as unschedulable in a process that is known as cordoning. When you cordon a worker node, you make it unavailable for future pod scheduling. Use the `name` of the worker node that you retrieved in the previous step.
+   The**name** that is returned in this command is the private IP address that is assigned to your worker node. You can find more information about your worker node when you run the `bx cs workers <cluster_name_or_id>` command and look for the worker node with the same **Private IP** address.
+2. Mark the worker node as unschedulable in a process that is known as cordoning. When you cordon a worker node, you make it unavailable for future pod scheduling. Use the **name** of the worker node that you retrieved in the previous step.
    ```
    kubectl cordon <worker_name>
    ```
@@ -1929,17 +1929,18 @@ Before you reboot your worker node, make sure that pods are rescheduled on other
     ```
     {: pre}
     This process can take a few minutes.
- 5. Reboot the worker node. Use the worker name or ID that is returned from the `bx cs workers <cluster_name_or_id>` command.
+ 5. Reboot the worker node. Use the worker ID that is returned from the `bx cs workers <cluster_name_or_id>` command.
     ```
     bx cs worker-reboot <cluster_name_or_id> <worker_name_or_id>
     ```
     {: pre}
- 6. Wait about 5 minutes before you make your worker node available for pod scheduling to ensure that the reboot is finished. During the reboot, the state of your worker nodes does not change. The reboot of a worker node is usually completed in a few seconds.
- 7. Make your worker node available for pod scheduling. Use the `name` for your worker node that is returned from the `kubectl get nodes` command.
+ 6. Wait about 5 minutes before you make your worker node available for pod scheduling to ensure that the reboot is finished. During the reboot, the state of your worker node does not change. The reboot of a worker node is usually completed in a few seconds.
+ 7. Make your worker node available for pod scheduling. Use the **name** for your worker node that is returned from the `kubectl get nodes` command.
     ```
     kubectl uncordon <worker_name>
     ```
     {: pre}
+    </br>
 
 <strong>Command options</strong>:
 
@@ -1972,12 +1973,12 @@ Reload all the necessary configurations for a worker node. A reload can be usefu
 
 Before you reload your worker node, make sure that pods are rescheduled on other worker nodes to help avoid a downtime for your app or data corruption on your worker node.
 
-1. List all worker nodes in your cluster and note the `name` of the worker node that you want to reload.
+1. List all worker nodes in your cluster and note the **name** of the worker node that you want to reload.
    ```
    kubectl get nodes
    ```
-   The `name` that is returned in this command is the private IP address that is assigned to your worker node. You can find more information about your worker node when you run the `bx cs workers <cluster_name_or_id>` command and look for the worker node with the same **Private IP** address.
-2. Mark the worker node as unschedulable in a process that is known as cordoning. When you cordon a worker node, you make it unavailable for future pod scheduling. Use the `name` of the worker node that you retrieved in the previous step.
+   The **name** that is returned in this command is the private IP address that is assigned to your worker node. You can find more information about your worker node when you run the `bx cs workers <cluster_name_or_id>` command and look for the worker node with the same **Private IP** address.
+2. Mark the worker node as unschedulable in a process that is known as cordoning. When you cordon a worker node, you make it unavailable for future pod scheduling. Use the **name** of the worker node that you retrieved in the previous step.
    ```
    kubectl cordon <worker_name>
    ```
@@ -1995,17 +1996,17 @@ Before you reload your worker node, make sure that pods are rescheduled on other
     ```
     {: pre}
     This process can take a few minutes.
- 5. Reload the worker node. Use the worker name or ID that is returned from the `bx cs workers <cluster_name_or_id>` command.
+ 5. Reload the worker node. Use the worker ID that is returned from the `bx cs workers <cluster_name_or_id>` command.
     ```
     bx cs worker-reload <cluster_name_or_id> <worker_name_or_id>
     ```
     {: pre}
  6. Wait for the reload to complete.
- 7. Make your worker node available for pod scheduling. Use the `name` for your worker node that is returned from the `kubectl get nodes` command.
+ 7. Make your worker node available for pod scheduling. Use the **name** for your worker node that is returned from the `kubectl get nodes` command.
     ```
     kubectl uncordon <worker_name>
     ```
-
+</br>
 <strong>Command options</strong>:
 
    <dl>
@@ -2033,12 +2034,12 @@ Remove one or more worker nodes from a cluster.
 
 Before you remove your worker node, make sure that pods are rescheduled on other worker nodes to help avoid a downtime for your app or data corruption on your worker node.
 
-1. List all worker nodes in your cluster and note the `name` of the worker node that you want to remove.
+1. List all worker nodes in your cluster and note the **name** of the worker node that you want to remove.
    ```
    kubectl get nodes
    ```
-   The `name` that is returned in this command is the private IP address that is assigned to your worker node. You can find more information about your worker node when you run the `bx cs workers <cluster_name_or_id>` command and look for the worker node with the same **Private IP** address.
-2. Mark the worker node as unschedulable in a process that is known as cordoning. When you cordon a worker node, you make it unavailable for future pod scheduling. Use the `name` of the worker node that you retrieved in the previous step.
+   The **name** that is returned in this command is the private IP address that is assigned to your worker node. You can find more information about your worker node when you run the `bx cs workers <cluster_name_or_id>` command and look for the worker node with the same **Private IP** address.
+2. Mark the worker node as unschedulable in a process that is known as cordoning. When you cordon a worker node, you make it unavailable for future pod scheduling. Use the **name** of the worker node that you retrieved in the previous step.
    ```
    kubectl cordon <worker_name>
    ```
@@ -2056,7 +2057,7 @@ Before you remove your worker node, make sure that pods are rescheduled on other
    ```
    {: pre}
    This process can take a few minutes.
-5. Remove the worker node. Use the worker name or ID that is returned from the `bx cs workers <cluster_name_or_id>` command.
+5. Remove the worker node. Use the worker ID that is returned from the `bx cs workers <cluster_name_or_id>` command.
    ```
    bx cs worker-rm <cluster_name_or_id> <worker_name_or_id>
    ```
@@ -2066,7 +2067,7 @@ Before you remove your worker node, make sure that pods are rescheduled on other
    ```
    bx cs workers <cluster_name_or_id>
    ```
-
+</br>
 <strong>Command options</strong>:
 
    <dl>
