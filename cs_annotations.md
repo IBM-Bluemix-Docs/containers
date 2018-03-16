@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-15"
+lastupdated: "2018-03-16"
 
 ---
 
@@ -599,8 +599,45 @@ spec:
   <td>This parameter is optional. When provided, the port is substituted to this value before traffic is sent to the backend app. Otherwise, the port remains same as the Ingress port.</td>
   </tr>
   </tbody></table>
-  </dd>
-  </dl>
+
+ </dd>
+ <dt>Usage</dt>
+ <dd><ol><li>Review open ports for your ALB.
+<pre class="pre">
+<code>kubectl get service -n kube-system</code></pre>
+Your CLI output looks similar to the following:
+<pre class="screen">
+<code>NAME                     CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
+public-ingress-ctl-svc   10.10.10.149   169.60.16.246   80:30776/TCP,443:30412/TCP   8d</code></pre></li>
+<li>Open the ALB config map.
+<pre class="pre">
+<code>kubectl edit configmap ibm-cloud-provider-ingress-cm -n kube-system</code></pre></li>
+<li>Add the TCP ports to the config map. Replace &lt;port&gt; with the TCP ports that you want to open.
+<pre class="codeblock">
+<code>apiVersion: v1
+kind: ConfigMap
+data:
+ public-ports: &lt;port1&gt;;&lt;port2&gt;
+metadata:
+ creationTimestamp: 2017-08-22T19:06:51Z
+ name: ibm-cloud-provider-ingress-cm
+ namespace: kube-system
+ resourceVersion: "1320"
+ selfLink: /api/v1/namespaces/kube-system/configmaps/ibm-cloud-provider-ingress-cm
+ uid: &lt;uid&gt;</code></pre></li>
+ <li>Verify that your ALB is re-configured with the TCP ports.
+<pre class="pre">
+<code>kubectl get service -n kube-system</code></pre>
+Your CLI output looks similar to the following:
+<pre class="screen">
+<code>NAME                     CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
+public-ingress-ctl-svc   10.10.10.149   169.60.16.246   &lt;port1&gt;:30776/TCP,&lt;port2&gt;:30412/TCP   8d</code></pre></li>
+<li>Configure your Ingress to access your app via a non-standard TCP port. Use the sample YAML file in this reference. </li>
+<li>Update your ALB configuration.
+<pre class="pre">
+<code>kubectl apply -f &lt;yaml_file&gt;</code></pre>
+</li>
+<li>Open your preferred web browser to access your app. Example: <code>https://&lt;ibmdomain&gt;:&lt;ingressPort&gt;/</code></li></ol></dd></dl>
 
 <br />
 
@@ -1568,7 +1605,30 @@ Add extra header information to a client request before sending the request to t
 <br><br>
 If your back-end app requires HTTP header information, you can use the <code>proxy-add-headers</code> annotation to add header information to the client request before the request is forwarded by the ALB to the back-end app.
 
-</br></br>
+<br>
+<ul><li>For example, you might need to add the following X-Forward header information to the request before it is forwarded to your app:
+
+<pre class="screen">
+<code>proxy_set_header Host $host;
+proxy_set_header X-Real-IP $remote_addr;
+proxy_set_header X-Forwarded-Proto $scheme;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</code></pre>
+
+</li>
+
+<li>To add the X-Forward header information to the request sent to your app, use the `proxy-add-headers` annotation in the following way:
+
+<pre class="screen">
+<code>ingress.bluemix.net/proxy-add-headers: |
+  serviceName=<myservice1> {
+  Host $host;
+  X-Real-IP $remote_addr;
+  X-Forwarded-Proto $scheme;
+  X-Forwarded-For $proxy_add_x_forwarded_for;
+  }</code></pre>
+
+</li></ul><br>
+
 If the client web app requires HTTP header information, you can use the <code>response-add-headers</code> annotation to add header information to the response before the response is forwarded by the ALB to the client web app.</dd>
 
 <dt>Sample Ingress resource YAML</dt>

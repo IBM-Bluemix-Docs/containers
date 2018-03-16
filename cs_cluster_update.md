@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-13"
+lastupdated: "2018-03-16"
 
 ---
 
@@ -181,7 +181,6 @@ You can update the machine types that are used in worker nodes by adding new wor
 {: shortdesc}
 
 1. Note the names and locations of the worker nodes to update.
-
     ```
     bx cs workers <cluster_name>
     ```
@@ -207,7 +206,7 @@ You can update the machine types that are used in worker nodes by adding new wor
     ```
     {: pre}
 
-5. When the added worker node is in the `Normal` state, you can remove the outdated worker node. 
+5. When the added worker node is in the `Normal` state, you can remove the outdated worker node. **Note**: If you are removing a machine type that is billed monthly (such as bare metal), you are charged for the entire the month.
 
     ```
     bx cs worker-rm <cluster_name> <worker_node>
@@ -215,3 +214,5 @@ You can update the machine types that are used in worker nodes by adding new wor
     {: pre}
 
 6. Repeat these steps to upgrade other worker nodes to different machine types.
+
+

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-07"
+lastupdated: "2018-03-16"
 
 ---
 
@@ -29,7 +29,7 @@ When these worker nodes are marked for networking only, other workloads cannot c
 ## Label worker nodes as edge nodes
 {: #edge_nodes}
 
-Add the `dedicated=edge` label to two or more worker nodes in your cluster to ensure that Ingress and load balancers are deployed to those worker nodes only.
+Add the `dedicated=edge` label to two or more worker nodes on each public VLAN in your cluster to ensure that Ingress and load balancers are deployed to those worker nodes only.
 {:shortdesc}
 
 Before you begin:
@@ -40,7 +40,7 @@ Before you begin:
 
 Steps:
 
-1. List all of the worker nodes in the cluster. Use the private IP address from the **NAME** column to identify the nodes. Select at least two worker nodes to be edge worker nodes. Using two or more worker nodes improves availability of the networking resources.
+1. List all of the worker nodes in the cluster. Use the private IP address from the **NAME** column to identify the nodes. Select at least two worker nodes on each public VLAN to be edge worker nodes. Using two or more worker nodes improves availability of the networking resources.
 
   ```
   kubectl get nodes -L publicVLAN,privateVLAN,dedicated

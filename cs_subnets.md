@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-15"
+lastupdated: "2018-03-16"
 
 ---
 
@@ -24,11 +24,11 @@ Change the pool of available portable public or private IP addresses by adding s
 
 In {{site.data.keyword.containershort_notm}}, you can add stable, portable IPs for Kubernetes services by adding network subnets to the cluster. In this case, subnets are not being used with netmasking to create connectivity across one or more clusters. Instead, the subnets are used to provide permanent fixed IPs for a service from a cluster that can be used to access that service.
 
-When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically provisions a portable public subnet with 5 public IP addresses and a portable private subnet with 5 private IP addresses. Portable public and private IP addresses are static and do not change when a worker node, or even the cluster, is removed. For each subnet, one of the portable public and one of the portable private IP addresses are used for [application load balancers](cs_ingress.html) that you can use to expose multiple apps in your cluster. The remaining 4 portable public and 4 portable private IP addresses can be used to expose single apps to the public by [creating a load balancer service](cs_loadbalancer.html).
+When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically provisions a portable public subnet with 5 public IP addresses and a portable private subnet with 5 private IP addresses. Portable public and private IP addresses are static and do not change when a worker node, or even the cluster, is removed. For each subnet, one of the portable public and one of the portable private IP addresses are used for [application load balancers](cs_ingress.html) that you can use to expose multiple apps in your cluster. The remaining four portable public and four portable private IP addresses can be used to expose single apps to the public by [creating a load balancer service](cs_loadbalancer.html).
 
-**Note:** Portable public IP addresses are charged on a monthly basis. If you choose to remove portable public IP addresses after your cluster is provisioned, you still have to pay the monthly charge, even if you used them only for a short amount of time.
+**Note:** Portable public IP addresses are charged monthly. If you choose to remove portable public IP addresses after your cluster is provisioned, you still have to pay the monthly charge, even if you used them only for a short amount of time.
 
-## Requesting additional subnets for your cluster
+## Requesting more subnets for your cluster
 {: #request}
 
 You can add stable, portable public or private IPs to the cluster by assigning subnets to the cluster.
@@ -63,7 +63,7 @@ To create a subnet in an IBM Cloud infrastructure (SoftLayer) account and make i
     </tr>
     <tr>
     <td><code><em>&lt;subnet_size&gt;</em></code></td>
-    <td>Replace <code>&lt;subnet_size&gt;</code> with the number of IP addresses that you want to add from your portable subnet. Accepted values are 8, 16, 32, or 64. <p>**Note:** When you add portable IP addresses for your subnet, three IP addresses are used to establish cluster-internal networking, so that you cannot use them for your application load balancer or to create a load balancer service. For example, if you request eight portable public IP addresses, you can use five of them to expose your apps to the public.</p> </td>
+    <td>Replace <code>&lt;subnet_size&gt;</code> with the number of IP addresses that you want to add from your portable subnet. Accepted values are 8, 16, 32, or 64. <p>**Note:** When you add portable IP addresses for your subnet, three IP addresses are used to establish cluster-internal networking. You cannot use these three IPs for your application load balancer or to create a load balancer service. For example, if you request eight portable public IP addresses, you can use five of them to expose your apps to the public.</p> </td>
     </tr>
     <tr>
     <td><code><em>&lt;VLAN_ID&gt;</em></code></td>
@@ -91,7 +91,7 @@ You can add existing portable public or private subnets to your Kubernetes clust
 
 Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
 
-If you have an existing subnet in your IBM Cloud infrastructure (SoftLayer) portfolio with custom firewall rules or available IP addresses that you want to use, create a cluster with no subnet and make your existing subnet available to the cluster when the cluster provisions.
+To use an existing subnet in your IBM Cloud infrastructure (SoftLayer) portfolio with custom firewall rules or available IP addresses:
 
 1.  Identify the subnet to use. Note the ID of the subnet and the VLAN ID. In this example, the subnet ID is 807861 and the VLAN ID is 1901230.
 
@@ -165,7 +165,7 @@ If you have an existing subnet in your IBM Cloud infrastructure (SoftLayer) port
     ```
     {: screen}
 
-6.  Add the subnet to your cluster by specifying the subnet ID. When you make a subnet available to a cluster, a Kubernetes config map is created for you that includes all available portable public IP addresses that you can use. If no application load balancers already exist for your cluster, one portable public and one portable private IP address is automatically used to create the public and private application load balancers. All other portable public and private IP addresses can be used to create load balancer services for your apps.
+6.  Add the subnet to your cluster by specifying the subnet ID. When you make a subnet available to a cluster, a Kubernetes configmap is created for you that includes all available portable public IP addresses that you can use. If no application load balancers exist for your cluster, one portable public and one portable private IP address is automatically used to create the public and private application load balancers. All other portable public and private IP addresses can be used to create load balancer services for your apps.
 
     ```
     bx cs cluster-subnet-add mycluster 807861
@@ -190,9 +190,9 @@ Requirements:
 
 Before you begin:
 - Configure the routing of network traffic into and out of the external subnet.
-- Confirm that you have VPN connectivity between the on-premises data center gateway device and either the private network Vyatta in your IBM Cloud infrastructure (SoftLayer) portfolio or the Strongswan VPN service running in your cluster. To use a Vyatta, see this [blog post ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/blogs/bluemix/2017/07/kubernetes-and-bluemix-container-based-workloads-part4/)]. To use Strongswan, see [Setting up VPN connectivity with the Strongswan IPSec VPN service](cs_vpn.html).
+- Confirm that you have VPN connectivity between the on-premises data center gateway device and either the private network Vyatta in your IBM Cloud infrastructure (SoftLayer) portfolio or the strongSwan VPN service that is running in your cluster. To use a Vyatta, see this [blog post ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/blogs/bluemix/2017/07/kubernetes-and-bluemix-container-based-workloads-part4/)]. To use strongSwan, see [Setting up VPN connectivity with the strongSwan IPSec VPN service](cs_vpn.html).
 
-To add a subnet from an on-prem network:
+To add a subnet from an on-premises network:
 
 1. View the ID of your cluster's Private VLAN. Locate the **VLANs** section. In the field **User-managed**, identify the VLAN ID with _false_.
 
@@ -209,7 +209,7 @@ To add a subnet from an on-prem network:
     ```
     {: screen}
 
-2. Add the external subnet to your private VLAN. The portable private IP addresses are added to the cluster's config map.
+2. Add the external subnet to your private VLAN. The portable private IP addresses are added to the cluster's configmap.
 
     ```
     bx cs cluster-user-subnet-add <cluster_name> <subnet_CIDR> <VLAN_ID>
@@ -241,7 +241,7 @@ To add a subnet from an on-prem network:
 
 4. Optional: [Enable routing between subnets on the same VLAN](#vlan-spanning).
 
-5. Add a private load balancer service or a private Ingress application load balancer to access your app over the private network. If you want to use a private IP address from the subnet that you added when you create a private load balancer or a private Ingress application load balancer, you must specify an IP address. Otherwise, an IP address is chosen at random from the IBM Cloud infrastructure (SoftLayer) subnets or user-provided subnets on the private VLAN. For more information, see [Configuring access to an app by using the load balancer service type](cs_loadbalancer.html#config) or [Enabling the private application load balancer](cs_ingress.html#private_ingress).
+5. Add a private load balancer service or a private Ingress application load balancer to access your app over the private network. To use a private IP address from the subnet that you added, you must specify an IP address. Otherwise, an IP address is chosen at random from the IBM Cloud infrastructure (SoftLayer) subnets or user-provided subnets on the private VLAN. For more information, see [Configuring access to an app by using the load balancer service type](cs_loadbalancer.html#config) or [Enabling the private application load balancer](cs_ingress.html#private_ingress).
 
 <br />
 
@@ -303,7 +303,7 @@ Before you begin, [set the context for the cluster you want to use.](cs_cli_inst
     ```
     {: pre}
 
-    **Note:** The creation of this service fails because the Kubernetes master cannot find the specified load balancer IP address in the Kubernetes config map. When you run this command, you can see the error message and the list of available public IP addresses for the cluster.
+    **Note:** The creation of this service fails because the Kubernetes master cannot find the specified load balancer IP address in the Kubernetes configmap. When you run this command, you can see the error message and the list of available public IP addresses for the cluster.
 
     ```
     Error on cloud load balancer a8bfa26552e8511e7bee4324285f6a4a for service default/myservice with UID 8bfa2655-2e85-11e7-bee4-324285f6a4af: Requested cloud provider IP 1.1.1.1 is not available. The following cloud provider IPs are available: <list_of_IP_addresses>
@@ -335,7 +335,7 @@ Before you begin, [set the context for the cluster you want to use.](cs_cli_inst
 ### Enabling routing between subnets on the same VLAN
 {: #vlan-spanning}
 
-When you create a cluster, a subnet ending in `/26` is provisioned in the same VLAN that the cluster is on. This primary subnet can hold up to 62 worker nodes.
+When you create a cluster, a subnet that ends in `/26` is provisioned in the same VLAN that the cluster is on. This primary subnet can hold up to 62 worker nodes.
 {:shortdesc}
 
 This 62 worker node limit might be exceeded by a large cluster or by several smaller clusters in a single region that are on the same VLAN. When the 62 worker node limit is reached, a second primary subnet in the same VLAN is ordered.
