@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-14"
+lastupdated: "2018-03-16"
 
 ---
 
@@ -33,6 +33,11 @@ Check out what container developers are interested in learning about in {{site.d
 <th>Description</th>
 </thead>
 <tbody>
+<tr>
+<td> 16 March</td>
+<td>[Provision a bare metal cluster with Trusted Compute](cs_clusters.html#shared_dedicated_node)</td>
+<td>Create a bare metal cluster that runs [Kubernetes version 1.9](cs_versions.html#cs_v19) or later, and enable Trusted Compute to verify your worker nodes against tampering.</td>
+</tr>
 <tr>
 <td>14 March</td>
 <td>[Secure sign-in with {{site.data.keyword.appid_full}}](cs_integrations.html#appid)</td>
