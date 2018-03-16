@@ -181,7 +181,6 @@ You can update the machine types that are used in worker nodes by adding new wor
 {: shortdesc}
 
 1. Note the names and locations of the worker nodes to update.
-
     ```
     bx cs workers <cluster_name>
     ```
@@ -215,3 +214,5 @@ You can update the machine types that are used in worker nodes by adding new wor
     {: pre}
 
 6. Repeat these steps to upgrade other worker nodes to different machine types.
+
+
