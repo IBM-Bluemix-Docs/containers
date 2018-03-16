@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-02"
+lastupdated: "2018-03-16"
 
 ---
 
@@ -22,7 +22,7 @@ lastupdated: "2018-03-02"
 When you create a Kubernetes cluster in {{site.data.keyword.containerlong}}, every cluster must be connected to a public VLAN. The public VLAN determines the public IP address that is assigned to a worker node during cluster creation.
 {:shortdesc}
 
-The public network interface for the worker nodes in both free and standard clusters is protected by Calico network policies. These policies block most inbound traffic by default. However, inbound traffic that is necessary for Kubernetes to function is allowed, as are connections to NodePort, Loadbalancer, and Ingress services. For more information about these policies, inlcuding how to modify them, see [Network policies](cs_network_policy.html#network_policies).
+The public network interface for the worker nodes in both free and standard clusters is protected by Calico network policies. These policies block most inbound traffic by default. However, inbound traffic that is necessary for Kubernetes to function is allowed, as are connections to NodePort, LoadBalancer, and Ingress services. For more information about these policies, including how to modify them, see [Network policies](cs_network_policy.html#network_policies).
 
 |Cluster type|Manager of the public VLAN for the cluster|
 |------------|------------------------------------------|
@@ -30,7 +30,7 @@ The public network interface for the worker nodes in both free and standard clus
 |Standard clusters in {{site.data.keyword.Bluemix_notm}}|You in your IBM Cloud infrastructure (SoftLayer) account|
 {: caption="VLAN management responsibilities" caption-side="top"}
 
-For information about in-cluster network communication between worker nodes and pods, see [In-cluster networking](cs_secure.html#in_cluster_network). For information about securely connecting apps running in a Kubernetes cluster to an on-premises network or to apps that are external to your cluster, see [Setting up VPN connectivity](cs_vpn.html).
+For information about in-cluster network communication between worker nodes and pods, see [In-cluster networking](cs_secure.html#in_cluster_network). For information about securely connecting apps that run in a Kubernetes cluster to an on-premises network or to apps that are external to your cluster, see [Setting up VPN connectivity](cs_vpn.html).
 
 ## Allowing public access to apps
 {: #public_access}
@@ -49,16 +49,16 @@ The diagram shows how Kubernetes carries user network traffic in {{site.data.key
 <dd>
  <ul>
   <li>Expose a public port on every worker node and use the public IP address of any worker node to publicly access your service in the cluster.</li>
-  <li>Iptables is a Linux kernel feature that load balances requests across the app's pods, provides high performance networking routing, and provides network access control.</li>
+  <li>Iptables is a Linux kernel feature that load balances requests across the app's pods, provides high-performance networking routing, and provides network access control.</li>
   <li>The public IP address of the worker node is not permanent. When a worker node is removed or re-created, a new public IP address is assigned to the worker node.</li>
-  <li>The NodePort service is great for testing public access. It can also be used if you only need public access for a short amount of time.</li>
+  <li>The NodePort service is great for testing public access. It can also be used if you need public access for only a short amount of time.</li>
  </ul>
 </dd>
 <dt><a href="cs_loadbalancer.html#planning" target="_blank">LoadBalancer service</a> (standard clusters only)</dt>
 <dd>
  <ul>
-  <li>Every standard cluster is provisioned with 4 portable public and 4 portable private IP addresses that you can use to create an external TCP/ UDP load balancer for your app.</li>
-  <li>Iptables is a Linux kernel feature that load balances requests across the app's pods, provides high performance networking routing, and provides network access control.</li>
+  <li>Every standard cluster is provisioned with four portable public and four portable private IP addresses that you can use to create an external TCP/UDP load balancer for your app.</li>
+  <li>Iptables is a Linux kernel feature that load balances requests across the app's pods, provides high-performance networking routing, and provides network access control.</li>
   <li>The portable public IP address that is assigned to the load balancer is permanent and does not change when a worker node is re-created in the cluster.</li>
   <li>You can customize your load balancer by exposing any port that your app requires.</li></ul>
 </dd>
@@ -70,7 +70,7 @@ The diagram shows how Kubernetes carries user network traffic in {{site.data.key
   <li>Ingress consists of two main components: the Ingress resource and the application load balancer.
    <ul>
     <li>The Ingress resource defines the rules for how to route and load balance incoming requests for an app.</li>
-    <li>The application load balancer (ALB) listens for incoming HTTP or HTTPS service requests and forwards requests across the apps' pods based on the rules defined for each Ingress resource.</li>
+    <li>The application load balancer (ALB) listens for incoming HTTP or HTTPS, TCP, or UDP service requests and forwards requests across the apps' pods based on the rules that you defined in the Ingress resource.</li>
    </ul>
   <li>Use Ingress if you want to implement your own ALB with custom routing rules and if you need SSL termination for your apps.</li>
  </ul>
@@ -81,6 +81,6 @@ To choose the best networking option for your application, you can follow this d
 <img usemap="#networking_map" border="0" class="image" src="images/networkingdt.png" width="500px" alt="This image walks you through choosing the best networking option for your application. If this image is not displaying, the information can still be found in the documentation." style="width:500px;" />
 <map name="networking_map" id="networking_map">
 <area href="/docs/containers/cs_nodeport.html#planning" alt="Nodeport service" shape="circle" coords="52, 283, 45"/>
-<area href="/docs/containers/cs_loadbalancer.html#planning" alt="Loadbalancer service" shape="circle" coords="247, 419, 44"/>
+<area href="/docs/containers/cs_loadbalancer.html#planning" alt="LoadBalancer service" shape="circle" coords="247, 419, 44"/>
 <area href="/docs/containers/cs_ingress.html#planning" alt="Ingress service" shape="circle" coords="445, 420, 45"/>
 </map>

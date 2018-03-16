@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-15"
+lastupdated: "2018-03-16"
 
 ---
 
@@ -1568,7 +1568,30 @@ Add extra header information to a client request before sending the request to t
 <br><br>
 If your back-end app requires HTTP header information, you can use the <code>proxy-add-headers</code> annotation to add header information to the client request before the request is forwarded by the ALB to the back-end app.
 
-</br></br>
+<br><br>
+<ul><li>For example, you might need to add the following X-Forward header information to the request before it is forwarded to your app:
+
+<pre class="screen">
+<code>proxy_set_header Host $host;
+proxy_set_header X-Real-IP $remote_addr;
+proxy_set_header X-Forwarded-Proto $scheme;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</code></pre>
+
+</li>
+
+<li>To add the X-Forward header information to the request sent to your app, use the `proxy-add-headers` annotation in the following way:
+
+<pre class="screen">
+<code>ingress.bluemix.net/proxy-add-headers: |
+  serviceName=<myservice1> {
+  Host $host;
+  X-Real-IP $remote_addr;
+  X-Forwarded-Proto $scheme;
+  X-Forwarded-For $proxy_add_x_forwarded_for;
+  }</code></pre>
+
+</li></ul>
+
 If the client web app requires HTTP header information, you can use the <code>response-add-headers</code> annotation to add header information to the response before the response is forwarded by the ALB to the client web app.</dd>
 
 <dt>Sample Ingress resource YAML</dt>
