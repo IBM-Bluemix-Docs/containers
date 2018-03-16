@@ -45,7 +45,7 @@ The LoadBalancer service serves as the external entry point for incoming request
 
 3. `kube-proxy` routes the request to the Kubernetes load balancer service for the app.
 
-4. The request is forwarded to the private IP address of the pod where the app is deployed. If you have multiple app instances deployed in the cluster, the load balancer routes the requests between the app pods.
+4. The request is forwarded to the private IP address of the pod where the app is deployed. If multiple app instances are deployed in the cluster, the load balancer routes the requests between the app pods.
 
 
 
@@ -132,11 +132,11 @@ To create a load balancer service:
         </tr>
         <tr>
           <td>`service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type:`
-          <td>Annotation to specify the type of LoadBalancer. The values are `private` and `public`. When creating a public LoadBalancer in clusters on public VLANs, this annotation is not required.</td>
+          <td>Annotation to specify the type of LoadBalancer. The values are `private` and `public`. If you are creating a public LoadBalancer in clusters on public VLANs, this annotation is not required.</td>
         </tr>
         <tr>
           <td><code>loadBalancerIP</code></td>
-          <td>When creating a private LoadBalancer or to use a a specific portable IP address for a public LoadBalancer, replace <em>&lt;loadBalancerIP&gt;</em> with the IP address that you want to use. For more information, see the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/services-networking/service/#type-loadbalancer).</td>
+          <td>To create a private LoadBalancer or to use a specific portable IP address for a public LoadBalancer, replace <em>&lt;loadBalancerIP&gt;</em> with the IP address that you want to use. For more information, see the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/services-networking/service/#type-loadbalancer).</td>
         </tr>
         </tbody></table>
 
