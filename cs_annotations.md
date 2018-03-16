@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-15"
+lastupdated: "2018-03-16"
 
 ---
 
@@ -1568,7 +1568,6 @@ Add extra header information to a client request before sending the request to t
 <br><br>
 If your back-end app requires HTTP header information, you can use the <code>proxy-add-headers</code> annotation to add header information to the client request before the request is forwarded by the ALB to the back-end app.
 
-</br></br>
 If the client web app requires HTTP header information, you can use the <code>response-add-headers</code> annotation to add header information to the response before the response is forwarded by the ALB to the client web app.</dd>
 
 <dt>Sample Ingress resource YAML</dt>
