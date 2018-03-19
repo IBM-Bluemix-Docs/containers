@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-14"
+lastupdated: "2018-03-16"
 
 ---
 
@@ -23,7 +23,7 @@ Set up logging and monitoring in {{site.data.keyword.containerlong}} to help you
 {: shortdesc}
 
 
-## Configuring log forwarding
+## Configuring cluster and app log forwarding
 {: #logging}
 
 With a standard Kubernetes cluster in {{site.data.keyword.containershort_notm}}, you can forward logs from different sources to {{site.data.keyword.loganalysislong_notm}}, to an external syslog server or to both.
@@ -71,21 +71,22 @@ Check out the following table for information about the different log sources.
   </tbody>
 </table>
 
-When you configure logging through the UI, you must specify an org and space. If you want to enable logging at the account level, you can do so through the CLI.
+To configure logging through the UI, you must specify an org and space. To enable logging at the account level, use the CLI.
 {: tip}
 
 
 ### Before you begin
+{: #before-forwarding}
 
 1. Verify permissions. If you specified a space when you created the cluster or the logging configuration then both the account owner and {{site.data.keyword.containershort_notm}} key owner need Manager, Developer, or Auditor permissions in that space.
   * If you don't know who the {{site.data.keyword.containershort_notm}} key owner is, run the following command.
       ```
-      bx cs api-key-info <cluster_name>
+      {[bxcs]} api-key-info <cluster_name>
       ```
       {: pre}
   * To immediately apply any changes that you made to your permissions, run the following command.
       ```
-      bx cs logging-config-refresh <cluster_name>
+      {[bxcs]} logging-config-refresh <cluster_name>
       ```
       {: pre}
 
@@ -102,11 +103,12 @@ When you configure logging through the UI, you must specify an org and space. If
   * Run syslog from a container. For example, you can use this [deployment .yaml file ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/IBM-Cloud/kube-samples/blob/master/deploy-apps-clusters/deploy-syslog-from-kube.yaml) to fetch a Docker public image that runs a container in a Kubernetes cluster. The image publishes the port `514` on the public cluster IP address, and uses this public cluster IP address to configure the syslog host.
 
 ### Enabling log forwarding
+{: #enable-forwarding}
 
 1. Create a log forwarding configuration.
     * To forward logs to {{site.data.keyword.loganalysisshort_notm}}:
       ```
-      bx cs logging-config-create <my_cluster> --logsource <my_log_source> --namespace <kubernetes_namespace> --hostname <ingestion_URL> --port <ingestion_port> --space <cluster_space> --org <cluster_org> --type ibm --app-containers <containers> --app-paths <paths_to_logs>
+      {[bxcs]} logging-config-create <my_cluster> --logsource <my_log_source> --namespace <kubernetes_namespace> --hostname <ingestion_URL> --port <ingestion_port> --space <cluster_space> --org <cluster_org> --type ibm --app-containers <containers> --app-paths <paths_to_logs>
       ```
       {: pre}
 
@@ -121,7 +123,7 @@ When you configure logging through the UI, you must specify an org and space. If
 
     * To forward logs to syslog:
       ```
-      bx cs logging-config-create <my_cluster> --logsource <my_log_source> --namespace <kubernetes_namespace> --hostname <log_server_hostname_or_IP> --port <log_server_port> --type syslog --app-containers <containers> --app-paths <paths_to_logs>
+      {[bxcs]} logging-config-create <my_cluster> --logsource <my_log_source> --namespace <kubernetes_namespace> --hostname <log_server_hostname_or_IP> --port <log_server_port> --type syslog --app-containers <containers> --app-paths <paths_to_logs>
       ```
       {: pre}
 
@@ -180,7 +182,7 @@ When you configure logging through the UI, you must specify an org and space. If
 
     * To list all of the logging configurations in the cluster:
       ```
-      bx cs logging-config-get <my_cluster>
+      {[bxcs]} logging-config-get <my_cluster>
       ```
       {: pre}
 
@@ -196,7 +198,7 @@ When you configure logging through the UI, you must specify an org and space. If
 
     * To list the logging configurations for one type of log source:
       ```
-      bx cs logging-config-get <my_cluster> --logsource worker
+      {[bxcs]} logging-config-get <my_cluster> --logsource worker
       ```
       {: pre}
 
@@ -209,12 +211,10 @@ When you configure logging through the UI, you must specify an org and space. If
       ```
       {: screen}
 
-To make an update to your configuration, follow the same steps, but replace `bx cs logging-config-create` with `bx cs logging-config-update`. Be sure to verify your update.
+To make an update to your configuration, follow the same steps, but replace `{[bxcs]} logging-config-create` with `{[bxcs]} logging-config-update`. Be sure to verify your update.
 {: tip}
 
-<br />
-
-
+{[white-space.md]}
 ## Viewing logs
 {: #view_logs}
 
@@ -242,8 +242,168 @@ For more information about viewing logs, see [Navigating to Kibana from a web br
 
 You can leverage the built-in Docker logging capabilities to review activities on the standard STDOUT and STDERR output streams. For more information, see [Viewing container logs for a container that runs in a Kubernetes cluster](/docs/services/CloudLogAnalysis/containers/containers_kubernetes.html#containers_kubernetes).
 
-<br />
+{[white-space.md]}
 
+<staging>
+
+## Filtering logs
+{: #filter-logs}
+
+You can choose which logs that you forward by filtering out specific logs for a period of time.
+
+1. Create a logging filter.
+  ```
+  {[bxcs]} logging-filter-create <CLUSTER_NAME> [--type LOG_TYPE] [--logging-configs CONFIG] [--namespace KUBERNETES_NAMESPACE] [--container CONTAINER] [--level LOGGING_LEVEL] [--message MESSAGE] [--json]
+  ```
+  {: pre}
+  <table>
+    <caption>Understanding this command's components</caption>
+    <thead>
+      <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>&lt;CLUSTER&gt;</td>
+        <td>Required: The name or ID of the cluster that you want to create a logging filter for.</td>
+      </tr>
+      <tr>
+        <td><code>&lt;LOG_TYPE&gt;</code></td>
+        <td>The type of logs that you want to apply the filter to. Currently <code>all</code>, <code>container</code>, and <code>host</code> are supported.</td>
+      </tr>
+      <tr>
+        <td><code>&lt;CONFIGS&gt;</code></td>
+        <td>Optional: A comma separated list of your logging configuration IDs. If not provided, the filter is applied to all of the cluster logging configurations that are passed to the filter. You can view log configurations that match the filter by using the <code>--show-matching-configs</code> flag with the command.</td>
+      </tr>
+      <tr>
+        <td><code>&lt;KUBERNETES_NAMESPACE&gt;</code></td>
+        <td>Optional: The Kubernetes namespace that you want to forward logs from. This flag applies only when you are using log type <code>container</code>.</td>
+      </tr>
+      <tr>
+        <td><code>&lt;CONTAINER&gt;</code></td>
+        <td>Optional: The name of the container from which you want to filter logs.</td>
+      </tr>
+      <tr>
+        <td><code>&lt;LOGGING_LEVEL&gt;</code></td>
+        <td>Optional: Filters out logs that are at the specified level and less. Acceptable values in their canonical order are <code>fatal</code>, <code>error</code>, <code>warn/warning</code>, <code>info</code>, <code>debug</code>, and <code>trace</code>. As an example, if you filtered logs at the <code>info</code> level, <code>debug</code>, and <code>trace</code> are also filtered. **Note**: You can use this flag only when log messages are in JSON format and contain a level field.</td>
+      </tr>
+      <tr>
+        <td><code>&lt;MESSAGE&gt;</code></td>
+        <td>Optional: Filters out logs that contain a specified message.</td>
+      </tr>
+      <tr>
+        <td><code>--json</code></td>
+        <td>Optional: Prints the command output in JSON format.</td>
+      </tr>
+    </tbody>
+  </table>
+
+2. View the log filter that you created.
+
+  ```
+  {[bxcs]} logging-filter-get CLUSTER [--id FILTER_ID] [--show-matching-configs] [--json]
+  ```
+  {: pre}
+  <table>
+    <caption>Understanding this command's components</caption>
+    <thead>
+      <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>&lt;CLUSTER&gt;</td>
+        <td>Required: The name or ID of the cluster that you want to create a logging filter for.</td>
+      </tr>
+      <tr>
+        <td><code>&lt;FILTER_ID&gt;</code></td>
+        <td>Optional: The ID of the log filter that you want to view.</td>
+      </tr>
+      <tr>
+        <td><code>--json</code></td>
+        <td>Optional: Prints the command output in JSON format.</td>
+      </tr>
+    </tbody>
+  </table>
+
+3. Update the log filter that you created.
+  ```
+  {[bxcs]} logging-filter-update CLUSTER_NAME [--type LOG_TYPE] [--logging-configs CONFIG] [--namespace KUBERNETES_NAMESPACE] [--container CONTAINER] [--level LOGGING_LEVEL] [--message MESSAGE] [--json]
+  ```
+  {: pre}
+  <table>
+    <caption>Understanding this command's components</caption>
+    <thead>
+      <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>&lt;CLUSTER&gt;</td>
+        <td>Required: The name or ID of the cluster that you want to update a logging filter for.</td>
+      </tr>
+      <tr>
+        <td><code><&lt;LOG_TYPE&gt;</code></td>
+        <td>The type of logs that you want to apply the filter to. Currently <code>all</code>, <code>container</code>, and <code>host</code> are supported.</td>
+      </tr>
+      <tr>
+        <td><code>&lt;CONFIGS&gt;</code></td>
+        <td>Optional: A comma separated list of your logging configuration IDs. If not provided, the filter is applied to all of the cluster logging configurations that are passed to the filter. You can view log configurations that match the filter by using the <code>--show-matching-configs</code> flag with the <code>{[bxcs]} logging-filter-get</code> command.</td>
+      </tr>
+      <tr>
+        <td><code>&lt;KUBERNETES_NAMESPACE&gt;</code></td>
+        <td>Optional: The Kubernetes namespace that you want to forward logs from. This flag applies only when you are using log type <code>container</code>.</td>
+      </tr>
+      <tr>
+        <td><code>&lt;CONTAINER&gt;</code></td>
+        <td>Optional: The name of the container from which you want to filter logs. This flag applies only when you are using log type <code>container</code>.</td>
+      </tr>
+      <tr>
+        <td><code>&lt;LOGGING_LEVEL&gt;</code></td>
+        <td>Optional: Filters out logs that are at the specified level and less. Acceptable values in their canonical order are <code>fatal</code>, <code>error</code>, <code>warn/warning</code>, <code>info</code>, <code>debug</code>, and <code>trace</code>. As an example, if you filtered logs at the <code>info</code> level, <code>debug</code>, and <code>trace</code> are also filtered. **Note**: You can use this flag only when log messages are in JSON format and contain a level field.</td>
+      </tr>
+      <tr>
+        <td><code>&lt;MESSAGE&gt;</code></td>
+        <td>Optional: Filters out logs that contain a specified message.</td>
+      </tr>
+      <tr>
+        <td><code>--json</code></td>
+        <td>Optional: Prints the command output in JSON format.</td>
+      </tr>
+    </tbody>
+  </table>
+
+4. Delete a log filter that you created.
+
+  ```
+  {[bxcs]} logging-filter-rm CLUSTER [--id FILTER_ID] [--json] [--all]
+  ```
+  {: pre}
+  <table>
+    <caption>Understanding this command's components</caption>
+    <thead>
+      <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>&lt;CLUSTER&gt;</code></td>
+        <td>Required: The name or ID of the cluster that you want to delete a logging filter for.</td>
+      </tr>
+      <tr>
+        <td><code>&lt;FILTER_ID&gt;</code></td>
+        <td>Optional: The ID of the log filter that you want to remove.</td>
+      </tr>
+      <tr>
+        <td><code>--all</code></td>
+        <td>Optional: Delete all of your log forwarding filters.</td>
+      </tr>
+      <tr>
+        <td><code>--json</code></td>
+        <td>Optional: Prints the command output in JSON format.</td>
+      </tr>
+    </tbody>
+  </table>
+
+{[white-space.md]}
+
+</staging>
 
 ## Stopping log forwarding
 {: #log_sources_delete}
@@ -256,7 +416,7 @@ You can stop forwarding logs one or all of the logging configurations for a clus
 2. Delete the logging configuration.
 <ul>
 <li>To delete one logging configuration:</br>
-  <pre><code>bx cs logging-config-rm &lt;my_cluster&gt; --id &lt;log_config_id&gt;</pre></code>
+  <pre><code>{[bxcs]} logging-config-rm &lt;my_cluster&gt; --id &lt;log_config_id&gt;</pre></code>
   <table>
     <caption>Understanding this command's components</caption>
       <thead>
@@ -273,11 +433,10 @@ You can stop forwarding logs one or all of the logging configurations for a clus
         </tr>
   </table></li>
 <li>To delete all of the logging configurations:</br>
-  <pre><code>bx cs logging-config-rm <my_cluster> --all</pre></code></li>
+  <pre><code>{[bxcs]} logging-config-rm <my_cluster> --all</pre></code></li>
 </ul>
 
-<br />
-
+{[white-space.md]}
 
 ## Configuring log forwarding for Kubernetes API audit logs
 {: #app_forward}
@@ -306,7 +465,7 @@ To forward Kubernetes API audit logs:
 1. Configure the webhook. If you do not provide any information in the flags, a default configuration is used.
 
     ```
-    bx cs apiserver-config-set audit-webhook <my_cluster> --remoteServer <server_URL_or_IP> --caCert <CA_cert_path> --clientCert <client_cert_path> --clientKey <client_key_path>
+    {[bxcs]} apiserver-config-set audit-webhook <my_cluster> --remoteServer <server_URL_or_IP> --caCert <CA_cert_path> --clientCert <client_cert_path> --clientKey <client_key_path>
     ```
     {: pre}
 
@@ -341,7 +500,7 @@ To forward Kubernetes API audit logs:
 2. Verify that log forwarding was enabled by viewing the URL for the remote logging service.
 
     ```
-    bx cs apiserver-config-get audit-webhook <my_cluster>
+    {[bxcs]} apiserver-config-get audit-webhook <my_cluster>
     ```
     {: pre}
 
@@ -355,7 +514,7 @@ To forward Kubernetes API audit logs:
 3. Apply the configuration update by restarting the Kubernetes master.
 
     ```
-    bx cs apiserver-refresh <my_cluster>
+    {[bxcs]} apiserver-refresh <my_cluster>
     ```
     {: pre}
 
@@ -369,19 +528,18 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
 1. Disable the webhook backend configuration for the cluster's API server.
 
     ```
-    bx cs apiserver-config-unset audit-webhook <my_cluster>
+    {[bxcs]} apiserver-config-unset audit-webhook <my_cluster>
     ```
     {: pre}
 
 2. Apply the configuration update by restarting the Kubernetes master.
 
     ```
-    bx cs apiserver-refresh <my_cluster>
+    {[bxcs]} apiserver-refresh <my_cluster>
     ```
     {: pre}
 
-<br />
-
+{[white-space.md]}
 
 ## Configuring cluster monitoring
 {: #monitoring}
@@ -413,8 +571,7 @@ You can configure other tools for more monitoring capabilities.
     <dd>Prometheus is an open source monitoring, logging, and alerting tool that was designed for Kubernetes. The tool retrieves detailed information about the cluster, worker nodes, and deployment health based on the Kubernetes logging information. For setup information, see [Integrating services with {{site.data.keyword.containershort_notm}}](cs_integrations.html#integrations).</dd>
 </dl>
 
-<br />
-
+{[white-space.md]}
 
 ## Configuring health monitoring for worker nodes with Autorecovery
 {: #autorecovery}
@@ -494,17 +651,17 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
    <td><code>checkhttp.json</code></td>
    <td>Defines an HTTP check that checks that an HTTP server is running on every node's IP address on port 80 and returns a 200 response at path <code>/myhealth</code>. You can find the IP address for a node by running <code>kubectl get nodes</code>.
 For example, consider two nodes in a cluster that have IP addresses of 10.10.10.1 and 10.10.10.2. In this example, two routes are checked for 200 OK responses: <code>http://10.10.10.1:80/myhealth</code> and <code>http://10.10.10.2:80/myhealth</code>.
-The check in the example YAML runs every 3 minutes. If it fails three consecutive times, the node is rebooted. This action is equivalent to running <code>bx cs worker-reboot</code>. The HTTP check is disabled until you set the <b>Enabled</b> field to <code>true</code>.      </td>
+The check in the example YAML runs every 3 minutes. If it fails three consecutive times, the node is rebooted. This action is equivalent to running <code>{[bxcs]} worker-reboot</code>. The HTTP check is disabled until you set the <b>Enabled</b> field to <code>true</code>.      </td>
    </tr>
    <tr>
    <td><code>checknode.json</code></td>
    <td>Defines a Kubernetes API node check that checks whether each node is in the <code>Ready</code> state. The check for a specific node counts as a failure if the node is not in the <code>Ready</code> state.
-The check in the example YAML runs every 3 minutes. If it fails three consecutive times, the node is reloaded. This action is equivalent to running <code>bx cs worker-reload</code>. The node check is enabled until you set the <b>Enabled</b> field to <code>false</code> or remove the check.</td>
+The check in the example YAML runs every 3 minutes. If it fails three consecutive times, the node is reloaded. This action is equivalent to running <code>{[bxcs]} worker-reload</code>. The node check is enabled until you set the <b>Enabled</b> field to <code>false</code> or remove the check.</td>
    </tr>
    <tr>
    <td><code>checkpod.json</code></td>
    <td>Defines a Kubernetes API pod check that checks the total percentage of <code>NotReady</code> pods on a node based on the total pods that are assigned to that node. The check for a specific node counts as a failure if the total percentage of <code>NotReady</code> pods is greater than the defined <code>PodFailureThresholdPercent</code>.
-The check in the example YAML runs every 3 minutes. If it fails three consecutive times, the node is reloaded. This action is equivalent to running <code>bx cs worker-reload</code>. The pod check is enabled until you set the <b>Enabled</b> field to <code>false</code> or remove the check.</td>
+The check in the example YAML runs every 3 minutes. If it fails three consecutive times, the node is reloaded. This action is equivalent to running <code>{[bxcs]} worker-reload</code>. The pod check is enabled until you set the <b>Enabled</b> field to <code>false</code> or remove the check.</td>
    </tr>
    </tbody>
    </table>
