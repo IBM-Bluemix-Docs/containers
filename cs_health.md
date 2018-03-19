@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-14"
+lastupdated: "2018-03-16"
 
 ---
 
@@ -23,7 +23,7 @@ Set up logging and monitoring in {{site.data.keyword.containerlong}} to help you
 {: shortdesc}
 
 
-## Configuring log forwarding
+## Configuring cluster and app log forwarding
 {: #logging}
 
 With a standard Kubernetes cluster in {{site.data.keyword.containershort_notm}}, you can forward logs from different sources to {{site.data.keyword.loganalysislong_notm}}, to an external syslog server or to both.
@@ -71,11 +71,12 @@ Check out the following table for information about the different log sources.
   </tbody>
 </table>
 
-When you configure logging through the UI, you must specify an org and space. If you want to enable logging at the account level, you can do so through the CLI.
+To configure logging through the UI, you must specify an org and space. To enable logging at the account level, use the CLI.
 {: tip}
 
 
 ### Before you begin
+{: #before-forwarding}
 
 1. Verify permissions. If you specified a space when you created the cluster or the logging configuration then both the account owner and {{site.data.keyword.containershort_notm}} key owner need Manager, Developer, or Auditor permissions in that space.
   * If you don't know who the {{site.data.keyword.containershort_notm}} key owner is, run the following command.
@@ -102,6 +103,7 @@ When you configure logging through the UI, you must specify an org and space. If
   * Run syslog from a container. For example, you can use this [deployment .yaml file ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/IBM-Cloud/kube-samples/blob/master/deploy-apps-clusters/deploy-syslog-from-kube.yaml) to fetch a Docker public image that runs a container in a Kubernetes cluster. The image publishes the port `514` on the public cluster IP address, and uses this public cluster IP address to configure the syslog host.
 
 ### Enabling log forwarding
+{: #enable-forwarding}
 
 1. Create a log forwarding configuration.
     * To forward logs to {{site.data.keyword.loganalysisshort_notm}}:
@@ -214,7 +216,6 @@ To make an update to your configuration, follow the same steps, but replace `bx 
 
 <br />
 
-
 ## Viewing logs
 {: #view_logs}
 
@@ -243,6 +244,8 @@ For more information about viewing logs, see [Navigating to Kibana from a web br
 You can leverage the built-in Docker logging capabilities to review activities on the standard STDOUT and STDERR output streams. For more information, see [Viewing container logs for a container that runs in a Kubernetes cluster](/docs/services/CloudLogAnalysis/containers/containers_kubernetes.html#containers_kubernetes).
 
 <br />
+
+
 
 
 ## Stopping log forwarding
@@ -422,8 +425,8 @@ You can configure other tools for more monitoring capabilities.
 The {{site.data.keyword.containerlong_notm}} Autorecovery system can be deployed into existing clusters of Kubernetes version 1.7 or later.
 {: shortdesc}
 
-The Autorecovery system uses various checks to query worker node health status. If Autorecovery detects an unhealthy worker node based on the configured checks, Autorecovery triggers a corrective action like an OS reload on the worker node. Only one worker node undergoes a corrective action at a time. The worker node must successfully complete the corrective action before any other worker node undergoes a corrective action. For more information, see this [Autorecovery blog post ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/blogs/bluemix/2017/12/autorecovery-utilizes-consistent-hashing-high-availability/).
-**NOTE**: Autorecovery requires at least one healthy node to function properly. Configure Autorecovery with active checks only in clusters with two or more worker nodes.
+The Autorecovery system uses various checks to query worker node health status. If Autorecovery detects an unhealthy worker node based on the configured checks, Autorecovery triggers a corrective action like an OS reload on the worker node. Only one worker node undergoes a corrective action at a time. The worker node must successfully complete the corrective action before any other worker node undergoes a corrective action. For more information, see this [Autorecovery blog post ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/blogs/bluemix/2017/12/autorecovery-utilizes-consistent-hashing-high-availability/).</br> </br>
+**Note**: Autorecovery requires at least one healthy node to function properly. Configure Autorecovery with active checks only in clusters with two or more worker nodes.
 
 Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster where you want to check worker node statuses.
 
