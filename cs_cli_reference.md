@@ -943,7 +943,7 @@ Enable a feature on an existing cluster.
 
    <dt><code><em>--trusted</em></code></dt>
    <dd><p>Include the flag to enable Trusted Compute for all supported bare metal worker nodes that are in the cluster. After you enable trust, you cannot later disable it for the cluster. For more information about how trust works, see [{{site.data.keyword.containershort_notm}} with Trusted Compute](cs_secure.html#trusted_compute).</p>
-   <p>To check whether the bare metal machine type supports trust, check the `Trustable` field in the output of the `bx cs machine-types <location>` [command](#cs_machine_types). To verify that a cluster is trust-enabled, view the **Trust ready** field in the output of the `bx cs cluster-get` [command](#cs_cluster_get). To verify a bare metal worker node is trust-enabled, view the **Trust** field in the output of the `bx cs worker-get` [command](#cs_worker_get).</p></dd>
+   <p>To check whether the bare metal machine type supports trust, check the **Trustable** field in the output of the `bx cs machine-types <location>` [command](#cs_machine_types). To verify that a cluster is trust-enabled, view the **Trust ready** field in the output of the `bx cs cluster-get` [command](#cs_cluster_get). To verify a bare metal worker node is trust-enabled, view the **Trust** field in the output of the `bx cs worker-get` [command](#cs_worker_get).</p></dd>
    </dl>
 
 **Example command**:
@@ -1680,6 +1680,7 @@ Update the details of a log forwarding configuration.
   bx cs logging-config-update my_cluster --id f4bc77c0-ee7d-422d-aabf-a4e6b977264e --hostname localhost --port 5514 --type syslog
   ```
   {: pre}
+
 
 
 <br />
