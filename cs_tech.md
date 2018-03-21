@@ -57,7 +57,7 @@ Learn about some basic Docker concepts:
 <br />
 
 
-## Kubernetes basics
+## Kubernetes clusters
 {: #kubernetes_basics}
 
 The open source project named Kubernetes combines running a containerized infrastructure with production work loads, open source contributions, and Docker container management tools. The Kubernetes infrastructure provides an isolated and secure app platform for managing containers that is portable, extensible, and self-healing in case of failovers.
