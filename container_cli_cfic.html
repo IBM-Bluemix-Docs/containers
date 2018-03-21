@@ -639,13 +639,14 @@ configure the custom domain in <span class="keyword">Cloud</span>,
 and then map the custom domain to the <span class="keyword">Cloud</span> system domain on the public DNS server.
 After your custom domain is mapped to the <span class="keyword">Cloud</span> system domain, requests for your custom
 domain are routed to your application in <span class="keyword">Cloud</span>. When you create a custom domain, do not
-include underscores (_) in the domain name. For more information about custom domains, see <a href="../apps/updapps.html#domain">Creating and using a custom
+include underscores (_) in the domain name. For more information about custom domains, see <a href="/docs/apps/updapps.html">Creating and using a custom
 domain</a>. To make your custom domain secure, <a href="../apps/secapps.html#ssl_certificate">upload a SSL
 certificate</a>, so your container groups can be accessed with HTTPS. <p>The host and the domain
 combined form the full public route URL, such as <samp class="ph codeph">http://mycontainerhost.<span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span></samp> and must be unique within
 <span class="keyword">Cloud</span>. When you review the details of
 a container group with the <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span>
 group-inspect</samp> command, the host and the domain are listed together as the route.</p>
+    
 </dd>
 <dt class="pt dlterm"><a name="container_cli_reference_cfic__d1494e963"><!-- --></a>--desired <var class="keyword varname">DESIRED</var></dt>
 <dd class="pd">(Optional) The number of instances in your group. The default is <span class="keyword option">2</span>. <span class="ph">The number of container group instances that your app requires depends
