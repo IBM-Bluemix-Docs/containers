@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-16"
+lastupdated: "2018-03-19"
 
 ---
 
@@ -23,7 +23,7 @@ With VPN connectivity, you can securely connect apps in a Kubernetes cluster on 
 
 To connect your worker nodes and apps to an on-premises data center, you can configure a VPN IPSec endpoint with a strongSwan service or with a Vyatta Gateway Appliance or a Fortigate Appliance.
 
-- **strongSwan IPSec VPN Service**: You can set up a [strongSwan IPSec VPN service ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.strongswan.org/) that securely connects your Kubernetes cluster with an on-premises network. The strongSwan IPSec VPN service provides a secure end-to-end communication channel over the internet that is based on the industry-standard Internet Protocol Security (IPsec) protocol suite. To set up a secure connection between your cluster and an on-premises network, you must install an IPsec VPN gateway in your on-premises data center. Then, you can [configure and deploy the strongSwan IPSec VPN service](#vpn-setup) in a Kubernetes pod.
+- **strongSwan IPSec VPN Service**: You can set up a [strongSwan IPSec VPN service ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.strongswan.org/) that securely connects your Kubernetes cluster with an on-premises network. The strongSwan IPSec VPN service provides a secure end-to-end communication channel over the internet that is based on the industry-standard Internet Protocol Security (IPsec) protocol suite. To set up a secure connection between your cluster and an on-premises network, you must [install an IPsec VPN gateway in your on-premises data center](docs/infrastructure/iaas-vpn/set-up-ipsec-vpn.html#setting-up-an-ipsec-connection). Then, you can [configure and deploy the strongSwan IPSec VPN service](#vpn-setup) in a Kubernetes pod.
 
 - **Vyatta Gateway Appliance or Fortigate Appliance**: If you have a larger cluster, want to access non-Kubernetes resources over the VPN, or want to access multiple clusters over a single VPN, you might choose to set up a Vyatta Gateway Appliance or Fortigate Appliance to configure an IPSec VPN endpoint. For more information, see this blog post on [Connecting a cluster to an on-premises data center ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/blogs/bluemix/2017/07/kubernetes-and-bluemix-container-based-workloads-part4/).
 
@@ -40,7 +40,7 @@ For more information about the Helm commands that are used to set up the strongS
 {: #vpn_configure}
 
 Before you begin:
-* You must install an IPsec VPN gateway in your on-premises data center.
+* [Install an IPsec VPN gateway in your on-premises data center](docs/infrastructure/iaas-vpn/set-up-ipsec-vpn.html#setting-up-an-ipsec-connection).
 * Either [create a standard cluster](cs_clusters.html#clusters_cli) or [update an existing cluster to version 1.7.4 or later](cs_cluster_update.html#master).
 * The cluster must have at least one available public Load Balancer IP address. [You can check to see your available public IP addresses](cs_subnets.html#manage) or [free up a used IP address](cs_subnets.html#free).
 * [Target the Kubernetes CLI to the cluster](cs_cli_install.html#cs_cli_configure).

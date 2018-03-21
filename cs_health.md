@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-14"
+lastupdated: "2018-03-16"
 
 ---
 
@@ -23,7 +23,7 @@ Set up logging and monitoring in {{site.data.keyword.containerlong}} to help you
 {: shortdesc}
 
 
-## Configuring log forwarding
+## Configuring cluster and app log forwarding
 {: #logging}
 
 With a standard Kubernetes cluster in {{site.data.keyword.containershort_notm}}, you can forward logs from different sources to {{site.data.keyword.loganalysislong_notm}}, to an external syslog server or to both.
@@ -61,21 +61,22 @@ Check out the following table for information about the different log sources.
     <tr>
       <td><code>kubernetes</code></td>
       <td>Logs for the Kubernetes system component.</td>
-      <td><code>/var/log/syslog</code>, <code>/var/log/auth.log</code></td>
+      <td><code>/var/log/kubelet.log, <code>/var/log/kube-proxy.log</code>, <code>/var/log/event-exporter/&ast;.log</code></td>
     </tr>
     <tr>
       <td><code>ingress</code></td>
       <td>Logs for an Ingress application load balancer that manages the network traffic that comes into a cluster.</td>
-      <td><code>/var/log/alb/ids/&#42;.log</code>, <code>/var/log/alb/ids/&#42;.err</code>, <code>/var/log/alb/customerlogs/&#42;.log</code>, <code>/var/log/alb/customerlogs/&#42;.err</code></td>
+      <td><code>/var/log/alb/ids/&ast;.log</code>, <code>/var/log/alb/ids/&ast;.err</code>, <code>/var/log/alb/customerlogs/&ast;.log</code>, <code>/var/log/alb/customerlogs/&ast;.err</code></td>
     </tr>
   </tbody>
 </table>
 
-When you configure logging through the UI, you must specify an org and space. If you want to enable logging at the account level, you can do so through the CLI.
+To configure logging through the UI, you must specify an org and space. To enable logging at the account level, use the CLI.
 {: tip}
 
 
 ### Before you begin
+{: #before-forwarding}
 
 1. Verify permissions. If you specified a space when you created the cluster or the logging configuration then both the account owner and {{site.data.keyword.containershort_notm}} key owner need Manager, Developer, or Auditor permissions in that space.
   * If you don't know who the {{site.data.keyword.containershort_notm}} key owner is, run the following command.
@@ -102,6 +103,7 @@ When you configure logging through the UI, you must specify an org and space. If
   * Run syslog from a container. For example, you can use this [deployment .yaml file ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/IBM-Cloud/kube-samples/blob/master/deploy-apps-clusters/deploy-syslog-from-kube.yaml) to fetch a Docker public image that runs a container in a Kubernetes cluster. The image publishes the port `514` on the public cluster IP address, and uses this public cluster IP address to configure the syslog host.
 
 ### Enabling log forwarding
+{: #enable-forwarding}
 
 1. Create a log forwarding configuration.
     * To forward logs to {{site.data.keyword.loganalysisshort_notm}}:
@@ -167,7 +169,7 @@ When you configure logging through the UI, you must specify an org and space. If
     </tr>
     <tr>
       <td><code><em>&lt;paths_to_logs&gt;</em></code></td>
-      <td>The path on their containers that the apps are logging to. To forward logs with source type <code>application</code>, you must provide a path. To specify more than one path, use a comma separated list. Example: <code>/var/log/myApp1/&#42;,/var/log/myApp2/&#42;</code></td>
+      <td>The path on their containers that the apps are logging to. To forward logs with source type <code>application</code>, you must provide a path. To specify more than one path, use a comma separated list. Example: <code>/var/log/myApp1/*,/var/log/myApp2/*</code></td>
     </tr>
     <tr>
       <td><code><em>&lt;containers&gt;</em></code></td>
@@ -214,7 +216,6 @@ To make an update to your configuration, follow the same steps, but replace `bx 
 
 <br />
 
-
 ## Viewing logs
 {: #view_logs}
 
@@ -245,6 +246,8 @@ You can leverage the built-in Docker logging capabilities to review activities o
 <br />
 
 
+
+
 ## Stopping log forwarding
 {: #log_sources_delete}
 
@@ -271,6 +274,7 @@ You can stop forwarding logs one or all of the logging configurations for a clus
           <td><code><em>&lt;log_config_id&gt;</em></code></td>
           <td>The ID of the log source configuration.</td>
         </tr>
+  </tbody>
   </table></li>
 <li>To delete all of the logging configurations:</br>
   <pre><code>bx cs logging-config-rm <my_cluster> --all</pre></code></li>
@@ -422,13 +426,13 @@ You can configure other tools for more monitoring capabilities.
 The {{site.data.keyword.containerlong_notm}} Autorecovery system can be deployed into existing clusters of Kubernetes version 1.7 or later.
 {: shortdesc}
 
-The Autorecovery system uses various checks to query worker node health status. If Autorecovery detects an unhealthy worker node based on the configured checks, Autorecovery triggers a corrective action like an OS reload on the worker node. Only one worker node undergoes a corrective action at a time. The worker node must successfully complete the corrective action before any other worker node undergoes a corrective action. For more information, see this [Autorecovery blog post ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/blogs/bluemix/2017/12/autorecovery-utilizes-consistent-hashing-high-availability/).
-**NOTE**: Autorecovery requires at least one healthy node to function properly. Configure Autorecovery with active checks only in clusters with two or more worker nodes.
+The Autorecovery system uses various checks to query worker node health status. If Autorecovery detects an unhealthy worker node based on the configured checks, Autorecovery triggers a corrective action like an OS reload on the worker node. Only one worker node undergoes a corrective action at a time. The worker node must successfully complete the corrective action before any other worker node undergoes a corrective action. For more information, see this [Autorecovery blog post ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/blogs/bluemix/2017/12/autorecovery-utilizes-consistent-hashing-high-availability/).</br> </br>
+**Note**: Autorecovery requires at least one healthy node to function properly. Configure Autorecovery with active checks only in clusters with two or more worker nodes.
 
 Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster where you want to check worker node statuses.
 
 1. Create a configuration map file that defines your checks in JSON format. For example, the following YAML file defines three checks: an HTTP check and two Kubernetes API server checks.</br>
-   **Tip:** Define each check as a unique key in the data section of the configuration map.
+   **Tip:** Define each check as a unique key in the `data` section of the configuration map.
 
    ```
    kind: ConfigMap
@@ -437,19 +441,6 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
      name: ibm-worker-recovery-checks
      namespace: kube-system
    data:
-     checkhttp.json: |
-       {
-         "Check":"HTTP",
-         "FailureThreshold":3,
-         "CorrectiveAction":"REBOOT",
-         "CooloffSeconds":1800,
-         "IntervalSeconds":180,
-         "TimeoutSeconds":10,
-         "Port":80,
-         "ExpectedStatus":200,
-         "Route":"/myhealth",
-         "Enabled":false
-       }
      checknode.json: |
        {
          "Check":"KUBEAPI",
@@ -473,6 +464,19 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
          "TimeoutSeconds":10,
          "Enabled":true
        }
+     checkhttp.json: |
+       {
+         "Check":"HTTP",
+         "FailureThreshold":3,
+         "CorrectiveAction":"REBOOT",
+         "CooloffSeconds":1800,
+         "IntervalSeconds":180,
+         "TimeoutSeconds":10,
+         "Port":80,
+         "ExpectedStatus":200,
+         "Route":"/myhealth",
+         "Enabled":false
+       }
    ```
    {:codeblock}
 
@@ -489,27 +493,26 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
    <tr>
    <td><code>namespace</code></td>
    <td>The <code>kube-system</code> namespace is a constant and cannot be changed.</td>
-   </tr>
-   <tr>
-   <td><code>checkhttp.json</code></td>
-   <td>Defines an HTTP check that checks that an HTTP server is running on every node's IP address on port 80 and returns a 200 response at path <code>/myhealth</code>. You can find the IP address for a node by running <code>kubectl get nodes</code>.
-For example, consider two nodes in a cluster that have IP addresses of 10.10.10.1 and 10.10.10.2. In this example, two routes are checked for 200 OK responses: <code>http://10.10.10.1:80/myhealth</code> and <code>http://10.10.10.2:80/myhealth</code>.
-The check in the example YAML runs every 3 minutes. If it fails three consecutive times, the node is rebooted. This action is equivalent to running <code>bx cs worker-reboot</code>. The HTTP check is disabled until you set the <b>Enabled</b> field to <code>true</code>.      </td>
-   </tr>
+  </tr>
    <tr>
    <td><code>checknode.json</code></td>
-   <td>Defines a Kubernetes API node check that checks whether each node is in the <code>Ready</code> state. The check for a specific node counts as a failure if the node is not in the <code>Ready</code> state.
-The check in the example YAML runs every 3 minutes. If it fails three consecutive times, the node is reloaded. This action is equivalent to running <code>bx cs worker-reload</code>. The node check is enabled until you set the <b>Enabled</b> field to <code>false</code> or remove the check.</td>
+   <td>Defines a Kubernetes API node check that checks whether each worker node is in the <code>Ready</code> state. The check for a specific worker node counts as a failure if the worker node is not in the <code>Ready</code> state.
+The check in the example YAML runs every 3 minutes. If it fails three consecutive times, the worker node is reloaded. This action is equivalent to running <code>bx cs worker-reload</code>. The node check is enabled until you set the <b>Enabled</b> field to <code>false</code> or remove the check.</td>
    </tr>
    <tr>
    <td><code>checkpod.json</code></td>
-   <td>Defines a Kubernetes API pod check that checks the total percentage of <code>NotReady</code> pods on a node based on the total pods that are assigned to that node. The check for a specific node counts as a failure if the total percentage of <code>NotReady</code> pods is greater than the defined <code>PodFailureThresholdPercent</code>.
-The check in the example YAML runs every 3 minutes. If it fails three consecutive times, the node is reloaded. This action is equivalent to running <code>bx cs worker-reload</code>. The pod check is enabled until you set the <b>Enabled</b> field to <code>false</code> or remove the check.</td>
+   <td>Defines a Kubernetes API pod check that checks the total percentage of <code>NotReady</code> pods on a worker node based on the total pods that are assigned to that worker node. The check for a specific worker node counts as a failure if the total percentage of <code>NotReady</code> pods is greater than the defined <code>PodFailureThresholdPercent</code>.
+The check in the example YAML runs every 3 minutes. If it fails three consecutive times, the worker node is reloaded. This action is equivalent to running <code>bx cs worker-reload</code>. The pod check is enabled until you set the <b>Enabled</b> field to <code>false</code> or remove the check.</td>
+   </tr>
+   <tr>
+   <td><code>checkhttp.json</code></td>
+   <td>Defines an HTTP check that checks if an HTTP server that runs on your worker node is healthy. To use this check you must deploy an HTTP server on every worker node in your cluster by using a [DaemonSet ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/). You must implement a health check that is available at the <code>/myhealth</code> path and that can verify if your HTTP server is healthy. You can define other paths by changing the <strong>Route</strong> parameter. If the HTTP server is healthy, you must return a 200 HTTP response code. The HTTP server must be configured to listen on the private IP address of the worker node. You can find the private IP address by running <code>kubectl get nodes</code>.</br>
+For example, consider two nodes in a cluster that have the private IP addresses 10.10.10.1 and 10.10.10.2. In this example, two routes are checked for a 200 HTTP response: <code>http://10.10.10.1:80/myhealth</code> and <code>http://10.10.10.2:80/myhealth</code>.
+The check in the example YAML runs every 3 minutes. If it fails three consecutive times, the worker node is rebooted. This action is equivalent to running <code>bx cs worker-reboot</code>. The HTTP check is disabled until you set the <b>Enabled</b> field to <code>true</code>.</td>
    </tr>
    </tbody>
    </table>
-
-
+   
    <table summary="Understanding the individual rule components">
    <caption>Understanding the components of individual rules</caption>
    <thead>
