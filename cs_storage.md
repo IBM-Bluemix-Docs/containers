@@ -617,7 +617,7 @@ Review the following backup and restore options for your NFS file shares:
 
 <dl>
   <dt>Set up periodic snapshots of your NFS file share</dt>
-  <dd>You can set up [periodic snapshots](/docs/infrastructure/FileStorage/snapshots.html#working-with-snapshots) for your NFS file share, which is a read-only image of an NFS file share that captures the state of the volume at a point in time. Snapshots are stored on the same file share within the same location. You can restore data from a snapshot if a user accidentally removes important data from the volume.</dd>
+  <dd>You can set up [periodic snapshots](/docs/infrastructure/FileStorage/snapshots.html) for your NFS file share, which is a read-only image of an NFS file share that captures the state of the volume at a point in time. Snapshots are stored on the same file share within the same location. You can restore data from a snapshot if a user accidentally removes important data from the volume.</dd>
   <dt>Replicate snapshots to an NFS file share in another location (data center)</dt>
  <dd>To protect your data from a location failure, you can [replicate snapshots](/docs/infrastructure/FileStorage/replication.html#working-with-replication) to an NFS file share that is set up in another location. Data can be replicated from the primary NFS file share to the backup NFS file share only. You cannot mount a replicated NFS file share to a cluster. When your primary NFS file share fails, you can manually set your backup NFS file share to be the primary one. Then, you can mount it to your cluster. After your primary NFS file share is restored, you can restore the data from the backup NFS file share.</dd>
   <dt>Backup data to Object Storage</dt>
