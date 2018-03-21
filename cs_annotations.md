@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-16"
+lastupdated: "2018-03-20"
 
 ---
 
@@ -303,15 +303,38 @@ Modify the way the ALB matches the request URI against the app path.
 
 <dl>
 <dt>Description</dt>
-<dd>By default, ALBs process the paths that apps listen on as prefixes. When an ALB receives a request to an app, the ALB checks the Ingress resource for a path (as a prefix) that matches the beginning of the request URI. If a match is found, the request is forwarded to the IP address of the pod where the app is deployed.<br><br>The `location-modifier` annotation changes the way the ALB searches for matches by modifying the location block configuration. The location block determines how requests are handled for the app path. **Note**: To handle regular expression (regex) paths, this annotation is required.</dd>
+<dd>By default, ALBs process the paths that apps listen on as prefixes. When an ALB receives a request to an app, the ALB checks the Ingress resource for a path (as a prefix) that matches the beginning of the request URI. If a match is found, the request is forwarded to the IP address of the pod where the app is deployed.<br><br>The `location-modifier` annotation changes the way the ALB searches for matches by modifying the location block configuration. The location block determines how requests are handled for the app path.<br><br>**Note**: To handle regular expression (regex) paths, this annotation is required.</dd>
+
 <dt>Supported modifiers</dt>
 <dd>
-<ul>
-<li><code>=</code> : The equal sign modifier causes the ALB to select exact matches only. When an exact match is found, the search stops and the matching path is selected.</li>
-<li><code>~</code> : The tilde modifier causes the ALB to process paths as case-sensitive regex paths during matching.</li>
-<li><code>~*</code> : The tilde followed by an asterisk modifier causes the ALB to process paths as case-insensitive regex paths during matching.</li>
-<li><code>^~</code> : The carat followed by a tilde modifier causes the ALB to select the best non-regex match instead of a regex path.</li>
-</ul>
+  
+<table>
+ <col width="10%">
+ <col width="90%">
+ <thead>
+ <th>Modifier</th>
+ <th>Description</th>
+ </thead>
+ <tbody>
+ <tr>
+ <td><code>=</code></td>
+ <td>The equal sign modifier causes the ALB to select exact matches only. When an exact match is found, the search stops and the matching path is selected.</td>
+ </tr>
+ <tr>
+ <td><code>~</code></td>
+ <td>The tilde modifier causes the ALB to process paths as case-sensitive regex paths during matching.</td>
+ </tr>
+ <tr>
+ <td><code>~\*</code></td>
+ <td>The tilde followed by an asterisk modifier causes the ALB to process paths as case-insensitive regex paths during matching.</td>
+ </tr>
+ <tr>
+ <td><code>^~</code></td>
+ <td>The carat followed by a tilde modifier causes the ALB to select the best non-regex match instead of a regex path.</td>
+ </tr>
+ </tbody>
+</table>
+
 </dd>
 
 <dt>Sample Ingress resource YAML</dt>
@@ -345,7 +368,7 @@ spec:
   <tbody>
   <tr>
   <td><code>modifier</code></td>
-  <td>Replace <code>&lt;<em>location_modifier</em>&gt;</code> with the location modifier you want to use for the path. Supported modifiers are <code>'='</code>,<code>'~'</code>,<code>'~*'</code>, and <code>'^~'</code>. You must surround the modifiers in single quotes.</td>
+  <td>Replace <code>&lt;<em>location_modifier</em>&gt;</code> with the location modifier you want to use for the path. Supported modifiers are <code>'='</code>, <code>'~'</code>, <code>'~\*'</code>, and <code>'^~'</code>. You must surround the modifiers in single quotes.</td>
   </tr>
   <tr>
   <td><code>serviceName</code></td>

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-16"
+lastupdated: "2018-03-19"
 
 ---
 
@@ -56,7 +56,7 @@ Review the options to debug your clusters and find the root causes for failures.
    <tbody>
 <tr>
    <td>Aborted</td>
-   <td>The deletion of the cluster is requested by the user before the Kubernetes master is deployed. After the deletion of the cluster is completed, the cluster is removed from your dashboard. If your cluster is stuck in this state for a long time, open an [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/get-support/howtogetsupport.html#using-avatar).</td>
+   <td>The deletion of the cluster is requested by the user before the Kubernetes master is deployed. After the deletion of the cluster is completed, the cluster is removed from your dashboard. If your cluster is stuck in this state for a long time, open an [{{site.data.keyword.Bluemix_notm}} support ticket](cs_troubleshoot.html#ts_getting_help).</td>
    </tr>
  <tr>
      <td>Critical</td>
@@ -68,7 +68,7 @@ Review the options to debug your clusters and find the root causes for failures.
    </tr>
    <tr>
      <td>Deleted</td>
-     <td>The cluster is deleted but not yet removed from your dashboard. If your cluster is stuck in this state for a long time, open an [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/get-support/howtogetsupport.html#using-avatar). </td>
+     <td>The cluster is deleted but not yet removed from your dashboard. If your cluster is stuck in this state for a long time, open an [{{site.data.keyword.Bluemix_notm}} support ticket](cs_troubleshoot.html#ts_getting_help). </td>
    </tr>
    <tr>
    <td>Deleting</td>
@@ -76,7 +76,7 @@ Review the options to debug your clusters and find the root causes for failures.
    </tr>
    <tr>
      <td>Deploy failed</td>
-     <td>The deployment of the Kubernetes master could not be completed. You cannot resolve this state. Contact IBM Cloud support by opening an [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/get-support/howtogetsupport.html#using-avatar).</td>
+     <td>The deployment of the Kubernetes master could not be completed. You cannot resolve this state. Contact IBM Cloud support by opening an [{{site.data.keyword.Bluemix_notm}} support ticket](cs_troubleshoot.html#ts_getting_help).</td>
    </tr>
      <tr>
        <td>Deploying</td>
@@ -92,7 +92,7 @@ Review the options to debug your clusters and find the root causes for failures.
      </tr>
    <tr>
      <td>Requested</td>
-     <td>A request to create the cluster and order the infrastructure for the Kubernetes master and worker nodes is sent. When the deployment of the cluster starts, the cluster state changes to <code>Deploying</code>. If your cluster is stuck in the <code>Requested</code> state for a long time, open an [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/get-support/howtogetsupport.html#using-avatar). </td>
+     <td>A request to create the cluster and order the infrastructure for the Kubernetes master and worker nodes is sent. When the deployment of the cluster starts, the cluster state changes to <code>Deploying</code>. If your cluster is stuck in the <code>Requested</code> state for a long time, open an [{{site.data.keyword.Bluemix_notm}} support ticket](cs_troubleshoot.html#ts_getting_help). </td>
    </tr>
    <tr>
      <td>Updating</td>
@@ -131,7 +131,7 @@ Review the options to debug your worker nodes and find the root causes for failu
     <tbody>
   <tr>
       <td>Critical</td>
-      <td>A worker node can go into a Critical state for many reasons. The most common reasons are the following: <ul><li>You initiated a reboot for your worker node without cordoning and draining your worker node. Rebooting a worker node can cause data corruption in <code>docker</code>, <code>kubelet</code>, <code>kube-proxy</code>, and <code>calico</code>. </li><li>The pods that are deployed to your worker node do not use resource limits for [memory ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/configure-pod-container/assign-memory-resource/) and [CPU ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-resource/). Without resource limits, pods can consume all available resources, leaving no resources for other pods to run on this worker node. This overcommitment of workload causes the worker node to fail. </li><li><code>Docker</code>, <code>kubelet</code> or <code>calico</code> went into an unrecoverable state after running hundreds or thousands of containers over time. </li><li>You set up a Vyatta for your worker node that went down and cut off the communication between your worker node and the Kubernetes master. </li><li> Current networking issues in {{site.data.keyword.containershort_notm}} or IBM Cloud infrastructure (SoftLayer) that causes the communication between your worker node and the Kubernetes master to fail.</li><li>Your worker node ran out of capacity. Check the <strong>Status</strong> of the worker node to see if it shows <strong>Out of disk</strong> or <strong>Out of memory</strong>. If your worker node is out of capacity, consider to either reduce the workload on your worker node or add a worker node to your cluster to help load balance the workload.</li></ul> In many cases, [reloading](cs_cli_reference.html#cs_worker_reload) your worker node can solve the problem. Before you reload your worker node, make sure to cordon and drain your worker node to ensure that existing pods are terminated gracefully and rescheduled onto remaining worker nodes. </br></br> If reloading the worker node does not resolve the issue, go to the next step to continue troubleshooting your worker node. </br></br><strong>Tip:</strong> You can [configure health checks for your worker node and enable Autorecovery](cs_health.html#autorecovery). If Autorecovery detects an unhealthy worker node based on the configured checks, Autorecovery triggers a corrective action like an OS reload on the worker node. For more information about how Autorecovery works, see the [Autorecovery blog ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/blogs/bluemix/2017/12/autorecovery-utilizes-consistent-hashing-high-availability/).
+      <td>A worker node can go into a Critical state for many reasons. The most common reasons are the following: <ul><li>You initiated a reboot for your worker node without cordoning and draining your worker node. Rebooting a worker node can cause data corruption in <code>docker</code>, <code>kubelet</code>, <code>kube-proxy</code>, and <code>calico</code>. </li><li>The pods that are deployed to your worker node do not use resource limits for [memory ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/configure-pod-container/assign-memory-resource/) and [CPU ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-resource/). Without resource limits, pods can consume all available resources, leaving no resources for other pods to run on this worker node. This overcommitment of workload causes the worker node to fail. </li><li><code>Docker</code>, <code>kubelet</code> or <code>calico</code> went into an unrecoverable state after running hundreds or thousands of containers over time. </li><li>You set up a Vyatta for your worker node that went down and cut off the communication between your worker node and the Kubernetes master. </li><li> Current networking issues in {{site.data.keyword.containershort_notm}} or IBM Cloud infrastructure (SoftLayer) that causes the communication between your worker node and the Kubernetes master to fail.</li><li>Your worker node ran out of capacity. Check the <strong>Status</strong> of the worker node to see if it shows <strong>Out of disk</strong> or <strong>Out of memory</strong>. If your worker node is out of capacity, consider to either reduce the workload on your worker node or add a worker node to your cluster to help load balance the workload.</li></ul> In many cases, [reloading](cs_cli_reference.html#cs_worker_reload) your worker node can solve the problem. When you reload your worker node, the latest [patch version](cs_versions.html#version_types) is applied to your worker node. The major and minor version is not changed. Before you reload your worker node, make sure to cordon and drain your worker node to ensure that existing pods are terminated gracefully and rescheduled onto remaining worker nodes. </br></br> If reloading the worker node does not resolve the issue, go to the next step to continue troubleshooting your worker node. </br></br><strong>Tip:</strong> You can [configure health checks for your worker node and enable Autorecovery](cs_health.html#autorecovery). If Autorecovery detects an unhealthy worker node based on the configured checks, Autorecovery triggers a corrective action like an OS reload on the worker node. For more information about how Autorecovery works, see the [Autorecovery blog ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/blogs/bluemix/2017/12/autorecovery-utilizes-consistent-hashing-high-availability/).
       </td>
      </tr>
       <tr>
@@ -164,7 +164,7 @@ Review the options to debug your worker nodes and find the root causes for failu
       </tr>
       <tr>
        <td>Unknown</td>
-       <td>The Kubernetes master is not reachable for one of the following reasons:<ul><li>You requested an update of your Kubernetes master. The state of the worker node cannot be retrieved during the update.</li><li>You might have an additional firewall that is protecting your worker nodes, or changed firewall settings recently. {{site.data.keyword.containershort_notm}} requires certain IP addresses and ports to be opened to allow communication from the worker node to the Kubernetes master and vice versa. For more information, see [Firewall prevents worker nodes from connecting](#cs_firewall).</li><li>The Kubernetes master is down. Contact {{site.data.keyword.Bluemix_notm}} support by opening an [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/get-support/howtogetsupport.html#getting-customer-support).</li></ul></td>
+       <td>The Kubernetes master is not reachable for one of the following reasons:<ul><li>You requested an update of your Kubernetes master. The state of the worker node cannot be retrieved during the update.</li><li>You might have an additional firewall that is protecting your worker nodes, or changed firewall settings recently. {{site.data.keyword.containershort_notm}} requires certain IP addresses and ports to be opened to allow communication from the worker node to the Kubernetes master and vice versa. For more information, see [Firewall prevents worker nodes from connecting](#cs_firewall).</li><li>The Kubernetes master is down. Contact {{site.data.keyword.Bluemix_notm}} support by opening an [{{site.data.keyword.Bluemix_notm}} support ticket](#ts_getting_help).</li></ul></td>
   </tr>
      <tr>
         <td>Warning</td>
@@ -201,11 +201,11 @@ Review common error messages and learn how to resolve them.
     <tbody>
       <tr>
         <td>{{site.data.keyword.Bluemix_notm}} Infrastructure Exception: Your account is currently prohibited from ordering 'Computing Instances'.</td>
-        <td>Your IBM Cloud infrastructure (SoftLayer) account might be restricted from ordering compute resources. Contact {{site.data.keyword.Bluemix_notm}} support by opening an [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/get-support/howtogetsupport.html#getting-customer-support).</td>
+        <td>Your IBM Cloud infrastructure (SoftLayer) account might be restricted from ordering compute resources. Contact {{site.data.keyword.Bluemix_notm}} support by opening an [{{site.data.keyword.Bluemix_notm}} support ticket](#ts_getting_help).</td>
       </tr>
       <tr>
         <td>{{site.data.keyword.Bluemix_notm}} Infrastructure Exception: Could not place order. There are insufficient resources behind router 'router_name' to fulfill the request for the following guests: 'worker_id'.</td>
-        <td>The VLAN that you selected is associated with a pod in the data center that has insufficient space to provision your worker node. You can choose between the following options:<ul><li>Use a different data center to provision your worker node. Run <code>bx cs locations</code> to list available data center.<li>If you have an existing public and private VLAN pair that is associated with another pod in the data center, use this VLAN pair instead.<li>Contact {{site.data.keyword.Bluemix_notm}} support by opening an [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/get-support/howtogetsupport.html#getting-customer-support).</ul></td>
+        <td>The VLAN that you selected is associated with a pod in the data center that has insufficient space to provision your worker node. You can choose between the following options:<ul><li>Use a different data center to provision your worker node. Run <code>bx cs locations</code> to list available data center.<li>If you have an existing public and private VLAN pair that is associated with another pod in the data center, use this VLAN pair instead.<li>Contact {{site.data.keyword.Bluemix_notm}} support by opening an [{{site.data.keyword.Bluemix_notm}} support ticket](#ts_getting_help).</ul></td>
       </tr>
       <tr>
         <td>{{site.data.keyword.Bluemix_notm}} Infrastructure Exception: Could not obtain network VLAN with id: &lt;vlan id&gt;.</td>
@@ -213,7 +213,7 @@ Review common error messages and learn how to resolve them.
       </tr>
       <tr>
         <td>SoftLayer_Exception_Order_InvalidLocation: The location provided for this order is invalid. (HTTP 500)</td>
-        <td>Your IBM Cloud infrastructure (SoftLayer) is not set up to order compute resources in the selected data center. Contact [{{site.data.keyword.Bluemix_notm}} support](/docs/get-support/howtogetsupport.html#getting-customer-support) to verify that you account is setup correctly.</td>
+        <td>Your IBM Cloud infrastructure (SoftLayer) is not set up to order compute resources in the selected data center. Contact [{{site.data.keyword.Bluemix_notm}} support](#ts_getting_help) to verify that you account is setup correctly.</td>
        </tr>
        <tr>
         <td>{{site.data.keyword.Bluemix_notm}} Infrastructure Exception: The user does not have the necessary {{site.data.keyword.Bluemix_notm}} Infrastructure permissions to add servers
@@ -1307,7 +1307,7 @@ Where do you start troubleshooting a container?
     -   For questions about the service and getting started instructions, use the [IBM developerWorks dW Answers ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/answers/topics/containers/?smartspace=bluemix) forum. Include the `ibm-cloud` and `containers` tags.
     See [Getting help](/docs/get-support/howtogetsupport.html#using-avatar) for more details about using the forums.
 
--   Contact IBM Support. For information about opening an IBM support ticket, or about support levels and ticket severities, see [Contacting support](/docs/get-support/howtogetsupport.html#getting-customer-support).
+-   Contact IBM Support by opening a ticket. For information about opening an IBM support ticket, or about support levels and ticket severities, see [Contacting support](/docs/get-support/howtogetsupport.html#getting-customer-support).
 
 {:tip}
 When reporting an issue, include your cluster ID. To get your cluster ID, run `bx cs clusters`.
