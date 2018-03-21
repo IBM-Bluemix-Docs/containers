@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-16"
+lastupdated: "2018-03-19"
 
 ---
 
@@ -128,7 +128,7 @@ When you create a cluster, every cluster is automatically connected to a VLAN fr
 
 A VLAN configures a group of worker nodes and pods as if they were attached to the same physical wire. The private VLAN determines the private IP address that is assigned to a worker node during cluster creation, and the public VLAN determines the public IP address that is assigned to a worker node during cluster creation.
 
-For free clusters, the cluster's worker nodes are connected to an IBM-owned public VLAN and private VLAN by default during cluster creation. For standard clusters, you must connect your worker nodes to a private VLAN. You can either connect your worker nodes to both a public VLAN and the private VLAN, or to the private VLAN only. If you want to connect your worker nodes to a private VLAN only, you can designate the ID of an existing private VLAN during cluster creation or [create a new private VLAN](/docs/cli/reference/softlayer/index.html#sl_vlan_create). However, you must also configure an alternative solution to enable a secure connection between worker nodes and the Kubernetes master. For example, you can configure a Vyatta to pass traffic from the private VLAN worker nodes to the Kubernetes master. See "Set up a custom Vyatta to securely connect your worker nodes to the Kubernetes master" in the [IBM Cloud infrastructure (SoftLayer) documentation](https://knowledgelayer.softlayer.com/procedure/basic-configuration-vyatta) for more information.
+For free clusters, the cluster's worker nodes are connected to an IBM-owned public VLAN and private VLAN by default during cluster creation. For standard clusters, you must connect your worker nodes to a private VLAN. You can either connect your worker nodes to both a public VLAN and the private VLAN, or to the private VLAN only. If you want to connect your worker nodes to a private VLAN only, you can designate the ID of an existing private VLAN during cluster creation or [create a new private VLAN](/docs/cli/reference/softlayer/index.html#sl_vlan_create). However, you must also configure an alternative solution to enable a secure connection between worker nodes and the Kubernetes master. For example, you can [configure a Vyatta Gateway Appliance](https://www.ibm.com/blogs/bluemix/2017/07/kubernetes-and-bluemix-container-based-workloads-part4/) to pass traffic from the private VLAN worker nodes to the Kubernetes master.
 
 **Note**: If you have multiple VLANs for a cluster or multiple subnets on the same VLAN, you must turn on VLAN spanning so that your worker nodes can communicate with each other on the private network. For instructions, see [Enable or disable VLAN spanning](/docs/infrastructure/vlans/vlan-spanning.html#enable-or-disable-vlan-spanning).
 
@@ -479,7 +479,7 @@ You can view the current cluster state by running the `bx cs clusters` command a
    <tbody>
 <tr>
    <td>Aborted</td>
-   <td>The deletion of the cluster is requested by the user before the Kubernetes master is deployed. After the deletion of the cluster is completed, the cluster is removed from your dashboard. If your cluster is stuck in this state for a long time, open an [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/get-support/howtogetsupport.html#using-avatar).</td>
+   <td>The deletion of the cluster is requested by the user before the Kubernetes master is deployed. After the deletion of the cluster is completed, the cluster is removed from your dashboard. If your cluster is stuck in this state for a long time, open an [{{site.data.keyword.Bluemix_notm}} support ticket](cs_troubleshoot.html#ts_getting_help).</td>
    </tr>
  <tr>
      <td>Critical</td>
@@ -491,7 +491,7 @@ You can view the current cluster state by running the `bx cs clusters` command a
    </tr>
    <tr>
      <td>Deleted</td>
-     <td>The cluster is deleted but not yet removed from your dashboard. If your cluster is stuck in this state for a long time, open an [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/get-support/howtogetsupport.html#using-avatar). </td>
+     <td>The cluster is deleted but not yet removed from your dashboard. If your cluster is stuck in this state for a long time, open an [{{site.data.keyword.Bluemix_notm}} support ticket](cs_troubleshoot.html#ts_getting_help). </td>
    </tr>
    <tr>
    <td>Deleting</td>
@@ -499,7 +499,7 @@ You can view the current cluster state by running the `bx cs clusters` command a
    </tr>
    <tr>
      <td>Deploy failed</td>
-     <td>The deployment of the Kubernetes master could not be completed. You cannot resolve this state. Contact IBM Cloud support by opening an [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/get-support/howtogetsupport.html#using-avatar).</td>
+     <td>The deployment of the Kubernetes master could not be completed. You cannot resolve this state. Contact IBM Cloud support by opening an [{{site.data.keyword.Bluemix_notm}} support ticket](cs_troubleshoot.html#ts_getting_help).</td>
    </tr>
      <tr>
        <td>Deploying</td>
@@ -515,7 +515,7 @@ You can view the current cluster state by running the `bx cs clusters` command a
      </tr>
    <tr>
      <td>Requested</td>
-     <td>A request to create the cluster and order the infrastructure for the Kubernetes master and worker nodes is sent. When the deployment of the cluster starts, the cluster state changes to <code>Deploying</code>. If your cluster is stuck in the <code>Requested</code> state for a long time, open an [{{site.data.keyword.Bluemix_notm}} support ticket](/docs/get-support/howtogetsupport.html#using-avatar). </td>
+     <td>A request to create the cluster and order the infrastructure for the Kubernetes master and worker nodes is sent. When the deployment of the cluster starts, the cluster state changes to <code>Deploying</code>. If your cluster is stuck in the <code>Requested</code> state for a long time, open an [{{site.data.keyword.Bluemix_notm}} support ticket](cs_troubleshoot.html#ts_getting_help). </td>
    </tr>
    <tr>
      <td>Updating</td>
