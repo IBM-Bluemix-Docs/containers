@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-16"
+lastupdated: "2018-03-21"
 
 ---
 
@@ -38,31 +38,6 @@ bx plugin list
 {: pre}
 
 
-
-<table summary="Application load balancer (ALB) commands">
-<col width="25%">
-<col width="25%">
-<col width="25%">
- <thead>
-    <th colspan=4>Application load balancer (ALB) commands</th>
- </thead>
- <tbody>
-  <tr>
-    <td>[bx cs alb-cert-deploy](#cs_alb_cert_deploy)</td>
-    <td>[bx cs alb-cert-get](#cs_alb_cert_get)</td>
-    <td>[bx cs alb-cert-rm](#cs_alb_cert_rm)</td>
-    <td>[bx cs alb-certs](#cs_alb_certs)</td>
-  </tr>
-  <tr>
-    <td>[bx cs alb-configure](#cs_alb_configure)</td>
-    <td>[bx cs alb-get](#cs_alb_get)</td>
-    <td>[bx cs alb-types](#cs_alb_types)</td>
-    <td>[bx cs albs](#cs_albs)</td>
- </tr>
-</tbody>
-</table>
-
-<br>
 
 <table summary="API commands">
 <col width="25%">
@@ -127,7 +102,6 @@ bx plugin list
     <td>[bx cs cluster-update](#cs_cluster_update)</td>
     <td>[bx cs clusters](#cs_clusters)</td>
     <td>[bx cs kube-versions](#cs_kube_versions)</td>
-    <td></td>
   </tr>
 </tbody>
 </table>
@@ -192,6 +166,31 @@ bx plugin list
     <td>[bx cs machine-types](#cs_machine_types)</td>
     <td>[bx cs vlans](#cs_vlans)</td>
   </tr>
+</tbody>
+</table>
+
+<br>
+
+<table summary="Ingress application load balancer (ALB) commands">
+<col width="25%">
+<col width="25%">
+<col width="25%">
+ <thead>
+    <th colspan=4>Application load balancer (ALB) commands</th>
+ </thead>
+ <tbody>
+  <tr>
+    <td>[bx cs alb-cert-deploy](#cs_alb_cert_deploy)</td>
+    <td>[bx cs alb-cert-get](#cs_alb_cert_get)</td>
+    <td>[bx cs alb-cert-rm](#cs_alb_cert_rm)</td>
+    <td>[bx cs alb-certs](#cs_alb_certs)</td>
+  </tr>
+  <tr>
+    <td>[bx cs alb-configure](#cs_alb_configure)</td>
+    <td>[bx cs alb-get](#cs_alb_get)</td>
+    <td>[bx cs alb-types](#cs_alb_types)</td>
+    <td>[bx cs albs](#cs_albs)</td>
+ </tr>
 </tbody>
 </table>
 
@@ -263,260 +262,6 @@ bx plugin list
   </tr>
 </tbody>
 </table>
-
-## Application load balancer (ALB) commands
-{: #alb_commands}
-
-### bx cs alb-cert-deploy [--update] --cluster CLUSTER --secret-name SECRET_NAME --cert-crn CERTIFICATE_CRN
-{: #cs_alb_cert_deploy}
-
-Deploy or update a certificate from your {{site.data.keyword.cloudcerts_long_notm}} instance to the ALB in a cluster.
-
-**Note:**
-* Only a user with the Administrator access role can execute this command.
-* You can only update certificates that are imported from the same {{site.data.keyword.cloudcerts_long_notm}} instance.
-
-<strong>Command options</strong>
-
-   <dl>
-   <dt><code>--cluster <em>CLUSTER</em></code></dt>
-   <dd>The name or ID of the cluster. This value is required.</dd>
-
-   <dt><code>--update</code></dt>
-   <dd>Include this flag to update the certificate for an ALB secret in a cluster. This value is optional.</dd>
-
-   <dt><code>--secret-name <em>SECRET_NAME</em></code></dt>
-   <dd>The name of the ALB secret. This value is required.</dd>
-
-   <dt><code>--cert-crn <em>CERTIFICATE_CRN</em></code></dt>
-   <dd>The certificate CRN. This value is required.</dd>
-   </dl>
-
-**Examples**:
-
-Example for deploying an ALB secret:
-
-   ```
-   bx cs alb-cert-deploy --secret-name my_alb_secret_name --cluster my_cluster --cert-crn crn:v1:staging:public:cloudcerts:us-south:a/06580c923e40314421d3b6cb40c01c68:0db4351b-0ee1-479d-af37-56a4da9ef30f:certificate:4bc35b7e0badb304e60aef00947ae7ff
-   ```
-   {: pre}
-
-Example for updating an existing ALB secret:
-
- ```
- bx cs alb-cert-deploy --update --secret-name my_alb_secret_name --cluster my_cluster --cert-crn crn:v1:staging:public:cloudcerts:us-south:a/06580c923e40314421d3b6cb40c01c68:0db4351b-0ee1-479d-af37-56a4da9ef30f:certificate:7e21fde8ee84a96d29240327daee3eb2
- ```
- {: pre}
-
-
-### bx cs alb-cert-get --cluster CLUSTER [--secret-name SECRET_NAME] [--cert-crn CERTIFICATE_CRN]
-{: #cs_alb_cert_get}
-
-View information about an ALB secret in a cluster.
-
-**Note:** Only a user with the Administrator access role can execute this command.
-
-<strong>Command options</strong>
-
-  <dl>
-  <dt><code>--cluster <em>CLUSTER</em></code></dt>
-  <dd>The name or ID of the cluster. This value is required.</dd>
-
-  <dt><code>--secret-name <em>SECRET_NAME</em></code></dt>
-  <dd>The name of the ALB secret. This value is required to get information on a specific ALB secret in the cluster.</dd>
-
-  <dt><code>--cert-crn <em>CERTIFICATE_CRN</em></code></dt>
-  <dd>The certificate CRN. This value is required to get information on all ALB secrets matching a specific certificate CRN in the cluster.</dd>
-  </dl>
-
-**Examples**:
-
- Example for fetching information on an ALB secret:
-
- ```
- bx cs alb-cert-get --cluster my_cluster --secret-name my_alb_secret_name
- ```
- {: pre}
-
- Example for fetching information on all ALB secrets that match a specified certificate CRN:
-
- ```
- bx cs alb-cert-get --cluster my_cluster --cert-crn  crn:v1:staging:public:cloudcerts:us-south:a/06580c923e40314421d3b6cb40c01c68:0db4351b-0ee1-479d-af37-56a4da9ef30f:certificate:4bc35b7e0badb304e60aef00947ae7ff
- ```
- {: pre}
-
-
-### bx cs alb-cert-rm --cluster CLUSTER [--secret-name SECRET_NAME] [--cert-crn CERTIFICATE_CRN]
-{: #cs_alb_cert_rm}
-
-Remove an ALB secret in a cluster.
-
-**Note:** Only a user with the Administrator access role can execute this command.
-
-<strong>Command options</strong>
-
-  <dl>
-  <dt><code>--cluster <em>CLUSTER</em></code></dt>
-  <dd>The name or ID of the cluster. This value is required.</dd>
-
-  <dt><code>--secret-name <em>SECRET_NAME</em></code></dt>
-  <dd>The name of the ALB secret. This value is required to remove a specific ALB secret in the cluster.</dd>
-
-  <dt><code>--cert-crn <em>CERTIFICATE_CRN</em></code></dt>
-  <dd>The certificate CRN. This value is required to remove all ALB secrets matching a specific certificate CRN in the cluster.</dd>
-  </dl>
-
-**Examples**:
-
- Example for removing an ALB secret:
-
- ```
- bx cs alb-cert-rm --cluster my_cluster --secret-name my_alb_secret_name
- ```
- {: pre}
-
- Example for removing all ALB secrets that match a specified certificate CRN:
-
- ```
- bx cs alb-cert-rm --cluster my_cluster --cert-crn crn:v1:staging:public:cloudcerts:us-south:a/06580c923e40314421d3b6cb40c01c68:0db4351b-0ee1-479d-af37-56a4da9ef30f:certificate:4bc35b7e0badb304e60aef00947ae7ff
- ```
- {: pre}
-
-
-### bx cs alb-certs --cluster CLUSTER
-{: #cs_alb_certs}
-
-View a list of ALB secrets in a cluster.
-
-**Note:** Only a user with the Administrator access role can execute this command.
-
-<strong>Command options</strong>
-
-   <dl>
-   <dt><code>--cluster <em>CLUSTER</em></code></dt>
-   <dd>The name or ID of the cluster. This value is required.</dd>
-   </dl>
-
-**Example**:
-
- ```
- bx cs alb-certs --cluster my_cluster
- ```
- {: pre}
-
-
-
-
-### bx cs alb-configure --albID ALB_ID [--enable][--disable][--user-ip USERIP]
-{: #cs_alb_configure}
-
-Enable or disable an ALB in your standard cluster. The public ALB is enabled by default.
-
-**Command options**:
-
-   <dl>
-   <dt><code><em>--albID </em>ALB_ID</code></dt>
-   <dd>The ID for an ALB. Run <code>bx cs albs <em>--cluster </em>CLUSTER</code> to view the IDs for the ALBs in a cluster. This value is required.</dd>
-
-   <dt><code>--enable</code></dt>
-   <dd>Include this flag to enable an ALB in a cluster.</dd>
-
-   <dt><code>--disable</code></dt>
-   <dd>Include this flag to disable an ALB in a cluster.</dd>
-
-   <dt><code>--user-ip <em>USER_IP</em></code></dt>
-   <dd>
-
-   <ul>
-    <li>This parameter is available for a private ALB only</li>
-    <li>The private ALB is deployed with an IP address from a user-provided private subnet. If no IP address is provided, the ALB is deployed with a private IP address from the portable private subnet that was provisioned automatically when you created the cluster.</li>
-   </ul>
-   </dd>
-   </dl>
-
-**Examples**:
-
-  Example for enabling an ALB:
-
-  ```
-  bx cs alb-configure --albID my_alb_id --enable
-  ```
-  {: pre}
-
-  Example for disabling an ALB:
-
-  ```
-  bx cs alb-configure --albID my_alb_id --disable
-  ```
-  {: pre}
-
-  Example for enabling an ALB with a user-provided IP address:
-
-  ```
-  bx cs alb-configure --albID my_private_alb_id --enable --user-ip user_ip
-  ```
-  {: pre}
-
-
-
-### bx cs alb-get --albID ALB_ID
-{: #cs_alb_get}
-
-View the details of an ALB.
-
-<strong>Command options</strong>:
-
-   <dl>
-   <dt><code><em>--albID </em>ALB_ID</code></dt>
-   <dd>The ID for an ALB. Run <code>bx cs albs --cluster <em>CLUSTER</em></code> to view the IDs for the ALBs in a cluster. This value is required.</dd>
-   </dl>
-
-**Example**:
-
-  ```
-  bx cs alb-get --albID ALB_ID
-  ```
-  {: pre}
-
-### bx cs alb-types
-{: #cs_alb_types}
-
-View the ALB types that are supported in the region.
-
-<strong>Command options</strong>:
-
-   None
-
-**Example**:
-
-  ```
-  bx cs alb-types
-  ```
-  {: pre}
-
-
-### bx cs albs --cluster CLUSTER
-{: #cs_albs}
-
-View the status of all ALBs in a cluster. If no ALB IDs are returned, then the cluster does not have a portable subnet. You can [create](#cs_cluster_subnet_create) or [add](#cs_cluster_subnet_add) subnets to a cluster.
-
-<strong>Command options</strong>:
-
-   <dl>
-   <dt><code><em>--cluster </em>CLUSTER</code></dt>
-   <dd>The name or ID of the cluster where you list available ALBs. This value is required.</dd>
-   </dl>
-
-**Example**:
-
-  ```
-  bx cs albs --cluster mycluster
-  ```
-  {: pre}
-
-
-<br />
-
 
 ## API commands
 {: #api_commands}
@@ -810,7 +555,6 @@ trusted: <em>true</em>
       </tr>
      <tr>
      <td><code><em>machine-type</em></code></td>
-     <td>Replace <code><em>&lt;machine_type&gt;</em></code> with the machine type that you want for your worker nodes. To list available machine types for your location, run <code>bx cs machine-types <em>&lt;location&gt;</em></code>.</td>
      <td>Replace <code><em>&lt;machine_type&gt;</em></code> with the type of machine that you want to deploy your worker nodes to. You can deploy your worker nodes as virtual machines on shared or dedicated hardware, or as physical machines on bare metal. Available physical and virtual machines types vary by the location in which you deploy the cluster. For more information, see the documentation for the `bx cs machine-type` [command](cs_cli_reference.html#cs_machine_types).</td>
      </tr>
      <tr>
@@ -854,7 +598,6 @@ trusted: <em>true</em>
 </dd>
 
 <dt><code>--machine-type <em>MACHINE_TYPE</em></code></dt>
-<dd>The machine type that you choose impacts the amount of memory and disk space that is available to the containers that are deployed to your worker node. To list available machine types, see [bx cs machine-types <em>LOCATION</em>](#cs_machine_types).  This value is required for standard clusters and is not available for free clusters.</dd>
 <dd>Choose a machine type. You can deploy your worker nodes as virtual machines on shared or dedicated hardware, or as physical machines on bare metal. Available physical and virtual machines types vary by the location in which you deploy the cluster. For more information, see the documentation for the `bx cs machine-type` [command](cs_cli_reference.html#cs_machine_types). This value is required for standard clusters and is not available for free clusters.</dd>
 
 <dt><code>--name <em>NAME</em></code></dt>
@@ -943,7 +686,7 @@ Enable a feature on an existing cluster.
 
    <dt><code><em>--trusted</em></code></dt>
    <dd><p>Include the flag to enable Trusted Compute for all supported bare metal worker nodes that are in the cluster. After you enable trust, you cannot later disable it for the cluster. For more information about how trust works, see [{{site.data.keyword.containershort_notm}} with Trusted Compute](cs_secure.html#trusted_compute).</p>
-   <p>To check whether the bare metal machine type supports trust, check the `Trustable` field in the output of the `bx cs machine-types <location>` [command](#cs_machine_types). To verify that a cluster is trust-enabled, view the **Trust ready** field in the output of the `bx cs cluster-get` [command](#cs_cluster_get). To verify a bare metal worker node is trust-enabled, view the **Trust** field in the output of the `bx cs worker-get` [command](#cs_worker_get).</p></dd>
+   <p>To check whether the bare metal machine type supports trust, check the **Trustable** field in the output of the `bx cs machine-types <location>` [command](#cs_machine_types). To verify that a cluster is trust-enabled, view the **Trust ready** field in the output of the `bx cs cluster-get` [command](#cs_cluster_get). To verify a bare metal worker node is trust-enabled, view the **Trust** field in the output of the `bx cs worker-get` [command](#cs_worker_get).</p></dd>
    </dl>
 
 **Example command**:
@@ -1354,6 +1097,260 @@ View a list of subnets that are available in an IBM Cloud infrastructure (SoftLa
 <br />
 
 
+## Ingress application load balancer (ALB) commands
+{: #alb_commands}
+
+### bx cs alb-cert-deploy [--update] --cluster CLUSTER --secret-name SECRET_NAME --cert-crn CERTIFICATE_CRN
+{: #cs_alb_cert_deploy}
+
+Deploy or update a certificate from your {{site.data.keyword.cloudcerts_long_notm}} instance to the ALB in a cluster.
+
+**Note:**
+* Only a user with the Administrator access role can execute this command.
+* You can only update certificates that are imported from the same {{site.data.keyword.cloudcerts_long_notm}} instance.
+
+<strong>Command options</strong>
+
+   <dl>
+   <dt><code>--cluster <em>CLUSTER</em></code></dt>
+   <dd>The name or ID of the cluster. This value is required.</dd>
+
+   <dt><code>--update</code></dt>
+   <dd>Include this flag to update the certificate for an ALB secret in a cluster. This value is optional.</dd>
+
+   <dt><code>--secret-name <em>SECRET_NAME</em></code></dt>
+   <dd>The name of the ALB secret. This value is required.</dd>
+
+   <dt><code>--cert-crn <em>CERTIFICATE_CRN</em></code></dt>
+   <dd>The certificate CRN. This value is required.</dd>
+   </dl>
+
+**Examples**:
+
+Example for deploying an ALB secret:
+
+   ```
+   bx cs alb-cert-deploy --secret-name my_alb_secret_name --cluster my_cluster --cert-crn crn:v1:staging:public:cloudcerts:us-south:a/06580c923e40314421d3b6cb40c01c68:0db4351b-0ee1-479d-af37-56a4da9ef30f:certificate:4bc35b7e0badb304e60aef00947ae7ff
+   ```
+   {: pre}
+
+Example for updating an existing ALB secret:
+
+ ```
+ bx cs alb-cert-deploy --update --secret-name my_alb_secret_name --cluster my_cluster --cert-crn crn:v1:staging:public:cloudcerts:us-south:a/06580c923e40314421d3b6cb40c01c68:0db4351b-0ee1-479d-af37-56a4da9ef30f:certificate:7e21fde8ee84a96d29240327daee3eb2
+ ```
+ {: pre}
+
+
+### bx cs alb-cert-get --cluster CLUSTER [--secret-name SECRET_NAME] [--cert-crn CERTIFICATE_CRN]
+{: #cs_alb_cert_get}
+
+View information about an ALB secret in a cluster.
+
+**Note:** Only a user with the Administrator access role can execute this command.
+
+<strong>Command options</strong>
+
+  <dl>
+  <dt><code>--cluster <em>CLUSTER</em></code></dt>
+  <dd>The name or ID of the cluster. This value is required.</dd>
+
+  <dt><code>--secret-name <em>SECRET_NAME</em></code></dt>
+  <dd>The name of the ALB secret. This value is required to get information on a specific ALB secret in the cluster.</dd>
+
+  <dt><code>--cert-crn <em>CERTIFICATE_CRN</em></code></dt>
+  <dd>The certificate CRN. This value is required to get information on all ALB secrets matching a specific certificate CRN in the cluster.</dd>
+  </dl>
+
+**Examples**:
+
+ Example for fetching information on an ALB secret:
+
+ ```
+ bx cs alb-cert-get --cluster my_cluster --secret-name my_alb_secret_name
+ ```
+ {: pre}
+
+ Example for fetching information on all ALB secrets that match a specified certificate CRN:
+
+ ```
+ bx cs alb-cert-get --cluster my_cluster --cert-crn  crn:v1:staging:public:cloudcerts:us-south:a/06580c923e40314421d3b6cb40c01c68:0db4351b-0ee1-479d-af37-56a4da9ef30f:certificate:4bc35b7e0badb304e60aef00947ae7ff
+ ```
+ {: pre}
+
+
+### bx cs alb-cert-rm --cluster CLUSTER [--secret-name SECRET_NAME] [--cert-crn CERTIFICATE_CRN]
+{: #cs_alb_cert_rm}
+
+Remove an ALB secret in a cluster.
+
+**Note:** Only a user with the Administrator access role can execute this command.
+
+<strong>Command options</strong>
+
+  <dl>
+  <dt><code>--cluster <em>CLUSTER</em></code></dt>
+  <dd>The name or ID of the cluster. This value is required.</dd>
+
+  <dt><code>--secret-name <em>SECRET_NAME</em></code></dt>
+  <dd>The name of the ALB secret. This value is required to remove a specific ALB secret in the cluster.</dd>
+
+  <dt><code>--cert-crn <em>CERTIFICATE_CRN</em></code></dt>
+  <dd>The certificate CRN. This value is required to remove all ALB secrets matching a specific certificate CRN in the cluster.</dd>
+  </dl>
+
+**Examples**:
+
+ Example for removing an ALB secret:
+
+ ```
+ bx cs alb-cert-rm --cluster my_cluster --secret-name my_alb_secret_name
+ ```
+ {: pre}
+
+ Example for removing all ALB secrets that match a specified certificate CRN:
+
+ ```
+ bx cs alb-cert-rm --cluster my_cluster --cert-crn crn:v1:staging:public:cloudcerts:us-south:a/06580c923e40314421d3b6cb40c01c68:0db4351b-0ee1-479d-af37-56a4da9ef30f:certificate:4bc35b7e0badb304e60aef00947ae7ff
+ ```
+ {: pre}
+
+
+### bx cs alb-certs --cluster CLUSTER
+{: #cs_alb_certs}
+
+View a list of ALB secrets in a cluster.
+
+**Note:** Only a user with the Administrator access role can execute this command.
+
+<strong>Command options</strong>
+
+   <dl>
+   <dt><code>--cluster <em>CLUSTER</em></code></dt>
+   <dd>The name or ID of the cluster. This value is required.</dd>
+   </dl>
+
+**Example**:
+
+ ```
+ bx cs alb-certs --cluster my_cluster
+ ```
+ {: pre}
+
+
+
+
+### bx cs alb-configure --albID ALB_ID [--enable][--disable][--user-ip USERIP]
+{: #cs_alb_configure}
+
+Enable or disable an ALB in your standard cluster. The public ALB is enabled by default.
+
+**Command options**:
+
+   <dl>
+   <dt><code><em>--albID </em>ALB_ID</code></dt>
+   <dd>The ID for an ALB. Run <code>bx cs albs <em>--cluster </em>CLUSTER</code> to view the IDs for the ALBs in a cluster. This value is required.</dd>
+
+   <dt><code>--enable</code></dt>
+   <dd>Include this flag to enable an ALB in a cluster.</dd>
+
+   <dt><code>--disable</code></dt>
+   <dd>Include this flag to disable an ALB in a cluster.</dd>
+
+   <dt><code>--user-ip <em>USER_IP</em></code></dt>
+   <dd>
+
+   <ul>
+    <li>This parameter is available for a private ALB only</li>
+    <li>The private ALB is deployed with an IP address from a user-provided private subnet. If no IP address is provided, the ALB is deployed with a private IP address from the portable private subnet that was provisioned automatically when you created the cluster.</li>
+   </ul>
+   </dd>
+   </dl>
+
+**Examples**:
+
+  Example for enabling an ALB:
+
+  ```
+  bx cs alb-configure --albID my_alb_id --enable
+  ```
+  {: pre}
+
+  Example for disabling an ALB:
+
+  ```
+  bx cs alb-configure --albID my_alb_id --disable
+  ```
+  {: pre}
+
+  Example for enabling an ALB with a user-provided IP address:
+
+  ```
+  bx cs alb-configure --albID my_private_alb_id --enable --user-ip user_ip
+  ```
+  {: pre}
+
+
+
+### bx cs alb-get --albID ALB_ID
+{: #cs_alb_get}
+
+View the details of an ALB.
+
+<strong>Command options</strong>:
+
+   <dl>
+   <dt><code><em>--albID </em>ALB_ID</code></dt>
+   <dd>The ID for an ALB. Run <code>bx cs albs --cluster <em>CLUSTER</em></code> to view the IDs for the ALBs in a cluster. This value is required.</dd>
+   </dl>
+
+**Example**:
+
+  ```
+  bx cs alb-get --albID ALB_ID
+  ```
+  {: pre}
+
+### bx cs alb-types
+{: #cs_alb_types}
+
+View the ALB types that are supported in the region.
+
+<strong>Command options</strong>:
+
+   None
+
+**Example**:
+
+  ```
+  bx cs alb-types
+  ```
+  {: pre}
+
+
+### bx cs albs --cluster CLUSTER
+{: #cs_albs}
+
+View the status of all ALBs in a cluster. If no ALB IDs are returned, then the cluster does not have a portable subnet. You can [create](#cs_cluster_subnet_create) or [add](#cs_cluster_subnet_add) subnets to a cluster.
+
+<strong>Command options</strong>:
+
+   <dl>
+   <dt><code><em>--cluster </em>CLUSTER</code></dt>
+   <dd>The name or ID of the cluster where you list available ALBs. This value is required.</dd>
+   </dl>
+
+**Example**:
+
+  ```
+  bx cs albs --cluster mycluster
+  ```
+  {: pre}
+
+
+<br />
+
+
 ## Infrastructure commands
 {: #infrastructure_commands}
 
@@ -1682,6 +1679,7 @@ Update the details of a log forwarding configuration.
   {: pre}
 
 
+
 <br />
 
 
@@ -1837,7 +1835,6 @@ diskEncryption: <em>false</em></code></pre>
 </tr>
 <tr>
 <td><code><em>machine-type</em></code></td>
-<td>Replace <code><em>&lt;machine_type&gt;</em></code> with the machine type that you want for your worker nodes. To list available machine types for your location, run <code>bx cs machine-types <em>&lt;location&gt;</em></code></td>
 <td>Replace <code><em>&lt;machine_type&gt;</em></code> with the type of machine that you want to deploy your worker nodes to. You can deploy your worker nodes as virtual machines on shared or dedicated hardware, or as physical machines on bare metal. Available physical and virtual machines types vary by the location in which you deploy the cluster. For more information, see the documentation for the `bx cs machine-type` [command](cs_cli_reference.html#cs_machine_types).</td>
 </tr>
 <tr>
@@ -1865,7 +1862,6 @@ diskEncryption: <em>false</em></code></pre>
 <dd>The level of hardware isolation for your worker node. Use dedicated if you want to have available physical resources dedicated to you only, or shared to allow physical resources to be shared with other IBM customers. The default is shared. This value is optional.</dd>
 
 <dt><code>--machine-type <em>MACHINE_TYPE</em></code></dt>
-<dd>The machine type that you choose impacts the amount of memory and disk space that is available to the containers that are deployed to your worker node. This value is required. To list available machine types, see [bx cs machine-types LOCATION](#cs_machine_types).</dd>
 <dd>Choose a machine type. You can deploy your worker nodes as virtual machines on shared or dedicated hardware, or as physical machines on bare metal. Available physical and virtual machines types vary by the location in which you deploy the cluster. For more information, see the documentation for the `bx cs machine-type` [command](cs_cli_reference.html#cs_machine_types). This value is required for standard clusters and is not available for free clusters.</dd>
 
 <dt><code>--number <em>NUMBER</em></code></dt>
@@ -2011,6 +2007,8 @@ Before you reboot your worker node, make sure that pods are rescheduled on other
 {: #cs_worker_reload}
 
 Reload all the necessary configurations for a worker node. A reload can be useful if your worker node experiences problems, such as slow performance or if your worker node is stuck in an unhealthy state.
+
+**Attention:** Reloading your worker node automatically applies the latest patch version to your worker node. The current major and minor version is not changed. For more information about Kubernetes versions, see [worker node update types](cs_versions.html#version_types).
 
 Before you reload your worker node, make sure that pods are rescheduled on other worker nodes to help avoid a downtime for your app or data corruption on your worker node.
 

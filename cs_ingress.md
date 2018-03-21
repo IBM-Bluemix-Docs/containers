@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-16"
+lastupdated: "2018-03-21"
 
 ---
 
@@ -1337,7 +1337,7 @@ For a comprehensive tutorial on how to secure microservice-to-microservice commu
 You can further configure an application load balancer with the following options.
 
 -   [Opening ports in the Ingress application load balancer](#opening_ingress_ports)
--   [Configuring SSL protocols and SSL ciphers at the HTTP level](#ssl_protocols_ciphers)
+-   [Configuring SSL protocols and SSL ciphers at the HTTP level](#ssl_protocols_ciphers) 
 -   [Customizing your application load balancer with annotations](cs_annotations.html)
 {: #ingress_annotation}
 
@@ -1348,31 +1348,39 @@ You can further configure an application load balancer with the following option
 By default, only ports 80 and 443 are exposed in the Ingress ALB. To expose other ports, you can edit the `ibm-cloud-provider-ingress-cm` configmap resource.
 {:shortdesc}
 
-1.  Create a local version of the configuration file for the `ibm-cloud-provider-ingress-cm` configmap resource. Add a <code>data</code> section and specify public ports 80, 443, and any other ports you want to add to the configmap file separated by a semi-colon (;).
+1. Create and open a local version of the configuration file for the `ibm-cloud-provider-ingress-cm` configmap resource.
 
- Note: When specifying the ports, 80 and 443 must also be included to keep those ports open. Any port that is not specified is closed.
+    ```
+    kubectl edit cm ibm-cloud-provider-ingress-cm -n kube-system
+    ```
+    {: pre}
 
- ```
- apiVersion: v1
- data:
-   public-ports: "80;443;<port3>"
- kind: ConfigMap
- metadata:
-   name: ibm-cloud-provider-ingress-cm
-   namespace: kube-system
- ```
- {: codeblock}
+2. Add a <code>data</code> section and specify public ports `80`, `443`, and any other ports you want to expose separated by a semi-colon (;).
 
- Example:
- ```
- apiVersion: v1
- data:
-   public-ports: "80;443;9443"
- kind: ConfigMap
- metadata:
-   name: ibm-cloud-provider-ingress-cm
-   namespace: kube-system
- ```
+    **Note**: When specifying the ports, 80 and 443 must also be included to keep those ports open. Any port that is not specified is closed.
+
+    ```
+    apiVersion: v1
+    data:
+      public-ports: "80;443;<port3>"
+    kind: ConfigMap
+    metadata:
+      name: ibm-cloud-provider-ingress-cm
+      namespace: kube-system
+    ```
+    {: pre}
+
+    Example:
+    ```
+    apiVersion: v1
+    data:
+      public-ports: "80;443;9443"
+    kind: ConfigMap
+    metadata:
+      name: ibm-cloud-provider-ingress-cm
+      namespace: kube-system
+    ```
+    {: screen}
 
 2. Apply the configuration file.
 
@@ -1400,7 +1408,7 @@ By default, only ports 80 and 443 are exposed in the Ingress ALB. To expose othe
 
   public-ports: "80;443;<port3>"
  ```
- {: codeblock}
+ {: screen}
 
 For more information about configmap resources, see the [Kubernetes documentation](https://kubernetes-v1-4.github.io/docs/user-guide/configmap/).
 
@@ -1416,7 +1424,7 @@ Enable SSL protocols and ciphers at the global HTTP level by editing the `ibm-cl
 
 To edit the configmap to enable SSL protocols and ciphers:
 
-1. Create and open a local version of the configuration file for the ibm-cloud-provider-ingress-cm configmap resource.
+1. Create and open a local version of the configuration file for the `ibm-cloud-provider-ingress-cm` configmap resource.
 
     ```
     kubectl edit cm ibm-cloud-provider-ingress-cm -n kube-system
@@ -1444,7 +1452,7 @@ To edit the configmap to enable SSL protocols and ciphers:
    ```
    {: pre}
 
-3. Verify that the configuration file is applied.
+3. Verify that the configuration file was applied.
 
    ```
    kubectl describe cm ibm-cloud-provider-ingress-cm -n kube-system
@@ -1465,3 +1473,5 @@ To edit the configmap to enable SSL protocols and ciphers:
     ssl-ciphers: "HIGH:!aNULL:!MD5"
    ```
    {: screen}
+
+
