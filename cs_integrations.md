@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-14"
+lastupdated: "2018-03-22"
 
 ---
 
@@ -452,14 +452,47 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
 
 1. Install the <a href="https://docs.helm.sh/using_helm/#installing-helm" target="_blank">Helm CLI <img src="../icons/launch-glyph.svg" alt="External link icon"></a>.
 
-2. Initialize Helm and install `tiller`.
+2. **Important**: To maintain cluster security, create a service account for Tiller in the `kube-system` namespace and a Kubernetes RBAC cluster role binding for the `tiller-deploy` pod.
+
+    1. In your preferred editor, create the following file and save it as `rbac-config.yaml`. **Note**: The `cluster-admin` cluster role is created by default in Kubernetes clusters, so you don’t need define it explicitly.
+
+        ```
+        apiVersion: v1
+        kind: ServiceAccount
+        metadata:
+          name: tiller
+          namespace: kube-system
+        ---
+        apiVersion: rbac.authorization.k8s.io/v1
+        kind: ClusterRoleBinding
+        metadata:
+          name: tiller
+        roleRef:
+          apiGroup: rbac.authorization.k8s.io
+          kind: ClusterRole
+          name: cluster-admin
+        subjects:
+          - kind: ServiceAccount
+            name: tiller
+            namespace: kube-system
+        ```
+        {: pre}
+
+    2. Create the service account and cluster role binding.
+
+        ```
+        kubectl create -f rbac-config.yaml
+        ```
+        {: pre}
+
+3. Initialize Helm and install `tiller` with the service account that you created.
 
     ```
-    helm init
+    helm init --service-account tiller
     ```
     {: pre}
 
-3. Verify that the `tiller-deploy` pod has a **Status** of `Running` in your cluster.
+4. Verify that the `tiller-deploy` pod has a **Status** of `Running` in your cluster.
 
     ```
     kubectl get pods -n kube-system -l app=helm
@@ -474,20 +507,29 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
     ```
     {: screen}
 
-4. Add the {{site.data.keyword.Bluemix_notm}} Helm repository to your Helm instance.
+5. Add the {{site.data.keyword.Bluemix_notm}} Helm repository to your Helm instance.
 
     ```
     helm repo add ibm  https://registry.bluemix.net/helm/ibm
     ```
     {: pre}
 
-5. List the Helm charts currently available in the {{site.data.keyword.Bluemix_notm}} repository.
+6. List the Helm charts currently available in the {{site.data.keyword.Bluemix_notm}} repository.
 
     ```
     helm search ibm
     ```
     {: pre}
 
+7. To learn more about a chart, list its settings and default values.
+
+    For example, to view the settings, documentation, and default values for the strongSwan IPSec VPN service Helm chart:
+    
+    ```
+    helm inspect ibm/strongswan
+    ```
+    {: pre}
+    
 
 ### Related Helm links
 {: #helm_links}
