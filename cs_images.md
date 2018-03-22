@@ -438,3 +438,5 @@ To create an imagePullSecret:
         kubectl apply -f mypod.yaml
         ```
         {: pre}
+
+
