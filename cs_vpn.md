@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-19"
+lastupdated: "2018-03-22"
 
 ---
 
@@ -30,10 +30,9 @@ To connect your worker nodes and apps to an on-premises data center, you can con
 ## Setting up VPN connectivity with the strongSwan IPSec VPN service Helm chart
 {: #vpn-setup}
 
-Use a Helm chart to configure and deploy the strongSwan IPSec VPN service inside of a Kubernetes pod. All VPN traffic is then routed through this pod.
+Set up VPN connectivity by using a Helm chart to deploy the strongSwan IPSec VPN service into your cluster.
 {:shortdesc}
 
-For more information about the Helm commands that are used to set up the strongSwan chart, see the <a href="https://docs.helm.sh/helm/" target="_blank">Helm documentation <img src="../icons/launch-glyph.svg" alt="External link icon"></a>.
 
 
 ### Configure the strongSwan Helm chart
@@ -44,6 +43,8 @@ Before you begin:
 * Either [create a standard cluster](cs_clusters.html#clusters_cli) or [update an existing cluster to version 1.7.4 or later](cs_cluster_update.html#master).
 * The cluster must have at least one available public Load Balancer IP address. [You can check to see your available public IP addresses](cs_subnets.html#manage) or [free up a used IP address](cs_subnets.html#free).
 * [Target the Kubernetes CLI to the cluster](cs_cli_install.html#cs_cli_configure).
+
+For more information about the Helm commands that are used to set up the strongSwan chart, see the <a href="https://docs.helm.sh/helm/" target="_blank">Helm documentation <img src="../icons/launch-glyph.svg" alt="External link icon"></a>.
 
 To configure the Helm chart:
 
