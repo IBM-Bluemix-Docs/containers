@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-16"
+lastupdated: "2018-03-21"
 
 ---
 
@@ -211,8 +211,53 @@ To configure logging through the UI, you must specify an org and space. To enabl
       ```
       {: screen}
 
-To make an update to your configuration, follow the same steps, but replace `bx cs logging-config-create` with `bx cs logging-config-update`. Be sure to verify your update.
-{: tip}
+### Updating log forwarding
+{: #enable-forwarding}
+
+1. Update a log forwarding configuration.
+    ```
+    bx cs logging-config-update <my_cluster> <log_config_id> --hostname <ingestion_URL> --port <ingestion_port> --space <cluster_space> --org <cluster_org> --type <log_type>
+    ```
+    {: pre}
+
+  <table>
+    <caption>Understanding this command's components</caption>
+  <thead>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code><em>&lt;my_cluster&gt;</em></code></td>
+      <td>The name or ID of the cluster.</td>
+    </tr>
+    <tr>
+      <td><code><em>&lt;log_config_id&gt;</em></code></td>
+      <td>The ID for the configuration that you want to update.</td>
+    </tr>
+    <tr>
+      <td><code><em>&lt;ingestion_URL&gt;</em></code></td>
+      <td><p>For {{site.data.keyword.loganalysisshort_notm}}, use the [ingestion URL](/docs/services/CloudLogAnalysis/log_ingestion.html#log_ingestion_urls). If you do not specify an ingestion URL, the endpoint for the region in which you created your cluster is used.</p>
+      <p>For syslog, specify the hostname or IP address of the log collector service.</p></td>
+    </tr>
+    <tr>
+      <td><code><em>&lt;ingestion_port&gt;</em></code></td>
+      <td>The ingestion port. If you do not specify a port, then the standard port <code>9091</code> is used.
+      <p>For syslog, specify the port of the log collector server. If you do not specify a port, then the standard port <code>514</code> is used.</td>
+    </tr>
+    <tr>
+      <td><code><em>&lt;cluster_space&gt;</em></code></td>
+      <td>Optional: The name of the Cloud Foundry space that you want to send logs to. When forwarding logs to {{site.data.keyword.loganalysisshort_notm}}, the space and org are specified in the ingestion point. If you do not specify a space, logs are sent to the account level.</td>
+    </tr>
+    <tr>
+      <td><code><em>&lt;cluster_org&gt;</em></code></td>
+      <td>The name of the Cloud Foundry org that the space is in. This value is required if you specified a space.</td>
+    </tr>
+    <tr>
+      <td><code><em>&lt;log_type&gt;</em></code></td>
+      <td>Where you want to forward your logs. Options are <code>ibm</code>, which forwards your logs to {{site.data.keyword.loganalysisshort_notm}} and <code>syslog</code>, which forwards your logs to an external server.</td>
+    </tr>
+  </tbody>
+  </table>
 
 <br />
 
@@ -230,7 +275,7 @@ You can view the logs that you forwarded to {{site.data.keyword.loganalysislong_
 
 If you used the default values to create your configuration file, then your logs can be found in the account, or org and space, in which the cluster was created. If you specified an org and space in your configuration file, then you can find your logs in that space. For more information about logging, see [Logging for the {{site.data.keyword.containershort_notm}}](/docs/services/CloudLogAnalysis/containers/containers_kubernetes.html#containers_kubernetes).
 
-To access the Kibana dashboard, go to one of the following URLs and select the {{site.data.keyword.Bluemix_notm}} account or space where you created the cluster.
+To access the Kibana dashboard, go to one of the following URLs and select the {{site.data.keyword.Bluemix_notm}} account or space where you configured log forwarding for the cluster.
 - US-South and US-East: https://logging.ng.bluemix.net
 - UK-South: https://logging.eu-gb.bluemix.net
 - EU-Central: https://logging.eu-fra.bluemix.net
@@ -512,7 +557,7 @@ The check in the example YAML runs every 3 minutes. If it fails three consecutiv
    </tr>
    </tbody>
    </table>
-   
+
    <table summary="Understanding the individual rule components">
    <caption>Understanding the components of individual rules</caption>
    <thead>
