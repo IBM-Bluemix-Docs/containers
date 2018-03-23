@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-19"
+lastupdated: "2018-03-22"
 
 ---
 
@@ -30,11 +30,22 @@ To connect your worker nodes and apps to an on-premises data center, you can con
 ## Setting up VPN connectivity with the strongSwan IPSec VPN service Helm chart
 {: #vpn-setup}
 
-Use a Helm chart to configure and deploy the strongSwan IPSec VPN service inside of a Kubernetes pod. All VPN traffic is then routed through this pod.
+Set up VPN connectivity by using a Helm chart to deploy the strongSwan IPSec VPN service into your cluster.
 {:shortdesc}
 
-For more information about the Helm commands that are used to set up the strongSwan chart, see the <a href="https://docs.helm.sh/helm/" target="_blank">Helm documentation <img src="../icons/launch-glyph.svg" alt="External link icon"></a>.
+Use a Helm chart to configure and deploy the strongSwan IPSec VPN service inside of a Kubernetes pod. Because strongSwan is integrated within your cluster, you don't need an external gateway device. When VPN connectivity is established, routes are automatically configured on all of the worker nodes in the cluster. These routes allow two way connectivity from any pod on any worker node through the VPN tunnel to or from the remote system. For example, the following diagram shows how a strongSwan VPN connection allows communication between a cluster in {{site.data.keyword.containershort_notm}} and an on-premises network:
 
+<img src="images/cs_vpn_strongswan.png" width="700" alt="Expose an app in {{site.data.keyword.containershort_notm}} by using a load balancer" style="width:700px; border-style: none"/>
+
+1. An app in your cluster, `myapp`, receives a request and needs to securely connect to data in your on-premises network.
+
+2. The request to the on-premises data center is forwarded to the IPSec strongSwan VPN pod.  The destination IP address is used to determine which network packets should be sent to the IPSec strongSwan VPN pod.
+
+3. The request is encrypted and sent over the VPN tunnel to the on-premises data center.
+
+4. The incoming request passes through the on-premises firewall and is delivered to the VPN tunnel endpoint (router) where it is decrypted.
+
+5. The VPN tunnel endpoint (router) forwards the request to on-premise server or mainframe depending on the destination IP address specified by the application in step 1. The necessary data is sent back over the VPN connection to `myapp` through the same process.
 
 ### Configure the strongSwan Helm chart
 {: #vpn_configure}
@@ -44,6 +55,8 @@ Before you begin:
 * Either [create a standard cluster](cs_clusters.html#clusters_cli) or [update an existing cluster to version 1.7.4 or later](cs_cluster_update.html#master).
 * The cluster must have at least one available public Load Balancer IP address. [You can check to see your available public IP addresses](cs_subnets.html#manage) or [free up a used IP address](cs_subnets.html#free).
 * [Target the Kubernetes CLI to the cluster](cs_cli_install.html#cs_cli_configure).
+
+For more information about the Helm commands that are used to set up the strongSwan chart, see the <a href="https://docs.helm.sh/helm/" target="_blank">Helm documentation <img src="../icons/launch-glyph.svg" alt="External link icon"></a>.
 
 To configure the Helm chart:
 
