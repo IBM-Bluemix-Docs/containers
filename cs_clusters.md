@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-19"
+lastupdated: "2018-03-22"
 
 ---
 
@@ -183,6 +183,8 @@ To create a cluster:
 
     2. **Standard**: Choose a version of Kubernetes, and select a location in which to deploy your cluster. For the best performance, select the location that is physically closest to you. Keep in mind that you might require legal authorization before data can be physically stored in a foreign country if you select a location that is outside your country.
 
+        
+
     3. **Standard**: Select a type of hardware isolation. Virtual is billed hourly and bare metal is billed monthly.
 
         - **Virtual - Dedicated**: Your worker nodes are hosted on infrastructure that is devoted to your account. Your physical resources are completely isolated.
@@ -207,6 +209,7 @@ To create a cluster:
 **What's next?**
 
 When the cluster is up and running, you can check out the following tasks:
+
 
 -   [Install the CLIs to start working with your cluster.](cs_cli_install.html#cs_cli_install)
 -   [Deploy an app in your cluster.](cs_app.html#app_cli)
@@ -450,6 +453,7 @@ To create a cluster:
 
 **What's next?**
 
+
 -   [Deploy an app in your cluster.](cs_app.html#app_cli)
 -   [Manage your cluster with the `kubectl` command line. ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/user-guide/kubectl/)
 -   [Set up your own private registry in {{site.data.keyword.Bluemix_notm}} to store and share Docker images with other users.](/docs/services/Registry/index.html)
@@ -457,6 +461,8 @@ To create a cluster:
 - If you have a firewall, you might need to [open the required ports](cs_firewall.html#firewall) to use `bx`, `kubectl`, or `calicotl` commands, to allow outbound traffic from your cluster, or to allow inbound traffic for networking services.
 
 <br />
+
+
 
 
 
