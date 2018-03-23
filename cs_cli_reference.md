@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-21"
+lastupdated: "2018-03-23"
 
 ---
 
@@ -212,9 +212,15 @@ bx plugin list
   </tr>
   <tr>
     <td>[bx cs logging-config-update](#cs_logging_update)</td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>[bx cs logging-filter-create](#cs_log_filter_create)</td>
+    <td>[bx cs logging-filter-update](#cs_log_filter_update)</td>
+    <td>[bx cs logging-filter-get](#cs_log_filter_view)</td>
+  </tr>
+  <tr>
+    <td>[bx cs logging-filter-rm](#cs_log_filter_delete)</td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
   </tr>
 </tbody>
 </table>
@@ -1515,7 +1521,7 @@ List the public and private VLANs that are available for a location in your IBM 
 ## Logging commands
 {: #logging_commands}
 
-### bx cs logging-config-create CLUSTER --logsource LOG_SOURCE [--namespace KUBERNETES_NAMESPACE] [--hostname LOG_SERVER_HOSTNAME_OR_IP] [--port LOG_SERVER_PORT] [--space CLUSTER_SPACE] [--org CLUSTER_ORG] --type LOG_TYPE [--json] [--skip-validation]
+### bx cs logging-config-create CLUSTER --logsource LOG_SOURCE [--namespace KUBERNETES_NAMESPACE] [--hostname LOG_SERVER_HOSTNAME_OR_IP] [--port LOG_SERVER_PORT] [--space CLUSTER_SPACE] [--org CLUSTER_ORG] [--app-containers CONTAINERS] [--app-paths PATHS_TO_LOGS] --type LOG_TYPE [--json] [--skip-validation]
 {: #cs_logging_create}
 
 Create a logging configuration. You can use this command to forward logs for containers, applications, worker nodes, Kubernetes clusters, and Ingress application load balancers to {{site.data.keyword.loganalysisshort_notm}} or to an external syslog server.
@@ -1523,26 +1529,30 @@ Create a logging configuration. You can use this command to forward logs for con
 <strong>Command options</strong>:
 
 <dl>
-<dt><code><em>CLUSTER</em></code></dt>
-<dd>The name or ID of the cluster.</dd>
-<dt><code>--logsource <em>LOG_SOURCE</em></code></dt>
-<dd>The log source that you want to enable log forwarding for. This argument supports a comma-separated list of log sources to apply the configuration for. Accepted values are <code>container</code>, <code>application</code>, <code>worker</code>, <code>kubernetes</code>, and <code>ingress</code>. If you do not provide a log source, logging configurations are created for <code>container</code> and <code>ingress</code> log sources.</dd>
-<dt><code>--namespace <em>KUBERNETES_NAMESPACE</em></code></dt>
-<dd>The Kubernetes namespace that you want to forward logs from. Log forwarding is not supported for the <code>ibm-system</code> and <code>kube-system</code> Kubernetes namespaces. This value is valid only for the container log source and is optional. If you do not specify a namespace, then all namespaces in the cluster use this configuration.</dd>
-<dt><code>--hostname <em>LOG_SERVER_HOSTNAME</em></code></dt>
-<dd>When the logging type is <code>syslog</code>, the hostname or IP address of the log collector server. This value is required for <code>syslog</code>. When the logging type is <code>ibm</code>, the {{site.data.keyword.loganalysislong_notm}} ingestion URL. You can find the list of available ingestion URLs [here](/docs/services/CloudLogAnalysis/log_ingestion.html#log_ingestion_urls). If you do not specify an ingestion URL, the endpoint for the region where your cluster was created is used.</dd>
-<dt><code>--port <em>LOG_SERVER_PORT</em></code></dt>
-<dd>The port of the log collector server. This value is optional. If you do not specify a port, then the standard port <code>514</code> is used for <code>syslog</code> and the standard port <code>9091</code> is used for <code>ibm</code>.</dd>
-<dt><code>--space <em>CLUSTER_SPACE</em></code></dt>
-<dd>The name of the Cloud Foundry space that you want to send logs to. This value is valid only for log type <code>ibm</code> and is optional. If you do not specify a space, logs are sent to the account level.</dd>
-<dt><code>--org <em>CLUSTER_ORG</em></code></dt>
-<dd>The name of the Cloud Foundry org that the space is in. This value is valid only for log type <code>ibm</code> and is required if you specified a space.</dd>
-<dt><code>--type <em>LOG_TYPE</em></code></dt>
-<dd>The log forwarding protocol that you want to use. Currently, <code>syslog</code> and <code>ibm</code> are supported. This value is required.</dd>
-<dt><code>--json</code></dt>
-<dd>Optionally prints the command output in JSON format.</dd>
-<dt><code>--skip-validation</code></dt>
-<dd>Optionally skips validation of the org and space names when they are specified. Skipping validation decreases processing time, but an invalid logging configuration will not correctly forward logs.</dd>
+  <dt><code><em>CLUSTER</em></code></dt>
+    <dd>The name or ID of the cluster.</dd>
+  <dt><code>--logsource <em>LOG_SOURCE</em></code></dt>
+    <dd>The log source that you want to enable log forwarding for. This argument supports a comma-separated list of log sources to apply the configuration for. Accepted values are <code>container</code>, <code>application</code>, <code>worker</code>, <code>kubernetes</code>, and <code>ingress</code>. If you do not provide a log source, logging configurations are created for <code>container</code> and <code>ingress</code> log sources.</dd>
+  <dt><code>--namespace <em>KUBERNETES_NAMESPACE</em></code></dt>
+    <dd>The Kubernetes namespace that you want to forward logs from. Log forwarding is not supported for the <code>ibm-system</code> and <code>kube-system</code> Kubernetes namespaces. This value is valid only for the container log source and is optional. If you do not specify a namespace, then all namespaces in the cluster use this configuration.</dd>
+  <dt><code>--hostname <em>LOG_SERVER_HOSTNAME</em></code></dt>
+    <dd>When the logging type is <code>syslog</code>, the hostname or IP address of the log collector server. This value is required for <code>syslog</code>. When the logging type is <code>ibm</code>, the {{site.data.keyword.loganalysislong_notm}} ingestion URL. You can find the list of available ingestion URLs [here](/docs/services/CloudLogAnalysis/log_ingestion.html#log_ingestion_urls). If you do not specify an ingestion URL, the endpoint for the region where your cluster was created is used.</dd>
+  <dt><code>--port <em>LOG_SERVER_PORT</em></code></dt>
+    <dd>The port of the log collector server. This value is optional. If you do not specify a port, then the standard port <code>514</code> is used for <code>syslog</code> and the standard port <code>9091</code> is used for <code>ibm</code>.</dd>
+  <dt><code>--space <em>CLUSTER_SPACE</em></code></dt>
+    <dd>The name of the Cloud Foundry space that you want to send logs to. This value is valid only for log type <code>ibm</code> and is optional. If you do not specify a space, logs are sent to the account level.</dd>
+  <dt><code>--org <em>CLUSTER_ORG</em></code></dt>
+    <dd>The name of the Cloud Foundry org that the space is in. This value is valid only for log type <code>ibm</code> and is required if you specified a space.</dd>
+  <dt><code>--app-paths</code></dt>
+    <dd>Optionally skips validation of the org and space names when they are specified. Skipping validation decreases processing time, but an invalid logging configuration will not correctly forward logs.</dd>
+  <dt><code>--app-containers</code></dt>
+    <dd>The path on their containers that the apps are logging to. To forward logs with source type <code>application</code>, you must provide a path. To specify more than one path, use a comma separated list. Example: <code>/var/log/myApp1/&ast;,/var/log/myApp2/&ast;</code></dd>
+  <dt><code>--type <em>LOG_TYPE</em></code></dt>
+    <dd>The log forwarding protocol that you want to use. Currently, <code>syslog</code> and <code>ibm</code> are supported. This value is required.</dd>
+  <dt><code>--json</code></dt>
+    <dd>Optionally prints the command output in JSON format.</dd>
+  <dt><code>--skip-validation</code></dt>
+    <dd>Optionally skips validation of the org and space names when they are specified. Skipping validation decreases processing time, but an invalid logging configuration will not correctly forward logs.</dd>
 </dl>
 
 **Examples**:
@@ -1575,14 +1585,14 @@ View all log forwarding configurations for a cluster, or filter logging configur
 
 <strong>Command options</strong>:
 
-   <dl>
-   <dt><code><em>CLUSTER</em></code></dt>
-   <dd>The name or ID of the cluster. This value is required.</dd>
-   <dt><code>--logsource <em>LOG_SOURCE</em></code></dt>
-   <dd>The kind of log source for which you want to filter. Only logging configurations of this log source in the cluster are returned. Accepted values are <code>container</code>, <code>application</code>, <code>worker</code>, <code>kubernetes</code>, and <code>ingress</code>. This value is optional.</dd>
-   <dt><code>--json</code></dt>
-   <dd>Optionally prints the command output in JSON format.</dd>
-   </dl>
+ <dl>
+  <dt><code><em>CLUSTER</em></code></dt>
+    <dd>The name or ID of the cluster. This value is required.</dd>
+  <dt><code>--logsource <em>LOG_SOURCE</em></code></dt>
+    <dd>The kind of log source for which you want to filter. Only logging configurations of this log source in the cluster are returned. Accepted values are <code>container</code>, <code>application</code>, <code>worker</code>, <code>kubernetes</code>, and <code>ingress</code>. This value is optional.</dd>
+  <dt><code>--json</code></dt>
+    <dd>Optionally prints the command output in JSON format.</dd>
+ </dl>
 
 **Example**:
 
@@ -1599,10 +1609,10 @@ Refresh the logging configuration for the cluster. This refreshes the logging to
 
 <strong>Command options</strong>:
 
-   <dl>
-   <dt><code><em>CLUSTER</em></code></dt>
+<dl>
+  <dt><code><em>CLUSTER</em></code></dt>
    <dd>The name or ID of the cluster. This value is required.</dd>
-   </dl>
+</dl>
 
 **Example**:
 
@@ -1619,14 +1629,14 @@ Delete one log forwarding configuration or all logging configurations for a clus
 
 <strong>Command options</strong>:
 
-   <dl>
-   <dt><code><em>CLUSTER</em></code></dt>
+<dl>
+  <dt><code><em>CLUSTER</em></code></dt>
    <dd>The name or ID of the cluster. This value is required.</dd>
-   <dt><code>--id <em>LOG_CONFIG_ID</em></code></dt>
+  <dt><code>--id <em>LOG_CONFIG_ID</em></code></dt>
    <dd>If you want to remove a single logging configuration, the logging configuration ID.</dd>
-   <dt><code>--all</code></dt>
+  <dt><code>--all</code></dt>
    <dd>The flag to remove all logging configurations in a cluster.</dd>
-   </dl>
+</dl>
 
 **Example**:
 
@@ -1636,19 +1646,21 @@ Delete one log forwarding configuration or all logging configurations for a clus
   {: pre}
 
 
-### bx cs logging-config-update CLUSTER --id LOG_CONFIG_ID [--hostname LOG_SERVER_HOSTNAME_OR_IP] [--port LOG_SERVER_PORT] [--space CLUSTER_SPACE] [--org CLUSTER_ORG] --type LOG_TYPE [--json] [--skipValidation]
+### bx cs logging-config-update CLUSTER --id LOG_CONFIG_ID [--namespace NAMESPACE] [--hostname LOG_SERVER_HOSTNAME_OR_IP] [--port LOG_SERVER_PORT] [--space CLUSTER_SPACE] [--org CLUSTER_ORG] --type LOG_TYPE [--json] [--skipValidation]
 {: #cs_logging_update}
 
 Update the details of a log forwarding configuration.
 
 <strong>Command options</strong>:
 
-   <dl>
-   <dt><code><em>CLUSTER</em></code></dt>
+<dl>
+  <dt><code><em>CLUSTER</em></code></dt>
    <dd>The name or ID of the cluster. This value is required.</dd>
-   <dt><code>--id <em>LOG_CONFIG_ID</em></code></dt>
+  <dt><code>--id <em>LOG_CONFIG_ID</em></code></dt>
    <dd>The logging configuration ID that you want to update. This value is required.</dd>
-   <dt><code>--hostname <em>LOG_SERVER_HOSTNAME</em></code></dt>
+  <dt><code>--namespace <em>NAMESPACE</em></code>
+    <dd>The Kubernetes namespace that you want to forward logs from. Log forwarding is not supported for the <code>ibm-system</code> and <code>kube-system</code> Kubernetes namespaces. This value is valid only for the <code>container</code> log source. If you do not specify a namespace, then all namespaces in the cluster use this configuration.</dd>
+  <dt><code>--hostname <em>LOG_SERVER_HOSTNAME</em></code></dt>
    <dd>When the logging type is <code>syslog</code>, the hostname or IP address of the log collector server. This value is required for <code>syslog</code>. When the logging type is <code>ibm</code>, the {{site.data.keyword.loganalysislong_notm}} ingestion URL. You can find the list of available ingestion URLs [here](/docs/services/CloudLogAnalysis/log_ingestion.html#log_ingestion_urls). If you do not specify an ingestion URL, the endpoint for the region where your cluster was created is used.</dd>
    <dt><code>--port <em>LOG_SERVER_PORT</em></code></dt>
    <dd>The port of the log collector server. This value is optional when the logging type is <code>syslog</code>. If you do not specify a port, then the standard port <code>514</code> is used for <code>syslog</code> and <code>9091</code> is used for <code>ibm</code>.</dd>
@@ -1656,6 +1668,10 @@ Update the details of a log forwarding configuration.
    <dd>The name of the space that you want to send logs to. This value is valid only for log type <code>ibm</code> and is optional. If you do not specify a space, logs are sent to the account level.</dd>
    <dt><code>--org <em>CLUSTER_ORG</em></code></dt>
    <dd>The name of the org that the space is in. This value is valid only for log type <code>ibm</code> and is required if you specified a space.</dd>
+   <dt><code>--app-paths</code></dt>
+     <dd>Optionally skips validation of the org and space names when they are specified. Skipping validation decreases processing time, but an invalid logging configuration will not correctly forward logs.</dd>
+   <dt><code>--app-containers</code></dt>
+     <dd>The path on their containers that the apps are logging to. To forward logs with source type <code>application</code>, you must provide a path. To specify more than one path, use a comma separated list. Example: <code>/var/log/myApp1/&ast;,/var/log/myApp2/&ast;</code></dd>
    <dt><code>--type <em>LOG_TYPE</em></code></dt>
    <dd>The log forwarding protocol that you want to use. Currently, <code>syslog</code> and <code>ibm</code> are supported. This value is required.</dd>
    <dt><code>--json</code></dt>

@@ -397,7 +397,7 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     ```
     POST https://iam.ng.bluemix.net/oidc/token
     ```
-    {: pre}
+    {: codeblock}
 
     To specify an {{site.data.keyword.Bluemix_notm}} region, [review the region abbreviations as they are used in the API endpoints](cs_regions.html#bluemix_regions).
 
@@ -420,25 +420,25 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     <li>password: <em>&lt;my_password&gt;</em></li>
     <li>uaa_client_id: cf</li>
     <li>uaa_client_secret:</li></ul>
-    <p><b>Note</b>: Add the uaa_client_secret key with no value specified.</p></td>
+    <strong>Note</strong>: Add the <code>uaa_client_secret</code> key with no value specified.</td>
     </tr>
     <tr>
     <td>Body for {{site.data.keyword.Bluemix_notm}} API keys</td>
     <td><ul><li>grant_type: urn:ibm:params:oauth:grant-type:apikey</li>
-    <li>response_type: cloud_iam, uaa</li>
+    <li>response_type: cloud_iam uaa</li>
     <li>apikey: <em>&lt;my_api_key&gt;</em></li>
     <li>uaa_client_id: cf</li>
     <li>uaa_client_secret:</li></ul>
-    <p><b>Note</b>: Add the uaa_client_secret key with no value specified.</p></td>
+    <strong>Note</strong>: Add the <code>uaa_client_secret</code> key with no value specified.</td>
     </tr>
     <tr>
     <td>Body for {{site.data.keyword.Bluemix_notm}} one-time passcode</td>
     <td><ul><li>grant_type: urn:ibm:params:oauth:grant-type:passcode</li>
-    <li>response_type: cloud_iam, uaa</li>
+    <li>response_type: cloud_iam uaa</li>
     <li>passcode: <em>&lt;my_passcode&gt;</em></li>
     <li>uaa_client_id: cf</li>
     <li>uaa_client_secret:</li></ul>
-    <p><b>Note</b>: Add the uaa_client_secret key with no value specified.</p></td>
+    <strong>Note</strong>: Add the <code>uaa_client_secret</code> key with no value specified.</td>
     </tr>
     </tbody>
     </table>
@@ -518,7 +518,7 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     ```
     POST https://iam.ng.bluemix.net/oidc/token
     ```
-    {: pre}
+    {: codeblock}
 
     To specify an {{site.data.keyword.Bluemix_notm}} region, [review the region abbreviations as they are used in the API endpoints](cs_regions.html#bluemix_regions).
 
@@ -530,7 +530,7 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     <tbody>
     <tr>
     <td>Header</td>
-    <td><ul><li>Content-Type:application/x-www-form-urlencoded</li> <li>Authorization: Basic Yng6Yng=<p><b>Note</b>: Provided for you is Yng6Yng=, the URL-encoded authorization for the username **bx** and the password **bx**.</p></li></ul>
+    <td><ul><li>Content-Type:application/x-www-form-urlencoded</li> <li>Authorization: Basic Yng6Yng=<p><strong>Note</strong>: <code>Yng6Yng=</code> equals the URL-encoded authorization for the username <strong>bx</strong> and the password <strong>bx</strong>.</p></li></ul>
     </td>
     </tr>
     <tr>
@@ -542,27 +542,26 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     <li>uaa_client_id: cf</li>
     <li>uaa_client_secret:</li>
     <li>bss_account: <em>&lt;my_account_id&gt;</em></li></ul>
-    <p><b>Note</b>: Add the uaa_client_secret key with no value specified.</p></td>
+    <strong>Note</strong>: Add the <code>uaa_client_secret</code> key with no value specified.</td>
     </tr>
     <tr>
     <td>Body for {{site.data.keyword.Bluemix_notm}} API keys</td>
     <td><ul><li>grant_type: urn:ibm:params:oauth:grant-type:apikey</li>
-    <li>response_type: cloud_iam, uaa</li>
+    <li>response_type: cloud_iam uaa</li>
     <li>apikey: <em>&lt;my_api_key&gt;</em></li>
     <li>uaa_client_id: cf</li>
     <li>uaa_client_secret:</li>
     <li>bss_account: <em>&lt;my_account_id&gt;</em></li></ul>
-    <p><b>Note</b>: Add the uaa_client_secret key with no value specified.</p></td>
+      <strong>Note</strong>: Add the <code>uaa_client_secret</code> key with no value specified.</td>
     </tr>
     <tr>
     <td>Body for {{site.data.keyword.Bluemix_notm}} one-time passcode</td>
     <td><ul><li>grant_type: urn:ibm:params:oauth:grant-type:passcode</li>
-    <li>response_type: cloud_iam, uaa</li>
+    <li>response_type: cloud_iam uaa</li>
     <li>passcode: <em>&lt;my_passcode&gt;</em></li>
     <li>uaa_client_id: cf</li>
     <li>uaa_client_secret:</li>
-    <li>bss_account: <em>&lt;my_account_id&gt;</em></li></ul>
-    <p><b>Note<b>: Add the uaa_client_secret key with no value specified.</p></td>
+    <li>bss_account: <em>&lt;my_account_id&gt;</em></li></ul><strong>Note</strong>: Add the <code>uaa_client_secret</code> key with no value specified.</td>
     </tr>
     </tbody>
     </table>
@@ -587,42 +586,48 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
 
 4.  List all Kubernetes clusters in your account. Use the information that you retrieved in earlier steps to build your header information.
 
-        ```
-        GET https://containers.bluemix.net/v1/clusters
-        ```
-        {: codeblock}
+     ```
+     GET https://containers.bluemix.net/v1/clusters
+     ```
+     {: codeblock}
 
-        <table summary="Input parameters to work with API">
-        <thead>
-        <th>Input parameters</th>
-        <th>Values</th>
-        </thead>
-        <tbody>
-        <tr>
-        <td>Header</td>
-        <td><ul><li>Authorization: bearer <em>&lt;iam_token&gt;</em></li>
-        <li>X-Auth-Refresh-Token: <em>&lt;refresh_token&gt;</em></li></ul></td>
-        </tr>
-        </tbody>
-        </table>
+     <table summary="Input parameters to work with API">
+     <thead>
+     <th>Input parameters</th>
+     <th>Values</th>
+     </thead>
+     <tbody>
+     <tr>
+     <td>Header</td>
+     <td><ul><li>Authorization: bearer <em>&lt;iam_token&gt;</em></li>
+     <li>X-Auth-Refresh-Token: <em>&lt;refresh_token&gt;</em></li></ul></td>
+     </tr>
+     </tbody>
+     </table>
 
 5.  Review the [{{site.data.keyword.containershort_notm}} API documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://containers.bluemix.net/swagger-api) to find a list of supported APIs.
 
 <br />
 
 
-## Refreshing IAM access tokens
+## Refreshing IAM access tokens and obtaining new refresh tokens
 {: #cs_api_refresh}
 
-Every IAM (Identity and Access Management) access token that is issued via the API expires after one hour. You must refresh your access token on a regular basis to assure access to the {{site.data.keyword.containershort_notm}} API.
+Every IAM (Identity and Access Management) access token that is issued via the API expires after one hour. You must refresh your access token on a regular basis to assure access to the {{site.data.keyword.Bluemix_notm}} API. You can use the same steps to obtain a new refresh token. 
 {:shortdesc}
 
-Before you begin, make sure that you have an IAM refresh token that you can use to request a new access token. If you do not have a refresh token, review [Automating the cluster creation and management process with the {{site.data.keyword.containershort_notm}} API](#cs_api) to retrieve your access token.
+Before you begin, make sure that you have an IAM refresh token or an {{site.data.keyword.Bluemix_notm}} API key that you can use to request a new access token. 
+- **Refresh token:** Follow the instructions in [Automating the cluster creation and management process with the {{site.data.keyword.Bluemix_notm}} API](#cs_api). 
+- **API key:** Retrieve your [{{site.data.keyword.Bluemix_notm}} ![External link icon](../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net/) API key as follows. 
+   1. From the menu bar, click **Manage** > **Security** > **Platform API keys**.
+   2. Click **Create**. 
+   3. Enter a **Name** and **Description** for your API key and click **Create**. 
+   4. Click **Show** to see the API key that was generated for you.
+   5. Copy the API key so that you can use it to retrieve your new IAM access token.
 
-Use the following steps if you want to refresh your IAM token.
+Use the following steps if you want to create an IAM token or if you want to obtain a new refresh token.
 
-1.  Generate a new IAM access token. Replace _&lt;iam_refresh_token&gt;_ with the IAM refresh token that you received when you authenticated with {{site.data.keyword.Bluemix_notm}}.
-
+1.  Generate a new IAM access token by using the refresh token or the {{site.data.keyword.Bluemix_notm}} API key.
     ```
     POST https://iam.bluemix.net/identity/token
     ```
@@ -637,16 +642,24 @@ Use the following steps if you want to refresh your IAM token.
     <tr>
     <td>Header</td>
     <td><ul><li>Content-Type: application/x-www-form-urlencoded</li>
-    <li>Authorization: Basic Yng6Yng=<p><b>Note</b>: Provided for you is Yng6Yng=, the URL-encoded authorization for the username **bx** and the password **bx**.</p></li></ul></td>
+      <li>Authorization: Basic Yng6Yng=</br></br><strong>Note:</strong> <code>Yng6Yng=</code> equals the URL-encoded authorization for the username <strong>bx</strong> and the password <strong>bx</strong>.</li></ul></td>
     </tr>
     <tr>
-    <td>Body</td>
+    <td>Body when using the refresh token</td>
     <td><ul><li>grant_type: refresh_token</li>
     <li>response_type: cloud_iam uaa</li>
     <li>refresh_token: <em>&lt;iam_refresh_token&gt;</em></li>
     <li>uaa_client_id: cf</li>
     <li>uaa_client_secret:</li>
-    <li>bss_account: <em>&lt;account_id&gt;</em></li></ul><p><b>Note</b>: Add the uaa_client_secret key with no value specified.</p></td>
+    <li>bss_account: <em>&lt;account_id&gt;</em></li></ul><strong>Note</strong>: Add the <code>uaa_client_secret</code> key with no value specified.</td>
+    </tr>
+    <tr>
+      <td>Body when using the {{site.data.keyword.Bluemix_notm}} API key</td>
+      <td><ul><li>grant_type: <code>urn:ibm:params:oauth:grant-type:apikey</code></li>
+    <li>response_type: cloud_iam uaa</li>
+    <li>apikey: <em>&lt;api_key&gt;</em></li>
+    <li>uaa_client_id: cf</li>
+        <li>uaa_client_secret:</li></ul><strong>Note:</strong> Add the <code>uaa_client_secret</code> key with no value specified.</td>
     </tr>
     </tbody>
     </table>
