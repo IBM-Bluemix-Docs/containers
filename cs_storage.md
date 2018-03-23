@@ -322,7 +322,7 @@ To add persistent storage:
 
     <p>**Example command to show the details of a storage class**:</p>
 
-    <pre class="pre">kubectl describe storageclasses ibmc-file-silver</pre>
+    <pre class="pre"><code>kubectl describe storageclasses ibmc-file-silver</code></pre>
 
 4.  **If you choose the custom storage class**: You get [Performance storage ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/topic/performance-storage) and have more control over choosing the combination of IOPS and size. For example, if you select a size of 40Gi for your PVC, you can choose IOPS that is a multiple of 100 that is in the range of 100 - 2000 IOPS. The following table shows you what range of IOPS you can choose depending on the size that you select.
 
@@ -381,7 +381,7 @@ To add persistent storage:
 
     <p>**Example command to show the details for a custom storage class**:</p>
 
-    <pre class="pre">kubectl describe storageclasses ibmc-file-retain-custom</pre>
+    <pre class="pre"><code>kubectl describe storageclasses ibmc-file-retain-custom</code></pre>
 
 5.  Decide whether you want to be billed on an hourly or monthly basis. By default, you are billed monthly.
 

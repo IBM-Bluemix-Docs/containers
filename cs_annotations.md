@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-20"
+lastupdated: "2018-03-23"
 
 ---
 
@@ -85,17 +85,17 @@ For general information about Ingress services and how to get started using them
   <tr>
   <td><a href="#keepalive-requests">Keepalive requests</a></td>
   <td><code>keepalive-requests</code></td>
-  <td>Configure the maximum number of requests that can be served through one keepalive connection.</td>
+  <td>Set the maximum number of requests that can be served through one keepalive connection.</td>
   </tr>
   <tr>
   <td><a href="#keepalive-timeout">Keepalive timeout</a></td>
   <td><code>keepalive-timeout</code></td>
-  <td>Configure the time that a keepalive connection stays open on the server.</td>
+  <td>Set the maximum time that a keepalive connection stays open on the server.</td>
   </tr>
   <tr>
   <td><a href="#upstream-keepalive">Upstream keepalive</a></td>
   <td><code>upstream-keepalive</code></td>
-  <td>Configure the maximum number of idle keepalive connections for an upstream server.</td>
+  <td>Set the maximum number of idle keepalive connections for an upstream server.</td>
   </tr>
   </tbody></table>
 
@@ -307,7 +307,7 @@ Modify the way the ALB matches the request URI against the app path.
 
 <dt>Supported modifiers</dt>
 <dd>
-  
+
 <table>
  <col width="10%">
  <col width="90%">
@@ -671,7 +671,7 @@ public-ingress-ctl-svc   10.10.10.149   169.60.16.246   &lt;port1&gt;:30776/TCP,
 ### Custom connect-timeouts and read-timeouts (proxy-connect-timeout, proxy-read-timeout)
 {: #proxy-connect-timeout}
 
-Set a custom connect-timeout and read-timeout for the ALB. Set the time that the ALB waits to connect to and read from the back-end app before the back-end app is considered unavailable.
+Set the time that the ALB waits to connect to and read from the back-end app before the back-end app is considered unavailable.
 {:shortdesc}
 
 <dl>
@@ -735,7 +735,7 @@ spec:
 ### Keepalive requests (keepalive-requests)
 {: #keepalive-requests}
 
-Configure the maximum number of requests that can be served through one keepalive connection.
+Set the maximum number of requests that can be served through one keepalive connection.
 {:shortdesc}
 
 <dl>
@@ -794,13 +794,13 @@ rules:
 ### Keepalive timeout (keepalive-timeout)
 {: #keepalive-timeout}
 
-Configure the time that a keepalive connection stays open on the server side.
+Set the maximum time that a keepalive connection stays open on the server side.
 {:shortdesc}
 
 <dl>
 <dt>Description</dt>
 <dd>
-Sets the time that a keepalive connection stays open on the server.
+Sets the maximum time that a keepalive connection stays open on the server.
 </dd>
 
 
@@ -853,7 +853,7 @@ spec:
 ### Upstream keepalive (upstream-keepalive)
 {: #upstream-keepalive}
 
-Configure the maximum number of idle keepalive connections for an upstream server.
+Set the maximum number of idle keepalive connections for an upstream server.
 {:shortdesc}
 
 <dl>
