@@ -128,7 +128,7 @@ When you create a cluster, every cluster is automatically connected to a VLAN fr
 
 A VLAN configures a group of worker nodes and pods as if they were attached to the same physical wire. The private VLAN determines the private IP address that is assigned to a worker node during cluster creation, and the public VLAN determines the public IP address that is assigned to a worker node during cluster creation.
 
-For free clusters, the cluster's worker nodes are connected to an IBM-owned public VLAN and private VLAN by default during cluster creation. For standard clusters, you must connect your worker nodes to a private VLAN. You can either connect your worker nodes to both a public VLAN and the private VLAN, or to the private VLAN only. If you want to connect your worker nodes to a private VLAN only, you can designate the ID of an existing private VLAN during cluster creation or [create a new private VLAN](/docs/cli/reference/softlayer/index.html#sl_vlan_create). However, you must also configure an alternative solution to enable a secure connection between worker nodes and the Kubernetes master. For example, you can [configure a Vyatta Gateway Appliance](https://www.ibm.com/blogs/bluemix/2017/07/kubernetes-and-bluemix-container-based-workloads-part4/) to pass traffic from the private VLAN worker nodes to the Kubernetes master.
+For free clusters, the cluster's worker nodes are connected to an IBM-owned public VLAN and private VLAN by default during cluster creation. For standard clusters, you must connect your worker nodes to a private VLAN. You can either connect your worker nodes to both a public VLAN and the private VLAN, or to the private VLAN only. If you want to connect your worker nodes to a private VLAN only, you can designate the ID of an existing private VLAN during cluster creation or [create a new private VLAN](/docs/cli/reference/softlayer/index.html#sl_vlan_create). However, you must also configure an alternative solution to enable a secure connection between worker nodes on the private VLAN and the Kubernetes master on the public VLAN. For example, you can [configure a Vyatta Gateway Appliance](cs_vpn.html#vyatta).
 
 **Note**: If you have multiple VLANs for a cluster or multiple subnets on the same VLAN, you must turn on VLAN spanning so that your worker nodes can communicate with each other on the private network. For instructions, see [Enable or disable VLAN spanning](/docs/infrastructure/vlans/vlan-spanning.html#enable-or-disable-vlan-spanning).
 
@@ -177,13 +177,11 @@ To create a cluster:
 
 3. Select a type of cluster plan. You can choose either **Free** or **Standard**. With a standard cluster you have access to features like multiple worker nodes for a highly available environment.
 
-4. Configure your cluster details.
+4.  Configure your cluster details.
 
     1. **Free and Standard**: Give your cluster a name. The name must start with a letter, can contain letters, numbers, and -, and must be 35 characters or fewer. Note that the {{site.data.keyword.IBM_notm}}-assigned Ingress subdomain is derived from the cluster name. The cluster name and Ingress subdomain together form the fully qualified domain name, which must be unique within a region and have 63 characters or fewer. To meet these requirements, the cluster name might be truncated or the subdomain might be assigned random character values.
 
     2. **Standard**: Choose a version of Kubernetes, and select a location in which to deploy your cluster. For the best performance, select the location that is physically closest to you. Keep in mind that you might require legal authorization before data can be physically stored in a foreign country if you select a location that is outside your country.
-
-        
 
     3. **Standard**: Select a type of hardware isolation. Virtual is billed hourly and bare metal is billed monthly.
 
