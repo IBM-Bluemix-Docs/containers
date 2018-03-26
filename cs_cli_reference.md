@@ -251,7 +251,7 @@ bx plugin list
     <td>[bx cs worker-add](#cs_worker_add)</td>
     <td>[bx cs worker-get](#cs_worker_get)</td>
     <td>[bx cs worker-reboot](#cs_worker_reboot)</td>
-    <td>[bx cs worker-reload](#cs_worker_reload)</td>
+    <td>[bx cs worker-reload](#cs_worker_reload)</td></staging>
   </tr>
   <tr>
     <td>[bx cs worker-rm](#cs_worker_rm)</td>
