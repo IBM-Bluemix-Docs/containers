@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-20"
+lastupdated: "2018-03-26"
 
 ---
 
@@ -85,17 +85,22 @@ For general information about Ingress services and how to get started using them
   <tr>
   <td><a href="#keepalive-requests">Keepalive requests</a></td>
   <td><code>keepalive-requests</code></td>
-  <td>Configure the maximum number of requests that can be served through one keepalive connection.</td>
+  <td>Set the maximum number of requests that can be served through one keepalive connection.</td>
   </tr>
   <tr>
   <td><a href="#keepalive-timeout">Keepalive timeout</a></td>
   <td><code>keepalive-timeout</code></td>
-  <td>Configure the time that a keepalive connection stays open on the server.</td>
+  <td>Set the maximum time that a keepalive connection stays open on the server.</td>
+  </tr>
+  <tr>
+  <td><a href="#proxy-next-upstream-config">Proxy next upstream</a></td>
+  <td><code>proxy-next-upstream-config</code></td>
+  <td>Set when the ALB can pass a request to the next upstream server.</td>
   </tr>
   <tr>
   <td><a href="#upstream-keepalive">Upstream keepalive</a></td>
   <td><code>upstream-keepalive</code></td>
-  <td>Configure the maximum number of idle keepalive connections for an upstream server.</td>
+  <td>Set the maximum number of idle keepalive connections for an upstream server.</td>
   </tr>
   </tbody></table>
 
@@ -307,7 +312,7 @@ Modify the way the ALB matches the request URI against the app path.
 
 <dt>Supported modifiers</dt>
 <dd>
-  
+
 <table>
  <col width="10%">
  <col width="90%">
@@ -432,7 +437,6 @@ rules:
 </dl>
 
 <br />
-
 
 
 ### Rewrite paths (rewrite-path)
@@ -671,7 +675,7 @@ public-ingress-ctl-svc   10.10.10.149   169.60.16.246   &lt;port1&gt;:30776/TCP,
 ### Custom connect-timeouts and read-timeouts (proxy-connect-timeout, proxy-read-timeout)
 {: #proxy-connect-timeout}
 
-Set a custom connect-timeout and read-timeout for the ALB. Set the time that the ALB waits to connect to and read from the back-end app before the back-end app is considered unavailable.
+Set the time that the ALB waits to connect to and read from the back-end app before the back-end app is considered unavailable.
 {:shortdesc}
 
 <dl>
@@ -735,7 +739,7 @@ spec:
 ### Keepalive requests (keepalive-requests)
 {: #keepalive-requests}
 
-Configure the maximum number of requests that can be served through one keepalive connection.
+Set the maximum number of requests that can be served through one keepalive connection.
 {:shortdesc}
 
 <dl>
@@ -794,13 +798,13 @@ rules:
 ### Keepalive timeout (keepalive-timeout)
 {: #keepalive-timeout}
 
-Configure the time that a keepalive connection stays open on the server side.
+Set the maximum time that a keepalive connection stays open on the server side.
 {:shortdesc}
 
 <dl>
 <dt>Description</dt>
 <dd>
-Sets the time that a keepalive connection stays open on the server.
+Sets the maximum time that a keepalive connection stays open on the server.
 </dd>
 
 
@@ -849,11 +853,96 @@ spec:
 <br />
 
 
+### Proxy next upstream (proxy-next-upstream-config)
+{: #proxy-next-upstream-config}
+
+Set when the ALB can pass a request to the next upstream server.
+{:shortdesc}
+
+<dl>
+<dt>Description</dt>
+<dd>
+The Ingress ALB acts as a proxy between the client app and your app. Some app setups require multiple upstream servers that handle incoming client requests from the ALB. Sometimes the proxy server that the ALB uses cannot establish a connection with an upstream server that the app uses. The ALB can then try to establish a connection with the next upstream server to pass the request to it instead. You can use the `proxy-next-upstream-config` annotation to set in which cases, how long, and how many times the ALB can try to pass a request to the next upstream server.<br><br><strong>Note</strong>: Timeout is always configured when you use `proxy-next-upstream-config`, so don't add `timeout=true` to this annotation.
+</dd>
+<dt>Sample Ingress resource YAML</dt>
+<dd>
+<pre class="codeblock">
+<code>apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: myingress
+  annotations:
+    ingress.bluemix.net/proxy-next-upstream-config: "serviceName=&lt;myservice1&gt; retries=&lt;tries&gt; timeout=&lt;time&gt; error=true http_502=true; serviceName=&lt;myservice2&gt; http_403=true non_idempotent=true"
+spec:
+  tls:
+  - hosts:
+    - mydomain
+    secretName: mysecret
+  rules:
+  - host: mydomain
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: myservice1
+          servicePort: 80
+</code></pre>
+
+<table>
+<thead>
+<th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
+</thead>
+<tbody>
+<tr>
+<td><code>serviceName</code></td>
+<td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the Kubernetes service that you created for your app.</td>
+</tr>
+<tr>
+<td><code>retries</code></td>
+<td>Replace <code>&lt;<em>tries</em>&gt;</code> with the maximum amount of times that the ALB tries to pass a request to the next upstream server. This number includes the original request. To turn off this limitation, use <code>0</code>. If you do not specify a value, the default value <code>0</code> is used.
+</td>
+</tr>
+<tr>
+<td><code>timeout</code></td>
+<td>Replace <code>&lt;<em>time</em>&gt;</code> with the maximum amount of time, in seconds, that the ALB tries to pass a request to the next upstream server. For example, to set a time of 30 seconds, enter <code>30s</code>. To turn off this limitation, use <code>0</code>. If you do not specify a value, the default value <code>0</code> is used.
+</td>
+</tr>
+<tr>
+<td><code>error</code></td>
+<td>If set to <code>true</code>, the ALB passes a request to the next upstream server when an error occurred while establishing a connection with the first upstream server, passing a request to it, or reading the response header.
+</td>
+</tr>
+<tr>
+<td><code>invalid_header</code></td>
+<td>If set to <code>true</code>, the ALB passes a request to the next upstream server when the first upstream server returns an empty or invalid response.
+</td>
+</tr>
+<tr>
+<td><code>http_502</code></td>
+<td>If set to <code>true</code>, the ALB passes a request to the next upstream server when the first upstream server returns a response with the code 502. You can designate the following HTTP response codes: <code>500</code>, <code>502</code>, <code>503</code>, <code>504</code>, <code>403</code>, <code>404</code>, <code>429</code>.
+</td>
+</tr>
+<tr>
+<td><code>non_idempotent</code></td>
+<td>If set to <code>true</code>, the ALB can pass requests with a non-idempotent method to the next upstream server. By default, the ALB does not pass these requests to the next upstream server.
+</td>
+</tr>
+<tr>
+<td><code>off</code></td>
+<td>To prevent the ALB from passing requests to the next upstream server, set to <code>true</code>.
+</td>
+</tr>
+</tbody></table>
+</dd>
+</dl>
+
+<br />
+
 
 ### Upstream keepalive (upstream-keepalive)
 {: #upstream-keepalive}
 
-Configure the maximum number of idle keepalive connections for an upstream server.
+Set the maximum number of idle keepalive connections for an upstream server.
 {:shortdesc}
 
 <dl>
@@ -924,8 +1013,9 @@ Set the maximum number of idle keepalive connections to the upstream server of a
   <p>If you set the request type to <code>web</code>, a web request that contains an {{site.data.keyword.appid_short_notm}} access token is validated. If token validation fails, the web request is rejected. If the request does not contain an access token, then the request is redirected to the {{site.data.keyword.appid_short_notm}} login page. **Note**: For {{site.data.keyword.appid_short_notm}} web authentication to work, cookies must be enabled in the user's browser.</p>
 
   <p>If you set the request type to <code>api</code>, an API request that contains an {{site.data.keyword.appid_short_notm}} access token is validated. If the request does not contain an access token, a <code>401: Unauthorized</code> error message is returned to the user.</p>
-  </dd>
 
+  <p>**Note**: For security reasons, {{site.data.keyword.appid_short_notm}} authentication only supports backends with TLS/SSL enabled.</p>
+  </dd>
    <dt>Sample Ingress resource YAML</dt>
    <dd>
 
