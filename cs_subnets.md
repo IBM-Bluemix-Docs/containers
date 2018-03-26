@@ -190,7 +190,7 @@ Requirements:
 
 Before you begin:
 - Configure the routing of network traffic into and out of the external subnet.
-- Confirm that you have VPN connectivity between the on-premises data center gateway device and either the private network Vyatta in your IBM Cloud infrastructure (SoftLayer) portfolio or the strongSwan VPN service that is running in your cluster. To use a Vyatta, see this [blog post ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/blogs/bluemix/2017/07/kubernetes-and-bluemix-container-based-workloads-part4/)]. To use strongSwan, see [Setting up VPN connectivity with the strongSwan IPSec VPN service](cs_vpn.html).
+- Confirm that you have VPN connectivity between the on-premises data center gateway device and either the private network Vyatta in your IBM Cloud infrastructure (SoftLayer) portfolio or the strongSwan VPN service that is running in your cluster. For more information, see [Setting up VPN connectivity](cs_vpn.html).
 
 To add a subnet from an on-premises network:
 
