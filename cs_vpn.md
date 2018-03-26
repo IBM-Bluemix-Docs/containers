@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-22"
+lastupdated: "2018-03-26"
 
 ---
 
@@ -23,9 +23,9 @@ With VPN connectivity, you can securely connect apps in a Kubernetes cluster on 
 
 To connect your worker nodes and apps to an on-premises data center, you can configure a VPN IPSec endpoint with a strongSwan service or with a Vyatta Gateway Appliance or a Fortigate Appliance.
 
-- **strongSwan IPSec VPN Service**: You can set up a [strongSwan IPSec VPN service ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.strongswan.org/) that securely connects your Kubernetes cluster with an on-premises network. The strongSwan IPSec VPN service provides a secure end-to-end communication channel over the internet that is based on the industry-standard Internet Protocol Security (IPsec) protocol suite. To set up a secure connection between your cluster and an on-premises network, you must [install an IPsec VPN gateway in your on-premises data center](/docs/infrastructure/iaas-vpn/set-up-ipsec-vpn.html#setting-up-an-ipsec-connection). Then, you can [configure and deploy the strongSwan IPSec VPN service](#vpn-setup) in a Kubernetes pod.
+- **strongSwan IPSec VPN Service**: You can set up a [strongSwan IPSec VPN service ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.strongswan.org/) that securely connects your Kubernetes cluster with an on-premises network. The strongSwan IPSec VPN service provides a secure end-to-end communication channel over the internet that is based on the industry-standard Internet Protocol Security (IPsec) protocol suite. To set up a secure connection between your cluster and an on-premises network, [configure and deploy the strongSwan IPSec VPN service](#vpn-setup) directly in a pod in your cluster.
 
-- **Vyatta Gateway Appliance or Fortigate Appliance**: If you have a larger cluster, want to access non-Kubernetes resources over the VPN, or want to access multiple clusters over a single VPN, you might choose to set up a Vyatta Gateway Appliance or Fortigate Appliance to configure an IPSec VPN endpoint. For more information, see this blog post on [Connecting a cluster to an on-premises data center ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/blogs/bluemix/2017/07/kubernetes-and-bluemix-container-based-workloads-part4/).
+- **Vyatta Gateway Appliance or Fortigate Appliance**: If you have a larger cluster, want to access non-Kubernetes resources over the VPN, or want to access multiple clusters over a single VPN, you might choose to set up a Vyatta Gateway Appliance or Fortigate Appliance to configure an IPSec VPN endpoint. To configure a Vyatta, see [Setting up VPN connectivity with Vyatta](#vyatta).
 
 ## Setting up VPN connectivity with the strongSwan IPSec VPN service Helm chart
 {: #vpn-setup}
@@ -394,3 +394,37 @@ You can disable the VPN connection by deleting the Helm chart.
   helm delete --purge <release_name>
   ```
   {: pre}
+
+## Setting up VPN connectivity with a Vyatta Gateway Appliance
+{: #vyatta}
+
+The [Vyatta Gateway Appliance [![External link icon](../icons/launch-glyph.svg "External link icon")]](http://knowledgelayer.softlayer.com/learning/network-gateway-devices-vyatta) is a bare metal server that runs a special distribution of Linux that you can use as a firewall to route and protect traffic on a set of VLANs.
+{:shortdesc}
+
+All public and private network traffic that enters or leaves the cluster VLANs is routed through the Vyatta. If your worker nodes are connected to a private VLAN only, can configure a Vyatta to enable a secure connection between worker nodes and the Kubernetes master.
+
+A Vyatta can also act as a firewall and an IPSec VPN gateway. The Vyatta is used as a VPN endpoint to create an encrypted IPSec tunnel between servers in IBM Cloud infrastructure (SoftLayer) and on-premise resources. If you connect your worker nodes to a private VLAN only, the Vyatta VPN tunnel can be used to connect the private network in {{site.data.keyword.containershort_notm}} to one or more on-premises private networks over an encrypted connection.
+
+The following diagram shows how a Vyatta can both secure a connection between the Kubernetes master and the worker nodes as well as a connection between the worker nodes and an on-premises data center:
+
+<img src="images/cs_vpn_vyatta.png" width="725" alt="Expose an app in {{site.data.keyword.containershort_notm}} by using a load balancer" style="width:725px; border-style: none"/>
+
+1. The Kubernetes master, which is on the public VLAN, receives a request for an app in your cluster, `myapp2`. The master sends the request to the app.
+
+2. Because `myapp2` is on a worker node that is on a private VLAN only, the Vyatta acts as a secure connection between the public and private VLANs. The Vyatta sends the request to the app.
+
+3. `myapp2` receives the request and needs to securely connect to data in your on-premises network. The request to the on-premises data center is forwarded back through the Vyatta.
+
+4. The request is encrypted and sent over the VPN tunnel to the on-premises data center.
+
+5. The incoming request passes through the on-premises firewall and is delivered to the VPN tunnel endpoint (router) where it is decrypted.
+
+6. The VPN tunnel endpoint (router) forwards the request to on-premise server or mainframe depending on the destination IP address specified by `myapp2` in step 3. The necessary data is sent back over the VPN connection to `myapp2` through the same process.
+
+To set up a Vyatta Gateway Appliance:
+
+	1. [Order a Vyatta ![External link icon](../icons/launch-glyph.svg "External link icon")]](https://knowledgelayer.softlayer.com/procedure/how-order-vyatta).
+	2. [Configure the private VLAN on the Vyatta [![External link icon](../icons/launch-glyph.svg "External link icon")]](https://knowledgelayer.softlayer.com/procedure/basic-configuration-vyatta).
+	3. Optional: To enable a VPN connection using the Vyatta, [configure IPSec on the Vyatta [![External link icon](../icons/launch-glyph.svg "External link icon")]](https://knowledgelayer.softlayer.com/procedure/how-configure-ipsec-vyatta).
+
+For more information, see this blog post on [Connecting a cluster to an on-premises data center ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/blogs/bluemix/2017/07/kubernetes-and-bluemix-container-based-workloads-part4/).
