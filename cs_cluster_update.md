@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-16"
+lastupdated: "2018-03-23"
 
 ---
 
@@ -192,21 +192,21 @@ You can update the machine types that are used in worker nodes by adding new wor
     ```
     {: pre}
 
-3. Add a worker node by using the [bx cs worker-add](cs_cli_reference.html#cs_worker_add) command and specify one of the machine types listed in the output of the previous command.
+3. Add worker nodes by using the [bx cs worker-add](cs_cli_reference.html#cs_worker_add) command. Specify a machine type.
 
     ```
     bx cs worker-add --cluster <cluster_name> --machine-type <machine_type> --number <number_of_worker_nodes> --private-vlan <private_vlan> --public-vlan <public_vlan>
     ```
     {: pre}
 
-4. Verify that the worker node is added.
+4. Verify that the worker nodes are added.
 
     ```
     bx cs workers <cluster_name>
     ```
     {: pre}
 
-5. When the added worker node is in the `Normal` state, you can remove the outdated worker node. **Note**: If you are removing a machine type that is billed monthly (such as bare metal), you are charged for the entire the month.
+5. When the added worker nodes are in the `Normal` state, you can remove the outdated worker node. **Note**: If you are removing a machine type that is billed monthly (such as bare metal), you are charged for the entire the month.
 
     ```
     bx cs worker-rm <cluster_name> <worker_node>
