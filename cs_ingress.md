@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-21"
+lastupdated: "2018-03-28"
 
 ---
 
@@ -16,7 +16,7 @@ lastupdated: "2018-03-21"
 {:download: .download}
 
 
-# Setting up Ingress services
+# Exposing apps with Ingress
 {: #ingress}
 
 Expose multiple apps in your Kubernetes cluster by creating Ingress resources that are managed by the IBM-provided application load balancer in {{site.data.keyword.containerlong}}.

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-16"
+lastupdated: "2018-03-28"
 
 ---
 
@@ -16,7 +16,7 @@ lastupdated: "2018-03-16"
 {:download: .download}
 
 
-# Planning external networking
+# Planning networking with NodePort, LoadBalancer, or Ingress services
 {: #planning}
 
 When you create a Kubernetes cluster in {{site.data.keyword.containerlong}}, every cluster must be connected to a public VLAN. The public VLAN determines the public IP address that is assigned to a worker node during cluster creation.

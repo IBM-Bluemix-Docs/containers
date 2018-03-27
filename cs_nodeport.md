@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-19"
+lastupdated: "2018-03-28"
 
 ---
 
@@ -16,7 +16,7 @@ lastupdated: "2018-03-19"
 {:download: .download}
 
 
-# Setting up NodePort services
+# Exposing apps with Nodeports
 {: #nodeport}
 
 Make your containerized app available to internet access by using the public IP address of any worker node in a Kubernetes cluster and exposing a node port. Use this option for testing {{site.data.keyword.containerlong}} and short-term public access.

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-19"
+lastupdated: "2018-03-28"
 
 ---
 
@@ -16,7 +16,7 @@ lastupdated: "2018-03-19"
 {:download: .download}
 
 
-# Setting up Load Balancer services
+# Exposing apps with LoadBalancers
 {: #loadbalancer}
 
 Expose a port and use a portable IP address for the load balancer to access a containerized app.
