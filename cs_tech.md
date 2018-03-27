@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-21"
+lastupdated: "2018-03-27"
 
 ---
 
@@ -47,12 +47,16 @@ Learn about some basic Docker concepts:
 <dt>Containers are small</dt>
 <dd>You can fit many containers in the amount of space that a single virtual machine requires.</dd>
 <dt>Containers are portable</dt>
-<dd><ul>
+<dd>
+<ul>
   <li>Reuse pieces of images to build containers. </li>
   <li>Move app code quickly from staging to production environments.</li>
-  <li>Automate your processes with continuous delivery tools.</li> </ul></dd>
-</dl>
+  <li>Automate your processes with continuous delivery tools.</li>
+  </ul>
+  </dd>
+<p>Ready to gain deeper knowledge of Docker? <a href="https://developer.ibm.com/courses/all/docker-essentials-extend-your-apps-with-containers/" target="_blank">Learn how Docker and {{site.data.keyword.containershort_notm}} work together by completing this course.</a></p>
 
+</dl>
 
 <br />
 
@@ -60,7 +64,7 @@ Learn about some basic Docker concepts:
 ## Kubernetes clusters
 {: #kubernetes_basics}
 
-The open source project named Kubernetes combines running a containerized infrastructure with production work loads, open source contributions, and Docker container management tools. The Kubernetes infrastructure provides an isolated and secure app platform for managing containers that is portable, extensible, and self-healing in case of failovers.
+<img src="images/certified-kubernetes-resized.png" style="padding-right: 10px;" align="left" alt="This badge indicates Kubernetes certification for IBM Cloud Container Service."/>The open source project named Kubernetes combines running a containerized infrastructure with production work loads, open source contributions, and Docker container management tools. The Kubernetes infrastructure provides an isolated and secure app platform for managing containers that is portable, extensible, and self-healing in case of failovers.
 {:shortdesc}
 
 Learn about some basic Kubernetes concepts as shown in the following diagram.
@@ -87,9 +91,12 @@ Define update strategies for your app, including the number of pods that you wan
 <dd>Every containerized app that is deployed into a cluster is deployed, run, and managed by a Kubernetes resource that is called a pod. Pods represent small deployable units in a Kubernetes cluster and are used to group the containers that must be treated as a single unit. In most cases, each container is deployed in its own pod. However, an app might require a container and other helper containers to be deployed into one pod so that those containers can be addressed by using the same private IP address.</dd>
 
 <dt>App</dt>
-<dd>An app might refer to a complete app or a component of an app. You might deploy components of an app in separate pods or separate worker nodes.
-</br></br>
-To learn more about Kubernetes terminology, <a href="cs_tutorials.html#cs_cluster_tutorial" target="_blank">try the tutorial</a>.</dd>
+<dd>An app might refer to a complete app or a component of an app. You might deploy components of an app in separate pods or separate worker nodes.</dd>
+
+<p>Ready to gain deeper knowledge of Kubernetes?</p>
+<ul><li><a href="cs_tutorials.html#cs_cluster_tutorial" target="_blank">Expand your terminology knowledge with the Creating clusters tutorial</a>.</li>
+<li><a href="https://developer.ibm.com/courses/all/get-started-kubernetes-ibm-cloud-container-service/" target="_blank">Learn how Kubernetes and {{site.data.keyword.containershort_notm}} work together by completing this course.</a></li></ul>
+
 
 </dl>
 
