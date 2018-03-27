@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-16"
+lastupdated: "2018-03-28"
 
 ---
 
@@ -16,7 +16,7 @@ lastupdated: "2018-03-16"
 {:download: .download}
 
 
-# Planning external networking
+# Planning networking with NodePort, LoadBalancer, or Ingress services
 {: #planning}
 
 When you create a Kubernetes cluster in {{site.data.keyword.containerlong}}, every cluster must be connected to a public VLAN. The public VLAN determines the public IP address that is assigned to a worker node during cluster creation.
@@ -67,7 +67,7 @@ The diagram shows how Kubernetes carries user network traffic in {{site.data.key
  <ul>
   <li>Expose multiple apps in your cluster by creating one external HTTP or HTTPS, TCP, or UDP load balancer that uses a secured and unique public entrypoint to route incoming requests to your apps.</li>
   <li>You can use one public route to expose multiple apps in your cluster as services.</li>
-  <li>Ingress consists of two main components: the Ingress resource and the application load balancer.
+  <li>Ingress consists of two components:
    <ul>
     <li>The Ingress resource defines the rules for how to route and load balance incoming requests for an app.</li>
     <li>The application load balancer (ALB) listens for incoming HTTP or HTTPS, TCP, or UDP service requests and forwards requests across the apps' pods based on the rules that you defined in the Ingress resource.</li>
