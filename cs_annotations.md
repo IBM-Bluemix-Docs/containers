@@ -55,17 +55,13 @@ For general information about Ingress services and how to get started using them
  <td>Route incoming network traffic to a different path that your backend app listens on.</td>
  </tr>
  <tr>
- <td><a href="#sticky-cookie-services">Session-affinity with cookies</a></td>
- <td><code>sticky-cookie-services</code></td>
- <td>Always route incoming network traffic to the same upstream server by using a sticky cookie.</td>
- </tr>
- <tr>
  <td><a href="#tcp-ports">TCP ports</a></td>
  <td><code>tcp-ports</code></td>
  <td>Access an app via a non-standard TCP port.</td>
  </tr>
  </tbody></table>
 
+<br>
 
 <table>
 <col width="20%">
@@ -98,11 +94,18 @@ For general information about Ingress services and how to get started using them
   <td>Set when the ALB can pass a request to the next upstream server.</td>
   </tr>
   <tr>
+  <td><a href="#sticky-cookie-services">Session-affinity with cookies</a></td>
+  <td><code>sticky-cookie-services</code></td>
+  <td>Always route incoming network traffic to the same upstream server by using a sticky cookie.</td>
+  </tr>
+  <tr>
   <td><a href="#upstream-keepalive">Upstream keepalive</a></td>
   <td><code>upstream-keepalive</code></td>
   <td>Set the maximum number of idle keepalive connections for an upstream server.</td>
   </tr>
   </tbody></table>
+
+<br>
 
   <table>
   <col width="20%">
@@ -146,6 +149,8 @@ For general information about Ingress services and how to get started using them
   </tr>
   </tbody></table>
 
+<br>
+
 
 
 <table>
@@ -180,6 +185,7 @@ For general information about Ingress services and how to get started using them
  </tr>
  </tbody></table>
 
+<br>
 
 <table>
 <col width="20%">
@@ -213,6 +219,8 @@ For general information about Ingress services and how to get started using them
 </tr>
 </tbody></table>
 
+<br>
+
 <table>
 <col width="20%">
 <col width="20%">
@@ -234,6 +242,8 @@ For general information about Ingress services and how to get started using them
 <td>Limit the request processing rate and the number of connections per a defined key for specific services.</td>
 </tr>
 </tbody></table>
+
+<br>
 
 
 
@@ -490,83 +500,6 @@ spec:
 </dd></dl>
 
 <br />
-
-
-### Session-affinity with cookies (sticky-cookie-services)
-{: #sticky-cookie-services}
-
-Use the sticky cookie annotation to add session affinity to your ALB and always route incoming network traffic to the same upstream server.
-{:shortdesc}
-
-<dl>
-<dt>Description</dt>
-<dd>For high availability, some app setups require you to deploy multiple upstream servers that handle incoming client requests. When a client connects to you back-end app, you can use session-affinity so that a client is served by the same upstream server for the duration of a session or for the time it takes to complete a task. You can configure your ALB to ensure session-affinity by always routing incoming network traffic to the same upstream server.
-
-</br></br>
-Every client that connects to your back-end app is assigned to one of the available upstream servers by the ALB. The ALB creates a session cookie that is stored in the client's app, which is included in the header information of every request between the ALB and the client. The information in the cookie ensures that all requests are handled by the same upstream server throughout the session.
-
-</br></br>
-When you include multiple services, use a semi-colon (;) to separate them.</dd>
-<dt>Sample Ingress resource YAML</dt>
-<dd>
-
-<pre class="codeblock">
-<code>apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: myingress
-  annotations:
-    ingress.bluemix.net/sticky-cookie-services: "serviceName=&lt;myservice1&gt; name=&lt;cookie_name1&gt; expires=&lt;expiration_time1&gt; path=&lt;cookie_path1&gt; hash=&lt;hash_algorithm1&gt;;serviceName=&lt;myservice2&gt; name=&lt;cookie_name2&gt; expires=&lt;expiration_time2&gt; path=&lt;cookie_path2&gt; hash=&lt;hash_algorithm2&gt;"
-spec:
-  tls:
-  - hosts:
-    - mydomain
-    secretName: mytlssecret
-  rules:
-  - host: mydomain
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: &lt;myservice1&gt;
-          servicePort: 8080
-      - path: /myapp
-        backend:
-          serviceName: &lt;myservice2&gt;
-          servicePort: 80</code></pre>
-
-  <table>
-  <caption>Understanding the YAML file components</caption>
-  <thead>
-  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
-  </thead>
-  <tbody>
-  <tr>
-  <td><code>serviceName</code></td>
-  <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the Kubernetes service that you created for your app.</td>
-  </tr>
-  <tr>
-  <td><code>name</code></td>
-  <td>Replace <code>&lt;<em>cookie_name</em>&gt;</code> with the name of a sticky cookie that is created during a session.</td>
-  </tr>
-  <tr>
-  <td><code>expires</code></td>
-  <td>Replace <code>&lt;<em>expiration_time</em>&gt;</code> with the time in seconds (s), minutes (m), or hours (h) before the sticky cookie expires. This time is independent of the user activity. After the cookie is expired, the cookie is deleted by the client web browser and no longer sent to the ALB. For example, to set an expiration time of 1 second, 1 minute, or 1 hour, enter <code>1s</code>, <code>1m</code>, or <code>1h</code>.</td>
-  </tr>
-  <tr>
-  <td><code>path</code></td>
-  <td>Replace <code>&lt;<em>cookie_path</em>&gt;</code> with the path that is appended to the Ingress subdomain and that indicates for which domains and subdomains the cookie is sent to the ALB. For example, if your Ingress domain is <code>www.myingress.com</code> and you want to send the cookie in every client request, you must set <code>path=/</code>. If you want to send the cookie only for <code>www.myingress.com/myapp</code> and all its subdomains, then you must set <code>path=/myapp</code>.</td>
-  </tr>
-  <tr>
-  <td><code>hash</code></td>
-  <td>Replace <code>&lt;<em>hash_algorithm</em>&gt;</code> with the hash algorithm that protects the information in the cookie. Only <code>sha1</code> is supported. SHA1 creates a hash sum based on the information in the cookie and appends this hash sum to the cookie. The server can decrypt the information in the cookie and verify data integrity.</td>
-  </tr>
-  </tbody></table>
-
- </dd></dl>
-
-<br />
-
 
 
 ### TCP ports for application load balancers (tcp-ports)
@@ -935,6 +868,82 @@ spec:
 </tbody></table>
 </dd>
 </dl>
+
+<br />
+
+
+### Session-affinity with cookies (sticky-cookie-services)
+{: #sticky-cookie-services}
+
+Use the sticky cookie annotation to add session affinity to your ALB and always route incoming network traffic to the same upstream server.
+{:shortdesc}
+
+<dl>
+<dt>Description</dt>
+<dd>For high availability, some app setups require you to deploy multiple upstream servers that handle incoming client requests. When a client connects to you back-end app, you can use session-affinity so that a client is served by the same upstream server for the duration of a session or for the time it takes to complete a task. You can configure your ALB to ensure session-affinity by always routing incoming network traffic to the same upstream server.
+
+</br></br>
+Every client that connects to your back-end app is assigned to one of the available upstream servers by the ALB. The ALB creates a session cookie that is stored in the client's app, which is included in the header information of every request between the ALB and the client. The information in the cookie ensures that all requests are handled by the same upstream server throughout the session.
+
+</br></br>
+When you include multiple services, use a semi-colon (;) to separate them.</dd>
+<dt>Sample Ingress resource YAML</dt>
+<dd>
+
+<pre class="codeblock">
+<code>apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: myingress
+  annotations:
+    ingress.bluemix.net/sticky-cookie-services: "serviceName=&lt;myservice1&gt; name=&lt;cookie_name1&gt; expires=&lt;expiration_time1&gt; path=&lt;cookie_path1&gt; hash=&lt;hash_algorithm1&gt;;serviceName=&lt;myservice2&gt; name=&lt;cookie_name2&gt; expires=&lt;expiration_time2&gt; path=&lt;cookie_path2&gt; hash=&lt;hash_algorithm2&gt;"
+spec:
+  tls:
+  - hosts:
+    - mydomain
+    secretName: mytlssecret
+  rules:
+  - host: mydomain
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: &lt;myservice1&gt;
+          servicePort: 8080
+      - path: /myapp
+        backend:
+          serviceName: &lt;myservice2&gt;
+          servicePort: 80</code></pre>
+
+  <table>
+  <caption>Understanding the YAML file components</caption>
+  <thead>
+  <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
+  </thead>
+  <tbody>
+  <tr>
+  <td><code>serviceName</code></td>
+  <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the Kubernetes service that you created for your app.</td>
+  </tr>
+  <tr>
+  <td><code>name</code></td>
+  <td>Replace <code>&lt;<em>cookie_name</em>&gt;</code> with the name of a sticky cookie that is created during a session.</td>
+  </tr>
+  <tr>
+  <td><code>expires</code></td>
+  <td>Replace <code>&lt;<em>expiration_time</em>&gt;</code> with the time in seconds (s), minutes (m), or hours (h) before the sticky cookie expires. This time is independent of the user activity. After the cookie is expired, the cookie is deleted by the client web browser and no longer sent to the ALB. For example, to set an expiration time of 1 second, 1 minute, or 1 hour, enter <code>1s</code>, <code>1m</code>, or <code>1h</code>.</td>
+  </tr>
+  <tr>
+  <td><code>path</code></td>
+  <td>Replace <code>&lt;<em>cookie_path</em>&gt;</code> with the path that is appended to the Ingress subdomain and that indicates for which domains and subdomains the cookie is sent to the ALB. For example, if your Ingress domain is <code>www.myingress.com</code> and you want to send the cookie in every client request, you must set <code>path=/</code>. If you want to send the cookie only for <code>www.myingress.com/myapp</code> and all its subdomains, then you must set <code>path=/myapp</code>.</td>
+  </tr>
+  <tr>
+  <td><code>hash</code></td>
+  <td>Replace <code>&lt;<em>hash_algorithm</em>&gt;</code> with the hash algorithm that protects the information in the cookie. Only <code>sha1</code> is supported. SHA1 creates a hash sum based on the information in the cookie and appends this hash sum to the cookie. The server can decrypt the information in the cookie and verify data integrity.</td>
+  </tr>
+  </tbody></table>
+
+ </dd></dl>
 
 <br />
 
