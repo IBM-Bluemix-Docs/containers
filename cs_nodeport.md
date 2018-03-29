@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-19"
+lastupdated: "2018-03-30"
 
 ---
 
@@ -16,13 +16,13 @@ lastupdated: "2018-03-19"
 {:download: .download}
 
 
-# Setting up NodePort services
+# Exposing apps with NodePorts
 {: #nodeport}
 
 Make your containerized app available to internet access by using the public IP address of any worker node in a Kubernetes cluster and exposing a node port. Use this option for testing {{site.data.keyword.containerlong}} and short-term public access.
 {:shortdesc}
 
-## Planning external networking with NodePort services
+## Managing network traffic by using NodePorts
 {: #planning}
 
 Expose a public port on your worker node and use the public IP address of the worker node to access your service in the cluster publicly from the internet.
@@ -42,12 +42,12 @@ The following diagram shows how communication is directed from the internet to a
 
 4. The request is forwarded to the private IP address of the pod where the app is deployed. If multiple app instances are deployed in the cluster, the NodePort service routes the requests between the app pods.
 
-**Note:** The public IP address of the worker node is not permanent. When a worker node is removed or re-created, a new public IP address is assigned to the worker node. You can use the NodePort service for testing the public access for your app or when public access is needed for a short amount of time only. When you require a stable public IP address and more availability for your service, expose your app by using a [LoadBalancer service](cs_loadbalancer.html#planning) or [Ingress](cs_ingress.html#planning).
+**Note:** The public IP address of the worker node is not permanent. When a worker node is removed or re-created, a new public IP address is assigned to the worker node. You can use the NodePort service for testing the public access for your app or when public access is needed for a short amount of time only. When you require a stable public IP address and more availability for your service, expose your app by using a [LoadBalancer service](cs_loadbalancer.html) or [Ingress](cs_ingress.html).
 
 <br />
 
 
-## Configuring public access to an app by using the NodePort service
+## Enabling public access to an app by using a NodePort service
 {: #config}
 
 You can expose your app as a Kubernetes NodePort service for free or standard clusters.
