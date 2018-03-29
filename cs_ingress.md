@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-21"
+lastupdated: "2018-03-29"
 
 ---
 
@@ -16,23 +16,25 @@ lastupdated: "2018-03-21"
 {:download: .download}
 
 
-# Setting up Ingress services
+# Exposing apps with Ingress
 {: #ingress}
 
 Expose multiple apps in your Kubernetes cluster by creating Ingress resources that are managed by the IBM-provided application load balancer in {{site.data.keyword.containerlong}}.
 {:shortdesc}
 
-## Planning networking with Ingress services
+## Managing network traffic by using Ingress
 {: #planning}
 
-With Ingress, you can expose multiple services in your cluster and make them publicly available by using a single public entry point.
+Ingress is a Kubernetes service that balances network traffic workloads in your cluster by forwarding public or private requests to your apps. You can use Ingress to expose multiple app services to the public or to a private network by using a unique public or private route.
 {:shortdesc}
 
-Rather than creating a load balancer service for each app that you want to expose to the public, Ingress provides a unique public route to forward public requests to apps inside and outside your cluster based on their individual paths. Ingress consists of two main components: the application load balancer and the Ingress resource.
-
-The application load balancer (ALB) is an external load balancer that listens for incoming HTTP or HTTPS, TCP, or UDP service requests and forwards requests to the appropriate app pod. When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically creates a highly available ALB for your cluster and assigns a unique public route to it. The public route is linked to a portable public IP address that is provisioned into your IBM Cloud infrastructure (SoftLayer) account during cluster creation. A default private ALB is also automatically created, but is not automatically enabled.
-
-To expose an app via Ingress, you must create a Kubernetes service for your app and register this service with the ALB by defining an Ingress resource. The Ingress resource specifies the path that is appended to the public route to form a unique URL for your exposed app, such as `mycluster.us-south.containers.mybluemix.net/myapp`, and defines the rules for how to route incoming requests for an app.
+Ingress consists of two components:
+<dl>
+<dt>Application load balancer</dt>
+<dd>The application load balancer (ALB) is an external load balancer that listens for incoming HTTP or HTTPS, TCP, or UDP service requests and forwards requests to the appropriate app pod. When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically creates a highly available ALB for your cluster and assigns a unique public route to it. The public route is linked to a portable public IP address that is provisioned into your IBM Cloud infrastructure (SoftLayer) account during cluster creation. A default private ALB is also automatically created, but is not automatically enabled.</dd>
+<dt>Ingress resource</dt>
+<dd>To expose an app by using Ingress, you must create a Kubernetes service for your app and register this service with the ALB by defining an Ingress resource. The Ingress resource is a Kubernetes resource that defines the rules for how to route incoming requests for an app. The Ingress resource also specifies the path to your app service, which is appended to the public route to form a unique app URL such as `mycluster.us-south.containers.mybluemix.net/myapp`.</dd>
+</dl>
 
 The following diagram shows how Ingress directs communication from the internet to an app:
 

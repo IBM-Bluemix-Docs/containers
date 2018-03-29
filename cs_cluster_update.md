@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-23"
+lastupdated: "2018-03-29"
 
 ---
 
@@ -162,12 +162,12 @@ To update your worker nodes:
 5. Confirm that the update is complete:
   * Review the Kubernetes version on the {{site.data.keyword.Bluemix_notm}} Dashboard or run `bx cs workers <cluster_name_or_id>`.
   * Review the Kubernets version of the worker nodes by running `kubectl get nodes`.
-  * In some cases, older clusters might list duplicate worker nodes with a **NotReady** status after an update. To remove duplicates, see [troubleshooting](cs_troubleshoot.html#cs_duplicate_nodes).
+  * In some cases, older clusters might list duplicate worker nodes with a **NotReady** status after an update. To remove duplicates, see [troubleshooting](cs_troubleshoot_clusters_workers.html#cs_duplicate_nodes).
 
 Next steps:
   - Repeat the update process with other clusters.
   - Inform developers who work in the cluster to update their `kubectl` CLI to the version of the Kubernetes master.
-  - If the Kubernetes dashboard does not display utilization graphs, [delete the `kube-dashboard` pod](cs_troubleshoot.html#cs_dashboard_graphs).
+  - If the Kubernetes dashboard does not display utilization graphs, [delete the `kube-dashboard` pod](cs_troubleshoot_health.html#cs_dashboard_graphs).
 
 
 <br />

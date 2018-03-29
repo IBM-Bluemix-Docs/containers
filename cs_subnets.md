@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-16"
+lastupdated: "2018-03-29"
 
 ---
 
@@ -24,7 +24,7 @@ Change the pool of available portable public or private IP addresses by adding s
 
 In {{site.data.keyword.containershort_notm}}, you can add stable, portable IPs for Kubernetes services by adding network subnets to the cluster. In this case, subnets are not being used with netmasking to create connectivity across one or more clusters. Instead, the subnets are used to provide permanent fixed IPs for a service from a cluster that can be used to access that service.
 
-When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically provisions a portable public subnet with 5 public IP addresses and a portable private subnet with 5 private IP addresses. Portable public and private IP addresses are static and do not change when a worker node, or even the cluster, is removed. For each subnet, one of the portable public and one of the portable private IP addresses are used for [application load balancers](cs_ingress.html) that you can use to expose multiple apps in your cluster. The remaining four portable public and four portable private IP addresses can be used to expose single apps to the public by [creating a load balancer service](cs_loadbalancer.html).
+When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically provisions a portable public subnet with 5 public IP addresses and a portable private subnet with 5 private IP addresses. Portable public and private IP addresses are static and do not change when a worker node, or even the cluster, is removed. For each subnet, one of the portable public and one of the portable private IP addresses are used for [Ingress application load balancers](cs_ingress.html) that you can use to expose multiple apps in your cluster. The remaining four portable public and four portable private IP addresses can be used to expose single apps to the public by [creating a load balancer service](cs_loadbalancer.html).
 
 **Note:** Portable public IP addresses are charged monthly. If you choose to remove portable public IP addresses after your cluster is provisioned, you still have to pay the monthly charge, even if you used them only for a short amount of time.
 
@@ -241,7 +241,7 @@ To add a subnet from an on-premises network:
 
 4. Optional: [Enable routing between subnets on the same VLAN](#vlan-spanning).
 
-5. Add a private load balancer service or a private Ingress application load balancer to access your app over the private network. To use a private IP address from the subnet that you added, you must specify an IP address. Otherwise, an IP address is chosen at random from the IBM Cloud infrastructure (SoftLayer) subnets or user-provided subnets on the private VLAN. For more information, see [Configuring access to an app by using the load balancer service type](cs_loadbalancer.html#config) or [Enabling the private application load balancer](cs_ingress.html#private_ingress).
+5. Add a private load balancer service or a private Ingress application load balancer to access your app over the private network. To use a private IP address from the subnet that you added, you must specify an IP address. Otherwise, an IP address is chosen at random from the IBM Cloud infrastructure (SoftLayer) subnets or user-provided subnets on the private VLAN. For more information, see [Enabling public or private access to an app by using a LoadBalancer service](cs_loadbalancer.html#config) or [Enabling the private application load balancer](cs_ingress.html#private_ingress).
 
 <br />
 

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-02-27"
+lastupdated: "2018-02-29"
 
 ---
 
@@ -173,7 +173,7 @@ To add network policies:
         ```
         {: codeblock}
 
-        1.  Retrieve the `<ETCD_URL>`. If this command fails with a `calico-config not found` error, then see this [troubleshooting topic](cs_troubleshoot.html#cs_calico_fails).
+        1.  Retrieve the `<ETCD_URL>`. If this command fails with a `calico-config not found` error, then see this [troubleshooting topic](cs_troubleshoot_network.html#cs_calico_fails).
 
           -   Linux and OS X:
 
