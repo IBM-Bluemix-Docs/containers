@@ -35,7 +35,7 @@ This task includes the information for installing these CLIs and plug-ins:
 
 -   {{site.data.keyword.Bluemix_notm}} CLI version 0.5.0 or later
 -   {{site.data.keyword.containershort_notm}} plug-in
--   Kubernetes CLI version 1.8.8 or later
+-   Kubernetes CLI version that matches the `major.minor` version of your cluster
 -   Optional: {{site.data.keyword.registryshort_notm}} plug-in
 -   Optional: Docker version 1.9 or later
 
@@ -71,7 +71,7 @@ To install the CLIs:
 
 4.  {: #kubectl}To view a local version of the Kubernetes dashboard and to deploy apps into your clusters, [install the Kubernetes CLI ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/tools/install-kubectl/). The prefix for running commands by using the Kubernetes CLI is `kubectl`.
 
-    1.  Download the Kubernetes CLI `major.minor` version that matches the Kubernetes cluster `major.minor` version that you plan to use. The current {{site.data.keyword.containershort_notm}} default Kubernetes version is 1.8.8. **Note**: If you use a `kubectl` CLI version that does match at least the `major.minor` version of your clusters, you might experience unexpected results. Make sure to keep your Kubernetes cluster and CLI versions up-to-date.
+    1.  Download the Kubernetes CLI `major.minor` version that matches the Kubernetes cluster `major.minor` version that you plan to use. The current {{site.data.keyword.containershort_notm}} default Kubernetes version is 1.8.8. **Note**: If you use a `kubectl` CLI version that does not match at least the `major.minor` version of your clusters, you might experience unexpected results. Make sure to keep your Kubernetes cluster and CLI versions up-to-date.
 
         - **OS X**:   [https://storage.googleapis.com/kubernetes-release/release/v1.8.8/bin/darwin/amd64/kubectl ![External link icon](../icons/launch-glyph.svg "External link icon")](https://storage.googleapis.com/kubernetes-release/release/v1.8.8/bin/darwin/amd64/kubectl)
         - **Linux**:   [https://storage.googleapis.com/kubernetes-release/release/v1.8.8/bin/linux/amd64/kubectl ![External link icon](../icons/launch-glyph.svg "External link icon")](https://storage.googleapis.com/kubernetes-release/release/v1.8.8/bin/linux/amd64/kubectl)
@@ -150,71 +150,72 @@ Before you can run `kubectl` commands, [install the required CLIs](#cs_cli_insta
 
 1.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your {{site.data.keyword.Bluemix_notm}} credentials when prompted. To specify an {{site.data.keyword.Bluemix_notm}} region, [include the API endpoint](cs_regions.html#bluemix_regions).
 
-      ```
-      bx login
-      ```
-      {: pre}
+    ```
+    bx login
+    ```
+    {: pre}
 
-      **Note:** If you have a federated ID, use `bx login --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
+    **Note:** If you have a federated ID, use `bx login --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
 
-  2.  Select an {{site.data.keyword.Bluemix_notm}} account. If you are assigned to multiple {{site.data.keyword.Bluemix_notm}} organizations, select the organization where the cluster was created. Clusters are specific to an organization, but are independent from an {{site.data.keyword.Bluemix_notm}} space. Therefore, you are not required to select a space.
+2.  Select an {{site.data.keyword.Bluemix_notm}} account. If you are assigned to multiple {{site.data.keyword.Bluemix_notm}} organizations, select the organization where the cluster was created. Clusters are specific to an organization, but are independent from an {{site.data.keyword.Bluemix_notm}} space. Therefore, you are not required to select a space.
 
-  3.  If you want to create or access Kubernetes clusters in a region other than the {{site.data.keyword.Bluemix_notm}} region that you selected earlier, run `bx cs region-set`.
+3.  If you want to create or access Kubernetes clusters in a region other than the {{site.data.keyword.Bluemix_notm}} region that you selected earlier, run `bx cs region-set`.
 
-  4.  List all of the clusters in the account to get the name of the cluster.
+4.  List all of the clusters in the account to get the name of the cluster.
 
-      ```
-      bx cs clusters
-      ```
-      {: pre}
+    ```
+    bx cs clusters
+    ```
+    {: pre}
 
-  5.  Set the cluster you created as the context for this session. Complete these configuration steps every time that you work with your cluster.
-      1.  Get the command to set the environment variable and download the Kubernetes configuration files.
+5.  Set the cluster you created as the context for this session. Complete these configuration steps every time that you work with your cluster.
+    1.  Get the command to set the environment variable and download the Kubernetes configuration files.
 
-          ```
-          bx cs cluster-config <cluster_name_or_id>
-          ```
-          {: pre}
+    ```
+    bx cs cluster-config <cluster_name_or_id>
+    ```
+    {: pre}
 
-          After downloading the configuration files, a command is displayed that you can use to set the path to the local Kubernetes configuration file as an environment variable.
+    After downloading the configuration files, a command is displayed that you can use to set the path to the local Kubernetes configuration file as an environment variable.
 
-          Example:
+    Example:
 
-          ```
-          export KUBECONFIG=/Users/<user_name>/.bluemix/plugins/container-service/clusters/<cluster_name>/kube-config-prod-dal10-<cluster_name>.yml
-          ```
-          {: screen}
+    ```
+    export KUBECONFIG=/Users/<user_name>/.bluemix/plugins/container-service/clusters/<cluster_name>/kube-config-prod-dal10-<cluster_name>.yml
+    ```
+    {: screen}
 
-      2.  Copy and paste the command that is displayed in your terminal to set the `KUBECONFIG` environment variable.
-      3.  Verify that the `KUBECONFIG` environment variable is set properly.
+    2.  Copy and paste the command that is displayed in your terminal to set the `KUBECONFIG` environment variable.
+        
+    3.  Verify that the `KUBECONFIG` environment variable is set properly.
 
-          Example:
+        Example:
 
-          ```
-          echo $KUBECONFIG
-          ```
-          {: pre}
+        ```
+        echo $KUBECONFIG
+        ```
+        {: pre}
 
-          Output:
-          ```
-          /Users/<user_name>/.bluemix/plugins/container-service/clusters/<cluster_name>/kube-config-prod-dal10-<cluster_name>.yml
-          ```
-          {: screen}
+        Output:
+        ```
+        /Users/<user_name>/.bluemix/plugins/container-service/clusters/<cluster_name>/kube-config-prod-dal10-<cluster_name>.yml
+        ```
+        {: screen}
 
-  6.  Verify that the `kubectl` commands run properly with your cluster by checking the Kubernetes CLI server version.
+6.  Verify that the `kubectl` commands run properly with your cluster by checking the Kubernetes CLI server version.
 
-      ```
-      kubectl version  --short
-      ```
-      {: pre}
+    ```
+    kubectl version  --short
+    ```
+    {: pre}
 
-      Example output:
+    Example output:
 
-      ```
-      Client Version: v1.8.8
-      Server Version: v1.8.8
-      ```
-      {: screen}
+    ```
+    Client Version: v1.8.8
+    Server Version: v1.8.8
+    ```
+    {: screen}
 
 Now, you can run `kubectl` commands to manage your clusters in {{site.data.keyword.Bluemix_notm}}. For a full list of commands, see the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands).
 
@@ -312,7 +313,7 @@ This task includes the information for removing these CLIs:
 
 
 -   {{site.data.keyword.containershort_notm}} plug-in
--   Kubernetes CLI version 1.8.8 or later
+-   Kubernetes CLI
 -   {{site.data.keyword.registryshort_notm}} plug-in
 -   Docker version 1.9. or later
 
@@ -341,10 +342,6 @@ To uninstall the CLIs:
     {: pre}
 
     The container-service and the container-registry plug-in are not displayed in the results.
-
-
-
-
 
 6.  Uninstall Docker. Instructions to uninstall Docker vary based on the operating system that you use.
 
