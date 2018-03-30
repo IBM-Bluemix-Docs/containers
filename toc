@@ -77,7 +77,14 @@ IBM Cloud Container Service
     {: .navgroup-end}
 
     {: .navgroup id="help"}
-    cs_troubleshoot.md
+    {: .topicgroup}
+    Troubleshooting clusters
+        cs_troubleshoot.md
+        cs_troubleshoot_clusters.md
+        cs_troubleshoot_storage.md
+        cs_troubleshoot_health.md
+        cs_troubleshoot_network.md
+    
     cs_popular_topics.md
     cs_rellinks.md
     {: .navgroup-end}

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-22"
+lastupdated: "2018-03-29"
 
 ---
 
@@ -95,7 +95,7 @@ You can choose between virtual or physical (bare metal) servers. Depending on th
 ### Hardware for worker nodes
 {: #shared_dedicated_node}
 
-When you create a standard cluster in {{site.data.keyword.Bluemix_notm}}, you choose to provision your worker nodes as physical machines (bare metal), or as virtual machines that run on physical hardware. When you create a free cluster, your worker node is automatically provisioned as a virtual, shared node in the IBM Cloud infrastructure (SoftLayer) account.
+When you create a standard cluster in {{site.data.keyword.Bluemix_notm}}, you choose to provision your worker nodes as physical machines (bare metal) or as virtual machines that run on physical hardware. When you create a free cluster, your worker node is automatically provisioned as a virtual, shared node in the IBM Cloud infrastructure (SoftLayer) account.
 {:shortdesc}
 
 ![Hardware options for worker nodes in a standard cluster](images/cs_clusters_hardware.png)
