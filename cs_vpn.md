@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-26"
+lastupdated: "2018-03-28"
 
 ---
 
@@ -23,9 +23,39 @@ With VPN connectivity, you can securely connect apps in a Kubernetes cluster on 
 
 To connect your worker nodes and apps to an on-premises data center, you can configure a VPN IPSec endpoint with a strongSwan service or with a Vyatta Gateway Appliance or a Fortigate Appliance.
 
+- **Vyatta Gateway Appliance or Fortigate Appliance**: If you have a larger cluster, want to access non-Kubernetes resources over the VPN, or want to access multiple clusters over a single VPN, you might choose to set up a Vyatta Gateway Appliance or [Fortigate Security Appliance![External link icon](../icons/launch-glyph.svg "External link icon")](/docs/infrastructure/fortigate-10g/getting-started.html#getting-started-with-fortigate-security-appliance-10gbps) to configure an IPSec VPN endpoint. To configure a Vyatta, see [Setting up VPN connectivity with Vyatta](#vyatta).
+
 - **strongSwan IPSec VPN Service**: You can set up a [strongSwan IPSec VPN service ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.strongswan.org/) that securely connects your Kubernetes cluster with an on-premises network. The strongSwan IPSec VPN service provides a secure end-to-end communication channel over the internet that is based on the industry-standard Internet Protocol Security (IPsec) protocol suite. To set up a secure connection between your cluster and an on-premises network, [configure and deploy the strongSwan IPSec VPN service](#vpn-setup) directly in a pod in your cluster.
 
-- **Vyatta Gateway Appliance or Fortigate Appliance**: If you have a larger cluster, want to access non-Kubernetes resources over the VPN, or want to access multiple clusters over a single VPN, you might choose to set up a Vyatta Gateway Appliance or [Fortigate Security Appliance![External link icon](../icons/launch-glyph.svg "External link icon")](/docs/infrastructure/fortigate-10g/getting-started.html#getting-started-with-fortigate-security-appliance-10gbps) to configure an IPSec VPN endpoint. To configure a Vyatta, see [Setting up VPN connectivity with Vyatta](#vyatta).
+## Setting up VPN connectivity with a Vyatta Gateway Appliance
+{: #vyatta}
+
+The [Vyatta Gateway Appliance ![External link icon](../icons/launch-glyph.svg "External link icon")](http://knowledgelayer.softlayer.com/learning/network-gateway-devices-vyatta) is a bare metal server that runs a special distribution of Linux. You can use a Vyatta as VPN gateway to securely connect to an on-premises network.
+{:shortdesc}
+
+All public and private network traffic that enters or leaves the cluster VLANs is routed through the Vyatta. You can use the Vyatta as a VPN endpoint to create an encrypted IPSec tunnel between servers in IBM Cloud infrastructure (SoftLayer) and on-premise resources. For example, the following diagram shows how an app on a private-only worker node in {{site.data.keyword.containershort_notm}} can communicate with an on-premises server via a Vyatta VPN connection:
+
+<img src="images/cs_vpn_vyatta.png" width="725" alt="Expose an app in {{site.data.keyword.containershort_notm}} by using a load balancer" style="width:725px; border-style: none"/>
+
+1. An app in your cluster, `myapp2`, receives a request from an Ingress or LoadBalancer service and needs to securely connect to data in your on-premises network.
+
+2. Because `myapp2` is on a worker node that is on a private VLAN only, the Vyatta acts as a secure connection between the worker nodes and the on-premises network. The Vyatta uses the destination IP address to determine which network packets should be sent to the on-premises network.
+
+3. The request is encrypted and sent over the VPN tunnel to the on-premises data center.
+
+4. The incoming request passes through the on-premises firewall and is delivered to the VPN tunnel endpoint (router) where it is decrypted.
+
+5. The VPN tunnel endpoint (router) forwards the request to the on-premises server or mainframe depending on the destination IP address specified in step 2. The necessary data is sent back over the VPN connection to `myapp2` through the same process.
+
+To set up a Vyatta Gateway Appliance:
+
+1. [Order a Vyatta ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/procedure/how-order-vyatta).
+
+2. [Configure the private VLAN on the Vyatta ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/procedure/basic-configuration-vyatta).
+
+3. To enable a VPN connection using the Vyatta, [configure IPSec on the Vyatta ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/procedure/how-configure-ipsec-vyatta).
+
+For more information, see this blog post on [connecting a cluster to an on-premises data center ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/blogs/bluemix/2017/07/kubernetes-and-bluemix-container-based-workloads-part4/).
 
 ## Setting up VPN connectivity with the strongSwan IPSec VPN service Helm chart
 {: #vpn-setup}
@@ -83,12 +113,12 @@ To configure the Helm chart:
     <tbody>
     <tr>
     <td><code>localSubnetNAT</code></td>
-    <td>Network Address Translation (NAT) for subnets provides a workaround for subnet conflicts between the local and on-premises networks. You can use NAT to remap the cluster's private local IP subnets, the pod subnet (172.30.0.0/16), or the pod service subnet (172.21.0.0/16) to a different private subnet. The VPN tunnel sees remapped IP subnets instead of the original subnets. Remapping happens before the packets are sent over the VPN tunnel as well as after the packets arrive from the VPN tunnel. You can expose both remapped and non-remapped subnets at the same time over the VPN.<br><br>To enable NAT, you can either add an entire subnet or individual IP addresses. If you add an entire subnet (in the format <code>10.171.42.0/24=10.10.10.0/24</code>), remapping is 1-to-1: all of the IP addresses in the internal network subnet are mapped over to external network subnet and vice versa. If you add individual IP addresses (in the format <code>10.171.42.17/32=10.10.10.2/32,10.171.42.29/32=10.10.10.3/32</code>), only those internal IP addresses are mapped to the specified external IP addresses.<br><br>If you use this option, the local subnet that is exposed over the VPN connection is the "outside" subnet that the "internal" subnet is being mapped to.
+    <td>Network Address Translation (NAT) for subnets provides a workaround for subnet conflicts between the local and on-premises networks. You can use NAT to remap the cluster's private local IP subnets, the pod subnet (172.30.0.0/16), or the pod service subnet (172.21.0.0/16) to a different private subnet. The VPN tunnel sees remapped IP subnets instead of the original subnets. Remapping happens before the packets are sent over the VPN tunnel as well as after the packets arrive from the VPN tunnel. You can expose both remapped and non-remapped subnets at the same time over the VPN.<br><br>To enable NAT, you can either add an entire subnet or individual IP addresses. If you add an entire subnet (in the format <code>10.171.42.0/24=10.10.10.0/24</code>), remapping is 1-to-1: all of the IP addresses in the internal network subnet are mapped over to external network subnet and vice versa. If you add individual IP addresses (in the format <code>10.171.42.17/32=10.10.10.2/32, 10.171.42.29/32=10.10.10.3/32</code>), only those internal IP addresses are mapped to the specified external IP addresses.<br><br>If you use this option, the local subnet that is exposed over the VPN connection is the "outside" subnet that the "internal" subnet is being mapped to.
     </td>
     </tr>
     <tr>
     <td><code>loadBalancerIP</code></td>
-    <td>Add a portable public IP address from a subnet that is assigned to this cluster that you want to use for the strongSwan VPN service. If the VPN connection is initiated from the on-premises gateway (<code>ipsec.auto</code> is set to <code>add</code>), you can use this proprty to configure a persistent public IP address on the on-premises gateway for the cluster. This value is optional.</td>
+    <td>Add a portable public IP address from a subnet that is assigned to this cluster that you want to use for the strongSwan VPN service. If the VPN connection is initiated from the on-premises gateway (<code>ipsec.auto</code> is set to <code>add</code>), you can use this property to configure a persistent public IP address on the on-premises gateway for the cluster. This value is optional.</td>
     </tr>
     <tr>
     <td><code>nodeSelector</code></td>
@@ -394,33 +424,3 @@ You can disable the VPN connection by deleting the Helm chart.
   helm delete --purge <release_name>
   ```
   {: pre}
-
-## Setting up VPN connectivity with a Vyatta Gateway Appliance
-{: #vyatta}
-
-The [Vyatta Gateway Appliance ![External link icon](../icons/launch-glyph.svg "External link icon")](http://knowledgelayer.softlayer.com/learning/network-gateway-devices-vyatta) is a bare metal server that runs a special distribution of Linux. You can use a Vyatta as VPN gateway to securely connect to an on-premises network.
-{:shortdesc}
-
-All public and private network traffic that enters or leaves the cluster VLANs is routed through the Vyatta. You can use the Vyatta as a VPN endpoint to create an encrypted IPSec tunnel between servers in IBM Cloud infrastructure (SoftLayer) and on-premise resources. For example, the following diagram shows how an app on a private-only worker node in {{site.data.keyword.containershort_notm}} can communicate with an on-premises server via a Vyatta VPN connection:
-
-<img src="images/cs_vpn_vyatta.png" width="725" alt="Expose an app in {{site.data.keyword.containershort_notm}} by using a load balancer" style="width:725px; border-style: none"/>
-
-1. An app in your cluster, `myapp2`, receives a request from an Ingress or LoadBalancer service and needs to securely connect to data in your on-premises network.
-
-2. Because `myapp2` is on a worker node that is on a private VLAN only, the Vyatta acts as a secure connection between the worker nodes and the on-premises network. The Vyatta uses the destination IP address to determine which network packets should be sent to the on-premises network.
-
-3. The request is encrypted and sent over the VPN tunnel to the on-premises data center. 
-
-4. The incoming request passes through the on-premises firewall and is delivered to the VPN tunnel endpoint (router) where it is decrypted.
-
-5. The VPN tunnel endpoint (router) forwards the request to the on-premises server or mainframe depending on the destination IP address specified in step 2. The necessary data is sent back over the VPN connection to `myapp2` through the same process.
-
-To set up a Vyatta Gateway Appliance:
-
-1. [Order a Vyatta ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/procedure/how-order-vyatta).
-
-2. [Configure the private VLAN on the Vyatta ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/procedure/basic-configuration-vyatta).
-
-3. To enable a VPN connection using the Vyatta, [configure IPSec on the Vyatta ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/procedure/how-configure-ipsec-vyatta).
-
-For more information, see this blog post on [connecting a cluster to an on-premises data center ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/blogs/bluemix/2017/07/kubernetes-and-bluemix-container-based-workloads-part4/).
