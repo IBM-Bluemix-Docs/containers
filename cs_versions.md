@@ -127,8 +127,8 @@ Previously, the operation failed and you saw the error message `xxx is not found
 <td>Taints and tolerations</td>
 <td>The `node.alpha.kubernetes.io/notReady` and `node.alpha.kubernetes.io/unreachable` taints were changed to `node.kubernetes.io/not-ready` and `node.kubernetes.io/unreachable` respectively.<br>
 Although the taints are updated automatically, you must manually update the tolerations for these taints. For each namespace except `ibm-system` and `kube-system`, determine whether you need to change tolerations:<br>
-<ul><li><code>kubectl get pods -n &lt;namespace&gt; -o yaml | grep "node.alpha.kubernetes.io/notReady" && echo "Action required"</code></li><li>
-<code>kubectl get pods -n &lt;namespace&gt; -o yaml | grep "node.alpha.kubernetes.io/unreachable" && echo "Action required"</code></li></ul><br>
+<ul><li><code>kubectl get pods -n <namespace> -o yaml | grep "node.alpha.kubernetes.io/notReady" && echo "Action required"</code></li><li>
+<code>kubectl get pods -n <namespace> -o yaml | grep "node.alpha.kubernetes.io/unreachable" && echo "Action required"</code></li></ul><br>
 If `Action required` is returned, modify the pod tolerations accordingly.</td>
 </tr>
 <tr>
@@ -193,7 +193,7 @@ Review changes that you might need to make when you are updating from the previo
 </tr>
 <tr>
 <td>`kubectl run`</td>
-<td>The `kubectl run` command must use multiple flags for `--env` instead of comma-separated arguments. For example, run <code>kubectl run --env &lt;x&gt;=&lt;y&gt; --env &lt;z&gt;=&lt;a&gt;</code> and not <code>kubectl run --env &lt;x&gt;=&lt;y&gt;,&lt;z&gt;=&lt;a&gt;</code>. </td>
+<td>The `kubectl run` command must use multiple flags for `--env` instead of comma-separated arguments. For example, run <code>kubectl run --env <x>=<y> --env <z>=<a></code> and not <code>kubectl run --env <x>=<y>,<z>=<a></code>. </td>
 </tr>
 <tr>
 <td>`kubectl stop`</td>
@@ -280,12 +280,12 @@ Review changes that you might need to make when you are updating from the previo
 
   <pre class="codeblock">
   <code>
-  kubectl create -n &lt;namespace&gt; -f - &lt;&lt;EOF
+  kubectl create -n <namespace> -f - <<EOF
   kind: NetworkPolicy
   apiVersion: networking.k8s.io/v1
   metadata:
     name: default-deny
-    namespace: &lt;namespace&gt;
+    namespace: <namespace>
   spec:
     podSelector: {}
   EOF

@@ -124,7 +124,7 @@ setup options.</a></div>
 <div class="p"><dl><dt class="dlterm" id="migrate_groups__group_anti">--anti</dt>
 <dd>Spread container pods across different worker nodes for higher availability.
 <pre class="codeblock"><code>annotations:
-        scheduler.alpha.kubernetes.io/affinity: &gt;
+        scheduler.alpha.kubernetes.io/affinity: >
             {
               "podAntiAffinity": {
                 "requiredDuringSchedulingIgnoredDuringExecution": [
@@ -257,7 +257,7 @@ spec:
       labels:
         app: ibmliberty
       annotations:
-        scheduler.alpha.kubernetes.io/affinity: &gt;
+        scheduler.alpha.kubernetes.io/affinity: >
             {
               "podAntiAffinity": {
                 "requiredDuringSchedulingIgnoredDuringExecution": [
@@ -470,7 +470,7 @@ vulnerability advisor, and any other customizations you have in place.</span></l
 <li class="step stepexpand"><span class="cmd"><a href="cs_cli_install.html#cs_cli_configure">Set the
 context</a> for your cluster.</span></li>
 <li class="step stepexpand"><span class="cmd">Deploy your existing app to your cluster <a href="cs_app.html#app_cli">from the CLI</a>.</span> When you deploy your app, you must request CPU.
-<pre class="codeblock"><code>kubectl run &lt;name&gt; --image=&lt;image&gt; --requests=cpu=&lt;cpu&gt; --expose --port=&lt;port_number&gt;</code></pre>
+<pre class="codeblock"><code>kubectl run <name> --image=<image> --requests=cpu=<cpu> --expose --port=<port_number></code></pre>
 <div class="tablenoborder"><table summary="" id="migrating_autoscaling__d45793e112" class="defaultstyle"><thead><tr><th colspan="2" id="d91310e676" class="thleft"><span class="ph"><img src="images/idea.png" alt="This icon indicates there is more information to learn about this step of the task."></span> Understanding
 this command's components</th>
 </tr>
@@ -494,7 +494,7 @@ this command's components</th>
 <div class="steps note"><span class="notetitle">Note:</span> For more complex deployments, you may need to create a <a href="cs_app.html#app_cli">deployment script</a>.</div>
 </li>
 <li class="step stepexpand"><span class="cmd">Create a Horizontal Pod Autoscaler and define your policy.</span>  For more information about working with the <samp class="ph codeph">kubectl autoscale</samp> command, see
-<a href="https://v1-7.docs.kubernetes.io/docs/user-guide/kubectl/kubectl_autoscale/#autoscale" rel="external" target="_blank" title="(Opens in a new tab or window)">the Kubernetes documentation</a>.<pre class="codeblock"><code>kubectl autoscale deployment &lt;deployment_name&gt; --cpu-percent=&lt;percentage&gt; --min=&lt;min_value&gt; --max=&lt;max_value&gt;</code></pre>
+<a href="https://v1-7.docs.kubernetes.io/docs/user-guide/kubectl/kubectl_autoscale/#autoscale" rel="external" target="_blank" title="(Opens in a new tab or window)">the Kubernetes documentation</a>.<pre class="codeblock"><code>kubectl autoscale deployment <deployment_name> --cpu-percent=<percentage> --min=<min_value> --max=<max_value></code></pre>
 
 <div class="tablenoborder"><table summary="" id="migrating_autoscaling__d45793e169" class="defaultstyle"><thead><tr><th colspan="2" id="d91310e733" class="thleft"><span class="ph"><img src="images/idea.png" alt="This icon indicates there is more information to learn about this step of the task."></span> Understanding
 this command's components</th>

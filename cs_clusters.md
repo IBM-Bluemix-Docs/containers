@@ -44,18 +44,18 @@ Increase the availability of your cluster with these techniques:
 <dt>Spread apps across worker nodes</dt>
 <dd>Allow developers to spread their apps in containers across multiple worker nodes per cluster. An app instance in each of three worker nodes allow for the downtime of one worker node without interrupting the usage of the app. You can specify how many worker nodes to include when you create a cluster from the [{{site.data.keyword.Bluemix_notm}} GUI](cs_clusters.html#clusters_ui) or the [CLI](cs_clusters.html#clusters_cli). Kubernetes limits the maximum number of worker nodes that you can have in a cluster, so keep in mind the [worker node and pod quotas ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/admin/cluster-large/).
 <pre class="codeblock">
-<code>bx cs cluster-create --location &lt;dal10&gt; --workers 3 --public-vlan &lt;my_public_vlan_id&gt; --private-vlan &lt;my_private_vlan_id&gt; --machine-type &lt;u2c.2x4&gt; --name &lt;my_cluster&gt;</code>
+<code>bx cs cluster-create --location <dal10> --workers 3 --public-vlan <my_public_vlan_id> --private-vlan <my_private_vlan_id> --machine-type <u2c.2x4> --name <my_cluster></code>
 </pre>
 </dd>
 <dt>Spread apps across clusters</dt>
 <dd>Create multiple clusters, each with multiple worker nodes. If an outage occurs with one cluster, users can still access an app that is also deployed in another cluster.
 <p>Cluster 1:</p>
 <pre class="codeblock">
-<code>bx cs cluster-create --location &lt;dal10&gt; --workers 3 --public-vlan &lt;my_public_vlan_id&gt; --private-vlan &lt;my_private_vlan_id&gt; --machine-type &lt;u2c.2x4&gt; --name &lt;my_cluster1&gt;</code>
+<code>bx cs cluster-create --location <dal10> --workers 3 --public-vlan <my_public_vlan_id> --private-vlan <my_private_vlan_id> --machine-type <u2c.2x4> --name <my_cluster1></code>
 </pre>
 <p>Cluster 2:</p>
 <pre class="codeblock">
-<code>bx cs cluster-create --location &lt;dal12&gt; --workers 3 --public-vlan &lt;my_public_vlan_id&gt; --private-vlan &lt;my_private_vlan_id&gt; --machine-type &lt;u2c.2x4&gt;  --name &lt;my_cluster2&gt;</code>
+<code>bx cs cluster-create --location <dal12> --workers 3 --public-vlan <my_public_vlan_id> --private-vlan <my_private_vlan_id> --machine-type <u2c.2x4>  --name <my_cluster2></code>
 </pre>
 </dd>
 <dt>Spread apps across clusters in different regions</dt>
@@ -63,11 +63,11 @@ Increase the availability of your cluster with these techniques:
 <p><strong>Important:</strong> After you configure a custom domain, you can use these commands to create the clusters.</p>
 <p>Location 1:</p>
 <pre class="codeblock">
-<code>bx cs cluster-create --location &lt;dal10&gt; --workers 3 --public-vlan &lt;my_public_vlan_id&gt; --private-vlan &lt;my_private_vlan_id&gt; --machine-type &lt;u2c.2x4&gt; --name &lt;my_cluster1&gt;</code>
+<code>bx cs cluster-create --location <dal10> --workers 3 --public-vlan <my_public_vlan_id> --private-vlan <my_private_vlan_id> --machine-type <u2c.2x4> --name <my_cluster1></code>
 </pre>
 <p>Location 2:</p>
 <pre class="codeblock">
-<code>bx cs cluster-create --location &lt;ams03&gt; --workers 3 --public-vlan &lt;my_public_vlan_id&gt; --private-vlan &lt;my_private_vlan_id&gt; --machine-type &lt;u2c.2x4&gt; --name &lt;my_cluster2&gt;</code>
+<code>bx cs cluster-create --location <ams03> --workers 3 --public-vlan <my_public_vlan_id> --private-vlan <my_private_vlan_id> --machine-type <u2c.2x4> --name <my_cluster2></code>
 </pre>
 </dd>
 </dl>
@@ -267,7 +267,7 @@ To create a cluster:
            Be sure that you want to provision a bare metal machine. Because it is billed monthly, if you cancel it immediately after an order by  mistake, you are still charged the full month.
            {:tip}
 
-        <pre class="pre">bx cs machine-types &lt;location&gt;</pre>
+        <pre class="pre">bx cs machine-types <location></pre>
 
     3.  **Standard clusters**: Check to see if a public and private VLAN already exists in the IBM Cloud infrastructure (SoftLayer) for this account.
 
@@ -314,19 +314,19 @@ To create a cluster:
         <td>The command to create a cluster in your {{site.data.keyword.Bluemix_notm}} organization.</td>
         </tr>
         <tr>
-        <td><code>--location <em>&lt;location&gt;</em></code></td>
-        <td>**Standard clusters**: Replace <em>&lt;location&gt;</em> with the {{site.data.keyword.Bluemix_notm}} location ID where you want to create your cluster. [Available locations](cs_regions.html#locations) depend on the {{site.data.keyword.containershort_notm}} region you are logged in to.</td>
+        <td><code>--location <em><location></em></code></td>
+        <td>**Standard clusters**: Replace <em><location></em> with the {{site.data.keyword.Bluemix_notm}} location ID where you want to create your cluster. [Available locations](cs_regions.html#locations) depend on the {{site.data.keyword.containershort_notm}} region you are logged in to.</td>
         </tr>
         <tr>
-        <td><code>--machine-type <em>&lt;machine_type&gt;</em></code></td>
+        <td><code>--machine-type <em><machine_type></em></code></td>
         <td>**Standard clusters**: Choose a machine type. You can deploy your worker nodes as virtual machines on shared or dedicated hardware, or as physical machines on bare metal. Available physical and virtual machines types vary by the location in which you deploy the cluster. For more information, see the documentation for the `bx cs machine-type` [command](cs_cli_reference.html#cs_machine_types). For free clusters, you do not have to define the machine type.</td>
         </tr>
         <tr>
-        <td><code>--hardware <em>&lt;shared_or_dedicated&gt;</em></code></td>
+        <td><code>--hardware <em><shared_or_dedicated></em></code></td>
         <td>**Standard clusters, virtual-only**: The level of hardware isolation for your worker node. Use dedicated to have available physical resources dedicated to you only, or shared to allow physical resources to be shared with other IBM customers. The default is shared. This value is optional for standard clusters and is not available for free clusters.</td>
         </tr>
         <tr>
-        <td><code>--public-vlan <em>&lt;public_vlan_id&gt;</em></code></td>
+        <td><code>--public-vlan <em><public_vlan_id></em></code></td>
         <td><ul>
           <li>**Free clusters**: You do not have to define a public VLAN. Your free cluster is automatically connected to a public VLAN that is owned by IBM.</li>
           <li>**Standard clusters**: If you already have a public VLAN set up in your IBM Cloud infrastructure (SoftLayer) account for that location, enter the ID of the public VLAN. If you want to connect your worker nodes to a private VLAN only, do not specify this option. **Note**: If you choose not to select a public VLAN, you must configure an alternative solution. See [VLAN connection for worker nodes](#worker_vlan_connection) for more information.<br/><br/>
@@ -334,19 +334,19 @@ To create a cluster:
         </ul></td>
         </tr>
         <tr>
-        <td><code>--private-vlan <em>&lt;private_vlan_id&gt;</em></code></td>
+        <td><code>--private-vlan <em><private_vlan_id></em></code></td>
         <td><ul><li>**Free clusters**: You do not have to define a private VLAN. Your free cluster is automatically connected to a private VLAN that is owned by IBM.</li><li>**Standard clusters**: If you already have a private VLAN set up in your IBM Cloud infrastructure (SoftLayer) account for that location, enter the ID of the private VLAN. If you do not have a private VLAN in your account, do not specify this option. {{site.data.keyword.containershort_notm}} automatically creates a private VLAN for you.<br/><br/><strong>Note</strong>: Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster.</li></ul></td>
         </tr>
         <tr>
-        <td><code>--name <em>&lt;name&gt;</em></code></td>
-        <td>**Free and standard clusters**: Replace <em>&lt;name&gt;</em> with a name for your cluster. The name must start with a letter, can contain letters, numbers, and -, and must be 35 characters or fewer. Note that the {{site.data.keyword.IBM_notm}}-assigned Ingress subdomain is derived from the cluster name. The cluster name and Ingress subdomain together form the fully qualified domain name, which must be unique within a region and have 63 characters or fewer. To meet these requirements, the cluster name might be truncated or the subdomain might be assigned random character values.</td>
+        <td><code>--name <em><name></em></code></td>
+        <td>**Free and standard clusters**: Replace <em><name></em> with a name for your cluster. The name must start with a letter, can contain letters, numbers, and -, and must be 35 characters or fewer. Note that the {{site.data.keyword.IBM_notm}}-assigned Ingress subdomain is derived from the cluster name. The cluster name and Ingress subdomain together form the fully qualified domain name, which must be unique within a region and have 63 characters or fewer. To meet these requirements, the cluster name might be truncated or the subdomain might be assigned random character values.</td>
         </tr>
         <tr>
-        <td><code>--workers <em>&lt;number&gt;</em></code></td>
+        <td><code>--workers <em><number></em></code></td>
         <td>**Standard clusters**: The number of worker nodes to include in the cluster. If the <code>--workers</code> option is not specified, 1 worker node is created.</td>
         </tr>
         <tr>
-          <td><code>--kube-version <em>&lt;major.minor.patch&gt;</em></code></td>
+          <td><code>--kube-version <em><major.minor.patch></em></code></td>
           <td>**Standard clusters**: The Kubernetes version for the cluster master node. This value is optional. Unless specified, the cluster is created with the default of supported Kubernetes versions. To see available versions, run <code>bx cs kube-versions</code>.</td>
         </tr>
         <tr>
@@ -567,6 +567,6 @@ When you delete a cluster, you are also deleting resources on the cluster, inclu
     3.  Follow the prompts and choose whether to delete cluster resources.
 
 When you remove a cluster, you can choose to remove the portable subnets and persistent storage associated with it:
-- Subnets are used to assign portable public IP addresses to load balancer services or your Ingress application load balancer. If you keep them, you can reuse them in a new cluster or manually delete them later from your IBM Cloud infrastructure (SoftLayer) portfolio.
+- Subnets are used to assign portable public IP addresses to load balancer services or your Ingress application load balancer. If you keep them, you can [reuse them in a new cluster](cs_subnets.html#custom) or manually delete them later from your IBM Cloud infrastructure (SoftLayer) portfolio.
 - If you created a persistent volume claim by using an [existing file share](cs_storage.html#existing), then you cannot delete the file share when you delete the cluster. You must manually delete the file share later from your IBM Cloud infrastructure (SoftLayer) portfolio.
 - Persistent storage provides high availability for your data. If you delete it, you cannot recover your data.

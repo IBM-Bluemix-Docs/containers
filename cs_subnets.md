@@ -58,16 +58,16 @@ To create a subnet in an IBM Cloud infrastructure (SoftLayer) account and make i
     <td>The command to provision a subnet for your cluster.</td>
     </tr>
     <tr>
-    <td><code><em>&lt;cluster_name_or_id&gt;</em></code></td>
-    <td>Replace <code>&lt;cluster_name_or_id&gt;</code> with the name or ID of the cluster.</td>
+    <td><code><em><cluster_name_or_id></em></code></td>
+    <td>Replace <code><cluster_name_or_id></code> with the name or ID of the cluster.</td>
     </tr>
     <tr>
-    <td><code><em>&lt;subnet_size&gt;</em></code></td>
-    <td>Replace <code>&lt;subnet_size&gt;</code> with the number of IP addresses that you want to add from your portable subnet. Accepted values are 8, 16, 32, or 64. <p>**Note:** When you add portable IP addresses for your subnet, three IP addresses are used to establish cluster-internal networking. You cannot use these three IPs for your application load balancer or to create a load balancer service. For example, if you request eight portable public IP addresses, you can use five of them to expose your apps to the public.</p> </td>
+    <td><code><em><subnet_size></em></code></td>
+    <td>Replace <code><subnet_size></code> with the number of IP addresses that you want to add from your portable subnet. Accepted values are 8, 16, 32, or 64. <p>**Note:** When you add portable IP addresses for your subnet, three IP addresses are used to establish cluster-internal networking. You cannot use these three IPs for your application load balancer or to create a load balancer service. For example, if you request eight portable public IP addresses, you can use five of them to expose your apps to the public.</p> </td>
     </tr>
     <tr>
-    <td><code><em>&lt;VLAN_ID&gt;</em></code></td>
-    <td>Replace <code>&lt;VLAN_ID&gt;</code> with the ID of the public or private VLAN on which you want to allocate the portable public or private IP addresses. You must select the public or private VLAN that an existing worker node is connected to. To review the public or private VLAN for a worker node, run the <code>bx cs worker-get &lt;worker_id&gt;</code> command. </td>
+    <td><code><em><VLAN_ID></em></code></td>
+    <td>Replace <code><VLAN_ID></code> with the ID of the public or private VLAN on which you want to allocate the portable public or private IP addresses. You must select the public or private VLAN that an existing worker node is connected to. To review the public or private VLAN for a worker node, run the <code>bx cs worker-get <worker_id></code> command. </td>
     </tr>
     </tbody></table>
 
@@ -83,13 +83,20 @@ To create a subnet in an IBM Cloud infrastructure (SoftLayer) account and make i
 <br />
 
 
-## Adding custom and existing subnets to Kubernetes clusters
+## Adding or reusing custom and existing subnets in Kubernetes clusters
 {: #custom}
 
-You can add existing portable public or private subnets to your Kubernetes cluster.
+You can add existing portable public or private subnets to your Kubernetes cluster or reuse subnets from a deleted cluster.
 {:shortdesc}
 
-Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
+Before you begin, 
+- [Target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
+- To reuse subnets from a cluster that you no longer need, delete the unneeded cluster. When prompted, choose to keep the subnets. Otherwise, the subnets are deleted within 24 hours.
+
+   ```
+   bx cs cluster-rm CLUSTER
+   ```
+   {: pre}
 
 To use an existing subnet in your IBM Cloud infrastructure (SoftLayer) portfolio with custom firewall rules or available IP addresses:
 
@@ -126,7 +133,7 @@ To use an existing subnet in your IBM Cloud infrastructure (SoftLayer) portfolio
     ```
     {: screen}
 
-3.  Create a cluster by using the location and VLAN ID that you identified. Include the `--no-subnet` flag to prevent a new portable public IP subnet and a new portable private IP subnet from being created automatically.
+3.  Create a cluster by using the location and VLAN ID that you identified. To reuse an existing subnet, include the `--no-subnet` flag to prevent a new portable public IP subnet and a new portable private IP subnet from being created automatically.
 
     ```
     bx cs cluster-create --location dal10 --machine-type u2c.2x4 --no-subnet --public-vlan 1901230 --private-vlan 1900403 --workers 3 --name my_cluster

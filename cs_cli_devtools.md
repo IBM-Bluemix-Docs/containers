@@ -515,15 +515,15 @@ Create a cluster in your organization. For free clusters, you specify the cluste
 <p><strong>Note:</strong> If you provide the same option in the command as parameter in the YAML file, the value in the command takes precedence over the value in the YAML. For example, you define a location in your YAML file and use the <code>--location</code> option in the command, the value that you entered in the command option overrides the value in the YAML file.
 
 <pre class="codeblock">
-<code>name: <em>&lt;cluster_name&gt;</em>
-location: <em>&lt;location&gt;</em>
-no-subnet: <em>&lt;no-subnet&gt;</em>
-machine-type: <em>&lt;machine_type&gt;</em>
-private-vlan: <em>&lt;private_vlan&gt;</em>
-public-vlan: <em>&lt;public_vlan&gt;</em>
-hardware: <em>&lt;shared_or_dedicated&gt;</em>
-workerNum: <em>&lt;number_workers&gt;</em>
-kube-version: <em>&lt;kube-version&gt;</em>
+<code>name: <em><cluster_name></em>
+location: <em><location></em>
+no-subnet: <em><no-subnet></em>
+machine-type: <em><machine_type></em>
+private-vlan: <em><private_vlan></em>
+public-vlan: <em><public_vlan></em>
+hardware: <em><shared_or_dedicated></em>
+workerNum: <em><number_workers></em>
+kube-version: <em><kube-version></em>
 diskEncryption: <em>false</em>
 trusted: <em>true</em>
 </code></pre>
@@ -537,27 +537,27 @@ trusted: <em>true</em>
     <tbody>
     <tr>
     <td><code><em>name</em></code></td>
-    <td>Replace <code><em>&lt;cluster_name&gt;</em></code> with a name for your cluster.</td>
+    <td>Replace <code><em><cluster_name></em></code> with a name for your cluster.</td>
     </tr>
     <tr>
     <td><code><em>location</em></code></td>
-    <td>Replace <code><em>&lt;location&gt;</em></code> with the location where you want to create your cluster. The available locations are dependent on the region that you are logged in. To list available locations, run <code>bx cs locations</code>. </td>
+    <td>Replace <code><em><location></em></code> with the location where you want to create your cluster. The available locations are dependent on the region that you are logged in. To list available locations, run <code>bx cs locations</code>. </td>
      </tr>
      <tr>
      <td><code><em>no-subnet</em></code></td>
-     <td>By default, a public and a private portable subnet are created on the VLAN associated with the cluster. Replace <code><em>&lt;no-subnet&gt;</em></code> with <code><em>true</em></code> to avoid creating subnets with the cluster. You can [create](#cs_cluster_subnet_create) or [add](#cs_cluster_subnet_add) subnets to a cluster later.</td>
+     <td>By default, a public and a private portable subnet are created on the VLAN associated with the cluster. Replace <code><em><no-subnet></em></code> with <code><em>true</em></code> to avoid creating subnets with the cluster. You can [create](#cs_cluster_subnet_create) or [add](#cs_cluster_subnet_add) subnets to a cluster later.</td>
       </tr>
      <tr>
      <td><code><em>machine-type</em></code></td>
-     <td>Replace <code><em>&lt;machine_type&gt;</em></code> with the type of machine that you want to deploy your worker nodes to. You can deploy your worker nodes as virtual machines on shared or dedicated hardware, or as physical machines on bare metal. Available physical and virtual machines types vary by the location in which you deploy the cluster. For more information, see the documentation for the `bx cs machine-type` [command](cs_cli_reference.html#cs_machine_types).</td>
+     <td>Replace <code><em><machine_type></em></code> with the type of machine that you want to deploy your worker nodes to. You can deploy your worker nodes as virtual machines on shared or dedicated hardware, or as physical machines on bare metal. Available physical and virtual machines types vary by the location in which you deploy the cluster. For more information, see the documentation for the `bx cs machine-type` [command](cs_cli_reference.html#cs_machine_types).</td>
      </tr>
      <tr>
      <td><code><em>private-vlan</em></code></td>
-     <td>Replace <code><em>&lt;private_vlan&gt;</em></code> with the ID of the private VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans <em>&lt;location&gt;</em></code> and look for VLAN routers that start with <code>bcr</code> (back-end router).</td>
+     <td>Replace <code><em><private_vlan></em></code> with the ID of the private VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans <em><location></em></code> and look for VLAN routers that start with <code>bcr</code> (back-end router).</td>
      </tr>
      <tr>
      <td><code><em>public-vlan</em></code></td>
-     <td>Replace <code><em>&lt;public_vlan&gt;</em></code> with the ID of the public VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans <em>&lt;location&gt;</em></code> and look for VLAN routers that start with <code>fcr</code> (front-end router).</td>
+     <td>Replace <code><em><public_vlan></em></code> with the ID of the public VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans <em><location></em></code> and look for VLAN routers that start with <code>fcr</code> (front-end router).</td>
      </tr>
      <tr>
      <td><code><em>hardware</em></code></td>
@@ -565,7 +565,7 @@ trusted: <em>true</em>
      </tr>
      <tr>
      <td><code><em>workerNum</em></code></td>
-     <td>Replace <code><em>&lt;number_workers&gt;</em></code> with the number of worker nodes that you want to deploy.</td>
+     <td>Replace <code><em><number_workers></em></code> with the number of worker nodes that you want to deploy.</td>
      </tr>
      <tr>
       <td><code><em>kube-version</em></code></td>
@@ -614,7 +614,7 @@ trusted: <em>true</em>
 <p><strong>Note:</strong> The public and private VLANs that you specify with the create command must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></li>
 </ul>
 
-<p>To find out if you already have a private VLAN for a specific location or to find the name of an existing private VLAN, run <code>bx cs vlans <em>&lt;location&gt;</em></code>.</p></dd>
+<p>To find out if you already have a private VLAN for a specific location or to find the name of an existing private VLAN, run <code>bx cs vlans <em><location></em></code>.</p></dd>
 
 <dt><code>--public-vlan <em>PUBLIC_VLAN</em></code></dt>
 <dd>
@@ -626,7 +626,7 @@ trusted: <em>true</em>
 <p><strong>Note:</strong> The public and private VLANs that you specify with the create command must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></li>
 </ul>
 
-<p>To find out if you already have a public VLAN for a specific location or to find the name of an existing public VLAN, run <code>bx cs vlans <em>&lt;location&gt;</em></code>.</p></dd>
+<p>To find out if you already have a public VLAN for a specific location or to find the name of an existing public VLAN, run <code>bx cs vlans <em><location></em></code>.</p></dd>
 
 <dt><code>--workers WORKER</code></dt>
 <dd>The number of worker nodes that you want to deploy in your cluster. If you do not specify this option, a cluster with 1 worker node is created. This value is optional for standard clusters and is not available for free clusters.
@@ -1814,13 +1814,13 @@ Add worker nodes to your standard cluster.
 <p><strong>Note:</strong> If you provide the same option in the command as parameter in the YAML file, the value in the command takes precedence over the value in the YAML. For example, you define a machine type in your YAML file and use the --machine-type option in the command, the value that you entered in the command option overrides the value in the YAML file.
 
 <pre class="codeblock">
-<code>name: <em>&lt;cluster_name_or_id&gt;</em>
-location: <em>&lt;location&gt;</em>
-machine-type: <em>&lt;machine_type&gt;</em>
-private-vlan: <em>&lt;private_vlan&gt;</em>
-public-vlan: <em>&lt;public_vlan&gt;</em>
-hardware: <em>&lt;shared_or_dedicated&gt;</em>
-workerNum: <em>&lt;number_workers&gt;</em>
+<code>name: <em><cluster_name_or_id></em>
+location: <em><location></em>
+machine-type: <em><machine_type></em>
+private-vlan: <em><private_vlan></em>
+public-vlan: <em><public_vlan></em>
+hardware: <em><shared_or_dedicated></em>
+workerNum: <em><number_workers></em>
 diskEncryption: <em>false</em></code></pre>
 
 <table>
@@ -1831,23 +1831,23 @@ diskEncryption: <em>false</em></code></pre>
 <tbody>
 <tr>
 <td><code><em>name</em></code></td>
-<td>Replace <code><em>&lt;cluster_name_or_id&gt;</em></code> with the name or ID of the cluster where you want to add worker nodes.</td>
+<td>Replace <code><em><cluster_name_or_id></em></code> with the name or ID of the cluster where you want to add worker nodes.</td>
 </tr>
 <tr>
 <td><code><em>location</em></code></td>
-<td>Replace <code><em>&lt;location&gt;</em></code> with the location where you want to deploy your worker nodes. The available locations are dependent on the region that you are logged in. To list available locations, run <code>bx cs locations</code>.</td>
+<td>Replace <code><em><location></em></code> with the location where you want to deploy your worker nodes. The available locations are dependent on the region that you are logged in. To list available locations, run <code>bx cs locations</code>.</td>
 </tr>
 <tr>
 <td><code><em>machine-type</em></code></td>
-<td>Replace <code><em>&lt;machine_type&gt;</em></code> with the type of machine that you want to deploy your worker nodes to. You can deploy your worker nodes as virtual machines on shared or dedicated hardware, or as physical machines on bare metal. Available physical and virtual machines types vary by the location in which you deploy the cluster. For more information, see the documentation for the `bx cs machine-type` [command](cs_cli_reference.html#cs_machine_types).</td>
+<td>Replace <code><em><machine_type></em></code> with the type of machine that you want to deploy your worker nodes to. You can deploy your worker nodes as virtual machines on shared or dedicated hardware, or as physical machines on bare metal. Available physical and virtual machines types vary by the location in which you deploy the cluster. For more information, see the documentation for the `bx cs machine-type` [command](cs_cli_reference.html#cs_machine_types).</td>
 </tr>
 <tr>
 <td><code><em>private-vlan</em></code></td>
-<td>Replace <code><em>&lt;private_vlan&gt;</em></code> with the ID of the private VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans <em>&lt;location&gt;</em></code> and look for VLAN routers that start with <code>bcr</code> (back-end router).</td>
+<td>Replace <code><em><private_vlan></em></code> with the ID of the private VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans <em><location></em></code> and look for VLAN routers that start with <code>bcr</code> (back-end router).</td>
 </tr>
 <tr>
 <td><code>public-vlan</code></td>
-<td>Replace <code>&lt;public_vlan&gt;</code> with the ID of the public VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans &lt;location&gt;</code> and look for VLAN routers that start with <code>fcr</code> (front-end router). <br><strong>Note</strong>: If you choose not to select a public VLAN because you want worker nodes to connect to a private VLAN only, you must configure an alternative solution. See [VLAN connection for worker nodes](cs_clusters.html#worker_vlan_connection) for more information. </td>
+<td>Replace <code><public_vlan></code> with the ID of the public VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans <location></code> and look for VLAN routers that start with <code>fcr</code> (front-end router). <br><strong>Note</strong>: If you choose not to select a public VLAN because you want worker nodes to connect to a private VLAN only, you must configure an alternative solution. See [VLAN connection for worker nodes](cs_clusters.html#worker_vlan_connection) for more information. </td>
 </tr>
 <tr>
 <td><code>hardware</code></td>
@@ -1855,7 +1855,7 @@ diskEncryption: <em>false</em></code></pre>
 </tr>
 <tr>
 <td><code>workerNum</code></td>
-<td>Replace <code><em>&lt;number_workers&gt;</em></code> with the number of worker nodes that you want to deploy.</td>
+<td>Replace <code><em><number_workers></em></code> with the number of worker nodes that you want to deploy.</td>
 </tr>
 <tr>
 <td><code>diskEncryption: <em>false</em></code></td>

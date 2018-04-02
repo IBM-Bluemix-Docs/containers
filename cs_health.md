@@ -135,45 +135,45 @@ To configure logging through the UI, you must specify an org and space. To enabl
   </thead>
   <tbody>
     <tr>
-      <td><code><em>&lt;my_cluster&gt;</em></code></td>
+      <td><code><em><my_cluster></em></code></td>
       <td>The name or ID of the cluster.</td>
     </tr>
     <tr>
-      <td><code><em>&lt;my_log_source&gt;</em></code></td>
+      <td><code><em><my_log_source></em></code></td>
       <td>The source that you want to forward logs from. Accepted values are <code>container</code>, <code>application</code>, <code>worker</code>, <code>kubernetes</code>, and <code>ingress</code>.</td>
     </tr>
     <tr>
-      <td><code><em>&lt;kubernetes_namespace&gt;</em></code></td>
+      <td><code><em><kubernetes_namespace></em></code></td>
       <td>Optional: The Kubernetes namespace that you want to forward logs from. Log forwarding is not supported for the <code>ibm-system</code> and <code>kube-system</code> Kubernetes namespaces. This value is valid only for the <code>container</code> log source. If you do not specify a namespace, then all namespaces in the cluster use this configuration.</td>
     </tr>
     <tr>
-      <td><code><em>&lt;hostname_or_ingestion_URL&gt;</em></code></td>
+      <td><code><em><hostname_or_ingestion_URL></em></code></td>
       <td><p>For {{site.data.keyword.loganalysisshort_notm}}, use the [ingestion URL](/docs/services/CloudLogAnalysis/log_ingestion.html#log_ingestion_urls). If you do not specify an ingestion URL, the endpoint for the region in which you created your cluster is used.</p>
       <p>For syslog, specify the hostname or IP address of the log collector service.</p></td>
     </tr>
     <tr>
-      <td><code><em>&lt;port&gt;</em></code></td>
+      <td><code><em><port></em></code></td>
       <td>The ingestion port. If you do not specify a port, then the standard port <code>9091</code> is used.
       <p>For syslog, specify the port of the log collector server. If you do not specify a port, then the standard port <code>514</code> is used.</td>
     </tr>
     <tr>
-      <td><code><em>&lt;cluster_space&gt;</em></code></td>
+      <td><code><em><cluster_space></em></code></td>
       <td>Optional: The name of the Cloud Foundry space that you want to send logs to. When forwarding logs to {{site.data.keyword.loganalysisshort_notm}}, the space and org are specified in the ingestion point. If you do not specify a space, logs are sent to the account level.</td>
     </tr>
     <tr>
-      <td><code><em>&lt;cluster_org&gt;</em></code></td>
+      <td><code><em><cluster_org></em></code></td>
       <td>The name of the Cloud Foundry org that the space is in. This value is required if you specified a space.</td>
     </tr>
     <tr>
-      <td><code><em>&lt;type&gt;</em></code></td>
+      <td><code><em><type></em></code></td>
       <td>Where you want to forward your logs. Options are <code>ibm</code>, which forwards your logs to {{site.data.keyword.loganalysisshort_notm}} and <code>syslog</code>, which forwards your logs to an external server.</td>
     </tr>
     <tr>
-      <td><code><em>&lt;paths_to_logs&gt;</em></code></td>
+      <td><code><em><paths_to_logs></em></code></td>
       <td>The path on their containers that the apps are logging to. To forward logs with source type <code>application</code>, you must provide a path. To specify more than one path, use a comma separated list. Example: <code>/var/log/myApp1/&ast;,/var/log/myApp2/&ast;</code></td>
     </tr>
     <tr>
-      <td><code><em>&lt;containers&gt;</em></code></td>
+      <td><code><em><containers></em></code></td>
       <td>Optional: To forward logs from apps, you can specify the name of the container that contains your app. You can specify more than one container by using a comma separated list. If no containers are specified, logs are forwarded from all of the containers that contain the paths that you provided.</td>
     </tr>
     <tr>
@@ -232,45 +232,45 @@ To configure logging through the UI, you must specify an org and space. To enabl
   </thead>
   <tbody>
     <tr>
-      <td><code><em>&lt;my_cluster&gt;</em></code></td>
+      <td><code><em><my_cluster></em></code></td>
       <td>The name or ID of the cluster.</td>
     </tr>
     <tr>
-      <td><code><em>&lt;log_config_id&gt;</em></code></td>
+      <td><code><em><log_config_id></em></code></td>
       <td>The ID for the configuration that you want to update.</td>
     </tr>
     <tr>
-      <td><code><em>&lt;namespace&gt;</em></code></td>
+      <td><code><em><namespace></em></code></td>
       <td>Optional: The Kubernetes namespace that you want to forward logs from. Log forwarding is not supported for the <code>ibm-system</code> and <code>kube-system</code> Kubernetes namespaces. This value is valid only for the <code>container</code> log source. If you do not specify a namespace, then all namespaces in the cluster use the configuration.</td>
     </tr>
     <tr>
-      <td><code><em>&lt;log_type&gt;</em></code></td>
+      <td><code><em><log_type></em></code></td>
       <td>Where you want to forward your logs. Options are <code>ibm</code>, which forwards your logs to {{site.data.keyword.loganalysisshort_notm}} and <code>syslog</code>, which forwards your logs to an external server.</td>
     </tr>
     <tr>
-      <td><code><em>&lt;hostname_or_ingestion_URL&gt;</em></code></td>
+      <td><code><em><hostname_or_ingestion_URL></em></code></td>
       <td><p>For {{site.data.keyword.loganalysisshort_notm}}, use the [ingestion URL](/docs/services/CloudLogAnalysis/log_ingestion.html#log_ingestion_urls). If you do not specify an ingestion URL, the endpoint for the region in which you created your cluster is used.</p>
       <p>For syslog, specify the hostname or IP address of the log collector service.</p></td>
     </tr>
     <tr>
-      <td><code><em>&lt;port&gt;</em></code></td>
+      <td><code><em><port></em></code></td>
       <td>The ingestion port. If you do not specify a port, then the standard port <code>9091</code> is used.
       <p>For syslog, specify the port of the log collector server. If you do not specify a port, then the standard port <code>514</code> is used.</td>
     </tr>
     <tr>
-      <td><code><em>&lt;cluster_space&gt;</em></code></td>
+      <td><code><em><cluster_space></em></code></td>
       <td>Optional: The name of the Cloud Foundry space that you want to send logs to. When forwarding logs to {{site.data.keyword.loganalysisshort_notm}}, the space and org are specified in the ingestion point. If you do not specify a space, logs are sent to the account level.</td>
     </tr>
     <tr>
-      <td><code><em>&lt;cluster_org&gt;</em></code></td>
+      <td><code><em><cluster_org></em></code></td>
       <td>The name of the Cloud Foundry org that the space is in. This value is required if you specified a space.</td>
     </tr>
     <tr>
-      <td><code><em>&lt;paths_to_logs&gt;</em></code></td>
+      <td><code><em><paths_to_logs></em></code></td>
       <td>The path on a container or containers that the apps are logging to. To forward logs with source type <code>application</code>, you must provide a path. To specify more than one path, use a comma separated list. Example: <code>/var/log/myApp1/&ast;,/var/log/myApp2/&ast;</code></td>
     </tr>
     <tr>
-      <td><code><em>&lt;containers&gt;</em></code></td>
+      <td><code><em><containers></em></code></td>
       <td>Optional: To forward logs from apps, you can specify the name of the container that contains your app. You can specify more than one container by using a comma separated list. If no containers are specified, logs are forwarded from all of the containers that contain the paths that you provided.</td>
     </tr>
   </tbody>
@@ -325,7 +325,7 @@ You can stop forwarding logs one or all of the logging configurations for a clus
 2. Delete the logging configuration.
 <ul>
 <li>To delete one logging configuration:</br>
-  <pre><code>bx cs logging-config-rm &lt;my_cluster&gt; --id &lt;log_config_id&gt;</pre></code>
+  <pre><code>bx cs logging-config-rm <my_cluster> --id <log_config_id></pre></code>
   <table>
     <caption>Understanding this command's components</caption>
       <thead>
@@ -333,11 +333,11 @@ You can stop forwarding logs one or all of the logging configurations for a clus
       </thead>
         <tbody>
         <tr>
-          <td><code><em>&lt;my_cluster&gt;</em></code></td>
+          <td><code><em><my_cluster></em></code></td>
           <td>The name of the cluster that the logging configuration is in.</td>
         </tr>
         <tr>
-          <td><code><em>&lt;log_config_id&gt;</em></code></td>
+          <td><code><em><log_config_id></em></code></td>
           <td>The ID of the log source configuration.</td>
         </tr>
   </tbody>
@@ -387,23 +387,23 @@ To forward Kubernetes API audit logs:
     </thead>
     <tbody>
     <tr>
-    <td><code><em>&lt;my_cluster&gt;</em></code></td>
+    <td><code><em><my_cluster></em></code></td>
     <td>The name or ID of the cluster.</td>
     </tr>
     <tr>
-    <td><code><em>&lt;server_URL&gt;</em></code></td>
+    <td><code><em><server_URL></em></code></td>
     <td>The URL or IP address for the remote logging service that you want to send logs to. Certificates are ignored if you provide an unsecure server URL.</td>
     </tr>
     <tr>
-    <td><code><em>&lt;CA_cert_path&gt;</em></code></td>
+    <td><code><em><CA_cert_path></em></code></td>
     <td>The file path for the CA certificate that is used to verify the remote logging service.</td>
     </tr>
     <tr>
-    <td><code><em>&lt;client_cert_path&gt;</em></code></td>
+    <td><code><em><client_cert_path></em></code></td>
     <td>The file path for the client certificate that is used to authenticate against the remote logging service.</td>
     </tr>
     <tr>
-    <td><code><em>&lt;client_key_path&gt;</em></code></td>
+    <td><code><em><client_key_path></em></code></td>
     <td>The file path for the corresponding client key that is used to connect to the remote logging service.</td>
     </tr>
     </tbody></table>

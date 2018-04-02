@@ -380,10 +380,10 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
 </table>
 
 1.  Create your IAM (Identity and Access Management) access token. The body information that is included in your request varies based on the {{site.data.keyword.Bluemix_notm}} authentication method that you use. Replace the following values:
-  - _&lt;my_username&gt;_: Your {{site.data.keyword.Bluemix_notm}} user name.
-  - _&lt;my_password&gt;_: Your {{site.data.keyword.Bluemix_notm}} password.
-  - _&lt;my_api_key&gt;_: Your {{site.data.keyword.Bluemix_notm}} API key.
-  - _&lt;my_passcode&gt;_: Your {{site.data.keyword.Bluemix_notm}} one-time passcode. Run `bx login --sso` and follow the instructions in your CLI output to retrieve your one-time passcode by using your web browser.
+  - _<my_username>_: Your {{site.data.keyword.Bluemix_notm}} user name.
+  - _<my_password>_: Your {{site.data.keyword.Bluemix_notm}} password.
+  - _<my_api_key>_: Your {{site.data.keyword.Bluemix_notm}} API key.
+  - _<my_passcode>_: Your {{site.data.keyword.Bluemix_notm}} one-time passcode. Run `bx login --sso` and follow the instructions in your CLI output to retrieve your one-time passcode by using your web browser.
 
     ```
     POST https://iam.<region>.bluemix.net/oidc/token
@@ -413,8 +413,8 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     <td>Body for {{site.data.keyword.Bluemix_notm}} user name and password</td>
     <td><ul><li>grant_type: password</li>
     <li>response_type: cloud_iam uaa</li>
-    <li>username: <em>&lt;my_username&gt;</em></li>
-    <li>password: <em>&lt;my_password&gt;</em></li>
+    <li>username: <em><my_username></em></li>
+    <li>password: <em><my_password></em></li>
     <li>uaa_client_id: cf</li>
     <li>uaa_client_secret:</li></ul>
     <strong>Note</strong>: Add the <code>uaa_client_secret</code> key with no value specified.</td>
@@ -423,7 +423,7 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     <td>Body for {{site.data.keyword.Bluemix_notm}} API keys</td>
     <td><ul><li>grant_type: urn:ibm:params:oauth:grant-type:apikey</li>
     <li>response_type: cloud_iam uaa</li>
-    <li>apikey: <em>&lt;my_api_key&gt;</em></li>
+    <li>apikey: <em><my_api_key></em></li>
     <li>uaa_client_id: cf</li>
     <li>uaa_client_secret:</li></ul>
     <strong>Note</strong>: Add the <code>uaa_client_secret</code> key with no value specified.</td>
@@ -432,7 +432,7 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     <td>Body for {{site.data.keyword.Bluemix_notm}} one-time passcode</td>
     <td><ul><li>grant_type: urn:ibm:params:oauth:grant-type:passcode</li>
     <li>response_type: cloud_iam uaa</li>
-    <li>passcode: <em>&lt;my_passcode&gt;</em></li>
+    <li>passcode: <em><my_passcode></em></li>
     <li>uaa_client_id: cf</li>
     <li>uaa_client_secret:</li></ul>
     <strong>Note</strong>: Add the <code>uaa_client_secret</code> key with no value specified.</td>
@@ -458,7 +458,7 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
 
     You can find the IAM token in the **access_token** field of your API ouput. Note the IAM token to retrieve additional header information in the next steps.
 
-2.  Retrieve the ID of the {{site.data.keyword.Bluemix_notm}} account where the cluster was created. Replace _&lt;iam_token&gt;_ with the IAM token that you retrieved in the previous step.
+2.  Retrieve the ID of the {{site.data.keyword.Bluemix_notm}} account where the cluster was created. Replace _<iam_token>_ with the IAM token that you retrieved in the previous step.
 
     ```
     GET https://accountmanagement.<region>.bluemix.net/v1/accounts
@@ -474,7 +474,7 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
   	<tr>
   		<td>Headers</td>
   		<td><ul><li>Content-Type: application/json</li>
-      <li>Authorization: bearer &lt;iam_token&gt;</li>
+      <li>Authorization: bearer <iam_token></li>
       <li>Accept: application/json</li></ul></td>
   	</tr>
     </tbody>
@@ -502,7 +502,7 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
 
     You can find the ID of your {{site.data.keyword.Bluemix_notm}} account in the **resources/metadata/guid** field of your API output.
 
-3.  Generate a new IAM token that includes your {{site.data.keyword.Bluemix_notm}} credentials and the account ID where the cluster was created. Replace _&lt;my_account_id&gt;_ with the ID of the {{site.data.keyword.Bluemix_notm}} account that you retrieved in the previous step.
+3.  Generate a new IAM token that includes your {{site.data.keyword.Bluemix_notm}} credentials and the account ID where the cluster was created. Replace _<my_account_id>_ with the ID of the {{site.data.keyword.Bluemix_notm}} account that you retrieved in the previous step.
 
     **Note:** If you are using an {{site.data.keyword.Bluemix_notm}} API key, you must use the {{site.data.keyword.Bluemix_notm}} account ID the API key was created for. To access clusters in other accounts, log into this account and create an {{site.data.keyword.Bluemix_notm}} API key that is based on this account.
 
@@ -534,31 +534,31 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     <td>Body for {{site.data.keyword.Bluemix_notm}} user name and password</td>
     <td><ul><li>grant_type: password</li>
     <li>response_type: cloud_iam uaa</li>
-    <li>username: <em>&lt;my_username&gt;</em></li>
-    <li>password: <em>&lt;my_password&gt;</em></li>
+    <li>username: <em><my_username></em></li>
+    <li>password: <em><my_password></em></li>
     <li>uaa_client_id: cf</li>
     <li>uaa_client_secret:</li>
-    <li>bss_account: <em>&lt;my_account_id&gt;</em></li></ul>
+    <li>bss_account: <em><my_account_id></em></li></ul>
     <strong>Note</strong>: Add the <code>uaa_client_secret</code> key with no value specified.</td>
     </tr>
     <tr>
     <td>Body for {{site.data.keyword.Bluemix_notm}} API keys</td>
     <td><ul><li>grant_type: urn:ibm:params:oauth:grant-type:apikey</li>
     <li>response_type: cloud_iam uaa</li>
-    <li>apikey: <em>&lt;my_api_key&gt;</em></li>
+    <li>apikey: <em><my_api_key></em></li>
     <li>uaa_client_id: cf</li>
     <li>uaa_client_secret:</li>
-    <li>bss_account: <em>&lt;my_account_id&gt;</em></li></ul>
+    <li>bss_account: <em><my_account_id></em></li></ul>
       <strong>Note</strong>: Add the <code>uaa_client_secret</code> key with no value specified.</td>
     </tr>
     <tr>
     <td>Body for {{site.data.keyword.Bluemix_notm}} one-time passcode</td>
     <td><ul><li>grant_type: urn:ibm:params:oauth:grant-type:passcode</li>
     <li>response_type: cloud_iam uaa</li>
-    <li>passcode: <em>&lt;my_passcode&gt;</em></li>
+    <li>passcode: <em><my_passcode></em></li>
     <li>uaa_client_id: cf</li>
     <li>uaa_client_secret:</li>
-    <li>bss_account: <em>&lt;my_account_id&gt;</em></li></ul><strong>Note</strong>: Add the <code>uaa_client_secret</code> key with no value specified.</td>
+    <li>bss_account: <em><my_account_id></em></li></ul><strong>Note</strong>: Add the <code>uaa_client_secret</code> key with no value specified.</td>
     </tr>
     </tbody>
     </table>
@@ -596,8 +596,8 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
      <tbody>
      <tr>
      <td>Header</td>
-     <td><ul><li>Authorization: bearer <em>&lt;iam_token&gt;</em></li>
-     <li>X-Auth-Refresh-Token: <em>&lt;refresh_token&gt;</em></li></ul></td>
+     <td><ul><li>Authorization: bearer <em><iam_token></em></li>
+     <li>X-Auth-Refresh-Token: <em><refresh_token></em></li></ul></td>
      </tr>
      </tbody>
      </table>
@@ -645,16 +645,16 @@ Use the following steps if you want to create an IAM token or if you want to obt
     <td>Body when using the refresh token</td>
     <td><ul><li>grant_type: refresh_token</li>
     <li>response_type: cloud_iam uaa</li>
-    <li>refresh_token: <em>&lt;iam_refresh_token&gt;</em></li>
+    <li>refresh_token: <em><iam_refresh_token></em></li>
     <li>uaa_client_id: cf</li>
     <li>uaa_client_secret:</li>
-    <li>bss_account: <em>&lt;account_id&gt;</em></li></ul><strong>Note</strong>: Add the <code>uaa_client_secret</code> key with no value specified.</td>
+    <li>bss_account: <em><account_id></em></li></ul><strong>Note</strong>: Add the <code>uaa_client_secret</code> key with no value specified.</td>
     </tr>
     <tr>
       <td>Body when using the {{site.data.keyword.Bluemix_notm}} API key</td>
       <td><ul><li>grant_type: <code>urn:ibm:params:oauth:grant-type:apikey</code></li>
     <li>response_type: cloud_iam uaa</li>
-    <li>apikey: <em>&lt;api_key&gt;</em></li>
+    <li>apikey: <em><api_key></em></li>
     <li>uaa_client_id: cf</li>
         <li>uaa_client_secret:</li></ul><strong>Note:</strong> Add the <code>uaa_client_secret</code> key with no value specified.</td>
     </tr>

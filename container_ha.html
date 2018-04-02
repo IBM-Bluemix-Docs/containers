@@ -332,7 +332,7 @@ variable</span> and repeat these steps.</span> <div class="tablenoborder"><table
 </tr>
 </thead>
 <tbody><tr><td headers="d49620e1256 "><div class="lines"><samp class="ph codeph">CCS_BIND_APP=</samp><br>
-<samp class="ph codeph"><var class="keyword varname">&lt;appname&gt;</var></samp></div>
+<samp class="ph codeph"><var class="keyword varname"><appname></var></samp></div>
 </td>
 <td headers="d49620e1258 ">Some <span class="keyword">Cloud</span> services do not
 support direct binding to a container. In this case, you need to create a Cloud Foundry app and bind
@@ -342,8 +342,8 @@ a bridge and allows <span class="keyword">Cloud</span> to inject
 your bridge app’s VCAP_SERVICES information into the running container instance. </td>
 </tr>
 <tr><td headers="d49620e1256 "><div class="lines"><samp class="ph codeph">CCS_BIND_SRV=</samp><br>
-<samp class="ph codeph"><var class="keyword varname">&lt;service_instance_name1&gt;,</var></samp><br>
-<samp class="ph codeph"><var class="keyword varname">&lt;service_instance_name2&gt;</var></samp></div>
+<samp class="ph codeph"><var class="keyword varname"><service_instance_name1>,</var></samp><br>
+<samp class="ph codeph"><var class="keyword varname"><service_instance_name2></var></samp></div>
 
 <div class="steps note"><span class="notetitle">Note:</span>  When a service does not support the use of the <samp class="ph codeph">CCS_BIND_SRV=</samp> environment
 variable, use <samp class="ph codeph">CCS_BIND_APP=</samp> instead.</div>
@@ -355,7 +355,7 @@ VCAP_SERVICES information into the running container instance. To list multiple 
 same environment variable.</td>
 </tr>
 <tr><td headers="d49620e1256 "><div class="lines">(Deprecated) <samp class="ph codeph">CCS_SSH_KEY=</samp><br>
-<samp class="ph codeph"><var class="keyword varname">&lt;public_ssh_key&gt; </var></samp></div>
+<samp class="ph codeph"><var class="keyword varname"><public_ssh_key> </var></samp></div>
 </td>
 <td headers="d49620e1258 "><div class="note note" data-hd-status="deprecated"><span class="notetitle">This environment variable has been deprecated:</span> Use <span class="ph"><samp class="ph codeph">bx ic</samp></span>
 <samp class="ph codeph">exec</samp> or <span class="ph"><samp class="ph codeph">bx ic</samp></span>
@@ -365,7 +365,7 @@ same environment variable.</td>
 key to a container when you create it, you can use <samp class="ph codeph">CCS_API_KEY</samp>.</span></td>
 </tr>
 <tr><td headers="d49620e1256 "><div class="lines"><samp class="ph codeph">LOG_LOCATIONS=</samp><br>
-<samp class="ph codeph"><var class="keyword varname">&lt;path_to_file&gt; </var></samp></div>
+<samp class="ph codeph"><var class="keyword varname"><path_to_file> </var></samp></div>
 </td>
 <td headers="d49620e1258 "><span class="ph" id="container_group_ui__d31214e1424">To add a log file to be monitored in the container, include the
 <samp class="ph codeph">LOG_LOCATIONS</samp> environment variable with a path to the log file.</span></td>
@@ -388,7 +388,7 @@ complete, the status is <span class="ph uicontrol">Running</span>.</li>
 <div class="section result"><p id="container_group_ui__wait"><span class="ph" id="container_group_ui__buildroute">If you are connecting to an external application from the
 container, there is up to a 5-minute wait after running the container process before it can connect
 to the specified route. Then, you can verify that the app is running in the container group by
-opening <span class="ph filepath">https://<var class="keyword varname">&lt;host&gt;</var>.<span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span></span> in a browser.</span></p>
+opening <span class="ph filepath">https://<var class="keyword varname"><host></var>.<span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span></span> in a browser.</span></p>
 </div><div class="section postreq"><div class="p" id="container_group_ui__ha_setup">The more widely you distribute your container setup, the less likely your users are
 to experience downtime with your app. After you create a container group, create another with the
 same image in the same space, another space in the same organization, or in another region to make
@@ -422,7 +422,7 @@ container. For more information, see <a href="container_volumes_ov.html#containe
 </div>
 </div><div class="section context"></div><p class="li stepsection">Create a scalable
 container group.</p><ol class="steps"><li class="step stepexpand"><span class="cmd">Create a container group with an existing image in your organization's private images registry
-by running one of the following <samp class="ph codeph">group-create</samp> commands. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create --anti --auto --desired <var class="keyword varname">&lt;instances&gt;</var> -e "LOG_LOCATIONS=<var class="keyword varname">&lt;file_path&gt;</var>" -m <var class="keyword varname">&lt;size&gt;</var> --name <var class="keyword varname">&lt;name&gt;</var> -p <var class="keyword varname">&lt;public_port&gt;</var> -n <var class="keyword varname">&lt;hostname&gt;</var> -d <span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span> --volume <var class="keyword varname">&lt;volume_name&gt;:&lt;mount_path&gt;</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;namespace&gt;</var>/<var class="keyword varname">&lt;image_name_or_id&gt;</var></code></pre>
+by running one of the following <samp class="ph codeph">group-create</samp> commands. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create --anti --auto --desired <var class="keyword varname"><instances></var> -e "LOG_LOCATIONS=<var class="keyword varname"><file_path></var>" -m <var class="keyword varname"><size></var> --name <var class="keyword varname"><name></var> -p <var class="keyword varname"><public_port></var> -n <var class="keyword varname"><hostname></var> -d <span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span> --volume <var class="keyword varname"><volume_name>:<mount_path></var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><namespace></var>/<var class="keyword varname"><image_name_or_id></var></code></pre>
 Example<p>The
 following example creates a container group with 3 instances that is named
 <var class="keyword varname">my_group</var> from the <span class="ph uicontrol">ibmliberty</span> image. The anti-affinity and
@@ -441,7 +441,7 @@ for the group is displayed.</li>
 <p><span class="ph" id="container_group_cli__d29581e200">If you are connecting to an external application from the
 container, there is up to a 5-minute wait after running the container process before it can connect
 to the specified route. Then, you can verify that the app is running in the container group by
-opening <span class="ph filepath">https://<var class="keyword varname">&lt;host&gt;</var>.<span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span></span> in a browser.</span></p>
+opening <span class="ph filepath">https://<var class="keyword varname"><host></var>.<span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span></span> in a browser.</span></p>
 </li>
 </ol>
 <div class="section postreq"><div class="p">The more widely you distribute your container setup, the less likely your users are
@@ -472,7 +472,7 @@ vulnerability advisor, and any other customizations you have in place.</span></l
 <li class="step stepexpand"><span class="cmd"><a href="cs_cli_install.html#cs_cli_configure">Set the
 context</a> for your cluster.</span></li>
 <li class="step stepexpand"><span class="cmd">Deploy your existing app to your cluster <a href="cs_app.html#app_cli">from the CLI</a>.</span> When you deploy your app, you must request CPU.
-<pre class="codeblock"><code>kubectl run &lt;name&gt; --image=&lt;image&gt; --requests=cpu=&lt;cpu&gt; --expose --port=&lt;port_number&gt;</code></pre>
+<pre class="codeblock"><code>kubectl run <name> --image=<image> --requests=cpu=<cpu> --expose --port=<port_number></code></pre>
 <div class="tablenoborder"><table summary="" id="migrating_autoscaling__table_px1_qsx_yy" class="defaultstyle"><thead><tr><th colspan="2" id="d49620e1891" class="thleft"><span class="ph"><img src="images/idea.png" alt="This icon indicates there is more information to learn about this step of the task."></span> Understanding
 this command's components</th>
 </tr>
@@ -496,7 +496,7 @@ this command's components</th>
 <div class="steps note"><span class="notetitle">Note:</span> For more complex deployments, you may need to create a <a href="cs_app.html#app_cli">deployment script</a>.</div>
 </li>
 <li class="step stepexpand"><span class="cmd">Create a Horizontal Pod Autoscaler and define your policy.</span>  For more information about working with the <samp class="ph codeph">kubectl autoscale</samp> command, see
-<a href="https://v1-7.docs.kubernetes.io/docs/user-guide/kubectl/kubectl_autoscale/#autoscale" rel="external" target="_blank" title="(Opens in a new tab or window)">the Kubernetes documentation</a>.<pre class="codeblock"><code>kubectl autoscale deployment &lt;deployment_name&gt; --cpu-percent=&lt;percentage&gt; --min=&lt;min_value&gt; --max=&lt;max_value&gt;</code></pre>
+<a href="https://v1-7.docs.kubernetes.io/docs/user-guide/kubectl/kubectl_autoscale/#autoscale" rel="external" target="_blank" title="(Opens in a new tab or window)">the Kubernetes documentation</a>.<pre class="codeblock"><code>kubectl autoscale deployment <deployment_name> --cpu-percent=<percentage> --min=<min_value> --max=<max_value></code></pre>
 
 <div class="tablenoborder"><table summary="" id="migrating_autoscaling__table_pgd_btx_yy" class="defaultstyle"><thead><tr><th colspan="2" id="d49620e1948" class="thleft"><span class="ph"><img src="images/idea.png" alt="This icon indicates there is more information to learn about this step of the task."></span> Understanding
 this command's components</th>
@@ -625,8 +625,8 @@ Cloud Container Service</span> CLI and the <span class="keyword">Cloud</span> GU
 <li class="step stepexpand"><span class="cmd">Update your app locally.</span></li>
 <li class="step stepexpand"><span class="cmd">Choose to either build your image directly in <span class="keyword">Cloud</span> or build and test your image locally
 before you push it to <span class="keyword">Cloud</span>. </span> <ul><li>To build the image directly in <span class="keyword">Cloud</span>, run the following command.*<div class="note tip"><span class="tiptitle">Tip:</span> <span class="ph">Run <samp class="ph codeph"><span class="ph">bx ic</span> namespace-get</samp> to retrieve
-your namespace and replace <var class="keyword varname">&lt;my_namespace&gt;</var> with your namespace information.</span></div>
-<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> build -t registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">&lt;image_name&gt;</var>:<var class="keyword varname">&lt;tag&gt;</var> <var class="keyword varname">&lt;dockerfile_location&gt;</var></code></pre>
+your namespace and replace <var class="keyword varname"><my_namespace></var> with your namespace information.</span></div>
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> build -t registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/<var class="keyword varname"><image_name></var>:<var class="keyword varname"><tag></var> <var class="keyword varname"><dockerfile_location></var></code></pre>
 Example<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> build -t registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">my_namespace</var>/<var class="keyword varname">my_image</var>:<var class="keyword varname">v1</var> .</code></pre>
 <div class="steps note"><span class="notetitle">Note:</span> <span class="ph" id="container_group_update_ui__d32579e180">*In this command, you can replace <samp class="ph codeph"><span class="ph">bx ic</span></samp> with <samp class="ph codeph">docker</samp>
 when you <a href="container_cli_cfic_install.html#container_cli_login" title="After you install the CLI, log in to use it.">logged in to <span class="keyword">IBM
@@ -640,30 +640,30 @@ environment variables for option 2, so that <samp class="ph codeph">docker</samp
 Docker engine on your local machine.<div class="p"><pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> init</code></pre>
 </div>
 </li>
-<li>Build the image locally from your Dockerfile.<div class="p"><pre class="codeblock"><code>docker build -t <var class="keyword varname">&lt;image_name&gt;</var>:<var class="keyword varname">&lt;tag&gt;</var> <var class="keyword varname">&lt;dockerfile_location&gt;</var></code></pre>
+<li>Build the image locally from your Dockerfile.<div class="p"><pre class="codeblock"><code>docker build -t <var class="keyword varname"><image_name></var>:<var class="keyword varname"><tag></var> <var class="keyword varname"><dockerfile_location></var></code></pre>
 </div>
 <div class="p">Example<pre class="codeblock"><code>docker build -t <var class="keyword varname">my_ibmliberty_image</var>:<var class="keyword varname">v1</var> .</code></pre>
 </div>
 </li>
 <li>Run a container from the image to test that your new app runs locally by using the following
-command, where <var class="keyword varname">Port</var> is the port for HTTP traffic.<div class="p"><pre class="codeblock"><code>docker run -d --name <var class="keyword varname">&lt;container_name&gt;</var> <var class="keyword varname">&lt;image_name&gt;</var></code></pre>
+command, where <var class="keyword varname">Port</var> is the port for HTTP traffic.<div class="p"><pre class="codeblock"><code>docker run -d --name <var class="keyword varname"><container_name></var> <var class="keyword varname"><image_name></var></code></pre>
 </div>
 <div class="p">Example<pre class="codeblock"><code>docker run -d --name <var class="keyword varname">my_container</var> <var class="keyword varname">my_ibmliberty_image</var></code></pre>
 </div>
 <p>If
 the app is running correctly, the container ID is displayed in the CLI output. To review the logs
 for the container, run <samp class="ph codeph">docker logs
-<var class="keyword varname">&lt;container_name_or_id&gt;</var>.</samp></p>
+<var class="keyword varname"><container_name_or_id></var>.</samp></p>
 </li>
 <li id="container_group_update_ui__d32562e248">Tag the local image with your private <span class="keyword">Cloud</span> registry and a new name. <span class="ph">Use lowercase alphanumeric characters or underscores (_) only
 in the image name. Other symbols, such as hyphens (-) or slashes (/), might prevent the image from
-being pushed to the image registry.</span><div class="p"><pre class="codeblock"><code>docker tag <var class="keyword varname">&lt;current_image_name_or_ID&gt;</var>:<var class="keyword varname">&lt;optional_tag&gt;</var>  registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">&lt;new_image_name&gt;</var>:<var class="keyword varname">&lt;optional_tag&gt;</var> </code></pre>
+being pushed to the image registry.</span><div class="p"><pre class="codeblock"><code>docker tag <var class="keyword varname"><current_image_name_or_ID></var>:<var class="keyword varname"><optional_tag></var>  registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/<var class="keyword varname"><new_image_name></var>:<var class="keyword varname"><optional_tag></var> </code></pre>
 </div>
 <p>Example</p>
-<div class="p"><pre class="codeblock"><code>docker tag <var class="keyword varname">my_ibmliberty_image</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">my_ibmliberty_image</var></code></pre>
+<div class="p"><pre class="codeblock"><code>docker tag <var class="keyword varname">my_ibmliberty_image</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/<var class="keyword varname">my_ibmliberty_image</var></code></pre>
 </div>
 </li>
-<li>Push the image to your private <span class="keyword">Cloud</span> registry by using the following command.<div class="p"><pre class="codeblock"><code>docker push registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">&lt;image_name&gt;</var></code></pre>
+<li>Push the image to your private <span class="keyword">Cloud</span> registry by using the following command.<div class="p"><pre class="codeblock"><code>docker push registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/<var class="keyword varname"><image_name></var></code></pre>
 </div>
 <div class="p">Example<pre class="codeblock"><code>docker push registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">my_namespace</var>/<var class="keyword varname">my_ibmliberty_image</var></code></pre>
 </div>
@@ -717,7 +717,7 @@ information about how to create a container group. </p>
 During the deployment process, the container group is also started. <p><span class="ph" id="container_group_update_ui__d32708e607">If you are connecting to an external application from the
 container, there is up to a 5-minute wait after running the container process before it can connect
 to the specified route. Then, you can verify that the app is running in the container group by
-opening <span class="ph filepath">https://<var class="keyword varname">&lt;host&gt;</var>.<span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span></span> in a browser.</span></p>
+opening <span class="ph filepath">https://<var class="keyword varname"><host></var>.<span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span></span> in a browser.</span></p>
 </li>
 </ol>
 </li>
@@ -769,8 +769,8 @@ Cloud Container Service</span> CLI</td>
 Cloud Container Service</span> CLI:</p><ol class="steps"><li class="step stepexpand"><span class="cmd">Update your app locally.</span></li>
 <li class="step stepexpand"><span class="cmd">Choose to either build your image directly in <span class="keyword">Cloud</span> or build and test your image locally
 before you push it to <span class="keyword">Cloud</span>. </span> <ul><li>To build the image directly in <span class="keyword">Cloud</span>, run the following command.*<div class="note tip"><span class="tiptitle">Tip:</span> <span class="ph">Run <samp class="ph codeph"><span class="ph">bx ic</span> namespace-get</samp> to retrieve
-your namespace and replace <var class="keyword varname">&lt;my_namespace&gt;</var> with your namespace information.</span></div>
-<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> build -t registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">&lt;image_name&gt;</var>:<var class="keyword varname">&lt;tag&gt;</var> <var class="keyword varname">&lt;dockerfile_location&gt;</var></code></pre>
+your namespace and replace <var class="keyword varname"><my_namespace></var> with your namespace information.</span></div>
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> build -t registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/<var class="keyword varname"><image_name></var>:<var class="keyword varname"><tag></var> <var class="keyword varname"><dockerfile_location></var></code></pre>
 Example<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> build -t registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">my_namespace</var>/<var class="keyword varname">my_image</var>:<var class="keyword varname">v1</var> .</code></pre>
 <div class="steps note"><span class="notetitle">Note:</span> <span class="ph" id="container_group_update_cli__d32023e180">*In this command, you can replace <samp class="ph codeph"><span class="ph">bx ic</span></samp> with <samp class="ph codeph">docker</samp>
 when you <a href="container_cli_cfic_install.html#container_cli_login" title="After you install the CLI, log in to use it.">logged in to <span class="keyword">IBM
@@ -784,30 +784,30 @@ environment variables for option 2, so that <samp class="ph codeph">docker</samp
 Docker engine on your local machine.<div class="p"><pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> init</code></pre>
 </div>
 </li>
-<li>Build the image locally from your Dockerfile.<div class="p"><pre class="codeblock"><code>docker build -t <var class="keyword varname">&lt;image_name&gt;</var>:<var class="keyword varname">&lt;tag&gt;</var> <var class="keyword varname">&lt;dockerfile_location&gt;</var></code></pre>
+<li>Build the image locally from your Dockerfile.<div class="p"><pre class="codeblock"><code>docker build -t <var class="keyword varname"><image_name></var>:<var class="keyword varname"><tag></var> <var class="keyword varname"><dockerfile_location></var></code></pre>
 </div>
 <div class="p">Example<pre class="codeblock"><code>docker build -t <var class="keyword varname">my_ibmliberty_image</var>:<var class="keyword varname">v1</var> .</code></pre>
 </div>
 </li>
 <li>Run a container from the image to test that your new app runs locally by using the following
-command, where <var class="keyword varname">Port</var> is the port for HTTP traffic.<div class="p"><pre class="codeblock"><code>docker run -d --name <var class="keyword varname">&lt;container_name&gt;</var> <var class="keyword varname">&lt;image_name&gt;</var></code></pre>
+command, where <var class="keyword varname">Port</var> is the port for HTTP traffic.<div class="p"><pre class="codeblock"><code>docker run -d --name <var class="keyword varname"><container_name></var> <var class="keyword varname"><image_name></var></code></pre>
 </div>
 <div class="p">Example<pre class="codeblock"><code>docker run -d --name <var class="keyword varname">my_container</var> <var class="keyword varname">my_ibmliberty_image</var></code></pre>
 </div>
 <p>If
 the app is running correctly, the container ID is displayed in the CLI output. To review the logs
 for the container, run <samp class="ph codeph">docker logs
-<var class="keyword varname">&lt;container_name_or_id&gt;</var>.</samp></p>
+<var class="keyword varname"><container_name_or_id></var>.</samp></p>
 </li>
 <li id="container_group_update_cli__d32006e248">Tag the local image with your private <span class="keyword">Cloud</span> registry and a new name. <span class="ph">Use lowercase alphanumeric characters or underscores (_) only
 in the image name. Other symbols, such as hyphens (-) or slashes (/), might prevent the image from
-being pushed to the image registry.</span><div class="p"><pre class="codeblock"><code>docker tag <var class="keyword varname">&lt;current_image_name_or_ID&gt;</var>:<var class="keyword varname">&lt;optional_tag&gt;</var>  registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">&lt;new_image_name&gt;</var>:<var class="keyword varname">&lt;optional_tag&gt;</var> </code></pre>
+being pushed to the image registry.</span><div class="p"><pre class="codeblock"><code>docker tag <var class="keyword varname"><current_image_name_or_ID></var>:<var class="keyword varname"><optional_tag></var>  registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/<var class="keyword varname"><new_image_name></var>:<var class="keyword varname"><optional_tag></var> </code></pre>
 </div>
 <p>Example</p>
-<div class="p"><pre class="codeblock"><code>docker tag <var class="keyword varname">my_ibmliberty_image</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">my_ibmliberty_image</var></code></pre>
+<div class="p"><pre class="codeblock"><code>docker tag <var class="keyword varname">my_ibmliberty_image</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/<var class="keyword varname">my_ibmliberty_image</var></code></pre>
 </div>
 </li>
-<li>Push the image to your private <span class="keyword">Cloud</span> registry by using the following command.<div class="p"><pre class="codeblock"><code>docker push registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">&lt;image_name&gt;</var></code></pre>
+<li>Push the image to your private <span class="keyword">Cloud</span> registry by using the following command.<div class="p"><pre class="codeblock"><code>docker push registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/<var class="keyword varname"><image_name></var></code></pre>
 </div>
 <div class="p">Example<pre class="codeblock"><code>docker push registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">my_namespace</var>/<var class="keyword varname">my_ibmliberty_image</var></code></pre>
 </div>

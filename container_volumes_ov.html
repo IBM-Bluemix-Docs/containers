@@ -163,10 +163,10 @@ accessible by any container the volume is mounted to.</p>
 CLI</a>. </div><div class="section context"></div><ol class="steps"><li class="step stepexpand"><span class="cmd">Create a container with a mounted volume.*</span> Replace <samp class="ph codeph"><var class="keyword varname">my_volume</var></samp> with the name of your volume, the
 <samp class="ph codeph"><var class="keyword varname">container_path</var></samp> with the mount path of the volume,
 <samp class="ph codeph"><var class="keyword varname">my_container</var></samp> with the name of your container, and
-registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">my_namespace</var>/<var class="keyword varname">my_image</var> with the image. <pre class="codeblock"><code><span class="ph">bx ic</span> run --volume <var class="keyword varname">my_volume</var>:/<var class="keyword varname">container_path</var> --name <var class="keyword varname">my_container</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">my_image</var></code></pre>
+registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">my_namespace</var>/<var class="keyword varname">my_image</var> with the image. <pre class="codeblock"><code><span class="ph">bx ic</span> run --volume <var class="keyword varname">my_volume</var>:/<var class="keyword varname">container_path</var> --name <var class="keyword varname">my_container</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/<var class="keyword varname">my_image</var></code></pre>
 
 <div class="note tip"><span class="tiptitle">Tip:</span> <span class="ph">Run <samp class="ph codeph"><span class="ph">bx ic</span> namespace-get</samp> to retrieve
-your namespace and replace <var class="keyword varname">&lt;my_namespace&gt;</var> with your namespace information.</span></div>
+your namespace and replace <var class="keyword varname"><my_namespace></var> with your namespace information.</span></div>
 
 <div class="steps note"><span class="notetitle">Note:</span> <span class="ph" id="container_volumes_mount__d44378e180">*In this command, you can replace <samp class="ph codeph"><span class="ph">bx ic</span></samp> with <samp class="ph codeph">docker</samp>
 when you <a href="container_cli_cfic_install.html#container_cli_login" title="After you install the CLI, log in to use it.">logged in to <span class="keyword">IBM
@@ -352,8 +352,8 @@ spaces are retrieved. </li>
 <li class="step stepexpand"><span class="cmd">Initialize the <span class="keyword">IBM
 Cloud Container Service</span> CLI.</span> <pre class="codeblock"><code><span class="ph">bx ic</span> init</code></pre>
 </li>
-<li class="step stepexpand"><span class="cmd">Add the image to your registry.*</span> Remember to replace <var class="keyword varname">&lt;my_namespace&gt;</var> with the namespace to your private
-images registry. Run <samp class="ph codeph"><span class="ph">bx ic</span> namespace-get</samp> if you need to find your namespace. <pre class="codeblock"><code><span class="ph">bx ic</span> build -t registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/&lt;my_namespace&gt;/nonroot .</code></pre>
+<li class="step stepexpand"><span class="cmd">Add the image to your registry.*</span> Remember to replace <var class="keyword varname"><my_namespace></var> with the namespace to your private
+images registry. Run <samp class="ph codeph"><span class="ph">bx ic</span> namespace-get</samp> if you need to find your namespace. <pre class="codeblock"><code><span class="ph">bx ic</span> build -t registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/<my_namespace>/nonroot .</code></pre>
 
 <div class="steps note"><span class="notetitle">Note:</span> <span class="ph" id="container_volumes_write__d45106e180">*In this command, you can replace <samp class="ph codeph"><span class="ph">bx ic</span></samp> with <samp class="ph codeph">docker</samp>
 when you <a href="container_cli_cfic_install.html#container_cli_login" title="After you install the CLI, log in to use it.">logged in to <span class="keyword">IBM
@@ -365,14 +365,14 @@ commands in all steps that are marked with an asterisk (*) in this topic. </span
 </li>
 <li class="step stepexpand"><span class="cmd">Mount the volume and run the container from the <var class="keyword varname">nonroot</var> image.*</span>  The volume mount path <samp class="ph codeph">/<span class="ph filepath">mnt</span>/<span class="ph filepath">myvol</span></samp>
 matches the mount path that is specified in the
-Dockerfile.<pre class="codeblock"><code><span class="ph">bx ic</span> run --name <var class="keyword varname">my_container</var> --volume <var class="keyword varname">my_volume</var>:/<span class="ph filepath">mnt</span>/<span class="ph filepath">myvol</span> registry.ng.bluemix.net/&lt;my_namespace&gt;/nonroot</code></pre>
+Dockerfile.<pre class="codeblock"><code><span class="ph">bx ic</span> run --name <var class="keyword varname">my_container</var> --volume <var class="keyword varname">my_volume</var>:/<span class="ph filepath">mnt</span>/<span class="ph filepath">myvol</span> registry.ng.bluemix.net/<my_namespace>/nonroot</code></pre>
 </li>
 <li class="step stepexpand"><span class="cmd">Confirm that <var class="keyword varname">my_container</var> is running.*</span> If the container has a <samp class="ph codeph">BUILDING</samp> status, then you cannot log in to it
 yet. <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ps</code></pre>
 
 <pre class="pre screen"><code>$ <span class="ph"><samp class="ph codeph">bx ic</samp></span> ps
 CONTAINER ID        IMAGE                                         COMMAND             CREATED             STATUS                    PORTS      NAMES
-d92ee43d-2af        registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">nonroot</var>:latest   ""                  41 seconds ago      Running 29 seconds ago               <var class="keyword varname">my_container</var></code></pre>
+d92ee43d-2af        registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/<var class="keyword varname"><my_namespace></var>/<var class="keyword varname">nonroot</var>:latest   ""                  41 seconds ago      Running 29 seconds ago               <var class="keyword varname">my_container</var></code></pre>
 </li>
 <li class="step stepexpand"><span class="cmd">Log in to the container after the container is running.*</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> exec -it <var class="keyword varname">my_container</var> /bin/bash</code></pre>
 </li>
@@ -415,8 +415,8 @@ data center, data is lost and cannot be recovered. </div>
 space</a>.</span></li>
 <li class="step stepexpand"><span class="cmd"><a href="container_volumes_ov.html#container_filestorage_managing" title="An organization manager can remove existing file shares and view which volumes are mounted on a file share.">Remove all file shares in your
 space</a>. </span></li>
-<li class="step stepexpand"><span class="cmd">Reprovision your space to the new data center. Replace <var class="keyword varname">&lt;data_center&gt;</var> with
-the <a href="container_cli_reference_cfic.html#container_cli_reference_cfic__reprovision">data center</a> where you want to create your new space. </span> <pre class="codeblock"><code><span class="ph">bx ic</span> reprovision <var class="keyword varname">&lt;data_center&gt;</var></code></pre>
+<li class="step stepexpand"><span class="cmd">Reprovision your space to the new data center. Replace <var class="keyword varname"><data_center></var> with
+the <a href="container_cli_reference_cfic.html#container_cli_reference_cfic__reprovision">data center</a> where you want to create your new space. </span> <pre class="codeblock"><code><span class="ph">bx ic</span> reprovision <var class="keyword varname"><data_center></var></code></pre>
 </li>
 <li class="step stepexpand"><span class="cmd"><a href="container_volumes_ov.html#container_fileshares_adding_cli" title="Create a file share by using the bx ic volume-fs-create command.">Create a file share in the new
 space</a>. </span></li>

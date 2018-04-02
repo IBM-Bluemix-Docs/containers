@@ -198,7 +198,7 @@ To access images in other {{site.data.keyword.Bluemix_notm}} regions or accounts
     {: pre}
 
 3.  Note the token ID that you want to use.
-4.  Retrieve the value for your token. Replace <em>&lt;token_id&gt;</em> with the ID of the token that you retrieved in the previous step.
+4.  Retrieve the value for your token. Replace <em><token_id></em> with the ID of the token that you retrieved in the previous step.
 
     ```
     bx cr token-get <token_id>
@@ -221,32 +221,32 @@ To access images in other {{site.data.keyword.Bluemix_notm}} regions or accounts
     </thead>
     <tbody>
     <tr>
-    <td><code>--namespace <em>&lt;kubernetes_namespace&gt;</em></code></td>
+    <td><code>--namespace <em><kubernetes_namespace></em></code></td>
     <td>Required. The Kubernetes namespace of your cluster where you want to use the secret and deploy containers to. Run <code>kubectl get namespaces</code> to list all namespaces in your cluster.</td>
     </tr>
     <tr>
-    <td><code><em>&lt;secret_name&gt;</em></code></td>
+    <td><code><em><secret_name></em></code></td>
     <td>Required. The name that you want to use for your imagePullSecret.</td>
     </tr>
     <tr>
-    <td><code>--docker-server <em>&lt;registry_url&gt;</em></code></td>
-    <td>Required. The URL to the image registry where your namespace is set up.<ul><li>For namespaces that are set up in US-South and US-East registry.ng.bluemix.net</li><li>For namespaces that are set up in UK-South registry.eu-gb.bluemix.net</li><li>For namespaces that are set up in EU-Central (Frankfurt) registry.eu-de.bluemix.net</li><li>For namespaces that are set up in Australia (Sydney) registry.au-syd.bluemix.net</li><li>For namespaces that are set up in {{site.data.keyword.Bluemix_dedicated_notm}} registry.<em>&lt;dedicated_domain&gt;</em></li></ul></td>
+    <td><code>--docker-server <em><registry_url></em></code></td>
+    <td>Required. The URL to the image registry where your namespace is set up.<ul><li>For namespaces that are set up in US-South and US-East registry.ng.bluemix.net</li><li>For namespaces that are set up in UK-South registry.eu-gb.bluemix.net</li><li>For namespaces that are set up in EU-Central (Frankfurt) registry.eu-de.bluemix.net</li><li>For namespaces that are set up in Australia (Sydney) registry.au-syd.bluemix.net</li><li>For namespaces that are set up in {{site.data.keyword.Bluemix_dedicated_notm}} registry.<em><dedicated_domain></em></li></ul></td>
     </tr>
     <tr>
-    <td><code>--docker-username <em>&lt;docker_username&gt;</em></code></td>
+    <td><code>--docker-username <em><docker_username></em></code></td>
     <td>Required. The user name to log in to your private registry. For {{site.data.keyword.registryshort_notm}}, the user name is set to <code>token</code>.</td>
     </tr>
     <tr>
-    <td><code>--docker-password <em>&lt;token_value&gt;</em></code></td>
+    <td><code>--docker-password <em><token_value></em></code></td>
     <td>Required. The value of your registry token that you retrieved earlier.</td>
     </tr>
     <tr>
-    <td><code>--docker-email <em>&lt;docker-email&gt;</em></code></td>
+    <td><code>--docker-email <em><docker-email></em></code></td>
     <td>Required. If you have one, enter your Docker email address. If you do not have one, enter a fictional email address, as for example a@b.c. This email is mandatory to create a Kubernetes secret, but is not used after creation.</td>
     </tr>
     </tbody></table>
 
-6.  Verify that the secret was created successfully. Replace <em>&lt;kubernetes_namespace&gt;</em> with the name of the namespace where you created the imagePullSecret.
+6.  Verify that the secret was created successfully. Replace <em><kubernetes_namespace></em> with the name of the namespace where you created the imagePullSecret.
 
     ```
     kubectl get secrets --namespace <kubernetes_namespace>
@@ -311,23 +311,23 @@ When you refer to the imagePullSecret in a pod deployment, it is valid for this 
     </thead>
     <tbody>
     <tr>
-    <td><code><em>&lt;container_name&gt;</em></code></td>
+    <td><code><em><container_name></em></code></td>
     <td>The name of the container that you want to deploy to your cluster.</td>
     </tr>
     <tr>
-    <td><code><em>&lt;my_namespace&gt;</em></code></td>
+    <td><code><em><my_namespace></em></code></td>
     <td>The namespace where your image is stored. To list available namespaces, run `bx cr namespace-list`.</td>
     </tr>
     <tr>
-    <td><code><em>&lt;my_image&gt;</em></code></td>
+    <td><code><em><my_image></em></code></td>
     <td>The name of the image that you want to use. To list available images in an {{site.data.keyword.Bluemix_notm}} account, run `bx cr image-list`.</td>
     </tr>
     <tr>
-    <td><code><em>&lt;tag&gt;</em></code></td>
+    <td><code><em><tag></em></code></td>
     <td>The version of the image that you want to use. If no tag is specified, the image that is tagged <strong>latest</strong> is used by default.</td>
     </tr>
     <tr>
-    <td><code><em>&lt;secret_name&gt;</em></code></td>
+    <td><code><em><secret_name></em></code></td>
     <td>The name of the imagePullSecret that you created earlier.</td>
     </tr>
     </tbody></table>
@@ -485,32 +485,32 @@ To create an imagePullSecret:
     </thead>
     <tbody>
     <tr>
-    <td><code>--namespace <em>&lt;kubernetes_namespace&gt;</em></code></td>
+    <td><code>--namespace <em><kubernetes_namespace></em></code></td>
     <td>Required. The Kubernetes namespace of your cluster where you want to use the secret and deploy containers to. Run <code>kubectl get namespaces</code> to list all namespaces in your cluster.</td>
     </tr>
     <tr>
-    <td><code><em>&lt;secret_name&gt;</em></code></td>
+    <td><code><em><secret_name></em></code></td>
     <td>Required. The name that you want to use for your imagePullSecret.</td>
     </tr>
     <tr>
-    <td><code>--docker-server <em>&lt;registry_url&gt;</em></code></td>
+    <td><code>--docker-server <em><registry_url></em></code></td>
     <td>Required. The URL to the registry where your private images are stored.</td>
     </tr>
     <tr>
-    <td><code>--docker-username <em>&lt;docker_username&gt;</em></code></td>
+    <td><code>--docker-username <em><docker_username></em></code></td>
     <td>Required. The user name to log in to your private registry.</td>
     </tr>
     <tr>
-    <td><code>--docker-password <em>&lt;token_value&gt;</em></code></td>
+    <td><code>--docker-password <em><token_value></em></code></td>
     <td>Required. The value of your registry token that you retrieved earlier.</td>
     </tr>
     <tr>
-    <td><code>--docker-email <em>&lt;docker-email&gt;</em></code></td>
+    <td><code>--docker-email <em><docker-email></em></code></td>
     <td>Required. If you have one, enter your Docker email address. If you do not have one, enter a fictional email address, as for example a@b.c. This email is mandatory to create a Kubernetes secret, but is not used after creation.</td>
     </tr>
     </tbody></table>
 
-2.  Verify that the secret was created successfully. Replace <em>&lt;kubernetes_namespace&gt;</em> with the name of the namespace where you created the imagePullSecret.
+2.  Verify that the secret was created successfully. Replace <em><kubernetes_namespace></em> with the name of the namespace where you created the imagePullSecret.
 
     ```
     kubectl get secrets --namespace <kubernetes_namespace>
@@ -542,23 +542,23 @@ To create an imagePullSecret:
         </thead>
         <tbody>
         <tr>
-        <td><code><em>&lt;pod_name&gt;</em></code></td>
+        <td><code><em><pod_name></em></code></td>
         <td>The name of the pod that you want to create.</td>
         </tr>
         <tr>
-        <td><code><em>&lt;container_name&gt;</em></code></td>
+        <td><code><em><container_name></em></code></td>
         <td>The name of the container that you want to deploy to your cluster.</td>
         </tr>
         <tr>
-        <td><code><em>&lt;my_image&gt;</em></code></td>
+        <td><code><em><my_image></em></code></td>
         <td>The full path to the image in your private registry that you want to use.</td>
         </tr>
         <tr>
-        <td><code><em>&lt;tag&gt;</em></code></td>
+        <td><code><em><tag></em></code></td>
         <td>The version of the image that you want to use. If no tag is specified, the image that is tagged <strong>latest</strong> is used by default.</td>
         </tr>
         <tr>
-        <td><code><em>&lt;secret_name&gt;</em></code></td>
+        <td><code><em><secret_name></em></code></td>
         <td>The name of the imagePullSecret that you created earlier.</td>
         </tr>
         </tbody></table>

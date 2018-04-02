@@ -179,12 +179,12 @@ first, and then bind the app to the container. The app acts as a bridge between 
 container. For more information, see <a href="container_troubleshoot.html#ts_bridge_app">Cloud service does not bind directly to a container</a>.</div>
 </div><ol class="steps"><li class="step stepexpand"><span class="cmd">Use one of the following commands to bind the <span class="keyword">Cloud</span> service instance to a new
 container.</span> <div class="note tip"><span class="tiptitle">Tip:</span> <span class="ph">Run <samp class="ph codeph"><span class="ph">bx ic</span> namespace-get</samp> to retrieve
-your namespace and replace <var class="keyword varname">&lt;my_namespace&gt;</var> with your namespace information.</span></div>
+your namespace and replace <var class="keyword varname"><my_namespace></var> with your namespace information.</span></div>
 <ul class="ul choices"><li class="li choice">If you are creating a single container, use the following
-command.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run --name <var class="keyword varname">container_name</var> -e "<var class="keyword varname">CCS_BIND_SRV</var>=<var class="keyword varname">service_instance1</var>,<var class="keyword varname">service_instance2</var>" registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">image_name</var></code></pre>
+command.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run --name <var class="keyword varname">container_name</var> -e "<var class="keyword varname">CCS_BIND_SRV</var>=<var class="keyword varname">service_instance1</var>,<var class="keyword varname">service_instance2</var>" registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/<var class="keyword varname">image_name</var></code></pre>
 </li>
 <li class="li choice">If you are creating a container group, use the following
-command.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create --name <var class="keyword varname">container_group_name</var> -e "<var class="keyword varname">CCS_BIND_SRV</var>=<var class="keyword varname">service_instance1</var>,<var class="keyword varname">service_instance2</var>" registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">image_name</var></code></pre>
+command.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create --name <var class="keyword varname">container_group_name</var> -e "<var class="keyword varname">CCS_BIND_SRV</var>=<var class="keyword varname">service_instance1</var>,<var class="keyword varname">service_instance2</var>" registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/<var class="keyword varname">image_name</var></code></pre>
 </li>
 <li class="li choice">If you are binding a service to container group that is already running, use the following
 command. This command is available for container groups only. Only one service can be bound at a
@@ -203,24 +203,24 @@ command.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx
 Verify that the VCAP_SERVICES information for the service is
 displayed.<pre class="codeblock"><code>{
  "VCAP_SERVICES": {
-  "&lt;service_name&gt;": [
+  "<service_name>": [
    {
     "credentials": {
-     "hostname": "&lt;hostname_id&gt;",
-     "jdbcUrl": "&lt;jdbc_URL&gt;",
-     "name": "&lt;encoded_name&gt;",
-     "password": "&lt;encoded_password&gt;",
-     "port": "&lt;port_number&gt;",
-     "uri": "&lt;service_URI&gt;",
-     "username": "&lt;encoded_username&gt;"
+     "hostname": "<hostname_id>",
+     "jdbcUrl": "<jdbc_URL>",
+     "name": "<encoded_name>",
+     "password": "<encoded_password>",
+     "port": "<port_number>",
+     "uri": "<service_URI>",
+     "username": "<encoded_username>"
     },
-    "label": "&lt;service_name&gt;",
-    "name": "&lt;service_instance&gt;",
-    "plan": "&lt;plan_name&gt;",
+    "label": "<service_name>",
+    "name": "<service_instance>",
+    "plan": "<plan_name>",
     "tags": [
-     "&lt;tag1&gt;",
-     "&lt;tag2&gt;",
-     "&lt;tag3&gt;"
+     "<tag1>",
+     "<tag2>",
+     "<tag3>"
     ]
    } </code></pre>
 </li>
@@ -246,16 +246,16 @@ private <span class="keyword">Cloud</span> images registry. </span> <ol type="a"
 Cloud Container Service</span> CLI</a>.</span></li>
 <li class="li substep substepexpand"><span class="cmd">Navigate to the <span class="ph filepath">alert-notification-helloworld</span> directory. </span></li>
 <li class="li substep substepexpand"><span class="cmd">Create your container image and push it to your private <span class="keyword">Cloud</span> images registry. Run <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> namespace-get</samp> to retrieve your
-namespace information and replace <var class="keyword varname">&lt;my_namespace&gt;</var> with your namespace.</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> build -t registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/alert .</code></pre>
+namespace information and replace <var class="keyword varname"><my_namespace></var> with your namespace.</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> build -t registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/alert .</code></pre>
 </li>
 <li class="li substep substepexpand"><span class="cmd">Verify that your container image is successfully created and pushed. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> images</code></pre>
 </li>
 </ol>
 </li>
 <li class="step stepexpand"><span class="cmd">Create a container from the image and bind the <span class="keyword">Alert Notification</span> service to it. Replace
-<var class="keyword varname">&lt;my_namespace&gt;</var> with your namespace information and
-<var class="keyword varname">&lt;my_alert&gt;</var> with the name of the Alert Notification service instance that you
-created in the beginning. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run --name alertcontainer -p 8080 -e "CCS_BIND_SRV=<var class="keyword varname">&lt;my_alert&gt;</var>" registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/alert</code></pre>
+<var class="keyword varname"><my_namespace></var> with your namespace information and
+<var class="keyword varname"><my_alert></var> with the name of the Alert Notification service instance that you
+created in the beginning. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run --name alertcontainer -p 8080 -e "CCS_BIND_SRV=<var class="keyword varname"><my_alert></var>" registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/alert</code></pre>
 </li>
 <li class="step stepexpand"><span class="cmd">Verify that your container is running.</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ps</code></pre>
 </li>
@@ -263,17 +263,17 @@ created in the beginning. </span> <pre class="codeblock"><code><span class="ph">
 to use. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ips</code></pre>
 
 <div class="note tip"><span class="tiptitle">Tip:</span> If no public IP addresses are available in your space, run <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-request</samp> to request a new IP
-address. You can also unbind an used IP address from a container by running the <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> unbind <var class="keyword varname">&lt;IP_ADDRESS&gt;</var>
-<var class="keyword varname">&lt;CONTAINER&gt;</var></samp> command.</div>
+address. You can also unbind an used IP address from a container by running the <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> unbind <var class="keyword varname"><IP_ADDRESS></var>
+<var class="keyword varname"><CONTAINER></var></samp> command.</div>
 </li>
-<li class="li substep substepexpand"><span class="cmd">Bind the public IP address to your container. Replace <var class="keyword varname">&lt;IP_ADDRESS&gt;</var> with
-the IP address you noted in the previous step. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind <var class="keyword varname">&lt;IP_ADDRESS&gt;</var> alertcontainer</code></pre>
+<li class="li substep substepexpand"><span class="cmd">Bind the public IP address to your container. Replace <var class="keyword varname"><IP_ADDRESS></var> with
+the IP address you noted in the previous step. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind <var class="keyword varname"><IP_ADDRESS></var> alertcontainer</code></pre>
 </li>
 </ol>
 </li>
 <li class="step stepexpand"><span class="cmd">Create a test alert.</span> <ol type="a" class="ol substeps"><li class="li substep substepexpand"><span class="cmd">Open your web browser.</span></li>
 <li class="li substep substepexpand"><span class="cmd">Enter the IP address and port in your web browser as follows:
-<samp class="ph codeph"><var class="keyword varname">&lt;IP_ADDRESS&gt;</var>:8080</samp>. </span> The welcome page of your <span class="keyword">Alert Notification</span> web app opens.<p><img src="images/alertapp.png" width="400" alt="Test your Alert Notification web app"></p>
+<samp class="ph codeph"><var class="keyword varname"><IP_ADDRESS></var>:8080</samp>. </span> The welcome page of your <span class="keyword">Alert Notification</span> web app opens.<p><img src="images/alertapp.png" width="400" alt="Test your Alert Notification web app"></p>
 </li>
 <li class="li substep substepexpand"><span class="cmd">Click on the <span class="ph uicontrol">Send Sample Alert</span> button to send a test alert to the Alert
 Viewer.</span></li>
@@ -304,9 +304,9 @@ Cloud Continuous Delivery</span>.</p>
 <ol><li>Create a Git repository that contains your code.</li>
 <li>Include a <samp class="ph codeph">Dockerfile</samp> in the root directory of your repo. </li>
 <li>From the menu, click
-<span class="ph menucascade"><span class="ph uicontrol">Services</span> &gt; <span class="ph uicontrol">DevOps</span></span>, and then
+<span class="ph menucascade"><span class="ph uicontrol">Services</span> > <span class="ph uicontrol">DevOps</span></span>, and then
 click <span class="ph uicontrol">Pipelines</span>.</li>
-<li>Click <span class="ph menucascade"><span class="ph uicontrol">Create Pipeline</span> &gt; <span class="ph uicontrol"><span class="keyword">Delivery Pipeline</span></span></span>.</li>
+<li>Click <span class="ph menucascade"><span class="ph uicontrol">Create Pipeline</span> > <span class="ph uicontrol"><span class="keyword">Delivery Pipeline</span></span></span>.</li>
 <li>Click <span class="ph uicontrol">Create</span>.</li>
 <li>Add your Git repo to the toolchain.<ol type="a" id="container_pipeline_ov__ol_mvk_s3v_vz"><li>Click <span class="ph uicontrol">Add a Tool</span>.</li>
 <li>Click the type of Git service that hosts your repo.</li>
@@ -393,12 +393,12 @@ for build number 4 is called <samp class="ph codeph">myappimage:4</samp>. </li>
 <li class="li substep substepexpand"><span class="cmd">If your Dockerfile is not located in the root
 directory of the project, in the Build Script
 section, add the path to the Dockerfile in the following locations.</span> <ol type="i"><li>Before the Run unit tests section, add the folder name with
-a change directory command.<div class="p"><pre class="codeblock"><code>cd <var class="keyword varname">&lt;folder&gt;</var></code></pre>
+a change directory command.<div class="p"><pre class="codeblock"><code>cd <var class="keyword varname"><folder></var></code></pre>
 </div>
 </li>
 <li>Wherever the <var class="keyword varname">${WORKSPACE}</var> variable is displayed, append the folder name. The
 <var class="keyword varname">${WORKSPACE}</var> variable automatically detects the root directory of the project for
-you.<div class="p">Example<pre class="codeblock"><code>BUILD_COMMAND="build --pull --tag ${FULL_REPOSITORY_NAME} ${WORKSPACE}/<var class="keyword varname">&lt;folder&gt;</var>"</code></pre>
+you.<div class="p">Example<pre class="codeblock"><code>BUILD_COMMAND="build --pull --tag ${FULL_REPOSITORY_NAME} ${WORKSPACE}/<var class="keyword varname"><folder></var>"</code></pre>
 </div>
 </li>
 </ol>
@@ -649,12 +649,12 @@ for build number 4 is called <samp class="ph codeph">myappimage:4</samp>. </li>
 <li class="li substep substepexpand"><span class="cmd">If your Dockerfile is not located in the root
 directory of the project, in the Build Script
 section, add the path to the Dockerfile in the following locations.</span> <ol type="i"><li>Before the Run unit tests section, add the folder name with
-a change directory command.<div class="p"><pre class="codeblock"><code>cd <var class="keyword varname">&lt;folder&gt;</var></code></pre>
+a change directory command.<div class="p"><pre class="codeblock"><code>cd <var class="keyword varname"><folder></var></code></pre>
 </div>
 </li>
 <li>Wherever the <var class="keyword varname">${WORKSPACE}</var> variable is displayed, append the folder name. The
 <var class="keyword varname">${WORKSPACE}</var> variable automatically detects the root directory of the project for
-you.<div class="p">Example<pre class="codeblock"><code>BUILD_COMMAND="build --pull --tag ${FULL_REPOSITORY_NAME} ${WORKSPACE}/<var class="keyword varname">&lt;folder&gt;</var>"</code></pre>
+you.<div class="p">Example<pre class="codeblock"><code>BUILD_COMMAND="build --pull --tag ${FULL_REPOSITORY_NAME} ${WORKSPACE}/<var class="keyword varname"><folder></var>"</code></pre>
 </div>
 </li>
 </ol>

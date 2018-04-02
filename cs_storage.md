@@ -448,7 +448,7 @@ To add persistent storage:
           <li>ibmc-file-silver / ibmc-file-retain-silver: 4 IOPS per GB.</li>
           <li>ibmc-file-gold / ibmc-file-retain-gold: 10 IOPS per GB.</li>
           <li>ibmc-file-custom / ibmc-file-retain-custom: Multiple values of IOPS available.</li></ul>
-          <p>If you do not specify a storage class, the PV is created with the default storage class.</p><p>**Tip:** If you want to change the default storage class, run <code>kubectl patch storageclass &lt;storageclass&gt; -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'</code> and replace <code>&lt;storageclass&gt;</code> with the name of the storage class.</p></td>
+          <p>If you do not specify a storage class, the PV is created with the default storage class.</p><p>**Tip:** If you want to change the default storage class, run <code>kubectl patch storageclass <storageclass> -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'</code> and replace <code><storageclass></code> with the name of the storage class.</p></td>
         </tr>
         <tr>
           <td><code>metadata/labels/billingType</code></td>

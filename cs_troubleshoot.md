@@ -29,9 +29,6 @@ You can take some general steps to ensure that your clusters are up-to-date:
 - [Reboot your worker nodes](cs_cli_reference.html#cs_worker_reboot) regularly to ensure the installation of updates and security patches that IBM automatically deploys to the operating system
 - Update your cluster to [the latest default version of Kubernetes](cs_versions.html) for {{site.data.keyword.containershort_notm}}
 
-<br />
-
-
 ## Debugging clusters
 {: #debug_clusters}
 
@@ -206,8 +203,8 @@ Review common error messages and learn how to resolve them.
         <td>The VLAN that you selected is associated with a pod in the data center that has insufficient space to provision your worker node. You can choose between the following options:<ul><li>Use a different data center to provision your worker node. Run <code>bx cs locations</code> to list available data center.<li>If you have an existing public and private VLAN pair that is associated with another pod in the data center, use this VLAN pair instead.<li>Contact {{site.data.keyword.Bluemix_notm}} support by opening an [{{site.data.keyword.Bluemix_notm}} support ticket](#ts_getting_help).</ul></td>
       </tr>
       <tr>
-        <td>{{site.data.keyword.Bluemix_notm}} Infrastructure Exception: Could not obtain network VLAN with id: &lt;vlan id&gt;.</td>
-        <td>Your worker node could not be provisioned because the selected VLAN ID could not be found for one of the following reasons:<ul><li>You might have specified the VLAN number instead of the VLAN ID. The VLAN number is 3 or 4 digits long, whereas the VLAN ID is 7 digits long. Run <code>bx cs vlans &lt;location&gt;</code> to retrieve the VLAN ID.<li>The VLAN ID might not be associated with the IBM Cloud infrastructure (SoftLayer) account that you use. Run <code>bx cs vlans &lt;location&gt;</code> to list available VLAN IDs for your account. To change the IBM Cloud infrastructure (SoftLayer) account, see [bx cs credentials-set](cs_cli_reference.html#cs_credentials_set). </ul></td>
+        <td>{{site.data.keyword.Bluemix_notm}} Infrastructure Exception: Could not obtain network VLAN with id: <vlan id>.</td>
+        <td>Your worker node could not be provisioned because the selected VLAN ID could not be found for one of the following reasons:<ul><li>You might have specified the VLAN number instead of the VLAN ID. The VLAN number is 3 or 4 digits long, whereas the VLAN ID is 7 digits long. Run <code>bx cs vlans <location></code> to retrieve the VLAN ID.<li>The VLAN ID might not be associated with the IBM Cloud infrastructure (SoftLayer) account that you use. Run <code>bx cs vlans <location></code> to list available VLAN IDs for your account. To change the IBM Cloud infrastructure (SoftLayer) account, see [bx cs credentials-set](cs_cli_reference.html#cs_credentials_set). </ul></td>
       </tr>
       <tr>
         <td>SoftLayer_Exception_Order_InvalidLocation: The location provided for this order is invalid. (HTTP 500)</td>
@@ -245,7 +242,7 @@ Review the options that you have to debug your app deployments and find the root
 1. Look for abnormalities in the service or deployment resources by running the `describe` command.
 
  Example:
- <pre class="pre"><code>kubectl describe service &lt;service_name&gt; </code></pre>
+ <pre class="pre"><code>kubectl describe service <service_name> </code></pre>
 
 2. [Check if the containers are stuck in the ContainerCreating state](cs_troubleshoot_storage.html#stuck_creating_state).
 
@@ -255,25 +252,25 @@ Review the options that you have to debug your app deployments and find the root
    1. Get the name of a pod.
      <pre class="pre"><code>kubectl get pods</code></pre>
    2. Log in to a container.
-     <pre class="pre"><code>kubectl exec -it &lt;pod_name&gt; -- /bin/bash</code></pre>
+     <pre class="pre"><code>kubectl exec -it <pod_name> -- /bin/bash</code></pre>
    3. Curl the app from within the container. If the port is not accessible, the service might not be listening on the correct port or the app might have issues. Update the configuration file for the service with the correct port and redeploy or investigate potential issues with the app.
-     <pre class="pre"><code>curl localhost: &lt;port&gt;</code></pre>
+     <pre class="pre"><code>curl localhost: <port></code></pre>
 
 5. Verify that the service is linked correctly to the pods.
    1. Get the name of a pod.
      <pre class="pre"><code>kubectl get pods</code></pre>
    2. Log in to a container.
-     <pre class="pre"><code>kubectl exec -it &lt;pod_name&gt; -- /bin/bash</code></pre>
+     <pre class="pre"><code>kubectl exec -it <pod_name> -- /bin/bash</code></pre>
    3. Curl the cluster IP address and port of the service. If the IP address and port are not accessible, look at the endpoints for the service. If there are no endpoints, then the selector for the service does not match the pods. If there are endpoints, then look at the target port field on the service and make sure that the target port is the same as what is being used for the pods.
-     <pre class="pre"><code>curl &lt;cluster_IP&gt;:&lt;port&gt;</code></pre>
+     <pre class="pre"><code>curl <cluster_IP>:<port></code></pre>
 
 6. For Ingress services, verify that the service is accessible from within the cluster.
    1. Get the name of a pod.
      <pre class="pre"><code>kubectl get pods</code></pre>
    2. Log in to a container.
-     <pre class="pre"><code>kubectl exec -it &lt;pod_name&gt; -- /bin/bash</code></pre>
+     <pre class="pre"><code>kubectl exec -it <pod_name> -- /bin/bash</code></pre>
    2. Curl the URL specified for the Ingress service. If the URL is not accessible, check for a firewall issue between the cluster and the external endpoint. 
-     <pre class="pre"><code>curl &lt;host_name&gt;.&lt;domain&gt;</code></pre>
+     <pre class="pre"><code>curl <host_name>.<domain></code></pre>
 
 <br />
 

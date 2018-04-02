@@ -212,15 +212,15 @@ To deploy the app:
     <td>Expose a resource as a Kubernetes service and make it publicly available to users.</td>
     </tr>
     <tr>
-    <td><code>deployment/<em>&lt;hello-world-deployment&gt;</em></code></td>
+    <td><code>deployment/<em><hello-world-deployment></em></code></td>
     <td>The resource type and the name of the resource to expose with this service.</td>
     </tr>
     <tr>
-    <td><code>--name=<em>&lt;hello-world-service&gt;</em></code></td>
+    <td><code>--name=<em><hello-world-service></em></code></td>
     <td>The name of the service.</td>
     </tr>
     <tr>
-    <td><code>--port=<em>&lt;8080&gt;</em></code></td>
+    <td><code>--port=<em><8080></em></code></td>
     <td>The port on which the service should serve.</td>
     </tr>
     <tr>
@@ -228,7 +228,7 @@ To deploy the app:
     <td>The service type to create.</td>
     </tr>
     <tr>
-    <td><code>--target-port=<em>&lt;8080&gt;</em></code></td>
+    <td><code>--target-port=<em><8080></em></code></td>
     <td>The port to which the service directs traffic. In this instance, the target-port is the same as the port, but other apps you create might differ.</td>
     </tr>
     </tbody></table>

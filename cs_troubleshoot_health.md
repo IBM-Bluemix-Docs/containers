@@ -25,9 +25,6 @@ lastupdated: "2018-03-30"
 As you use {{site.data.keyword.containerlong}}, consider these techniques for troubleshooting cluster logging and monitoring. Before trying these techniques, you can take some general steps to [debug your cluster and check for common issues](cs_troubleshoot.html).
 {: shortdesc}
 
-<br />
-
-
 ## Logs do not appear
 {: #cs_no_logs}
 
@@ -59,7 +56,7 @@ Review the following reasons why logs are not appearing and the corresponding tr
  </tr>
  <tr>
  <td>If you specified a space at cluster creation, the account owner does not have Manager, Developer, or Auditor permissions to that space.</td>
- <td>To change access permissions for the account owner:<ol><li>To find out who the account owner for the cluster is, run <code>bx cs api-key-info &lt;cluster_name_or_ID&gt;</code>.</li><li>To grant that account owner Manager, Developer, or Auditor {{site.data.keyword.containershort_notm}} access permissions to the space, see <a href="cs_users.html#managing">Managing cluster access</a>.</li><li>To refresh the logging token after permissions have been changed, run <code>bx cs logging-config-refresh &lt;cluster_name_or_ID&gt;</code>.</li></ol></td>
+ <td>To change access permissions for the account owner:<ol><li>To find out who the account owner for the cluster is, run <code>bx cs api-key-info <cluster_name_or_ID></code>.</li><li>To grant that account owner Manager, Developer, or Auditor {{site.data.keyword.containershort_notm}} access permissions to the space, see <a href="cs_users.html#managing">Managing cluster access</a>.</li><li>To refresh the logging token after permissions have been changed, run <code>bx cs logging-config-refresh <cluster_name_or_ID></code>.</li></ol></td>
  </tr>
  </tbody></table>
 

@@ -82,27 +82,27 @@ Create a non-expiring token for an image registry that you used for single and s
     </thead>
     <tbody>
     <tr>
-    <td><code>--namespace &lt;kubernetes_namespace&gt;</code></td>
+    <td><code>--namespace <kubernetes_namespace></code></td>
     <td>Required. The Kubernetes namespace of your cluster where you want to use the secret and deploy containers to. Run <code>kubectl get namespaces</code> to list all namespaces in your cluster.</td>
     </tr>
     <tr>
-    <td><code>&lt;secret_name&gt;</code></td>
+    <td><code><secret_name></code></td>
     <td>Required. The name that you want to use for your imagePullSecret.</td>
     </tr>
     <tr>
-    <td><code>--docker-server &lt;registry_url&gt;</code></td>
-    <td>Required. The URL to the image registry where your namespace is set up: registry.&lt;dedicated_domain&gt;</li></ul></td>
+    <td><code>--docker-server <registry_url></code></td>
+    <td>Required. The URL to the image registry where your namespace is set up: registry.<dedicated_domain></li></ul></td>
     </tr>
     <tr>
-    <td><code>--docker-username &lt;docker_username&gt;</code></td>
+    <td><code>--docker-username <docker_username></code></td>
     <td>Required. The user name to log in to your private registry.</td>
     </tr>
     <tr>
-    <td><code>--docker-password &lt;token_value&gt;</code></td>
+    <td><code>--docker-password <token_value></code></td>
     <td>Required. The value of your registry token that you retrieved earlier.</td>
     </tr>
     <tr>
-    <td><code>--docker-email &lt;docker-email&gt;</code></td>
+    <td><code>--docker-email <docker-email></code></td>
     <td>Required. If you have one, enter your Docker email address. If you do not have one, enter a fictional email address, as for example a@b.c. This email is mandatory to create a Kubernetes secret, but is not used after creation.</td>
     </tr>
     </tbody></table>
@@ -133,26 +133,26 @@ Create a non-expiring token for an image registry that you used for single and s
         </thead>
         <tbody>
         <tr>
-        <td><code>&lt;pod_name&gt;</code></td>
+        <td><code><pod_name></code></td>
         <td>The name of the pod that you want to create.</td>
         </tr>
         <tr>
-        <td><code>&lt;container_name&gt;</code></td>
+        <td><code><container_name></code></td>
         <td>The name of the container that you want to deploy to your cluster.</td>
         </tr>
         <tr>
-        <td><code>&lt;my_namespace&gt;</code></td>
+        <td><code><my_namespace></code></td>
         <td>The namespace where your image is stored. To list available namespaces, run `bx cr namespace-list`.</td>
         </tr>
-        <td><code>&lt;my_image&gt;</code></td>
+        <td><code><my_image></code></td>
         <td>The name of the image that you want to use. To list available images in an {{site.data.keyword.Bluemix_notm}} account, run <code>bx cr image-list</code>.</td>
         </tr>
         <tr>
-        <td><code>&lt;tag&gt;</code></td>
+        <td><code><tag></code></td>
         <td>The version of the image that you want to use. If no tag is specified, the image that is tagged <strong>latest</strong> is used by default.</td>
         </tr>
         <tr>
-        <td><code>&lt;secret_name&gt;</code></td>
+        <td><code><secret_name></code></td>
         <td>The name of the imagePullSecret that you created earlier.</td>
         </tr>
         </tbody></table>

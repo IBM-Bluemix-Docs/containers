@@ -213,7 +213,7 @@ displaying the namespace for your organization. In this case, you can continue w
 step.</div>
 </div>
 
-<div class="p"><pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> namespace-set <var class="keyword varname">&lt;my_namespace&gt;</var></code></pre>
+<div class="p"><pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> namespace-set <var class="keyword varname"><my_namespace></var></code></pre>
 
 <div class="note tip"><span class="tiptitle">Tip:</span> Observe the following rules for the
 namespace:<ul id="container_cli_login__d9193e141"><li>It can contain only lowercase letters, numbers, or underscores (_).</li>
@@ -493,8 +493,8 @@ base image is used to build the new image.</dd>
 build are in the same directory that the command is run from. Because the registry and namespace are
 included with the image name, the image is built in your organization's private <span class="keyword">Cloud</span> images registry.</span>
 <div class="note tip"><span class="tiptitle">Tip:</span> <span class="ph">Run <samp class="ph codeph"><span class="ph">bx ic</span> namespace-get</samp> to retrieve
-your namespace and replace <var class="keyword varname">&lt;my_namespace&gt;</var> with your namespace information.</span></div>
-<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> build -t registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">myimage</var> .</code></pre>
+your namespace and replace <var class="keyword varname"><my_namespace></var> with your namespace information.</span></div>
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> build -t registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/<var class="keyword varname">myimage</var> .</code></pre>
 </dd>
 </dl>
 </section><section role="region" aria-labelledby="d72e1938" id="container_cli_reference_cfic__d1494e565"><h3 class="sectiontitle" id="d72e1938"><span class="ph"><samp class="ph codeph">bx ic</samp></span> cp SRC_PATH CONTAINER:DEST_PATH | <span class="ph"><samp class="ph codeph">bx ic</samp></span> cp CONTAINER:SRC_PATH DEST_PATH </h3>
@@ -555,9 +555,9 @@ image is optional.</dd>
 <dd><pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> cpi <var class="keyword varname">source_repository</var>/<var class="keyword varname">source_image_name</var> <var class="keyword varname">private_registry_URL</var>/<var class="keyword varname">destination_image_name</var>:<var class="keyword varname">tag</var></code></pre>
 
 <div class="note tip"><span class="tiptitle">Tip:</span> <span class="ph">Run <samp class="ph codeph"><span class="ph">bx ic</span> namespace-get</samp> to retrieve
-your namespace and replace <var class="keyword varname">&lt;my_namespace&gt;</var> with your namespace information.</span></div>
+your namespace and replace <var class="keyword varname"><my_namespace></var> with your namespace information.</span></div>
 
-<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> cpi <var class="keyword varname">training/sinatra</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">mysinatra</var>:<var class="keyword varname">v1</var></code></pre>
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> cpi <var class="keyword varname">training/sinatra</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/<var class="keyword varname">mysinatra</var>:<var class="keyword varname">v1</var></code></pre>
 </dd>
 </dl>
 </section><section role="region" aria-labelledby="d72e2148" id="container_cli_reference_cfic__d1494e738"><h3 class="sectiontitle" id="d72e2148"><span class="ph" id="container_cli_reference_cfic__d1494e740"><span class="ph"><samp class="ph codeph">bx ic</samp></span> exec [-d] [-it] [-u USER] CONTAINER CMD </span></h3>
@@ -678,7 +678,7 @@ value. Example: <samp class="ph codeph">-e <span class="q">"<var class="keyword 
 </tr>
 </thead>
 <tbody><tr><td headers="d72e2500 "><div class="lines"><samp class="ph codeph">CCS_BIND_APP=</samp><br>
-<samp class="ph codeph"><var class="keyword varname">&lt;appname&gt;</var></samp></div>
+<samp class="ph codeph"><var class="keyword varname"><appname></var></samp></div>
 </td>
 <td headers="d72e2502 ">Some <span class="keyword">Cloud</span> services do not
 support direct binding to a container. In this case, you need to create a Cloud Foundry app and bind
@@ -688,8 +688,8 @@ a bridge and allows <span class="keyword">Cloud</span> to inject
 your bridge app’s VCAP_SERVICES information into the running container instance. </td>
 </tr>
 <tr><td headers="d72e2500 "><div class="lines"><samp class="ph codeph">CCS_BIND_SRV=</samp><br>
-<samp class="ph codeph"><var class="keyword varname">&lt;service_instance_name1&gt;,</var></samp><br>
-<samp class="ph codeph"><var class="keyword varname">&lt;service_instance_name2&gt;</var></samp></div>
+<samp class="ph codeph"><var class="keyword varname"><service_instance_name1>,</var></samp><br>
+<samp class="ph codeph"><var class="keyword varname"><service_instance_name2></var></samp></div>
 
 <div class="steps note"><span class="notetitle">Note:</span>  When a service does not support the use of the <samp class="ph codeph">CCS_BIND_SRV=</samp> environment
 variable, use <samp class="ph codeph">CCS_BIND_APP=</samp> instead.</div>
@@ -701,7 +701,7 @@ VCAP_SERVICES information into the running container instance. To list multiple 
 same environment variable.</td>
 </tr>
 <tr><td headers="d72e2500 "><div class="lines">(Deprecated) <samp class="ph codeph">CCS_SSH_KEY=</samp><br>
-<samp class="ph codeph"><var class="keyword varname">&lt;public_ssh_key&gt; </var></samp></div>
+<samp class="ph codeph"><var class="keyword varname"><public_ssh_key> </var></samp></div>
 </td>
 <td headers="d72e2502 "><div class="note note" data-hd-status="deprecated"><span class="notetitle">This environment variable has been deprecated:</span> Use <span class="ph"><samp class="ph codeph">bx ic</samp></span>
 <samp class="ph codeph">exec</samp> or <span class="ph"><samp class="ph codeph">bx ic</samp></span>
@@ -711,7 +711,7 @@ same environment variable.</td>
 key to a container when you create it, you can use <samp class="ph codeph">CCS_API_KEY</samp>.</span></td>
 </tr>
 <tr><td headers="d72e2500 "><div class="lines"><samp class="ph codeph">LOG_LOCATIONS=</samp><br>
-<samp class="ph codeph"><var class="keyword varname">&lt;path_to_file&gt; </var></samp></div>
+<samp class="ph codeph"><var class="keyword varname"><path_to_file> </var></samp></div>
 </td>
 <td headers="d72e2502 "><span class="ph" id="container_cli_reference_cfic__d1494e1130">To add a log file to be monitored in the container, include the
 <samp class="ph codeph">LOG_LOCATIONS</samp> environment variable with a path to the log file.</span></td>
@@ -719,7 +719,7 @@ key to a container when you create it, you can use <samp class="ph codeph">CCS_A
 </tbody>
 </table>
 </div>
-Example:<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create -e CCS_BIND_SRV=<var class="keyword varname">&lt;service_instance_name&gt;</var> --name <var class="keyword varname">&lt;container_name&gt;</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">&lt;image_name&gt;</var></code></pre>
+Example:<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> group-create -e CCS_BIND_SRV=<var class="keyword varname"><service_instance_name></var> --name <var class="keyword varname"><container_name></var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/<var class="keyword varname"><image_name></var></code></pre>
 </div>
 </dd>
 <dt class="pt dlterm">--env-file <var class="keyword varname">ENVFILE</var></dt>
@@ -1236,7 +1236,7 @@ container that is named
 <var class="keyword varname">my_container</var>.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> port <var class="keyword varname">my_container</var></code></pre>
 </dd>
 <dt class="dlterm">System Output</dt>
-<dd><pre class="codeblock"><code><samp class="ph systemoutput">9080/tcp -&gt; 192.0.2.25:9080</samp></code></pre>
+<dd><pre class="codeblock"><code><samp class="ph systemoutput">9080/tcp -> 192.0.2.25:9080</samp></code></pre>
 </dd>
 <dd class="ddexpand">In this example, <samp class="ph systemoutput">9080/tcp</samp> is your private port that is using the
 TCP/IP protocol. It is mapped to the public IP address <samp class="ph systemoutput">192.0.2.25</samp> and
@@ -1508,7 +1508,7 @@ include them around both the environment variable name and the value. <p>Example
 </tr>
 </thead>
 <tbody><tr><td headers="d72e4975 "><div class="lines"><samp class="ph codeph">CCS_BIND_APP=</samp><br>
-<samp class="ph codeph"><var class="keyword varname">&lt;appname&gt;</var></samp></div>
+<samp class="ph codeph"><var class="keyword varname"><appname></var></samp></div>
 </td>
 <td headers="d72e4977 ">Some <span class="keyword">Cloud</span> services do not
 support direct binding to a container. In this case, you need to create a Cloud Foundry app and bind
@@ -1518,8 +1518,8 @@ a bridge and allows <span class="keyword">Cloud</span> to inject
 your bridge app’s VCAP_SERVICES information into the running container instance. </td>
 </tr>
 <tr><td headers="d72e4975 "><div class="lines"><samp class="ph codeph">CCS_BIND_SRV=</samp><br>
-<samp class="ph codeph"><var class="keyword varname">&lt;service_instance_name1&gt;,</var></samp><br>
-<samp class="ph codeph"><var class="keyword varname">&lt;service_instance_name2&gt;</var></samp></div>
+<samp class="ph codeph"><var class="keyword varname"><service_instance_name1>,</var></samp><br>
+<samp class="ph codeph"><var class="keyword varname"><service_instance_name2></var></samp></div>
 
 <div class="steps note"><span class="notetitle">Note:</span>  When a service does not support the use of the <samp class="ph codeph">CCS_BIND_SRV=</samp> environment
 variable, use <samp class="ph codeph">CCS_BIND_APP=</samp> instead.</div>
@@ -1531,7 +1531,7 @@ VCAP_SERVICES information into the running container instance. To list multiple 
 same environment variable.</td>
 </tr>
 <tr><td headers="d72e4975 "><div class="lines">(Deprecated) <samp class="ph codeph">CCS_SSH_KEY=</samp><br>
-<samp class="ph codeph"><var class="keyword varname">&lt;public_ssh_key&gt; </var></samp></div>
+<samp class="ph codeph"><var class="keyword varname"><public_ssh_key> </var></samp></div>
 </td>
 <td headers="d72e4977 "><div class="note note" data-hd-status="deprecated"><span class="notetitle">This environment variable has been deprecated:</span> Use <span class="ph"><samp class="ph codeph">bx ic</samp></span>
 <samp class="ph codeph">exec</samp> or <span class="ph"><samp class="ph codeph">bx ic</samp></span>
@@ -1541,7 +1541,7 @@ same environment variable.</td>
 key to a container when you create it, you can use <samp class="ph codeph">CCS_API_KEY</samp>.</span></td>
 </tr>
 <tr><td headers="d72e4975 "><div class="lines"><samp class="ph codeph">LOG_LOCATIONS=</samp><br>
-<samp class="ph codeph"><var class="keyword varname">&lt;path_to_file&gt; </var></samp></div>
+<samp class="ph codeph"><var class="keyword varname"><path_to_file> </var></samp></div>
 </td>
 <td headers="d72e4977 "><span class="ph" id="container_cli_reference_cfic__d1494e1130-d1490e3792a1310">To add a log file to be monitored in the container, include the
 <samp class="ph codeph">LOG_LOCATIONS</samp> environment variable with a path to the log file.</span></td>
@@ -1628,7 +1628,7 @@ not specify a protocol, your port is automatically exposed for TCP traffic. </p>
 <p>If you have an existing IP address in the space that you want to bind to the container, you can
 specify the IP address with the port information. Include the IP address, the port, or the IP
 address and the container port number, such as
-<var class="keyword varname">&lt;ip-address&gt;</var>:<var class="keyword varname">&lt;port_on_IP&gt;</var>:<var class="keyword varname">&lt;container-port&gt;</var>.
+<var class="keyword varname"><ip-address></var>:<var class="keyword varname"><port_on_IP></var>:<var class="keyword varname"><container-port></var>.
 The port on the IP address must match the container port exposed in the Dockerfile. </p>
 
 <div class="p">Example<pre class="codeblock"><code>-p 192.0.2.23:9080:9080</code></pre>

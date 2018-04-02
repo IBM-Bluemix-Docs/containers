@@ -120,11 +120,11 @@ To create a load balancer service:
         <tbody>
         <tr>
           <td><code>name</code></td>
-          <td>Replace <em>&lt;myservice&gt;</em> with a name for your load balancer service.</td>
+          <td>Replace <em><myservice></em> with a name for your load balancer service.</td>
         </tr>
         <tr>
           <td><code>selector</code></td>
-          <td>Enter the label key (<em>&lt;selectorkey&gt;</em>) and value (<em>&lt;selectorvalue&gt;</em>) pair that you want to use to target the pods where your app runs. For example, if you use the following selector <code>app: code</code>, all pods that have this label in their metadata are included in the load balancing. Enter the same label that you used when you deployed your app to the cluster. </td>
+          <td>Enter the label key (<em><selectorkey></em>) and value (<em><selectorvalue></em>) pair that you want to use to target the pods where your app runs. For example, if you use the following selector <code>app: code</code>, all pods that have this label in their metadata are included in the load balancing. Enter the same label that you used when you deployed your app to the cluster. </td>
         </tr>
         <tr>
           <td><code>port</code></td>
@@ -136,7 +136,7 @@ To create a load balancer service:
         </tr>
         <tr>
           <td><code>loadBalancerIP</code></td>
-          <td>To create a private LoadBalancer or to use a specific portable IP address for a public LoadBalancer, replace <em>&lt;loadBalancerIP&gt;</em> with the IP address that you want to use. For more information, see the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/services-networking/service/#type-loadbalancer).</td>
+          <td>To create a private LoadBalancer or to use a specific portable IP address for a public LoadBalancer, replace <em><loadBalancerIP></em> with the IP address that you want to use. For more information, see the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/services-networking/service/#type-loadbalancer).</td>
         </tr>
         </tbody></table>
 
@@ -151,7 +151,7 @@ To create a load balancer service:
 
         When your load balancer service is created, a portable IP address is automatically assigned to the load balancer. If no portable IP address is available, the load balancer service cannot be created.
 
-3.  Verify that the load balancer service was created successfully. Replace _&lt;myservice&gt;_ with the name of the load balancer service that you created in the previous step.
+3.  Verify that the load balancer service was created successfully. Replace _<myservice>_ with the name of the load balancer service that you created in the previous step.
 
     ```
     kubectl describe service <myservice>

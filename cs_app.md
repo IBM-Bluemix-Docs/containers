@@ -98,7 +98,7 @@ spec:
               topologyKey: kubernetes.io/hostname
       containers:
       - name: wasliberty
-        image: registry.&lt;region&gt;.bluemix.net/ibmliberty
+        image: registry.<region>.bluemix.net/ibmliberty
         ports:
         - containerPort: 9080
 ---
@@ -276,7 +276,7 @@ Kubernetes secrets are a secure way to store confidential information, such as u
 
 To view the default TLS secret:
 <pre>
-bx cs cluster-get &gt;CLUSTER-NAME&lt; | grep "Ingress secret"
+bx cs cluster-get >CLUSTER-NAME< | grep "Ingress secret"
 </pre>
 </p>
 To create your own instead, complete the steps in this topic.</td>

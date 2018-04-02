@@ -25,9 +25,6 @@ lastupdated: "2018-03-30"
 As you use {{site.data.keyword.containerlong}}, consider these techniques for troubleshooting cluster networking. Before trying these techniques, you can take some general steps to [debug your cluster and check for common issues](cs_troubleshoot.html).
 {: shortdesc}
 
-<br />
-
-
 ## Cannot connect to an app via a load balancer service
 {: #cs_loadbalancer_fails}
 
@@ -55,31 +52,31 @@ To troubleshoot your load balancer service:
 
 2.  Check the accuracy of the configuration file for your load balancer service.
 
-  ```
-  apiVersion: v1
-  kind: Service
-  metadata:
-    name: myservice
-  spec:
-    type: LoadBalancer
-    selector:
-      <selectorkey>:<selectorvalue>
-    ports:
-     - protocol: TCP
-       port: 8080
-  ```
-  {: pre}
+    ```
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: myservice
+    spec:
+      type: LoadBalancer
+      selector:
+        <selectorkey>:<selectorvalue>
+      ports:
+       - protocol: TCP
+         port: 8080
+    ```
+    {: pre}
 
     1.  Check that you defined **LoadBalancer** as the type for your service.
-    2.  Make sure that you used the same **<selectorkey>** and **<selectorvalue>** that you used in the **label/metadata** section when you deployed your app.
+    2.  Make sure that the **<selectorkey>** and **<selectorvalue>** that you use in the `spec.selector` section of the LoadBalancer service is the same as the key/ value pair that you used in the `spec.template.metadata.labels` section of your deployment yaml. If labels do not match, the **Endpoints** section in your LoadBalancer service displays **<none>** and your app is not accessible from the internet. 
     3.  Check that you used the **port** that your app listens on.
 
 3.  Check your load balancer service and review the **Events** section to find potential errors.
 
-  ```
-  kubectl describe service <myservice>
-  ```
-  {: pre}
+    ```
+    kubectl describe service <myservice>
+    ```
+    {: pre}
 
     Look for the following error messages:
 
@@ -88,16 +85,16 @@ To troubleshoot your load balancer service:
     <li><pre class="screen"><code>Requested cloud provider IP <cloud-provider-ip> is not available. The following cloud provider IPs are available: <available-cloud-provider-ips></code></pre></br>You defined a portable public IP address for your load balancer service by using the **loadBalancerIP** section, but this portable public IP address is not available in your portable public subnet. Change your load balancer service configuration script and either choose one of the available portable public IP addresses, or remove the **loadBalancerIP** section from your script so that an available portable public IP address can be allocated automatically.</li>
     <li><pre class="screen"><code>No available nodes for load balancer services</code></pre>You do not have enough worker nodes to deploy a load balancer service. One reason might be that you deployed a standard cluster with more than one worker node, but the provisioning of the worker nodes failed.</li>
     <ol><li>List available worker nodes.</br><pre class="codeblock"><code>kubectl get nodes</code></pre></li>
-    <li>If at least two available worker nodes are found, list the worker node details.</br><pre class="codeblock"><code>bx cs worker-get [&lt;cluster_name_or_id&gt;] &lt;worker_ID&gt;</code></pre></li>
-    <li>Make sure that the public and private VLAN IDs for the worker nodes that were returned by the <code>kubectl get nodes</code> and the <code>bx cs [&lt;cluster_name_or_id&gt;] worker-get</code> commands match.</li></ol></li></ul>
+    <li>If at least two available worker nodes are found, list the worker node details.</br><pre class="codeblock"><code>bx cs worker-get [<cluster_name_or_id>] <worker_ID></code></pre></li>
+    <li>Make sure that the public and private VLAN IDs for the worker nodes that were returned by the <code>kubectl get nodes</code> and the <code>bx cs [<cluster_name_or_id>] worker-get</code> commands match.</li></ol></li></ul>
 
 4.  If you are using a custom domain to connect to your load balancer service, make sure that your custom domain is mapped to the public IP address of your load balancer service.
     1.  Find the public IP address of your load balancer service.
 
-      ```
-      kubectl describe service <myservice> | grep "LoadBalancer Ingress"
-      ```
-      {: pre}
+        ```
+        kubectl describe service <myservice> | grep "LoadBalancer Ingress"
+        ```
+        {: pre}
 
     2.  Check that your custom domain is mapped to the portable public IP address of your load balancer service in the Pointer record (PTR).
 
@@ -274,11 +271,11 @@ Review the following reasons why the application load balancer secret might fail
  </tr>
  <tr>
  <td>The certificate CRN provided at time of create is incorrect.</td>
- <td><ol><li>Check the accuracy of the certificate CRN string you provide.</li><li>If the certificate CRN is found to be accurate, then try to update the secret: <code>bx cs alb-cert-deploy --update --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></li><li>If this command results in the <code>update_failed</code> status, then remove the secret: <code>bx cs alb-cert-rm --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt;</code></li><li>Deploy the secret again: <code>bx cs alb-cert-deploy --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></li></ol></td>
+ <td><ol><li>Check the accuracy of the certificate CRN string you provide.</li><li>If the certificate CRN is found to be accurate, then try to update the secret: <code>bx cs alb-cert-deploy --update --cluster <cluster_name_or_id> --secret-name <secret_name> --cert-crn <certificate_CRN></code></li><li>If this command results in the <code>update_failed</code> status, then remove the secret: <code>bx cs alb-cert-rm --cluster <cluster_name_or_id> --secret-name <secret_name></code></li><li>Deploy the secret again: <code>bx cs alb-cert-deploy --cluster <cluster_name_or_id> --secret-name <secret_name> --cert-crn <certificate_CRN></code></li></ol></td>
  </tr>
  <tr>
  <td>The certificate CRN provided at time of update is incorrect.</td>
- <td><ol><li>Check the accuracy of the certificate CRN string you provide.</li><li>If the certificate CRN is found to be accurate, then remove the secret: <code>bx cs alb-cert-rm --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt;</code></li><li>Deploy the secret again: <code>bx cs alb-cert-deploy --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></li><li>Try to update the secret: <code>bx cs alb-cert-deploy --update --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></li></ol></td>
+ <td><ol><li>Check the accuracy of the certificate CRN string you provide.</li><li>If the certificate CRN is found to be accurate, then remove the secret: <code>bx cs alb-cert-rm --cluster <cluster_name_or_id> --secret-name <secret_name></code></li><li>Deploy the secret again: <code>bx cs alb-cert-deploy --cluster <cluster_name_or_id> --secret-name <secret_name> --cert-crn <certificate_CRN></code></li><li>Try to update the secret: <code>bx cs alb-cert-deploy --update --cluster <cluster_name_or_id> --secret-name <secret_name> --cert-crn <certificate_CRN></code></li></ol></td>
  </tr>
  <tr>
  <td>The {{site.data.keyword.cloudcerts_long_notm}} service is experiencing downtime.</td>
@@ -427,7 +424,7 @@ Update the Helm chart values to reflect the worker node changes:
      <tbody>
      <tr>
      <td><code>localSubnetNAT</code></td>
-     <td>If you are using subnet NAT to remap specific private local IP addresses, remove any IP addresses from the old worker node. If you are using subnet NAT to remap entire subnets and you have no worker nodes remaining on a subnet, remove that subnet CIDR from this setting.</td>
+     <td>If you are using subnet NAT to remap specific private local IP addresses, remove any IP addresses from this setting that are from the old worker node. If you are using subnet NAT to remap entire subnets and you have no worker nodes remaining on a subnet, remove that subnet CIDR from this setting.</td>
      </tr>
      <tr>
      <td><code>nodeSelector</code></td>
@@ -435,7 +432,7 @@ Update the Helm chart values to reflect the worker node changes:
      </tr>
      <tr>
      <td><code>tolerations</code></td>
-     <td>If worker node you deleted was not tainted, but the only worker nodes that remain are tainted, change this setting to allow the VPN pod to run on all tainted worker nodes or worker nodes with specific taints.
+     <td>If the worker node that you deleted was not tainted, but the only worker nodes that remain are tainted, change this setting to allow the VPN pod to run on all tainted worker nodes or worker nodes with specific taints.
      </td>
      </tr>
      </tbody></table>
@@ -505,7 +502,7 @@ To retrieve the `<ETCD_URL>`, run one of the following commands:
 - Windows:
     <ol>
     <li> Get a list of the pods in the kube-system namespace and locate the Calico controller pod. </br><pre class="codeblock"><code>kubectl get pod -n kube-system</code></pre></br>Example:</br><pre class="screen"><code>calico-policy-controller-1674857634-k2ckm</code></pre>
-    <li> View the details of the Calico controller pod.</br> <pre class="codeblock"><code>kubectl describe pod -n kube-system calico-policy-controller-&lt;ID&gt;</code></pre>
+    <li> View the details of the Calico controller pod.</br> <pre class="codeblock"><code>kubectl describe pod -n kube-system calico-policy-controller-<ID></code></pre>
     <li> Locate the ETCD endpoints value. Example: <code>https://169.1.1.1:30001</code>
     </ol>
 

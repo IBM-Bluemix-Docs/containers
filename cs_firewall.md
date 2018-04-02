@@ -225,7 +225,7 @@ Let your cluster access infrastructure resources and services from behind a fire
 
   3.  Allow outgoing network traffic from the worker nodes to [{{site.data.keyword.registrylong_notm}} regions](/docs/services/Registry/registry_overview.html#registry_regions):
       - `TCP port 443 FROM <each_worker_node_publicIP> TO <registry_publicIP>`
-      - Replace <em>&lt;registry_publicIP&gt;</em> with the registry IP addresses to which you want to allow traffic. The global registry stores IBM-provided public images, and regional registries store your own private or public images.
+      - Replace <em><registry_publicIP></em> with the registry IP addresses to which you want to allow traffic. The global registry stores IBM-provided public images, and regional registries store your own private or public images.
         <p>
 <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
       <thead>
@@ -265,7 +265,7 @@ Let your cluster access infrastructure resources and services from behind a fire
 
   4.  Optional: Allow outgoing network traffic from the worker nodes to {{site.data.keyword.monitoringlong_notm}} and {{site.data.keyword.loganalysislong_notm}} services:
       - `TCP port 443, port 9095 FROM <each_worker_node_publicIP> TO <monitoring_publicIP>`
-      - Replace <em>&lt;monitoring_publicIP&gt;</em> with all of the addresses for the monitoring regions to which you want to allow traffic:
+      - Replace <em><monitoring_publicIP></em> with all of the addresses for the monitoring regions to which you want to allow traffic:
         <p><table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
         <thead>
         <th>Container region</th>
@@ -293,7 +293,7 @@ Let your cluster access infrastructure resources and services from behind a fire
       </table>
 </p>
       - `TCP port 443, port 9091 FROM <each_worker_node_publicIP> TO <logging_publicIP>`
-      - Replace <em>&lt;logging_publicIP&gt;</em> with all of the addresses for the logging regions to which you want to allow traffic:
+      - Replace <em><logging_publicIP></em> with all of the addresses for the logging regions to which you want to allow traffic:
         <p><table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
         <thead>
         <th>Container region</th>

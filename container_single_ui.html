@@ -156,7 +156,7 @@ variable</span> and repeat these steps.</span> <div class="tablenoborder"><table
 </tr>
 </thead>
 <tbody><tr><td headers="d72924e493 "><div class="lines"><samp class="ph codeph">CCS_BIND_APP=</samp><br>
-<samp class="ph codeph"><var class="keyword varname">&lt;appname&gt;</var></samp></div>
+<samp class="ph codeph"><var class="keyword varname"><appname></var></samp></div>
 </td>
 <td headers="d72924e495 ">Some <span class="keyword">Cloud</span> services do not
 support direct binding to a container. In this case, you need to create a Cloud Foundry app and bind
@@ -166,8 +166,8 @@ a bridge and allows <span class="keyword">Cloud</span> to inject
 your bridge app’s VCAP_SERVICES information into the running container instance. </td>
 </tr>
 <tr><td headers="d72924e493 "><div class="lines"><samp class="ph codeph">CCS_BIND_SRV=</samp><br>
-<samp class="ph codeph"><var class="keyword varname">&lt;service_instance_name1&gt;,</var></samp><br>
-<samp class="ph codeph"><var class="keyword varname">&lt;service_instance_name2&gt;</var></samp></div>
+<samp class="ph codeph"><var class="keyword varname"><service_instance_name1>,</var></samp><br>
+<samp class="ph codeph"><var class="keyword varname"><service_instance_name2></var></samp></div>
 
 <div class="steps note"><span class="notetitle">Note:</span>  When a service does not support the use of the <samp class="ph codeph">CCS_BIND_SRV=</samp> environment
 variable, use <samp class="ph codeph">CCS_BIND_APP=</samp> instead.</div>
@@ -179,7 +179,7 @@ VCAP_SERVICES information into the running container instance. To list multiple 
 same environment variable.</td>
 </tr>
 <tr><td headers="d72924e493 "><div class="lines">(Deprecated) <samp class="ph codeph">CCS_SSH_KEY=</samp><br>
-<samp class="ph codeph"><var class="keyword varname">&lt;public_ssh_key&gt; </var></samp></div>
+<samp class="ph codeph"><var class="keyword varname"><public_ssh_key> </var></samp></div>
 </td>
 <td headers="d72924e495 "><div class="note note" data-hd-status="deprecated"><span class="notetitle">This environment variable has been deprecated:</span> Use <span class="ph"><samp class="ph codeph">bx ic</samp></span>
 <samp class="ph codeph">exec</samp> or <span class="ph"><samp class="ph codeph">bx ic</samp></span>
@@ -189,7 +189,7 @@ same environment variable.</td>
 key to a container when you create it, you can use <samp class="ph codeph">CCS_API_KEY</samp>.</span></td>
 </tr>
 <tr><td headers="d72924e493 "><div class="lines"><samp class="ph codeph">LOG_LOCATIONS=</samp><br>
-<samp class="ph codeph"><var class="keyword varname">&lt;path_to_file&gt; </var></samp></div>
+<samp class="ph codeph"><var class="keyword varname"><path_to_file> </var></samp></div>
 </td>
 <td headers="d72924e495 "><span class="ph" id="gui__d42700e1424">To add a log file to be monitored in the container, include the
 <samp class="ph codeph">LOG_LOCATIONS</samp> environment variable with a path to the log file.</span></td>
@@ -223,8 +223,8 @@ options: <ul id="gui__ul_yh5_421_4z"><li>You can open the app in a browser by cr
 display the app in the browser.</div>
 </li>
 <li>From the Linux or UNIX command line, you can run <span class="ph filepath">nc -zv
-<var class="keyword varname">&lt;public_IP&gt;</var>
-<var class="keyword varname">&lt;public_port&gt;</var></span> to verify that a server is listening on the port that
+<var class="keyword varname"><public_IP></var>
+<var class="keyword varname"><public_port></var></span> to verify that a server is listening on the port that
 was specified.</li>
 </ul>
 </div>
@@ -255,7 +255,7 @@ container. For more information, see <a href="container_volumes_ov.html#containe
 </ul>
 </div>
 </div><p class="li stepsection">Create a container.</p><ol class="steps"><li class="step stepexpand"><span class="cmd">Create a container with an existing IP address and an existing image in your organization's
-private images registry.*</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run -p <var class="keyword varname">&lt;ip-address&gt;</var>:<var class="keyword varname">&lt;port_on_IP&gt;</var>:<var class="keyword varname">&lt;public_port&gt;</var> -e <var class="keyword varname">&lt;env_variable&gt;</var> -m <var class="keyword varname">&lt;container_size&gt;</var> --name <var class="keyword varname">&lt;container_name&gt;</var> --volume <var class="keyword varname">&lt;volname:mount_path&gt;</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;namespace&gt;</var>/<var class="keyword varname">&lt;image_name_or_id&gt;</var></code></pre>
+private images registry.*</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run -p <var class="keyword varname"><ip-address></var>:<var class="keyword varname"><port_on_IP></var>:<var class="keyword varname"><public_port></var> -e <var class="keyword varname"><env_variable></var> -m <var class="keyword varname"><container_size></var> --name <var class="keyword varname"><container_name></var> --volume <var class="keyword varname"><volname:mount_path></var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><namespace></var>/<var class="keyword varname"><image_name_or_id></var></code></pre>
 <div class="steps note"><span class="notetitle">Note:</span> <span class="ph" id="container_single_cli__d41670e180">*In this command, you can replace <samp class="ph codeph"><span class="ph">bx ic</span></samp> with <samp class="ph codeph">docker</samp>
 when you <a href="container_cli_cfic_install.html#container_cli_login" title="After you install the CLI, log in to use it.">logged in to <span class="keyword">IBM
 Cloud Container Service</span></a> and set your environment
@@ -290,8 +290,8 @@ options: <ul id="container_single_cli__d41675e375"><li>You can open the app in a
 display the app in the browser.</div>
 </li>
 <li>From the Linux or UNIX command line, you can run <span class="ph filepath">nc -zv
-<var class="keyword varname">&lt;public_IP&gt;</var>
-<var class="keyword varname">&lt;public_port&gt;</var></span> to verify that a server is listening on the port that
+<var class="keyword varname"><public_IP></var>
+<var class="keyword varname"><public_port></var></span> to verify that a server is listening on the port that
 was specified.</li>
 </ul>
 </div>
@@ -333,8 +333,8 @@ Cloud Container Service</span> CLI</td>
 Cloud Container Service</span> CLI:</p><ol class="steps"><li class="step stepexpand"><span class="cmd">Update the app locally.</span></li>
 <li class="step stepexpand"><span class="cmd">Choose to either build your image directly in <span class="keyword">Cloud</span> or build and test your image locally
 before you push it to <span class="keyword">Cloud</span>. </span> <ul><li>To build the image directly in <span class="keyword">Cloud</span>, run the following command.*<div class="note tip"><span class="tiptitle">Tip:</span> <span class="ph">Run <samp class="ph codeph"><span class="ph">bx ic</span> namespace-get</samp> to retrieve
-your namespace and replace <var class="keyword varname">&lt;my_namespace&gt;</var> with your namespace information.</span></div>
-<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> build -t registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">&lt;image_name&gt;</var>:<var class="keyword varname">&lt;tag&gt;</var> <var class="keyword varname">&lt;dockerfile_location&gt;</var></code></pre>
+your namespace and replace <var class="keyword varname"><my_namespace></var> with your namespace information.</span></div>
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> build -t registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/<var class="keyword varname"><image_name></var>:<var class="keyword varname"><tag></var> <var class="keyword varname"><dockerfile_location></var></code></pre>
 Example<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> build -t registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">my_namespace</var>/<var class="keyword varname">my_image</var>:<var class="keyword varname">v1</var> .</code></pre>
 <div class="steps note"><span class="notetitle">Note:</span> <span class="ph" id="container_single_updating__d43200e229">*In this command, you can replace <samp class="ph codeph"><span class="ph">bx ic</span></samp> with <samp class="ph codeph">docker</samp>
 when you <a href="container_cli_cfic_install.html#container_cli_login" title="After you install the CLI, log in to use it.">logged in to <span class="keyword">IBM
@@ -348,30 +348,30 @@ environment variables for option 2, so that <samp class="ph codeph">docker</samp
 Docker engine on your local machine.<div class="p"><pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> init</code></pre>
 </div>
 </li>
-<li>Build the image locally from your Dockerfile.<div class="p"><pre class="codeblock"><code>docker build -t <var class="keyword varname">&lt;image_name&gt;</var>:<var class="keyword varname">&lt;tag&gt;</var> <var class="keyword varname">&lt;dockerfile_location&gt;</var></code></pre>
+<li>Build the image locally from your Dockerfile.<div class="p"><pre class="codeblock"><code>docker build -t <var class="keyword varname"><image_name></var>:<var class="keyword varname"><tag></var> <var class="keyword varname"><dockerfile_location></var></code></pre>
 </div>
 <div class="p">Example<pre class="codeblock"><code>docker build -t <var class="keyword varname">my_ibmliberty_image</var>:<var class="keyword varname">v1</var> .</code></pre>
 </div>
 </li>
 <li>Run a container from the image to test that your new app runs locally by using the following
-command, where <var class="keyword varname">Port</var> is the port for HTTP traffic.<div class="p"><pre class="codeblock"><code>docker run -d --name <var class="keyword varname">&lt;container_name&gt;</var> <var class="keyword varname">&lt;image_name&gt;</var></code></pre>
+command, where <var class="keyword varname">Port</var> is the port for HTTP traffic.<div class="p"><pre class="codeblock"><code>docker run -d --name <var class="keyword varname"><container_name></var> <var class="keyword varname"><image_name></var></code></pre>
 </div>
 <div class="p">Example<pre class="codeblock"><code>docker run -d --name <var class="keyword varname">my_container</var> <var class="keyword varname">my_ibmliberty_image</var></code></pre>
 </div>
 <p>If
 the app is running correctly, the container ID is displayed in the CLI output. To review the logs
 for the container, run <samp class="ph codeph">docker logs
-<var class="keyword varname">&lt;container_name_or_id&gt;</var>.</samp></p>
+<var class="keyword varname"><container_name_or_id></var>.</samp></p>
 </li>
 <li id="container_single_updating__d43200e329">Tag the local image with your private <span class="keyword">Cloud</span> registry and a new name. <span class="ph">Use lowercase alphanumeric characters or underscores (_) only
 in the image name. Other symbols, such as hyphens (-) or slashes (/), might prevent the image from
-being pushed to the image registry.</span><div class="p"><pre class="codeblock"><code>docker tag <var class="keyword varname">&lt;current_image_name_or_ID&gt;</var>:<var class="keyword varname">&lt;optional_tag&gt;</var>  registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">&lt;new_image_name&gt;</var>:<var class="keyword varname">&lt;optional_tag&gt;</var> </code></pre>
+being pushed to the image registry.</span><div class="p"><pre class="codeblock"><code>docker tag <var class="keyword varname"><current_image_name_or_ID></var>:<var class="keyword varname"><optional_tag></var>  registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/<var class="keyword varname"><new_image_name></var>:<var class="keyword varname"><optional_tag></var> </code></pre>
 </div>
 <p>Example</p>
-<div class="p"><pre class="codeblock"><code>docker tag <var class="keyword varname">my_ibmliberty_image</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">my_ibmliberty_image</var></code></pre>
+<div class="p"><pre class="codeblock"><code>docker tag <var class="keyword varname">my_ibmliberty_image</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/<var class="keyword varname">my_ibmliberty_image</var></code></pre>
 </div>
 </li>
-<li>Push the image to your private <span class="keyword">Cloud</span> registry by using the following command.<div class="p"><pre class="codeblock"><code>docker push registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">&lt;image_name&gt;</var></code></pre>
+<li>Push the image to your private <span class="keyword">Cloud</span> registry by using the following command.<div class="p"><pre class="codeblock"><code>docker push registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/<var class="keyword varname"><image_name></var></code></pre>
 </div>
 <div class="p">Example<pre class="codeblock"><code>docker push registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">my_namespace</var>/<var class="keyword varname">my_ibmliberty_image</var></code></pre>
 </div>
@@ -386,11 +386,11 @@ Cloud Container Service</span>.</span></div>
 </li>
 </ul>
 </li>
-<li class="step stepexpand"><span class="cmd">Unbind the public IP address from the container. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-unbind <var class="keyword varname">&lt;public_IP_address&gt;</var> <var class="keyword varname">&lt;container_name_or_id&gt;</var></code></pre>
+<li class="step stepexpand"><span class="cmd">Unbind the public IP address from the container. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-unbind <var class="keyword varname"><public_IP_address></var> <var class="keyword varname"><container_name_or_id></var></code></pre>
  <p>The container is no longer bound to the IP address, but the IP is still counted toward your
 organization's public IP quota.</p>
 </li>
-<li class="step stepexpand"><span class="cmd">Verify that the IP address was unbound by running the following command.*</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> inspect <var class="keyword varname">&lt;container_name_or_id&gt;</var></code></pre>
+<li class="step stepexpand"><span class="cmd">Verify that the IP address was unbound by running the following command.*</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> inspect <var class="keyword varname"><container_name_or_id></var></code></pre>
 
 <p>If the value for <samp class="ph systemoutput">PublicIpAddress</samp> is not empty, wait a few minutes
 longer and run the command again before you continue with the next step.</p>
@@ -399,9 +399,9 @@ longer and run the command again before you continue with the next step.</p>
 updated image.*</span> <pre class="codeblock"><code><span class="ph"><span class="ph"><samp class="ph codeph">bx ic</samp></span><span class="ph" id="container_single_updating__d43214e3572"> run [-p PORT] [-P] [-d] [-e ENV] [--env-file
 ENVFILE] [-it] [--link NAME:ALIAS] [-m MEMORY] --name NAME [--volume VOLUME:/DIRECTORY_PATH] IMAGE [CMD [CMD ...]] </span></span></code></pre>
 </li>
-<li class="step stepexpand"><span class="cmd">Bind the IP address to the new container.</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind <var class="keyword varname">&lt;public_IP_address&gt;</var> <var class="keyword varname">&lt;container_name_or_id&gt;</var></code></pre>
+<li class="step stepexpand"><span class="cmd">Bind the IP address to the new container.</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind <var class="keyword varname"><public_IP_address></var> <var class="keyword varname"><container_name_or_id></var></code></pre>
 </li>
-<li class="step stepexpand">Optional: <span class="cmd">Delete the old container.*</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> rm <var class="keyword varname">&lt;container_name_or_id&gt;</var></code></pre>
+<li class="step stepexpand">Optional: <span class="cmd">Delete the old container.*</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> rm <var class="keyword varname"><container_name_or_id></var></code></pre>
 </li>
 </ol>
 </div>
@@ -428,10 +428,10 @@ information. You can always refer to the database server as <samp class="ph code
 exposes the port number to the recipient container. In a Dockerfile, the port that is exposed in the
 image with the EXPOSE statement is not currently used by the linking run time.</div>
 <div class="note tip"><span class="tiptitle">Tip:</span> <span class="ph">Run <samp class="ph codeph"><span class="ph">bx ic</span> namespace-get</samp> to retrieve
-your namespace and replace <var class="keyword varname">&lt;my_namespace&gt;</var> with your namespace information.</span></div>
-<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run -p <var class="keyword varname">&lt;port&gt;</var> --name <var class="keyword varname">&lt;source_container_name&gt;</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">&lt;source_container_image_name&gt;</var> </code></pre>
+your namespace and replace <var class="keyword varname"><my_namespace></var> with your namespace information.</span></div>
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run -p <var class="keyword varname"><port></var> --name <var class="keyword varname"><source_container_name></var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/<var class="keyword varname"><source_container_image_name></var> </code></pre>
 Example
-<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run -p <var class="keyword varname">17546</var> --name <var class="keyword varname">source</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">dbimage</var> </code></pre>
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run -p <var class="keyword varname">17546</var> --name <var class="keyword varname">source</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/<var class="keyword varname">dbimage</var> </code></pre>
 <div class="steps note"><span class="notetitle">Note:</span> <span class="ph" id="container_linking__d36742e180">*In this command, you can replace <samp class="ph codeph"><span class="ph">bx ic</span></samp> with <samp class="ph codeph">docker</samp>
 when you <a href="container_cli_cfic_install.html#container_cli_login" title="After you install the CLI, log in to use it.">logged in to <span class="keyword">IBM
 Cloud Container Service</span></a> and set your environment
@@ -441,27 +441,27 @@ commands in all steps that are marked with an asterisk (*) in this topic. </span
 <li class="step stepexpand"><span class="cmd">Create a recipient container and link it to the source container by running the following
 command. *</span> For the alias, select a custom name for the image that is used in the source container. You
 can expose multiple ports for the recipient container to the host container by including the
-<span class="keyword option">-p</span> option multiple times. <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run -p <var class="keyword varname">&lt;port&gt;</var> -p <var class="keyword varname">&lt;port&gt;</var> --name <var class="keyword varname">&lt;recipient_container_name&gt;</var> --link <var class="keyword varname">&lt;source_container_name&gt;</var>:<var class="keyword varname">&lt;alias&gt;</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">&lt;recipient_container_image_name&gt;</var> </code></pre>
-Example<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run -p 12534 -p 15256 --name <var class="keyword varname">recipient</var> --link <var class="keyword varname">source</var>:<var class="keyword varname">dbserver</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">webserver</var> </code></pre>
+<span class="keyword option">-p</span> option multiple times. <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run -p <var class="keyword varname"><port></var> -p <var class="keyword varname"><port></var> --name <var class="keyword varname"><recipient_container_name></var> --link <var class="keyword varname"><source_container_name></var>:<var class="keyword varname"><alias></var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/<var class="keyword varname"><recipient_container_image_name></var> </code></pre>
+Example<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run -p 12534 -p 15256 --name <var class="keyword varname">recipient</var> --link <var class="keyword varname">source</var>:<var class="keyword varname">dbserver</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/<var class="keyword varname">webserver</var> </code></pre>
 <p>The
 container is linked when the ID for the recipient container is displayed.</p>
 </li>
 <li class="step stepexpand">Optional: <span class="cmd">Verify the environment variables that are injected by the link by logging into your container
-using <samp class="ph codeph">exec</samp>.*</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> exec -it <var class="keyword varname">&lt;recipient_container_name&gt;</var> bash </code></pre>
+using <samp class="ph codeph">exec</samp>.*</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> exec -it <var class="keyword varname"><recipient_container_name></var> bash </code></pre>
  <div class="p">Run the <samp class="ph codeph">env</samp> command in the bash window to see the details of the
 alias.<pre class="codeblock"><code>"Env": [
-    "<var class="keyword varname">&lt;alias&gt;</var>_PORT_&lt;source_container_port&gt;/tcp_TCP_PORT=&lt;source_container_port&gt;/tcp",
-    "<var class="keyword varname">&lt;alias&gt;</var>_PORT_&lt;source_container_port&gt;/tcp_TCP=tcp://<var class="keyword varname">&lt;recipient_container_private_IP&gt;</var>:&lt;source_container_port&gt;/tcp",
-    "<var class="keyword varname">&lt;alias&gt;</var>_ENV_space_id=<var class="keyword varname">&lt;space_ID&gt;</var>",
+    "<var class="keyword varname"><alias></var>_PORT_<source_container_port>/tcp_TCP_PORT=<source_container_port>/tcp",
+    "<var class="keyword varname"><alias></var>_PORT_<source_container_port>/tcp_TCP=tcp://<var class="keyword varname"><recipient_container_private_IP></var>:<source_container_port>/tcp",
+    "<var class="keyword varname"><alias></var>_ENV_space_id=<var class="keyword varname"><space_ID></var>",
     "logging_password=",
-    "space_id=<var class="keyword varname">&lt;space_ID&gt;</var>",
+    "space_id=<var class="keyword varname"><space_ID></var>",
     "logstash_target=logs.opvis.bluemix.net:9091",
-    "<var class="keyword varname">&lt;alias&gt;</var>_PORT_<var class="keyword varname">&lt;source_container_port&gt;</var>/tcp_TCP_ADDR=<var class="keyword varname">&lt;recipient_container_private_ip&gt;</var>",
-    "<var class="keyword varname">&lt;alias&gt;</var>_ENV_metrics_target=metrics.opvis.bluemix.net:9095",
-    "<var class="keyword varname">&lt;alias&gt;</var>_NAME=/<var class="keyword varname">&lt;recipient_container&gt;</var>/<var class="keyword varname">&lt;alias&gt;</var>",
-    "<var class="keyword varname">&lt;alias&gt;</var>_ENV_logstash_target=logs.opvis.bluemix.net:9091",
-    "<var class="keyword varname">&lt;alias&gt;</var>_ENV_logging_password=",
-    "<var class="keyword varname">&lt;alias&gt;</var>_PORT_<var class="keyword varname">&lt;source_container_port&gt;</var>/tcp_TCP_PROTO=tcp",
+    "<var class="keyword varname"><alias></var>_PORT_<var class="keyword varname"><source_container_port></var>/tcp_TCP_ADDR=<var class="keyword varname"><recipient_container_private_ip></var>",
+    "<var class="keyword varname"><alias></var>_ENV_metrics_target=metrics.opvis.bluemix.net:9095",
+    "<var class="keyword varname"><alias></var>_NAME=/<var class="keyword varname"><recipient_container></var>/<var class="keyword varname"><alias></var>",
+    "<var class="keyword varname"><alias></var>_ENV_logstash_target=logs.opvis.bluemix.net:9091",
+    "<var class="keyword varname"><alias></var>_ENV_logging_password=",
+    "<var class="keyword varname"><alias></var>_PORT_<var class="keyword varname"><source_container_port></var>/tcp_TCP_PROTO=tcp",
     "metrics_target=metrics.opvis.bluemix.net:9095"
 ],</code></pre>
 </div>
@@ -487,11 +487,11 @@ allocated to the space. While allocated to a space, the IP address does not chan
 <li class="step stepexpand"><span class="cmd">Note the IP address.</span></li>
 <li class="step stepexpand"><span class="cmd">Bind the address to a new container or an existing running
 container.</span> <ul class="ul choices"><li class="li choice">To bind to an existing running
-container<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind <var class="keyword varname">&lt;public_IP_address&gt;</var> <var class="keyword varname">&lt;container_name_or_id&gt;</var></code></pre>
+container<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind <var class="keyword varname"><public_IP_address></var> <var class="keyword varname"><container_name_or_id></var></code></pre>
 Example<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind 192.0.2.23 my_container</code></pre>
 </li>
 <li class="li choice">To bind to a new
-container<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run -p <var class="keyword varname">&lt;ip-address&gt;</var>:<var class="keyword varname">&lt;container-port&gt;</var>:<var class="keyword varname">&lt;container-port&gt;</var> --name <var class="keyword varname">&lt;container_name&gt;</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">&lt;image_name&gt;</var></code></pre>
+container<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run -p <var class="keyword varname"><ip-address></var>:<var class="keyword varname"><container-port></var>:<var class="keyword varname"><container-port></var> --name <var class="keyword varname"><container_name></var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/<var class="keyword varname"><image_name></var></code></pre>
 </li>
 </ul>
 </li>
@@ -519,7 +519,7 @@ request an IP address by using the command line, see <a href="container_single_u
 <aside role="complementary" aria-labelledby="d72924e1976"></aside></article><article class="topic task nested2" role="article" aria-labelledby="d72924e2077" lang="en-us" id="container_cli_ips_unbind"><h3 class="topictitle3" id="d72924e2077">Unbinding public IP addresses from a container</h3>
 <div class="body taskbody"><p class="shortdesc">You can unbind a public IP address from a container, but the IP address is still
 available to other containers and counted toward your organization's public IP quota. </p>
-<ol class="steps"><li class="step stepexpand" id="container_cli_ips_unbind__unbind"><span class="cmd">Unbind the public IP address from the container. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-unbind <var class="keyword varname">&lt;public_IP_address&gt;</var> <var class="keyword varname">&lt;container_name_or_id&gt;</var></code></pre>
+<ol class="steps"><li class="step stepexpand" id="container_cli_ips_unbind__unbind"><span class="cmd">Unbind the public IP address from the container. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-unbind <var class="keyword varname"><public_IP_address></var> <var class="keyword varname"><container_name_or_id></var></code></pre>
  <p>The container is no longer bound to the IP address, but the IP is still counted toward your
 organization's public IP quota.</p>
 </li>
@@ -531,7 +531,7 @@ organization's public IP quota.</p>
 <div class="body taskbody"><p class="shortdesc">If you are not using a public IP address or must delete one to request a new one, you can
 remove a public IP address from your organization's quota. </p>
 <div class="section prereq">Before you begin, unbind the public IP address from any containers that are using
-it.</div><ol class="steps"><li class="step stepexpand"><span class="cmd">Remove the IP address from your organization's quota.</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-release <var class="keyword varname">&lt;public_IP_address&gt;</var> </code></pre>
+it.</div><ol class="steps"><li class="step stepexpand"><span class="cmd">Remove the IP address from your organization's quota.</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-release <var class="keyword varname"><public_IP_address></var> </code></pre>
 </li>
 <li class="step stepexpand">Optional: <span class="cmd">Verify that the IP address is not listed as allocated anymore. </span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ips</code></pre>
 </li>
@@ -771,7 +771,7 @@ get</samp>.</p>
 example.<pre class="pre screen"><code>$ <span class="ph"><samp class="ph codeph">bx ic</samp></span> cpi mongo registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/<var class="keyword varname">$your_namespace</var>/<var class="keyword varname">mongo</var>
 Sending build context to Docker daemon 2.048 kB
 Step 1 : FROM mongo
- ---&gt; 32427ae49eff
+ ---> 32427ae49eff
 Successfully built 32427ae49eff
 The push refers to a repository [registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/<var class="keyword varname">$your_namespace</var>/<var class="keyword varname">mongo</var>] (len: 1)</code></pre>
  In the background, the mongo image from Docker Hub is being copied to your images registry.
@@ -780,7 +780,7 @@ full output will look like the following
 example.<pre class="pre screen"><code>$ <span class="ph"><samp class="ph codeph">bx ic</samp></span> cpi mongo registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/<var class="keyword varname">$your_namespace</var>/<var class="keyword varname">mongo</var>
 Sending build context to Docker daemon 2.048 kB
 Step 1 : FROM mongo
- ---&gt; 32427ae49eff
+ ---> 32427ae49eff
 Successfully built 32427ae49eff
 The push refers to a repository [registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/<var class="keyword varname">$your_namespace</var>/<var class="keyword varname">mongo</var>] (len: 1)
 32427ae49eff: Pushed
@@ -829,7 +829,7 @@ that is built from this image has these commands. <pre class="codeblock"><code>m
 </li>
 <li class="step stepexpand"><span class="cmd">Create a Dockerfile within the <span class="ph filepath">wrapper</span> folder.</span> This command creates a Dockerfile and adds the specified <var class="keyword varname">FROM</var> command,
 which is required in all Dockerfiles. <var class="keyword varname">FROM</var> states what the parent image will be.
-In this case, we are using the <var class="keyword varname">lets-chat</var> image as our parent. <pre class="codeblock"><code>echo <span class="q">"FROM sdelements/lets-chat:latest"</span> &gt; Dockerfile</code></pre>
+In this case, we are using the <var class="keyword varname">lets-chat</var> image as our parent. <pre class="codeblock"><code>echo <span class="q">"FROM sdelements/lets-chat:latest"</span> > Dockerfile</code></pre>
 </li>
 <li class="step stepexpand"><span class="cmd">Confirm the Dockerfile was created by listing files in your current directory.</span> <pre class="codeblock"><code>ls</code></pre>
 </li>
@@ -839,7 +839,7 @@ and assigns a private IP address to the container. The lets-chat app requires an
 connection at the time the app starts. Adding the network delay ensures that there is enough time
 for the <span class="keyword">IBM
 Cloud Container Service</span> networking to finish
-before the app is started. <pre class="codeblock"><code>echo <span class="q">"CMD (sleep 60; npm start)"</span> &gt;&gt; Dockerfile</code></pre>
+before the app is started. <pre class="codeblock"><code>echo <span class="q">"CMD (sleep 60; npm start)"</span> >> Dockerfile</code></pre>
 </li>
 <li class="step stepexpand"><span class="cmd">Build and tag your image.</span> Don't forget the <samp class="ph codeph">.</samp> at the end of the command! The period tells Docker to look
 inside your current local folder for the needed Dockerfile. <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> build -t registry.<var class="keyword varname" data-hd-keyref="DomainName">domain_name</var>/<var class="keyword varname">$your_namespace</var>/lets-chat .</code></pre>
@@ -1036,7 +1036,7 @@ expose, as well as the links to other services in the system. </p>
 <div class="section prereq">Before you begin, consider the following steps. <ul><li>Run <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> namespace-get</samp> to
 retrieve your namespace information and store this information in an environment variable that is
 named <var class="keyword varname">$your_namespace</var>.
-<pre class="codeblock"><code><var class="keyword varname">$your_namespace</var>=&lt;my_namespace_information&gt;</code></pre>
+<pre class="codeblock"><code><var class="keyword varname">$your_namespace</var>=<my_namespace_information></code></pre>
 </li>
 <li>Build the <a href="container_single_ui.html#container_gettingstarted_tutorial_lesson_2" title="In this lesson you use two methods to add images to your private images registry: copying an image from Docker Hub and creating a Dockerfile. Creating your own Dockerfile allows you to add your own commands to an image. Thus, every container launched from that image contains those commands. One of the benefits of containers is that these images help you maintain source control so that everyone in your organization can build containers with a consistent operating environment.">Lets-Chat and the MongoDB container image</a> in your private <span class="keyword">Cloud</span> images registry.</li>
 </ul>
@@ -1142,14 +1142,14 @@ looks like the following:
 
         Name                   Command      State             Ports
 -----------------------------------------------------------------------
-composetutorial_lets-chat_1                  Up      192.0.2.100:8080-&gt;8080/tcp
-composetutorial_mongo_1                    Up      203.0.113.23:27017-&gt;27017/tcp</code></pre>
+composetutorial_lets-chat_1                  Up      192.0.2.100:8080->8080/tcp
+composetutorial_mongo_1                    Up      203.0.113.23:27017->27017/tcp</code></pre>
 </li>
 <li class="step stepexpand">Optional: <span class="cmd">If you have not configured an IP address in your <span class="ph filepath">docker-compose.yml</span> file,
 bind an available public IP address to your Lets-Chat container. </span> Run <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> ips</samp> to list
 available public IP addresses in your space or <samp class="ph codeph"><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-request</samp> to request a new public IP
-address. Replace <var class="keyword varname">&lt;IP_address&gt;</var> with your public IP address.
-<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind <var class="keyword varname">&lt;IP_address&gt;</var> composetutorial_lets-chat_1</code></pre>
+address. Replace <var class="keyword varname"><IP_address></var> with your public IP address.
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind <var class="keyword varname"><IP_address></var> composetutorial_lets-chat_1</code></pre>
 </li>
 <li class="step stepexpand">Optional: <span class="cmd">Wait for the binding of the IP address to the container to complete. </span> This process can take a few minutes. As soon as it is completed, an <span class="ph uicontrol">OK</span>
 message is displayed in your CLI. </li>
@@ -1210,7 +1210,7 @@ your multi-container deployment. <pre class="codeblock"><code>docker-compose up 
 <li class="step stepexpand"><span class="cmd">Verify that the Mongo container instance was linked to the Lets-Chat container instances. </span> <pre class="codeblock"><code>docker inspect composetutorial_lets-chat_1</code></pre>
 <pre class="codeblock"><code>docker inspect composetutorial_lets-chat_2</code></pre>
 You
-can review the linked Mongo container instance in the <var class="keyword varname">HostConfig &gt; Links</var> section
+can review the linked Mongo container instance in the <var class="keyword varname">HostConfig > Links</var> section
 of each of your
 responses.<pre class="codeblock"><code>...
 "HostConfig": {
@@ -1303,9 +1303,9 @@ COPY nginx.conf /etc/nginx/nginx.conf</code></pre>
 Your CLI output looks like the following:
 <pre class="codeblock"><code>Sending build context to Docker daemon 9.728 kB
 Step 1 : FROM nginx
- ---&gt; 6f62f48c4e55
+ ---> 6f62f48c4e55
 Step 2 : COPY nginx.conf /etc/nginx/nginx.conf
- ---&gt; bc40817f0593
+ ---> bc40817f0593
 Removing intermediate container 64c5e180943f
 Successfully built bc40817f0593
 The push refers to a repository [registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">$your_namespace</var>/nginx] (len: 1)
@@ -1360,7 +1360,7 @@ multi-container deployment, so links will be correctly attached.
 </li>
 <li class="li substep substepexpand"><span class="cmd">Verify that containers are linked correctly.</span> <pre class="codeblock"><code>docker inspect composetutorial_nginx_1</code></pre>
 You can review the linked
-Lets-Chat container instances in the <var class="keyword varname">HostConfig &gt; Links</var> section of your
+Lets-Chat container instances in the <var class="keyword varname">HostConfig > Links</var> section of your
 responses.<pre class="codeblock"><code>...
 "HostConfig": {
         "Binds": [],
@@ -1466,18 +1466,18 @@ not support the binding of the service directly to a container. In this case, yo
 Cloud Foundry app. For more information, see <a href="container_troubleshoot.html#ts_bridge_app">Cloud service does not bind directly to a container</a>. </p>
 </div>
 <ul><li><span class="keyword option">Bind an IBM Cloud service</span><p>To bind a service, use the
-<span class="ph uicontrol">CCS_BIND_SRV</span> key. Replace <var class="keyword varname">&lt;service_instance_name&gt;</var> with
+<span class="ph uicontrol">CCS_BIND_SRV</span> key. Replace <var class="keyword varname"><service_instance_name></var> with
 the name of the service instance that you created in your private <span class="keyword">Cloud</span> images
 registry.</p>
 <pre class="codeblock"><code>environment:
-  - "CCS_BIND_SRV=<var class="keyword varname">&lt;service_instance_name&gt;</var>"</code></pre>
+  - "CCS_BIND_SRV=<var class="keyword varname"><service_instance_name></var>"</code></pre>
 </li>
 <li><span class="keyword option">Bind a Cloud Foundry app</span><p>To bind an app, use the
-<span class="ph uicontrol">CCS_BIND_APP</span> key. Replace <var class="keyword varname">&lt;app_name&gt;</var> with the name of
+<span class="ph uicontrol">CCS_BIND_APP</span> key. Replace <var class="keyword varname"><app_name></var> with the name of
 the Cloud Foundry app that you created in your private <span class="keyword">Cloud</span> images
 registry.</p>
 <pre class="codeblock"><code>environment:
-  - "CCS_BIND_APP=<var class="keyword varname">&lt;app_name&gt;</var>"</code></pre>
+  - "CCS_BIND_APP=<var class="keyword varname"><app_name></var>"</code></pre>
 </li>
 </ul>
 <dl><dt class="dlterm">Example</dt>
@@ -1486,8 +1486,8 @@ Cloud Foundry app named <var class="keyword varname">containerbridge</var> and a
 <var class="keyword varname">tmp_folder</var> to the lets-chat
 service.<pre class="codeblock"><code>#Name of your service
 lets-chat:
-  #Container image that is used to run the lets-chat service. Replace <var class="keyword varname">&lt;my_namespace&gt;</var> with the name of your namespace.
-  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/lets-chat
+  #Container image that is used to run the lets-chat service. Replace <var class="keyword varname"><my_namespace></var> with the name of your namespace.
+  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/lets-chat
   #Use <span class="ph uicontrol">CCS_BIND_SRV</span> to bind a <span class="keyword">Cloud</span> service or <span class="ph uicontrol">CCS_BIND_APP</span> to bind a Cloud Foundry app to your Docker Compose service.
   environment:
    - "CCS_BIND_APP=containerbridge"
@@ -1500,29 +1500,29 @@ network only. This port is accessible to all linked services.<dl><dt class="dlte
 port 8080 to the internal network only. The linked mongo container uses this port to send requests
 to the lets-chat container.
 <pre class="codeblock"><code>lets-chat:
-  #Container image that is used to run the lets-chat service. Replace <var class="keyword varname">&lt;my_namespace&gt;</var> with the name of your namespace.
-  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/lets-chat
+  #Container image that is used to run the lets-chat service. Replace <var class="keyword varname"><my_namespace></var> with the name of your namespace.
+  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/lets-chat
   #Make a port available to the private network only.
   expose:
    - "8080"
   links:
     - mongo
 mongo:
-  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/mongo</code></pre>
+  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/mongo</code></pre>
 </dd>
 </dl>
 </section><section role="region" aria-labelledby="d72924e5299" id="container_compose_yml__image"><h4 class="sectiontitle" id="d72924e5299"><span class="ph"><samp class="ph codeph">image</samp></span></h4>Define the base image that you
 want to use to run your Docker Compose service. The image must be available in your private <span class="keyword">Cloud</span> registry before you can use it in the
 <span class="ph filepath">docker-compose.yml</span> file. <p>To define the image, use the full path to your
 private <span class="keyword">Cloud</span> registry in the
-following format: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">&lt;image&gt;</var>:<var class="keyword varname">&lt;tag&gt;</var>.</p>
+following format: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/<var class="keyword varname"><image></var>:<var class="keyword varname"><tag></var>.</p>
 <dl><dt class="dlterm">Example</dt>
 <dd>The following example shows a sample <span class="ph filepath">docker-compose.yml</span> file that defines
 the lets-chat image as a base for the lets-chat
 service.<pre class="codeblock"><code>#Name of your service
 lets-chat:
-  #Container image that is used to run the lets-chat service. Replace <var class="keyword varname">&lt;my_namespace&gt;</var> with the name of your namespace.
-  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/lets-chat
+  #Container image that is used to run the lets-chat service. Replace <var class="keyword varname"><my_namespace></var> with the name of your namespace.
+  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/lets-chat
   </code></pre>
 </dd>
 </dl>
@@ -1534,13 +1534,13 @@ command. To link a service, enter the service name. <dl><dt class="dlterm">Examp
 nginx container to all the containers that are started for the lets-chat service.
 <pre class="codeblock"><code>#Name of your service
 nginx:
-  #Container image that is used to run the nginx service. Replace <var class="keyword varname">&lt;my_namespace&gt;</var> with the name of your namespace.
-  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/nginx
+  #Container image that is used to run the nginx service. Replace <var class="keyword varname"><my_namespace></var> with the name of your namespace.
+  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/nginx
   #Enter the name of the service that you want to link.
   links:
     - lets-chat
 lets-chat:
-  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace</var>/lets-chat</code></pre>
+  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace</var>/lets-chat</code></pre>
 </dd>
 </dl>
 </section><section role="region" aria-labelledby="d72924e5385" id="container_compose_yml__mem"><h4 class="sectiontitle" id="d72924e5385"><span class="ph"><samp class="ph codeph">mem_limit</samp></span></h4>Set the size for your container
@@ -1564,8 +1564,8 @@ do not specify a size, all containers are created with a <span class="ph uicontr
 container size of the lets-chat service to 512
 megabytes.<pre class="codeblock"><code>#Name of your service
 lets-chat:
-  #Container image that is used to run the lets-chat service. Replace <var class="keyword varname">&lt;my_namespace&gt;</var> with the name of your namespace.
-  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/lets-chat
+  #Container image that is used to run the lets-chat service. Replace <var class="keyword varname"><my_namespace></var> with the name of your namespace.
+  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/lets-chat
   #Enter the size you want in megabytes
   mem_limit: 512</code></pre>
 </dd>
@@ -1607,8 +1607,8 @@ to the <span class="ph filepath">/tmp/data</span> folder with read and write acc
 <pre class="codeblock"><code>version: '2'
 #Name of your service
 lets-chat:
-  #container image that is used to run the lets-chat service. Replace &lt;my_namespace&gt; with the name of your namespace.
-  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/lets-chat
+  #container image that is used to run the lets-chat service. Replace <my_namespace> with the name of your namespace.
+  image: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/lets-chat
   #You need to first create your volume before you can add it
   volumes:
    - <var class="keyword varname">my_volume</var>:<span class="ph filepath">/tmp/data</span>:rw

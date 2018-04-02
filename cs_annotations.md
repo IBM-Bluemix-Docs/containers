@@ -270,7 +270,7 @@ kind: Ingress
 metadata:
   name: cafe-ingress
   annotations:
-    ingress.bluemix.net/proxy-external-service: "path=&lt;mypath&gt; external-svc=https:&lt;external_service&gt; host=&lt;mydomain&gt;"
+    ingress.bluemix.net/proxy-external-service: "path=<mypath> external-svc=https:<external_service> host=<mydomain>"
 spec:
   tls:
   - hosts:
@@ -293,15 +293,15 @@ spec:
  <tbody>
  <tr>
  <td><code>path</code></td>
- <td>Replace <code>&lt;<em>mypath</em>&gt;</code> with the path that the external service listens on.</td>
+ <td>Replace <code><<em>mypath</em>></code> with the path that the external service listens on.</td>
  </tr>
  <tr>
  <td><code>external-svc</code></td>
- <td>Replace <code>&lt;<em>external_service</em>&gt;</code> with the external service to be called. For example, <code>https://&lt;myservice&gt;.&lt;region&gt;.mybluemix.net</code>.</td>
+ <td>Replace <code><<em>external_service</em>></code> with the external service to be called. For example, <code>https://<myservice>.<region>.mybluemix.net</code>.</td>
  </tr>
  <tr>
  <td><code>host</code></td>
- <td>Replace <code>&lt;<em>mydomain</em>&gt;</code> with the host domain for the external service.</td>
+ <td>Replace <code><<em>mydomain</em>></code> with the host domain for the external service.</td>
  </tr>
  </tbody></table>
 
@@ -361,7 +361,7 @@ kind: Ingress
 metadata:
 name: myingress
 annotations:
-  ingress.bluemix.net/location-modifier: "modifier='&lt;location_modifier&gt;' serviceName=&lt;myservice&gt;;modifier='&lt;location_modifier&gt;' serviceName=&lt;myservice2&gt;"
+  ingress.bluemix.net/location-modifier: "modifier='<location_modifier>' serviceName=<myservice>;modifier='<location_modifier>' serviceName=<myservice2>"
 spec:
   tls:
   - hosts:
@@ -373,7 +373,7 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: &lt;myservice&gt;
+          serviceName: <myservice>
           servicePort: 80</code></pre>
 
  <table>
@@ -383,11 +383,11 @@ spec:
   <tbody>
   <tr>
   <td><code>modifier</code></td>
-  <td>Replace <code>&lt;<em>location_modifier</em>&gt;</code> with the location modifier you want to use for the path. Supported modifiers are <code>'='</code>, <code>'~'</code>, <code>'~\*'</code>, and <code>'^~'</code>. You must surround the modifiers in single quotes.</td>
+  <td>Replace <code><<em>location_modifier</em>></code> with the location modifier you want to use for the path. Supported modifiers are <code>'='</code>, <code>'~'</code>, <code>'~\*'</code>, and <code>'^~'</code>. You must surround the modifiers in single quotes.</td>
   </tr>
   <tr>
   <td><code>serviceName</code></td>
-  <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the Kubernetes service you created for your app.</td>
+  <td>Replace <code><<em>myservice</em>></code> with the name of the Kubernetes service you created for your app.</td>
   </tr>
   </tbody></table>
   </dd>
@@ -417,7 +417,7 @@ kind: Ingress
 metadata:
 name: myingress
 annotations:
-  ingress.bluemix.net/ALB-ID: "&lt;private_ALB_ID&gt;"
+  ingress.bluemix.net/ALB-ID: "<private_ALB_ID>"
 spec:
 tls:
 - hosts:
@@ -438,7 +438,7 @@ rules:
 </thead>
 <tbody>
 <tr>
-<td><code>&lt;private_ALB_ID&gt;</code></td>
+<td><code><private_ALB_ID></code></td>
 <td>The ID for your private ALB. Run <code>bx cs albs --cluster <my_cluster></code> to find the private ALB ID.
 </td>
 </tr>
@@ -466,7 +466,7 @@ kind: Ingress
 metadata:
   name: myingress
   annotations:
-    ingress.bluemix.net/rewrite-path: "serviceName=&lt;myservice1&gt; rewrite=&lt;target_path1&gt;;serviceName=&lt;myservice2&gt; rewrite=&lt;target_path2&gt;"
+    ingress.bluemix.net/rewrite-path: "serviceName=<myservice1> rewrite=<target_path1>;serviceName=<myservice2> rewrite=<target_path2>"
 spec:
   tls:
   - hosts:
@@ -489,11 +489,11 @@ spec:
 <tbody>
 <tr>
 <td><code>serviceName</code></td>
-<td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the Kubernetes service that you created for your app.</td>
+<td>Replace <code><<em>myservice</em>></code> with the name of the Kubernetes service that you created for your app.</td>
 </tr>
 <tr>
 <td><code>rewrite</code></td>
-<td>Replace <code>&lt;<em>target_path</em>&gt;</code> with the path that your app listens on. Incoming network traffic on the ALB domain is forwarded to the Kubernetes service by using this path. Most apps do not listen on a specific path, but use the root path and a specific port. In the example above, the rewrite path was defined as <code>/coffee</code>.</td>
+<td>Replace <code><<em>target_path</em>></code> with the path that your app listens on. Incoming network traffic on the ALB domain is forwarded to the Kubernetes service by using this path. Most apps do not listen on a specific path, but use the root path and a specific port. In the example above, the rewrite path was defined as <code>/coffee</code>.</td>
 </tr>
 </tbody></table>
 
@@ -526,7 +526,7 @@ kind: Ingress
 metadata:
 name: myingress
 annotations:
-  ingress.bluemix.net/tcp-ports: "serviceName=&lt;myservice&gt; ingressPort=&lt;ingress_port&gt; [servicePort=&lt;service_port&gt;]"
+  ingress.bluemix.net/tcp-ports: "serviceName=<myservice> ingressPort=<ingress_port> [servicePort=<service_port>]"
 spec:
   tls:
   - hosts:
@@ -538,7 +538,7 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: &lt;myservice&gt;
+          serviceName: <myservice>
           servicePort: 80</code></pre>
 
  <table>
@@ -548,11 +548,11 @@ spec:
   <tbody>
   <tr>
   <td><code>serviceName</code></td>
-  <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the Kubernetes service to access over non-standard TCP port.</td>
+  <td>Replace <code><<em>myservice</em>></code> with the name of the Kubernetes service to access over non-standard TCP port.</td>
   </tr>
   <tr>
   <td><code>ingressPort</code></td>
-  <td>Replace <code>&lt;<em>ingress_port</em>&gt;</code> with the TCP port on which you want to access your app.</td>
+  <td>Replace <code><<em>ingress_port</em>></code> with the TCP port on which you want to access your app.</td>
   </tr>
   <tr>
   <td><code>servicePort</code></td>
@@ -572,32 +572,32 @@ public-ingress-ctl-svc   10.10.10.149   169.60.16.246   80:30776/TCP,443:30412/T
 <li>Open the ALB config map.
 <pre class="pre">
 <code>kubectl edit configmap ibm-cloud-provider-ingress-cm -n kube-system</code></pre></li>
-<li>Add the TCP ports to the config map. Replace &lt;port&gt; with the TCP ports that you want to open.
+<li>Add the TCP ports to the config map. Replace <port> with the TCP ports that you want to open.
 <pre class="codeblock">
 <code>apiVersion: v1
 kind: ConfigMap
 data:
- public-ports: &lt;port1&gt;;&lt;port2&gt;
+ public-ports: <port1>;<port2>
 metadata:
  creationTimestamp: 2017-08-22T19:06:51Z
  name: ibm-cloud-provider-ingress-cm
  namespace: kube-system
  resourceVersion: "1320"
  selfLink: /api/v1/namespaces/kube-system/configmaps/ibm-cloud-provider-ingress-cm
- uid: &lt;uid&gt;</code></pre></li>
+ uid: <uid></code></pre></li>
  <li>Verify that your ALB is re-configured with the TCP ports.
 <pre class="pre">
 <code>kubectl get service -n kube-system</code></pre>
 Your CLI output looks similar to the following:
 <pre class="screen">
 <code>NAME                     CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
-public-ingress-ctl-svc   10.10.10.149   169.60.16.246   &lt;port1&gt;:30776/TCP,&lt;port2&gt;:30412/TCP   8d</code></pre></li>
+public-ingress-ctl-svc   10.10.10.149   169.60.16.246   <port1>:30776/TCP,<port2>:30412/TCP   8d</code></pre></li>
 <li>Configure your Ingress to access your app via a non-standard TCP port. Use the sample YAML file in this reference. </li>
 <li>Update your ALB configuration.
 <pre class="pre">
-<code>kubectl apply -f &lt;yaml_file&gt;</code></pre>
+<code>kubectl apply -f <yaml_file></code></pre>
 </li>
-<li>Open your preferred web browser to access your app. Example: <code>https://&lt;ibmdomain&gt;:&lt;ingressPort&gt;/</code></li></ol></dd></dl>
+<li>Open your preferred web browser to access your app. Example: <code>https://<ibmdomain>:<ingressPort>/</code></li></ol></dd></dl>
 
 <br />
 
@@ -632,8 +632,8 @@ kind: Ingress
 metadata:
  name: myingress
  annotations:
-   ingress.bluemix.net/proxy-connect-timeout: "&lt;connect_timeout&gt;s"
-   ingress.bluemix.net/proxy-read-timeout: "&lt;read_timeout&gt;s"
+   ingress.bluemix.net/proxy-connect-timeout: "<connect_timeout>s"
+   ingress.bluemix.net/proxy-read-timeout: "<read_timeout>s"
 spec:
  tls:
  - hosts:
@@ -654,11 +654,11 @@ spec:
  </thead>
  <tbody>
  <tr>
- <td><code>&lt;connect_timeout&gt;</code></td>
+ <td><code><connect_timeout></code></td>
  <td>The number of seconds to wait to connect to the back-end app, for example <code>65s</code>. <strong>Note:</strong> A connect-timeout cannot exceed 75 seconds.</td>
  </tr>
  <tr>
- <td><code>&lt;read_timeout&gt;</code></td>
+ <td><code><read_timeout></code></td>
  <td>The number of seconds to wait before the back-end app is read, for example <code>65s</code>. <strong>Note:</strong> A read-timeout cannot exceed 120 seconds.</td>
  </tr>
  </tbody></table>
@@ -691,7 +691,7 @@ kind: Ingress
 metadata:
 name: myingress
 annotations:
-  ingress.bluemix.net/keepalive-requests: "serviceName=&lt;myservice&gt; requests=&lt;max_requests&gt;"
+  ingress.bluemix.net/keepalive-requests: "serviceName=<myservice> requests=<max_requests>"
 spec:
 tls:
 - hosts:
@@ -703,7 +703,7 @@ rules:
     paths:
     - path: /
       backend:
-        serviceName: &lt;myservice&gt;
+        serviceName: <myservice>
         servicePort: 8080</code></pre>
 
 <table>
@@ -713,11 +713,11 @@ rules:
 <tbody>
 <tr>
 <td><code>serviceName</code></td>
-<td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the Kubernetes service that you created for your app. This parameter is optional. The configuration is applied to all of the services in the Ingress host unless a service is specified. If the parameter is provided, the keepalive requests are set for the given service. If the parameter is not provided, the keepalive requests are set at the server level of the <code>nginx.conf</code> for all the services that do not have the keepalive requests configured.</td>
+<td>Replace <code><<em>myservice</em>></code> with the name of the Kubernetes service that you created for your app. This parameter is optional. The configuration is applied to all of the services in the Ingress host unless a service is specified. If the parameter is provided, the keepalive requests are set for the given service. If the parameter is not provided, the keepalive requests are set at the server level of the <code>nginx.conf</code> for all the services that do not have the keepalive requests configured.</td>
 </tr>
 <tr>
 <td><code>requests</code></td>
-<td>Replace <code>&lt;<em>max_requests</em>&gt;</code> with the maximum number of requests that can be served through one keepalive connection.</td>
+<td>Replace <code><<em>max_requests</em>></code> with the maximum number of requests that can be served through one keepalive connection.</td>
 </tr>
 </tbody></table>
 
@@ -750,7 +750,7 @@ kind: Ingress
 metadata:
  name: myingress
  annotations:
-   ingress.bluemix.net/keepalive-timeout: "serviceName=&lt;myservice&gt; timeout=&lt;time&gt;s"
+   ingress.bluemix.net/keepalive-timeout: "serviceName=<myservice> timeout=<time>s"
 spec:
  tls:
  - hosts:
@@ -772,11 +772,11 @@ spec:
  <tbody>
  <tr>
  <td><code>serviceName</code></td>
- <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the Kubernetes service that you created for your app. This parameter is optional. If the parameter is provided, the keepalive timeout is set for the given service. If the parameter is not provided, the keepalive timeout is set at the server level of the <code>nginx.conf</code> for all the services that do not have the keepalive timeout configured.</td>
+ <td>Replace <code><<em>myservice</em>></code> with the name of the Kubernetes service that you created for your app. This parameter is optional. If the parameter is provided, the keepalive timeout is set for the given service. If the parameter is not provided, the keepalive timeout is set at the server level of the <code>nginx.conf</code> for all the services that do not have the keepalive timeout configured.</td>
  </tr>
  <tr>
  <td><code>timeout</code></td>
- <td>Replace <code>&lt;<em>time</em>&gt;</code> with an amount of time in seconds. Example: <code>timeout=20s</code>. A zero value disables the keepalive client connections.</td>
+ <td>Replace <code><<em>time</em>></code> with an amount of time in seconds. Example: <code>timeout=20s</code>. A zero value disables the keepalive client connections.</td>
  </tr>
  </tbody></table>
 
@@ -805,7 +805,7 @@ kind: Ingress
 metadata:
   name: myingress
   annotations:
-    ingress.bluemix.net/proxy-next-upstream-config: "serviceName=&lt;myservice1&gt; retries=&lt;tries&gt; timeout=&lt;time&gt; error=true http_502=true; serviceName=&lt;myservice2&gt; http_403=true non_idempotent=true"
+    ingress.bluemix.net/proxy-next-upstream-config: "serviceName=<myservice1> retries=<tries> timeout=<time> error=true http_502=true; serviceName=<myservice2> http_403=true non_idempotent=true"
 spec:
   tls:
   - hosts:
@@ -828,16 +828,16 @@ spec:
 <tbody>
 <tr>
 <td><code>serviceName</code></td>
-<td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the Kubernetes service that you created for your app.</td>
+<td>Replace <code><<em>myservice</em>></code> with the name of the Kubernetes service that you created for your app.</td>
 </tr>
 <tr>
 <td><code>retries</code></td>
-<td>Replace <code>&lt;<em>tries</em>&gt;</code> with the maximum amount of times that the ALB tries to pass a request to the next upstream server. This number includes the original request. To turn off this limitation, use <code>0</code>. If you do not specify a value, the default value <code>0</code> is used.
+<td>Replace <code><<em>tries</em>></code> with the maximum amount of times that the ALB tries to pass a request to the next upstream server. This number includes the original request. To turn off this limitation, use <code>0</code>. If you do not specify a value, the default value <code>0</code> is used.
 </td>
 </tr>
 <tr>
 <td><code>timeout</code></td>
-<td>Replace <code>&lt;<em>time</em>&gt;</code> with the maximum amount of time, in seconds, that the ALB tries to pass a request to the next upstream server. For example, to set a time of 30 seconds, enter <code>30s</code>. To turn off this limitation, use <code>0</code>. If you do not specify a value, the default value <code>0</code> is used.
+<td>Replace <code><<em>time</em>></code> with the maximum amount of time, in seconds, that the ALB tries to pass a request to the next upstream server. For example, to set a time of 30 seconds, enter <code>30s</code>. To turn off this limitation, use <code>0</code>. If you do not specify a value, the default value <code>0</code> is used.
 </td>
 </tr>
 <tr>
@@ -896,7 +896,7 @@ kind: Ingress
 metadata:
   name: myingress
   annotations:
-    ingress.bluemix.net/sticky-cookie-services: "serviceName=&lt;myservice1&gt; name=&lt;cookie_name1&gt; expires=&lt;expiration_time1&gt; path=&lt;cookie_path1&gt; hash=&lt;hash_algorithm1&gt;;serviceName=&lt;myservice2&gt; name=&lt;cookie_name2&gt; expires=&lt;expiration_time2&gt; path=&lt;cookie_path2&gt; hash=&lt;hash_algorithm2&gt;"
+    ingress.bluemix.net/sticky-cookie-services: "serviceName=<myservice1> name=<cookie_name1> expires=<expiration_time1> path=<cookie_path1> hash=<hash_algorithm1>;serviceName=<myservice2> name=<cookie_name2> expires=<expiration_time2> path=<cookie_path2> hash=<hash_algorithm2>"
 spec:
   tls:
   - hosts:
@@ -908,11 +908,11 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: &lt;myservice1&gt;
+          serviceName: <myservice1>
           servicePort: 8080
       - path: /myapp
         backend:
-          serviceName: &lt;myservice2&gt;
+          serviceName: <myservice2>
           servicePort: 80</code></pre>
 
   <table>
@@ -923,23 +923,23 @@ spec:
   <tbody>
   <tr>
   <td><code>serviceName</code></td>
-  <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the Kubernetes service that you created for your app.</td>
+  <td>Replace <code><<em>myservice</em>></code> with the name of the Kubernetes service that you created for your app.</td>
   </tr>
   <tr>
   <td><code>name</code></td>
-  <td>Replace <code>&lt;<em>cookie_name</em>&gt;</code> with the name of a sticky cookie that is created during a session.</td>
+  <td>Replace <code><<em>cookie_name</em>></code> with the name of a sticky cookie that is created during a session.</td>
   </tr>
   <tr>
   <td><code>expires</code></td>
-  <td>Replace <code>&lt;<em>expiration_time</em>&gt;</code> with the time in seconds (s), minutes (m), or hours (h) before the sticky cookie expires. This time is independent of the user activity. After the cookie is expired, the cookie is deleted by the client web browser and no longer sent to the ALB. For example, to set an expiration time of 1 second, 1 minute, or 1 hour, enter <code>1s</code>, <code>1m</code>, or <code>1h</code>.</td>
+  <td>Replace <code><<em>expiration_time</em>></code> with the time in seconds (s), minutes (m), or hours (h) before the sticky cookie expires. This time is independent of the user activity. After the cookie is expired, the cookie is deleted by the client web browser and no longer sent to the ALB. For example, to set an expiration time of 1 second, 1 minute, or 1 hour, enter <code>1s</code>, <code>1m</code>, or <code>1h</code>.</td>
   </tr>
   <tr>
   <td><code>path</code></td>
-  <td>Replace <code>&lt;<em>cookie_path</em>&gt;</code> with the path that is appended to the Ingress subdomain and that indicates for which domains and subdomains the cookie is sent to the ALB. For example, if your Ingress domain is <code>www.myingress.com</code> and you want to send the cookie in every client request, you must set <code>path=/</code>. If you want to send the cookie only for <code>www.myingress.com/myapp</code> and all its subdomains, then you must set <code>path=/myapp</code>.</td>
+  <td>Replace <code><<em>cookie_path</em>></code> with the path that is appended to the Ingress subdomain and that indicates for which domains and subdomains the cookie is sent to the ALB. For example, if your Ingress domain is <code>www.myingress.com</code> and you want to send the cookie in every client request, you must set <code>path=/</code>. If you want to send the cookie only for <code>www.myingress.com/myapp</code> and all its subdomains, then you must set <code>path=/myapp</code>.</td>
   </tr>
   <tr>
   <td><code>hash</code></td>
-  <td>Replace <code>&lt;<em>hash_algorithm</em>&gt;</code> with the hash algorithm that protects the information in the cookie. Only <code>sha1</code> is supported. SHA1 creates a hash sum based on the information in the cookie and appends this hash sum to the cookie. The server can decrypt the information in the cookie and verify data integrity.</td>
+  <td>Replace <code><<em>hash_algorithm</em>></code> with the hash algorithm that protects the information in the cookie. Only <code>sha1</code> is supported. SHA1 creates a hash sum based on the information in the cookie and appends this hash sum to the cookie. The server can decrypt the information in the cookie and verify data integrity.</td>
   </tr>
   </tbody></table>
 
@@ -970,7 +970,7 @@ Set the maximum number of idle keepalive connections to the upstream server of a
  metadata:
   name: myingress
   annotations:
-    ingress.bluemix.net/upstream-keepalive: "serviceName=&lt;myservice&gt; keepalive=&lt;max_connections&gt;"
+    ingress.bluemix.net/upstream-keepalive: "serviceName=<myservice> keepalive=<max_connections>"
  spec:
   tls:
   - hosts:
@@ -992,11 +992,11 @@ Set the maximum number of idle keepalive connections to the upstream server of a
   <tbody>
   <tr>
   <td><code>serviceName</code></td>
-  <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the Kubernetes service that you created for your app.</td>
+  <td>Replace <code><<em>myservice</em>></code> with the name of the Kubernetes service that you created for your app.</td>
   </tr>
   <tr>
   <td><code>keepalive</code></td>
-  <td>Replace <code>&lt;<em>max_connections</em>&gt;</code> with the maximum number of idle keepalive connections to the upstream server. The default is <code>64</code>. A <code>0</code> value disables upstream keepalive connections for the given service.</td>
+  <td>Replace <code><<em>max_connections</em>></code> with the maximum number of idle keepalive connections to the upstream server. The default is <code>64</code>. A <code>0</code> value disables upstream keepalive connections for the given service.</td>
   </tr>
   </tbody></table>
   </dd>
@@ -1034,7 +1034,7 @@ Set the maximum number of idle keepalive connections to the upstream server of a
    metadata:
     name: myingress
     annotations:
-      ingress.bluemix.net/appid-auth: "bindSecret=&lt;bind_secret&gt; namespace=&lt;namespace&gt; requestType=&lt;request_type&gt; serviceName=&lt;myservice&gt;"
+      ingress.bluemix.net/appid-auth: "bindSecret=<bind_secret> namespace=<namespace> requestType=<request_type> serviceName=<myservice>"
    spec:
     tls:
     - hosts:
@@ -1056,19 +1056,19 @@ Set the maximum number of idle keepalive connections to the upstream server of a
     <tbody>
     <tr>
     <td><code>bindSecret</code></td>
-    <td>Replace <em><code>&lt;bind_secret&gt;</code></em> with the Kubernetes secret which stores the bind secret.</td>
+    <td>Replace <em><code><bind_secret></code></em> with the Kubernetes secret which stores the bind secret.</td>
     </tr>
     <tr>
     <td><code>namespace</code></td>
-    <td>Replace <em><code>&lt;namespace&gt;</code></em> with the namespace of the bind secret. This field defaults to the `default` namespace.</td>
+    <td>Replace <em><code><namespace></code></em> with the namespace of the bind secret. This field defaults to the `default` namespace.</td>
     </tr>
     <tr>
     <td><code>requestType</code></td>
-    <td>Replace <code><em>&lt;request_type&gt;</em></code> with the type of request you want to send to {{site.data.keyword.appid_short_notm}}. Accepted values are `web` or `api`. The default is `api`.</td>
+    <td>Replace <code><em><request_type></em></code> with the type of request you want to send to {{site.data.keyword.appid_short_notm}}. Accepted values are `web` or `api`. The default is `api`.</td>
     </tr>
     <tr>
     <td><code>serviceName</code></td>
-    <td>Replace <code><em>&lt;myservice&gt</em></code> with the name of the Kubernetes service that you created for your app. This field is optional. If a service name is not included, then the annotation is enabled for all services.  If a service name is included, then the annotation is enabled only for that service. Separate multiple services with a semi-colon (;).</td>
+    <td>Replace <code><em><myservice&gt</em></code> with the name of the Kubernetes service that you created for your app. This field is optional. If a service name is not included, then the annotation is enabled for all services.  If a service name is included, then the annotation is enabled only for that service. Separate multiple services with a semi-colon (;).</td>
     </tr>
     </tbody></table>
     </dd>
@@ -1078,7 +1078,7 @@ Set the maximum number of idle keepalive connections to the upstream server of a
     <li>Provision an [{{site.data.keyword.appid_short_notm}} instance](https://console.bluemix.net/catalog/services/app-id).</li>
     <li>In the {{site.data.keyword.appid_short_notm}} management console, add redirectURIs for your app.</li>
     <li>Create a bind secret.
-    <pre class="pre"><code>bx cs cluster-service-bind &lt;my_cluster&gt; &lt;my_namespace&gt; &lt;my_service_instance_GUID&gt;</code></pre> </li>
+    <pre class="pre"><code>bx cs cluster-service-bind <my_cluster> <my_namespace> <my_service_instance_GUID></code></pre> </li>
     <li>Configure the <code>appid-auth</code> annotation.</li>
     </ol></dd>
     </dl>
@@ -1108,7 +1108,7 @@ kind: Ingress
 metadata:
  name: myingress
  annotations:
-   ingress.bluemix.net/custom-port: "protocol=&lt;protocol1&gt; port=&lt;port1&gt;;protocol=&lt;protocol2&gt; port=&lt;port2&gt;"
+   ingress.bluemix.net/custom-port: "protocol=<protocol1> port=<port1>;protocol=<protocol2> port=<port2>"
 spec:
  tls:
  - hosts:
@@ -1129,11 +1129,11 @@ spec:
  </thead>
  <tbody>
  <tr>
- <td><code>&lt;protocol&gt;</code></td>
+ <td><code><protocol></code></td>
  <td>Enter <code>http</code> or <code>https</code> to change the default port for incoming HTTP or HTTPS network traffic.</td>
  </tr>
  <tr>
- <td><code>&lt;port&gt;</code></td>
+ <td><code><port></code></td>
  <td>Enter the port number that you want to use for incoming HTTP or HTTPS network traffic.  <p><strong>Note:</strong> When a custom port is specified for either HTTP or HTTPS, the default ports are no longer valid for both HTTP and HTTPS. For example, to change the default port for HTTPS to 8443, but use the default port for HTTP, you must set custom ports for both: <code>custom-port: "protocol=http port=80; protocol=https port=8443"</code>.</p></td>
  </tr>
  </tbody></table>
@@ -1150,32 +1150,32 @@ public-ingress-ctl-svc   10.10.10.149   169.60.16.246   80:30776/TCP,443:30412/T
 <li>Open the ALB config map.
 <pre class="pre">
 <code>kubectl edit configmap ibm-cloud-provider-ingress-cm -n kube-system</code></pre></li>
-<li>Add the non-default HTTP and HTTPS ports to the config map. Replace &lt;port&gt; with the HTTP or HTTPS port that you want to open.
+<li>Add the non-default HTTP and HTTPS ports to the config map. Replace <port> with the HTTP or HTTPS port that you want to open.
 <pre class="codeblock">
 <code>apiVersion: v1
 kind: ConfigMap
 data:
- public-ports: &lt;port1&gt;;&lt;port2&gt;
+ public-ports: <port1>;<port2>
 metadata:
  creationTimestamp: 2017-08-22T19:06:51Z
  name: ibm-cloud-provider-ingress-cm
  namespace: kube-system
  resourceVersion: "1320"
  selfLink: /api/v1/namespaces/kube-system/configmaps/ibm-cloud-provider-ingress-cm
- uid: &lt;uid&gt;</code></pre></li>
+ uid: <uid></code></pre></li>
  <li>Verify that your ALB is re-configured with the non-default ports.
 <pre class="pre">
 <code>kubectl get service -n kube-system</code></pre>
 Your CLI output looks similar to the following:
 <pre class="screen">
 <code>NAME                     CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
-public-ingress-ctl-svc   10.10.10.149   169.60.16.246   &lt;port1&gt;:30776/TCP,&lt;port2&gt;:30412/TCP   8d</code></pre></li>
+public-ingress-ctl-svc   10.10.10.149   169.60.16.246   <port1>:30776/TCP,<port2>:30412/TCP   8d</code></pre></li>
 <li>Configure your Ingress to use the non-default ports when routing incoming network traffic to your services. Use the sample YAML file in this reference. </li>
 <li>Update your ALB configuration.
 <pre class="pre">
-<code>kubectl apply -f &lt;yaml_file&gt;</code></pre>
+<code>kubectl apply -f <yaml_file></code></pre>
 </li>
-<li>Open your preferred web browser to access your app. Example: <code>https://&lt;ibmdomain&gt;:&lt;port&gt;/&lt;service_path&gt;/</code></li></ol></dd></dl>
+<li>Open your preferred web browser to access your app. Example: <code>https://<ibmdomain>:<port>/<service_path>/</code></li></ol></dd></dl>
 
 <br />
 
@@ -1240,7 +1240,7 @@ kind: Ingress
 metadata:
   name: myingress
   annotations:
-    ingress.bluemix.net/hsts: enabled=&lt;true&gt; maxAge=&lt;31536000&gt; includeSubdomains=&lt;true&gt;
+    ingress.bluemix.net/hsts: enabled=<true> maxAge=<31536000> includeSubdomains=<true>
 spec:
   tls:
   - hosts:
@@ -1271,7 +1271,7 @@ spec:
   </tr>
     <tr>
   <td><code>maxAge</code></td>
-  <td>Replace <code>&lt;<em>31536000</em>&gt;</code> with an integer representing how many seconds a browser will cache sending requests straight to HTTPS. The default is <code>31536000</code>, which is equal to 1 year.</td>
+  <td>Replace <code><<em>31536000</em>></code> with an integer representing how many seconds a browser will cache sending requests straight to HTTPS. The default is <code>31536000</code>, which is equal to 1 year.</td>
   </tr>
   <tr>
   <td><code>includeSubdomains</code></td>
@@ -1316,7 +1316,7 @@ kind: Ingress
 metadata:
 name: myingress
 annotations:
-  ingress.bluemix.net/mutual-auth: "secretName=&lt;mysecret&gt; port=&lt;port&gt; serviceName=&lt;servicename1&gt;,&lt;servicename2&gt;"
+  ingress.bluemix.net/mutual-auth: "secretName=<mysecret> port=<port> serviceName=<servicename1>,<servicename2>"
 spec:
   tls:
   - hosts:
@@ -1339,14 +1339,14 @@ spec:
 <tbody>
 <tr>
 <td><code>secretName</code></td>
-<td>Replace <code>&lt;<em>mysecret</em>&gt;</code> with a name for the secret resource.</td>
+<td>Replace <code><<em>mysecret</em>></code> with a name for the secret resource.</td>
 </tr>
 <tr>
-<td><code>&lt;port&gt;</code></td>
+<td><code><port></code></td>
 <td>The ALB port number.</td>
 </tr>
 <tr>
-<td><code>&lt;serviceName&gt;</code></td>
+<td><code><serviceName></code></td>
 <td>The name of one or more Ingress resources. This parameter is optional.</td>
 </tr>
 </tbody></table>
@@ -1380,9 +1380,9 @@ Encrypt traffic to your upstream apps that require HTTPS.
 <code>apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: &lt;myingressname&gt;
+  name: <myingressname>
   annotations:
-    ingress.bluemix.net/ssl-services: "ssl-service=&lt;myservice1&gt; [ssl-secret=&lt;service1-ssl-secret&gt;];ssl-service=&lt;myservice2&gt; [ssl-secret=&lt;service2-ssl-secret&gt;]
+    ingress.bluemix.net/ssl-services: "ssl-service=<myservice1> [ssl-secret=<service1-ssl-secret>];ssl-service=<myservice2> [ssl-secret=<service2-ssl-secret>]
 spec:
   rules:
   - host: mydomain
@@ -1404,11 +1404,11 @@ spec:
   <tbody>
   <tr>
   <td><code>ssl-service</code></td>
-  <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the service that represents your app. Traffic is encrypted from ALB to this app.</td>
+  <td>Replace <code><<em>myservice</em>></code> with the name of the service that represents your app. Traffic is encrypted from ALB to this app.</td>
   </tr>
   <tr>
   <td><code>ssl-secret</code></td>
-  <td>Replace <code>&lt;<em>service-ssl-secret</em>&gt;</code> with the secret for the service. This parameter is optional. If the parameter is provided, the value must contain the key and the certificate that your app is expecting from the client.</td>
+  <td>Replace <code><<em>service-ssl-secret</em>></code> with the secret for the service. This parameter is optional. If the parameter is provided, the value must contain the key and the certificate that your app is expecting from the client.</td>
   </tr>
   </tbody></table>
 
@@ -1438,11 +1438,11 @@ Allow HTTPS requests and encrypt traffic to your upstream apps with one-way or m
 <code>apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: &lt;myingressname&gt;
+  name: <myingressname>
   annotations:
     ingress.bluemix.net/ssl-services: |
-      ssl-service=&lt;myservice1&gt; ssl-secret=&lt;service1-ssl-secret&gt;;
-      ssl-service=&lt;myservice2&gt; ssl-secret=&lt;service2-ssl-secret&gt;
+      ssl-service=<myservice1> ssl-secret=<service1-ssl-secret>;
+      ssl-service=<myservice2> ssl-secret=<service2-ssl-secret>
 spec:
   tls:
   - hosts:
@@ -1469,11 +1469,11 @@ spec:
   <tbody>
   <tr>
   <td><code>ssl-service</code></td>
-  <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the service that represents your app. Traffic is encrypted from ALB to this app.</td>
+  <td>Replace <code><<em>myservice</em>></code> with the name of the service that represents your app. Traffic is encrypted from ALB to this app.</td>
   </tr>
   <tr>
   <td><code>ssl-secret</code></td>
-  <td>Replace <code>&lt;<em>service-ssl-secret</em>&gt;</code> with the secret for the service. This parameter is optional. If the parameter is provided, the value must contain the key and the certificate that your app is expecting from the client.</td>
+  <td>Replace <code><<em>service-ssl-secret</em>></code> with the secret for the service. This parameter is optional. If the parameter is provided, the value must contain the key and the certificate that your app is expecting from the client.</td>
   </tr>
   </tbody></table>
 
@@ -1551,7 +1551,7 @@ kind: Ingress
 metadata:
  name: proxy-ingress
  annotations:
-   ingress.bluemix.net/proxy-buffers: "serviceName=&lt;myservice&gt; number=&lt;number_of_buffers&gt; size=&lt;size&gt;"
+   ingress.bluemix.net/proxy-buffers: "serviceName=<myservice> number=<number_of_buffers> size=<size>"
 spec:
  tls:
  - hosts:
@@ -1573,15 +1573,15 @@ spec:
  <tbody>
  <tr>
  <td><code>serviceName</code></td>
- <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name for a service to apply proxy-buffers.</td>
+ <td>Replace <code><<em>myservice</em>></code> with the name for a service to apply proxy-buffers.</td>
  </tr>
  <tr>
  <td><code>number_of_buffers</code></td>
- <td>Replace <code>&lt;<em>number_of_buffers</em>&gt;</code> with a number, such as <em>2</em>.</td>
+ <td>Replace <code><<em>number_of_buffers</em>></code> with a number, such as <em>2</em>.</td>
  </tr>
  <tr>
  <td><code>size</code></td>
- <td>Replace <code>&lt;<em>size</em>&gt;</code> with the size of each buffer in kilobytes (k or K), such as <em>1K</em>.</td>
+ <td>Replace <code><<em>size</em>></code> with the size of each buffer in kilobytes (k or K), such as <em>1K</em>.</td>
  </tr>
  </tbody>
  </table>
@@ -1612,7 +1612,7 @@ kind: Ingress
 metadata:
  name: proxy-ingress
  annotations:
-   ingress.bluemix.net/proxy-buffer-size: "serviceName=&lt;myservice&gt; size=&lt;size&gt;"
+   ingress.bluemix.net/proxy-buffer-size: "serviceName=<myservice> size=<size>"
 spec:
  tls:
  - hosts:
@@ -1635,11 +1635,11 @@ spec:
  <tbody>
  <tr>
  <td><code>serviceName</code></td>
- <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of a service to apply proxy-buffers-size.</td>
+ <td>Replace <code><<em>myservice</em>></code> with the name of a service to apply proxy-buffers-size.</td>
  </tr>
  <tr>
  <td><code>size</code></td>
- <td>Replace <code>&lt;<em>size</em>&gt;</code> with the size of each buffer in kilobytes (k or K), such as <em>1K</em>.</td>
+ <td>Replace <code><<em>size</em>></code> with the size of each buffer in kilobytes (k or K), such as <em>1K</em>.</td>
  </tr>
  </tbody></table>
 
@@ -1672,7 +1672,7 @@ kind: Ingress
 metadata:
  name: proxy-ingress
  annotations:
-   ingress.bluemix.net/proxy-busy-buffers-size: "serviceName=&lt;serviceName&gt; size=&lt;size&gt;"
+   ingress.bluemix.net/proxy-busy-buffers-size: "serviceName=<serviceName> size=<size>"
 spec:
  tls:
  - hosts:
@@ -1695,11 +1695,11 @@ spec:
 <tbody>
 <tr>
 <td><code>serviceName</code></td>
-<td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of a service to apply proxy-busy-buffers-size.</td>
+<td>Replace <code><<em>myservice</em>></code> with the name of a service to apply proxy-busy-buffers-size.</td>
 </tr>
 <tr>
 <td><code>size</code></td>
-<td>Replace <code>&lt;<em>size</em>&gt;</code> with the size of each buffer in kilobytes (k or K), such as <em>1K</em>.</td>
+<td>Replace <code><<em>size</em>></code> with the size of each buffer in kilobytes (k or K), such as <em>1K</em>.</td>
 </tr>
 </tbody></table>
 
@@ -1763,20 +1763,20 @@ metadata:
   name: myingress
   annotations:
     ingress.bluemix.net/proxy-add-headers: |
-      serviceName=&lt;myservice1&gt; {
-      &lt;header1&gt; &lt;value1&gt;;
-      &lt;header2&gt; &lt;value2&gt;;
+      serviceName=<myservice1> {
+      <header1> <value1>;
+      <header2> <value2>;
       }
-      serviceName=&lt;myservice2&gt; {
-      &lt;header3&gt; &lt;value3&gt;;
+      serviceName=<myservice2> {
+      <header3> <value3>;
       }
     ingress.bluemix.net/response-add-headers: |
-      serviceName=&lt;myservice1&gt; {
-      &lt;header1&gt;: &lt;value1&gt;;
-      &lt;header2&gt;: &lt;value2&gt;;
+      serviceName=<myservice1> {
+      <header1>: <value1>;
+      <header2>: <value2>;
       }
-      serviceName=&lt;myservice2&gt; {
-      &lt;header3&gt;: &lt;value3&gt;;
+      serviceName=<myservice2> {
+      <header3>: <value3>;
       }
 spec:
   tls:
@@ -1789,11 +1789,11 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: &lt;myservice1&gt;
+          serviceName: <myservice1>
           servicePort: 8080
       - path: /myapp
         backend:
-          serviceName: &lt;myservice2&gt;
+          serviceName: <myservice2>
           servicePort: 80</code></pre>
 
  <table>
@@ -1803,14 +1803,14 @@ spec:
   <tbody>
   <tr>
   <td><code>service_name</code></td>
-  <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the Kubernetes service that you created for your app.</td>
+  <td>Replace <code><<em>myservice</em>></code> with the name of the Kubernetes service that you created for your app.</td>
   </tr>
   <tr>
-  <td><code>&lt;header&gt;</code></td>
+  <td><code><header></code></td>
   <td>The key of the header information to add to the client request or client response.</td>
   </tr>
   <tr>
-  <td><code>&lt;value&gt;</code></td>
+  <td><code><value></code></td>
   <td>The value of the header information to add to the client request or client response.</td>
   </tr>
   </tbody></table>
@@ -1838,12 +1838,12 @@ Remove header information that is included in the client response from the back-
    name: myingress
    annotations:
      ingress.bluemix.net/response-remove-headers: |
-       serviceName=&lt;myservice1&gt; {
-       "&lt;header1&gt;";
-       "&lt;header2&gt;";
+       serviceName=<myservice1> {
+       "<header1>";
+       "<header2>";
        }
-       serviceName=&lt;myservice2&gt; {
-       "&lt;header3&gt;";
+       serviceName=<myservice2> {
+       "<header3>";
        }
  spec:
    tls:
@@ -1856,11 +1856,11 @@ Remove header information that is included in the client response from the back-
        paths:
        - path: /
          backend:
-           serviceName: &lt;myservice1&gt;
+           serviceName: <myservice1>
            servicePort: 8080
        - path: /myapp
          backend:
-           serviceName: &lt;myservice2&gt;
+           serviceName: <myservice2>
            servicePort: 80</code></pre>
 
   <table>
@@ -1870,10 +1870,10 @@ Remove header information that is included in the client response from the back-
    <tbody>
    <tr>
    <td><code>service_name</code></td>
-   <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the Kubernetes service that you created for your app.</td>
+   <td>Replace <code><<em>myservice</em>></code> with the name of the Kubernetes service that you created for your app.</td>
    </tr>
    <tr>
-   <td><code>&lt;header&gt;</code></td>
+   <td><code><header></code></td>
    <td>The key of the header to remove from the client response.</td>
    </tr>
    </tbody></table>
@@ -1905,7 +1905,7 @@ kind: Ingress
 metadata:
  name: myingress
  annotations:
-   ingress.bluemix.net/client-max-body-size: "size=&lt;size&gt;"
+   ingress.bluemix.net/client-max-body-size: "size=<size>"
 spec:
  tls:
  - hosts:
@@ -1926,7 +1926,7 @@ spec:
  </thead>
  <tbody>
  <tr>
- <td><code>&lt;size&gt;</code></td>
+ <td><code><size></code></td>
  <td>The maximum size of the client response body. For example, to set it to 200 megabyte, define <code>200m</code>.  <strong>Note:</strong> You can set the size to 0 to disable the check of the client request body size.</td>
  </tr>
  </tbody></table>
@@ -1955,7 +1955,7 @@ kind: Ingress
 metadata:
  name: myingress
  annotations:
-   ingress.bluemix.net/large-client-header-buffers: "number=&lt;number&gt; size=&lt;size&gt;"
+   ingress.bluemix.net/large-client-header-buffers: "number=<number> size=<size>"
 spec:
  tls:
  - hosts:
@@ -1976,11 +1976,11 @@ spec:
  </thead>
  <tbody>
  <tr>
- <td><code>&lt;number&gt;</code></td>
+ <td><code><number></code></td>
  <td>The maximum number of buffers that should be allocated to read large client request header. For example, to set it to 4, define <code>4</code>.</td>
  </tr>
  <tr>
- <td><code>&lt;size&gt;</code></td>
+ <td><code><size></code></td>
  <td>The maximum size of buffers that read large client request header. For example, to set it to 16 kilobytes, define <code>16k</code>.
    <strong>Note:</strong> The size must end with a <code>k</code> for kilobyte or <code>m</code> for megabyte.</td>
  </tr>
@@ -2017,7 +2017,7 @@ For all services, limit the request processing rate and the number of connection
  metadata:
   name: myingress
   annotations:
-    ingress.bluemix.net/global-rate-limit: "key=&lt;key&gt; rate=&lt;rate&gt; conn=&lt;number_of_connections&gt;"
+    ingress.bluemix.net/global-rate-limit: "key=<key> rate=<rate> conn=<number_of_connections>"
  spec:
   tls:
   - hosts:
@@ -2043,11 +2043,11 @@ For all services, limit the request processing rate and the number of connection
   </tr>
   <tr>
   <td><code>rate</code></td>
-  <td>Replace <code>&lt;<em>rate</em>&gt;</code> with the processing rate. Enter a value as a rate per second (r/s) or rate per minute (r/m). Example: <code>50r/m</code>.</td>
+  <td>Replace <code><<em>rate</em>></code> with the processing rate. Enter a value as a rate per second (r/s) or rate per minute (r/m). Example: <code>50r/m</code>.</td>
   </tr>
   <tr>
   <td><code>number-of_connections</code></td>
-  <td>Replace <code>&lt;<em>conn</em>&gt;</code> with the number of connections.</td>
+  <td>Replace <code><<em>conn</em>></code> with the number of connections.</td>
   </tr>
   </tbody></table>
 
@@ -2079,7 +2079,7 @@ Limit the request processing rate and the number of connections for specific ser
  metadata:
   name: myingress
   annotations:
-    ingress.bluemix.net/service-rate-limit: "serviceName=&lt;myservice&gt; key=&lt;key&gt; rate=&lt;rate&gt; conn=&lt;number_of_connections&gt;"
+    ingress.bluemix.net/service-rate-limit: "serviceName=<myservice> key=<key> rate=<rate> conn=<number_of_connections>"
  spec:
   tls:
   - hosts:
@@ -2101,7 +2101,7 @@ Limit the request processing rate and the number of connections for specific ser
   <tbody>
   <tr>
   <td><code>serviceName</code></td>
-  <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the service for which you want to limit the processing rate.</li>
+  <td>Replace <code><<em>myservice</em>></code> with the name of the service for which you want to limit the processing rate.</li>
   </tr>
   <tr>
   <td><code>key</code></td>
@@ -2109,11 +2109,11 @@ Limit the request processing rate and the number of connections for specific ser
   </tr>
   <tr>
   <td><code>rate</code></td>
-  <td>Replace <code>&lt;<em>rate</em>&gt;</code> with the processing rate. To define a rate per second, use r/s: <code>10r/s</code>. To define a rate per minute, use r/m: <code>50r/m</code>.</td>
+  <td>Replace <code><<em>rate</em>></code> with the processing rate. To define a rate per second, use r/s: <code>10r/s</code>. To define a rate per minute, use r/m: <code>50r/m</code>.</td>
   </tr>
   <tr>
   <td><code>number-of_connections</code></td>
-  <td>Replace <code>&lt;<em>conn</em>&gt;</code> with the number of connections.</td>
+  <td>Replace <code><<em>conn</em>></code> with the number of connections.</td>
   </tr>
   </tbody></table>
   </dd>

@@ -25,9 +25,6 @@ lastupdated: "2018-03-30"
 As you use {{site.data.keyword.containerlong}}, consider these techniques for troubleshooting cluster networking. Before trying these techniques, you can take some general steps to [debug your cluster and check for common issues](cs_troubleshoot.html).
 {: shortdesc}
 
-<br />
-
-
 ## File systems for worker nodes change to read-only
 {: #readonly_nodes}
 
@@ -44,7 +41,7 @@ The file system on the worker node is read-only.
 1. Back up any data that might be stored on the worker node or in your containers.
 2. For a short-term fix to the existing worker node, reload the worker node.
 
-<pre class="pre"><code>bx cs worker-reload &lt;cluster_name&gt; &lt;worker_id&gt;</code></pre>
+<pre class="pre"><code>bx cs worker-reload <cluster_name> <worker_id></code></pre>
 
 For a long-term fix, [update the machine type by adding another worker node](cs_cluster_update.html#machine_type).
 

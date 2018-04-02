@@ -85,19 +85,19 @@ If you do not already have an app ready, you can use a Kubernetes example app ca
     <tbody>
     <tr>
     <td><code>name</code></td>
-    <td>Replace <code><em>&lt;my-nodeport-service&gt;</em></code> with a name for your NodePort service.</td>
+    <td>Replace <code><em><my-nodeport-service></em></code> with a name for your NodePort service.</td>
     </tr>
     <tr>
     <td><code>run</code></td>
-    <td>Replace <code><em>&lt;my-demo&gt;</em></code> with the name of your deployment.</td>
+    <td>Replace <code><em><my-demo></em></code> with the name of your deployment.</td>
     </tr>
     <tr>
     <td><code>port</code></td>
-    <td>Replace <code><em>&lt;8081&gt;</em></code> with the port that your service listens on. </td>
+    <td>Replace <code><em><8081></em></code> with the port that your service listens on. </td>
      </tr>
      <tr>
      <td><code>nodePort</code></td>
-     <td>Optional: Replace <code><em>&lt;31514&gt;</em></code> with a NodePort in the 30000 - 32767 range. Do not specify a NodePort that is already in use by another service. If no NodePort is assigned, a random one is assigned for you.<br><br>If you want to specify a NodePort and want to see which NodePorts are already in use, you can run the following command: <pre class="pre"><code>kubectl get svc</code></pre>Any NodePorts in use appear under the **Ports** field.</td>
+     <td>Optional: Replace <code><em><31514></em></code> with a NodePort in the 30000 - 32767 range. Do not specify a NodePort that is already in use by another service. If no NodePort is assigned, a random one is assigned for you.<br><br>If you want to specify a NodePort and want to see which NodePorts are already in use, you can run the following command: <pre class="pre"><code>kubectl get svc</code></pre>Any NodePorts in use appear under the **Ports** field.</td>
      </tr>
      </tbody></table>
 

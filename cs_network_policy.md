@@ -237,7 +237,7 @@ To add network policies:
               {: pre}
 
             -   Windows:
-              <ol><li>Open the directory you retrieved in the last step.</br><pre class="codeblock"><code>C:\Users\<user>\.bluemix\plugins\container-service\&lt;cluster_name&gt;-admin\</code></pre>
+              <ol><li>Open the directory you retrieved in the last step.</br><pre class="codeblock"><code>C:\Users\<user>\.bluemix\plugins\container-service\<cluster_name>-admin\</code></pre>
               <li> Locate the <code>ca-*pem_file</code> file.</ol>
 
         4.  Verify that the Calico configuration is working correctly.

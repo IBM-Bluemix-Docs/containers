@@ -117,8 +117,8 @@ continue with the next step. </span> If a namespace is not specified for your or
 image registry. </li>
 </ol><p class="li stepsection"><p>From the CLI, run the following command after logging in to <span class="keyword">IBM
 Cloud Container Service</span>:</p>
-</p><ol start="3"><li class="step stepexpand"><span class="cmd">Set a namespace for your organization. Replace <var class="keyword varname">&lt;my_namespace&gt;</var> with the
-namespace that you want to set for your organization.</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> namespace-set <var class="keyword varname">&lt;my_namespace&gt;</var></code></pre>
+</p><ol start="3"><li class="step stepexpand"><span class="cmd">Set a namespace for your organization. Replace <var class="keyword varname"><my_namespace></var> with the
+namespace that you want to set for your organization.</span> <pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> namespace-set <var class="keyword varname"><my_namespace></var></code></pre>
 
 <div class="steps note"><span class="notetitle">Note:</span> If you are not sure if a namespace was already set for your organization, follow the steps in
 the <a href="container_planning.html#namespace_get" title="If a namespace for your organization is already set, you can retrieve it from the Cloud GUI or the CLI.">Retrieving the namespace for your organization</a> topic.</div>
@@ -136,7 +136,7 @@ steps. </p>
 </p><ol><li class="step stepexpand"><span class="cmd"><span class="ph" data-hd-otherprops="registry_check">From the catalog, select
 <span class="ph uicontrol">Containers</span> and choose an image.</span></span></li>
 <li class="step stepexpand"><span class="cmd">Under the image name, click <span class="ph uicontrol">Copy URL</span>.</span></li>
-<li class="step stepexpand"><span class="cmd">Retrieve the namespace from the copied URL, which is in the following format: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">&lt;image_name&gt;</var>:<var class="keyword varname">&lt;tag&gt;</var>.</span></li>
+<li class="step stepexpand"><span class="cmd">Retrieve the namespace from the copied URL, which is in the following format: registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/<var class="keyword varname"><image_name></var>:<var class="keyword varname"><tag></var>.</span></li>
 </ol><p class="li stepsection"><p>From the CLI, log in to <span class="keyword">IBM
 Cloud Container Service</span>
 service and run the following command.</p>
@@ -494,8 +494,8 @@ step.</span></li>
 </td>
 </tr>
 <tr><td headers="d64747e2025 ">Body</td>
-<td headers="d64747e2027 "><samp class="ph codeph">grant_type=password&amp;username=<var class="keyword varname">&lt;username&gt;</var>
-&amp;password=<var class="keyword varname">&lt;password&gt;</var></samp><div class="p"><div class="steps note"><span class="notetitle">Note:</span> Replace <var class="keyword varname">&lt;username&gt;</var> and <var class="keyword varname">&lt;password&gt;</var> with your
+<td headers="d64747e2027 "><samp class="ph codeph">grant_type=password&amp;username=<var class="keyword varname"><username></var>
+&amp;password=<var class="keyword varname"><password></var></samp><div class="p"><div class="steps note"><span class="notetitle">Note:</span> Replace <var class="keyword varname"><username></var> and <var class="keyword varname"><password></var> with your
 <span class="keyword">Cloud</span> user name and password. </div>
 </div>
 </td>
@@ -533,7 +533,7 @@ organization. </span> <pre class="codeblock"><code>GET http://api.<span class="k
 </thead>
 <tbody><tr><td headers="d64747e2129 ">Header</td>
 <td headers="d64747e2131 "><ul><li>Accept: <samp class="ph codeph">application/json;charset=utf-8</samp></li>
-<li>Authorization: <samp class="ph codeph">bearer <var class="keyword varname">&lt;access_token&gt;</var></samp></li>
+<li>Authorization: <samp class="ph codeph">bearer <var class="keyword varname"><access_token></var></samp></li>
 <li>Content-Type: <samp class="ph codeph">application/x-www-form-urlencoded;charset=utf</samp></li>
 </ul>
 </td>
@@ -602,8 +602,8 @@ Cloud Container Service</span> base URL</td>
 <td headers="d64747e2234 "><span class="ph filepath">https://containers-api.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/v3</span></td>
 </tr>
 <tr><td headers="d64747e2232 ">Header</td>
-<td headers="d64747e2234 "><ul><li>X-Auth-Token: <samp class="ph codeph">bearer <var class="keyword varname">&lt;access_token&gt;</var></samp></li>
-<li>X-Auth-Project-Id: <samp class="ph codeph"><var class="keyword varname">&lt;space_ID&gt;</var></samp></li>
+<td headers="d64747e2234 "><ul><li>X-Auth-Token: <samp class="ph codeph">bearer <var class="keyword varname"><access_token></var></samp></li>
+<li>X-Auth-Project-Id: <samp class="ph codeph"><var class="keyword varname"><space_ID></var></samp></li>
 <li>Content-Type: <samp class="ph codeph">application/json</samp></li>
 </ul>
 </td>
@@ -798,7 +798,7 @@ or public IP addresses that are unbound. </div>
 </li>
 <li>My options:<div class="p">Request a new public IP address and bind it to your
 container.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-request</code></pre>
-<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind <var class="keyword varname">&lt;IP_ADDRESS&gt;</var> <var class="keyword varname">&lt;CONTAINER&gt;</var></code></pre>
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind <var class="keyword varname"><IP_ADDRESS></var> <var class="keyword varname"><CONTAINER></var></code></pre>
 </div>
 </li>
 </ul>
@@ -808,7 +808,7 @@ container.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">
 192.0.2.56</code></pre>
 </li>
 <li>My options:<div class="p">Bind the public IP address to your container.
-<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind <var class="keyword varname">&lt;IP_ADDRESS&gt;</var> <var class="keyword varname">&lt;CONTAINER&gt;</var></code></pre>
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind <var class="keyword varname"><IP_ADDRESS></var> <var class="keyword varname"><CONTAINER></var></code></pre>
 </div>
 </li>
 </ul>
@@ -819,12 +819,12 @@ output:<pre class="codeblock"><code>IP Address      Container ID
 192.0.2.56   d7b4a167-8e51-4b16-b591-1a17cb7ee41f </code></pre>
 </li>
 <li>My options:<ul><li>Unbind an already bound IP address from a container and bind it to a new
-container.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-unbind <var class="keyword varname">&lt;IP_ADDRESS&gt;</var> <var class="keyword varname">&lt;CONTAINER&gt;</var></code></pre>
-<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind <var class="keyword varname">&lt;IP_ADDRESS&gt;</var> <var class="keyword varname">&lt;CONTAINER&gt;</var></code></pre>
+container.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-unbind <var class="keyword varname"><IP_ADDRESS></var> <var class="keyword varname"><CONTAINER></var></code></pre>
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind <var class="keyword varname"><IP_ADDRESS></var> <var class="keyword varname"><CONTAINER></var></code></pre>
 </li>
 <li><div class="p">Request a new public IP address and bind it to your
 container.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-request</code></pre>
-<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind <var class="keyword varname">&lt;IP_ADDRESS&gt;</var> <var class="keyword varname">&lt;CONTAINER&gt;</var></code></pre>
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> ip-bind <var class="keyword varname"><IP_ADDRESS></var> <var class="keyword varname"><CONTAINER></var></code></pre>
 </div>
 </li>
 </ul>

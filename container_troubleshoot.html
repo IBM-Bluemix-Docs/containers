@@ -187,7 +187,7 @@ are required to use the <samp class="ph codeph">sudo</samp> prefix with all of y
 run with root authentication and therefore, might require the prefix <samp class="ph codeph">sudo</samp>,
 depending on your operating system.</div><div class="section tsResolve">To run <samp class="ph codeph">docker</samp> and <span class="ph"><samp class="ph codeph">bx ic</samp></span> commands without <samp class="ph codeph">sudo</samp>, run
 the following command, then, if you are on Linux, you must log out then log back in again.
-<pre class="codeblock"><code>sudo usermod -a -G docker <var class="keyword varname">&lt;CURRENT_USER&gt;</var></code></pre>
+<pre class="codeblock"><code>sudo usermod -a -G docker <var class="keyword varname"><CURRENT_USER></var></code></pre>
 </div></div>
 </article></article><article class="topic concept nested1" role="article" aria-labelledby="d81670e780" lang="en-us" id="ts_ov_orgs"><h2 class="topictitle2" id="d81670e780">Troubleshooting quota </h2>
 <div class="body conbody"><p class="shortdesc"></p>
@@ -330,7 +330,7 @@ enable the user namespace feature, see <a href="https://docs.docker.com/engine/s
 <dd>If you cannot find the file that causes the issue, try to comment out the image layers in your
 Dockerfile and uncomment one layer after another. Build your image and create a container to find
 the affected image layer. <p>Run <samp class="ph codeph">chown [-R] root:root
-<var class="keyword varname">&lt;file_or_folder&gt;</var></samp> to change the ownership of the affected file that is
+<var class="keyword varname"><file_or_folder></var></samp> to change the ownership of the affected file that is
 stored on your local machine or add this command to the affected image layer in the Dockerfile.</p>
 <p>Example
 Dockerfile</p>
@@ -359,12 +359,12 @@ Cloud Container Service</span>. </li>
 </li>
 <li>Pull an image from your private <span class="keyword">Cloud</span> registry to your local machine. Use the
 name or id of the image that was returned in the previous step.
-<pre class="codeblock"><code>docker pull <var class="keyword varname">&lt;image_name_or_id&gt;</var></code></pre>
+<pre class="codeblock"><code>docker pull <var class="keyword varname"><image_name_or_id></var></code></pre>
 </li>
 <li>Verify that the image was pulled to your local machine. <pre class="codeblock"><code>docker images</code></pre>
 </li>
 <li>Save your image into a <span class="ph filepath">.tar</span> file.
-<pre class="codeblock"><code>docker export <var class="keyword varname">&lt;image_name_or_id&gt;</var> &gt; <var class="keyword varname">&lt;exported_image_name&gt;</var>.tar</code></pre>
+<pre class="codeblock"><code>docker export <var class="keyword varname"><image_name_or_id></var> > <var class="keyword varname"><exported_image_name></var>.tar</code></pre>
 </li>
 </ol>
 </div></div>
@@ -520,7 +520,7 @@ a running app, this app does not start or run. The app is not required to run to
 <samp class="ph codeph">VCAP_SERVICES</samp> to the container.</div>
 </div>
 <ol type="a"><li>Create a directory and a text file in your working app directory. Example:
-<span class="ph filepath"><var class="keyword varname">&lt;directory&gt;</var>/<var class="keyword varname">&lt;empty_file.txt&gt;</var></span>. This
+<span class="ph filepath"><var class="keyword varname"><directory></var>/<var class="keyword varname"><empty_file.txt></var></span>. This
 file serves as the source file for the app, though it does not need to contain any content.<ul><li>Windows example:
 <span class="ph filepath">C:\Users\<var class="keyword varname">User</var>\<var class="keyword varname">containerbridge</var>\<var class="keyword varname">empty_file.txt</var></span></li>
 <li>Linux example:
@@ -533,7 +533,7 @@ file serves as the source file for the app, though it does not need to contain a
 <var class="keyword varname">containerbridge</var> is a common name since the app acts a bridge from the container
 to a
 service.<p></p>
-<pre class="codeblock" id="ts_bridge_app__containerbridgecode"><code>cf push <var class="keyword varname">&lt;appname&gt;</var> -p <var class="keyword varname">&lt;directory&gt;</var> -i 1 -d <span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span> -k 1M -m 64M --no-hostname --no-manifest --no-route --no-start</code></pre>
+<pre class="codeblock" id="ts_bridge_app__containerbridgecode"><code>cf push <var class="keyword varname"><appname></var> -p <var class="keyword varname"><directory></var> -i 1 -d <span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span> -k 1M -m 64M --no-hostname --no-manifest --no-route --no-start</code></pre>
 Example:
 <pre class="codeblock"><code>cf push <var class="keyword varname">containerbridge</var> -p <var class="keyword varname">containerbridge</var> -i 1 -d <span class="keyword" data-hd-keyref="APPDomain">AppDomainName</span> -k 1M -m 64M --no-hostname --no-manifest --no-route --no-start</code></pre>
 </li>
@@ -545,14 +545,14 @@ marketplace</samp> command. The resulting list includes the name of the <span cl
 description of what the service is.</li>
 <li>Run the <samp class="ph codeph">create-service</samp> command and include the service name and plan from the
 <samp class="ph codeph">cf marketplace</samp> list. Also, include your own instance name for the
-service.<pre class="codeblock"><code>cf create-service <var class="keyword varname">&lt;service&gt;</var> <var class="keyword varname">&lt;plan&gt;</var> <var class="keyword varname">&lt;service_instance&gt;</var></code></pre>
+service.<pre class="codeblock"><code>cf create-service <var class="keyword varname"><service></var> <var class="keyword varname"><plan></var> <var class="keyword varname"><service_instance></var></code></pre>
 Example<pre class="codeblock"><code>cf create-service <var class="keyword varname">cleardb</var> <var class="keyword varname">spark</var> <var class="keyword varname">my-clear-db</var></code></pre>
 </li>
 </ol>
 </li>
 <li>Bind the <span class="keyword">Cloud</span> service to the app
 by running the bind-service command. Repeat to bind other <span class="keyword">Cloud</span> services to the bridge
-app.<pre class="codeblock"><code>cf bind-service <var class="keyword varname">&lt;appname&gt;</var> <var class="keyword varname">&lt;service_instance&gt;</var></code></pre>
+app.<pre class="codeblock"><code>cf bind-service <var class="keyword varname"><appname></var> <var class="keyword varname"><service_instance></var></code></pre>
 Example<pre class="codeblock"><code>cf bind-service <var class="keyword varname">containerbridge</var> <var class="keyword varname">my-clear-db</var></code></pre>
 </li>
 <li>If you are prompted to restage the app, run the following
@@ -560,7 +560,7 @@ command.<pre class="codeblock"><code>cf restage <var class="keyword varname">con
 </li>
 <li>Review the information for the <span class="keyword">Cloud</span> service that is passed through the
 <var class="keyword varname">containerbridge</var> app by running the following
-command.<pre class="codeblock"><code>cf env <var class="keyword varname">&lt;appname&gt;</var> </code></pre>
+command.<pre class="codeblock"><code>cf env <var class="keyword varname"><appname></var> </code></pre>
 Example<pre class="codeblock"><code>cf env <var class="keyword varname">containerbridge</var> </code></pre>
 <p>The
 results include the injected <span class="keyword">Cloud</span>
@@ -569,24 +569,24 @@ service parameters by using the <samp class="ph codeph">VCAP_SERVICES</samp> env
 example:
 <pre class="codeblock"><code>{
  "VCAP_SERVICES": {
-  "&lt;service_name&gt;": [
+  "<service_name>": [
    {
     "credentials": {
-     "hostname": "&lt;hostname_id&gt;",
-     "jdbcUrl": "&lt;jdbc_URL&gt;",
-     "name": "&lt;encoded_name&gt;",
-     "password": "&lt;encoded_password&gt;",
-     "port": "&lt;port_number&gt;",
-     "uri": "&lt;service_URI&gt;",
-     "username": "&lt;encoded_username&gt;"
+     "hostname": "<hostname_id>",
+     "jdbcUrl": "<jdbc_URL>",
+     "name": "<encoded_name>",
+     "password": "<encoded_password>",
+     "port": "<port_number>",
+     "uri": "<service_URI>",
+     "username": "<encoded_username>"
     },
-    "label": "&lt;service_name&gt;",
-    "name": "&lt;service_instance&gt;",
-    "plan": "&lt;plan_name&gt;",
+    "label": "<service_name>",
+    "name": "<service_instance>",
+    "plan": "<plan_name>",
     "tags": [
-     "&lt;tag1&gt;",
-     "&lt;tag2&gt;",
-     "&lt;tag3&gt;"
+     "<tag1>",
+     "<tag2>",
+     "<tag3>"
     ]
    } </code></pre>
 </div>
@@ -819,16 +819,16 @@ the package to the latest version. <pre class="codeblock"><code>pip install --up
 </article><article class="topic tsTroubleshooting nested2" role="article" aria-labelledby="d81670e3446" lang="en-us" id="ts_compose_commands_failed"><h3 class="topictitle3" id="d81670e3446">No module named queue error is displayed when executing Docker Compose commands</h3>
 <div class="body tsBody"><p class="shortdesc"></p>
 <div class="section tsSymptoms">As soon as you run Docker Compose commands in your CLI, an error message similar to the
-following example is displayed. <div class="p"><pre class="pre msgblock"><code>File "/usr/local/bin/docker-compose", line 9, in &lt;module&gt;
+following example is displayed. <div class="p"><pre class="pre msgblock"><code>File "/usr/local/bin/docker-compose", line 9, in <module>
 load_entry_point('docker-compose==1.6.2', 'console_scripts', 'docker-compose')() File
 "/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/pkg_resources.py", line 357,
 in load_entry_point return get_distribution(dist).load_entry_point(group, name) File
 "/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/pkg_resources.py", line 2394,
 in load_entry_point return ep.load() File "/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/pkg_resources.py",
 line 2108, in load entry = __import__(self.module_name, globals(),globals(), ['__name__'])
-File "/Library/Python/2.7/site-packages/compose/cli/main.py", line 26, in &lt;module&gt; from ..project import NoSuchService
-File "/Library/Python/2.7/site-packages/compose/project.py", line 10, in &lt;module&gt; from . import parallel
-File "/Library/Python/2.7/site-packages/compose/parallel.py", line 9, in &lt;module&gt; from six.moves.queue import Empty ImportError:
+File "/Library/Python/2.7/site-packages/compose/cli/main.py", line 26, in <module> from ..project import NoSuchService
+File "/Library/Python/2.7/site-packages/compose/project.py", line 10, in <module> from . import parallel
+File "/Library/Python/2.7/site-packages/compose/parallel.py", line 9, in <module> from six.moves.queue import Empty ImportError:
 No module named queue</code></pre>
 </div>
 </div><div class="section tsCauses">The Python path is pointing to the wrong directory. The Docker Compose Python package
@@ -853,8 +853,8 @@ RUN useradd --uid <var class="keyword varname">1010</var> --gid <var class="keyw
 </li>
 <li>Build and push the image to your private <span class="keyword">Cloud</span> images registry.</li>
 <li>Create a container with the image where the volume path is mounted.<div class="note tip"><span class="tiptitle">Tip:</span> <span class="ph">Run <samp class="ph codeph"><span class="ph">bx ic</span> namespace-get</samp> to retrieve
-your namespace and replace <var class="keyword varname">&lt;my_namespace&gt;</var> with your namespace information.</span></div>
-<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run --volume <var class="keyword varname">volume_name</var>:<var class="keyword varname">/path/to/files</var> --name <var class="keyword varname">fixVolumePermissions</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname">&lt;my_namespace&gt;</var>/<var class="keyword varname">image</var></code></pre>
+your namespace and replace <var class="keyword varname"><my_namespace></var> with your namespace information.</span></div>
+<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> run --volume <var class="keyword varname">volume_name</var>:<var class="keyword varname">/path/to/files</var> --name <var class="keyword varname">fixVolumePermissions</var> registry.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>/<var class="keyword varname"><my_namespace></var>/<var class="keyword varname">image</var></code></pre>
 </li>
 <li>Log in to the
 container.<pre class="codeblock"><code><span class="ph"><samp class="ph codeph">bx ic</samp></span> exec -it <var class="keyword varname">container_name</var> bash</code></pre>
