@@ -25,7 +25,6 @@ lastupdated: "2018-03-30"
 As you use {{site.data.keyword.containerlong}}, consider these techniques for troubleshooting cluster networking. Before trying these techniques, you can take some general steps to [debug your cluster and check for common issues](cs_troubleshoot.html).
 {: shortdesc}
 
-<br />
 
 
 ## Cannot connect to an app via a load balancer service
@@ -55,31 +54,31 @@ To troubleshoot your load balancer service:
 
 2.  Check the accuracy of the configuration file for your load balancer service.
 
-  ```
-  apiVersion: v1
-  kind: Service
-  metadata:
-    name: myservice
-  spec:
-    type: LoadBalancer
-    selector:
-      <selectorkey>:<selectorvalue>
-    ports:
-     - protocol: TCP
-       port: 8080
-  ```
-  {: pre}
+    ```
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: myservice
+    spec:
+      type: LoadBalancer
+      selector:
+        <selectorkey>:<selectorvalue>
+      ports:
+       - protocol: TCP
+         port: 8080
+    ```
+    {: pre}
 
     1.  Check that you defined **LoadBalancer** as the type for your service.
-    2.  Make sure that you used the same **<selectorkey>** and **<selectorvalue>** that you used in the **label/metadata** section when you deployed your app.
+    2.  Make sure that the **<selectorkey>** and **<selectorvalue>** that you use in the `spec.selector` section of the LoadBalancer service is the same as the key/ value pair that you used in the `spec.template.metadata.labels` section of your deployment yaml. If labels do not match, the **Endpoints** section in your LoadBalancer service displays **<none>** and your app is not accessible from the internet. 
     3.  Check that you used the **port** that your app listens on.
 
 3.  Check your load balancer service and review the **Events** section to find potential errors.
 
-  ```
-  kubectl describe service <myservice>
-  ```
-  {: pre}
+    ```
+    kubectl describe service <myservice>
+    ```
+    {: pre}
 
     Look for the following error messages:
 
@@ -94,14 +93,16 @@ To troubleshoot your load balancer service:
 4.  If you are using a custom domain to connect to your load balancer service, make sure that your custom domain is mapped to the public IP address of your load balancer service.
     1.  Find the public IP address of your load balancer service.
 
-      ```
-      kubectl describe service <myservice> | grep "LoadBalancer Ingress"
-      ```
-      {: pre}
+        ```
+        kubectl describe service <myservice> | grep "LoadBalancer Ingress"
+        ```
+        {: pre}
 
     2.  Check that your custom domain is mapped to the portable public IP address of your load balancer service in the Pointer record (PTR).
 
 <br />
+
+
 
 
 ## Cannot connect to an app via Ingress
@@ -247,6 +248,7 @@ To troubleshoot your Ingress:
 
 
 
+
 ## Ingress application load balancer secret issues
 {: #cs_albsecret_fails}
 
@@ -287,6 +289,8 @@ Review the following reasons why the application load balancer secret might fail
  </tbody></table>
 
 <br />
+
+
 
 
 ## Cannot establish VPN connectivity with the strongSwan Helm chart
@@ -349,6 +353,8 @@ When you try to establish VPN connectivity with the strongSwan Helm chart, it is
         The tool outputs several pages of information as it runs various tests for common networking issues. Output lines that begin with `ERROR`, `WARNING`, `VERIFY`, or `CHECK` indicate possible errors with the VPN connectivity.
 
     <br />
+
+
 
 
 ## strongSwan VPN connectivity fails after worker node addition or deletion
@@ -427,7 +433,7 @@ Update the Helm chart values to reflect the worker node changes:
      <tbody>
      <tr>
      <td><code>localSubnetNAT</code></td>
-     <td>If you are using subnet NAT to remap specific private local IP addresses, remove any IP addresses from the old worker node. If you are using subnet NAT to remap entire subnets and you have no worker nodes remaining on a subnet, remove that subnet CIDR from this setting.</td>
+     <td>If you are using subnet NAT to remap specific private local IP addresses, remove any IP addresses from this setting that are from the old worker node. If you are using subnet NAT to remap entire subnets and you have no worker nodes remaining on a subnet, remove that subnet CIDR from this setting.</td>
      </tr>
      <tr>
      <td><code>nodeSelector</code></td>
@@ -435,7 +441,7 @@ Update the Helm chart values to reflect the worker node changes:
      </tr>
      <tr>
      <td><code>tolerations</code></td>
-     <td>If worker node you deleted was not tainted, but the only worker nodes that remain are tainted, change this setting to allow the VPN pod to run on all tainted worker nodes or worker nodes with specific taints.
+     <td>If the worker node that you deleted was not tainted, but the only worker nodes that remain are tainted, change this setting to allow the VPN pod to run on all tainted worker nodes or worker nodes with specific taints.
      </td>
      </tr>
      </tbody></table>
@@ -481,6 +487,8 @@ Update the Helm chart values to reflect the worker node changes:
 <br />
 
 
+
+
 ## Cannot retrieve the ETCD URL for Calico CLI configuration
 {: #cs_calico_fails}
 
@@ -512,6 +520,8 @@ To retrieve the `<ETCD_URL>`, run one of the following commands:
 When you retrieve the `<ETCD_URL>`, continue with the steps as listed in (Adding network policies)[cs_network_policy.html#adding_network_policies].
 
 <br />
+
+
 
 
 ## Getting help and support

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-29"
+lastupdated: "2018-04-02"
 
 ---
 
@@ -103,20 +103,25 @@ When you create a standard cluster in {{site.data.keyword.Bluemix_notm}}, you ch
 <dl>
 <dt>Physical machines (bare metal)</dt>
 <dd>You can provision your worker node as a single-tenant physical server, also referred to as bare metal. Bare metal gives you direct access to the physical resources on the machine, such as the memory or CPU. This setup eliminates the virtual machine hypervisor that allocates physical resources to virtual machines that run on the host. Instead, all of a bare metal machine's resources are dedicated exclusively to the worker, so you don't need to worry about "noisy neighbors" sharing resources or slowing down performance.
-<p><strong>Monthly billing</strong>: Bare metal servers are more expensive than virtual, and are best suited for high-performance applications that need more resources and host control. Bare metal servers are billed monthly. If you cancel a bare metal server before the end of the month, you are charged through the end of that month. When you provision bare metal servers, you interact directly with IBM Cloud infrastructure (SoftLayer), and as such, this manual process can take more than one business day to complete.</p>
-<p><strong>Option to enable Trusted Compute</strong>: Only on select bare metal worker nodes that run Kubernetes version 1.9 or later, you can enable Trusted Compute to verify your worker nodes against tampering. If you don't enable trust during cluster creation but want to later, you can use the `bx cs feature-enable` [command](cs_cli_reference.html#cs_cluster_feature_enable). After you enable trust, you cannot disable it later. For more information about how trust works during the node startup process, see [{{site.data.keyword.containershort_notm}} with Trusted Compute](cs_secure.html#trusted_compute). When you run the `bx cs machine-types <location>` [command](cs_cli_reference.html#cs_machine_types), you can see which machines support trust by reviewing the `Trustable` field.</p>
-<p><strong>Bare metal machine type groups</strong>: Bare metal machine types come in groups that have different compute resources that you can choose from to meet your application's needs. Physical machine types have higher local storage than virtual, and some have RAID to back up local data. To learn about the different types of bare metal offerings, see the `bx cs machine-type` [command](cs_cli_reference.html#cs_machine_types).
-<ul><li>`mb1c`: Choose this type for a balanced configuration of physical machine resources for your worker nodes. This type includes access to the 10GBps Dual Redundant networks and a dual SSD HDD configuration. It typically features a 1TB primary storage disk and a 1.7 or 2 TB secondary disk.</li>
-<li>`mr1c`: Choose this type to maximize the RAM available to your worker nodes.</li>
-<li>`md1c`: Choose this type if your worker nodes require a significant amount of local disk storage, including RAID to back up the data stored locally on the machine. The 1TB primary storage disks are configured for RAID1, and the 4TB secondary storage disks are configured for RAID10.</li>
+<p><strong>Monthly billing</strong>: Bare metal servers are more expensive than virtual servers, and are best suited for high-performance apps that need more resources and host control. Bare metal servers are billed monthly. If you cancel a bare metal server before the end of the month, you are charged through the end of that month. Ordering and canceling bare metal servers is a manual process through your IBM Cloud infrastructure (SoftLayer) account. It can take more than one business day to complete.</p>
+<p><strong>Option to enable Trusted Compute</strong>: Enable Trusted Compute to verify your worker nodes against tampering. If you don't enable trust during cluster creation but want to later, you can use the `bx cs feature-enable` [command](cs_cli_reference.html#cs_cluster_feature_enable). After you enable trust, you cannot disable it later. You can make a new cluster without trust. For more information about how trust works during the node startup process, see [{{site.data.keyword.containershort_notm}} with Trusted Compute](cs_secure.html#trusted_compute). Trusted Compute is available on clusters that run Kubernetes version 1.9 or later and have certain bare metal machine types. When you run the `bx cs machine-types <location>` [command](cs_cli_reference.html#cs_machine_types), you can see which machines support trust by reviewing the `Trustable` field.</p>
+<p><strong>Bare metal machine type groups</strong>: Bare metal machine types come in groups that have different compute resources that you can choose from to meet your app's needs. Physical machine types have more local storage than virtual, and some have RAID to back up local data. To learn about the different types of bare metal offerings, see the `bx cs machine-type` [command](cs_cli_reference.html#cs_machine_types).
+<ul><li>`mb1c.4x32`: Choose this type for a balanced configuration of physical machine resources for your worker nodes. Balanced with 4 cores, 32GB Memory, 1TB SATA Primary Disk, 2TB SATA Secondary Disk, 10Gbps Bonded Network.</li>
+<li>`mb1c.16x64`: Choose this type if you don't need the configuration of physical machine resources for your worker nodes to be RAM-intensive, data-intensive, or GPU-intensive. Balanced with 16 cores, 64GB Memory, 1TB SATA Primary Disk, 1.7TB SSD Secondary Disk, 10Gbps Bonded Network.</li>
+<li>`mr1c.28x512`: Choose this type to maximize the RAM available to your worker nodes. RAM intensive with 28 cores, 512GB Memory, 1TB SATA Primary Disk, 1.7TB SSD Secondary Disk, 10Gbps Bonded Network.</li>
+<li>`md1c.16x64.4x4tb`: Choose this type if your worker nodes require a significant amount of local disk storage, including RAID to back up the data stored locally on the machine. The 1TB primary storage disks are configured for RAID1, and the 4TB secondary storage disks are configured for RAID10. Data intensive with 28 cores, 512GB Memory, 2x1TB RAID1 Primary Disk, 4x4TB SATA RAID10 Secondary Disk, 10Gbps Bonded Network.</li>
+<li>`md1c.28x512.4x4tb`: Choose this type if your worker nodes require a significant amount of local disk storage, including RAID to back up the data stored locally on the machine. The 1TB primary storage disks are configured for RAID1, and the 4TB secondary storage disks are configured for RAID10. Data intensive with 16 cores, 64GB Memory, 2x1TB RAID1 Primary Disk, 4x4TB SATA RAID10 Secondary Disk, 10Gbps Bonded Network.</li>
 
 </ul></p></dd>
 <dt>Virtual machines</dt>
 <dd>When you create a standard virtual cluster, you must choose whether you want the underlying hardware to be shared by multiple {{site.data.keyword.IBM_notm}} customers (multi tenancy) or to be dedicated to you only (single tenancy).
 <p>In a multi-tenant set up, physical resources, such as CPU and memory, are shared across all virtual machines that are deployed to the same physical hardware. To ensure that every virtual machine can run independently, a virtual machine monitor, also referred to as the hypervisor, segments the physical resources into isolated entities and allocates them as dedicated resources to a virtual machine (hypervisor isolation).</p>
 <p>In a single-tenant set up, all physical resources are dedicated to you only. You can deploy multiple worker nodes as virtual machines on the same physical host. Similar to the multi-tenant set up, the hypervisor assures that every worker node gets its share of the available physical resources.</p>
-<p>Shared nodes are usually cheaper than dedicated nodes because the costs for the underlying hardware are shared among multiple customers. However, when you decide between shared and dedicated nodes, you might want to check with your legal department to discuss the level of infrastructure isolation and compliance that your app environment requires.</p></dd>
+<p>Shared nodes are usually less costly than dedicated nodes because the costs for the underlying hardware are shared among multiple customers. However, when you decide between shared and dedicated nodes, you might want to check with your legal department to discuss the level of infrastructure isolation and compliance that your app environment requires.</p>
+<p><strong>Virtual `u2c` or `b2c` machine types</strong>: These machines use local disk instead of storage area networking (SAN) for reliability. Reliability benefits include higher throughput when serializing bytes to the local disk and reduced file system degradation due to network failures. These machine types contain 25GB primary local disk storage for the OS file system, and 100GB secondary local disk storage for `/var/lib/docker`, the directory that all the container data is written to.</p>
+<p><strong>Deprecated `u1c` or `b1c` machine types</strong>: To start using `u2c` and `b2c` machine types, [update the machine types by adding worker nodes](cs_cluster_update.html#machine_type).</p></dd>
 </dl>
+
 
 Available physical and virtual machines types vary by the location in which you deploy the cluster. For more information, see the `bx cs machine-type` [command](cs_cli_reference.html#cs_machine_types). You can deploy clusters by using the [console UI](#clusters_ui) or the [CLI](#clusters_cli).
 
@@ -128,7 +133,7 @@ When you create a cluster, every cluster is automatically connected to a VLAN fr
 
 A VLAN configures a group of worker nodes and pods as if they were attached to the same physical wire. The private VLAN determines the private IP address that is assigned to a worker node during cluster creation, and the public VLAN determines the public IP address that is assigned to a worker node during cluster creation.
 
-For free clusters, the cluster's worker nodes are connected to an IBM-owned public VLAN and private VLAN by default during cluster creation. For standard clusters, you must connect your worker nodes to a private VLAN. You can either connect your worker nodes to both a public VLAN and the private VLAN, or to the private VLAN only. If you want to connect your worker nodes to a private VLAN only, you can designate the ID of an existing private VLAN during cluster creation or [create a new private VLAN](/docs/cli/reference/softlayer/index.html#sl_vlan_create). However, you must also configure an alternative solution to enable a secure connection between worker nodes on the private VLAN and the Kubernetes master on the public VLAN. For example, you can [configure a Vyatta Gateway Appliance](cs_vpn.html#vyatta).
+For free clusters, the cluster's worker nodes are connected to an IBM-owned public VLAN and private VLAN by default during cluster creation. For standard clusters, you must connect your worker nodes to a private VLAN. You can either connect your worker nodes to both a public VLAN and the private VLAN, or to the private VLAN only. If you want to connect your worker nodes to a private VLAN only, you can designate the ID of an existing private VLAN during cluster creation or [create a private VLAN](/docs/cli/reference/softlayer/index.html#sl_vlan_create). If worker nodes are set up with a private VLAN only, you must configure an alternative solution for network connectivity. For more information, see [VLAN connection for worker nodes](#worker_vlan_connection).
 
 **Note**: If you have multiple VLANs for a cluster or multiple subnets on the same VLAN, you must turn on VLAN spanning so that your worker nodes can communicate with each other on the private network. For instructions, see [Enable or disable VLAN spanning](/docs/infrastructure/vlans/vlan-spanning.html#enable-or-disable-vlan-spanning).
 
@@ -197,7 +202,7 @@ To create a cluster:
     4.  **Standard**: Select a type of machine and specify the number of worker nodes that you need. The machine type defines the amount of virtual CPU, memory, and disk space that is set up in each worker node and made available to the containers. Available bare metal and virtual machines types vary by the location in which you deploy the cluster. For more information, see the documentation for the `bx cs machine-type` [command](cs_cli_reference.html#cs_machine_types). After you create your cluster, you can add different machine types by adding a new worker node to the cluster.
 
     5. **Standard**: Select a public VLAN (optional) and private VLAN (required) from your IBM Cloud infrastructure (SoftLayer) account. Both VLANs communicate between worker nodes but the public VLAN also communicates with the IBM-managed Kubernetes master. You can use the same VLAN for multiple clusters.
-        **Note**: If you choose not to select a public VLAN, you must configure an alternative solution. See [VLAN connection for worker nodes](#worker_vlan_connection) for more information.
+        **Note**: If worker nodes are set up with a private VLAN only, you must configure an alternative solution for network connectivity. For more information, see [VLAN connection for worker nodes](#worker_vlan_connection).
 
     6. By default, **Encrypt local disk** is selected. If you choose to clear the check box, then the host's Docker data is not encrypted.[Learn more about the encryption](cs_secure.html#encrypted_disks).
 
@@ -267,7 +272,10 @@ To create a cluster:
            Be sure that you want to provision a bare metal machine. Because it is billed monthly, if you cancel it immediately after an order by  mistake, you are still charged the full month.
            {:tip}
 
-        <pre class="pre">bx cs machine-types &lt;location&gt;</pre>
+        ```
+        bx cs machine-types <location>
+        ```
+        {: pre}
 
     3.  **Standard clusters**: Check to see if a public and private VLAN already exists in the IBM Cloud infrastructure (SoftLayer) for this account.
 
@@ -285,9 +293,9 @@ To create a cluster:
         ```
         {: screen}
 
-        If a public and private VLAN already exist, note the matching routers. Private VLAN routers always begin with `bcr` (back-end router) and public VLAN routers always begin with `fcr` (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. In the example output, any of the private VLANs can be used with any of public VLANs because the routers all include `02a.dal10`.
+        If a public and private VLAN already exist, note the matching routers. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). When creating a cluster and specifying the public and private VLANs, the number and letter combination after those prefixes must match. In the example output, any of the private VLANs can be used with any of public VLANs because the routers all include `02a.dal10`.
 
-        You must connect your worker nodes to a private VLAN, and can optionally also connect your worker nodes to a public VLAN. **Note**: If you choose not to select a public VLAN, you must configure an alternative solution. See [VLAN connection for worker nodes](#worker_vlan_connection) for more information.
+        You must connect your worker nodes to a private VLAN, and optionally, you can connect your worker nodes to a public VLAN. **Note**: If worker nodes are set up with a private VLAN only, you must configure an alternative solution for network connectivity. For more information, see [VLAN connection for worker nodes](#worker_vlan_connection).
 
     4.  **Free and standard clusters**: Run the `cluster-create` command. You can choose between a free cluster, which includes one worker node set up with 2vCPU and 4GB memory, or a standard cluster, which can include as many worker nodes as you choose in your IBM Cloud infrastructure (SoftLayer) account. When you create a standard cluster, by default, the worker node disks are encrypted, its hardware is shared by multiple IBM customers, and it is billed by hours of usage. </br>Example for a standard cluster. Specify the cluster's options:
 
@@ -329,13 +337,13 @@ To create a cluster:
         <td><code>--public-vlan <em>&lt;public_vlan_id&gt;</em></code></td>
         <td><ul>
           <li>**Free clusters**: You do not have to define a public VLAN. Your free cluster is automatically connected to a public VLAN that is owned by IBM.</li>
-          <li>**Standard clusters**: If you already have a public VLAN set up in your IBM Cloud infrastructure (SoftLayer) account for that location, enter the ID of the public VLAN. If you want to connect your worker nodes to a private VLAN only, do not specify this option. **Note**: If you choose not to select a public VLAN, you must configure an alternative solution. See [VLAN connection for worker nodes](#worker_vlan_connection) for more information.<br/><br/>
-          <strong>Note</strong>: Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster.</li>
+          <li>**Standard clusters**: If you already have a public VLAN set up in your IBM Cloud infrastructure (SoftLayer) account for that location, enter the ID of the public VLAN. If you want to connect your worker nodes to a private VLAN only, do not specify this option. **Note**: If worker nodes are set up with a private VLAN only, you must configure an alternative solution for network connectivity. For more information, see [VLAN connection for worker nodes](#worker_vlan_connection).<br/><br/>
+          <strong>Note</strong>: Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). When creating a cluster and specifying the public and private VLANs, the number and letter combination after those prefixes must match.</li>
         </ul></td>
         </tr>
         <tr>
         <td><code>--private-vlan <em>&lt;private_vlan_id&gt;</em></code></td>
-        <td><ul><li>**Free clusters**: You do not have to define a private VLAN. Your free cluster is automatically connected to a private VLAN that is owned by IBM.</li><li>**Standard clusters**: If you already have a private VLAN set up in your IBM Cloud infrastructure (SoftLayer) account for that location, enter the ID of the private VLAN. If you do not have a private VLAN in your account, do not specify this option. {{site.data.keyword.containershort_notm}} automatically creates a private VLAN for you.<br/><br/><strong>Note</strong>: Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster.</li></ul></td>
+        <td><ul><li>**Free clusters**: You do not have to define a private VLAN. Your free cluster is automatically connected to a private VLAN that is owned by IBM.</li><li>**Standard clusters**: If you already have a private VLAN set up in your IBM Cloud infrastructure (SoftLayer) account for that location, enter the ID of the private VLAN. If you do not have a private VLAN in your account, do not specify this option. {{site.data.keyword.containershort_notm}} automatically creates a private VLAN for you.<br/><br/><strong>Note</strong>: Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). When creating a cluster and specifying the public and private VLANs, the number and letter combination after those prefixes must match.</li></ul></td>
         </tr>
         <tr>
         <td><code>--name <em>&lt;name&gt;</em></code></td>
@@ -567,6 +575,13 @@ When you delete a cluster, you are also deleting resources on the cluster, inclu
     3.  Follow the prompts and choose whether to delete cluster resources.
 
 When you remove a cluster, you can choose to remove the portable subnets and persistent storage associated with it:
-- Subnets are used to assign portable public IP addresses to load balancer services or your Ingress application load balancer. If you keep them, you can reuse them in a new cluster or manually delete them later from your IBM Cloud infrastructure (SoftLayer) portfolio.
+- Subnets are used to assign portable public IP addresses to load balancer services or your Ingress application load balancer. If you keep them, you can [reuse them in a new cluster](cs_subnets.html#custom) or manually delete them later from your IBM Cloud infrastructure (SoftLayer) portfolio.
 - If you created a persistent volume claim by using an [existing file share](cs_storage.html#existing), then you cannot delete the file share when you delete the cluster. You must manually delete the file share later from your IBM Cloud infrastructure (SoftLayer) portfolio.
 - Persistent storage provides high availability for your data. If you delete it, you cannot recover your data.
+
+**Tip**: After it is no longer listed in the available clusters list, you can reuse the name of a removed cluster.
+
+  ```
+  bx cs clusters
+  ```
+  {: pre}
