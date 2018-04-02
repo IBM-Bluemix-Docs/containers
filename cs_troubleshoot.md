@@ -29,9 +29,6 @@ You can take some general steps to ensure that your clusters are up-to-date:
 - [Reboot your worker nodes](cs_cli_reference.html#cs_worker_reboot) regularly to ensure the installation of updates and security patches that IBM automatically deploys to the operating system
 - Update your cluster to [the latest default version of Kubernetes](cs_versions.html) for {{site.data.keyword.containershort_notm}}
 
-<br />
-
-
 ## Debugging clusters
 {: #debug_clusters}
 
