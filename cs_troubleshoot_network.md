@@ -25,9 +25,6 @@ lastupdated: "2018-03-30"
 As you use {{site.data.keyword.containerlong}}, consider these techniques for troubleshooting cluster networking. Before trying these techniques, you can take some general steps to [debug your cluster and check for common issues](cs_troubleshoot.html).
 {: shortdesc}
 
-<br />
-
-
 ## Cannot connect to an app via a load balancer service
 {: #cs_loadbalancer_fails}
 
@@ -71,7 +68,7 @@ To troubleshoot your load balancer service:
   {: pre}
 
     1.  Check that you defined **LoadBalancer** as the type for your service.
-    2.  Make sure that you used the same **<selectorkey>** and **<selectorvalue>** that you used in the **label/metadata** section when you deployed your app.
+    2.  Make sure that the **<selectorkey>** and **<selectorvalue>** that you use in the `spec.selector` section of the LoadBalancer service is the same as the key/ value pair that you used in the `spec.template.metadata.labels` section of your deployment yaml. If labels do not match, the **Endpoints** section in your LoadBalancer service displays **<none>** and your app is not accessible from the internet. 
     3.  Check that you used the **port** that your app listens on.
 
 3.  Check your load balancer service and review the **Events** section to find potential errors.
@@ -427,7 +424,7 @@ Update the Helm chart values to reflect the worker node changes:
      <tbody>
      <tr>
      <td><code>localSubnetNAT</code></td>
-     <td>If you are using subnet NAT to remap specific private local IP addresses, remove any IP addresses from the old worker node. If you are using subnet NAT to remap entire subnets and you have no worker nodes remaining on a subnet, remove that subnet CIDR from this setting.</td>
+     <td>If you are using subnet NAT to remap specific private local IP addresses, remove any IP addresses from this setting that are from the old worker node. If you are using subnet NAT to remap entire subnets and you have no worker nodes remaining on a subnet, remove that subnet CIDR from this setting.</td>
      </tr>
      <tr>
      <td><code>nodeSelector</code></td>
@@ -435,7 +432,7 @@ Update the Helm chart values to reflect the worker node changes:
      </tr>
      <tr>
      <td><code>tolerations</code></td>
-     <td>If worker node you deleted was not tainted, but the only worker nodes that remain are tainted, change this setting to allow the VPN pod to run on all tainted worker nodes or worker nodes with specific taints.
+     <td>If the worker node that you deleted was not tainted, but the only worker nodes that remain are tainted, change this setting to allow the VPN pod to run on all tainted worker nodes or worker nodes with specific taints.
      </td>
      </tr>
      </tbody></table>
