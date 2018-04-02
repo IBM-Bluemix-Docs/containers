@@ -25,9 +25,6 @@ lastupdated: "2018-03-30"
 As you use {{site.data.keyword.containerlong}}, consider these techniques for troubleshooting your clusters and worker nodes. Before trying these techniques, you can take some general steps to [debug your cluster and check for common issues](cs_troubleshoot.html).
 {: shortdesc}
 
-<br />
-
-
 ## Unable to connect to your infrastructure account
 {: #cs_credentials}
 
@@ -221,10 +218,10 @@ If your app runs in the `default` namespace, uses the `default ServiceAccount`, 
 {: tsResolve}
 Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
 
-1.  **Temporary action**: As you update your app RBAC policies, you might want to revert temporarily to the previous `ClusterRoleBinding` for the `default ServiceAccount` in the `default` namespace. 
-    
+1.  **Temporary action**: As you update your app RBAC policies, you might want to revert temporarily to the previous `ClusterRoleBinding` for the `default ServiceAccount` in the `default` namespace.
+
     1.  Copy the following `.yaml` file.
-        
+
         ```yaml
         kind: ClusterRoleBinding
         apiVersion: rbac.authorization.k8s.io/v1beta1
@@ -254,12 +251,12 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to you
         ```
 
     2.  Apply the `.yaml` files to your cluster.
-        
+
         ```
         kubectl apply -f FILENAME
         ```
         {: pre}
-        
+
 2.  [Create RBAC authorization resources![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/admin/authorization/rbac/#api-overview) to update the `ClusterRoleBinding` admin access.
 
 3.  If you created a temporary cluster role binding, remove it.

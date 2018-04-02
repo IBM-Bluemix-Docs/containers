@@ -567,6 +567,6 @@ When you delete a cluster, you are also deleting resources on the cluster, inclu
     3.  Follow the prompts and choose whether to delete cluster resources.
 
 When you remove a cluster, you can choose to remove the portable subnets and persistent storage associated with it:
-- Subnets are used to assign portable public IP addresses to load balancer services or your Ingress application load balancer. If you keep them, you can reuse them in a new cluster or manually delete them later from your IBM Cloud infrastructure (SoftLayer) portfolio.
+- Subnets are used to assign portable public IP addresses to load balancer services or your Ingress application load balancer. If you keep them, you can [reuse them in a new cluster](cs_subnets.html#custom) or manually delete them later from your IBM Cloud infrastructure (SoftLayer) portfolio.
 - If you created a persistent volume claim by using an [existing file share](cs_storage.html#existing), then you cannot delete the file share when you delete the cluster. You must manually delete the file share later from your IBM Cloud infrastructure (SoftLayer) portfolio.
 - Persistent storage provides high availability for your data. If you delete it, you cannot recover your data.
