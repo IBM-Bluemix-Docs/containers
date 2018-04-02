@@ -147,7 +147,10 @@ spec:
     spec:
       containers:
       - name: ibmliberty
-        image: registry.<region>.bluemix.net/ibmliberty:latest
+        image: registry.bluemix.net/ibmliberty:latest
+        ports: 
+        - name: web
+          containerPort: 9080
 ---
 apiVersion: v1
 kind: Service
@@ -157,7 +160,7 @@ metadata:
     app: ibmliberty
 spec:
   selector:
-    run: ibmliberty
+    app: ibmliberty
   type: NodePort
   ports:
    - protocol: TCP
@@ -165,6 +168,7 @@ spec:
 ```
 {: codeblock}
 
+To expose your service, make sure that the key/value pair that you use in the `spec.selector` section of the service is the same as the key/value pair that you use in the `spec.template.metadata.labels` section of your deployment yaml.
 To learn more about each component, review the [Kubernetes basics](cs_tech.html#kubernetes_basics).
 
 <br />

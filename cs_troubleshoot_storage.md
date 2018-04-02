@@ -25,9 +25,6 @@ lastupdated: "2018-03-30"
 As you use {{site.data.keyword.containerlong}}, consider these techniques for troubleshooting cluster networking. Before trying these techniques, you can take some general steps to [debug your cluster and check for common issues](cs_troubleshoot.html).
 {: shortdesc}
 
-<br />
-
-
 ## File systems for worker nodes change to read-only
 {: #readonly_nodes}
 
