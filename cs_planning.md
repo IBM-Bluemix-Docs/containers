@@ -21,7 +21,7 @@ Check out the latest information in its new location:
  - [Comparison of free and standard clusters](cs_why.html#cluster_types)
  - [Cluster configuration](cs_clusters.html#planning_clusters)
  - [Worker node configuration](cs_clusters.html#planning_worker_nodes)
- - [Cluster management responsibilities](cs_why.html#responsibilities)
+ - [Cluster management responsibilities](cs_responsibilities.html)
  - [Deployments](cs_app.html#highly_available_apps)
  - [In-cluster networking](cs_secure.html#in_cluster_network)
  - [Public networking](cs_network_planning.html#planning)
