@@ -1078,9 +1078,7 @@ large</samp>. If you see this message, remove a service from your container.</dd
 <dt class="dlterm"><a name="ki_containers__port25"><!-- --></a>Port 25 is not available to expose in a container</dt>
 <dd>Port 25 is blocked from use by SoftLayer, which is part of the <span class="keyword">IBM
 Cloud Container Service</span> architecture. This issue affects the
-usage of some SMTP services in containers. For more information about why this port is blocked, see
-the article <a href="http://knowledgelayer.softlayer.com/content/outbound-email-port-25" rel="external" target="_blank" title="(Opens in a new tab or window)">Outbound Email on Port 25 </a> in the SoftLayer
-documentation.</dd>
+usage of some SMTP services in containers.</dd>
 <dt class="dlterm"><a name="ki_containers__containerbuildingprocess"><!-- --></a>Container building or networking process does not complete</dt>
 <dd><div class="p">If a container remains in the building or networking state too long, you might need to remove the
 container and create a new container from the same image. You can use the following CLI <span class="ph"><samp class="ph codeph">bx ic</samp></span> commands:<ol><li><span class="ph">Retrieve a list of containers that are running in the space. By default,
