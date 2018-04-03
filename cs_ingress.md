@@ -31,7 +31,7 @@ Ingress is a Kubernetes service that balances network traffic workloads in your 
 Ingress consists of two components:
 <dl>
 <dt>Application load balancer</dt>
-<dd>The application load balancer (ALB) is an external load balancer that listens for incoming HTTP or HTTPS, TCP, or UDP service requests and forwards requests to the appropriate app pod. When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically creates a highly available ALB for your cluster and assigns a unique public route to it. The public route is linked to a portable public IP address that is provisioned into your IBM Cloud infrastructure (SoftLayer) account during cluster creation. A default private ALB is also automatically created, but is not automatically enabled.</dd>
+<dd>The application load balancer (ALB) is an external load balancer that listens for incoming HTTP, HTTPS, TCP, or UDP service requests and forwards requests to the appropriate app pod. When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically creates a highly available ALB for your cluster and assigns a unique public route to it. The public route is linked to a portable public IP address that is provisioned into your IBM Cloud infrastructure (SoftLayer) account during cluster creation. A default private ALB is also automatically created, but is not automatically enabled.</dd>
 <dt>Ingress resource</dt>
 <dd>To expose an app by using Ingress, you must create a Kubernetes service for your app and register this service with the ALB by defining an Ingress resource. The Ingress resource is a Kubernetes resource that defines the rules for how to route incoming requests for an app. The Ingress resource also specifies the path to your app service, which is appended to the public route to form a unique app URL such as `mycluster.us-south.containers.mybluemix.net/myapp`.</dd>
 </dl>
@@ -95,55 +95,55 @@ Before you begin:
 
 To expose an app by using the IBM-provided domain:
 
-1. [Deploy your app to the cluster](cs_app.html#app_cli). Ensure that you add a label to your deployment in the metadata section of your configuration file, such as `app: code`. This label is needed to identify all pods where your app is running so that the pods can be included in the Ingress load balancing.
+1.  [Deploy your app to the cluster](cs_app.html#app_cli). Ensure that you add a label to your deployment in the metadata section of your configuration file, such as `app: code`. This label is needed to identify all pods where your app is running so that the pods can be included in the Ingress load balancing.
 
-2. Create a Kubernetes service for the app that you want to expose. Your app must be exposed by a Kubernetes service to be included by the cluster ALB in the Ingress load balancing.
-    1.  Open your preferred editor and create a service configuration file that is named, for example, `myservice.yaml`.
-    2.  Define a service for the app that the ALB will expose to the public.
+2.   Create a Kubernetes service for the app that you want to expose. Your app must be exposed by a Kubernetes service to be included by the cluster ALB in the Ingress load balancing.
+      1.  Open your preferred editor and create a service configuration file that is named, for example, `myservice.yaml`.
+      2.  Define a service for the app that the ALB will expose to the public.
 
-        ```
-        apiVersion: v1
-        kind: Service
-        metadata:
-          name: <myservice>
-        spec:
-          selector:
-            <selectorkey>: <selectorvalue>
-          ports:
-           - protocol: TCP
-             port: 8080
-        ```
-        {: codeblock}
+          ```
+          apiVersion: v1
+          kind: Service
+          metadata:
+            name: <myservice>
+          spec:
+            selector:
+              <selectorkey>: <selectorvalue>
+            ports:
+             - protocol: TCP
+               port: 8080
+          ```
+          {: codeblock}
 
-        <table>
-        <caption>Understanding the ALB service file components</caption>
-        <thead>
-        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
-        </thead>
-        <tbody>
-        <tr>
-        <td><code>name</code></td>
-        <td>Replace <em>&lt;myservice&gt;</em> with a name for your ALB service.</td>
-        </tr>
-        <tr>
-        <td><code>selector</code></td>
-        <td>Enter the label key (<em>&lt;selectorkey&gt;</em>) and value (<em>&lt;selectorvalue&gt;</em>) pair that you want to use to target the pods where your app runs. To target your pods and include them in the service load balancing, make sure that the <em>&lt;selectorkey&gt;</em> and <em>&lt;selectorvalue&gt;</em> are the same as the key/value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.</td>
-         </tr>
-         <tr>
-         <td><code>port</code></td>
-         <td>The port that the service listens on.</td>
-         </tr>
-         </tbody></table>
-    3.  Save your changes.
-    4.  Create the service in your cluster.
+          <table>
+          <caption>Understanding the ALB service file components</caption>
+          <thead>
+          <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
+          </thead>
+          <tbody>
+          <tr>
+          <td><code>name</code></td>
+          <td>Replace <em>&lt;myservice&gt;</em> with a name for your ALB service.</td>
+          </tr>
+          <tr>
+          <td><code>selector</code></td>
+          <td>Enter the label key (<em>&lt;selectorkey&gt;</em>) and value (<em>&lt;selectorvalue&gt;</em>) pair that you want to use to target the pods where your app runs. To target your pods and include them in the service load balancing, make sure that the <em>&lt;selectorkey&gt;</em> and <em>&lt;selectorvalue&gt;</em> are the same as the key/value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.</td>
+           </tr>
+           <tr>
+           <td><code>port</code></td>
+           <td>The port that the service listens on.</td>
+           </tr>
+           </tbody></table>
+      3.  Save your changes.
+      4.  Create the service in your cluster.
 
-        ```
-        kubectl apply -f myservice.yaml
-        ```
-        {: pre}
-    5.  Repeat these steps for every app that you want to expose to the public.
+          ```
+          kubectl apply -f myservice.yaml
+          ```
+          {: pre}
+      5.  Repeat these steps for every app that you want to expose to the public.
 
-3.  Get the details for your cluster to view the IBM-provided domain. Replace _&lt;mycluster&gt;_ with the name of the cluster where the app is deployed that you want to expose to the public.
+3. Get the details for your cluster to view the IBM-provided domain. Replace _&lt;mycluster&gt;_ with the name of the cluster where the app is deployed that you want to expose to the public.
 
     ```
     bx cs cluster-get <mycluster>
@@ -241,22 +241,22 @@ To expose an app by using the IBM-provided domain:
         kubectl apply -f myingress.yaml
         ```
         {: pre}
+5.   Verify that the Ingress resource was created successfully. Replace _&lt;myingressname&gt;_ with the name of the Ingress resource that you created earlier.
 
-5. Verify that the Ingress resource was created successfully. Replace _&lt;myingressname&gt;_ with the name of the Ingress resource that you created earlier.
+      ```
+      kubectl describe ingress <myingressname>
+      ```
+      {: pre}
 
-    ```
-    kubectl describe ingress <myingressname>
-    ```
-    {: pre}
+      1. If messages in the events describe an error in your resource configuration, change the values in your resource file and reapply the file for the resource.
 
-    1. If messages in the events describe an error in your resource configuration, change the values in your resource file and reapply the file for the resource.
+6.   In a web browser, enter the URL of the app service to access.
 
-6. In a web browser, enter the URL of the app service to access.
+      ```
+      https://<ibmdomain>/<myservicepath1>
+      ```
+      {: codeblock}
 
-    ```
-    https://<ibmdomain>/<myservicepath1>
-    ```
-    {: codeblock}
 
 <br />
 
@@ -274,81 +274,81 @@ Before you begin:
 
 To expose an app by using the IBM-provided domain with TLS:
 
-1. [Deploy your app to the cluster](cs_app.html#app_cli). Ensure that you add a label to your deployment in the metadata section of your configuration file, such as `app: code`. This label is needed to identify all pods where your app is running so that the pods can be included in the Ingress load balancing.
+1.  [Deploy your app to the cluster](cs_app.html#app_cli). Ensure that you add a label to your deployment in the metadata section of your configuration file, such as `app: code`. This label is needed to identify all pods where your app is running so that the pods can be included in the Ingress load balancing.
 
-2. Create a Kubernetes service for the app that you want to expose. Your app must be exposed by a Kubernetes service to be included by the cluster ALB in the Ingress load balancing.
-    1.  Open your preferred editor and create a service configuration file that is named, for example, `myservice.yaml`.
-    2.  Define a service for the app that the ALB will expose to the public.
+2.   Create a Kubernetes service for the app that you want to expose. Your app must be exposed by a Kubernetes service to be included by the cluster ALB in the Ingress load balancing.
+      1.  Open your preferred editor and create a service configuration file that is named, for example, `myservice.yaml`.
+      2.  Define a service for the app that the ALB will expose to the public.
 
-        ```
-        apiVersion: v1
-        kind: Service
-        metadata:
-          name: <myservice>
-        spec:
-          selector:
-            <selectorkey>: <selectorvalue>
-          ports:
-           - protocol: TCP
-             port: 8080
-        ```
-        {: codeblock}
+          ```
+          apiVersion: v1
+          kind: Service
+          metadata:
+            name: <myservice>
+          spec:
+            selector:
+              <selectorkey>: <selectorvalue>
+            ports:
+             - protocol: TCP
+               port: 8080
+          ```
+          {: codeblock}
 
-        <table>
-        <caption>Understanding the ALB service file components</caption>
-        <thead>
-        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
-        </thead>
-        <tbody>
-        <tr>
-        <td><code>name</code></td>
-        <td>Replace <em>&lt;myservice&gt;</em> with a name for your ALB service.</td>
-        </tr>
-        <tr>
-        <td><code>selector</code></td>
-        <td>Enter the label key (<em>&lt;selectorkey&gt;</em>) and value (<em>&lt;selectorvalue&gt;</em>) pair that you want to use to target the pods where your app runs. To target your pods and include them in the service load balancing, make sure that the <em>&lt;selectorkey&gt;</em> and <em>&lt;selectorvalue&gt;</em> are the same as the key/value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.</td>
-         </tr>
-         <tr>
-         <td><code>port</code></td>
-         <td>The port that the service listens on.</td>
-         </tr>
-         </tbody></table>
-    3.  Save your changes.
-    4.  Create the service in your cluster.
+          <table>
+          <caption>Understanding the ALB service file components</caption>
+          <thead>
+          <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
+          </thead>
+          <tbody>
+          <tr>
+          <td><code>name</code></td>
+          <td>Replace <em>&lt;myservice&gt;</em> with a name for your ALB service.</td>
+          </tr>
+          <tr>
+          <td><code>selector</code></td>
+          <td>Enter the label key (<em>&lt;selectorkey&gt;</em>) and value (<em>&lt;selectorvalue&gt;</em>) pair that you want to use to target the pods where your app runs. To target your pods and include them in the service load balancing, make sure that the <em>&lt;selectorkey&gt;</em> and <em>&lt;selectorvalue&gt;</em> are the same as the key/value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.</td>
+           </tr>
+           <tr>
+           <td><code>port</code></td>
+           <td>The port that the service listens on.</td>
+           </tr>
+           </tbody></table>
+      3.  Save your changes.
+      4.  Create the service in your cluster.
 
-        ```
-        kubectl apply -f myservice.yaml
-        ```
-        {: pre}
-    5.  Repeat these steps for every app that you want to expose to the public.
+          ```
+          kubectl apply -f myservice.yaml
+          ```
+          {: pre}
+      5.  Repeat these steps for every app that you want to expose to the public.
 
-3. View the IBM-provided domain and TLS certificate. Replace _&lt;mycluster&gt;_ with the name of the cluster where the app is deployed.
+3.   View the IBM-provided domain and TLS certificate. Replace _&lt;mycluster&gt;_ with the name of the cluster where the app is deployed.
 
-    ```
-    bx cs cluster-get <mycluster>
-    ```
-    {: pre}
+      ```
+      bx cs cluster-get <mycluster>
+      ```
+      {: pre}
 
-    Your CLI output looks similar to the following.
+      Your CLI output looks similar to the following.
 
-    ```
-    bx cs cluster-get <mycluster>
-    Retrieving cluster <mycluster>...
-    OK
-    Name:    <mycluster>
-    ID:    b9c6b00dc0aa487f97123440b4895f2d
-    State:    normal
-    Created:  2017-04-26T19:47:08+0000
-    Location: dal10
-    Master URL:  https://169.57.40.165:1931
-    Ingress subdomain:  <ibmdomain>
-    Ingress secret:  <ibmtlssecret>
-    Workers:  3
-    Version: 1.8.8
-    ```
-    {: screen}
+      ```
+      bx cs cluster-get <mycluster>
+      Retrieving cluster <mycluster>...
+      OK
+      Name:    <mycluster>
+      ID:    b9c6b00dc0aa487f97123440b4895f2d
+      State:    normal
+      Created:  2017-04-26T19:47:08+0000
+      Location: dal10
+      Master URL:  https://169.57.40.165:1931
+      Ingress subdomain:  <ibmdomain>
+      Ingress secret:  <ibmtlssecret>
+      Workers:  3
+      Version: 1.8.8
+      ```
+      {: screen}
 
-    You can see the IBM-provided domain in the **Ingress subdomain** and the IBM-provided certificate in the **Ingress secret** fields.
+      You can see the IBM-provided domain in the **Ingress subdomain** and the IBM-provided certificate in the **Ingress secret** fields.
 
 4.  Create an Ingress resource. Ingress resources define the routing rules for the Kubernetes service that you created for your app and are used by the ALB to route incoming network traffic to the service. You must use one Ingress resource to define routing rules for multiple apps if every app is exposed via a Kubernetes service inside the cluster.
     1.  Open your preferred editor and create an Ingress configuration file that is named, for example, `myingress.yaml`.
@@ -437,22 +437,22 @@ To expose an app by using the IBM-provided domain with TLS:
         kubectl apply -f myingress.yaml
         ```
         {: pre}
+5.   Verify that the Ingress resource was created successfully. Replace _&lt;myingressname&gt;_ with the name of the Ingress resource that you created earlier.
 
-5. Verify that the Ingress resource was created successfully. Replace _&lt;myingressname&gt;_ with the name of the Ingress resource that you created earlier.
+      ```
+      kubectl describe ingress <myingressname>
+      ```
+      {: pre}
 
-    ```
-    kubectl describe ingress <myingressname>
-    ```
-    {: pre}
+      1. If messages in the events describe an error in your resource configuration, change the values in your resource file and reapply the file for the resource.
 
-    1. If messages in the events describe an error in your resource configuration, change the values in your resource file and reapply the file for the resource.
+6.   In a web browser, enter the URL of the app service to access.
 
-6. In a web browser, enter the URL of the app service to access.
+      ```
+      https://<ibmdomain>/<myservicepath1>
+      ```
+      {: codeblock}
 
-    ```
-    https://<ibmdomain>/<myservicepath1>
-    ```
-    {: codeblock}
 
 <br />
 
@@ -490,54 +490,53 @@ To expose an app by using a custom domain with TLS:
             kubectl create secret tls <mytlssecret> --key <tls_key_filepath> --cert <tls_cert_filepath>
             ```
             {: pre}
+4.  [Deploy your app to the cluster](cs_app.html#app_cli). Ensure that you add a label to your deployment in the metadata section of your configuration file, such as `app: code`. This label is needed to identify all pods where your app is running so that the pods can be included in the Ingress load balancing.
 
-4. [Deploy your app to the cluster](cs_app.html#app_cli). Ensure that you add a label to your deployment in the metadata section of your configuration file, such as `app: code`. This label is needed to identify all pods where your app is running so that the pods can be included in the Ingress load balancing.
+5.   Create a Kubernetes service for the app that you want to expose. Your app must be exposed by a Kubernetes service to be included by the cluster ALB in the Ingress load balancing.
+      1.  Open your preferred editor and create a service configuration file that is named, for example, `myservice.yaml`.
+      2.  Define a service for the app that the ALB will expose to the public.
 
-5. Create a Kubernetes service for the app that you want to expose. Your app must be exposed by a Kubernetes service to be included by the cluster ALB in the Ingress load balancing.
-    1.  Open your preferred editor and create a service configuration file that is named, for example, `myservice.yaml`.
-    2.  Define a service for the app that the ALB will expose to the public.
+          ```
+          apiVersion: v1
+          kind: Service
+          metadata:
+            name: <myservice>
+          spec:
+            selector:
+              <selectorkey>: <selectorvalue>
+            ports:
+             - protocol: TCP
+               port: 8080
+          ```
+          {: codeblock}
 
-        ```
-        apiVersion: v1
-        kind: Service
-        metadata:
-          name: <myservice>
-        spec:
-          selector:
-            <selectorkey>: <selectorvalue>
-          ports:
-           - protocol: TCP
-             port: 8080
-        ```
-        {: codeblock}
+          <table>
+          <caption>Understanding the ALB service file components</caption>
+          <thead>
+          <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
+          </thead>
+          <tbody>
+          <tr>
+          <td><code>name</code></td>
+          <td>Replace <em>&lt;myservice&gt;</em> with a name for your ALB service.</td>
+          </tr>
+          <tr>
+          <td><code>selector</code></td>
+          <td>Enter the label key (<em>&lt;selectorkey&gt;</em>) and value (<em>&lt;selectorvalue&gt;</em>) pair that you want to use to target the pods where your app runs. To target your pods and include them in the service load balancing, make sure that the <em>&lt;selectorkey&gt;</em> and <em>&lt;selectorvalue&gt;</em> are the same as the key/value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.</td>
+           </tr>
+           <tr>
+           <td><code>port</code></td>
+           <td>The port that the service listens on.</td>
+           </tr>
+           </tbody></table>
+      3.  Save your changes.
+      4.  Create the service in your cluster.
 
-        <table>
-        <caption>Understanding the ALB service file components</caption>
-        <thead>
-        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
-        </thead>
-        <tbody>
-        <tr>
-        <td><code>name</code></td>
-        <td>Replace <em>&lt;myservice&gt;</em> with a name for your ALB service.</td>
-        </tr>
-        <tr>
-        <td><code>selector</code></td>
-        <td>Enter the label key (<em>&lt;selectorkey&gt;</em>) and value (<em>&lt;selectorvalue&gt;</em>) pair that you want to use to target the pods where your app runs. To target your pods and include them in the service load balancing, make sure that the <em>&lt;selectorkey&gt;</em> and <em>&lt;selectorvalue&gt;</em> are the same as the key/value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.</td>
-         </tr>
-         <tr>
-         <td><code>port</code></td>
-         <td>The port that the service listens on.</td>
-         </tr>
-         </tbody></table>
-    3.  Save your changes.
-    4.  Create the service in your cluster.
-
-        ```
-        kubectl apply -f myservice.yaml
-        ```
-        {: pre}
-    5.  Repeat these steps for every app that you want to expose to the public.
+          ```
+          kubectl apply -f myservice.yaml
+          ```
+          {: pre}
+      5.  Repeat these steps for every app that you want to expose to the public.
 
 6.  Create an Ingress resource. Ingress resources define the routing rules for the Kubernetes service that you created for your app and are used by the ALB to route incoming network traffic to the service. You must use one Ingress resource to define routing rules for multiple apps if every app is exposed via a Kubernetes service inside the cluster.
     1.  Open your preferred editor and create an Ingress configuration file that is named, for example, `myingress.yaml`.
@@ -629,22 +628,22 @@ To expose an app by using a custom domain with TLS:
         kubectl apply -f myingress.yaml
         ```
         {: pre}
+7.   Verify that the Ingress resource was created successfully. Replace _&lt;myingressname&gt;_ with the name of the Ingress resource that you created earlier.
 
-7. Verify that the Ingress resource was created successfully. Replace _&lt;myingressname&gt;_ with the name of the Ingress resource that you created earlier.
+      ```
+      kubectl describe ingress <myingressname>
+      ```
+      {: pre}
 
-    ```
-    kubectl describe ingress <myingressname>
-    ```
-    {: pre}
+      1. If messages in the events describe an error in your resource configuration, change the values in your resource file and reapply the file for the resource.
 
-    1. If messages in the events describe an error in your resource configuration, change the values in your resource file and reapply the file for the resource.
+8.   In a web browser, enter the URL of the app service to access.
 
-8. In a web browser, enter the URL of the app service to access.
+      ```
+      https://<mycustomdomain>/<myservicepath1>
+      ```
+      {: codeblock}
 
-        ```
-        https://<mycustomdomain>/<myservicepath1>
-        ```
-        {: codeblock}
 
 <br />
 
@@ -701,7 +700,6 @@ You can route incoming network traffic on the IBM-provided domain to apps that a
         kubectl apply -f myexternalservice.yaml
         ```
         {: pre}
-
 2.  Configure a Kubernetes endpoint that defines the external location of the app that you want to include into the cluster load balancing.
     1.  Open your preferred editor and create an endpoint configuration file that is named, for example, `myexternalendpoint.yaml`.
     2.  Define your external endpoint. Include all public IP addresses and ports that you can use to access your external app.
@@ -744,34 +742,33 @@ You can route incoming network traffic on the IBM-provided domain to apps that a
         kubectl apply -f myexternalendpoint.yaml
         ```
         {: pre}
+3.   View the IBM-provided domain and TLS certificate. Replace _&lt;mycluster&gt;_ with the name of the cluster where the app is deployed.
 
-3. View the IBM-provided domain and TLS certificate. Replace _&lt;mycluster&gt;_ with the name of the cluster where the app is deployed.
+      ```
+      bx cs cluster-get <mycluster>
+      ```
+      {: pre}
 
-    ```
-    bx cs cluster-get <mycluster>
-    ```
-    {: pre}
+      Your CLI output looks similar to the following.
 
-    Your CLI output looks similar to the following.
+      ```
+      bx cs cluster-get <mycluster>
+      Retrieving cluster <mycluster>...
+      OK
+      Name:    <mycluster>
+      ID:    b9c6b00dc0aa487f97123440b4895f2d
+      State:    normal
+      Created:  2017-04-26T19:47:08+0000
+      Location: dal10
+      Master URL:  https://169.57.40.165:1931
+      Ingress subdomain:  <ibmdomain>
+      Ingress secret:  <ibmtlssecret>
+      Workers:  3
+      Version: 1.8.8
+      ```
+      {: screen}
 
-    ```
-    bx cs cluster-get <mycluster>
-    Retrieving cluster <mycluster>...
-    OK
-    Name:    <mycluster>
-    ID:    b9c6b00dc0aa487f97123440b4895f2d
-    State:    normal
-    Created:  2017-04-26T19:47:08+0000
-    Location: dal10
-    Master URL:  https://169.57.40.165:1931
-    Ingress subdomain:  <ibmdomain>
-    Ingress secret:  <ibmtlssecret>
-    Workers:  3
-    Version: 1.8.8
-    ```
-    {: screen}
-
-    You can see the IBM-provided domain in the **Ingress subdomain** and the IBM-provided certificate in the **Ingress secret** fields.
+      You can see the IBM-provided domain in the **Ingress subdomain** and the IBM-provided certificate in the **Ingress secret** fields.
 
 4.  Create an Ingress resource. Ingress resources define the routing rules for the Kubernetes service that you created for your app and are used by the ALB to route incoming network traffic to the service. You can use one Ingress resource to define routing rules for multiple external apps as long as every app is exposed with its external endpoint via a Kubernetes service inside the cluster.
     1.  Open your preferred editor and create an Ingress configuration file that is named, for example, `myexternalingress.yaml`.
@@ -860,22 +857,22 @@ You can route incoming network traffic on the IBM-provided domain to apps that a
         kubectl apply -f myexternalingress.yaml
         ```
         {: pre}
+5.   Verify that the Ingress resource was created successfully. Replace _&lt;myingressname&gt;_ with the name of the Ingress resource that you created earlier.
 
-5. Verify that the Ingress resource was created successfully. Replace _&lt;myingressname&gt;_ with the name of the Ingress resource that you created earlier.
+      ```
+      kubectl describe ingress <myingressname>
+      ```
+      {: pre}
 
-    ```
-    kubectl describe ingress <myingressname>
-    ```
-    {: pre}
+      1. If messages in the events describe an error in your resource configuration, change the values in your resource file and reapply the file for the resource.
 
-    1. If messages in the events describe an error in your resource configuration, change the values in your resource file and reapply the file for the resource.
+6.   In a web browser, enter the URL of the app service to access.
 
-6. In a web browser, enter the URL of the app service to access.
+      ```
+      https://<ibmdomain>/<myservicepath1>
+      ```
+      {: codeblock}
 
-    ```
-    https://<ibmdomain>/<myservicepath1>
-    ```
-    {: codeblock}
 
 <br />
 
@@ -978,56 +975,54 @@ Before you begin:
 To privately expose an app by using a custom domain without TLS using an external DNS provider:
 
 1.  Create a custom domain. To create a custom domain, work with your Domain Name Service (DNS) provider or [{{site.data.keyword.Bluemix_notm}} ](/docs/infrastructure/dns/getting-started.html#getting-started-with-dns) to register your custom domain.
-
 2.  Map your custom domain to the portable private IP address of the IBM-provided private ALB by adding the IP address as a record. To find the portable private IP address of the private ALB, run `bx cs albs --cluster <cluster_name>`.
+3.  [Deploy your app to the cluster](cs_app.html#app_cli). Ensure that you add a label to your deployment in the metadata section of your configuration file, such as `app: code`. This label is needed to identify all pods where your app is running so that the pods can be included in the Ingress load balancing.
 
-3.[Deploy your app to the cluster](cs_app.html#app_cli). Ensure that you add a label to your deployment in the metadata section of your configuration file, such as `app: code`. This label is needed to identify all pods where your app is running so that the pods can be included in the Ingress load balancing.
+4.   Create a Kubernetes service for the app that you want to expose. Your app must be exposed by a Kubernetes service to be included by the cluster ALB in the Ingress load balancing.
+      1.  Open your preferred editor and create a service configuration file that is named, for example, `myservice.yaml`.
+      2.  Define a service for the app that the ALB will expose to the private network.
 
-4. Create a Kubernetes service for the app that you want to expose. Your app must be exposed by a Kubernetes service to be included by the cluster ALB in the Ingress load balancing.
-    1.  Open your preferred editor and create a service configuration file that is named, for example, `myservice.yaml`.
-    2.  Define a service for the app that the ALB will expose to the private network.
+          ```
+          apiVersion: v1
+          kind: Service
+          metadata:
+            name: <myservice>
+          spec:
+            selector:
+              <selectorkey>: <selectorvalue>
+            ports:
+             - protocol: TCP
+               port: 8080
+          ```
+          {: codeblock}
 
-        ```
-        apiVersion: v1
-        kind: Service
-        metadata:
-          name: <myservice>
-        spec:
-          selector:
-            <selectorkey>: <selectorvalue>
-          ports:
-           - protocol: TCP
-             port: 8080
-        ```
-        {: codeblock}
+          <table>
+          <caption>Understanding the ALB service file components</caption>
+          <thead>
+          <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
+          </thead>
+          <tbody>
+          <tr>
+          <td><code>name</code></td>
+          <td>Replace <em>&lt;myservice&gt;</em> with a name for your ALB service.</td>
+          </tr>
+          <tr>
+          <td><code>selector</code></td>
+          <td>Enter the label key (<em>&lt;selectorkey&gt;</em>) and value (<em>&lt;selectorvalue&gt;</em>) pair that you want to use to target the pods where your app runs. To target your pods and include them in the service load balancing, make sure that the <em>&lt;selectorkey&gt;</em> and <em>&lt;selectorvalue&gt;</em> are the same as the key/value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.</td>
+           </tr>
+           <tr>
+           <td><code>port</code></td>
+           <td>The port that the service listens on.</td>
+           </tr>
+           </tbody></table>
+      3.  Save your changes.
+      4.  Create the service in your cluster.
 
-        <table>
-        <caption>Understanding the ALB service file components</caption>
-        <thead>
-        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
-        </thead>
-        <tbody>
-        <tr>
-        <td><code>name</code></td>
-        <td>Replace <em>&lt;myservice&gt;</em> with a name for your ALB service.</td>
-        </tr>
-        <tr>
-        <td><code>selector</code></td>
-        <td>Enter the label key (<em>&lt;selectorkey&gt;</em>) and value (<em>&lt;selectorvalue&gt;</em>) pair that you want to use to target the pods where your app runs. To target your pods and include them in the service load balancing, make sure that the <em>&lt;selectorkey&gt;</em> and <em>&lt;selectorvalue&gt;</em> are the same as the key/value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.</td>
-         </tr>
-         <tr>
-         <td><code>port</code></td>
-         <td>The port that the service listens on.</td>
-         </tr>
-         </tbody></table>
-    3.  Save your changes.
-    4.  Create the service in your cluster.
-
-        ```
-        kubectl apply -f myservice.yaml
-        ```
-        {: pre}
-    5.  Repeat these steps for every app that you want to expose to the private network.
+          ```
+          kubectl apply -f myservice.yaml
+          ```
+          {: pre}
+      5.  Repeat these steps for every app that you want to expose to the private network.
 
 5.  Create an Ingress resource. Ingress resources define the routing rules for the Kubernetes service that you created for your app and are used by the ALB to route incoming network traffic to the service. You must use one Ingress resource to define routing rules for multiple apps if every app is exposed via a Kubernetes service inside the cluster.
     1.  Open your preferred editor and create an Ingress configuration file that is named, for example, `myingress.yaml`.
@@ -1110,23 +1105,22 @@ To privately expose an app by using a custom domain without TLS using an externa
         kubectl apply -f myingress.yaml
         ```
         {: pre}
+6.   Verify that the Ingress resource was created successfully. Replace _&lt;myingressname&gt;_ with the name of the Ingress resource that you created earlier.
 
+      ```
+      kubectl describe ingress <myingressname>
+      ```
+      {: pre}
 
-6. Verify that the Ingress resource was created successfully. Replace _&lt;myingressname&gt;_ with the name of the Ingress resource that you created earlier.
+      1. If messages in the events describe an error in your resource configuration, change the values in your resource file and reapply the file for the resource.
 
-    ```
-    kubectl describe ingress <myingressname>
-    ```
-    {: pre}
+7.   In a web browser, enter the URL of the app service to access.
 
-    1. If messages in the events describe an error in your resource configuration, change the values in your resource file and reapply the file for the resource.
+      ```
+      https://<mycustomdomain>/<myservicepath1>
+      ```
+      {: codeblock}
 
-7. In a web browser, enter the URL of the app service to access.
-
-        ```
-        https://<mycustomdomain>/<myservicepath1>
-        ```
-        {: codeblock}
 
 <br />
 
@@ -1144,9 +1138,7 @@ Before you begin:
 To privately expose an app by using a custom domain with TLS using an external DNS provider:
 
 1.  Create a custom domain. To create a custom domain, work with your Domain Name Service (DNS) provider or [{{site.data.keyword.Bluemix_notm}} ](/docs/infrastructure/dns/getting-started.html#getting-started-with-dns) to register your custom domain.
-
 2.  Map your custom domain to the portable private IP address of the IBM-provided private ALB by adding the IP address as a record. To find the portable private IP address of the private ALB, run `bx cs albs --cluster <cluster_name>`.
-
 3.  Either import or create a TLS certificate and key secret:
     * If a TLS certificate is stored in {{site.data.keyword.cloudcerts_long_notm}} that you want to use, you can import its associated secret into your cluster by running `bx cs alb-cert-deploy --secret-name <secret_name> --cluster <cluster_name_or_ID> --cert-crn <certificate_crn>`.
     * If you do not have a TLS certificate ready, follow these steps:
@@ -1157,54 +1149,53 @@ To privately expose an app by using a custom domain with TLS using an external D
             kubectl create secret tls <mytlssecret> --key <tls_key_filepath> --cert <tls_cert_filepath>
             ```
             {: pre}
+4.  [Deploy your app to the cluster](cs_app.html#app_cli). Ensure that you add a label to your deployment in the metadata section of your configuration file, such as `app: code`. This label is needed to identify all pods where your app is running so that the pods can be included in the Ingress load balancing.
 
-4. [Deploy your app to the cluster](cs_app.html#app_cli). Ensure that you add a label to your deployment in the metadata section of your configuration file, such as `app: code`. This label is needed to identify all pods where your app is running so that the pods can be included in the Ingress load balancing.
+5.   Create a Kubernetes service for the app that you want to expose. Your app must be exposed by a Kubernetes service to be included by the cluster ALB in the Ingress load balancing.
+      1.  Open your preferred editor and create a service configuration file that is named, for example, `myservice.yaml`.
+      2.  Define a service for the app that the ALB will expose to the private network.
 
-5. Create a Kubernetes service for the app that you want to expose. Your app must be exposed by a Kubernetes service to be included by the cluster ALB in the Ingress load balancing.
-    1.  Open your preferred editor and create a service configuration file that is named, for example, `myservice.yaml`.
-    2.  Define a service for the app that the ALB will expose to the private network.
+          ```
+          apiVersion: v1
+          kind: Service
+          metadata:
+            name: <myservice>
+          spec:
+            selector:
+              <selectorkey>: <selectorvalue>
+            ports:
+             - protocol: TCP
+               port: 8080
+          ```
+          {: codeblock}
 
-        ```
-        apiVersion: v1
-        kind: Service
-        metadata:
-          name: <myservice>
-        spec:
-          selector:
-            <selectorkey>: <selectorvalue>
-          ports:
-           - protocol: TCP
-             port: 8080
-        ```
-        {: codeblock}
+          <table>
+          <caption>Understanding the ALB service file components</caption>
+          <thead>
+          <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
+          </thead>
+          <tbody>
+          <tr>
+          <td><code>name</code></td>
+          <td>Replace <em>&lt;myservice&gt;</em> with a name for your ALB service.</td>
+          </tr>
+          <tr>
+          <td><code>selector</code></td>
+          <td>Enter the label key (<em>&lt;selectorkey&gt;</em>) and value (<em>&lt;selectorvalue&gt;</em>) pair that you want to use to target the pods where your app runs. To target your pods and include them in the service load balancing, make sure that the <em>&lt;selectorkey&gt;</em> and <em>&lt;selectorvalue&gt;</em> are the same as the key/value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.</td>
+           </tr>
+           <tr>
+           <td><code>port</code></td>
+           <td>The port that the service listens on.</td>
+           </tr>
+           </tbody></table>
+      3.  Save your changes.
+      4.  Create the service in your cluster.
 
-        <table>
-        <caption>Understanding the ALB service file components</caption>
-        <thead>
-        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
-        </thead>
-        <tbody>
-        <tr>
-        <td><code>name</code></td>
-        <td>Replace <em>&lt;myservice&gt;</em> with a name for your ALB service.</td>
-        </tr>
-        <tr>
-        <td><code>selector</code></td>
-        <td>Enter the label key (<em>&lt;selectorkey&gt;</em>) and value (<em>&lt;selectorvalue&gt;</em>) pair that you want to use to target the pods where your app runs. To target your pods and include them in the service load balancing, make sure that the <em>&lt;selectorkey&gt;</em> and <em>&lt;selectorvalue&gt;</em> are the same as the key/value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.</td>
-         </tr>
-         <tr>
-         <td><code>port</code></td>
-         <td>The port that the service listens on.</td>
-         </tr>
-         </tbody></table>
-    3.  Save your changes.
-    4.  Create the service in your cluster.
-
-        ```
-        kubectl apply -f myservice.yaml
-        ```
-        {: pre}
-    5.  Repeat these steps for every app that you want to expose to the private network.
+          ```
+          kubectl apply -f myservice.yaml
+          ```
+          {: pre}
+      5.  Repeat these steps for every app that you want to expose to the private network.
 
 6.  Create an Ingress resource. Ingress resources define the routing rules for the Kubernetes service that you created for your app and are used by the ALB to route incoming network traffic to the service. You must use one Ingress resource to define routing rules for multiple apps if every app is exposed via a Kubernetes service inside the cluster.
     1.  Open your preferred editor and create an Ingress configuration file that is named, for example, `myingress.yaml`.
@@ -1302,22 +1293,22 @@ To privately expose an app by using a custom domain with TLS using an external D
         kubectl apply -f myingress.yaml
         ```
         {: pre}
+7.   Verify that the Ingress resource was created successfully. Replace _&lt;myingressname&gt;_ with the name of the Ingress resource that you created earlier.
 
-7. Verify that the Ingress resource was created successfully. Replace _&lt;myingressname&gt;_ with the name of the Ingress resource that you created earlier.
+      ```
+      kubectl describe ingress <myingressname>
+      ```
+      {: pre}
 
-    ```
-    kubectl describe ingress <myingressname>
-    ```
-    {: pre}
+      1. If messages in the events describe an error in your resource configuration, change the values in your resource file and reapply the file for the resource.
 
-    1. If messages in the events describe an error in your resource configuration, change the values in your resource file and reapply the file for the resource.
+8.   In a web browser, enter the URL of the app service to access.
 
-8. In a web browser, enter the URL of the app service to access.
+      ```
+      https://<mycustomdomain>/<myservicepath1>
+      ```
+      {: codeblock}
 
-        ```
-        https://<mycustomdomain>/<myservicepath1>
-        ```
-        {: codeblock}
 
 For a comprehensive tutorial on how to secure microservice-to-microservice communication across your clusters by using the private ALB with TLS, check out [this blog post ![External link icon](../icons/launch-glyph.svg "External link icon")]](https://medium.com/ibm-cloud/secure-microservice-to-microservice-communication-across-kubernetes-clusters-using-a-private-ecbe2a8d4fe2).
 
@@ -1331,62 +1322,57 @@ You can configure the private ALB to route incoming network traffic to the apps 
 {:shortdesc}
 
 1. [Enable the private application load balancer](#private_ingress).
-
 2. To allow your private worker nodes to communicate with the Kubernetes master, [set up VPN connectivity](cs_vpn.html).
-
 3. [Configure your DNS service ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/).
-
 4. Create a custom domain and register it with your DNS service.
-
 5.  Map your custom domain to the portable private IP address of the IBM-provided private ALB by adding the IP address as a record. To find the portable private IP address of the private ALB, run `bx cs albs --cluster <cluster_name>`.
+6.  [Deploy your app to the cluster](cs_app.html#app_cli). Ensure that you add a label to your deployment in the metadata section of your configuration file, such as `app: code`. This label is needed to identify all pods where your app is running so that the pods can be included in the Ingress load balancing.
 
-6. [Deploy your app to the cluster](cs_app.html#app_cli). Ensure that you add a label to your deployment in the metadata section of your configuration file, such as `app: code`. This label is needed to identify all pods where your app is running so that the pods can be included in the Ingress load balancing.
+7.   Create a Kubernetes service for the app that you want to expose. Your app must be exposed by a Kubernetes service to be included by the cluster ALB in the Ingress load balancing.
+      1.  Open your preferred editor and create a service configuration file that is named, for example, `myservice.yaml`.
+      2.  Define a service for the app that the ALB will expose to the private network.
 
-7. Create a Kubernetes service for the app that you want to expose. Your app must be exposed by a Kubernetes service to be included by the cluster ALB in the Ingress load balancing.
-    1.  Open your preferred editor and create a service configuration file that is named, for example, `myservice.yaml`.
-    2.  Define a service for the app that the ALB will expose to the private network.
+          ```
+          apiVersion: v1
+          kind: Service
+          metadata:
+            name: <myservice>
+          spec:
+            selector:
+              <selectorkey>: <selectorvalue>
+            ports:
+             - protocol: TCP
+               port: 8080
+          ```
+          {: codeblock}
 
-        ```
-        apiVersion: v1
-        kind: Service
-        metadata:
-          name: <myservice>
-        spec:
-          selector:
-            <selectorkey>: <selectorvalue>
-          ports:
-           - protocol: TCP
-             port: 8080
-        ```
-        {: codeblock}
+          <table>
+          <caption>Understanding the ALB service file components</caption>
+          <thead>
+          <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
+          </thead>
+          <tbody>
+          <tr>
+          <td><code>name</code></td>
+          <td>Replace <em>&lt;myservice&gt;</em> with a name for your ALB service.</td>
+          </tr>
+          <tr>
+          <td><code>selector</code></td>
+          <td>Enter the label key (<em>&lt;selectorkey&gt;</em>) and value (<em>&lt;selectorvalue&gt;</em>) pair that you want to use to target the pods where your app runs. To target your pods and include them in the service load balancing, make sure that the <em>&lt;selectorkey&gt;</em> and <em>&lt;selectorvalue&gt;</em> are the same as the key/value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.</td>
+           </tr>
+           <tr>
+           <td><code>port</code></td>
+           <td>The port that the service listens on.</td>
+           </tr>
+           </tbody></table>
+      3.  Save your changes.
+      4.  Create the service in your cluster.
 
-        <table>
-        <caption>Understanding the ALB service file components</caption>
-        <thead>
-        <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
-        </thead>
-        <tbody>
-        <tr>
-        <td><code>name</code></td>
-        <td>Replace <em>&lt;myservice&gt;</em> with a name for your ALB service.</td>
-        </tr>
-        <tr>
-        <td><code>selector</code></td>
-        <td>Enter the label key (<em>&lt;selectorkey&gt;</em>) and value (<em>&lt;selectorvalue&gt;</em>) pair that you want to use to target the pods where your app runs. To target your pods and include them in the service load balancing, make sure that the <em>&lt;selectorkey&gt;</em> and <em>&lt;selectorvalue&gt;</em> are the same as the key/value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.</td>
-         </tr>
-         <tr>
-         <td><code>port</code></td>
-         <td>The port that the service listens on.</td>
-         </tr>
-         </tbody></table>
-    3.  Save your changes.
-    4.  Create the service in your cluster.
-
-        ```
-        kubectl apply -f myservice.yaml
-        ```
-        {: pre}
-    5.  Repeat these steps for every app that you want to expose to the private network.
+          ```
+          kubectl apply -f myservice.yaml
+          ```
+          {: pre}
+      5.  Repeat these steps for every app that you want to expose to the private network.
 
 8.  Create an Ingress resource. Ingress resources define the routing rules for the Kubernetes service that you created for your app and are used by the ALB to route incoming network traffic to the service. You must use one Ingress resource to define routing rules for multiple apps if every app is exposed via a Kubernetes service inside the cluster.
   1.  Open your preferred editor and create an Ingress configuration file that is named, for example, `myingress.yaml`.
@@ -1481,22 +1467,22 @@ You can configure the private ALB to route incoming network traffic to the apps 
       kubectl apply -f myingress.yaml
       ```
       {: pre}
+9.   Verify that the Ingress resource was created successfully. Replace _&lt;myingressname&gt;_ with the name of the Ingress resource that you created earlier.
 
-9. Verify that the Ingress resource was created successfully. Replace _&lt;myingressname&gt;_ with the name of the Ingress resource that you created earlier.
+      ```
+      kubectl describe ingress <myingressname>
+      ```
+      {: pre}
 
-    ```
-    kubectl describe ingress <myingressname>
-    ```
-    {: pre}
+      1. If messages in the events describe an error in your resource configuration, change the values in your resource file and reapply the file for the resource.
 
-    1. If messages in the events describe an error in your resource configuration, change the values in your resource file and reapply the file for the resource.
+10.   In a web browser, enter the URL of the app service to access.
 
-10. In a web browser, enter the URL of the app service to access.
+      ```
+      https://<mycustomdomain>/<myservicepath1>
+      ```
+      {: codeblock}
 
-        ```
-        https://<mycustomdomain>/<myservicepath1>
-        ```
-        {: codeblock}
 
 <br />
 
@@ -1555,14 +1541,14 @@ By default, only ports 80 and 443 are exposed in the Ingress ALB. To expose othe
     ```
     {: screen}
 
-2. Apply the configuration file.
+3. Apply the configuration file.
 
  ```
  kubectl apply -f <path/to/configmap.yaml>
  ```
  {: pre}
 
-3. Verify that the configuration file was applied.
+4. Verify that the configuration file was applied.
 
  ```
  kubectl describe cm ibm-cloud-provider-ingress-cm -n kube-system

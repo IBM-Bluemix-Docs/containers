@@ -212,9 +212,16 @@ bx plugin list
   </tr>
   <tr>
     <td>[bx cs logging-config-update](#cs_logging_update)</td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>[bx cs logging-filter-create](#cs_log_filter_create)</td>
+    <td>[bx cs logging-filter-update](#cs_log_filter_update)</td>
+    <td>[bx cs logging-filter-get](#cs_log_filter_view)</td><
+  </tr>
+  <tr>
+    <td>[bx cs logging-filter-rm](#cs_log_filter_delete)</td>
+    <td> </td>
+    <td> </td>
+    <td> </td>
+  </tr>
 </tbody>
 </table>
 
