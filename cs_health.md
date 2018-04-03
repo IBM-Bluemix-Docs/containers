@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-22"
+lastupdated: "2018-04-03"
 
 ---
 
@@ -279,6 +279,155 @@ To configure logging through the UI, you must specify an org and space. To enabl
 <br />
 
 
+
+## Filtering logs
+{: #filter-logs}
+
+You can choose which logs that you forward by filtering out specific logs for a period of time.
+
+1. Create a logging filter.
+  ```
+  bx cs logging-filter-create <cluster_name> --type LOG_TYPE --logging-configs <configs> --namespace <kubernetes_namespace> --container <container_name> --level <logging_level> --message <message>
+  ```
+  {: pre}
+  <table>
+    <caption>Understanding this command's components</caption>
+    <thead>
+      <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>&lt;cluster_name&gt;</td>
+        <td>Required: The name or ID of the cluster that you want to create a logging filter for.</td>
+      </tr>
+      <tr>
+        <td><code>&lt;log_type&gt;</code></td>
+        <td>The type of logs that you want to apply the filter to. Currently <code>all</code>, <code>container</code>, and <code>host</code> are supported.</td>
+      </tr>
+      <tr>
+        <td><code>&lt;configs&gt;</code></td>
+        <td>Optional: A comma separated list of your logging configuration IDs. If not provided, the filter is applied to all of the cluster logging configurations that are passed to the filter. You can view log configurations that match the filter by using the <code>--show-matching-configs</code> flag with the command.</td>
+      </tr>
+      <tr>
+        <td><code>&lt;kubernetes_namespace&gt;</code></td>
+        <td>Optional: The Kubernetes namespace that you want to forward logs from. This flag applies only when you are using log type <code>container</code>.</td>
+      </tr>
+      <tr>
+        <td><code>&lt;container_name&gt;</code></td>
+        <td>Optional: The name of the container from which you want to filter logs.</td>
+      </tr>
+      <tr>
+        <td><code>&lt;logging_level&gt;</code></td>
+        <td>Optional: Filters out logs that are at the specified level and less. Acceptable values in their canonical order are <code>fatal</code>, <code>error</code>, <code>warn/warning</code>, <code>info</code>, <code>debug</code>, and <code>trace</code>. As an example, if you filtered logs at the <code>info</code> level, <code>debug</code>, and <code>trace</code> are also filtered. **Note**: You can use this flag only when log messages are in JSON format and contain a level field. To display your messages in JSON, append the <code>--json</code> flag to the command.</td>
+      </tr>
+      <tr>
+        <td><code>&lt;message&gt;</code></td>
+        <td>Optional: Filters out logs that contain a specified message.</td>
+      </tr>
+    </tbody>
+  </table>
+
+2. View the log filter that you created.
+
+  ```
+  bx cs logging-filter-get <cluster_name> --id <filter_id> --show-matching-configs
+  ```
+  {: pre}
+  <table>
+    <caption>Understanding this command's components</caption>
+    <thead>
+      <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>&lt;cluster_name&gt;</td>
+        <td>Required: The name or ID of the cluster that you want to create a logging filter for.</td>
+      </tr>
+      <tr>
+        <td><code>&lt;filter_id&gt;</code></td>
+        <td>Optional: The ID of the log filter that you want to view.</td>
+      </tr>
+      <tr>
+        <td><code>--show-matching-configs</code></td>
+        <td>Show the logging configurations that each filter applies to.</td>
+      </tr>
+    </tbody>
+  </table>
+
+3. Update the log filter that you created.
+  ```
+  bx cs logging-filter-update <cluster_name> --id <filter_id> --type <log_type> --logging-configs <configs> --namespace <kubernetes_namespace --container <container_name> --level <logging_level> --message <message>
+  ```
+  {: pre}
+  <table>
+    <caption>Understanding this command's components</caption>
+    <thead>
+      <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>&lt;cluster_name&gt;</td>
+        <td>Required: The name or ID of the cluster that you want to update a logging filter for.</td>
+      </tr>
+      <tr>
+        <td><code>&lt;filter_id&gt;</code></td>
+        <td>The ID of the log filter that you want to update.</td>
+      </tr>
+      <tr>
+        <td><code><&lt;log_type&gt;</code></td>
+        <td>The type of logs that you want to apply the filter to. Currently <code>all</code>, <code>container</code>, and <code>host</code> are supported.</td>
+      </tr>
+      <tr>
+        <td><code>&lt;configs&gt;</code></td>
+        <td>Optional: A comma separated list of all of the logging configuration IDs that you want to apply the filter to. If not provided, the filter is applied to all of the cluster logging configurations that are passed to the filter. You can view log configurations that match the filter by using the <code>--show-matching-configs</code> flag with the <code>bx cs logging-filter-get</code> command.</td>
+      </tr>
+      <tr>
+        <td><code>&lt;kubernetes_namespace&gt;</code></td>
+        <td>Optional: The Kubernetes namespace that you want to forward logs from. This flag applies only when you are using log type <code>container</code>.</td>
+      </tr>
+      <tr>
+        <td><code>&lt;container_name&gt;</code></td>
+        <td>Optional: The name of the container from which you want to filter logs. This flag applies only when you are using log type <code>container</code>.</td>
+      </tr>
+      <tr>
+        <td><code>&lt;logging_level&gt;</code></td>
+        <td>Optional: Filters out logs that are at the specified level and less. Acceptable values in their canonical order are <code>fatal</code>, <code>error</code>, <code>warn/warning</code>, <code>info</code>, <code>debug</code>, and <code>trace</code>. As an example, if you filtered logs at the <code>info</code> level, <code>debug</code>, and <code>trace</code> are also filtered. **Note**: You can use this flag only when log messages are in JSON format and contain a level field.</td>
+      </tr>
+      <tr>
+        <td><code>&lt;message&gt;</code></td>
+        <td>Optional: Filters out logs that contain a specified message.</td>
+      </tr>
+    </tbody>
+  </table>
+
+4. Delete a log filter that you created.
+
+  ```
+  bx cs logging-filter-rm <cluster_name> --id <filter_id> [--all]
+  ```
+  {: pre}
+  <table>
+    <caption>Understanding this command's components</caption>
+    <thead>
+      <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>&lt;cluster_name&gt;</code></td>
+        <td>Required: The name or ID of the cluster that you want to delete a logging filter for.</td>
+      </tr>
+      <tr>
+        <td><code>&lt;filter_id&gt;</code></td>
+        <td>Optional: The ID of the log filter that you want to remove.</td>
+      </tr>
+      <tr>
+        <td><code>--all</code></td>
+        <td>Optional: Delete all of your log forwarding filters.</td>
+      </tr>
+    </tbody>
+  </table>
+
+<br />
 
 
 
