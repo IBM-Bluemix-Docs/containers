@@ -65,10 +65,10 @@ If you do not already have an app ready, you can use a Kubernetes example app ca
     metadata:
       name: <my-nodeport-service>
       labels:
-        run: <my-demo>
+        <my-label-key>: <my-label-value>
     spec:
       selector:
-        run: <my-demo>
+        <my-selector-key>: <my-selector-value>
       type: NodePort
       ports:
        - port: <8081>
@@ -84,19 +84,23 @@ If you do not already have an app ready, you can use a Kubernetes example app ca
     </thead>
     <tbody>
     <tr>
-    <td><code>name</code></td>
+    <td><code>metadata.name</code></td>
     <td>Replace <code><em>&lt;my-nodeport-service&gt;</em></code> with a name for your NodePort service.</td>
     </tr>
     <tr>
-    <td><code>run</code></td>
-    <td>Replace <code><em>&lt;my-demo&gt;</em></code> with the name of your deployment.</td>
+    <td><code>metadata.labels</code></td>
+    <td>Replace <code><em>&lt;my-label-key&gt;</em></code> and <code><em>&lt;my-label-value&gt;</em></code> with the label that you want to use for your service.</td>
     </tr>
     <tr>
-    <td><code>port</code></td>
+      <td><code>spec.selector</code></td>
+      <td>Replace <code><em>&lt;my-selector-key&gt;</em></code> and <code><em>&lt;my-selector-value&gt;</em></code> with the key/value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.
+      </tr>
+    <tr>
+    <td><code>ports.port</code></td>
     <td>Replace <code><em>&lt;8081&gt;</em></code> with the port that your service listens on. </td>
      </tr>
      <tr>
-     <td><code>nodePort</code></td>
+     <td><code>ports.nodePort</code></td>
      <td>Optional: Replace <code><em>&lt;31514&gt;</em></code> with a NodePort in the 30000 - 32767 range. Do not specify a NodePort that is already in use by another service. If no NodePort is assigned, a random one is assigned for you.<br><br>If you want to specify a NodePort and want to see which NodePorts are already in use, you can run the following command: <pre class="pre"><code>kubectl get svc</code></pre>Any NodePorts in use appear under the **Ports** field.</td>
      </tr>
      </tbody></table>
@@ -149,6 +153,7 @@ When the app is deployed, you can use the public IP address of any worker node a
     ```
     {: screen}
 
-    In this example, the NodePort is `30872`.
+    In this example, the NodePort is `30872`.</br>
+    **Note:** If the **Endpoints** section displays `<none>`, make sure that the `<selectorkey>` and `<selectorvalue>` that you use in the `spec.selector` section of the NodePort service is the same as the key/ value pair that you used in the `spec.template.metadata.labels` section of your deployment yaml.
 
 3.  Form the URL with one of the worker node public IP addresses and the NodePort. Example: `http://192.0.2.23:30872`
