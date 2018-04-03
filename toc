@@ -12,6 +12,10 @@ IBM Cloud Container Service
     About
         cs_why.md
         cs_tech.md
+
+    {: .topicgroup}
+    Your cluster strategy
+        cs_responsibilities.md
         cs_secure.md
         cs_ha.md
 
@@ -84,7 +88,7 @@ IBM Cloud Container Service
         cs_troubleshoot_storage.md
         cs_troubleshoot_health.md
         cs_troubleshoot_network.md
-    
+
     cs_popular_topics.md
     cs_rellinks.md
     {: .navgroup-end}
