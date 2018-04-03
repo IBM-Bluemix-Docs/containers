@@ -124,7 +124,7 @@ To create a load balancer service:
         </tr>
         <tr>
           <td><code>selector</code></td>
-          <td>Enter the label key (<em>&lt;selectorkey&gt;</em>) and value (<em>&lt;selectorvalue&gt;</em>) pair that you want to use to target the pods where your app runs. For example, if you use the following selector <code>app: code</code>, all pods that have this label in their metadata are included in the load balancing. Enter the same label that you used when you deployed your app to the cluster. </td>
+          <td>Enter the label key (<em>&lt;selectorkey&gt;</em>) and value (<em>&lt;selectorvalue&gt;</em>) pair that you want to use to target the pods where your app runs. To target your pods and include them in the service load balancing, make sure that the <em>&lt;selectorkey&gt;</em> and <em>&lt;selectorvalue&gt;</em> are the same as the key/ value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.</td>
         </tr>
         <tr>
           <td><code>port</code></td>
