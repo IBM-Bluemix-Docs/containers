@@ -546,17 +546,16 @@ You can view the current cluster state by running the `bx cs clusters` command a
 ## Removing clusters
 {: #remove}
 
-When you are finished with a cluster, you can remove it so that the cluster is no longer consuming resources.
+Free and standard clusters that are created with a Pay-As-You-Go account must be removed manually when they are not needed anymore so that the cluster is no longer consuming resources.
 {:shortdesc}
 
-Free and standard clusters created with a Pay-As-You-Go account must be removed manually by the user when they are not needed anymore.
+**Warning:** No backups are created of your cluster or your data in your persistent storage. Deleting a cluster or persistent storage is permanent and cannot be undone.
 
-When you delete a cluster, you are also deleting resources on the cluster, including containers, pods, bound services, and secrets. If you do not delete your storage when you delete your cluster, you can delete your storage through the IBM Cloud infrastructure (SoftLayer) dashboard in the {{site.data.keyword.Bluemix_notm}} GUI. Due to the monthly billing cycle, a persistent volume claim cannot be deleted on the last day of a month. If you delete the persistent volume claim on the last day of the month, the deletion remains pending until the beginning of the next month.
-
-**Warning:** No backups are created of your cluster or your data in your persistent storage. Deleting a cluster is permanent and cannot be undone.
+To remove a cluster:
 
 -   From the {{site.data.keyword.Bluemix_notm}} GUI
     1.  Select your cluster and click **Delete** from the **More actions...** menu.
+    
 -   From the {{site.data.keyword.Bluemix_notm}} CLI
     1.  List the available clusters.
 
@@ -572,16 +571,14 @@ When you delete a cluster, you are also deleting resources on the cluster, inclu
         ```
         {: pre}
 
-    3.  Follow the prompts and choose whether to delete cluster resources.
+    3.  Follow the prompts and choose whether to delete cluster resources, which includes containers, pods, bound services, subnets, persistent storage, and secrets.
 
-When you remove a cluster, you can choose to remove the portable subnets and persistent storage associated with it:
-- Subnets are used to assign portable public IP addresses to load balancer services or your Ingress application load balancer. If you keep them, you can [reuse them in a new cluster](cs_subnets.html#custom) or manually delete them later from your IBM Cloud infrastructure (SoftLayer) portfolio.
-- If you created a persistent volume claim by using an [existing file share](cs_storage.html#existing), then you cannot delete the file share when you delete the cluster. You must manually delete the file share later from your IBM Cloud infrastructure (SoftLayer) portfolio.
-- Persistent storage provides high availability for your data. If you delete it, you cannot recover your data.
+      - **Subnets**: Subnets are used to assign portable public IP addresses to load balancer services or your Ingress application load balancer. 
+      - **Persistent storage**: Persistent storage provides high availability for your data. If you created a persistent volume claim by using an [existing file share](cs_storage.html#existing), then you cannot delete the file share when you delete the cluster. You must manually delete the file share later from your IBM Cloud infrastructure (SoftLayer) portfolio. 
+      
+        **Note**: Due to the monthly billing cycle, a persistent volume claim cannot be deleted on the last day of a month. If you delete the persistent volume claim on the last day of the month, the deletion remains pending until the beginning of the next month.
 
-**Tip**: After it is no longer listed in the available clusters list, you can reuse the name of a removed cluster.
-
-  ```
-  bx cs clusters
-  ```
-  {: pre}
+Next steps:
+- After it is no longer listed in the available clusters list when you run the `bx cs clusters` command, you can reuse the name of a removed cluster.
+- If you kept the subnets, you can [reuse them in a new cluster](cs_subnets.html#custom) or manually delete them later from your IBM Cloud infrastructure (SoftLayer) portfolio.
+- If you kept the persistent storage, you can delete your storage later through the IBM Cloud infrastructure (SoftLayer) dashboard in the IBM Cloud GUI.
