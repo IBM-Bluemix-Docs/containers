@@ -24,14 +24,22 @@ Change the pool of available portable public or private IP addresses by adding s
 
 In {{site.data.keyword.containershort_notm}}, you can add stable, portable IPs for Kubernetes services by adding network subnets to the cluster. In this case, subnets are not being used with netmasking to create connectivity across one or more clusters. Instead, the subnets are used to provide permanent fixed IPs for a service from a cluster that can be used to access that service.
 
-When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically provisions a portable public subnet with 5 public IP addresses and a portable private subnet with 5 private IP addresses. Portable public and private IP addresses are static and do not change when a worker node, or even the cluster, is removed. For each subnet, one of the portable public and one of the portable private IP addresses are used for [Ingress application load balancers](cs_ingress.html) that you can use to expose multiple apps in your cluster. The remaining four portable public and four portable private IP addresses can be used to expose single apps to the public by [creating a load balancer service](cs_loadbalancer.html).
+<dl>
+  <dt>Creating a cluster includes subnet creation by default</dt>
+  <dd>When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically provisions the following subnets:
+    <ol><li>A portable public subnet with 5 public IP addresses</li>
+      <li>A portable private subnet with 5 private IP addresses </li></ol>
+      Portable public and private IP addresses are static and do not change when a worker node is removed. For each subnet, one of the portable public and one of the portable private IP addresses are used for [Ingress application load balancers](cs_ingress.html) that you can use to expose multiple apps in your cluster. The remaining four portable public and four portable private IP addresses can be used to expose single apps to the public or private network by [creating a load balancer service](cs_loadbalancer.html).</dd>
+  <dt>[Ordering and managing your own existing subnets](#custom)</dt>
+  <dd>You can order and manage existing portable subnets in your IBM Cloud infrastructure (SoftLayer) account instead of using the automatically provisioned subnets. Use this option to retain stable static IPs across cluster removals and creations, or to order larger blocks of IPs. First create a cluster without subnets by using the `cluster-create --no-subnet` command, and then add the subnet to the cluster with the `cluster-subnet-add` command. </dd>
+</dl>
 
-**Note:** Portable public IP addresses are charged monthly. If you choose to remove portable public IP addresses after your cluster is provisioned, you still have to pay the monthly charge, even if you used them only for a short amount of time.
+**Note:** Portable public IP addresses are charged monthly. If you remove portable public IP addresses after your cluster is provisioned, you still must pay the monthly charge, even if you used them only for a short amount of time.
 
 ## Requesting more subnets for your cluster
 {: #request}
 
-You can add stable, portable public or private IPs to the cluster by assigning subnets to the cluster.
+You can add stable, portable public, or private IPs to the cluster by assigning subnets to the cluster.
 {:shortdesc}
 
 **Note:** When you make a subnet available to a cluster, IP addresses of this subnet are used for cluster networking purposes. To avoid IP address conflicts, make sure that you use a subnet with one cluster only. Do not use a subnet for multiple clusters or for other purposes outside of {{site.data.keyword.containershort_notm}} at the same time.
@@ -91,7 +99,7 @@ You can add existing portable public or private subnets to your Kubernetes clust
 
 Before you begin, 
 - [Target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
-- To reuse subnets from a cluster that you no longer need, delete the unneeded cluster. When prompted, choose to keep the subnets. Otherwise, the subnets are deleted within 24 hours.
+- To reuse subnets from a cluster that you no longer need, delete the unneeded cluster. The subnets are deleted within 24 hours.
 
    ```
    bx cs cluster-rm CLUSTER
