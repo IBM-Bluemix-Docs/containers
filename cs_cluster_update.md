@@ -95,6 +95,7 @@ To update your worker nodes:
       name: ibm-cluster-update-configuration
       namespace: kube-system
     data:
+     drain_timeout_seconds: 120
      zonecheck.json: |
        {
          "MaxUnavailablePercentage": 70,
@@ -120,12 +121,16 @@ To update your worker nodes:
     </thead>
     <tbody>
       <tr>
-        <td><code>defaultcheck.json</code></td>
-        <td> As a default, if the ibm-cluster-update-configuration map is not defined in a valid way, only 20% of your clusters are able to be unavailable at one time. If one or more valid rules are defined without a global default, the new default is to allow 100% of the workers to be unavailable at one time. You can control this by creating a default percentage. </td>
+        <td><code>drain_timeout_seconds</code></td>
+        <td> Optional: The timeout in seconds of the drain that occurs during the worker node update. Drain sets the node to `unschedulable`, which prevents new pods from being deployed to that node. Drain also deletes pods off of the node. Accepted values are integers from 1 to 180. The default value is 30.</td>
       </tr>
       <tr>
         <td><code>zonecheck.json</code></br><code>regioncheck.json</code></td>
         <td> Examples of unique keys for which you want to set rules. The names of the keys can be anything you want them to be; the information is parsed by the configurations set within the key. For each key that you define, you can set only one value for <code>NodeSelectorKey</code> and <code>NodeSelectorValue</code>. If you want to set rules for more than one region, or location (data center), create a new key entry. </td>
+      </tr>
+      <tr>
+        <td><code>defaultcheck.json</code></td>
+        <td> As a default, if the <code>ibm-cluster-update-configuration</code> map is not defined in a valid way, only 20% of your clusters are able to be unavailable at one time. If one or more valid rules are defined without a global default, the new default is to allow 100% of the workers to be unavailable at one time. You can control this by creating a default percentage. </td>
       </tr>
       <tr>
         <td><code>MaxUnavailablePercentage</code></td>
