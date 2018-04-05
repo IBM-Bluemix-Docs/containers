@@ -167,3 +167,7 @@ For more information about how to create a service of type cluster IP, see [Kube
 For information about securely connecting apps in a Kubernetes cluster to an on-premises network, see [Setting up VPN connectivity](cs_vpn.html#vpn). For information about exposing your apps for external network communication, see [Allowing public access to apps](cs_network_planning.html#public_access).
 
 
+
+
+
+
