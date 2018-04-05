@@ -176,7 +176,7 @@ bx plugin list
 <col width="25%">
 <col width="25%">
  <thead>
-    <th colspan=4>Application load balancer (ALB) commands</th>
+    <th colspan=4>Ingress application load balancer (ALB) commands</th>
  </thead>
  <tbody>
   <tr>
