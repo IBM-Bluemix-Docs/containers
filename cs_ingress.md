@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-03"
+lastupdated: "2018-04-05"
 
 ---
 
@@ -1541,14 +1541,9 @@ By default, only ports 80 and 443 are exposed in the Ingress ALB. To expose othe
     ```
     {: screen}
 
-3. Apply the configuration file.
+3. Save the configuration file.
 
- ```
- kubectl apply -f <path/to/configmap.yaml>
- ```
- {: pre}
-
-4. Verify that the configuration file was applied.
+4. Verify that the configmap changes were applied.
 
  ```
  kubectl describe cm ibm-cloud-provider-ingress-cm -n kube-system
@@ -1604,14 +1599,9 @@ To edit the configmap to enable SSL protocols and ciphers:
    ```
    {: codeblock}
 
-2. Apply the configuration file.
+3. Save the configuration file.
 
-   ```
-   kubectl apply -f <path/to/configmap.yaml>
-   ```
-   {: pre}
-
-3. Verify that the configuration file was applied.
+4. Verify that the configmap changes were applied.
 
    ```
    kubectl describe cm ibm-cloud-provider-ingress-cm -n kube-system
