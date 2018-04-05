@@ -549,7 +549,9 @@ You can view the current cluster state by running the `bx cs clusters` command a
 Free and standard clusters that are created with a Pay-As-You-Go account must be removed manually when they are not needed anymore so that those clusters are no longer consuming resources.
 {:shortdesc}
 
-**Warning:** No backups are created of your cluster or your data in your persistent storage. Deleting a cluster or persistent storage is permanent and cannot be undone.
+**Warning:** 
+  - No backups are created of your cluster or your data in your persistent storage. Deleting a cluster or persistent storage is permanent and cannot be undone.
+  - When you remove a cluster, you also remove any subnets that were automatically provisioned when you created the cluster and that you created by using the `bx cs cluster-subnet-create` command. However, if you manually added existing subnets to your cluster by using the `bx cs cluster-subnet-add command`, these subnets are not removed from your IBM Cloud infrastructure (SoftLayer) account and you can reuse them in other clusters.
 
 To remove a cluster:
 
@@ -571,9 +573,7 @@ To remove a cluster:
         ```
         {: pre}
 
-    3.  Follow the prompts and choose whether to delete cluster resources, which includes containers, pods, bound services, subnets, persistent storage, and secrets.
-
-      - **Subnets**: Subnets are used to assign portable public IP addresses to load balancer services or your Ingress application load balancer. 
+    3.  Follow the prompts and choose whether to delete cluster resources, which includes containers, pods, bound services, persistent storage, and secrets.
       - **Persistent storage**: Persistent storage provides high availability for your data. If you created a persistent volume claim by using an [existing file share](cs_storage.html#existing), then you cannot delete the file share when you delete the cluster. You must manually delete the file share later from your IBM Cloud infrastructure (SoftLayer) portfolio. 
       
           **Note**: Due to the monthly billing cycle, a persistent volume claim cannot be deleted on the last day of a month. If you delete the persistent volume claim on the last day of the month, the deletion remains pending until the beginning of the next month.
