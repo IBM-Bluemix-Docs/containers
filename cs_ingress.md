@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-05"
+lastupdated: "2018-04-06"
 
 ---
 
@@ -970,7 +970,7 @@ You can configure the private ALB to route incoming network traffic to the apps 
 
 Before you begin:
 * [Enable the private application load balancer](#private_ingress).
-* If you have private worker nodes and want to use an external DNS provider, you must [configure edge nodes with public access](cs_edge.html#edge) and [configure a Vyatta Gateway Appliance ![External link icon](../icons/launch-glyph.svg "External link icon")]](https://www.ibm.com/blogs/bluemix/2017/07/kubernetes-and-bluemix-container-based-workloads-part4/). If you want to remain on a private network only, see [Privately expose apps using an on-premises DNS service](#private_ingress_onprem_dns) instead.
+* If you have private worker nodes and want to use an external DNS provider, you must [configure edge nodes with public access](cs_edge.html#edge) and [configure a Vyatta Gateway Appliance ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/blogs/bluemix/2017/07/kubernetes-and-bluemix-container-based-workloads-part4/). If you want to remain on a private network only, see [Privately expose apps using an on-premises DNS service](#private_ingress_onprem_dns) instead.
 
 To privately expose an app by using a custom domain without TLS using an external DNS provider:
 
@@ -1133,7 +1133,7 @@ You can use private ALBs to route incoming network traffic to apps in your clust
 
 Before you begin:
 * [Enable the private application load balancer](#private_ingress).
-* If you have private worker nodes and want to use an external DNS provider, you must [configure edge nodes with public access](cs_edge.html#edge) and [configure a Vyatta Gateway Appliance ![External link icon](../icons/launch-glyph.svg "External link icon")]](https://www.ibm.com/blogs/bluemix/2017/07/kubernetes-and-bluemix-container-based-workloads-part4/). If you want to remain on a private network only, see [Privately expose apps using an on-premises DNS service](#private_ingress_onprem_dns) instead.
+* If you have private worker nodes and want to use an external DNS provider, you must [configure edge nodes with public access](cs_edge.html#edge) and [configure a Vyatta Gateway Appliance ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/blogs/bluemix/2017/07/kubernetes-and-bluemix-container-based-workloads-part4/). If you want to remain on a private network only, see [Privately expose apps using an on-premises DNS service](#private_ingress_onprem_dns) instead.
 
 To privately expose an app by using a custom domain with TLS using an external DNS provider:
 
@@ -1546,7 +1546,7 @@ By default, only ports 80 and 443 are exposed in the Ingress ALB. To expose othe
 4. Verify that the configmap changes were applied.
 
  ```
- kubectl describe cm ibm-cloud-provider-ingress-cm -n kube-system
+ kubectl get cm ibm-cloud-provider-ingress-cm -n kube-system -o yaml
  ```
  {: pre}
 
@@ -1604,7 +1604,7 @@ To edit the configmap to enable SSL protocols and ciphers:
 4. Verify that the configmap changes were applied.
 
    ```
-   kubectl describe cm ibm-cloud-provider-ingress-cm -n kube-system
+   kubectl get cm ibm-cloud-provider-ingress-cm -n kube-system -o yaml
    ```
    {: pre}
 
