@@ -930,7 +930,7 @@ List the services that are bound to one or all of the Kubernetes namespace in a 
   {: pre}
 
 
-### bx cs webhook-create --cluster CLUSTER --level LEVEL --type slack --URL URL
+### bx cs webhook-create --cluster CLUSTER --level LEVEL --type slack --url URL
 {: #cs_webhook_create}
 
 Register a webhook.
@@ -947,14 +947,14 @@ Register a webhook.
    <dt><code>--type <em>slack</em></code></dt>
    <dd>The webhook type. Currently slack is supported. This value is required.</dd>
 
-   <dt><code>--URL <em>URL</em></code></dt>
+   <dt><code>--url <em>URL</em></code></dt>
    <dd>The URL for the webhook. This value is required.</dd>
    </dl>
 
 **Example**:
 
   ```
-  bx cs webhook-create --cluster my_cluster --level Normal --type slack --URL http://github.com/<mywebhook>
+  bx cs webhook-create --cluster my_cluster --level Normal --type slack --url http://github.com/<mywebhook>
   ```
   {: pre}
 
