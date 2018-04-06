@@ -519,7 +519,7 @@ You can view the current cluster state by running the `bx cs clusters` command a
       </tr>
       <tr>
        <td>Normal</td>
-       <td>All worker nodes in a cluster are up and running. You can access the cluster and deploy apps to the cluster. This state is considered healthy and does not require an action from you.</td>
+       <td>All worker nodes in a cluster are up and running. You can access the cluster and deploy apps to the cluster. This state is considered healthy and does not require an action from you. **Note**: Although the worker nodes might be normal, other infrastructure resources, such as [networking](cs_troubleshoot_network.html) and [storage](cs_troubleshoot_storage.html), might still need attention.</td>
     </tr>
       <tr>
        <td>Pending</td>
@@ -539,6 +539,7 @@ You can view the current cluster state by running the `bx cs clusters` command a
     </tr>
    </tbody>
  </table>
+
 
 <br />
 
