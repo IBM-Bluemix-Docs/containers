@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-03"
+lastupdated: "2018-04-05"
 
 ---
 
@@ -708,11 +708,10 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
    <tr>
    <td><code>namespace</code></td>
    <td>The <code>kube-system</code> namespace is a constant and cannot be changed.</td>
-  </tr>
+   </tr>
    <tr>
    <td><code>checknode.json</code></td>
-   <td>Defines a Kubernetes API node check that checks whether each worker node is in the <code>Ready</code> state. The check for a specific worker node counts as a failure if the worker node is not in the <code>Ready</code> state.
-The check in the example YAML runs every 3 minutes. If it fails three consecutive times, the worker node is reloaded. This action is equivalent to running <code>bx cs worker-reload</code>. The node check is enabled until you set the <b>Enabled</b> field to <code>false</code> or remove the check.</td>
+   <td>Defines a Kubernetes API node check that checks whether each worker node is in the <code>Ready</code> state. The check for a specific worker node counts as a failure if the worker node is not in the <code>Ready</code> state. The check in the example YAML runs every 3 minutes. If it fails three consecutive times, the worker node is reloaded. This action is equivalent to running <code>bx cs worker-reload</code>. The node check is enabled until you set the <b>Enabled</b> field to <code>false</code> or remove the check.</td>
    </tr>
    <tr>
    <td><code>checkpod.json</code></td>
@@ -721,8 +720,8 @@ The check in the example YAML runs every 3 minutes. If it fails three consecutiv
    <tr>
    <td><code>checkhttp.json</code></td>
    <td>Defines an HTTP check that checks if an HTTP server that runs on your worker node is healthy. To use this check you must deploy an HTTP server on every worker node in your cluster by using a [DaemonSet ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/). You must implement a health check that is available at the <code>/myhealth</code> path and that can verify if your HTTP server is healthy. You can define other paths by changing the <strong>Route</strong> parameter. If the HTTP server is healthy, you must return the HTTP response code that is defined in <strong>ExpectedStatus</strong>. The HTTP server must be configured to listen on the private IP address of the worker node. You can find the private IP address by running <code>kubectl get nodes</code>.</br>
-For example, consider two nodes in a cluster that have the private IP addresses 10.10.10.1 and 10.10.10.2. In this example, two routes are checked for a 200 HTTP response: <code>http://10.10.10.1:80/myhealth</code> and <code>http://10.10.10.2:80/myhealth</code>.
-The check in the example YAML runs every 3 minutes. If it fails three consecutive times, the worker node is rebooted. This action is equivalent to running <code>bx cs worker-reboot</code>. The HTTP check is disabled until you set the <b>Enabled</b> field to <code>true</code>.</td>
+   For example, consider two nodes in a cluster that have the private IP addresses 10.10.10.1 and 10.10.10.2. In this example, two routes are checked for a 200 HTTP response: <code>http://10.10.10.1:80/myhealth</code> and <code>http://10.10.10.2:80/myhealth</code>.
+   The check in the example YAML runs every 3 minutes. If it fails three consecutive times, the worker node is rebooted. This action is equivalent to running <code>bx cs worker-reboot</code>. The HTTP check is disabled until you set the <b>Enabled</b> field to <code>true</code>.</td>
    </tr>
    </tbody>
    </table>
@@ -780,6 +779,10 @@ The check in the example YAML runs every 3 minutes. If it fails three consecutiv
    <tr>
    <td><code>Enabled</code></td>
    <td>Enter <code>true</code> to enable the check or <code>false</code> to disable the check.</td>
+   </tr>
+   <tr>
+   <td><code>Namespace</code></td>
+   <td> Optional: To restrict <code>checkpod.json</code> to checking only pods in one namespace, add the <code>Namespace</code> field and enter the namespace.</td>
    </tr>
    </tbody>
    </table>
