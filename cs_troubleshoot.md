@@ -79,7 +79,7 @@ Review the options to debug your clusters and find the root causes for failures.
       </tr>
       <tr>
        <td>Normal</td>
-       <td>All worker nodes in a cluster are up and running. You can access the cluster and deploy apps to the cluster. This state is considered healthy and does not require an action from you.</td>
+       <td>All worker nodes in a cluster are up and running. You can access the cluster and deploy apps to the cluster. This state is considered healthy and does not require an action from you. **Note**: Although the worker nodes might be normal, other infrastructure resources, such as [networking](cs_troubleshoot_network.html) and [storage](cs_troubleshoot_storage.html), might still need attention.</td>
     </tr>
       <tr>
        <td>Pending</td>
@@ -99,6 +99,7 @@ Review the options to debug your clusters and find the root causes for failures.
     </tr>
    </tbody>
  </table>
+
 
 <br />
 
@@ -135,7 +136,7 @@ Review the options to debug your worker nodes and find the root causes for failu
      </tr>
         <tr>
         <td>Normal</td>
-        <td>Your worker node is fully provisioned and ready to be used in the cluster. This state is considered healthy and does not require an action from the user.</td>
+        <td>Your worker node is fully provisioned and ready to be used in the cluster. This state is considered healthy and does not require an action from the user. **Note**: Although the worker nodes might be normal, other infrastructure resources, such as [networking](cs_troubleshoot_network.html) and [storage](cs_troubleshoot_storage.html), might still need attention.</td>
      </tr>
    <tr>
         <td>Provisioning</td>
