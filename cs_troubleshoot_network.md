@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-03"
+lastupdated: "2018-04-09"
 
 ---
 
@@ -24,8 +24,6 @@ lastupdated: "2018-04-03"
 
 As you use {{site.data.keyword.containerlong}}, consider these techniques for troubleshooting cluster networking. Before trying these techniques, you can take some general steps to [debug your cluster and check for common issues](cs_troubleshoot.html).
 {: shortdesc}
-
-
 
 ## Cannot connect to an app via a load balancer service
 {: #cs_loadbalancer_fails}
@@ -291,6 +289,32 @@ Review the following reasons why the application load balancer secret might fail
 <br />
 
 
+## Cannot get a subdomain for Ingress ALB
+{: #cs_subnet_limit}
+
+{: tsSymptoms}
+When you run `bx cs cluster-get <cluster>`, your cluster is in a `normal` state but no **Ingress Subdomain** is available.
+
+{: tsCauses}
+When you create a cluster, 8 public and 8 private portable subnets are requested on the VLAN that you specify. For {{site.data.keyword.containershort_notm}}, VLANs have a limit of 40 subnets. If the cluster's VLAN already reached that limit, the **Ingress Subdomain** fails to provision.
+
+To view how many subnets a VLAN has:
+1.  From the [IBM Cloud infrastructure (SoftLayer) console](https://control.bluemix.net/), select **Network** > **IP Management** > **VLANs**.
+2.  Click the **VLAN Number** of the VLAN that you used to create your cluster. Review the **Subnets** section to see if there are 40 or more subnets.
+
+{: tsResolve}
+If you need a new VLAN, order one by [contacting {{site.data.keyword.Bluemix_notm}} support](/docs/get-support/howtogetsupport.html#getting-customer-support). Then [create a cluster](cs_cli_reference.html#cs_cluster_create) that uses this new VLAN.
+
+If you have another VLAN that is available, you can [set up VLAN spanning](/docs/infrastructure/vlans/vlan-spanning.html#enable-or-disable-vlan-spanning) in your existing cluster. After, you can add new worker nodes to the cluster that use the other VLAN with available subnets.
+
+If you are not using all the subnets in the VLAN, you can reuse subnets in the cluster.
+1.  Check that the subnets that you want to use are available. **Note**: The infrastructure account that you are using might be shared across multiple {{site.data.keyword.Bluemix_notm}} accounts. If so, even if you run the `bx cs subnets` command to see subnets with **Bound Clusters**, you can see information only for your clusters. Check with the infrastructure account owner to make sure that the subnets are available and not in use by any other account or team.
+  
+2.  [Create a cluster](cs_cli_reference.html#cs_cluster_create) with the `--no-subnet` option so that the service does not try to create new subnets. Specify the location and VLAN that has the subnets that are available for reuse.
+
+3.  Use the `bx cs cluster-subnet-add` [command](cs_cli_reference.html#cs_cluster_subnet_add) to add existing subnets to your cluster. For more information, see [Adding or reusing custom and existing subnets in Kubernetes clusters](cs_subnets.html#custom).
+
+<br />
 
 
 ## Cannot establish VPN connectivity with the strongSwan Helm chart
@@ -353,8 +377,6 @@ When you try to establish VPN connectivity with the strongSwan Helm chart, it is
         The tool outputs several pages of information as it runs various tests for common networking issues. Output lines that begin with `ERROR`, `WARNING`, `VERIFY`, or `CHECK` indicate possible errors with the VPN connectivity.
 
     <br />
-
-
 
 
 ## strongSwan VPN connectivity fails after worker node addition or deletion
