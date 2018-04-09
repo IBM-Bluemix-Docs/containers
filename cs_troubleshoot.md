@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-03"
+lastupdated: "2018-04-09"
 
 ---
 
@@ -26,8 +26,8 @@ As you use {{site.data.keyword.containerlong}}, consider these techniques for ge
 {: shortdesc}
 
 You can take some general steps to ensure that your clusters are up-to-date:
-- [Reboot your worker nodes](cs_cli_reference.html#cs_worker_reboot) regularly to ensure the installation of updates and security patches that IBM automatically deploys to the operating system
-- Update your cluster to [the latest default version of Kubernetes](cs_versions.html) for {{site.data.keyword.containershort_notm}}
+- Check on a monthly basis for available security and operating system patches to [update your worker nodes](cs_cli_reference.html#cs_worker_update).
+- [Update your cluster](cs_cli_reference.html#cs_cluster_update) to the latest default [version of Kubernetes](cs_versions.html) for {{site.data.keyword.containershort_notm}}
 
 ## Debugging clusters
 {: #debug_clusters}
@@ -79,7 +79,7 @@ Review the options to debug your clusters and find the root causes for failures.
       </tr>
       <tr>
        <td>Normal</td>
-       <td>All worker nodes in a cluster are up and running. You can access the cluster and deploy apps to the cluster. This state is considered healthy and does not require an action from you.</td>
+       <td>All worker nodes in a cluster are up and running. You can access the cluster and deploy apps to the cluster. This state is considered healthy and does not require an action from you. **Note**: Although the worker nodes might be normal, other infrastructure resources, such as [networking](cs_troubleshoot_network.html) and [storage](cs_troubleshoot_storage.html), might still need attention.</td>
     </tr>
       <tr>
        <td>Pending</td>
@@ -99,6 +99,7 @@ Review the options to debug your clusters and find the root causes for failures.
     </tr>
    </tbody>
  </table>
+
 
 <br />
 
@@ -135,7 +136,7 @@ Review the options to debug your worker nodes and find the root causes for failu
      </tr>
         <tr>
         <td>Normal</td>
-        <td>Your worker node is fully provisioned and ready to be used in the cluster. This state is considered healthy and does not require an action from the user.</td>
+        <td>Your worker node is fully provisioned and ready to be used in the cluster. This state is considered healthy and does not require an action from the user. **Note**: Although the worker nodes might be normal, other infrastructure resources, such as [networking](cs_troubleshoot_network.html) and [storage](cs_troubleshoot_storage.html), might still need attention.</td>
      </tr>
    <tr>
         <td>Provisioning</td>
