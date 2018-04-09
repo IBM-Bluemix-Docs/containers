@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-23"
+lastupdated: "2018-04-09"
 
 
 ---
@@ -17,8 +17,12 @@ lastupdated: "2018-03-23"
 {:download: .download}
 
 
-# Assigning user access to clusters
+# Assigning cluster access
 {: #users}
+
+
+
+
 
 You can grant access to a Kubernetes cluster to ensure that only authorized users can work with the cluster and deploy containers to the cluster in {{site.data.keyword.containerlong}}.
 {:shortdesc}
@@ -414,3 +418,5 @@ Before you begin, [target the Kubernetes CLI to the cluster](cs_cli_install.html
         {: pre}
 
 Now that you created and bound a custom Kubernetes RBAC role, follow up with users. Ask them to test an action that they have permission to complete due to the role, such as deleting a pod.
+
+

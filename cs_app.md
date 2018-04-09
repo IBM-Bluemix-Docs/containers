@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-05"
+lastupdated: "2018-04-09"
 
 ---
 
@@ -408,6 +408,7 @@ Before you begin:
 - [Target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
 - Heapster monitoring must be deployed in the cluster that you want to autoscale.
 
+Steps:
 1.  Deploy your app to your cluster from the CLI. When you deploy your app, you must request CPU.
 
     ```
