@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-03"
+lastupdated: "2018-04-09"
 
 ---
 
@@ -930,7 +930,7 @@ List the services that are bound to one or all of the Kubernetes namespace in a 
   {: pre}
 
 
-### bx cs webhook-create --cluster CLUSTER --level LEVEL --type slack --URL URL
+### bx cs webhook-create --cluster CLUSTER --level LEVEL --type slack --url URL
 {: #cs_webhook_create}
 
 Register a webhook.
@@ -947,14 +947,14 @@ Register a webhook.
    <dt><code>--type <em>slack</em></code></dt>
    <dd>The webhook type. Currently slack is supported. This value is required.</dd>
 
-   <dt><code>--URL <em>URL</em></code></dt>
+   <dt><code>--url <em>URL</em></code></dt>
    <dd>The URL for the webhook. This value is required.</dd>
    </dl>
 
 **Example**:
 
   ```
-  bx cs webhook-create --cluster my_cluster --level Normal --type slack --URL http://github.com/<mywebhook>
+  bx cs webhook-create --cluster my_cluster --level Normal --type slack --url http://github.com/<mywebhook>
   ```
   {: pre}
 
@@ -2132,7 +2132,8 @@ Before you reboot your worker node, make sure that pods are rescheduled on other
 
 Reload all the necessary configurations for a worker node. A reload can be useful if your worker node experiences problems, such as slow performance or if your worker node is stuck in an unhealthy state.
 
-**Attention:** Reloading your worker node automatically applies the latest patch version to your worker node. The current major and minor version is not changed. For more information about Kubernetes versions, see [worker node update types](cs_versions.html#version_types).
+Reloading a worker node does not apply the latest updates, security patches, or [Kubernetes version](cs_versions.html#version_types). When patch and version updates are available, you are prompted in the CLI and console as you use worker-related features. To keep your workers up-to-date, regularly use the `bx cs worker-update` [command](#cs_worker_update).
+{: tip}
 
 Before you reload your worker node, make sure that pods are rescheduled on other worker nodes to help avoid a downtime for your app or data corruption on your worker node.
 
@@ -2251,10 +2252,12 @@ Before you remove your worker node, make sure that pods are rescheduled on other
   ```
   {: pre}
 
-### bx cs worker-update [-f] CLUSTER WORKER [WORKER] [--kube-version MAJOR.MINOR.PATCH] [--force-update]
+### bx cs worker-update [-f] CLUSTER WORKER [WORKER] [--force-update]
 {: #cs_worker_update}
 
-Update worker nodes to the latest Kubernetes version. Running `bx cs worker-update` can cause downtime for your apps and services. During the update, all pods are rescheduled onto other worker nodes and data is deleted if not stored outside the pod. To avoid downtime, [ensure that you have enough worker nodes to handle your workload while the selected worker nodes are updating](cs_cluster_update.html#worker_node).
+Update worker nodes to apply the latest security updates and patches to the operating system, and to update the Kubernetes version to match the version of the master node. You can update the master node Kubernetes version with the `bx cs cluster-update` [command](#cs_cluster_update).
+
+**Important**: Running `bx cs worker-update` can cause downtime for your apps and services. During the update, all pods are rescheduled onto other worker nodes and data is deleted if not stored outside the pod. To avoid downtime, [ensure that you have enough worker nodes to handle your workload while the selected worker nodes are updating](cs_cluster_update.html#worker_node).
 
 You might need to change your YAML files for deployments before updating. Review this [release note](cs_versions.html) for details.
 
@@ -2264,9 +2267,6 @@ You might need to change your YAML files for deployments before updating. Review
 
    <dt><em>CLUSTER</em></dt>
    <dd>The name or ID of the cluster where you list available worker nodes. This value is required.</dd>
-
-   <dt><code>--kube-version <em>MAJOR.MINOR.PATCH</em></code></dt>
-   <dd>The Kubernetes version of the cluster. If this flag is not specified, the worker node is update to the default version. To see available versions, run [bx cs kube-versions](#cs_kube_versions). This value is optional.</dd>
 
    <dt><code>-f</code></dt>
    <dd>Use this option to force the update of the master with no user prompts. This value is optional.</dd>
