@@ -98,7 +98,7 @@ To deploy the app:
     1. Get the command to set the environment variable and download the Kubernetes configuration files.
 
         ```
-        bx cs cluster-config <pr_firm_cluster>
+        bx cs cluster-config <cluster_name_or_ID>
         ```
         {: pre}
 
@@ -156,7 +156,7 @@ To deploy the app:
         Output:
 
         ```
-        The push refers to a repository [registry.<region>.bluemix.net/<namespace>/hello-world]
+        The push refers to a repository [registry.ng.bluemix.net/pr_firm/hello-world]
         ea2ded433ac8: Pushed
         894eb973f4d3: Pushed
         788906ca2c7e: Pushed
@@ -237,7 +237,7 @@ To deploy the app:
     1.  Get information about the service to see which NodePort was assigned.
 
         ```
-        kubectl describe service <hello-world-service>
+        kubectl describe service hello-world-service
         ```
         {: pre}
 
@@ -249,10 +249,10 @@ To deploy the app:
         Labels:                 run=hello-world-deployment
         Selector:               run=hello-world-deployment
         Type:                   NodePort
-        IP:                     10.10.10.8
+        IP:                     10.xxx.xx.xxx
         Port:                   <unset> 8080/TCP
         NodePort:               <unset> 30872/TCP
-        Endpoints:              172.30.171.87:8080
+        Endpoints:              172.30.xxx.xxx:8080
         Session Affinity:       None
         No events.
         ```
@@ -263,21 +263,22 @@ To deploy the app:
     2.  Get the public IP address for the worker node in the cluster.
 
         ```
-        bx cs workers <pr_firm_cluster>
+        bx cs workers <cluster_name_or_ID>
         ```
         {: pre}
 
         Output:
 
         ```
+        bx cs workers pr_firm_cluster
         Listing cluster workers...
         OK
         ID                                                 Public IP       Private IP       Machine Type   State    Status   Location   Version
-        kube-mil01-pa10c8f571c84d4ac3b52acbf50fd11788-w1   169.47.227.138  10.171.53.188    free           normal   Ready    mil01      1.8.8
+        kube-mil01-pa10c8f571c84d4ac3b52acbf50fd11788-w1   169.xx.xxx.xxx  10.xxx.xx.xxx    free           normal   Ready    mil01      1.8.8
         ```
         {: screen}
 
-11. Open a browser and check out the app with the following URL: `http://<IP_address>:<NodePort>`. With the example values, the URL is `http://169.47.227.138:30872`. When you enter that URL in a browser, you can see the following text.
+11. Open a browser and check out the app with the following URL: `http://<IP_address>:<NodePort>`. With the example values, the URL is `http://169.xx.xxx.xxx:30872`. When you enter that URL in a browser, you can see the following text.
 
     ```
     Hello world! Your app is up and running in a cluster!
@@ -344,7 +345,7 @@ As defined in the configuration script, Kubernetes can use an availability check
   Output:
 
   ```
-  The push refers to a repository [registry.<region>.bluemix.net/<namespace>/hello-world]
+  The push refers to a repository [registry.ng.bluemix.net/pr_firm/hello-world]
   ea2ded433ac8: Pushed
   894eb973f4d3: Pushed
   788906ca2c7e: Pushed
@@ -407,18 +408,18 @@ As defined in the configuration script, Kubernetes can use an availability check
 7.  Now that the deployment work is done you can open a browser and check out the app. To form the URL, take the same public IP address that you used in the previous lesson for your worker node and combine it with the NodePort that was specified in the configuration script. To get the public IP address for the worker node:
 
   ```
-  bx cs workers <pr_firm_cluster>
+  bx cs workers <cluster_name_or_ID>
   ```
   {: pre}
 
-  With the example values, the URL is `http://169.47.227.138:30072`. In a browser, you might see the following text. If you do not see this text, don't worry. This app is designed to go up and down.
+  With the example values, the URL is `http://169.xx.xxx.xxx:30072`. In a browser, you might see the following text. If you do not see this text, don't worry. This app is designed to go up and down.
 
   ```
   Hello world! Great job getting the second stage up and running!
   ```
   {: screen}
 
-  You can also check `http://169.47.227.138:30072/healthz` for status.
+  You can also check `http://169.xx.xxx.xxx:30072/healthz` for status.
 
   For the first 10 - 15 seconds, a 200 message is returned, so you know that the app is running successfully. After those 15 seconds, a timeout message is displayed. This is an expected behavior.
 
@@ -518,7 +519,7 @@ From the previous tutorial, you have your account and a cluster with one worker 
         ```
         {: pre}
 
-3.  Build the {{site.data.keyword.watson}}-talk image.
+4.  Build the {{site.data.keyword.watson}}-talk image.
 
     1.  Navigate to the `watson-talk` directory.
 
@@ -548,7 +549,7 @@ From the previous tutorial, you have your account and a cluster with one worker 
         ```
         {: pre}
 
-4.  Verify that the images were successfully added to your registry namespace. If you used the Docker Quickstart terminal to run Docker commands, be sure that you switch back to the CLI that you used to set the `KUBECONFIG` session variable.
+5.  Verify that the images were successfully added to your registry namespace. If you used the Docker Quickstart terminal to run Docker commands, be sure that you switch back to the CLI that you used to set the `KUBECONFIG` session variable.
 
     ```
     bx cr images
@@ -560,15 +561,15 @@ From the previous tutorial, you have your account and a cluster with one worker 
     ```
     Listing images...
 
-    REPOSITORY                                  NAMESPACE  TAG            DIGEST         CREATED         SIZE     VULNERABILITY STATUS
-    registry.<region>.bluemix.net/namespace/hello-world   namespace  1              0d90cb732881   40 minutes ago  264 MB   OK
-    registry.<region>.bluemix.net/namespace/hello-world   namespace  2              c3b506bdf33e   20 minutes ago  264 MB   OK
-    registry.<region>.bluemix.net/namespace/watson        namespace  latest         fedbe587e174   3 minutes ago   274 MB   OK
-    registry.<region>.bluemix.net/namespace/watson-talk   namespace  latest         fedbe587e174   2 minutes ago   274 MB   OK
+    REPOSITORY                                      NAMESPACE  TAG      DIGEST         CREATED         SIZE     VULNERABILITY STATUS
+    registry.ng.bluemix.net/namespace/hello-world   namespace  1        0d90cb732881   40 minutes ago  264 MB   OK
+    registry.ng.bluemix.net/namespace/hello-world   namespace  2        c3b506bdf33e   20 minutes ago  264 MB   OK
+    registry.ng.bluemix.net/namespace/watson        namespace  latest   fedbe587e174   3 minutes ago   274 MB   OK
+    registry.ng.bluemix.net/namespace/watson-talk   namespace  latest   fedbe587e174   2 minutes ago   274 MB   OK
     ```
     {: screen}
 
-5.  Open the `watson-deployment.yml` file, in the `Lab 3` directory, with a text editor. This configuration script includes a deployment and a service for both the watson and watson-talk components of the app.
+6.  Open the `watson-deployment.yml` file, in the `Lab 3` directory, with a text editor. This configuration script includes a deployment and a service for both the watson and watson-talk components of the app.
 
     1.  Update the details for the image in your registry namespace for both deployments.
 
@@ -593,7 +594,7 @@ From the previous tutorial, you have your account and a cluster with one worker 
                 - name: service-bind-volume
                   secret:
                     defaultMode: 420
-                    secretName: binding-<mytoneanalyzer>
+                    secretName: binding-mytoneanalyzer
         ```
         {: codeblock}
 
@@ -606,14 +607,14 @@ From the previous tutorial, you have your account and a cluster with one worker 
 
     3.  In the watson-talk service section, note the value that is set for the `NodePort`. This example uses 30080.
 
-6.  Run the configuration script.
+7.  Run the configuration script.
 
   ```
   kubectl apply -f watson-deployment.yml
   ```
   {: pre}
 
-7.  Optional: Verify that the {{site.data.keyword.watson}} {{site.data.keyword.toneanalyzershort}} secret is mounted as a volume to the pod.
+8.  Optional: Verify that the {{site.data.keyword.watson}} {{site.data.keyword.toneanalyzershort}} secret is mounted as a volume to the pod.
 
     1.  To get the name of a watson pod, run the following command.
 
@@ -651,20 +652,20 @@ From the previous tutorial, you have your account and a cluster with one worker 
         ```
         {: codeblock}
 
-8.  Open a browser and analyze some text. The format of the URL is `http://<worker_node_IP_address>:<watson-talk-nodeport>/analyze/"<text_to_analyze>"`.
+9.  Open a browser and analyze some text. The format of the URL is `http://<worker_node_IP_address>:<watson-talk-nodeport>/analyze/"<text_to_analyze>"`.
 
     Example:
 
     ```
-    http://169.47.227.138:30080/analyze/"Today is a beautiful day"
+    http://169.xx.xxx.xxx:30080/analyze/"Today is a beautiful day"
     ```
     {: screen}
 
     In a browser, you can see the JSON response for the text you entered.
 
-9.  [Launch the Kubernetes dashboard](cs_app.html#cli_dashboard). Note that the steps differ depending on your version of Kubernetes.
+10.  [Launch the Kubernetes dashboard](cs_app.html#cli_dashboard). Note that the steps differ depending on your version of Kubernetes.
 
-10. In the **Workloads** tab, you can see the resources that you created. When you are done exploring the Kubernetes dashboard, use CTRL+C to exit the `proxy` command.
+11. In the **Workloads** tab, you can see the resources that you created. When you are done exploring the Kubernetes dashboard, use CTRL+C to exit the `proxy` command.
 
 ### Lesson 3b. Updating the running Watson Tone Analyzer deployment
 {: #lesson3b}
@@ -733,7 +734,7 @@ Ready to delete what you created? You can use the configuration script to delete
   If you do not want to keep the cluster, you can delete that too.
 
   ```
-  bx cs cluster-rm <pr_firm_cluster>
+  bx cs cluster-rm <cluster_name_or_ID>
   ```
   {: pre}
 
