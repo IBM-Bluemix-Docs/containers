@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-03"
+lastupdated: "2018-04-06"
 
 ---
 
@@ -104,7 +104,7 @@ To create a load balancer service:
         spec:
           type: LoadBalancer
           selector:
-            <selectorkey>:<selectorvalue>
+            <selectorkey>: <selectorvalue>
           ports:
            - protocol: TCP
              port: 8080
