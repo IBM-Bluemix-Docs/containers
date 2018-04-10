@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-30"
+lastupdated: "2018-04-05"
 
 ---
 
@@ -19,48 +19,58 @@ lastupdated: "2018-03-30"
 {:tsResolve: .tsResolve}
 
 
-# Troubleshooting cluster logging and monitoring
+# Troubleshooting logging and monitoring
 {: #cs_troubleshoot_health}
 
-As you use {{site.data.keyword.containerlong}}, consider these techniques for troubleshooting cluster logging and monitoring. Before trying these techniques, you can take some general steps to [debug your cluster and check for common issues](cs_troubleshoot.html).
+As you use {{site.data.keyword.containerlong}}, consider these techniques for troubleshooting issues with logging and monitoring.
 {: shortdesc}
+
+If you have a more general issue, try out [cluster debugging](cs_troubleshoot.html).
+{: tip}
 
 ## Logs do not appear
 {: #cs_no_logs}
 
 {: tsSymptoms}
-When you access the Kibana dashboard, logs do not display.
+When you access the Kibana dashboard, your logs do not display.
 
 {: tsResolve}
-Review the following reasons why logs are not appearing and the corresponding troubleshooting steps:
+Review the following reasons why your cluster logs are not appearing and the corresponding troubleshooting steps:
 
 <table>
-<col width="40%">
-<col width="60%">
- <thead>
- <th>Why it's happening</th>
- <th>How to fix it</th>
+  <col width="40%">
+  <col width="60%">
+  <thead>
+    <tr>
+      <th>Why it's happening</th>
+      <th>How to fix it</th>
+    </tr>
  </thead>
  <tbody>
- <tr>
- <td>No logging configuration is set up.</td>
- <td>In order for logs to be sent, you must first create a logging configuration to forward logs to {{site.data.keyword.loganalysislong_notm}}. To create a logging configuration, see <a href="cs_health.html#logging">Configuring cluster logging</a>.</td>
- </tr>
- <tr>
- <td>The cluster is not in a <code>Normal</code> state.</td>
- <td>To check the state of your cluster, see <a href="cs_troubleshoot.html#debug_clusters">Debugging clusters</a>.</td>
- </tr>
- <tr>
- <td>The log storage quota has been hit.</td>
- <td>To increase your log storage limits, see the <a href="/docs/services/CloudLogAnalysis/troubleshooting/error_msgs.html">{{site.data.keyword.loganalysislong_notm}} documentation</a>.</td>
- </tr>
- <tr>
- <td>If you specified a space at cluster creation, the account owner does not have Manager, Developer, or Auditor permissions to that space.</td>
- <td>To change access permissions for the account owner:<ol><li>To find out who the account owner for the cluster is, run <code>bx cs api-key-info &lt;cluster_name_or_ID&gt;</code>.</li><li>To grant that account owner Manager, Developer, or Auditor {{site.data.keyword.containershort_notm}} access permissions to the space, see <a href="cs_users.html#managing">Managing cluster access</a>.</li><li>To refresh the logging token after permissions have been changed, run <code>bx cs logging-config-refresh &lt;cluster_name_or_ID&gt;</code>.</li></ol></td>
- </tr>
- </tbody></table>
+  <tr>
+    <td>No logging configuration is set up.</td>
+    <td>In order for logs to be sent, you must create a logging configuration. To do so, see <a href="cs_health.html#logging">Configuring cluster logging</a>.</td>
+  </tr>
+  <tr>
+    <td>The cluster is not in a <code>Normal</code> state.</td>
+    <td>To check the state of your cluster, see <a href="cs_troubleshoot.html#debug_clusters">Debugging clusters</a>.</td>
+  </tr>
+  <tr>
+    <td>The log storage quota has been hit.</td>
+    <td>To increase your log storage limits, see the <a href="/docs/services/CloudLogAnalysis/troubleshooting/error_msgs.html">{{site.data.keyword.loganalysislong_notm}} documentation</a>.</td>
+  </tr>
+  <tr>
+    <td>If you specified a space at cluster creation, the account owner does not have Manager, Developer, or Auditor permissions to that space.</td>
+      <td>To change access permissions for the account owner:<ol><li>To find out who the account owner for the cluster is, run <code>bx cs api-key-info &lt;cluster_name_or_ID&gt;</code>.</li><li>To grant that account owner Manager, Developer, or Auditor {{site.data.keyword.containershort_notm}} access permissions to the space, see <a href="cs_users.html#managing">Managing cluster access</a>.</li><li>To refresh the logging token after permissions have been changed, run <code>bx cs logging-config-refresh &lt;cluster_name_or_ID&gt;</code>.</li></ol></td>
+    </tr>
+    <tr>
+      <td>You have an application logging config with a symlink in your app path.</td>
+      <td><p>In order for logs to be sent, you must use an absolute path in your logging configuration or the logs cannot be read. If your path is mounted to your worker node, it might have created a symlink.</p> <p>Example: If the specified path is <code>/usr/local/<b>spark</b>/work/app-0546/0/stderr</code> but the logs actually go to <code>/usr/local/<b>spark-1.0-hadoop-1.2</b>/work/app-0546/0/stderr</code>, then the logs cannot be read.</td>
+    </tr>
+  </tbody>
+</table>
 
-To test changes you made during troubleshooting, you can deploy Noisy, a sample pod that produces several log events, onto a worker node in your cluster.
+To test changes you made during troubleshooting, you can deploy *Noisy*, a sample pod that produces several log events, onto a worker node in your cluster.
 
   1. [Target your CLI](cs_cli_install.html#cs_cli_configure) to a cluster where you want to start producing logs.
 
@@ -125,6 +135,8 @@ Still having issues with your cluster?
 
 -   To see whether {{site.data.keyword.Bluemix_notm}} is available, [check the {{site.data.keyword.Bluemix_notm}} status page ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/bluemix/support/#status).
 -   Post a question in the [{{site.data.keyword.containershort_notm}} Slack. ![External link icon](../icons/launch-glyph.svg "External link icon")](https://ibm-container-service.slack.com)
+    If you are not using an IBM ID for your {{site.data.keyword.Bluemix_notm}} account, [request an invitation](https://bxcs-slack-invite.mybluemix.net/) to this Slack.
+    {: tip}
 -   Review the forums to see whether other users ran into the same issue. When you use the forums to ask a question, tag your question so that it is seen by the {{site.data.keyword.Bluemix_notm}} development teams.
 
     -   If you have technical questions about developing or deploying clusters or apps with {{site.data.keyword.containershort_notm}}, post your question on [Stack Overflow ![External link icon](../icons/launch-glyph.svg "External link icon")](https://stackoverflow.com/questions/tagged/ibm-cloud+containers) and tag your question with `ibm-cloud`, `kubernetes`, and `containers`.

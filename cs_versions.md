@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-04"
+lastupdated: "2018-04-09"
 
 ---
 
@@ -49,22 +49,22 @@ Server Version: 1.8.8
 ## Update types
 {: #version_types}
 
-Kubernetes provides these version update types:
+Your Kubernetes cluster has three types of updates: major, minor, and patch.
 {:shortdesc}
 
 |Update type|Examples of version labels|Updated by|Impact
 |-----|-----|-----|-----|
 |Major|1.x.x|You|Operation changes for clusters, including scripts or deployments.|
-|Minor|x.5.x|You|Operation changes for clusters, including scripts or deployments.|
-|Patch|x.x.3|IBM and you|No changes to scripts or deployments. IBM updates masters automatically, but you apply patches to worker nodes.|
+|Minor|x.9.x|You|Operation changes for clusters, including scripts or deployments.|
+|Patch|x.x.4_1510|IBM and you|Security and operating system patches. IBM updates masters automatically, but you apply patches to worker nodes.|
 {: caption="Impacts of Kubernetes updates" caption-side="top"}
+
+For major and minor updates, first [update your master node](cs_cluster_update.html#master) and then [update the worker nodes](cs_cluster_update.html#worker_node). For patch updates, check monthly to see if an update is available, and use the `bx cs worker-update` [command](cs_cli_reference.html#cs_worker_update) to apply these security and operating system patches. As updates become available, you are notified when you view information about the worker nodes, such as with the `bx cs workers <cluster>` or `bx cs worker-get <cluster> <worker>` commands.
 
 By default, you cannot update a Kubernetes master more than two minor versions ahead. For example, if your current master is version 1.5 and you want to update to 1.8, you must update to 1.7 first. You can force the update to continue, but updating more than two minor versions might cause unexpected results.
 {: tip}
 
 The following information summarizes updates that are likely to have impact on deployed apps when you update a cluster to a new version from the previous version. Review the [Kubernetes changelog ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG.md) for a complete list of changes in Kubernetes versions.
-
-For more information about the updating process, see [Updating clusters](cs_cluster_update.html#master) and [Updating worker nodes](cs_cluster_update.html#worker_node).
 
 If you use a `kubectl` CLI version that does match at least the `major.minor` version of your clusters, you might experience unexpected results. Make sure to keep your Kubernetes cluster and [CLI versions](cs_cli_install.html#kubectl) up-to-date.
 {:tip}

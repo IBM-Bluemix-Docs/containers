@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-03"
+lastupdated: "2018-04-06"
 
 ---
 
@@ -151,7 +151,24 @@ For general information about Ingress services and how to get started using them
 
 <br>
 
+<table>
+<col width="20%">
+<col width="20%">
+<col width="60%">
+<thead>
+<th>Istio annotations</th>
+<th>Name</th>
+<th>Description</th>
+</thead>
+<tbody>
+<tr>
+<td><a href="#istio-services">Istio services</a></td>
+<td><code>istio-services</code></td>
+<td>Route traffic to Istio-managed services.</td>
+</tr>
+</tbody></table>
 
+<br>
 
 <table>
 <col width="20%">
@@ -1483,7 +1500,91 @@ spec:
 <br />
 
 
+## Istio annotations
+{: #istio-annotations}
 
+### Istio services (istio-services)
+{: #istio-services}
+
+  Route traffic to Istio-managed services.
+  {:shortdesc}
+
+  <dl>
+  <dt>Description</dt>
+  <dd>
+  If you have Istio-managed services, you can use a cluster ALB to route HTTP/HTTPS requests to the Istio Ingress controller. The Istio Ingress controller then routes the requests to the app services. In order to route traffic, you must make changes to the Ingress resources for both the cluster ALB and the Istio Ingress controller.
+    <br><br>In the Ingress resource for the cluster ALB, you must:
+      <ul>
+        <li>specify the `istio-services` annotation</li>
+        <li>define the service path as the actual path the app listens on</li>
+        <li>define the service port as the port of the Istio Ingress controller</li>
+      </ul>
+    <br>In the Ingress resource for the Istio Ingress controller, you must:
+      <ul>
+        <li>define the service path as the actual path the app listens on</li>
+        <li>define the service port as the HTTP/HTTPS port of the app service that is exposed by the Istio Ingress controller</li>
+  </dd>
+
+   <dt>Sample Ingress resource YAML for the cluster ALB</dt>
+   <dd>
+
+   <pre class="codeblock">
+   <code>apiVersion: extensions/v1beta1
+   kind: Ingress
+   metadata:
+    name: myingress
+    annotations:
+      ingress.bluemix.net/istio-services: "enable=True serviceName=&lt;myservice1&gt; istioServiceNamespace=&lt;istio-namespace&gt; istioServiceName=&lt;istio-ingress-service&gt;"
+   spec:
+    tls:
+    - hosts:
+      - mydomain
+      secretName: mytlssecret
+    rules:
+    - host: mydomain
+      http:
+        paths:
+        - path: &lt;/myapp1&gt;
+          backend:
+            serviceName: &lt;myservice1&gt;
+            servicePort: &lt;istio_ingress_port&gt;
+        - path: &lt;/myapp2&gt;
+          backend:
+            serviceName: &lt;myservice2&gt;
+            servicePort: &lt;istio_ingress_port&gt;</pre>
+
+   <table>
+    <thead>
+    <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
+    </thead>
+    <tbody>
+    <tr>
+    <td><code>enable</code></td>
+      <td>To enable traffic routing to Istio-manages services, set to <code>True</code>.</td>
+    </tr>
+    <tr>
+    <td><code>serviceName</code></td>
+    <td>Replace <code><em>&lt;myservice1&gt;</em></code> with the name of the Kubernetes service that you created for your Istio-managed app. Separate multiple services with a semi-colon (;). This field is optional. If you do not specify a service name, then all Istio-managed services are enabled for traffic routing.</td>
+    </tr>
+    <tr>
+    <td><code>istioServiceNamespace</code></td>
+    <td>Replace <code><em>&lt;istio-namespace&gt;</em></code> with the Kubernetes namespace where Istio is installed. This field is optional. If you do not specify a namespace, then the <code>istio-system</code> namespace is used.</td>
+    </tr>
+    <tr>
+    <td><code>istioServiceName</code></td>
+    <td>Replace <code><em>&lt;istio-ingress-service&gt;</em></code> with the name of the Istio Ingress service. This field is optional. If you do not specify the Istio Ingress service name, then service name <code>istio-ingress</code> is used.</td>
+    </tr>
+    <tr>
+    <td><code>path</code></td>
+      <td>For each Istio-managed service that you want to route traffic to, replace <code><em>&lt;/myapp1&gt;</em></code> with the backend path that the Istio-managed service listens on. The path must correspond to the path that you defined in the Istio Ingress resource.</td>
+    </tr>
+    <tr>
+    <td><code>servicePort</code></td>
+    <td>For each Istio-managed service that you want to route traffic to, replace <code><em>&lt;istio_ingress_port&gt;</em></code> with port of the Istio Ingress controller.</td>
+    </tr>
+    </tbody></table>
+    </dd>
+    </dl>
 
 ## Proxy buffer annotations
 {: #proxy-buffer}
