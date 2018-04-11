@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-03"
+lastupdated: "2018-04-11"
 
 ---
 
@@ -40,6 +40,50 @@ Clusters are deployed on compute hosts that provide native Kubernetes and {{site
 <br />
 
 
+## Comparison of running the service in {{site.data.keyword.Bluemix_notm}} Public, Dedicated, Private, and a hybrid setup
+{: #differentiation}
+
+You can run {{site.data.keyword.containershort_notm}} in {{site.data.keyword.Bluemix_notm}} Public or Dedicated, in {{site.data.keyword.Bluemix_notm}} Private, or in a hybrid setup.
+{:shortdesc}
+
+Review the following information for the differences between these {{site.data.keyword.containershort_notm}} setups.
+
+<table>
+<col width="22%">
+<col width="78%">
+ <thead>
+ <th>{{site.data.keyword.containershort_notm}} setup</th>
+ <th>Description</th>
+ </thead>
+ <tbody>
+ <tr>
+ <td>{{site.data.keyword.Bluemix_notm}} Public
+ </td>
+ <td>With {{site.data.keyword.Bluemix_notm}} Public on [shared or dedicated hardware or bare metal machines](cs_clusters.html#shared_dedicated_node), you can host your apps in clusters on the cloud by using {{site.data.keyword.containershort_notm}}. {{site.data.keyword.containershort_notm}} on {{site.data.keyword.Bluemix_notm}} Public delivers powerful tools by combining Docker and Kubernetes technologies, an intuitive user experience, and built-in security and isolation to automate the deployment, operation, scaling, and monitoring of containerized apps in a cluster of compute hosts.<br><br>For more information, see [{{site.data.keyword.containershort_notm}} technology](cs_tech.html#ibm-cloud-container-service-technology).
+ </td>
+ </tr>
+ <tr>
+ <td>{{site.data.keyword.Bluemix_notm}} Dedicated
+ </td>
+ <td>{{site.data.keyword.Bluemix_notm}} Dedicated offers the same Container Service capabilities on the cloud as {{site.data.keyword.Bluemix_notm}} Public. However, with an {{site.data.keyword.Bluemix_notm}} Dedicated account, available [physical resources are dedicated to your cluster only](cs_clusters.html#shared_dedicated_node) and are not shared with clusters from other {{site.data.keyword.IBM_notm}} customers. You might choose to set up an {{site.data.keyword.Bluemix_notm}} Dedicated environment when you require isolation for your cluster and the other {{site.data.keyword.Bluemix_notm}} services that you use.<br><br>For more information, see [Getting started with clusters in {{site.data.keyword.Bluemix_notm}} Dedicated](cs_dedicated.html#dedicated).
+ </td>
+ </tr>
+ <tr>
+ <td>{{site.data.keyword.Bluemix_notm}} Private
+ </td>
+ <td>{{site.data.keyword.Bluemix_notm}} Private is an application platform that can be installed locally on your own machines. You might choose to use Container Service in {{site.data.keyword.Bluemix_notm}} Private when you need to develop and manage on-prem, containerized apps in your own controlled and secure environment behind a firewall. <br><br>For more information, see [{{site.data.keyword.Bluemix_notm}} Private product information ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/cloud-computing/products/ibm-cloud-private/) and [documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/support/knowledgecenter/en/SSBS6K_1.2.0/kc_welcome_containers.html).
+ </td>
+ </tr>
+ <tr>
+ <td>Hybrid setup
+ </td>
+ <td>Hybrid is the combination use of services that run in {{site.data.keyword.Bluemix_notm}} Public or Dedicated and other services that run on-premise, such as an app in {{site.data.keyword.Bluemix_notm}} Private. Examples for a hybrid setup: <ul><li>Provisioning a cluster with Container Service in {{site.data.keyword.Bluemix_notm}} Public but connecting that cluster to an on-prem database.</li><li>Provisioning a cluster with Container Service in {{site.data.keyword.Bluemix_notm}} Private and deploying an app into that cluster. However, this app might use a {{site.data.keyword.ibmwatson}} service such as {{site.data.keyword.toneanalyzershort}} in {{site.data.keyword.Bluemix_notm}} Public.</li></ul><br>To enable communication between services running in {{site.data.keyword.Bluemix_notm}} Public/Dedicated and services running on-prem, you must [set up a VPN connection](cs_vpn.html).
+ </td>
+ </tr>
+ </tbody>
+</table>
+
+<br />
 
 
 ## Comparison of free and standard clusters
@@ -70,7 +114,7 @@ You can create one free cluster or any number of standard clusters. Try out free
 
 
 {: #responsibilities}
-**Note**: Looking for your responsibilities and container terms when you use the service? 
+**Note**: Looking for your responsibilities and container terms when you use the service?
 
 {: #terms}
 See [{{site.data.keyword.containershort_notm}} responsibilities](cs_responsibilities.html).

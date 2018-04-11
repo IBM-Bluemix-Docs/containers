@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-30"
+lastupdated: "2018-04-11"
 
 ---
 
@@ -38,15 +38,52 @@ The most significant differences between {{site.data.keyword.Bluemix_notm}} publ
 ### Differences in cluster management between the cloud environments
 {: #dedicated_env_differences}
 
-|Area|{{site.data.keyword.Bluemix_notm}} public|{{site.data.keyword.Bluemix_dedicated_notm}}|
-|--|--------------|--------------------------------|
-|Cluster creation|Create a free cluster or specify the following details for a standard cluster:<ul><li>Cluster type</li><li>Name</li><li>Location</li><li>Machine type</li><li>Number of worker nodes</li><li>Public VLAN</li><li>Private VLAN</li><li>Hardware</li></ul>|Specify the following details for a standard cluster:<ul><li>Name</li><li>Kubernetes version</li><li>Machine type</li><li>Number of worker nodes</li></ul><p>**Note:** The VLANs and Hardware settings are pre-defined during the creation of the {{site.data.keyword.Bluemix_notm}} environment.</p>|
-|Cluster hardware and ownership|In standard clusters, the hardware can be shared by other {{site.data.keyword.IBM_notm}} customers or dedicated to you only. The public and private VLANs are owned and managed by you in your IBM Cloud infrastructure (SoftLayer) account.|In clusters on {{site.data.keyword.Bluemix_dedicated_notm}}, the hardware is always dedicated. The public and private VLANs are owned and managed by IBM for you. Location is pre-defined for the {{site.data.keyword.Bluemix_notm}} environment.|
-|Load balancer and Ingress networking|During the provisioning of standard clusters, the following actions occur automatically.<ul><li>One portable public and one portable private subnet are bound to your cluster and assigned to your IBM Cloud infrastructure (SoftLayer) account.</li><li>One portable public IP address is used for a highly available application load balancer and a unique public route is assigned in the format &lt;cluster_name&gt;.containers.mybluemix.net. You can use this route to expose multiple apps to the public. One portable private IP address is used for a private application load balancer.</li><li>Four portable public and four portable private IP addresses are assigned to the cluster that can be used to expose apps via load balancer services. Additional subnets can be requested through your IBM Cloud infrastructure (SoftLayer) account.</li></ul>|When you create your Dedicated account, you make a connectivity decision on how you want to expose and access your cluster services. If you want to use your own enterprise IP ranges (user-manged IPs), you must provide them when you [set up an {{site.data.keyword.Bluemix_dedicated_notm}} environment](/docs/dedicated/index.html#setupdedicated). <ul><li>By default, no portable public subnets are bound to clusters that you create in your Dedicated account. Instead, you have the flexibility to choose the connectivity model which best suits your enterprise.</li><li>After you create the cluster, you choose the type of subnets you want bind to and use with your cluster for either load balancer or Ingress connectivity.<ul><li>For public or private portable subnets, you can [add subnets to clusters](cs_subnets.html#subnets)</li><li>For user-managed IP addresses that you provided to IBM at Dedicated onboarding, you can [add user-managed subnets to clusters](#dedicated_byoip_subnets).</li></ul></li><li>After you bind a subnet to your cluster, the Ingress application load balancer is created. A public Ingress route is created only if you use a portable public subnet.</li></ul>|
-|NodePort networking|Expose a public port on your worker node and use the public IP address of the worker node to publicly access your service in the cluster.|All public IP addresses of the workers nodes are blocked by a firewall. However, for {{site.data.keyword.Bluemix_notm}} services that are added to the cluster, the node port can be accessed via a public IP address or a private IP address.|
-|Persistent storage|Use [dynamic provisioning](cs_storage.html#create) or [static provisioning](cs_storage.html#existing) of volumes.|Use [dynamic provisioning](cs_storage.html#create) of volumes. [Open a support ticket](cs_troubleshoot_storage.html#ts_getting_help) to request a backup for your volumes, request a restoration from your volumes, and perform other storage functions.</li></ul>|
-|Image registry URL in {{site.data.keyword.registryshort_notm}}|<ul><li>US-South and US-East: <code>registry.ng bluemix.net</code></li><li>UK-South: <code>registry.eu-gb.bluemix.net</code></li><li>EU-Central (Frankfurt): <code>registry.eu-de.bluemix.net</code></li><li>Australia (Sydney): <code>registry.au-syd.bluemix.net</code></li></ul>|<ul><li>For new namespaces, use the same region-based registries that are defined for {{site.data.keyword.Bluemix_notm}} public.</li><li>For namespaces that were set up for single and scalable containers in {{site.data.keyword.Bluemix_dedicated_notm}}, use <code>registry.&lt;dedicated_domain&gt;</code></li></ul>|
-|Accessing the registry|See the options in [Using private and public image registries with {{site.data.keyword.containershort_notm}}](cs_images.html).|<ul><li>For new namespaces, see the options in [Using private and public image registries with {{site.data.keyword.containershort_notm}}](cs_images.html).</li><li>For namespaces that were set up for single and scalable groups, [use a token and create a Kubernetes secret](cs_dedicated_tokens.html#cs_dedicated_tokens) for authentication.</li></ul>|
+<table>
+<col width="20%">
+<col width="40%">
+<col width="40%">
+ <thead>
+ <th>Area</th>
+ <th>{{site.data.keyword.Bluemix_notm}} public</th>
+ <th>{{site.data.keyword.Bluemix_dedicated_notm}}</th>
+ </thead>
+ <tbody>
+ <tr>
+ <td>Cluster creation</td>
+ <td>Create a free cluster or a standard cluster.</td>
+ <td>Create a standard cluster.</td>
+ </tr>
+ <tr>
+ <td>Cluster hardware and ownership</td>
+ <td>In standard clusters, the hardware can be shared by other {{site.data.keyword.IBM_notm}} customers or dedicated to you only. The public and private VLANs are owned and managed by you in your IBM Cloud infrastructure (SoftLayer) account.</td>
+ <td>In clusters on {{site.data.keyword.Bluemix_dedicated_notm}}, the hardware is always dedicated. The public and private VLANs that are available for cluster creation are pre-defined when the {{site.data.keyword.Bluemix_dedicated_notm}} environment is set up, and are owned and managed by IBM for you. The location that is available during cluster creation is also pre-defined for the {{site.data.keyword.Bluemix_notm}} environment.</td>
+ </tr>
+ <tr>
+ <td>Load balancer and Ingress networking</td>
+ <td>During the provisioning of standard clusters, the following actions occur automatically.<ul><li>One portable public and one portable private subnet are bound to your cluster and assigned to your IBM Cloud infrastructure (SoftLayer) account. Additional subnets can be requested through your IBM Cloud infrastructure (SoftLayer) account.</li></li><li>One portable public IP address is used for a highly available Ingress application load balancer (ALB) and a unique public route is assigned in the format <code>&lt;cluster_name&gt;.containers.mybluemix.net</code>. You can use this route to expose multiple apps to the public. One portable private IP address is used for a private ALB.</li><li>Four portable public and four portable private IP addresses are assigned to the cluster that can be used to expose apps via load balancer services.</ul></td>
+ <td>When you create your Dedicated account, you make a connectivity decision on how you want to expose and access your cluster services. If you want to use your own enterprise IP ranges (user-manged IPs), you must provide them when you [set up an {{site.data.keyword.Bluemix_dedicated_notm}} environment](/docs/dedicated/index.html#setupdedicated). <ul><li>By default, no portable public subnets are bound to clusters that you create in your Dedicated account. Instead, you have the flexibility to choose the connectivity model which best suits your enterprise.</li><li>After you create the cluster, you choose the type of subnets you want bind to and use with your cluster for either load balancer or Ingress connectivity.<ul><li>For public or private portable subnets, you can [add subnets to clusters](cs_subnets.html#subnets)</li><li>For user-managed IP addresses that you provided to IBM at Dedicated onboarding, you can [add user-managed subnets to clusters](#dedicated_byoip_subnets).</li></ul></li><li>After you bind a subnet to your cluster, the Ingress ALB is created. A public Ingress route is created only if you use a portable public subnet.</li></ul></td>
+ </tr>
+ <tr>
+ <td>NodePort networking</td>
+ <td>Expose a public port on your worker node and use the public IP address of the worker node to publicly access your service in the cluster.</td>
+ <td>All public IP addresses of the workers nodes are blocked by a firewall. However, for {{site.data.keyword.Bluemix_notm}} services that are added to the cluster, the node port can be accessed via a public IP address or a private IP address.</td>
+ </tr>
+ <tr>
+ <td>Persistent storage</td>
+ <td>Use [dynamic provisioning](cs_storage.html#create) or [static provisioning](cs_storage.html#existing) of volumes.</td>
+ <td>Use [dynamic provisioning](cs_storage.html#create) of volumes. [Open a support ticket](cs_troubleshoot_storage.html#ts_getting_help) to request a backup for your volumes, request a restoration from your volumes, and perform other storage functions.</li></ul></td>
+ </tr>
+ <tr>
+ <td>Image registry URL in {{site.data.keyword.registryshort_notm}}</td>
+ <td><ul><li>US-South and US-East: <code>registry.ng bluemix.net</code></li><li>UK-South: <code>registry.eu-gb.bluemix.net</code></li><li>EU-Central (Frankfurt): <code>registry.eu-de.bluemix.net</code></li><li>Australia (Sydney): <code>registry.au-syd.bluemix.net</code></li></ul></td>
+ <td><ul><li>For new namespaces, use the same region-based registries that are defined for {{site.data.keyword.Bluemix_notm}} public.</li><li>For namespaces that were set up for single and scalable containers in {{site.data.keyword.Bluemix_dedicated_notm}}, use <code>registry.&lt;dedicated_domain&gt;</code></li></ul></td>
+ </tr>
+ <tr>
+ <td>Accessing the registry</td>
+ <td>See the options in [Using private and public image registries with {{site.data.keyword.containershort_notm}}](cs_images.html).</td>
+ <td><ul><li>For new namespaces, see the options in [Using private and public image registries with {{site.data.keyword.containershort_notm}}](cs_images.html).</li><li>For namespaces that were set up for single and scalable groups, [use a token and create a Kubernetes secret](cs_dedicated_tokens.html#cs_dedicated_tokens) for authentication.</li></ul></td>
+ </tr>
+</tbody></table>
 {: caption="Feature differences between {{site.data.keyword.Bluemix_notm}} public and {{site.data.keyword.Bluemix_dedicated_notm}}" caption-side="top"}
 
 <br />
@@ -201,16 +238,42 @@ Design your {{site.data.keyword.Bluemix_dedicated_notm}} cluster setup for maxim
 ### Creating clusters with the GUI
 {: #dedicated_creating_ui}
 
-1.  Open your Dedicated console: `https://<my-dedicated-cloud-instance>.bluemix.net`.
+1. Open your Dedicated console: `https://<my-dedicated-cloud-instance>.bluemix.net`.
+
 2. Select the **Also log in to {{site.data.keyword.Bluemix_notm}} Public** check box and click **Log in**.
+
 3. Follow the prompts to log in with your IBMid. If this is your first time to log in to your Dedicated account, then follow the prompts to log in to {{site.data.keyword.Bluemix_dedicated_notm}}.
-4.  From the catalog, select **Containers** and click **Kubernetes cluster**.
-5.  Enter a **Cluster Name**. The name must start with a letter, can contain letters, numbers, and -, and must be 35 characters or fewer. Note that the {{site.data.keyword.IBM_notm}}-assigned Ingress subdomain is derived from the cluster name. The cluster name and Ingress subdomain together form the fully qualified domain name, which must be unique within a region and have 63 characters or fewer. To meet these requirements, the cluster name might be truncated or the subdomain might be assigned random character values.
-6.  Select a **Machine type**. The machine type defines the amount of virtual CPU and memory that is set up in each worker node. This virtual CPU and memory is available for all the containers that you deploy in your nodes.
-    -   The micro machine type indicates the smallest option.
-    -   A balanced machine type has an equal amount of memory that is assigned to each CPU, which optimizes performance.
-7.  Choose the **Number of worker nodes** that you need. Select `3` to ensure high availability of your cluster.
-8.  Click **Create Cluster**. The details for the cluster open, but the worker nodes in the cluster take a few minutes to provision. On the **Worker nodes** tab, you can see the progress of the worker node deployment. When the worker nodes are ready, the state changes to **Ready**.
+
+4. From the catalog, select **Containers** and click **Kubernetes cluster**.
+
+5. Configure your cluster details.
+
+    1. Enter a **Cluster Name**. The name must start with a letter, can contain letters, numbers, and -, and must be 35 characters or fewer. Note that the {{site.data.keyword.IBM_notm}}-assigned Ingress subdomain is derived from the cluster name. The cluster name and Ingress subdomain together form the fully qualified domain name, which must be unique within a region and have 63 characters or fewer. To meet these requirements, the cluster name might be truncated or the subdomain might be assigned random character values.
+
+    2. Select the **Location** in which to deploy your cluster. The available location was pre-defined when the {{site.data.keyword.Bluemix_dedicated_notm}} environment was set up.
+
+    3. Choose the Kubernetes API server version for the cluster master node.
+
+    4. Select a type of hardware isolation. Virtual is billed hourly and bare metal is billed monthly.
+
+        - **Virtual - Dedicated**: Your worker nodes are hosted on infrastructure that is devoted to your account. Your physical resources are completely isolated.
+
+        - **Bare Metal**: Billed monthly, bare metal servers are provisioned by manual interaction with IBM Cloud infrastructure (SoftLayer), and can take more than one business day to complete. Bare metal is best suited for high-performance applications that need more resources and host control. <staging>For clusters that run Kubernetes version 1.9 or later, you can also choose to enable [Trusted Compute](cs_secure.html#trusted_compute) to verify your worker nodes against tampering. If you don't enable trust during cluster creation but want to later, you can use the `bx cs feature-enable` [command](cs_cli_reference.html#cs_cluster_feature_enable). After you enable trust, you cannot disable it later.<staging>
+
+        Be sure that you want to provision a bare metal machine. Because it is billed monthly, if you cancel it immediately after an order by mistake, you are still charged the full month.
+        {:tip}
+
+    5. Select a **Machine type**. The machine type defines the amount of virtual CPU, memory, and disk space that is set up in each worker node and made available to the containers. Available bare metal and virtual machines types vary by the location in which you deploy the cluster. For more information, see the documentation for the `bx cs machine-type` [command](cs_cli_reference.html#cs_machine_types). After you create your cluster, you can add different machine types by adding a new worker node to the cluster.
+
+    6. Choose the **Number of worker nodes** that you need. Select `3` to ensure high availability of your cluster.
+
+    7. Select a **Public VLAN** (optional) and **Private VLAN** (required). The available public and private VLANs are pre-defined when the {{site.data.keyword.Bluemix_dedicated_notm}} environment is set up. Both VLANs communicate between worker nodes but the public VLAN also communicates with the IBM-managed Kubernetes master. You can use the same VLAN for multiple clusters.
+        **Note**: If worker nodes are set up with a private VLAN only, you must configure an alternative solution for network connectivity. For more information, see [VLAN connection for worker nodes](cs_clusters.html#worker_vlan_connection).
+
+    8. By default, **Encrypt local disk** is selected. If you choose to clear the check box, then the host's Docker data is not encrypted. [Learn more about the encryption](cs_secure.html#encrypted_disks).
+
+6. Click **Create cluster**. You can see the progress of the worker node deployment in the **Worker nodes** tab. When the deploy is done, you can see that your cluster is ready in the **Overview** tab.
+    **Note:** Every worker node is assigned a unique worker node ID and domain name that must not be manually changed after the cluster is created. Changing the ID or domain name prevents the Kubernetes master from managing your cluster.
 
 ### Creating clusters with the CLI
 {: #dedicated_creating_cli}
@@ -252,8 +315,16 @@ Design your {{site.data.keyword.Bluemix_dedicated_notm}} cluster setup for maxim
     </tr>
     <tr>
     <td><code>--machine-type <em>&lt;machine_type&gt;</em></code></td>
-    <td>If you are creating a standard cluster, choose a machine type. The machine type specifies the virtual compute resources that are available to each worker node. Review [Comparison of free and standard clusters for {{site.data.keyword.containershort_notm}}](cs_why.html#cluster_types) for more information. For free clusters, you do not have to define the machine type.</td>
+    <td>Choose a machine type. You can deploy your worker nodes as virtual machines on dedicated hardware, or as physical machines on bare metal. Available physical and virtual machines types vary by the location in which you deploy the cluster. For more information, see the documentation for the `bx cs machine-type` [command](cs_cli_reference.html#cs_machine_types).</td>
     </tr>
+    <tr>
+    <td><code>--public-vlan <em>&lt;machine_type&gt;</em></code></td>
+    <td>Enter the ID of the public VLAN that your Dedicated environment is configured to use. If you want to connect your worker nodes to a private VLAN only, do not specify this option. **Note**: If worker nodes are set up with a private VLAN only, you must configure an alternative solution for network connectivity. For more information, see [VLAN connection for worker nodes](cs_clusters.html#worker_vlan_connection).</td>
+    </tr>
+    <tr>
+    <td><code>--private-vlan <em>&lt;machine_type&gt;</em></code></td>
+    <td>Enter the ID of the private VLAN that your Dedicated environment is configured to use.</td>
+    </tr>  
     <tr>
     <td><code>--name <em>&lt;name&gt;</em></code></td>
     <td>Replace <em>&lt;name&gt;</em> with a name for your cluster. The name must start with a letter, can contain letters, numbers, and -, and must be 35 characters or fewer. Note that the {{site.data.keyword.IBM_notm}}-assigned Ingress subdomain is derived from the cluster name. The cluster name and Ingress subdomain together form the fully qualified domain name, which must be unique within a region and have 63 characters or fewer. To meet these requirements, the cluster name might be truncated or the subdomain might be assigned random character values.</td>
@@ -261,6 +332,18 @@ Design your {{site.data.keyword.Bluemix_dedicated_notm}} cluster setup for maxim
     <tr>
     <td><code>--workers <em>&lt;number&gt;</em></code></td>
     <td>The number of worker nodes to include in the cluster. If the <code>--workers</code> option is not specified, one worker node is created.</td>
+    </tr>
+    <tr>
+    <td><code>--kube-version <em>&lt;major.minor.patch&gt;</em></code></td>
+    <td>The Kubernetes version for the cluster master node. This value is optional. Unless specified, the cluster is created with the default of supported Kubernetes versions. To see available versions, run <code>bx cs kube-versions</code>.</td>
+    </tr>
+    <tr>
+    <td><code>--disable-disk-encrypt</code></td>
+    <td>Worker nodes feature [disk encryption](cs_secure.html#encrypted_disks) by default. If you want to disable encryption, include this option.</td>
+    </tr>
+    <tr>
+    <td><code>--trusted</code></td>
+    <td>Enable [Trusted Compute](cs_secure.html#trusted_compute) to verify your bare metal worker nodes against tampering. If you don't enable trust during cluster creation but want to later, you can use the `bx cs feature-enable` [command](cs_cli_reference.html#cs_cluster_feature_enable). After you enable trust, you cannot disable it later.</td>
     </tr>
     </tbody></table>
 
