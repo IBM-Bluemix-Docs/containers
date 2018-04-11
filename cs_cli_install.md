@@ -1,8 +1,8 @@
----
+_
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-14"
+lastupdated: "2018-04-10"
 
 ---
 
@@ -81,7 +81,7 @@ To install the CLIs:
         1.  Move the executable file to the `/usr/local/bin` directory.
 
             ```
-            mv /<path_to_file>/kubectl /usr/local/bin/kubectl
+            mv /filepath/kubectl /usr/local/bin/kubectl
             ```
             {: pre}
 
@@ -172,7 +172,7 @@ Before you can run `kubectl` commands, [install the required CLIs](#cs_cli_insta
     1.  Get the command to set the environment variable and download the Kubernetes configuration files.
 
     ```
-    bx cs cluster-config <cluster_name_or_id>
+    bx cs cluster-config <cluster_name_or_ID>
     ```
     {: pre}
 
@@ -181,12 +181,12 @@ Before you can run `kubectl` commands, [install the required CLIs](#cs_cli_insta
     Example:
 
     ```
-    export KUBECONFIG=/Users/<user_name>/.bluemix/plugins/container-service/clusters/<cluster_name>/kube-config-prod-dal10-<cluster_name>.yml
+    export KUBECONFIG=/Users/<user_name>/.bluemix/plugins/container-service/clusters/mycluster/kube-config-prod-dal10-mycluster.yml
     ```
     {: screen}
 
     2.  Copy and paste the command that is displayed in your terminal to set the `KUBECONFIG` environment variable.
-        
+
     3.  Verify that the `KUBECONFIG` environment variable is set properly.
 
         Example:
@@ -198,7 +198,7 @@ Before you can run `kubectl` commands, [install the required CLIs](#cs_cli_insta
 
         Output:
         ```
-        /Users/<user_name>/.bluemix/plugins/container-service/clusters/<cluster_name>/kube-config-prod-dal10-<cluster_name>.yml
+        /Users/<user_name>/.bluemix/plugins/container-service/clusters/mycluster/kube-config-prod-dal10-mycluster.yml
         ```
         {: screen}
 
@@ -380,10 +380,10 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
 </table>
 
 1.  Create your IAM (Identity and Access Management) access token. The body information that is included in your request varies based on the {{site.data.keyword.Bluemix_notm}} authentication method that you use. Replace the following values:
-  - _&lt;my_username&gt;_: Your {{site.data.keyword.Bluemix_notm}} user name.
-  - _&lt;my_password&gt;_: Your {{site.data.keyword.Bluemix_notm}} password.
-  - _&lt;my_api_key&gt;_: Your {{site.data.keyword.Bluemix_notm}} API key.
-  - _&lt;my_passcode&gt;_: Your {{site.data.keyword.Bluemix_notm}} one-time passcode. Run `bx login --sso` and follow the instructions in your CLI output to retrieve your one-time passcode by using your web browser.
+  - _&lt;username&gt;_: Your {{site.data.keyword.Bluemix_notm}} user name.
+  - _&lt;password&gt;_: Your {{site.data.keyword.Bluemix_notm}} password.
+  - _&lt;api_key&gt;_: Your {{site.data.keyword.Bluemix_notm}} API key.
+  - _&lt;passcode&gt;_: Your {{site.data.keyword.Bluemix_notm}} one-time passcode. Run `bx login --sso` and follow the instructions in your CLI output to retrieve your one-time passcode by using your web browser.
 
     ```
     POST https://iam.<region>.bluemix.net/oidc/token
@@ -413,9 +413,9 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     <td>Body for {{site.data.keyword.Bluemix_notm}} user name and password</td>
     <td><ul><li>grant_type: password</li>
     <li>response_type: cloud_iam uaa</li>
-    <li>username: <em>&lt;my_username&gt;</em></li>
-    <li>password: <em>&lt;my_password&gt;</em></li>
-    <li>uaa_client_id: cf</li>
+    <li>username: <em>&lt;username&gt;</em></li>
+    <li>password: <em>&lt;password&gt;</em></li>
+    <li>uaa_client_ID: cf</li>
     <li>uaa_client_secret:</li></ul>
     <strong>Note</strong>: Add the <code>uaa_client_secret</code> key with no value specified.</td>
     </tr>
@@ -423,8 +423,8 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     <td>Body for {{site.data.keyword.Bluemix_notm}} API keys</td>
     <td><ul><li>grant_type: urn:ibm:params:oauth:grant-type:apikey</li>
     <li>response_type: cloud_iam uaa</li>
-    <li>apikey: <em>&lt;my_api_key&gt;</em></li>
-    <li>uaa_client_id: cf</li>
+    <li>apikey: <em>&lt;api_key&gt;</em></li>
+    <li>uaa_client_ID: cf</li>
     <li>uaa_client_secret:</li></ul>
     <strong>Note</strong>: Add the <code>uaa_client_secret</code> key with no value specified.</td>
     </tr>
@@ -432,8 +432,8 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     <td>Body for {{site.data.keyword.Bluemix_notm}} one-time passcode</td>
     <td><ul><li>grant_type: urn:ibm:params:oauth:grant-type:passcode</li>
     <li>response_type: cloud_iam uaa</li>
-    <li>passcode: <em>&lt;my_passcode&gt;</em></li>
-    <li>uaa_client_id: cf</li>
+    <li>passcode: <em>&lt;passcode&gt;</em></li>
+    <li>uaa_client_ID: cf</li>
     <li>uaa_client_secret:</li></ul>
     <strong>Note</strong>: Add the <code>uaa_client_secret</code> key with no value specified.</td>
     </tr>
@@ -491,8 +491,8 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
       "resources":
         {
           "metadata": {
-            "guid": "<my_account_id>",
-            "url": "/v1/accounts/<my_account_id>",
+            "guid": "<account_ID>",
+            "url": "/v1/accounts/<account_ID>",
             "created_at": "2016-01-07T18:55:09.726Z",
             "updated_at": "2017-04-28T23:46:03.739Z",
             "origin": "BSS"
@@ -502,7 +502,7 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
 
     You can find the ID of your {{site.data.keyword.Bluemix_notm}} account in the **resources/metadata/guid** field of your API output.
 
-3.  Generate a new IAM token that includes your {{site.data.keyword.Bluemix_notm}} credentials and the account ID where the cluster was created. Replace _&lt;my_account_id&gt;_ with the ID of the {{site.data.keyword.Bluemix_notm}} account that you retrieved in the previous step.
+3.  Generate a new IAM token that includes your {{site.data.keyword.Bluemix_notm}} credentials and the account ID where the cluster was created. Replace _&lt;account_ID&gt;_ with the ID of the {{site.data.keyword.Bluemix_notm}} account that you retrieved in the previous step.
 
     **Note:** If you are using an {{site.data.keyword.Bluemix_notm}} API key, you must use the {{site.data.keyword.Bluemix_notm}} account ID the API key was created for. To access clusters in other accounts, log into this account and create an {{site.data.keyword.Bluemix_notm}} API key that is based on this account.
 
@@ -534,31 +534,31 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
     <td>Body for {{site.data.keyword.Bluemix_notm}} user name and password</td>
     <td><ul><li>grant_type: password</li>
     <li>response_type: cloud_iam uaa</li>
-    <li>username: <em>&lt;my_username&gt;</em></li>
-    <li>password: <em>&lt;my_password&gt;</em></li>
-    <li>uaa_client_id: cf</li>
+    <li>username: <em>&lt;username&gt;</em></li>
+    <li>password: <em>&lt;password&gt;</em></li>
+    <li>uaa_client_ID: cf</li>
     <li>uaa_client_secret:</li>
-    <li>bss_account: <em>&lt;my_account_id&gt;</em></li></ul>
+    <li>bss_account: <em>&lt;account_ID&gt;</em></li></ul>
     <strong>Note</strong>: Add the <code>uaa_client_secret</code> key with no value specified.</td>
     </tr>
     <tr>
     <td>Body for {{site.data.keyword.Bluemix_notm}} API keys</td>
     <td><ul><li>grant_type: urn:ibm:params:oauth:grant-type:apikey</li>
     <li>response_type: cloud_iam uaa</li>
-    <li>apikey: <em>&lt;my_api_key&gt;</em></li>
-    <li>uaa_client_id: cf</li>
+    <li>apikey: <em>&lt;api_key&gt;</em></li>
+    <li>uaa_client_ID: cf</li>
     <li>uaa_client_secret:</li>
-    <li>bss_account: <em>&lt;my_account_id&gt;</em></li></ul>
+    <li>bss_account: <em>&lt;account_ID&gt;</em></li></ul>
       <strong>Note</strong>: Add the <code>uaa_client_secret</code> key with no value specified.</td>
     </tr>
     <tr>
     <td>Body for {{site.data.keyword.Bluemix_notm}} one-time passcode</td>
     <td><ul><li>grant_type: urn:ibm:params:oauth:grant-type:passcode</li>
     <li>response_type: cloud_iam uaa</li>
-    <li>passcode: <em>&lt;my_passcode&gt;</em></li>
-    <li>uaa_client_id: cf</li>
+    <li>passcode: <em>&lt;passcode&gt;</em></li>
+    <li>uaa_client_ID: cf</li>
     <li>uaa_client_secret:</li>
-    <li>bss_account: <em>&lt;my_account_id&gt;</em></li></ul><strong>Note</strong>: Add the <code>uaa_client_secret</code> key with no value specified.</td>
+    <li>bss_account: <em>&lt;account_ID&gt;</em></li></ul><strong>Note</strong>: Add the <code>uaa_client_secret</code> key with no value specified.</td>
     </tr>
     </tbody>
     </table>
@@ -610,15 +610,15 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
 ## Refreshing IAM access tokens and obtaining new refresh tokens
 {: #cs_api_refresh}
 
-Every IAM (Identity and Access Management) access token that is issued via the API expires after one hour. You must refresh your access token on a regular basis to assure access to the {{site.data.keyword.Bluemix_notm}} API. You can use the same steps to obtain a new refresh token. 
+Every IAM (Identity and Access Management) access token that is issued via the API expires after one hour. You must refresh your access token on a regular basis to assure access to the {{site.data.keyword.Bluemix_notm}} API. You can use the same steps to obtain a new refresh token.
 {:shortdesc}
 
-Before you begin, make sure that you have an IAM refresh token or an {{site.data.keyword.Bluemix_notm}} API key that you can use to request a new access token. 
-- **Refresh token:** Follow the instructions in [Automating the cluster creation and management process with the {{site.data.keyword.Bluemix_notm}} API](#cs_api). 
-- **API key:** Retrieve your [{{site.data.keyword.Bluemix_notm}} ![External link icon](../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net/) API key as follows. 
+Before you begin, make sure that you have an IAM refresh token or an {{site.data.keyword.Bluemix_notm}} API key that you can use to request a new access token.
+- **Refresh token:** Follow the instructions in [Automating the cluster creation and management process with the {{site.data.keyword.Bluemix_notm}} API](#cs_api).
+- **API key:** Retrieve your [{{site.data.keyword.Bluemix_notm}} ![External link icon](../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net/) API key as follows.
    1. From the menu bar, click **Manage** > **Security** > **Platform API keys**.
-   2. Click **Create**. 
-   3. Enter a **Name** and **Description** for your API key and click **Create**. 
+   2. Click **Create**.
+   3. Enter a **Name** and **Description** for your API key and click **Create**.
    4. Click **Show** to see the API key that was generated for you.
    5. Copy the API key so that you can use it to retrieve your new IAM access token.
 
@@ -646,16 +646,16 @@ Use the following steps if you want to create an IAM token or if you want to obt
     <td><ul><li>grant_type: refresh_token</li>
     <li>response_type: cloud_iam uaa</li>
     <li>refresh_token: <em>&lt;iam_refresh_token&gt;</em></li>
-    <li>uaa_client_id: cf</li>
+    <li>uaa_client_ID: cf</li>
     <li>uaa_client_secret:</li>
-    <li>bss_account: <em>&lt;account_id&gt;</em></li></ul><strong>Note</strong>: Add the <code>uaa_client_secret</code> key with no value specified.</td>
+    <li>bss_account: <em>&lt;account_ID&gt;</em></li></ul><strong>Note</strong>: Add the <code>uaa_client_secret</code> key with no value specified.</td>
     </tr>
     <tr>
       <td>Body when using the {{site.data.keyword.Bluemix_notm}} API key</td>
       <td><ul><li>grant_type: <code>urn:ibm:params:oauth:grant-type:apikey</code></li>
     <li>response_type: cloud_iam uaa</li>
     <li>apikey: <em>&lt;api_key&gt;</em></li>
-    <li>uaa_client_id: cf</li>
+    <li>uaa_client_ID: cf</li>
         <li>uaa_client_secret:</li></ul><strong>Note:</strong> Add the <code>uaa_client_secret</code> key with no value specified.</td>
     </tr>
     </tbody>
