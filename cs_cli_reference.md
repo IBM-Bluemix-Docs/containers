@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-09"
+lastupdated: "2018-04-11"
 
 ---
 
@@ -275,7 +275,7 @@ bx plugin list
 ### bx cs api-key-info CLUSTER
 {: #cs_api_key_info}
 
-View the name and email address for the owner of the IAM API key in a {{site.data.keyword.containershort_notm}} region.
+View the name and email address for the owner of the IAM API key in an {{site.data.keyword.containershort_notm}} region.
 
 The Identity and Access Management (IAM) API key is automatically set for a region when the first action that requires the {{site.data.keyword.containershort_notm}} admin access policy is performed. For example, one of your admin users creates the first cluster in the `us-south` region. By doing that, the IAM API key for this user is stored in the account for this region. The API key is used to order resources in IBM Cloud infrastructure (SoftLayer), such as new worker nodes or VLANs.
 
@@ -303,7 +303,7 @@ If you find that you need to update the API key that is stored for a region, you
 ### bx cs api-key-reset
 {: #cs_api_key_reset}
 
-Replace the current IAM API key in a {{site.data.keyword.containershort_notm}} region.
+Replace the current IAM API key in an {{site.data.keyword.containershort_notm}} region.
 
 This command requires the {{site.data.keyword.containershort_notm}} admin access policy and stores the API key of the user that executes this command in the account. The IAM API key is required to order infrastructure from the IBM Cloud infrastructure (SoftLayer) portfolio. Once stored, the API key is used for every action in a region that requires infrastructure permissions independent of the user that executes this command. For more information about how IAM API keys work, see the [`bx cs api-key-info` command](#cs_api_key_info).
 
@@ -549,7 +549,8 @@ trusted: <em>true</em>
     <tbody>
     <tr>
     <td><code><em>name</em></code></td>
-    <td>Replace <code><em>&lt;cluster_name&gt;</em></code> with a name for your cluster.</td>
+    <td>Replace <code><em>&lt;cluster_name&gt;</em></code> with a name for your cluster. The name must start with a letter, can contain letters, numbers, and hyphen (-), and must be 35 characters or fewer. Note that the cluster name and the region in which the cluster is deployed form the fully qualified domain name for the Ingress subdomain. To ensure that the Ingress subdomain is unique within a region, the cluster name might be truncated and appended with a random value within the Ingress domain name.
+</td>
     </tr>
     <tr>
     <td><code><em>location</em></code></td>
@@ -581,7 +582,8 @@ trusted: <em>true</em>
      </tr>
      <tr>
       <td><code><em>kube-version</em></code></td>
-      <td>The Kubernetes version for the cluster master node. This value is optional. Unless specified, the cluster is created with the default of supported Kubernetes versions. To see available versions, run <code>bx cs kube-versions</code>.</td></tr>
+      <td>The Kubernetes version for the cluster master node. This value is optional. When the version is not specified, the cluster is created with the default of supported Kubernetes versions. To see available versions, run <code>bx cs kube-versions</code>.
+</td></tr>
       <tr>
       <td><code>diskEncryption: <em>false</em></code></td>
       <td>Worker nodes feature disk encryption by default; [learn more](cs_secure.html#worker). To disable encryption, include this option and set the value to <code>false</code>.</td></tr>
@@ -607,10 +609,12 @@ trusted: <em>true</em>
 <dd>Choose a machine type. You can deploy your worker nodes as virtual machines on shared or dedicated hardware, or as physical machines on bare metal. Available physical and virtual machines types vary by the location in which you deploy the cluster. For more information, see the documentation for the `bx cs machine-type` [command](cs_cli_reference.html#cs_machine_types). This value is required for standard clusters and is not available for free clusters.</dd>
 
 <dt><code>--name <em>NAME</em></code></dt>
-<dd>The name for the cluster.  This value is required.</dd>
+<dd>The name for the cluster.  This value is required. The name must start with a letter, can contain letters, numbers, and hyphen (-), and must be 35 characters or fewer. Note that the cluster name and the region in which the cluster is deployed form the fully qualified domain name for the Ingress subdomain. To ensure that the Ingress subdomain is unique within a region, the cluster name might be truncated and appended with a random value within the Ingress domain name.
+</dd>
 
 <dt><code>--kube-version <em>MAJOR.MINOR.PATCH</em></code></dt>
-<dd>The Kubernetes version for the cluster master node. This value is optional. Unless specified, the cluster is created with the default of supported Kubernetes versions. To see available versions, run <code>bx cs kube-versions</code>.</dd>
+<dd>The Kubernetes version for the cluster master node. This value is optional. When the version is not specified, the cluster is created with the default of supported Kubernetes versions. To see available versions, run <code>bx cs kube-versions</code>.
+</dd>
 
 <dt><code>--no-subnet</code></dt>
 <dd>By default, a public and a private portable subnet are created on the VLAN associated with the cluster. Include the <code>--no-subnet</code> flag to avoid creating subnets with the cluster. You can [create](#cs_cluster_subnet_create) or [add](#cs_cluster_subnet_add) subnets to a cluster later.</dd>
