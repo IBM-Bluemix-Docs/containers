@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-30"
+lastupdated: "2018-04-12"
 
 ---
 
@@ -103,7 +103,7 @@ The following image shows the options that you have in {{site.data.keyword.conta
 If you already have existing NFS file shares in your IBM Cloud infrastructure (SoftLayer) account that you want to use with Kubernetes, you can do so by creating a persistent volume (PV) for your existing storage.
 {:shortdesc}
 
-A persistent volume (PV) is a Kubernetes resource that represents an actual storage device that is provisioned in a data center. Persistent volumes abstract the details of how a specific storage type is provisioned by IBM Cloud Storage. To mount a PV to your cluster, you must request persistent storage for your pod by creating a persistent volume claim (PVC). The following diagram illustrates the relationship between PVs and PVCs.
+A persistent volume (PV) is a Kubernetes resource that represents an actual storage device that is provisioned in a data center. Persistent volumes abstract the details of how a specific storage type is provisioned by {{site.data.keyword.Bluemix_notm}} Storage. To mount a PV to your cluster, you must request persistent storage for your pod by creating a persistent volume claim (PVC). The following diagram illustrates the relationship between PVs and PVCs.
 
 ![Create persistent volumes and persistent volume claims](images/cs_cluster_pv_pvc.png)
 
@@ -615,16 +615,30 @@ To add persistent storage:
 ## Setting up backup and restore solutions for NFS file shares
 {: #backup_restore}
 
-File shares are provisioned into the same location (data center) as your cluster and are clustered by {{site.data.keyword.IBM_notm}} to provide high availability. However, file shares are not backed up automatically and might be inaccessible if the entire location fails. To protect your data from being lost or damaged, you can set up periodic backups of your NFS file shares that you can use to restore your data when needed.
+File shares are provisioned into the same location as your cluster. The storage is hosted on clustered servers by {{site.data.keyword.IBM_notm}} to provide availability in case a server goes down. However, file shares  are not backed up automatically and might be inaccessible if the entire location fails. To protect your data from being lost or damaged, you can set up periodic backups that you can use to restore your data when needed.
 {: shortdesc}
 
 Review the following backup and restore options for your NFS file shares:
 
 <dl>
-  <dt>Set up periodic snapshots of your NFS file share</dt>
-  <dd>You can set up [periodic snapshots](/docs/infrastructure/FileStorage/snapshots.html) for your NFS file share, which is a read-only image of an NFS file share that captures the state of the volume at a point in time. Snapshots are stored on the same file share within the same location. You can restore data from a snapshot if a user accidentally removes important data from the volume.</dd>
-  <dt>Replicate snapshots to an NFS file share in another location (data center)</dt>
- <dd>To protect your data from a location failure, you can [replicate snapshots](/docs/infrastructure/FileStorage/replication.html#working-with-replication) to an NFS file share that is set up in another location. Data can be replicated from the primary NFS file share to the backup NFS file share only. You cannot mount a replicated NFS file share to a cluster. When your primary NFS file share fails, you can manually set your backup NFS file share to be the primary one. Then, you can mount it to your cluster. After your primary NFS file share is restored, you can restore the data from the backup NFS file share.</dd>
+  <dt>Set up periodic snapshots</dt>
+  <dd><p>You can set up [periodic snapshots](/docs/infrastructure/FileStorage/snapshots.html) for your NFS file share, which is a read-only image that captures the state of the instance at a point in time. Snapshots are stored on the same file share within the same location. You can restore data from a snapshot if a user accidentally removes important data from the volume.</p>
+  <p>For more information, see [periodic snapshots](/docs/infrastructure/FileStorage/snapshots.html) for your NFS file share.</p></dd>
+  <dt>Replicate snapshots to another location</dt>
+ <dd><p>To protect your data from a location failure, you can [replicate snapshots](/docs/infrastructure/FileStorage/replication.html#working-with-replication) to an NFS file share instance that is set up in another location. Data can be replicated from the primary storage to the backup storage only. You cannot mount a replicated NFS file share instance to a cluster. When your primary storage fails, you can manually set your replicated backup storage to be the primary one. Then, you can mount it to your cluster. After your primary storage is restored, you can restore the data from the backup storage.</p>
+ <p>For more information, see [replicate snapshots](/docs/infrastructure/FileStorage/replication.html#working-with-replication) to an NFS file share.</p></dd>
+ <dt>Duplicate storage</dt>
+ <dd><p>You can duplicate your NFS file share instance in the same location as the original storage instance. A duplicate has the same data as the original storage instance at the point in time that you create the duplicate. Unlike replicas, use the duplicate as a completely independent storage instance from the original. To duplicate, first set up snapshots for the volume.</p>
+ <p>For more information, see [creating a duplicate NFS file storage](/docs/infrastructure/FileStorage/how-to-create-duplicate-volume.html#creating-a-duplicate-file-storage).</p></dd>
   <dt>Backup data to Object Storage</dt>
-  <dd>You can use the [**ibm-backup-restore image**](/docs/services/RegistryImages/ibm-backup-restore/index.html#ibmbackup_restore_starter) to spin up a backup and restore pod in your cluster. This pod contains a script to run a one-time or periodic backup for any persistent volume claim (PVC) in your cluster. Data is stored in your {{site.data.keyword.objectstoragefull}} instance that you set up in a location. To make your data even more highly available and protect your app from a location failure, set up a second {{site.data.keyword.objectstoragefull}} instance and replicate data across locations. If you need to restore data from your {{site.data.keyword.objectstoragefull}} instance, use the restore script that is provided with the image.</dd>
+  <dd><p>You can use the [**ibm-backup-restore image**](/docs/services/RegistryImages/ibm-backup-restore/index.html#ibmbackup_restore_starter) to spin up a backup and restore pod in your cluster. This pod contains a script to run a one-time or periodic backup for any persistent volume claim (PVC) in your cluster. Data is stored in your {{site.data.keyword.objectstoragefull}} instance that you set up in a location.</p>
+  <p>To make your data even more highly available and protect your app from a location failure, set up a second {{site.data.keyword.objectstoragefull}} instance and replicate data across locations. If you need to restore data from your {{site.data.keyword.objectstoragefull}} instance, use the restore script that is provided with the image.</p></dd>
+<dt>Copy data to and from pods and containers</dt>
+<dd><p>You can use the `kubectl cp` [command![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#cp) to copy files and directories to and from pods or specific containers in your cluster. Before you begin, [target your Kubernetes CLI](cs_cli_install.html#cs_cli_configure) to the cluster that you want to use.</p>
+<p>You can use the command in a variety of ways:</p>
+<ul>
+<li>Copy data from your local machine to a pod in your cluster: <pre>kubectl cp <var><local_filepath>/<filename></var> <var><namespace>/<pod>:<pod_filepath></var></pre></li>
+<li>Copy data from a pod in your cluster to your local machine: <pre>kubectl cp <var><namespace>/<pod>:<pod_filepath>/<filename></var> <var><local_filepath>/<filename></var></pre></li>
+<li>Copy data from a pod in your cluster to a specific container in another pod another: <pre>kubectl cp <var><namespace>/<pod>:<pod_filepath></var> <var><namespace>/<other_pod>:<pod_filepath></var> -c <var><container></var></pre></li>
+</ul></dd>
   </dl>
