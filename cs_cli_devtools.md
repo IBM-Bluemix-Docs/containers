@@ -263,7 +263,7 @@ bx plugin list
 ### bx cs api-key-info CLUSTER
 {: #cs_api_key_info}
 
-View the name and email address for the owner of the IAM API key in a {{site.data.keyword.containershort_notm}} region.
+View the name and email address for the owner of the IAM API key in an {{site.data.keyword.containershort_notm}} region.
 
 The Identity and Access Management (IAM) API key is automatically set for a region when the first action that requires the {{site.data.keyword.containershort_notm}} admin access policy is performed. For example, one of your admin users creates the first cluster in the `us-south` region. By doing that, the IAM API key for this user is stored in the account for this region. The API key is used to order resources in IBM Cloud infrastructure (SoftLayer), such as new worker nodes or VLANs.
 
@@ -291,7 +291,7 @@ If you find that you need to update the API key that is stored for a region, you
 ### bx cs api-key-reset
 {: #cs_api_key_reset}
 
-Replace the current IAM API key in a {{site.data.keyword.containershort_notm}} region.
+Replace the current IAM API key in an {{site.data.keyword.containershort_notm}} region.
 
 This command requires the {{site.data.keyword.containershort_notm}} admin access policy and stores the API key of the user that executes this command in the account. The IAM API key is required to order infrastructure from the IBM Cloud infrastructure (SoftLayer) portfolio. Once stored, the API key is used for every action in a region that requires infrastructure permissions independent of the user that executes this command. For more information about how IAM API keys work, see the [`bx cs api-key-info` command](#cs_api_key_info).
 
