@@ -22,8 +22,11 @@ lastupdated: "2018-04-09"
 # Troubleshooting cluster networking
 {: #cs_troubleshoot_network}
 
-As you use {{site.data.keyword.containerlong}}, consider these techniques for troubleshooting cluster networking. Before trying these techniques, you can take some general steps to [debug your cluster and check for common issues](cs_troubleshoot.html).
+As you use {{site.data.keyword.containerlong}}, consider these techniques for troubleshooting cluster networking.
 {: shortdesc}
+
+If you have a more general issue, try out [cluster debugging](cs_troubleshoot.html).
+{: tip}
 
 ## Cannot connect to an app via a load balancer service
 {: #cs_loadbalancer_fails}
