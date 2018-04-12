@@ -60,7 +60,7 @@ Figure. {{site.data.keyword.containershort_notm}} access roles
     <dd><p><em>Platform</em>: You can determine the actions that individuals can perform on an {{site.data.keyword.containershort_notm}} cluster. You can set these policies by region. Example actions are creating or removing clusters, or adding extra worker nodes. These policies must be set in conjunction with infrastructure policies.</p>
     <p><em>Infrastructure</em>: You can determine the access levels for your infrastructure such as the cluster node machines, networking, or storage resources. The same policy is enforced whether the user makes the request from the {{site.data.keyword.containershort_notm}} GUI or through the CLI; even when the actions are completed in IBM Cloud infrastructure (SoftLayer). You must set this type of policy in conjunction with {{site.data.keyword.containershort_notm}} platform access policies. To learn about the available roles, check out [infrastructure permissions](/docs/iam/infrastructureaccess.html#infrapermission).</p></dd>
   <dt>Kubernetes Resource Based Access Control (RBAC) roles</dt>
-    <dd>Every user who is assigned a platform access policy is automatically assigned a Kubernetes role. In Kubernetes, [Role Based Access Control (RBAC) ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/admin/authorization/rbac/#api-overview) determines the actions that a user can perform on the resources inside of a cluster. RBAC roles are automatically configured for the <code>Default</code> namespace, but as the cluster administrator, you can assign roles for other namespaces.</dd>
+    <dd>Every user who is assigned a platform access policy is automatically assigned a Kubernetes role. In Kubernetes, [Role Based Access Control (RBAC) ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/admin/authorization/rbac/#api-overview) determines the actions that a user can perform on the resources inside of a cluster. RBAC roles are automatically configured for the <code>default</code> namespace, but as the cluster administrator, you can assign roles for other namespaces.</dd>
   <dt>Cloud Foundry</dt>
     <dd>At this time, not all services can be managed with Cloud IAM. If you are using one of these services, you can continue to use the [Cloud Foundry user roles](/docs/iam/cfaccess.html#cfaccess) to control access to your services.</dd>
 </dl>
@@ -75,31 +75,31 @@ Downgrading permissions? It can take a few minutes for the action to complete.
 {{site.data.keyword.containershort_notm}} is configured to use {{site.data.keyword.Bluemix_notm}} platform roles. The role permissions build on each other, which means that the `Editor` role has the same permissions as the `Viewer` role, plus the permissions that are granted to an editor. The following table explains the types of actions that each role can perform.
 
 <table>
-  <tr>
+    <tr>
     <th>Platform roles</th>
     <th>Example actions</th>
     <th>Corresponding RBAC role</th>
-  </tr>
+    </tr>
   <tr>
-    <td>Viewer</td>
-    <td>View the details for a cluster or other service instances.</td>
-    <td>View</td>
-  </tr>
+      <td>Viewer</td>	
+      <td>View the details for a cluster or other service instances.</td>	
+      <td>View</td>	
+  </tr>	
   <tr>
-    <td>Editor</td>
-    <td>Can bind or unbind an IBM Cloud service to a cluster, or create a webhook.</td>
-    <td>Edit</td>
-  </tr>
-  <tr>
-    <td>Operator</td>
-    <td>Can create, remove, reboot, or reload a worker node. Can add a subnet to a cluster.</td>
-    <td>Admin</td>
-  </tr>
-  <tr>
-    <td>Administrator</td>
-    <td>Can create and remove clusters. Can edit access policies for others at the account level for the service and infrastructure.</td>
-    <td>Cluster-admin</td>
-  </tr>
+    <td>Editor</td>	
+    <td>Can bind or unbind an IBM Cloud service to a cluster, or create a webhook.</td>	
+    <td>Edit</td>	
+  </tr>	
+  <tr>	
+    <td>Operator</td>	
+    <td>Can create, remove, reboot, or reload a worker node. Can add a subnet to a cluster.</td>	
+    <td>Admin</td>	
+  </tr>	
+  <tr>	
+    <td>Administrator</td>	
+    <td>Can create and remove clusters. Can edit access policies for others at the account level for the service and infrastructure.</td>	
+    <td>Cluster-admin</td>	
+  </tr>	
 </table>
 
 For more information about assigning user roles in the UI, see [Managing IAM access](/docs/iam/mngiam.html#iammanidaccser).
