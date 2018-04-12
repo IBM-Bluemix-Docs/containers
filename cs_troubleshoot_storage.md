@@ -22,8 +22,11 @@ lastupdated: "2018-04-03"
 # Troubleshooting cluster storage
 {: #cs_troubleshoot_storage}
 
-As you use {{site.data.keyword.containerlong}}, consider these techniques for troubleshooting cluster storage. Before trying these techniques, you can take some general steps to [debug your cluster and check for common issues](cs_troubleshoot.html).
+As you use {{site.data.keyword.containerlong}}, consider these techniques for troubleshooting cluster storage.
 {: shortdesc}
+
+If you have a more general issue, try out [cluster debugging](cs_troubleshoot.html).
+{: tip}
 
 ## File systems for worker nodes change to read-only
 {: #readonly_nodes}
