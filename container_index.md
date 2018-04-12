@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-16"
+lastupdated: "2018-04-12"
 
 ---
 
@@ -45,7 +45,7 @@ And what is a cluster? A cluster is a set of resources, worker nodes, networks, 
 
 Before you begin, you must have a Trial, Pay-As-You-Go, or Subscription [{{site.data.keyword.Bluemix_notm}} account](https://console.bluemix.net/registration/) to create a free cluster.
 
-**What {{site.data.keyword.Bluemix_notm}} account type should I get?** With Pay-As-You-Go and Subscription accounts, you can provision IBM Cloud infrastructure (SoftLayer) resources for your Kubernetes clusters and create one free cluster or standard clusters. With a Trial account, you can create one free, 21-day cluster but no standard clusters. After 21 days, your free cluster is deleted. To continue with Kubernetes clusters, create another free cluster until your Trial account ends, or upgrade your account to a Pay-As-You-Go or Subscription.
+**What {{site.data.keyword.Bluemix_notm}} account type should I get?** With Pay-As-You-Go and Subscription accounts, you can provision IBM Cloud infrastructure (SoftLayer) resources for your Kubernetes clusters and create one free cluster or standard clusters. With a Trial account, you can create one free cluster but no standard clusters. All free clusters are deleted after 21 days. To continue with Kubernetes clusters, create another free cluster until your Trial account ends, or upgrade your account to a Pay-As-You-Go or Subscription.
 {:tip}
 
 To create a free cluster:
@@ -65,8 +65,7 @@ Good work! You created your first Kubernetes cluster. Here are some details abou
 
 
 **What's next?**
-
-When the cluster is up and running, start doing something with your cluster.
+Over the next 21 days, try out some things with your free cluster.
 
 * [Install the CLIs to start working with your cluster.](cs_cli_install.html#cs_cli_install)
 * [Deploy an app in your cluster.](cs_app.html#app_cli)
