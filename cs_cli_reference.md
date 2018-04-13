@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-09"
+lastupdated: "2018-04-13"
 
 ---
 
@@ -125,7 +125,7 @@ bx plugin list
 </tbody>
 </table>
 
-<br>
+</br>
 
 <table summary="Cluster commands: Subnets">
 <col width="25%">
@@ -150,7 +150,7 @@ bx plugin list
 </tbody>
 </table>
 
-<br>
+</br>
 
 <table summary="Infrastructure commands">
 <col width="25%">
@@ -169,7 +169,7 @@ bx plugin list
 </tbody>
 </table>
 
-<br>
+</br>
 
 <table summary="Ingress application load balancer (ALB) commands">
 <col width="25%">
@@ -194,7 +194,7 @@ bx plugin list
 </tbody>
 </table>
 
-<br>
+</br>
 
 <table summary="Logging commands">
 <col width="25%">
@@ -225,7 +225,7 @@ bx plugin list
 </tbody>
 </table>
 
-<br>
+</br>
 
 <table summary="Region commands">
 <col width="25%">
@@ -244,7 +244,7 @@ bx plugin list
 </tbody>
 </table>
 
-<br>
+</br>
 
 <table summary="Worker node commands">
 <col width="25%">
@@ -254,19 +254,19 @@ bx plugin list
     <th colspan=4>Worker node commands</th>
  </thead>
  <tbody>
-  <tr>
-    <td>[bx cs worker-add](#cs_worker_add)</td>
-    <td>[bx cs worker-get](#cs_worker_get)</td>
-    <td>[bx cs worker-reboot](#cs_worker_reboot)</td>
-    <td>[bx cs worker-reload](#cs_worker_reload)</td></staging>
-  </tr>
-  <tr>
-    <td>[bx cs worker-rm](#cs_worker_rm)</td>
-    <td>[bx cs worker-update](#cs_worker_update)</td>
-    <td>[bx cs workers](#cs_workers)</td>
-    <td></td>
-  </tr>
-</tbody>
+    <tr>
+      <td>[bx cs worker-add](#cs_worker_add)</td>
+      <td>[bx cs worker-get](#cs_worker_get)</td>
+      <td>[bx cs worker-reboot](#cs_worker_reboot)</td>
+      <td>[bx cs worker-reload](#cs_worker_reload)</td></staging>
+    </tr>
+    <tr>
+      <td>[bx cs worker-rm](#cs_worker_rm)</td>
+      <td>[bx cs worker-update](#cs_worker_update)</td>
+      <td>[bx cs workers](#cs_workers)</td>
+      <td></td>
+    </tr>
+  </tbody>
 </table>
 
 ## API commands
@@ -275,7 +275,7 @@ bx plugin list
 ### bx cs api-key-info CLUSTER
 {: #cs_api_key_info}
 
-View the name and email address for the owner of the IAM API key in a {{site.data.keyword.containershort_notm}} region.
+View the name and email address for the owner of the IAM API key in an {{site.data.keyword.containershort_notm}} region.
 
 The Identity and Access Management (IAM) API key is automatically set for a region when the first action that requires the {{site.data.keyword.containershort_notm}} admin access policy is performed. For example, one of your admin users creates the first cluster in the `us-south` region. By doing that, the IAM API key for this user is stored in the account for this region. The API key is used to order resources in IBM Cloud infrastructure (SoftLayer), such as new worker nodes or VLANs.
 
@@ -303,7 +303,7 @@ If you find that you need to update the API key that is stored for a region, you
 ### bx cs api-key-reset
 {: #cs_api_key_reset}
 
-Replace the current IAM API key in a {{site.data.keyword.containershort_notm}} region.
+Replace the current IAM API key in an {{site.data.keyword.containershort_notm}} region.
 
 This command requires the {{site.data.keyword.containershort_notm}} admin access policy and stores the API key of the user that executes this command in the account. The IAM API key is required to order infrastructure from the IBM Cloud infrastructure (SoftLayer) portfolio. Once stored, the API key is used for every action in a region that requires infrastructure permissions independent of the user that executes this command. For more information about how IAM API keys work, see the [`bx cs api-key-info` command](#cs_api_key_info).
 
@@ -515,7 +515,7 @@ bx cs cluster-config my_cluster
 ### bx cs cluster-create [--file FILE_LOCATION] [--hardware HARDWARE] --location LOCATION --machine-type MACHINE_TYPE --name NAME [--kube-version MAJOR.MINOR.PATCH] [--no-subnet] [--private-vlan PRIVATE_VLAN] [--public-vlan PUBLIC_VLAN] [--workers WORKER] [--disable-disk-encrypt] [--trusted]
 {: #cs_cluster_create}
 
-Create a cluster in your organization. For free clusters, you specify the cluster name; everything else is set to a default value. You can have one free cluster at a time. To take advantage of the full capabilities of Kubernetes, create a standard cluster.
+Create a cluster in your organization. For free clusters, you specify the cluster name; everything else is set to a default value. A free cluster is automatically deleted after 21 days. You can have one free cluster at a time. To take advantage of the full capabilities of Kubernetes, create a standard cluster.
 
 <strong>Command options</strong>
 
@@ -549,7 +549,8 @@ trusted: <em>true</em>
     <tbody>
     <tr>
     <td><code><em>name</em></code></td>
-    <td>Replace <code><em>&lt;cluster_name&gt;</em></code> with a name for your cluster.</td>
+    <td>Replace <code><em>&lt;cluster_name&gt;</em></code> with a name for your cluster. The name must start with a letter, can contain letters, numbers, and hyphen (-), and must be 35 characters or fewer. Note that the cluster name and the region in which the cluster is deployed form the fully qualified domain name for the Ingress subdomain. To ensure that the Ingress subdomain is unique within a region, the cluster name might be truncated and appended with a random value within the Ingress domain name.
+</td>
     </tr>
     <tr>
     <td><code><em>location</em></code></td>
@@ -581,7 +582,8 @@ trusted: <em>true</em>
      </tr>
      <tr>
       <td><code><em>kube-version</em></code></td>
-      <td>The Kubernetes version for the cluster master node. This value is optional. Unless specified, the cluster is created with the default of supported Kubernetes versions. To see available versions, run <code>bx cs kube-versions</code>.</td></tr>
+      <td>The Kubernetes version for the cluster master node. This value is optional. When the version is not specified, the cluster is created with the default of supported Kubernetes versions. To see available versions, run <code>bx cs kube-versions</code>.
+</td></tr>
       <tr>
       <td><code>diskEncryption: <em>false</em></code></td>
       <td>Worker nodes feature disk encryption by default; [learn more](cs_secure.html#worker). To disable encryption, include this option and set the value to <code>false</code>.</td></tr>
@@ -607,10 +609,12 @@ trusted: <em>true</em>
 <dd>Choose a machine type. You can deploy your worker nodes as virtual machines on shared or dedicated hardware, or as physical machines on bare metal. Available physical and virtual machines types vary by the location in which you deploy the cluster. For more information, see the documentation for the `bx cs machine-type` [command](cs_cli_reference.html#cs_machine_types). This value is required for standard clusters and is not available for free clusters.</dd>
 
 <dt><code>--name <em>NAME</em></code></dt>
-<dd>The name for the cluster.  This value is required.</dd>
+<dd>The name for the cluster.  This value is required. The name must start with a letter, can contain letters, numbers, and hyphen (-), and must be 35 characters or fewer. Note that the cluster name and the region in which the cluster is deployed form the fully qualified domain name for the Ingress subdomain. To ensure that the Ingress subdomain is unique within a region, the cluster name might be truncated and appended with a random value within the Ingress domain name.
+</dd>
 
 <dt><code>--kube-version <em>MAJOR.MINOR.PATCH</em></code></dt>
-<dd>The Kubernetes version for the cluster master node. This value is optional. Unless specified, the cluster is created with the default of supported Kubernetes versions. To see available versions, run <code>bx cs kube-versions</code>.</dd>
+<dd>The Kubernetes version for the cluster master node. This value is optional. When the version is not specified, the cluster is created with the default of supported Kubernetes versions. To see available versions, run <code>bx cs kube-versions</code>.
+</dd>
 
 <dt><code>--no-subnet</code></dt>
 <dd>By default, a public and a private portable subnet are created on the VLAN associated with the cluster. Include the <code>--no-subnet</code> flag to avoid creating subnets with the cluster. You can [create](#cs_cluster_subnet_create) or [add](#cs_cluster_subnet_add) subnets to a cluster later.</dd>
@@ -781,7 +785,7 @@ Remove a cluster from your organization.
 ### bx cs cluster-update [-f] CLUSTER [--kube-version MAJOR.MINOR.PATCH] [--force-update]
 {: #cs_cluster_update}
 
-Update the Kubernetes master to the default API version. During the update, you cannot access or change the cluster. Worker nodes, apps, and resources that have been deployed by the user are not modified and will continue to run.
+Update the Kubernetes master to the default API version. During the update, you cannot access or change the cluster. Worker nodes, apps, and resources that have been deployed by the user are not modified and continue to run.
 
 You might need to change your YAML files for future deployments. Review this [release note](cs_versions.html) for details.
 
@@ -843,7 +847,9 @@ View a list of Kubernetes versions supported in {{site.data.keyword.containersho
   {: pre}
 
 
+
 <br />
+
 
 
 ## Cluster commands: Services and integrations
@@ -1547,15 +1553,15 @@ Create a logging configuration. You can use this command to forward logs for con
   <dt><code>--org <em>CLUSTER_ORG</em></code></dt>
     <dd>The name of the Cloud Foundry org that the space is in. This value is valid only for log type <code>ibm</code> and is required if you specified a space.</dd>
   <dt><code>--app-paths</code></dt>
-    <dd>Optionally skips validation of the org and space names when they are specified. Skipping validation decreases processing time, but an invalid logging configuration will not correctly forward logs.</dd>
+    <dd>Skip validation of the org and space names when they are specified. Skipping validation decreases processing time, but an invalid logging configuration does not correctly forward logs. This value is optional.</dd>
   <dt><code>--app-containers</code></dt>
     <dd>The path on their containers that the apps are logging to. To forward logs with source type <code>application</code>, you must provide a path. To specify more than one path, use a comma separated list. Example: <code>/var/log/myApp1/&ast;,/var/log/myApp2/&ast;</code></dd>
   <dt><code>--type <em>LOG_TYPE</em></code></dt>
     <dd>The log forwarding protocol that you want to use. Currently, <code>syslog</code> and <code>ibm</code> are supported. This value is required.</dd>
   <dt><code>--json</code></dt>
-    <dd>Optionally prints the command output in JSON format.</dd>
+    <dd>Print the command output in JSON format. This value is optional.</dd>
   <dt><code>--skip-validation</code></dt>
-    <dd>Optionally skips validation of the org and space names when they are specified. Skipping validation decreases processing time, but an invalid logging configuration will not correctly forward logs.</dd>
+    <dd>Skip validation of the org and space names when they are specified. Skipping validation decreases processing time, but an invalid logging configuration does not correctly forward logs. This value is optional.</dd>
 </dl>
 
 **Examples**:
@@ -1672,7 +1678,7 @@ Update the details of a log forwarding configuration.
    <dt><code>--org <em>CLUSTER_ORG</em></code></dt>
    <dd>The name of the org that the space is in. This value is valid only for log type <code>ibm</code> and is required if you specified a space.</dd>
    <dt><code>--app-paths</code></dt>
-     <dd>Optionally skips validation of the org and space names when they are specified. Skipping validation decreases processing time, but an invalid logging configuration will not correctly forward logs.</dd>
+     <dd>Skip validation of the org and space names when they are specified. Skipping validation decreases processing time, but an invalid logging configuration does not correctly forward logs. This value is optional.</dd>
    <dt><code>--app-containers</code></dt>
      <dd>The path on their containers that the apps are logging to. To forward logs with source type <code>application</code>, you must provide a path. To specify more than one path, use a comma separated list. Example: <code>/var/log/myApp1/&ast;,/var/log/myApp2/&ast;</code></dd>
    <dt><code>--type <em>LOG_TYPE</em></code></dt>
@@ -1680,7 +1686,7 @@ Update the details of a log forwarding configuration.
    <dt><code>--json</code></dt>
    <dd>Optionally prints the command output in JSON format.</dd>
    <dt><code>--skipValidation</code></dt>
-   <dd>Optionally skips validation of the org and space names when they are specified. Skipping validation decreases processing time, but an invalid logging configuration will not correctly forward logs.</dd>
+   <dd>Skip validation of the org and space names when they are specified. Skipping validation decreases processing time, but an invalid logging configuration does not correctly forward logs. This value is optional.</dd>
    </dl>
 
 **Example for log type `ibm`**:
@@ -1733,7 +1739,7 @@ This example filters out all logs that are forwarded from containers with the na
   ```
   {: pre}
 
-This example filters out all of the logs that are forwarded, at an info level or less, from a specific cluster. The output will be returned as JSON.
+This example filters out all of the logs that are forwarded, at an info level or less, from a specific cluster. The output is returned as JSON.
 
   ```
   bx cs logging-filter-create example-cluster --type all --level info --json
@@ -1917,6 +1923,8 @@ us-south      us-south
 ## Worker node commands
 {: worker_node_commands}
 
+
+
 ### bx cs worker-add --cluster CLUSTER [--file FILE_LOCATION] [--hardware HARDWARE] --machine-type MACHINE_TYPE --number NUMBER --private-vlan PRIVATE_VLAN --public-vlan PUBLIC_VLAN [--disable-disk-encrypt]
 {: #cs_worker_add}
 
@@ -2020,6 +2028,8 @@ diskEncryption: <em>false</em></code></pre>
   {: pre}
 
 
+
+
 ### bx cs worker-get [CLUSTER_NAME_OR_ID] WORKER_NODE_ID
 {: #cs_worker_get}
 
@@ -2031,7 +2041,7 @@ View details of a worker node.
    <dt><code><em>CLUSTER_NAME_OR_ID</em></code></dt>
    <dd>The name or ID of the worker node's cluster. This value is optional.</dd>
    <dt><code><em>WORKER_NODE_ID</em></code></dt>
-   <dd>The ID for a worker node. Run <code>bx cs workers <em>CLUSTER</em></code> to view the IDs for the worker nodes in a cluster. This value is required.</dd>
+   <dd>The name of your worker node. Run <code>bx cs workers <em>CLUSTER</em></code> to view the IDs for the worker nodes in a cluster. This value is required.</dd>
    </dl>
 
 **Example command**:
@@ -2191,12 +2201,14 @@ Before you reload your worker node, make sure that pods are rescheduled on other
   ```
   {: pre}
 
+
 ### bx cs worker-rm [-f] CLUSTER WORKER [WORKER]
 {: #cs_worker_rm}
 
-Remove one or more worker nodes from a cluster.
+Remove one or more worker nodes from a cluster. If you remove a worker node, your cluster becomes unbalanced. 
 
 Before you remove your worker node, make sure that pods are rescheduled on other worker nodes to help avoid a downtime for your app or data corruption on your worker node.
+{: tip}
 
 1. List all worker nodes in your cluster and note the **name** of the worker node that you want to remove.
    ```
@@ -2252,7 +2264,10 @@ Before you remove your worker node, make sure that pods are rescheduled on other
   ```
   {: pre}
 
-### bx cs worker-update [-f] CLUSTER WORKER [WORKER] [--force-update]
+
+
+
+### bx cs worker-update [-f] CLUSTER WORKER [WORKER] [--kube-version MAJOR.MINOR.PATCH] [--force-update]
 {: #cs_worker_update}
 
 Update worker nodes to apply the latest security updates and patches to the operating system, and to update the Kubernetes version to match the version of the master node. You can update the master node Kubernetes version with the `bx cs cluster-update` [command](#cs_cluster_update).
@@ -2285,6 +2300,8 @@ You might need to change your YAML files for deployments before updating. Review
   ```
   {: pre}
 
+
+
 ### bx cs workers CLUSTER [--show-deleted]
 {: #cs_workers}
 
@@ -2305,3 +2322,4 @@ View a list of worker nodes and the status for each in a cluster.
   bx cs workers mycluster
   ```
   {: pre}
+
