@@ -22,8 +22,11 @@ lastupdated: "2018-04-10"
 # Troubleshooting clusters and worker nodes
 {: #cs_troubleshoot_clusters}
 
-As you use {{site.data.keyword.containerlong}}, consider these techniques for troubleshooting your clusters and worker nodes. Before trying these techniques, you can take some general steps to [debug your cluster and check for common issues](cs_troubleshoot.html).
+As you use {{site.data.keyword.containerlong}}, consider these techniques for troubleshooting your clusters and worker nodes. 
 {: shortdesc}
+
+If you have a more general issue, try out [cluster debugging](cs_troubleshoot.html).
+{: tip}
 
 ## Unable to connect to your infrastructure account
 {: #cs_credentials}
