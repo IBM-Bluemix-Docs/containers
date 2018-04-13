@@ -24,6 +24,7 @@ IBM Cloud Container Service
         cs_tutorials.md
         cs_tutorials_apps.md
         cs_tutorials_istio.md
+        cs_tutorials_cf.md
     {: .navgroup-end}
 
     {: .navgroup id="howto"}
