@@ -22,8 +22,11 @@ lastupdated: "2018-04-03"
 # Troubleshooting cluster storage
 {: #cs_troubleshoot_storage}
 
-As you use {{site.data.keyword.containerlong}}, consider these techniques for troubleshooting cluster storage. Before trying these techniques, you can take some general steps to [debug your cluster and check for common issues](cs_troubleshoot.html).
+As you use {{site.data.keyword.containerlong}}, consider these techniques for troubleshooting cluster storage.
 {: shortdesc}
+
+If you have a more general issue, try out [cluster debugging](cs_troubleshoot.html).
+{: tip}
 
 ## File systems for worker nodes change to read-only
 {: #readonly_nodes}
@@ -38,10 +41,9 @@ You might see one of the following symptoms:
 The file system on the worker node is read-only.
 
 {: tsResolve}
-1. Back up any data that might be stored on the worker node or in your containers.
-2. For a short-term fix to the existing worker node, reload the worker node.
-
-<pre class="pre"><code>bx cs worker-reload &lt;cluster_name&gt; &lt;worker_id&gt;</code></pre>
+1.  Back up any data that might be stored on the worker node or in your containers.
+2.  For a short-term fix to the existing worker node, reload the worker node.
+    <pre class="pre"><code>bx cs worker-reload &lt;cluster_name&gt; &lt;worker_id&gt;</code></pre>
 
 For a long-term fix, [update the machine type by adding another worker node](cs_cluster_update.html#machine_type).
 
