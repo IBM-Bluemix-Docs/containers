@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-05"
+lastupdated: "2018-04-11"
 
 ---
 
@@ -295,7 +295,7 @@ To use the service in a pod that is deployed in the cluster, cluster users can a
 ## Creating Cloud Foundry aliases for other {{site.data.keyword.Bluemix_notm}} service resources
 {: #adding_resource_cluster}
 
-Cloud Foundry services are supported for binding with clusters. To bind a {{site.data.keyword.Bluemix_notm}} service that is not a Cloud Foundry service to your cluster, create a Cloud Foundry alias for the service instance.
+Cloud Foundry services are supported for binding with clusters. To bind an {{site.data.keyword.Bluemix_notm}} service that is not a Cloud Foundry service to your cluster, create a Cloud Foundry alias for the service instance.
 {:shortdesc}
 
 Before you begin, [request an instance of the {{site.data.keyword.Bluemix_notm}} service](/docs/apps/reqnsi.html#req_instance).
@@ -488,29 +488,32 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
 
 2. **Important**: To maintain cluster security, create a service account for Tiller in the `kube-system` namespace and a Kubernetes RBAC cluster role binding for the `tiller-deploy` pod.
 
-    1. In your preferred editor, create the following file and save it as `rbac-config.yaml`. **Note**: The `cluster-admin` cluster role is created by default in Kubernetes clusters, so you don’t need define it explicitly.
+    1. In your preferred editor, create the following file and save it as `rbac-config.yaml`.
+      **Note**:
+        * The `cluster-admin` cluster role is created by default in Kubernetes clusters, so you don’t need define it explicitly.
+        * If you are using a version 1.7.x cluster, change the `apiVersion` to `rbac.authorization.k8s.io/v1beta1`.
 
-        ```
-        apiVersion: v1
-        kind: ServiceAccount
-        metadata:
+      ```
+      apiVersion: v1
+      kind: ServiceAccount
+      metadata:
+        name: tiller
+        namespace: kube-system
+      ---
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRoleBinding
+      metadata:
+        name: tiller
+      roleRef:
+        apiGroup: rbac.authorization.k8s.io
+        kind: ClusterRole
+        name: cluster-admin
+      subjects:
+        - kind: ServiceAccount
           name: tiller
           namespace: kube-system
-        ---
-        apiVersion: rbac.authorization.k8s.io/v1
-        kind: ClusterRoleBinding
-        metadata:
-          name: tiller
-        roleRef:
-          apiGroup: rbac.authorization.k8s.io
-          kind: ClusterRole
-          name: cluster-admin
-        subjects:
-          - kind: ServiceAccount
-            name: tiller
-            namespace: kube-system
-        ```
-        {: pre}
+      ```
+      {: codeblock}
 
     2. Create the service account and cluster role binding.
 
@@ -558,12 +561,12 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
 7. To learn more about a chart, list its settings and default values.
 
     For example, to view the settings, documentation, and default values for the strongSwan IPSec VPN service Helm chart:
-    
+
     ```
     helm inspect ibm/strongswan
     ```
     {: pre}
-    
+
 
 ### Related Helm links
 {: #helm_links}
