@@ -327,7 +327,8 @@ Design your {{site.data.keyword.Bluemix_dedicated_notm}} cluster setup for maxim
     </tr>  
     <tr>
     <td><code>--name <em>&lt;name&gt;</em></code></td>
-    <td>Enter a name for your cluster. The name must start with a letter, can contain letters, numbers, and -, and must be 35 characters or fewer. Note that the {{site.data.keyword.IBM_notm}}-assigned Ingress subdomain is derived from the cluster name. The cluster name and Ingress subdomain together form the fully qualified domain name, which must be unique within a region and have 63 characters or fewer. To meet these requirements, the cluster name might be truncated or the subdomain might be assigned random character values.</td>
+    <td>Enter a name for your cluster. The name must start with a letter, can contain letters, numbers, and hyphen (-), and must be 35 characters or fewer. Note that the cluster name and the region in which the cluster is deployed form the fully qualified domain name for the Ingress subdomain. To ensure that the Ingress subdomain is unique within a region, the cluster name might be truncated and appended with a random value within the Ingress domain name.
+</td>
     </tr>
     <tr>
     <td><code>--workers <em>&lt;number&gt;</em></code></td>
