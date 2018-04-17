@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-17"
+lastupdated: "2018-04-12"
 
 ---
 
@@ -116,7 +116,7 @@ Before you begin, make sure that you have an existing NFS file share that you ca
 To create a PV and matching PVC, follow these steps.
 
 1.  In your IBM Cloud infrastructure (SoftLayer) account, look up the ID and path of the NFS file share where you want to create your PV object. In addition, authorize the file storage to the subnets in the cluster. This authorization gives your cluster access to the storage.
-    1.  Log in to the [IBM Cloud infrastructure (SoftLayer) portal ![External link icon](../icons/launch-glyph.svg "External link icon")](https://control.softlayer.com/).
+    1.  Log in to your IBM Cloud infrastructure (SoftLayer) account.
     2.  Click **Storage**.
     3.  Click **File Storage** and from the **Actions** menu, select **Authorize Host**.
     4.  Select **Subnets**.
@@ -248,6 +248,8 @@ You successfully created a PV object and bound it to a PVC. Cluster users can no
 
 <br />
 
+
+
 ## Using existing block storage in your cluster
 {: #existing_block}
 
@@ -324,7 +326,7 @@ To create a PV and matching PVC, follow these steps.
     </tr>
     <tr>
     <td><code>flexVolume/options/Lun</code></td>
-    <td>Enter the lun ID for your block storage that your retrieved in the previous step as <code>lunId</code>.</td>
+    <td>Enter the lun ID for your block storage that you retrieved in the previous step as <code>lunId</code>.</td>
     </tr>
     <tr>
     <td><code>flexVolume/options/TargetPortal</code></td>
@@ -405,6 +407,7 @@ To create a PV and matching PVC, follow these steps.
 You successfully created a PV and bound it to a PVC. Cluster users can now [mount the PVC](#app_volume_mount) to their deployments and start reading from and writing to the PV.
 
 <br />
+
 
 
 ## Adding NFS file storage or block storage to apps
@@ -772,10 +775,13 @@ To add persistent storage:
 
 {: #nonroot}
 {: #enabling_root_permission}
-<!--This section to be left in place until the link redirects are completed-->
+
 **NFS permissions**: Looking for documentation on enabling NFS non-root permissions? See [Adding non-root user access to NFS file storage](cs_troubleshoot_storage.html#nonroot).
 
 <br />
+
+
+
 
 ## Installing the {{site.data.keyword.Bluemix_notm}} Block Storage plug-in on your cluster
 {: #install_block}
@@ -860,6 +866,7 @@ You can now continue to [create a PVC](#create) to provision block storage for y
 
 <br />
 
+
 ### Updating the {{site.data.keyword.Bluemix_notm}} Block Storage plug-in
 You can upgrade the existing {{site.data.keyword.Bluemix_notm}} Block Storage plug-in to the latest version. 
 {: shortdesc}
@@ -885,6 +892,7 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
    {: pre}
    
 <br />
+
 
 ### Removing the {{site.data.keyword.Bluemix_notm}} Block Storage plug-in
 If you do not want to provision and use {{site.data.keyword.Bluemix_notm}} Block Storage for your cluster, you can uninstall the helm chart.
@@ -929,6 +937,7 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
 <br />
 
 
+
 ## Setting up backup and restore solutions for NFS file shares and block storage
 {: #backup_restore}
 
@@ -961,5 +970,3 @@ Review the following backup and restore options for your NFS file shares and blo
 </ul>
 </dd>
   </dl>
-  
-<br />
