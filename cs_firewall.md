@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-10"
+lastupdated: "2018-04-16"
 
 ---
 
@@ -96,14 +96,14 @@ To allow access for a specific cluster:
 4. Retrieve the **Master URL** for your cluster.
 
    ```
-   bx cs cluster-get <cluster_name_or_id>
+   bx cs cluster-get <cluster_name_or_ID>
    ```
    {: pre}
 
    Example output:
    ```
    ...
-   Master URL:		https://169.46.7.238:31142
+   Master URL:		https://169.xx.xxx.xxx:31142
    ...
    ```
    {: screen}
@@ -119,7 +119,7 @@ To allow access for a specific cluster:
 
    Example command:
    ```
-   curl --insecure https://169.46.7.238:31142/version
+   curl --insecure https://169.xx.xxx.xxx:31142/version
    ```
    {: pre}
 
@@ -175,7 +175,7 @@ Let your cluster access infrastructure resources and services from behind a fire
   1.  Note the public IP address for all your worker nodes in the cluster.
 
       ```
-      bx cs workers <cluster_name_or_id>
+      bx cs workers <cluster_name_or_ID>
       ```
       {: pre}
 
@@ -264,8 +264,8 @@ Let your cluster access infrastructure resources and services from behind a fire
 </p>
 
   4.  Optional: Allow outgoing network traffic from the worker nodes to {{site.data.keyword.monitoringlong_notm}} and {{site.data.keyword.loganalysislong_notm}} services:
-      - `TCP port 443, port 9095 FROM <each_worker_node_publicIP> TO <monitoring_publicIP>`
-      - Replace <em>&lt;monitoring_publicIP&gt;</em> with all of the addresses for the monitoring regions to which you want to allow traffic:
+      - `TCP port 443, port 9095 FROM <each_worker_node_public_IP> TO <monitoring_public_IP>`
+      - Replace <em>&lt;monitoring_public_IP&gt;</em> with all of the addresses for the monitoring regions to which you want to allow traffic:
         <p><table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
         <thead>
         <th>Container region</th>
@@ -292,8 +292,8 @@ Let your cluster access infrastructure resources and services from behind a fire
         </tbody>
       </table>
 </p>
-      - `TCP port 443, port 9091 FROM <each_worker_node_publicIP> TO <logging_publicIP>`
-      - Replace <em>&lt;logging_publicIP&gt;</em> with all of the addresses for the logging regions to which you want to allow traffic:
+      - `TCP port 443, port 9091 FROM <each_worker_node_public_IP> TO <logging_public_IP>`
+      - Replace <em>&lt;logging_public_IP&gt;</em> with all of the addresses for the logging regions to which you want to allow traffic:
         <p><table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
         <thead>
         <th>Container region</th>
