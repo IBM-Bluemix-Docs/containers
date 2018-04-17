@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-10"
+lastupdated: "2018-04-17"
 
 ---
 
@@ -183,7 +183,7 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to you
 
 You can use the default port or set your own port to launch the Kubernetes dashboard for a cluster.
 
-1.  For clusters with a Kubernetes master version of 1.7.4 or earlier:
+1.  For clusters with a Kubernetes master version of 1.7.16 or earlier:
 
     1.  Set the proxy with the default port number.
 
@@ -398,6 +398,7 @@ To deploy your app:
 
 
 
+
 ## Scaling apps 
 {: #app_scaling}
 
@@ -412,6 +413,7 @@ Before you begin:
 - Heapster monitoring must be deployed in the cluster that you want to autoscale.
 
 Steps:
+
 1.  Deploy your app to your cluster from the CLI. When you deploy your app, you must request CPU.
 
     ```
