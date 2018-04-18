@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-10"
+lastupdated: "2018-04-18"
 
 ---
 
@@ -22,7 +22,7 @@ lastupdated: "2018-04-10"
 # Troubleshooting clusters and worker nodes
 {: #cs_troubleshoot_clusters}
 
-As you use {{site.data.keyword.containerlong}}, consider these techniques for troubleshooting your clusters and worker nodes. 
+As you use {{site.data.keyword.containerlong}}, consider these techniques for troubleshooting your clusters and worker nodes.
 {: shortdesc}
 
 If you have a more general issue, try out [cluster debugging](cs_troubleshoot.html).
@@ -288,8 +288,8 @@ Manually update the reference of the private IP address to point to the correct 
 
   ```
   ID                                                 Public IP       Private IP       Machine Type   State     Status   Location   Version
-  kube-dal10-cr9b7371a7fcbe46d08e04f046d5e6d8b4-w1   192.0.2.0.12    203.0.113.144    b2c.4x16       normal    Ready    dal10      1.8.8
-  kube-dal10-cr9b7371a7fcbe46d08e04f046d5e6d8b4-w2   192.0.2.0.16    203.0.113.144    b2c.4x16       deleted    -       dal10      1.8.8
+  kube-dal10-cr9b7371a7fcbe46d08e04f046d5e6d8b4-w1   169.xx.xxx.xxx    10.xxx.xx.xxx    b2c.4x16       normal    Ready    dal10      1.8.8
+  kube-dal10-cr9b7371a7fcbe46d08e04f046d5e6d8b4-w2   169.xx.xxx.xxx    10.xxx.xx.xxx    b2c.4x16       deleted    -       dal10      1.8.8
   ```
   {: screen}
 
@@ -297,14 +297,14 @@ Manually update the reference of the private IP address to point to the correct 
 3.  List the available worker nodes in Calico. Replace <path_to_file> with the local path to the Calico configuration file.
 
   ```
-  calicoctl get nodes --config=<path_to_file>/calicoctl.cfg
+  calicoctl get nodes --config=filepath/calicoctl.cfg
   ```
   {: pre}
 
   ```
   NAME
-  kube-dal10-cr9b7371a7fcbe46d08e04f046d5e6d8b4-w1
-  kube-dal10-cr9b7371a7fcbe46d08e04f046d5e6d8b4-w2
+  kube-dal10-cr9b7371a7faaa46d08e04f046d5e6d8b4-w1
+  kube-dal10-cr9b7371a7faaa46d08e04f046d5e6d8b4-w2
   ```
   {: screen}
 
@@ -386,7 +386,7 @@ If this cluster is an existing one, check your cluster capacity.
 4.  If you don't have enough capacity in your cluster, add another worker node to your cluster.
 
   ```
-  bx cs worker-add <cluster name or id> 1
+  bx cs worker-add <cluster_name_or_ID> 1
   ```
   {: pre}
 

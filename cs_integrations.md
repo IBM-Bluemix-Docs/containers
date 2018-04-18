@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-11"
+lastupdated: "2018-04-18"
 
 ---
 
@@ -25,7 +25,6 @@ You can use various external services and catalog services with a standard Kuber
 
 ## Application services
 <table summary="Summary for accessibility">
-<caption>Table. Integration options for application services</caption>
 <thead>
 <tr>
 <th>Service</th>
@@ -47,7 +46,6 @@ IBM Blockchain Platform <img src="../icons/launch-glyph.svg" alt="External link 
 
 ## DevOps services
 <table summary="Summary for accessibility">
-<caption>Table. Integration options for managing DevOps</caption>
 <thead>
 <tr>
 <th>Service</th>
@@ -80,7 +78,6 @@ IBM Blockchain Platform <img src="../icons/launch-glyph.svg" alt="External link 
 
 ## Logging and monitoring services
 <table summary="Summary for accessibility">
-<caption>Table. Integration options for managing logs and metrics</caption>
 <thead>
 <tr>
 <th>Service</th>
@@ -137,7 +134,6 @@ IBM Blockchain Platform <img src="../icons/launch-glyph.svg" alt="External link 
 
 ## Security services
 <table summary="Summary for accessibility">
-<caption>Table. Integration options for managing security</caption>
 <thead>
 <tr>
 <th>Service</th>
@@ -178,7 +174,6 @@ IBM Blockchain Platform <img src="../icons/launch-glyph.svg" alt="External link 
 
 ## Storage services
 <table summary="Summary for accessibility">
-<caption>Table. Integration options for persistent storage</caption>
 <thead>
 <tr>
 <th>Service</th>
@@ -261,7 +256,7 @@ To add a service:
 5.  Add the service to your cluster.
 
     ```
-    bx cs cluster-service-bind <cluster_name_or_id> <namespace> <service_instance_name>
+    bx cs cluster-service-bind <cluster_name_or_ID> <namespace> <service_instance_name>
     ```
     {: pre}
 
@@ -357,8 +352,8 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to you
     Example output:
 
     ```
-    NAME                                    TYPE                                  DATA      AGE
-    binding-<service_instance_name>         Opaque                                1         3m
+    NAME                              TYPE            DATA      AGE
+    binding-<service_instance_name>   Opaque          1         3m
 
     ```
     {: screen}
@@ -426,7 +421,7 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to you
 5.  Create the pod and mount the secret volume.
 
     ```
-    kubectl apply -f <yaml_path>
+    kubectl apply -f secret-test.yaml
     ```
     {: pre}
 
