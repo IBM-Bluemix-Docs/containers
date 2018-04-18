@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-01-24"
+lastupdated: "2018-04-17"
 
 ---
 
@@ -62,10 +62,10 @@ Before you begin, create an {{site.data.keyword.Bluemix_notm}} Pay-As-You-Go acc
   ```
   {: pre}
 
-6.  Set the API key that you generated earlier to access the IBM Cloud infrastructure (SoftLayer) portfolio. Replace `<API_KEY>` with the API key and `<USERNAME>` with the {{site.data.keyword.ibmid}} of your new Pay-As-You-Go account.
+6.  Set the API key that you generated earlier to access the IBM Cloud infrastructure (SoftLayer) portfolio. Replace `<API_key>` with the API key and `<username>` with the {{site.data.keyword.ibmid}} of your new Pay-As-You-Go account.
 
   ```
-  bx cs credentials-set --infrastructure-api-key <API_KEY> --infrastructure-username <USERNAME>
+  bx cs credentials-set --infrastructure-api-key <API_key> --infrastructure-username <username>
   ```
   {: pre}
 
