@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-30"
+lastupdated: "2018-04-18"
 
 ---
 
@@ -27,8 +27,8 @@ In {{site.data.keyword.containershort_notm}}, you can add stable, portable IPs f
 <dl>
   <dt>Creating a cluster includes subnet creation by default</dt>
   <dd>When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically provisions the following subnets:
-    <ol><li>A portable public subnet with 5 public IP addresses</li>
-      <li>A portable private subnet with 5 private IP addresses </li></ol>
+    <ul><li>A portable public subnet with 5 public IP addresses</li>
+      <li>A portable private subnet with 5 private IP addresses </li></ul>
       Portable public and private IP addresses are static and do not change when a worker node is removed. For each subnet, one of the portable public and one of the portable private IP addresses are used for [Ingress application load balancers](cs_ingress.html) that you can use to expose multiple apps in your cluster. The remaining four portable public and four portable private IP addresses can be used to expose single apps to the public or private network by [creating a load balancer service](cs_loadbalancer.html).</dd>
   <dt>[Ordering and managing your own existing subnets](#custom)</dt>
   <dd>You can order and manage existing portable subnets in your IBM Cloud infrastructure (SoftLayer) account instead of using the automatically provisioned subnets. Use this option to retain stable static IPs across cluster removals and creations, or to order larger blocks of IPs. First create a cluster without subnets by using the `cluster-create --no-subnet` command, and then add the subnet to the cluster with the `cluster-subnet-add` command. </dd>
@@ -82,7 +82,7 @@ To create a subnet in an IBM Cloud infrastructure (SoftLayer) account and make i
 2.  Verify that the subnet was successfully created and added to your cluster. The subnet CIDR is listed in the **VLANs** section.
 
     ```
-    bx cs cluster-get --showResources <cluster name or id>
+    bx cs cluster-get --showResources <cluster_name_or_ID>
     ```
     {: pre}
 
@@ -97,18 +97,18 @@ To create a subnet in an IBM Cloud infrastructure (SoftLayer) account and make i
 You can add existing portable public or private subnets to your Kubernetes cluster or reuse subnets from a deleted cluster.
 {:shortdesc}
 
-Before you begin, 
+Before you begin,
 - [Target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
 - To reuse subnets from a cluster that you no longer need, delete the unneeded cluster. The subnets are deleted within 24 hours.
 
    ```
-   bx cs cluster-rm CLUSTER
+   bx cs cluster-rm <cluster_name_or_ID
    ```
    {: pre}
 
 To use an existing subnet in your IBM Cloud infrastructure (SoftLayer) portfolio with custom firewall rules or available IP addresses:
 
-1.  Identify the subnet to use. Note the ID of the subnet and the VLAN ID. In this example, the subnet ID is 807861 and the VLAN ID is 1901230.
+1.  Identify the subnet to use. Note the ID of the subnet and the VLAN ID. In this example, the subnet ID is `1602829` and the VLAN ID is `2234945`.
 
     ```
     bx cs subnets
@@ -118,9 +118,9 @@ To use an existing subnet in your IBM Cloud infrastructure (SoftLayer) portfolio
     ```
     Getting subnet list...
     OK
-    ID        Network                                      Gateway                                   VLAN ID   Type      Bound Cluster
-    553242    203.0.113.0/24                               10.87.15.00                               1565280   private
-    807861    192.0.2.0/24                                 10.121.167.180                            1901230   public
+    ID        Network             Gateway          VLAN ID   Type      Bound Cluster
+    1550165   10.xxx.xx.xxx/26      10.xxx.xx.xxx      2234947   private
+    1602829   169.xx.xxx.xxx/28    169.xx.xxx.xxx    2234945   public
 
     ```
     {: screen}
@@ -135,16 +135,16 @@ To use an existing subnet in your IBM Cloud infrastructure (SoftLayer) portfolio
     ```
     Getting VLAN list...
     OK
-    ID        Name                  Number   Type      Router
-    1900403   vlan                    1391     private   bcr01a.dal10
-    1901230   vlan                    1180     public   fcr02a.dal10
+    ID        Name   Number   Type      Router         Supports Virtual Workers
+    2234947          1813     private   bcr01a.dal10   true
+    2234945          1618     public    fcr01a.dal10   true
     ```
     {: screen}
 
 3.  Create a cluster by using the location and VLAN ID that you identified. To reuse an existing subnet, include the `--no-subnet` flag to prevent a new portable public IP subnet and a new portable private IP subnet from being created automatically.
 
     ```
-    bx cs cluster-create --location dal10 --machine-type u2c.2x4 --no-subnet --public-vlan 1901230 --private-vlan 1900403 --workers 3 --name my_cluster
+    bx cs cluster-create --location dal10 --machine-type u2c.2x4 --no-subnet --public-vlan 2234945 --private-vlan 2234947 --workers 3 --name my_cluster
     ```
     {: pre}
 
@@ -161,7 +161,7 @@ To use an existing subnet in your IBM Cloud infrastructure (SoftLayer) portfolio
 
     ```
     Name         ID                                   State      Created          Workers   Location   Version
-    my_cluster   paf97e8843e29941b49c598f516de72101   deployed   20170201162433   3         dal10      1.8.8
+    mycluster    aaf97a8843a29941b49a598f516da72101   deployed   20170201162433   3         dal10      1.8.8
     ```
     {: screen}
 
@@ -200,7 +200,7 @@ Provide a subnet from an on-premises network that you want {{site.data.keyword.c
 
 Requirements:
 - User-managed subnets can be added to private VLANs only.
-- The subnet prefix length limit is /24 to /30. For example, `203.0.113.0/24` specifies 253 usable private IP addresses, while `203.0.113.0/30` specifies 1 usable private IP address.
+- The subnet prefix length limit is /24 to /30. For example, `169.xx.xxx.xxx/24` specifies 253 usable private IP addresses, while `169.xx.xxx.xxx/30` specifies 1 usable private IP address.
 - The first IP address in the subnet must be used as the gateway for the subnet.
 
 Before you begin:
@@ -218,9 +218,9 @@ To add a subnet from an on-premises network:
 
     ```
     VLANs
-    VLAN ID   Subnet CIDR         Public       User-managed
-    1555503   192.0.2.0/24        true         false
-    1555505   198.51.100.0/24     false        false
+    VLAN ID   Subnet CIDR       Public   User-managed
+    2234947   10.xxx.xx.xxx/29   false    false
+    2234945   169.xx.xxx.xxx/29   true     false
     ```
     {: screen}
 
@@ -234,7 +234,7 @@ To add a subnet from an on-premises network:
     Example:
 
     ```
-    bx cs cluster-user-subnet-add my_cluster 203.0.113.0/24 1555505
+    bx cs cluster-user-subnet-add mycluster 10.xxx.xx.xxx/24 2234947
     ```
     {: pre}
 
@@ -247,10 +247,10 @@ To add a subnet from an on-premises network:
 
     ```
     VLANs
-    VLAN ID   Subnet CIDR         Public       User-managed
-    1555503   192.0.2.0/24        true         false
-    1555505   198.51.100.0/24     false        false
-    1555505   203.0.113.0/24      false        true
+    VLAN ID   Subnet CIDR       Public   User-managed
+    2234947   10.xxx.xx.xxx/29   false    false
+    2234945   169.xx.xxx.xxx/29   true     false
+    2234947   10.xxx.xx.xxx/24      false        true
     ```
     {: screen}
 
@@ -343,7 +343,7 @@ Before you begin, [set the context for the cluster you want to use.](cs_cli_inst
 2.  Remove the load balancer service that uses a public or private IP address.
 
     ```
-    kubectl delete service <myservice>
+    kubectl delete service <service_name>
     ```
     {: pre}
 

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-16"
+lastupdated: "2018-04-17"
 
 ---
 
@@ -18,7 +18,7 @@ lastupdated: "2018-03-16"
 # Restricting network traffic to edge worker nodes
 {: #edge}
 
-Edge worker nodes can improve the security of your Kubernetes cluster by allowing fewer worker nodes to be accessed externally and by isolating the networking workload in {{site.data.keyword.containerlong}}. 
+Edge worker nodes can improve the security of your Kubernetes cluster by allowing fewer worker nodes to be accessed externally and by isolating the networking workload in {{site.data.keyword.containerlong}}.
 {:shortdesc}
 
 When these worker nodes are marked for networking only, other workloads cannot consume the CPU or memory of the worker node and interfere with networking.
@@ -50,7 +50,7 @@ Steps:
 2. Label the worker nodes with `dedicated=edge`. After a worker node is marked with `dedicated=edge`, all subsequent Ingress and load balancers are deployed to an edge worker node.
 
   ```
-  kubectl label nodes <node_name> <node_name2> dedicated=edge
+  kubectl label nodes <node1_name> <node2_name> dedicated=edge
   ```
   {: pre}
 
@@ -64,7 +64,7 @@ Steps:
   Output:
 
   ```
-  kubectl get service -n <namespace> <name> -o yaml | kubectl apply -f
+  kubectl get service -n <namespace> <service_name> -o yaml | kubectl apply -f
   ```
   {: screen}
 
@@ -73,7 +73,7 @@ Steps:
   Output:
 
   ```
-  service "<name>" configured
+  service "my_loadbalancer" configured
   ```
   {: screen}
 
@@ -86,7 +86,7 @@ You labeled worker nodes with `dedicated=edge` and redeployed all existing load 
 {: #edge_workloads}
 
 One benefit of edge worker nodes is that they can be specified to run networking services only.
-{:shortdesc} 
+{:shortdesc}
 
 Using the `dedicated=edge` toleration means that all load balancer and Ingress services are deployed to the labeled worker nodes only. However, to prevent other workloads from running on edge worker nodes and consuming worker node resources, you must use [Kubernetes taints ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/).
 
@@ -103,5 +103,4 @@ Using the `dedicated=edge` toleration means that all load balancer and Ingress s
   ```
   kubectl taint node <node_name> dedicated=edge:NoSchedule dedicated=edge:NoExecute
   ```
-
-Now, only pods with the `dedicated=edge` toleration are deployed to your edge worker nodes.
+  Now, only pods with the `dedicated=edge` toleration are deployed to your edge worker nodes.
