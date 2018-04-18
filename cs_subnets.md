@@ -56,7 +56,6 @@ To create a subnet in an IBM Cloud infrastructure (SoftLayer) account and make i
     {: pre}
 
     <table>
-    <caption>Understanding this command's components</caption>
     <thead>
     <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
     </thead>
@@ -119,8 +118,8 @@ To use an existing subnet in your IBM Cloud infrastructure (SoftLayer) portfolio
     Getting subnet list...
     OK
     ID        Network             Gateway          VLAN ID   Type      Bound Cluster
-    1550165   10.xxx.xx.xxx/26      10.xxx.xx.xxx      2234947   private
-    1602829   169.xx.xxx.xxx/28    169.xx.xxx.xxx    2234945   public
+    1550165   10.xxx.xx.xxx/26    10.xxx.xx.xxx    2234947   private
+    1602829   169.xx.xxx.xxx/28   169.xx.xxx.xxx   2234945   public
 
     ```
     {: screen}
@@ -176,7 +175,7 @@ To use an existing subnet in your IBM Cloud infrastructure (SoftLayer) portfolio
 
     ```
     ID                                                  Public IP        Private IP     Machine Type   State      Status   Location   Version
-    prod-dal10-pa8dfcc5223804439c87489886dbbc9c07-w1    169.47.223.113   10.171.42.93   free           normal     Ready    dal10      1.8.8
+    prod-dal10-pa8dfcc5223804439c87489886dbbc9c07-w1    169.xx.xxx.xxx   10.xxx.xx.xxx   free           normal     Ready    dal10      1.8.8
     ```
     {: screen}
 
@@ -219,8 +218,8 @@ To add a subnet from an on-premises network:
     ```
     VLANs
     VLAN ID   Subnet CIDR       Public   User-managed
-    2234947   10.xxx.xx.xxx/29   false    false
-    2234945   169.xx.xxx.xxx/29   true     false
+    2234947   10.xxx.xx.xxx/29  false    false
+    2234945   169.xx.xxx.xxx/29 true     false
     ```
     {: screen}
 
@@ -248,9 +247,9 @@ To add a subnet from an on-premises network:
     ```
     VLANs
     VLAN ID   Subnet CIDR       Public   User-managed
-    2234947   10.xxx.xx.xxx/29   false    false
-    2234945   169.xx.xxx.xxx/29   true     false
-    2234947   10.xxx.xx.xxx/24      false        true
+    2234947   10.xxx.xx.xxx/29  false    false
+    2234945   169.xx.xxx.xxx/29   true   false
+    2234947   10.xxx.xx.xxx/24  false        true
     ```
     {: screen}
 
