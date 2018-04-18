@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-13"
+lastupdated: "2018-04-17"
 
 ---
 
@@ -104,9 +104,8 @@ Review the built-in worker node security features to protect the worker node env
   <dd>If you choose to provision your worker nodes on bare metal physical servers (instead of virtual server instances), you have additional control over the compute host, such as the memory or CPU. This setup eliminates the virtual machine hypervisor that allocates physical resources to virtual machines that run on the host. Instead, all of a bare metal machine's resources are dedicated exclusively to the worker, so you don't need to worry about "noisy neighbors" sharing resources or slowing down performance. Bare metal servers are dedicated to you, with all its resources available for cluster usage.</dd>
   <dt id="trusted_compute">{{site.data.keyword.containershort_notm}} with Trusted Compute</dt>
   <dd><p>When you [deploy your cluster on bare metal](cs_clusters.html#clusters_ui) that supports Trusted Compute, you can enable trust. The Trusted Platform Module (TPM) chip is enabled on each bare metal worker node in the cluster that supports Trusted Compute (including future nodes that you add to the cluster). Therefore, after you enable trust, you cannot later disable it for the cluster. A trust server is deployed on the master node, and a trust agent is deployed as a pod on the worker node. When your worker node starts up, the trust agent pod monitors each stage of the process.</p>
-  <p>The hardware is at the root of trust, which sends measurements by using the TPM. TPM generates encryption keys that are used for securing the transmission of the measurement data throughout the process. The trust agent passes along to the trust server the measurement of each component in the startup process: from the BIOS firmware that interacts with the TPM hardware to the bootloader and OS kernel. Then, the trusted agent compares these measurements with the expected values in the trusted server to attest whether the startup was valid. The trusted compute process does not monitor other pods in your worker nodes, such as applications.</p>
   <p>For example, if an unauthorized user gains access to your system and modifies the OS kernel with additional logic to collect data, the trust agent detects this and changes the node's trusted status so that you know that the worker is no longer trusted. With trusted compute, you can verify your worker nodes against tampering.</p>
-  <p><img src="images/trusted_compute.png" alt="Trusted Compute for bare metal clusters" width="480" style="width:480px; border-style: none"/></p></dd>
+  </dd>
   <dt id="encrypted_disks">Encrypted disk</dt>
   <dd>By default, {{site.data.keyword.containershort_notm}} provides two local SSD encrypted data partitions for all worker nodes when the worker nodes are provisioned. The first partition is not encrypted, and the second partition mounted to _/var/lib/docker_ is unlocked by using LUKS encryption keys. Each worker in each Kubernetes cluster has its own unique LUKS encryption key, managed by {{site.data.keyword.containershort_notm}}. When you create a cluster or add a worker node to an existing cluster, the keys are pulled securely and then discarded after the encrypted disk is unlocked.
   <p><b>Note</b>: Encryption can impact disk I/O performance. For workloads that require high-performance disk I/O, test a cluster with encryption both enabled and disabled to help you decide whether to turn off encryption.</p>
@@ -132,7 +131,9 @@ Manage the security and integrity of your images with built-in security features
 
 <dl>
 <dt>Secured Docker private image repository in {{site.data.keyword.registryshort_notm}}</dt>
-<dd>You can set up your own Docker image repository in a multi-tenant, highly available, and scalable private image registry that is hosted and managed by IBM to build, securely store, and share Docker images across cluster users.</dd>
+<dd>You can set up your own Docker image repository in a multi-tenant, highly available, and scalable private image registry that is hosted and managed by IBM to build, securely store, and share Docker images across cluster users.
+  
+  </dd>
 
 <dt>Image security compliance</dt>
 <dd>When you use {{site.data.keyword.registryshort_notm}}, you can leverage the built-in security scanning that is provided by Vulnerability Advisor. Every image that is pushed to your namespace is automatically scanned for vulnerabilities against a database of known CentOS, Debian, Red Hat, and Ubuntu issues. If vulnerabilities are found, Vulnerability Advisor provides instructions for how to resolve them to assure image integrity and security.</dd>

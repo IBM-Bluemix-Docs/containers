@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-03"
+lastupdated: "2018-04-17"
 
 ---
 
@@ -19,7 +19,7 @@ lastupdated: "2018-04-03"
 # Building containers from images
 {: #images}
 
-A Docker image is the basis for every container that you create with {{site.data.keyword.containerlong}}. 
+A Docker image is the basis for every container that you create with {{site.data.keyword.containerlong}}.
 {:shortdesc}
 
 An image is created from a Dockerfile, which is a file that contains instructions to build the image. A Dockerfile might reference build artifacts in its instructions that are stored separately, such as an app, the app's configuration, and its dependencies.
@@ -27,7 +27,7 @@ An image is created from a Dockerfile, which is a file that contains instruction
 ## Planning image registries
 {: #planning}
 
-Images are typically stored in a registry that can either be accessible by the public (public registry) or set up with limited access for a small group of users (private registry). 
+Images are typically stored in a registry that can either be accessible by the public (public registry) or set up with limited access for a small group of users (private registry).
 {:shortdesc}
 
 Public registries, such as Docker Hub, can be used to get started with Docker and Kubernetes to create your first containerized app in a cluster. But when it comes to enterprise applications, use a private registry, like the one provided in {{site.data.keyword.registryshort_notm}} to protect your images from being used and changed by unauthorized users. Private registries must be set up by the cluster admin to ensure that the credentials to access the private registry are available to the cluster users.
@@ -43,6 +43,8 @@ You can use multiple registries with {{site.data.keyword.containershort_notm}} t
 {: caption="Table. Public and private image registry options" caption-side="top"}
 
 After you set up an image registry, cluster users can use the images for their app deployments to the cluster.
+
+
 
 <br />
 
@@ -125,7 +127,7 @@ To deploy a container into the **default** namespace of your cluster, create a c
 
 
 
-## Creating an `imagePullSecret` to access {{site.data.keyword.Bluemix_notm}} or external private registries in other Kubernetes namespaces, {{site.data.keyword.Bluemix_notm}} regions, and accounts 
+## Creating an `imagePullSecret` to access {{site.data.keyword.Bluemix_notm}} or external private registries in other Kubernetes namespaces, {{site.data.keyword.Bluemix_notm}} regions, and accounts
 {: #other}
 
 Create your own `imagePullSecret` to deploy containers to other Kubernetes namespaces, use images that are stored in other {{site.data.keyword.Bluemix_notm}} regions or accounts, use images that are stored in {{site.data.keyword.Bluemix_dedicated_notm}}, or use images that are stored in external private registries.
@@ -141,13 +143,13 @@ Before you begin:
 3.  [Target your CLI to your cluster](cs_cli_install.html#cs_cli_configure).
 
 <br/>
-To create your own imagePullSecret you can choose among the following options: 
+To create your own imagePullSecret you can choose among the following options:
 - [Copy the imagePullSecret from the default namespace to other namespaces in your cluster](#copy_imagePullSecret).
 - [Create an imagePullSecret to access images in other {{site.data.keyword.Bluemix_notm}} regions and accounts](#other_regions_accounts).
 - [Create an imagePullSecret to access images in external private registries](#private_images).
 
 <br/>
-If you already created an imagePullSecret in your namespace that you want to use in your deployment, see [Deploying containers by using the created imagePullSecret](#use_imagePullSecret). 
+If you already created an imagePullSecret in your namespace that you want to use in your deployment, see [Deploying containers by using the created imagePullSecret](#use_imagePullSecret).
 
 ### Copying the imagePullSecret from the default namespace to other namespaces in your cluster
 {: #copy_imagePullSecret}
@@ -155,13 +157,13 @@ If you already created an imagePullSecret in your namespace that you want to use
 You can copy the imagePullSecret that is automatically created for the `default` Kubernetes namespace to other namespaces in your cluster.
 {: shortdesc}
 
-1. List available namespaces in your cluster. 
+1. List available namespaces in your cluster.
    ```
    kubectl get namespaces
    ```
    {: pre}
-   
-   Example output: 
+
+   Example output:
    ```
    default          Active    79d
    ibm-cert-store   Active    79d
@@ -171,32 +173,32 @@ You can copy the imagePullSecret that is automatically created for the `default`
    kube-system      Active    79d
    ```
    {: screen}
-   
-2. Optional: Create a namespace in your cluster. 
+
+2. Optional: Create a namespace in your cluster.
    ```
-   kubectl create namespace <mynamespace>
-   ```
-   {: pre}
-   
-3. Copy the imagePullSecret from the `default` namespace to the namespace of your choice. The new imagePullSecret is named `bluemix-<mynamespace>-secret-regional`. 
-   ```
-   kubectl get secret bluemix-default-secret-regional -o yaml | sed 's/default/<mynamespace>/g' | kubectl -n <mynamespace> create -f -
+   kubectl create namespace <namespace_name>
    ```
    {: pre}
-   
-4.  Verify that the secret was created successfully. 
+
+3. Copy the imagePullSecret from the `default` namespace to the namespace of your choice. The new imagePullSecret is named `bluemix-<namespace_name>-secret-regional`.
+   ```
+   kubectl get secret bluemix-default-secret-regional -o yaml | sed 's/default/<namespace_name>/g' | kubectl -n <namespace_name> create -f -
+   ```
+   {: pre}
+
+4.  Verify that the secret was created successfully.
     ```
-    kubectl get secrets --namespace <mynamespace>
+    kubectl get secrets --namespace <namespace_name>
     ```
     {: pre}
-   
+
 5. [Deploy a container by using the imagePullSecret](#use_imagePullSecret) in your namespace.
 
-  
+
 ### Creating an imagePullSecret to access images in other {{site.data.keyword.Bluemix_notm}} regions and accounts
 {: #other_regions_accounts}
 
-To access images in other {{site.data.keyword.Bluemix_notm}} regions or accounts, you must create a registry token and save your credentials in your own imagePullSecret. 
+To access images in other {{site.data.keyword.Bluemix_notm}} regions or accounts, you must create a registry token and save your credentials in your own imagePullSecret.
 {: shortdesc}
 
 1.  If you do not have a token, [create a token for the registry that you want to access.](/docs/services/Registry/registry_tokens.html#registry_tokens_create)
@@ -208,7 +210,7 @@ To access images in other {{site.data.keyword.Bluemix_notm}} regions or accounts
     {: pre}
 
 3.  Note the token ID that you want to use.
-4.  Retrieve the value for your token. Replace <em>&lt;token_id&gt;</em> with the ID of the token that you retrieved in the previous step.
+4.  Retrieve the value for your token. Replace <em>&lt;token_ID&gt;</em> with the ID of the token that you retrieved in the previous step.
 
     ```
     bx cr token-get <token_id>
@@ -220,7 +222,7 @@ To access images in other {{site.data.keyword.Bluemix_notm}} regions or accounts
 5.  Create the Kubernetes secret to store your token information.
 
     ```
-    kubectl --namespace <kubernetes_namespace> create secret docker-registry <secret_name>  --docker-server=<registry_url> --docker-username=token --docker-password=<token_value> --docker-email=<docker_email>
+    kubectl --namespace <kubernetes_namespace> create secret docker-registry <secret_name>  --docker-server=<registry_URL> --docker-username=token --docker-password=<token_value> --docker-email=<docker_email>
     ```
     {: pre}
 
@@ -239,7 +241,7 @@ To access images in other {{site.data.keyword.Bluemix_notm}} regions or accounts
     <td>Required. The name that you want to use for your imagePullSecret.</td>
     </tr>
     <tr>
-    <td><code>--docker-server <em>&lt;registry_url&gt;</em></code></td>
+    <td><code>--docker-server <em>&lt;registry_URL&gt;</em></code></td>
     <td>Required. The URL to the image registry where your namespace is set up.<ul><li>For namespaces that are set up in US-South and US-East registry.ng.bluemix.net</li><li>For namespaces that are set up in UK-South registry.eu-gb.bluemix.net</li><li>For namespaces that are set up in EU-Central (Frankfurt) registry.eu-de.bluemix.net</li><li>For namespaces that are set up in Australia (Sydney) registry.au-syd.bluemix.net</li><li>For namespaces that are set up in {{site.data.keyword.Bluemix_dedicated_notm}} registry.<em>&lt;dedicated_domain&gt;</em></li></ul></td>
     </tr>
     <tr>
@@ -263,7 +265,7 @@ To access images in other {{site.data.keyword.Bluemix_notm}} regions or accounts
     ```
     {: pre}
 
-7.  [Deploy a container by using the imagePullSecret](#use_imagePullSecret) in your namespace. 
+7.  [Deploy a container by using the imagePullSecret](#use_imagePullSecret) in your namespace.
 
 ### Accessing images that are stored in other private registries
 {: #private_images}
@@ -281,7 +283,7 @@ To create an imagePullSecret:
 1.  Create the Kubernetes secret to store your private registry credentials.
 
     ```
-    kubectl --namespace <kubernetes_namespace> create secret docker-registry <secret_name>  --docker-server=<registry_url> --docker-username=<docker_username> --docker-password=<docker_password> --docker-email=<docker_email>
+    kubectl --namespace <kubernetes_namespace> create secret docker-registry <secret_name>  --docker-server=<registry_URL> --docker-username=<docker_username> --docker-password=<docker_password> --docker-email=<docker_email>
     ```
     {: pre}
 
@@ -300,7 +302,7 @@ To create an imagePullSecret:
     <td>Required. The name that you want to use for your imagePullSecret.</td>
     </tr>
     <tr>
-    <td><code>--docker-server <em>&lt;registry_url&gt;</em></code></td>
+    <td><code>--docker-server <em>&lt;registry_URL&gt;</em></code></td>
     <td>Required. The URL to the registry where your private images are stored.</td>
     </tr>
     <tr>
@@ -325,18 +327,18 @@ To create an imagePullSecret:
     {: pre}
 
 3.  [Create a pod that references the imagePullSecret](#use_imagePullSecret).
-        
+
 ## Deploying containers by using the created imagePullSecret
 {: #use_imagePullSecret}
 
-You can define an imagePullSecret in your pod deployment or store the imagePullSecret in your Kubernetes service account so that it is available for all deployments that do not specify a service account. 
+You can define an imagePullSecret in your pod deployment or store the imagePullSecret in your Kubernetes service account so that it is available for all deployments that do not specify a service account.
 {: shortdesc}
 
 Choose between the following options:
-* [Referring to the imagePullSecret in your pod deployment](#pod_imagePullSecret): Use this option if you do not want to grant access to your registry for all pods in your namespace by default. 
+* [Referring to the imagePullSecret in your pod deployment](#pod_imagePullSecret): Use this option if you do not want to grant access to your registry for all pods in your namespace by default.
 * [Storing the imagePullSecret in the Kubernetes service account](#store_imagePullSecret): Use this option to grant access to images in your registry for deployments in the selected Kubernetes namespaces.
 
-Before you begin: 
+Before you begin:
 * [Create an imagePullSecret](#other) to access images in other registries, Kubernetes namespaces, {{site.data.keyword.Bluemix_notm}} regions, or accounts.
 * [Target your CLI to your cluster](cs_cli_install.html#cs_cli_configure).
 
@@ -348,28 +350,28 @@ When you refer to the imagePullSecret in a pod deployment, it is valid for this 
 
 1.  Create a pod configuration file that is named `mypod.yaml`.
 2.  Define the pod and the imagePullSecret to access the private {{site.data.keyword.registrylong_notm}}.
-          
+
     To access a private image:
     ```
     apiVersion: v1
     kind: Pod
     metadata:
-      name: <pod_name>
+      name: mypod
     spec:
       containers:
         - name: <container_name>
-          image: registry.<region>.bluemix.net/<my_namespace>/<my_image>:<tag>
+          image: registry.<region>.bluemix.net/<namespace_name>/<image_name>:<tag>
       imagePullSecrets:
         - name: <secret_name>
     ```
     {: codeblock}
-          
+
     To access an {{site.data.keyword.Bluemix_notm}} public image:
     ```
     apiVersion: v1
     kind: Pod
     metadata:
-      name: <pod_name>
+      name: mypod
     spec:
       containers:
         - name: <container_name>
@@ -390,11 +392,11 @@ When you refer to the imagePullSecret in a pod deployment, it is valid for this 
     <td>The name of the container that you want to deploy to your cluster.</td>
     </tr>
     <tr>
-    <td><code><em>&lt;my_namespace&gt;</em></code></td>
+    <td><code><em>&lt;namespace_name&gt;</em></code></td>
     <td>The namespace where your image is stored. To list available namespaces, run `bx cr namespace-list`.</td>
     </tr>
     <tr>
-    <td><code><em>&lt;my_image&gt;</em></code></td>
+    <td><code><em>&lt;image_name&gt;</em></code></td>
     <td>The name of the image that you want to use. To list available images in an {{site.data.keyword.Bluemix_notm}} account, run `bx cr image-list`.</td>
     </tr>
     <tr>
@@ -413,62 +415,62 @@ When you refer to the imagePullSecret in a pod deployment, it is valid for this 
     kubectl apply -f mypod.yaml
     ```
     {: pre}
-           
+
 ### Storing the imagePullSecret in the Kubernetes service account for the selected namespace
 {:#store_imagePullSecret}
 
 Every namespace has a Kubernetes service account that is named `default`. You can add the imagePullSecret to this service account to grant access to images in your registry. Deployments that do not specify a service account automatically use the `default` service account for this namespace.
 {:shortdesc}
 
-1. Check if an imagePullSecret already exists for your default service account. 
+1. Check if an imagePullSecret already exists for your default service account.
    ```
-   kubectl describe serviceaccount default -n <mynamespace>
+   kubectl describe serviceaccount default -n <namespace_name>
    ```
    {: pre}
    No imagePullSecret exists when `<none>` is displayed in the **Image pull secrets** entry.  
-2. Add the imagePullSecret to your default service account. 
-   - **To add the imagePullSecret when no imagePullSecret is defined:** 
+2. Add the imagePullSecret to your default service account.
+   - **To add the imagePullSecret when no imagePullSecret is defined:**
        ```
-       kubectl patch -n <mynamespace> serviceaccount/default -p '{"imagePullSecrets":[{"name": "bluemix-<mynamespace>-secret-regional"}]}'
+       kubectl patch -n <namespace_name> serviceaccount/default -p '{"imagePullSecrets":[{"name": "bluemix-<namespace_name>-secret-regional"}]}'
        ```
        {: pre}
    - **To add the imagePullSecret when an imagePullSecret is already defined:**
        ```
-       kubectl patch -n <mynamespace> serviceaccount/default --type='json' -p='[{"op":"add","path":"/imagePullSecrets/-","value":{"name":"bluemix-<mynamespace>-secret-regional"}}]'
+       kubectl patch -n <namespace_name> serviceaccount/default --type='json' -p='[{"op":"add","path":"/imagePullSecrets/-","value":{"name":"bluemix-<namespace_name>-secret-regional"}}]'
        ```
        {: pre}
-3. Verify that your imagePullSecret was added to your default service account. 
+3. Verify that your imagePullSecret was added to your default service account.
    ```
-   kubectl describe serviceaccount default -n <mynamespace>
+   kubectl describe serviceaccount default -n <namespace_name>
    ```
    {: pre}
-       
+
    Example output:
    ```
    Name:                default
-   Namespace:           <mynamespace>
+   Namespace:           <namespace_name>
    Labels:              <none>
    Annotations:         <none>
-   Image pull secrets:  bluemix-mynamespace-secret-regional
+   Image pull secrets:  bluemix-namespace_name-secret-regional
    Mountable secrets:   default-token-sh2dx
    Tokens:              default-token-sh2dx
    Events:              <none>
    ```
    {: pre}
-  
-4. Deploy a container from an image in your registry. 
+
+4. Deploy a container from an image in your registry.
    ```
    apiVersion: v1
    kind: Pod
    metadata:
-     name: <pod_name>
+     name: mypod
    spec:
      containers:
        - name: <container_name>
-         image: registry.<region>.bluemix.net/<my_namespace>/<my_image>:<tag>
+         image: registry.<region>.bluemix.net/<namespace_name>/<image_name>:<tag>
    ```
    {: codeblock}
-    
+
 5. Create the deployment in your cluster.
    ```
    kubectl apply -f mypod.yaml
