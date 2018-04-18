@@ -34,10 +34,10 @@ You can use non-persistent storage options if your data is not required to be pe
 
 The following image shows available non-persistent data storage options in {{site.data.keyword.containerlong_notm}}. These options are available for free and standard clusters.
 <p>
-<img src="images/cs_storage_nonpersistent.png" alt="Non-persistent data storage options" width="450" style="width: 450px; border-style: none"/></p>
+<img src="images/cs_storage_nonpersistent.png" alt="Non-persistent data storage options" width="500" style="width: 500px; border-style: none"/></p>
 
-<table summary="The table shows non-persistent storage options. Rows are to be read from the left to right, with the number of the option in column one, the title of the otion in column two and a description in column three." style="width: 100%">
-<caption>Table. Non-persistent storage options</caption>
+<table summary="The table shows non-persistent storage options. Rows are to be read from the left to right, with the number of the option in column one, the title of the option in column two, and a description in column three." style="width: 100%">
+<caption>Non-persistent storage options</caption>
   <thead>
   <th>Option</th>
   <th>Description</th>
@@ -70,7 +70,7 @@ The following image shows the options that you have in {{site.data.keyword.conta
 <img src="images/cs_storage_ha.png" alt="High availability options for persistent storage"/>
 
 <table summary="The table shows persistent storage options. Rows are to be read from the left to right, with the number of the option in column one, the title of the otion in column two and a description in column three.">
-<caption>Table. Persistent storage options</caption>
+<caption>Persistent storage options</caption>
   <thead>
   <th>Option</th>
   <th>Description</th>
@@ -91,7 +91,7 @@ The following image shows the options that you have in {{site.data.keyword.conta
   </tbody>
   </table>
 
-{: caption="Table. Persistent data storage options for deployments in Kubernetes clusters" caption-side="top"}
+{: caption="Persistent data storage options for deployments in Kubernetes clusters" caption-side="top"}
 
 <br />
 
@@ -173,14 +173,7 @@ To create a PV and matching PVC, follow these steps.
 3.  Create the PV object in your cluster.
 
     ```
-    kubectl apply -f <yaml_path>
-    ```
-    {: pre}
-
-    Example
-
-    ```
-    kubectl apply -f deploy/kube-config/pv.yaml
+    kubectl apply -f deploy/kube-config/mypv.yaml
     ```
     {: pre}
 
@@ -282,7 +275,7 @@ To create a PV and matching PVC, follow these steps.
     Your output looks similar to the following:
     ```
     id         username            datacenter   storage_type              capacity_gb   bytes_used   ip_addr         lunId   active_transactions
-    38642141   IBM02SEL1543159-1   dal10        endurance_block_storage   20            -            161.26.98.114   170     0
+    38642141   IBM02SEL1543159-1   dal10        endurance_block_storage   20            -            169.xx.xxx.xxx   170     0
     ```
     {: screen}
 
@@ -293,7 +286,7 @@ To create a PV and matching PVC, follow these steps.
     apiVersion: v1
     kind: PersistentVolume
     metadata:
-      name: <pv_name>
+      name: mypv
     spec:
       capacity:
         storage: "<storage_size>"
@@ -303,9 +296,9 @@ To create a PV and matching PVC, follow these steps.
         driver: "ibm/ibmc-block"
         fsType: "ext4"
         options:
-          "Lun": "<lun_id>"
-          "TargetPortal": "<ip_address>"
-          "VolumeID": "<volume_id>"
+          "Lun": "<lun_ID>"
+          "TargetPortal": "<IP_address>"
+          "VolumeID": "<volume_ID>"
           "volumeName": "<volume_name>"
       ```
       {: codeblock}
@@ -344,7 +337,7 @@ To create a PV and matching PVC, follow these steps.
 
 9.  Create the PV in your cluster.
     ```
-    kubectl apply -f <file_path>
+    kubectl apply -f mypv.yaml
     ```
     {: pre}
 
@@ -374,13 +367,13 @@ To create a PV and matching PVC, follow these steps.
 
 12.  Create your PVC.
      ```
-     kubectl apply -f <file_path>
+     kubectl apply -f mypvc.yaml
      ```
      {: pre}
 
 13.  Verify that your PVC is created and bound to the PV that you created earlier. This process can take a few minutes.
      ```
-     kubectl describe pvc <pvc_name>
+     kubectl describe pvc mypvc
      ```
      {: pre}
 
@@ -638,14 +631,14 @@ To add persistent storage:
 7.  Create the PVC.
 
     ```
-    kubectl apply -f <local_file_path>
+    kubectl apply -f mypvc.yaml
     ```
     {: pre}
 
 8.  Verify that your PVC is created and bound to the PV. This process can take a few minutes.
 
     ```
-    kubectl describe pvc <pvc_name>
+    kubectl describe pvc mypvc
     ```
     {: pre}
 
@@ -792,19 +785,19 @@ Install the {{site.data.keyword.Bluemix_notm}} Block Storage plug-in with a Helm
 Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster where you want to install the {{site.data.keyword.Bluemix_notm}} Block Storage plug-in.
 
 1. Install [Helm](cs_integrations.html#helm) on the cluster where you want to use the {{site.data.keyword.Bluemix_notm}} Block Storage plug-in.
-2. Update the helm repo to retrieve the latest version of all helm charts in this repo. 
+2. Update the helm repo to retrieve the latest version of all helm charts in this repo.
    ```
-   helm repo update 
+   helm repo update
    ```
    {: pre}
-   
+
 3. Install the {{site.data.keyword.Bluemix_notm}} Block Storage plug-in. When you install the plug-in, pre-defined block storage classes are added to your cluster.
    ```
    helm install ibm/ibmcloud-block-storage-plugin
    ```
-   {: pre} 
-      
-   Example output: 
+   {: pre}
+
+   Example output:
    ```
    NAME:   bald-olm
    LAST DEPLOYED: Wed Apr 18 10:02:55 2018
@@ -887,7 +880,7 @@ You can now continue to [create a PVC](#create) to provision block storage for y
 
 
 ### Updating the {{site.data.keyword.Bluemix_notm}} Block Storage plug-in
-You can upgrade the existing {{site.data.keyword.Bluemix_notm}} Block Storage plug-in to the latest version. 
+You can upgrade the existing {{site.data.keyword.Bluemix_notm}} Block Storage plug-in to the latest version.
 {: shortdesc}
 
 Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster.
@@ -897,19 +890,19 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
    helm ls | grep ibmcloud-block-storage-plugin
    ```
    {: pre}
-   
-   Example output: 
+
+   Example output:
    ```
    myhelmchart 	1       	Mon Sep 18 15:31:40 2017	DEPLOYED	ibmcloud-block-storage-plugin-0.1.0	default
    ```
    {: screen}
-   
+
 2. Upgrade the {{site.data.keyword.Bluemix_notm}} Block Storage plug-in to the latest version.
    ```
    helm upgrade --force --recreate-pods <helm_chart_name>  ibm/ibmcloud-block-storage-plugin
    ```
    {: pre}
-   
+
 <br />
 
 
@@ -917,42 +910,42 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
 If you do not want to provision and use {{site.data.keyword.Bluemix_notm}} Block Storage for your cluster, you can uninstall the helm chart.
 {: shortdesc}
 
-**Note:** Removing the plug-in does not remove existing PVCs, PVs, or data. When you remove the plug-in, all the related pods and daemon sets are removed from your cluster. You cannot provision new block storage for your cluster or use existing block storage PVCs and PVs after you remove the plug-in. 
+**Note:** Removing the plug-in does not remove existing PVCs, PVs, or data. When you remove the plug-in, all the related pods and daemon sets are removed from your cluster. You cannot provision new block storage for your cluster or use existing block storage PVCs and PVs after you remove the plug-in.
 
-Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster and make sure that you do not have any PVCs or PVs in your cluster that use block storage. 
+Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster and make sure that you do not have any PVCs or PVs in your cluster that use block storage.
 
 1. Find the name of the block storage helm chart that you installed in your cluster.
    ```
    helm ls | grep ibmcloud-block-storage-plugin
    ```
    {: pre}
-   
-   Example output: 
+
+   Example output:
    ```
    myhelmchart 	1       	Mon Sep 18 15:31:40 2017	DEPLOYED	ibmcloud-block-storage-plugin-0.1.0	default
    ```
    {: screen}
-   
+
 2. Delete the {{site.data.keyword.Bluemix_notm}} Block Storage plug-in.
    ```
    helm delete <helm_chart_name>
    ```
    {: pre}
-   
-3. Verify that the block storage pods are removed. 
+
+3. Verify that the block storage pods are removed.
    ```
    kubectl get pod -n kube-system | grep ibmcloud-block-storage-plugin
    ```
    {: pre}
-   The removal of the pods is successful if no pods are displayed in your CLI output. 
-   
-4. Verify that the block storage storage classes are removed. 
+   The removal of the pods is successful if no pods are displayed in your CLI output.
+
+4. Verify that the block storage storage classes are removed.
    ```
    kubectl get storageclasses | grep block
    ```
    {: pre}
-   The removal of the storage classes is successful if no storage classes are displayed in your CLI output. 
-   
+   The removal of the storage classes is successful if no storage classes are displayed in your CLI output.
+
 <br />
 
 
