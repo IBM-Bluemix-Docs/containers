@@ -50,6 +50,8 @@ Review the responsibilities that you share with IBM to manage your clusters.
 - [Backing up and restoring data in persistent storage in IBM Cloud infrastructure (SoftLayer) ![External link icon](../icons/launch-glyph.svg "External link icon")](../services/RegistryImages/ibm-backup-restore/index.html)
 - [Configuring health monitoring for worker nodes with Autorecovery](cs_health.html#autorecovery)
 
+  **Attention**: When you use IBM products and services, you are responsible for ensuring your own compliance with various laws and regulations, including the European Union General Data Protection Regulation (GDPR), that you are subject to.
+
 <br />
 
 
@@ -69,4 +71,5 @@ Misuse includes:
 *   Unauthorized modification of any service or system
 *   Violation of the rights of others
 
-See [Cloud Services terms](/docs/navigation/notices.html#terms) for overall terms of use.
+
+See [Cloud Services terms](https://console.bluemix.net/docs/overview/terms-of-use/notices.html#terms) for overall terms of use.
