@@ -535,8 +535,8 @@ Create a cluster in your organization. For free clusters, you specify the cluste
 location: <em>&lt;location&gt;</em>
 no-subnet: <em>&lt;no-subnet&gt;</em>
 machine-type: <em>&lt;machine_type&gt;</em>
-private-vlan: <em>&lt;private_vlan&gt;</em>
-public-vlan: <em>&lt;public_vlan&gt;</em>
+private-vlan: <em>&lt;private_VLAN&gt;</em>
+public-vlan: <em>&lt;public_VLAN&gt;</em>
 hardware: <em>&lt;shared_or_dedicated&gt;</em>
 workerNum: <em>&lt;number_workers&gt;</em>
 kube-version: <em>&lt;kube-version&gt;</em>
@@ -570,11 +570,11 @@ trusted: <em>true</em>
      </tr>
      <tr>
      <td><code><em>private-vlan</em></code></td>
-     <td>Replace <code><em>&lt;private_vlan&gt;</em></code> with the ID of the private VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans <em>&lt;location&gt;</em></code> and look for VLAN routers that start with <code>bcr</code> (back-end router).</td>
+     <td>Replace <code><em>&lt;private_VLAN&gt;</em></code> with the ID of the private VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans <em>&lt;location&gt;</em></code> and look for VLAN routers that start with <code>bcr</code> (back-end router).</td>
      </tr>
      <tr>
      <td><code><em>public-vlan</em></code></td>
-     <td>Replace <code><em>&lt;public_vlan&gt;</em></code> with the ID of the public VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans <em>&lt;location&gt;</em></code> and look for VLAN routers that start with <code>fcr</code> (front-end router).</td>
+     <td>Replace <code><em>&lt;public_VLAN&gt;</em></code> with the ID of the public VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans <em>&lt;location&gt;</em></code> and look for VLAN routers that start with <code>fcr</code> (front-end router).</td>
      </tr>
      <tr>
      <td><code><em>hardware</em></code></td>
@@ -631,7 +631,7 @@ trusted: <em>true</em>
 <li>If this standard cluster is the first standard cluster that you create in this location, do not include this flag. A private VLAN is created for you when the clusters is created.</li>
 <li>If you created a standard cluster before in this location or created a private VLAN in IBM Cloud infrastructure (SoftLayer) before, you must specify that private VLAN.
 
-<p><strong>Note:</strong> Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). When creating a cluster and specifying the public and private VLANs, the number and letter combination after those prefixes must match.</p></li>
+<p><strong>Note:</strong> {[matching_VLANs]}</p></li>
 </ul>
 
 <p>To find out if you already have a private VLAN for a specific location or to find the name of an existing private VLAN, run <code>bx cs vlans <em>&lt;location&gt;</em></code>.</p></dd>
@@ -643,7 +643,7 @@ trusted: <em>true</em>
 <li>If this standard cluster is the first standard cluster that you create in this location, do not use this flag. A public VLAN is created for you when the cluster is created.</li>
 <li>If you created a standard cluster before in this location or created a public VLAN in IBM Cloud infrastructure (SoftLayer) before, you must specify that public VLAN.
 
-<p><strong>Note:</strong> Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). When creating a cluster and specifying the public and private VLANs, the number and letter combination after those prefixes must match.</p></li>
+<p><strong>Note:</strong> {[matching_VLANs]}</p></li>
 </ul>
 
 <p>To find out if you already have a public VLAN for a specific location or to find the name of an existing public VLAN, run <code>bx cs vlans <em>&lt;location&gt;</em></code>.</p></dd>
@@ -669,7 +669,7 @@ trusted: <em>true</em>
   {: #example_cluster_create}
 
   ```
-  bx cs cluster-create --location dal10 --public-vlan my_public_vlan_id --private-vlan my_private_vlan_id --machine-type u2c.2x4 --name my_cluster --hardware shared --workers 2
+  bx cs cluster-create --location dal10 --public-vlan my_public_VLAN_ID --private-vlan my_private_VLAN_ID --machine-type u2c.2x4 --name my_cluster --hardware shared --workers 2
   ```
   {: pre}
 
@@ -735,19 +735,19 @@ View information about a cluster in your organization.
 **Example output**:
 
   ```
-  Name:			   mycluster
-  ID:			     abc1234567
-  State:			 normal
+  Name:        my_cluster
+  ID:          abc1234567
+  State:       normal
   Trust ready: false
-  Created:		 2018-01-01T17:19:28+0000
-  Location:		 dal10
-  Master URL:	 https://169.xx.x.xxx:xxxxx
-  Ingress subdomain: mycluster.us-south.containers.mybluemix.net
-  Ingress secret:		 mycluster
-  Workers:		3
-  Version:		1.7.16_1511* (1.8.11_1509 latest)
-  Owner Email:		name@example.com
-  Monitoring dashboard:	https://metrics.ng.bluemix.net/app/#/grafana4/dashboard/db/link
+  Created:     2018-01-01T17:19:28+0000
+  Location:    dal10
+  Master URL:  https://169.xx.xxx.xxx:xxxxx
+  Ingress subdomain: my_cluster.us-south.containers.mybluemix.net
+  Ingress secret:    my_cluster
+  Workers:     3
+  Version:     1.7.16_1511* (1.8.11_1509 latest)
+  Owner Email: name@example.com
+  Monitoring dashboard: https://metrics.ng.bluemix.net/app/#/grafana4/dashboard/db/link
 
   Addons
   Name                   Enabled
@@ -757,8 +757,8 @@ View information about a cluster in your organization.
 
   Subnet VLANs
   VLAN ID   Subnet CIDR         Public   User-managed
-  2234947   10.xxx.xxx.x/29     false    false
-  2234945   169.xx.xxx.xxx/29   true     false
+  2234947   10.xxx.xx.xxx/29 false    false
+  2234945   169.xx.xxx.xxx/29  true    false
 
   ```
   {: screen}
@@ -909,7 +909,7 @@ Remove an {{site.data.keyword.Bluemix_notm}} service from a cluster.
 **Example**:
 
   ```
-  bx cs cluster-service-unbind my_cluster my_namespace my_service_instance_GUID
+  bx cs cluster-service-unbind my_cluster my_namespace 8567221
   ```
   {: pre}
 
@@ -965,7 +965,7 @@ Register a webhook.
 **Example**:
 
   ```
-  bx cs webhook-create --cluster my_cluster --level Normal --type slack --url http://github.com/<mywebhook>
+  bx cs webhook-create --cluster my_cluster --level Normal --type slack --url http://github.com/mywebhook
   ```
   {: pre}
 
@@ -998,7 +998,7 @@ Make a subnet in an IBM Cloud infrastructure (SoftLayer) account available to a 
 **Example**:
 
   ```
-  bx cs cluster-subnet-add my_cluster subnet
+  bx cs cluster-subnet-add my_cluster 1643389
   ```
   {: pre}
 
@@ -1062,7 +1062,7 @@ This private subnet is not one provided by IBM Cloud infrastructure (SoftLayer).
 **Example**:
 
   ```
-  bx cs cluster-user-subnet-add my_cluster 192.168.10.0/29 1502175
+  bx cs cluster-user-subnet-add my_cluster 169.xx.xxx.xxx/29 1502175
   ```
   {: pre}
 
@@ -1090,7 +1090,7 @@ Remove your own private subnet from a specified cluster.
 **Example**:
 
   ```
-  bx cs cluster-user-subnet-rm my_cluster 192.168.10.0/29 1502175
+  bx cs cluster-user-subnet-rm my_cluster 169.xx.xxx.xxx/29 1502175
   ```
   {: pre}
 
@@ -1147,14 +1147,14 @@ Deploy or update a certificate from your {{site.data.keyword.cloudcerts_long_not
 Example for deploying an ALB secret:
 
    ```
-   bx cs alb-cert-deploy --secret-name my_alb_secret_name --cluster my_cluster --cert-crn crn:v1:staging:public:cloudcerts:us-south:a/06580c923e40314421d3b6cb40c01c68:0db4351b-0ee1-479d-af37-56a4da9ef30f:certificate:4bc35b7e0badb304e60aef00947ae7ff
+   bx cs alb-cert-deploy --secret-name my_alb_secret --cluster my_cluster --cert-crn crn:v1:staging:public:cloudcerts:us-south:a/06580c923e40314421d3b6cb40c01c68:0db4351b-0ee1-479d-af37-56a4da9ef30f:certificate:4bc35b7e0badb304e60aef00947ae7ff
    ```
    {: pre}
 
 Example for updating an existing ALB secret:
 
  ```
- bx cs alb-cert-deploy --update --secret-name my_alb_secret_name --cluster my_cluster --cert-crn crn:v1:staging:public:cloudcerts:us-south:a/06580c923e40314421d3b6cb40c01c68:0db4351b-0ee1-479d-af37-56a4da9ef30f:certificate:7e21fde8ee84a96d29240327daee3eb2
+ bx cs alb-cert-deploy --update --secret-name my_alb_secret --cluster my_cluster --cert-crn crn:v1:staging:public:cloudcerts:us-south:a/06580c923e40314421d3b6cb40c01c68:0db4351b-0ee1-479d-af37-56a4da9ef30f:certificate:7e21fde8ee84a96d29240327daee3eb2
  ```
  {: pre}
 
@@ -1184,7 +1184,7 @@ View information about an ALB secret in a cluster.
  Example for fetching information on an ALB secret:
 
  ```
- bx cs alb-cert-get --cluster my_cluster --secret-name my_alb_secret_name
+ bx cs alb-cert-get --cluster my_cluster --secret-name my_alb_secret
  ```
  {: pre}
 
@@ -1221,7 +1221,7 @@ Remove an ALB secret in a cluster.
  Example for removing an ALB secret:
 
  ```
- bx cs alb-cert-rm --cluster my_cluster --secret-name my_alb_secret_name
+ bx cs alb-cert-rm --cluster my_cluster --secret-name my_alb_secret
  ```
  {: pre}
 
@@ -1289,21 +1289,21 @@ Enable or disable an ALB in your standard cluster. The public ALB is enabled by 
   Example for enabling an ALB:
 
   ```
-  bx cs alb-configure --albID my_alb_id --enable
+  bx cs alb-configure --albID private-cr18a61a63a6a94b658596aa93a087aaa9-alb1 --enable
   ```
   {: pre}
 
   Example for disabling an ALB:
 
   ```
-  bx cs alb-configure --albID my_alb_id --disable
+  bx cs alb-configure --albID public-cr18a61a63a6a94b658596aa93a087aaa9-alb1 --disable
   ```
   {: pre}
 
   Example for enabling an ALB with a user-provided IP address:
 
   ```
-  bx cs alb-configure --albID my_private_alb_id --enable --user-ip user_ip
+  bx cs alb-configure --albID private-cr18a61a63a6a94b658596aa93a087aaa9-alb1 --enable --user-ip user_ip
   ```
   {: pre}
 
@@ -1324,7 +1324,7 @@ View the details of an ALB.
 **Example**:
 
   ```
-  bx cs alb-get --albID ALB_ID
+  bx cs alb-get --albID public-cr18a61a63a6a94b658596aa93a087aaa9-alb1
   ```
   {: pre}
 
@@ -1360,7 +1360,7 @@ View the status of all ALBs in a cluster. If no ALB IDs are returned, then the c
 **Example**:
 
   ```
-  bx cs albs --cluster mycluster
+  bx cs albs --cluster my_cluster
   ```
   {: pre}
 
@@ -1417,7 +1417,7 @@ You cannot set multiple credentials for one {{site.data.keyword.containershort_n
 **Example**:
 
   ```
-  bx cs credentials-set --infrastructure-api-key API_KEY --infrastructure-username USERNAME
+  bx cs credentials-set --infrastructure-api-key <api_key> --infrastructure-username dbmanager
   ```
   {: pre}
 
@@ -1581,14 +1581,14 @@ Example for log type `ibm` that forwards from a `container` log source on defaul
 Example for log type `syslog` that forwards from a `container` log source on default port 514:
 
   ```
-  bx cs logging-config-create my_cluster --logsource container --namespace my_namespace  --hostname my_hostname-or-IP --type syslog
+  bx cs logging-config-create my_cluster --logsource container --namespace my_namespace  --hostname 169.xx.xxx.xxx --type syslog
   ```
   {: pre}
 
 Example for log type `syslog` that forwards logs from an `ingress` source on a port different than the default:
 
   ```
-  bx cs logging-config-create my_cluster --logsource container --hostname my_hostname-or-IP --port 5514 --type syslog
+  bx cs logging-config-create my_cluster --logsource container --hostname 169.xx.xxx.xxx --port 5514 --type syslog
   ```
   {: pre}
 
@@ -1947,11 +1947,11 @@ Add worker nodes to your standard cluster.
 <p><strong>Note:</strong> If you provide the same option in the command as parameter in the YAML file, the value in the command takes precedence over the value in the YAML. For example, you define a machine type in your YAML file and use the --machine-type option in the command, the value that you entered in the command option overrides the value in the YAML file.
 
 <pre class="codeblock">
-<code>name: <em>&lt;cluster_name_or_id&gt;</em>
+<code>name: <em>&lt;cluster_name_or_ID&gt;</em>
 location: <em>&lt;location&gt;</em>
 machine-type: <em>&lt;machine_type&gt;</em>
-private-vlan: <em>&lt;private_vlan&gt;</em>
-public-vlan: <em>&lt;public_vlan&gt;</em>
+private-vlan: <em>&lt;private_VLAN&gt;</em>
+public-vlan: <em>&lt;public_VLAN&gt;</em>
 hardware: <em>&lt;shared_or_dedicated&gt;</em>
 workerNum: <em>&lt;number_workers&gt;</em>
 diskEncryption: <em>false</em></code></pre>
@@ -1964,7 +1964,7 @@ diskEncryption: <em>false</em></code></pre>
 <tbody>
 <tr>
 <td><code><em>name</em></code></td>
-<td>Replace <code><em>&lt;cluster_name_or_id&gt;</em></code> with the name or ID of the cluster where you want to add worker nodes.</td>
+<td>Replace <code><em>&lt;cluster_name_or_ID&gt;</em></code> with the name or ID of the cluster where you want to add worker nodes.</td>
 </tr>
 <tr>
 <td><code><em>location</em></code></td>
@@ -1976,11 +1976,11 @@ diskEncryption: <em>false</em></code></pre>
 </tr>
 <tr>
 <td><code><em>private-vlan</em></code></td>
-<td>Replace <code><em>&lt;private_vlan&gt;</em></code> with the ID of the private VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans <em>&lt;location&gt;</em></code> and look for VLAN routers that start with <code>bcr</code> (back-end router).</td>
+<td>Replace <code><em>&lt;private_VLAN&gt;</em></code> with the ID of the private VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans <em>&lt;location&gt;</em></code> and look for VLAN routers that start with <code>bcr</code> (back-end router).</td>
 </tr>
 <tr>
 <td><code>public-vlan</code></td>
-<td>Replace <code>&lt;public_vlan&gt;</code> with the ID of the public VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans &lt;location&gt;</code> and look for VLAN routers that start with <code>fcr</code> (front-end router). <br><strong>Note</strong>: If worker nodes are set up with a private VLAN only, you must configure an alternative solution for network connectivity. For more information, see [VLAN connection for worker nodes](cs_clusters.html#worker_vlan_connection).</td>
+<td>Replace <code>&lt;public_VLAN&gt;</code> with the ID of the public VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans &lt;location&gt;</code> and look for VLAN routers that start with <code>fcr</code> (front-end router). <br><strong>Note</strong>: {[private_VLAN_vyatta]}</td>
 </tr>
 <tr>
 <td><code>hardware</code></td>
@@ -2007,12 +2007,12 @@ diskEncryption: <em>false</em></code></pre>
 <dt><code>--private-vlan <em>PRIVATE_VLAN</em></code></dt>
 <dd>The private VLAN that was specified when the cluster was created. This value is required.
 
-<p><strong>Note:</strong> Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). When creating a cluster and specifying the public and private VLANs, the number and letter combination after those prefixes must match.</p></dd>
+<p><strong>Note:</strong> {[matching_VLANs]}</p></dd>
 
 <dt><code>--public-vlan <em>PUBLIC_VLAN</em></code></dt>
-<dd>The public VLAN that was specified when the cluster was created. This value is optional. If you want your worker nodes to exist on a private VLAN only, do not provide a public VLAN ID. <strong>Note</strong>: If worker nodes are set up with a private VLAN only, you must configure an alternative solution for network connectivity. For more information, see [VLAN connection for worker nodes](cs_clusters.html#worker_vlan_connection).
+<dd>The public VLAN that was specified when the cluster was created. This value is optional. If you want your worker nodes to exist on a private VLAN only, do not provide a public VLAN ID. <strong>Note</strong>: {[private_VLAN_vyatta]}
 
-<p><strong>Note:</strong> Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). When creating a cluster and specifying the public and private VLANs, the number and letter combination after those prefixes must match.</p></dd>
+<p><strong>Note:</strong> {[matching_VLANs]}</p></dd>
 
 <dt><code>--disable-disk-encrypt</code></dt>
 <dd>Worker nodes feature disk encryption by default; [learn more](cs_secure.html#worker). To disable encryption, include this option.</dd>
@@ -2021,7 +2021,7 @@ diskEncryption: <em>false</em></code></pre>
 **Examples**:
 
   ```
-  bx cs worker-add --cluster my_cluster --number 3 --public-vlan my_public_vlan_id --private-vlan my_private_vlan_id --machine-type u2c.2x4 --hardware shared
+  bx cs worker-add --cluster my_cluster --number 3 --public-vlan my_public_VLAN_ID --private-vlan my_private_VLAN_ID --machine-type u2c.2x4 --hardware shared
   ```
   {: pre}
 
@@ -2052,24 +2052,24 @@ View details of a worker node.
 **Example command**:
 
   ```
-  bx cs worker-get [CLUSTER_NAME_OR_ID] WORKER_NODE_ID
+  bx cs worker-get my_cluster kube-dal10-cr18a61a63a6a94b658596aa93d087aaa9-w1
   ```
   {: pre}
 
 **Example output**:
 
   ```
-  ID:				    kube-dal10-123456789-w1
-  State:				normal
-  Status:				Ready
+  ID:           kube-dal10-123456789-w1
+  State:        normal
+  Status:       Ready
   Trust:        disabled
-  Private VLAN:			223xxxx
-  Public VLAN:			223xxxx
-  Private IP:			10.xxx.xx.xx
-  Public IP:			169.xx.xxx.xxx
-  Hardware:			shared
-  Zone:				dal10
-  Version:			1.8.11_1509
+  Private VLAN: 223xxxx
+  Public VLAN:  223xxxx
+  Private IP:   10.xxx.xx.xxx
+  Public IP:    169.xx.xxx.xxx
+  Hardware:     shared
+  Zone:         dal10
+  Version:      1.8.11_1509
   ```
   {: screen}
 
@@ -2086,7 +2086,7 @@ Before you reboot your worker node, make sure that pods are rescheduled on other
    ```
    kubectl get nodes
    ```
-   The**name** that is returned in this command is the private IP address that is assigned to your worker node. You can find more information about your worker node when you run the `bx cs workers <cluster_name_or_id>` command and look for the worker node with the same **Private IP** address.
+   The**name** that is returned in this command is the private IP address that is assigned to your worker node. You can find more information about your worker node when you run the `bx cs workers <cluster_name_or_ID>` command and look for the worker node with the same **Private IP** address.
 2. Mark the worker node as unschedulable in a process that is known as cordoning. When you cordon a worker node, you make it unavailable for future pod scheduling. Use the **name** of the worker node that you retrieved in the previous step.
    ```
    kubectl cordon <worker_name>
@@ -2105,9 +2105,9 @@ Before you reboot your worker node, make sure that pods are rescheduled on other
     ```
     {: pre}
     This process can take a few minutes.
- 5. Reboot the worker node. Use the worker ID that is returned from the `bx cs workers <cluster_name_or_id>` command.
+ 5. Reboot the worker node. Use the worker ID that is returned from the `bx cs workers <cluster_name_or_ID>` command.
     ```
-    bx cs worker-reboot <cluster_name_or_id> <worker_name_or_id>
+    bx cs worker-reboot <cluster_name_or_ID> <worker_name_or_ID>
     ```
     {: pre}
  6. Wait about 5 minutes before you make your worker node available for pod scheduling to ensure that the reboot is finished. During the reboot, the state of your worker node does not change. The reboot of a worker node is usually completed in a few seconds.
@@ -2137,7 +2137,7 @@ Before you reboot your worker node, make sure that pods are rescheduled on other
 **Example**:
 
   ```
-  bx cs worker-reboot my_cluster my_node1 my_node2
+  bx cs worker-reboot my_cluster kube-dal10-cr18a61a63a6a94b658596aa93d087aaa9-w1 kube-dal10-cr18a61a63a6a94b658596aa93d087aaa9-w2
   ```
   {: pre}
 
@@ -2156,7 +2156,7 @@ Before you reload your worker node, make sure that pods are rescheduled on other
    ```
    kubectl get nodes
    ```
-   The **name** that is returned in this command is the private IP address that is assigned to your worker node. You can find more information about your worker node when you run the `bx cs workers <cluster_name_or_id>` command and look for the worker node with the same **Private IP** address.
+   The **name** that is returned in this command is the private IP address that is assigned to your worker node. You can find more information about your worker node when you run the `bx cs workers <cluster_name_or_ID>` command and look for the worker node with the same **Private IP** address.
 2. Mark the worker node as unschedulable in a process that is known as cordoning. When you cordon a worker node, you make it unavailable for future pod scheduling. Use the **name** of the worker node that you retrieved in the previous step.
    ```
    kubectl cordon <worker_name>
@@ -2175,9 +2175,9 @@ Before you reload your worker node, make sure that pods are rescheduled on other
     ```
     {: pre}
     This process can take a few minutes.
- 5. Reload the worker node. Use the worker ID that is returned from the `bx cs workers <cluster_name_or_id>` command.
+ 5. Reload the worker node. Use the worker ID that is returned from the `bx cs workers <cluster_name_or_ID>` command.
     ```
-    bx cs worker-reload <cluster_name_or_id> <worker_name_or_id>
+    bx cs worker-reload <cluster_name_or_ID> <worker_name_or_ID>
     ```
     {: pre}
  6. Wait for the reload to complete.
@@ -2202,7 +2202,7 @@ Before you reload your worker node, make sure that pods are rescheduled on other
 **Example**:
 
   ```
-  bx cs worker-reload my_cluster my_node1 my_node2
+  bx cs worker-reload my_cluster kube-dal10-cr18a61a63a6a94b658596aa93d087aaa9-w1 kube-dal10-cr18a61a63a6a94b658596aa93d087aaa9-w2
   ```
   {: pre}
 
@@ -2219,7 +2219,7 @@ Before you remove your worker node, make sure that pods are rescheduled on other
    ```
    kubectl get nodes
    ```
-   The **name** that is returned in this command is the private IP address that is assigned to your worker node. You can find more information about your worker node when you run the `bx cs workers <cluster_name_or_id>` command and look for the worker node with the same **Private IP** address.
+   The **name** that is returned in this command is the private IP address that is assigned to your worker node. You can find more information about your worker node when you run the `bx cs workers <cluster_name_or_ID>` command and look for the worker node with the same **Private IP** address.
 2. Mark the worker node as unschedulable in a process that is known as cordoning. When you cordon a worker node, you make it unavailable for future pod scheduling. Use the **name** of the worker node that you retrieved in the previous step.
    ```
    kubectl cordon <worker_name>
@@ -2238,15 +2238,15 @@ Before you remove your worker node, make sure that pods are rescheduled on other
    ```
    {: pre}
    This process can take a few minutes.
-5. Remove the worker node. Use the worker ID that is returned from the `bx cs workers <cluster_name_or_id>` command.
+5. Remove the worker node. Use the worker ID that is returned from the `bx cs workers <cluster_name_or_ID>` command.
    ```
-   bx cs worker-rm <cluster_name_or_id> <worker_name_or_id>
+   bx cs worker-rm <cluster_name_or_ID> <worker_name_or_ID>
    ```
    {: pre}
 
 6. Verify that the worker node is removed.
    ```
-   bx cs workers <cluster_name_or_id>
+   bx cs workers <cluster_name_or_ID>
    ```
 </br>
 <strong>Command options</strong>:
@@ -2265,7 +2265,7 @@ Before you remove your worker node, make sure that pods are rescheduled on other
 **Example**:
 
   ```
-  bx cs worker-rm my_cluster my_node1 my_node2
+  bx cs worker-rm my_cluster kube-dal10-cr18a61a63a6a94b658596aa93d087aaa9-w1 kube-dal10-cr18a61a63a6a94b658596aa93d087aaa9-w2
   ```
   {: pre}
 
@@ -2301,7 +2301,7 @@ You might need to change your YAML files for deployments before updating. Review
 **Example**:
 
   ```
-  bx cs worker-update my_cluster my_node1 my_node2
+  bx cs worker-update my_cluster kube-dal10-cr18a61a63a6a94b658596aa93d087aaa9-w1 kube-dal10-cr18a61a63a6a94b658596aa93d087aaa9-w2
   ```
   {: pre}
 
@@ -2324,7 +2324,6 @@ View a list of worker nodes and the status for each in a cluster.
 **Example**:
 
   ```
-  bx cs workers mycluster
+  bx cs workers my_cluster
   ```
   {: pre}
-
