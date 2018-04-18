@@ -296,7 +296,6 @@ Before you begin, [target the Kubernetes CLI to the cluster](cs_cli_install.html
         {: codeblock}
 
         <table>
-        <caption>Table. Understanding this YAML components</caption>
         <thead>
         <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this YAML components</th>
         </thead>
@@ -371,7 +370,6 @@ Before you begin, [target the Kubernetes CLI to the cluster](cs_cli_install.html
         {: codeblock}
 
         <table>
-        <caption>Table. Understanding this YAML components</caption>
         <thead>
         <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this YAML components</th>
         </thead>
