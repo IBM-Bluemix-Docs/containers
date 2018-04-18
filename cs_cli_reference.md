@@ -657,7 +657,7 @@ trusted: <em>true</em>
 <dd>Worker nodes feature disk encryption by default; [learn more](cs_secure.html#worker). To disable encryption, include this option.</dd>
 
 <dt><code>--trusted</code></dt>
-<dd><p>**Bare metal only**: Enable [Trusted Compute](cs_secure.html#trusted_compute) to verify your bare metal worker nodes against tampering. If you don't enable trust during cluster creation but want to later, you can use the `bx cs feature-enable` [command](cs_cli_reference.html#cs_cluster_feature_enable). After you enable trust, you cannot disable it later. For more information about how trust works, see [{{site.data.keyword.containershort_notm}} with Trusted Compute](cs_secure.html#trusted_compute).</p>
+<dd><p>**Bare metal only**: Enable [Trusted Compute](cs_secure.html#trusted_compute) to verify your bare metal worker nodes against tampering. If you don't enable trust during cluster creation but want to later, you can use the `bx cs feature-enable` [command](cs_cli_reference.html#cs_cluster_feature_enable). After you enable trust, you cannot disable it later.</p>
 <p>To check whether the bare metal machine type supports trust, check the `Trustable` field in the output of the `bx cs machine-types <location>` [command](#cs_machine_types). To verify that a cluster is trust-enabled, view the **Trust ready** field in the output of the `bx cs cluster-get` [command](#cs_cluster_get). To verify a bare metal worker node is trust-enabled, view the **Trust** field in the output of the `bx cs worker-get` [command](#cs_worker_get).</p></dd>
 </dl>
 
@@ -699,7 +699,7 @@ Enable a feature on an existing cluster.
    <dd>The name or ID of the cluster. This value is required.</dd>
 
    <dt><code><em>--trusted</em></code></dt>
-   <dd><p>Include the flag to enable Trusted Compute for all supported bare metal worker nodes that are in the cluster. After you enable trust, you cannot later disable it for the cluster. For more information about how trust works, see [{{site.data.keyword.containershort_notm}} with Trusted Compute](cs_secure.html#trusted_compute).</p>
+   <dd><p>Include the flag to enable [Trusted Compute](cs_secure.html#trusted_compute) for all supported bare metal worker nodes that are in the cluster. After you enable trust, you cannot later disable it for the cluster.</p>
    <p>To check whether the bare metal machine type supports trust, check the **Trustable** field in the output of the `bx cs machine-types <location>` [command](#cs_machine_types). To verify that a cluster is trust-enabled, view the **Trust ready** field in the output of the `bx cs cluster-get` [command](#cs_cluster_get). To verify a bare metal worker node is trust-enabled, view the **Trust** field in the output of the `bx cs worker-get` [command](#cs_worker_get).</p></dd>
    </dl>
 
@@ -745,7 +745,7 @@ View information about a cluster in your organization.
   Ingress subdomain: mycluster.us-south.containers.mybluemix.net
   Ingress secret:		 mycluster
   Workers:		3
-  Version:		1.7.4_1509* (1.8.8_1507 latest)
+  Version:		1.7.16_1511* (1.8.11_1509 latest)
   Owner Email:		name@example.com
   Monitoring dashboard:	https://metrics.ng.bluemix.net/app/#/grafana4/dashboard/db/link
 
@@ -938,6 +938,7 @@ List the services that are bound to one or all of the Kubernetes namespace in a 
   bx cs cluster-services my_cluster --namespace my_namespace
   ```
   {: pre}
+
 
 
 ### bx cs webhook-create --cluster CLUSTER --level LEVEL --type slack --url URL
@@ -1557,11 +1558,11 @@ Create a logging configuration. You can use this command to forward logs for con
   <dt><code>--org <em>CLUSTER_ORG</em></code></dt>
     <dd>The name of the Cloud Foundry org that the space is in. This value is valid only for log type <code>ibm</code> and is required if you specified a space.</dd>
   <dt><code>--app-paths</code></dt>
-    <dd>Skip validation of the org and space names when they are specified. Skipping validation decreases processing time, but an invalid logging configuration does not correctly forward logs. This value is optional.</dd>
-  <dt><code>--app-containers</code></dt>
-    <dd>The path on their containers that the apps are logging to. To forward logs with source type <code>application</code>, you must provide a path. To specify more than one path, use a comma separated list. Example: <code>/var/log/myApp1/&ast;,/var/log/myApp2/&ast;</code></dd>
+    <dd>The path on the container that the apps are logging to. To forward logs with source type <code>application</code>, you must provide a path. To specify more than one path, use a comma-separated list. This value is required for log source <code>application</code>. Example: <code>/var/log/myApp1/&ast;,/var/log/myApp2/&ast;</code></dd>
   <dt><code>--type <em>LOG_TYPE</em></code></dt>
-    <dd>The log forwarding protocol that you want to use. Currently, <code>syslog</code> and <code>ibm</code> are supported. This value is required.</dd>
+    <dd>Where you want to forward your logs. Options are <code>ibm</code>, which forwards your logs to {{site.data.keyword.loganalysisshort_notm}} and <code>syslog</code>, which forwards your logs to an external server.</dd>
+  <dt><code>--app-containers</code></dt>
+    <dd>Optional: To forward logs from apps, you can specify the name of the container that contains your app. You can specify more than one container by using a comma-separated list. If no containers are specified, logs are forwarded from all of the containers that contain the paths that you provided. This option is only valid for log source <code>application</code></dt>
   <dt><code>--json</code></dt>
     <dd>Print the command output in JSON format. This value is optional.</dd>
   <dt><code>--skip-validation</code></dt>
@@ -2068,7 +2069,7 @@ View details of a worker node.
   Public IP:			169.xx.xxx.xxx
   Hardware:			shared
   Zone:				dal10
-  Version:			1.8.8_1507
+  Version:			1.8.11_1509
   ```
   {: screen}
 
@@ -2326,3 +2327,4 @@ View a list of worker nodes and the status for each in a cluster.
   bx cs workers mycluster
   ```
   {: pre}
+
