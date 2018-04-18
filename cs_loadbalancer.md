@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-10"
+lastupdated: "2018-04-17"
 
 ---
 
@@ -35,7 +35,7 @@ When you create a Kubernetes LoadBalancer service in a cluster on a public VLAN,
 
 The portable public IP address that is assigned to your LoadBalancer service is permanent and does not change when a worker node is removed or re-created. Therefore, the LoadBalancer service is more available than the NodePort service. Unlike with NodePort services, you can assign any port to your load balancer and are not bound to a certain port range. If you use a LoadBalancer service, a node port is also available on each IP address of any worker node. To block access to node port while you are using a LoadBalancer service, see [Blocking incoming traffic](cs_network_policy.html#block_ingress).
 
-The LoadBalancer service serves as the external entry point for incoming requests for the app. To access the LoadBalancer service from the internet, use the public IP address of your load balancer and the assigned port in the format `<ip_address>:<port>`. The following diagram shows how a load balancer directs communication from the internet to an app:
+The LoadBalancer service serves as the external entry point for incoming requests for the app. To access the LoadBalancer service from the internet, use the public IP address of your load balancer and the assigned port in the format `<IP_address>:<port>`. The following diagram shows how a load balancer directs communication from the internet to an app:
 
 <img src="images/cs_loadbalancer_planning.png" width="550" alt="Expose an app in {{site.data.keyword.containershort_notm}} by using a load balancer" style="width:550px; border-style: none"/>
 
@@ -81,11 +81,11 @@ To create a load balancer service:
         apiVersion: v1
         kind: Service
         metadata:
-          name: <myservice>
+          name: myloadbalancer
         spec:
           type: LoadBalancer
           selector:
-            <selectorkey>:<selectorvalue>
+            <selector_key>:<selector_value>
           ports:
            - protocol: TCP
              port: 8080
@@ -98,17 +98,17 @@ To create a load balancer service:
         apiVersion: v1
         kind: Service
         metadata:
-          name: <myservice>
+          name: myloadbalancer
           annotations:
             service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: <public_or_private>
         spec:
           type: LoadBalancer
           selector:
-            <selectorkey>: <selectorvalue>
+            <selector_key>: <selector_value>
           ports:
            - protocol: TCP
              port: 8080
-          loadBalancerIP: <private_ip_address>
+          loadBalancerIP: <IP_address>
         ```
         {: codeblock}
 
@@ -119,12 +119,8 @@ To create a load balancer service:
         </thead>
         <tbody>
         <tr>
-          <td><code>name</code></td>
-          <td>Replace <em>&lt;myservice&gt;</em> with a name for your load balancer service.</td>
-        </tr>
-        <tr>
           <td><code>selector</code></td>
-          <td>Enter the label key (<em>&lt;selectorkey&gt;</em>) and value (<em>&lt;selectorvalue&gt;</em>) pair that you want to use to target the pods where your app runs. To target your pods and include them in the service load balancing, make sure that the <em>&lt;selectorkey&gt;</em> and <em>&lt;selectorvalue&gt;</em> are the same as the key/ value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.</td>
+          <td>Enter the label key (<em>&lt;selector_key&gt;</em>) and value (<em>&lt;selector_value&gt;</em>) pair that you want to use to target the pods where your app runs. To target your pods and include them in the service load balancing, make sure that the <em>&lt;selector_key&gt;</em> and <em>&lt;selector_value&gt;</em> are the same as the key/value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.</td>
         </tr>
         <tr>
           <td><code>port</code></td>
@@ -132,15 +128,15 @@ To create a load balancer service:
         </tr>
         <tr>
           <td>`service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type:`
-          <td>Annotation to specify the type of LoadBalancer. The values are `private` and `public`. If you are creating a public LoadBalancer in clusters on public VLANs, this annotation is not required.</td>
+          <td>Annotation to specify the type of LoadBalancer. Accepted values are `private` and `public`. If you are creating a public LoadBalancer in clusters on public VLANs, this annotation is not required.</td>
         </tr>
         <tr>
           <td><code>loadBalancerIP</code></td>
-          <td>To create a private LoadBalancer or to use a specific portable IP address for a public LoadBalancer, replace <em>&lt;loadBalancerIP&gt;</em> with the IP address that you want to use. For more information, see the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/services-networking/service/#type-loadbalancer).</td>
+          <td>To create a private LoadBalancer or to use a specific portable IP address for a public LoadBalancer, replace <em>&lt;IP_address&gt;</em> with the IP address that you want to use. For more information, see the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/services-networking/service/#type-loadbalancer).</td>
         </tr>
         </tbody></table>
 
-    3.  Optional: Configure a firewall by specifying the `loadBalancerSourceRanges` in the spec section. For more information, see the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/).
+    3.  Optional: Configure a firewall by specifying the `loadBalancerSourceRanges` in the **spec** section. For more information, see the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/).
 
     4.  Create the service in your cluster.
 
@@ -151,10 +147,10 @@ To create a load balancer service:
 
         When your load balancer service is created, a portable IP address is automatically assigned to the load balancer. If no portable IP address is available, the load balancer service cannot be created.
 
-3.  Verify that the load balancer service was created successfully. Replace _&lt;myservice&gt;_ with the name of the load balancer service that you created in the previous step.
+3.  Verify that the load balancer service was created successfully.
 
     ```
-    kubectl describe service <myservice>
+    kubectl describe service myloadbalancer
     ```
     {: pre}
 
@@ -163,23 +159,23 @@ To create a load balancer service:
     Example CLI output:
 
     ```
-    Name:                   <myservice>
+    Name:                   myloadbalancer
     Namespace:              default
     Labels:                 <none>
-    Selector:               <selectorkey>=<selectorvalue>
+    Selector:               app=liberty
     Type:                   LoadBalancer
     Location:               dal10
-    IP:                     10.10.10.90
-    LoadBalancer Ingress:   192.168.10.38
+    IP:                     172.21.xxx.xxx
+    LoadBalancer Ingress:   169.xx.xxx.xxx
     Port:                   <unset> 8080/TCP
     NodePort:               <unset> 32040/TCP
-    Endpoints:              172.30.171.87:8080
+    Endpoints:              172.30.xxx.xxx:8080
     Session Affinity:       None
     Events:
-    FirstSeen	LastSeen	Count	From			SubObjectPath	Type		Reason			Message
-      ---------	--------	-----	----			-------------	--------	------			-------
-      10s		10s		1	{service-controller }			Normal		CreatingLoadBalancer	Creating load balancer
-      10s		10s		1	{service-controller }			Normal		CreatedLoadBalancer	Created load balancer
+      FirstSeen	LastSeen	Count	From			SubObjectPath	Type	 Reason			          Message
+      ---------	--------	-----	----			-------------	----	 ------			          -------
+      10s		    10s		    1	    {service-controller }	  Normal CreatingLoadBalancer	Creating load balancer
+      10s		    10s		    1	    {service-controller }		Normal CreatedLoadBalancer	Created load balancer
     ```
     {: screen}
 
@@ -187,9 +183,9 @@ To create a load balancer service:
 
 4.  If you created a public load balancer, access your app from the internet.
     1.  Open your preferred web browser.
-    2.  Enter the portable public IP address of the load balancer and port. In the example above, the portable public IP address `192.168.10.38` was assigned to the load balancer service.
+    2.  Enter the portable public IP address of the load balancer and port.
 
         ```
-        http://192.168.10.38:8080
+        http://169.xx.xxx.xxx:8080
         ```
         {: codeblock}

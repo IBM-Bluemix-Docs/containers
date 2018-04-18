@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-09"
+lastupdated: "2018-04-17"
 
 ---
 
@@ -150,10 +150,10 @@ To update your worker nodes:
 
 3. Update your worker nodes from the GUI or by running the CLI command.
   * To update from the {{site.data.keyword.Bluemix_notm}} Dashboard, navigate to the `Worker Nodes` section of your cluster, and click `Update Worker`.
-  * To get worker node IDs, run `bx cs workers <cluster_name_or_id>`. If you select multiple worker nodes, the worker nodes are placed in a queue for update evaluation. If they are considered ready after evaluation, they will be updated according to the rules set in the configurations
+  * To get worker node IDs, run `bx cs workers <cluster_name_or_ID>`. If you select multiple worker nodes, the worker nodes are placed in a queue for update evaluation. If they are considered ready after evaluation, they will be updated according to the rules set in the configurations
 
     ```
-    bx cs worker-update <cluster_name_or_id> <worker_node_id1> <worker_node_id2>
+    bx cs worker-update <cluster_name_or_ID> <worker_node1_ID> <worker_node2_ID>
     ```
     {: pre}
 
@@ -164,7 +164,7 @@ To update your worker nodes:
     {: pre}
 
 5. Confirm that the update is complete:
-  * Review the Kubernetes version on the {{site.data.keyword.Bluemix_notm}} Dashboard or run `bx cs workers <cluster_name_or_id>`.
+  * Review the Kubernetes version on the {{site.data.keyword.Bluemix_notm}} Dashboard or run `bx cs workers <cluster_name_or_ID>`.
   * Review the Kubernets version of the worker nodes by running `kubectl get nodes`.
   * In some cases, older clusters might list duplicate worker nodes with a **NotReady** status after an update. To remove duplicates, see [troubleshooting](cs_troubleshoot_clusters.html#cs_duplicate_nodes).
 
@@ -199,7 +199,7 @@ You can update the machine types that are used in worker nodes by adding new wor
 3. Add worker nodes by using the [bx cs worker-add](cs_cli_reference.html#cs_worker_add) command. Specify a machine type.
 
     ```
-    bx cs worker-add --cluster <cluster_name> --machine-type <machine_type> --number <number_of_worker_nodes> --private-vlan <private_vlan> --public-vlan <public_vlan>
+    bx cs worker-add --cluster <cluster_name> --machine-type <machine_type> --number <number_of_worker_nodes> --private-vlan <private_VLAN_ID> --public-vlan <public_VLAN_ID>
     ```
     {: pre}
 
