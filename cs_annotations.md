@@ -378,7 +378,7 @@ kind: Ingress
 metadata:
 name: myingress
 annotations:
-  ingress.bluemix.net/location-modifier: "modifier='&lt;location_modifier&gt;' serviceName=&lt;myservice&gt;;modifier='&lt;location_modifier&gt;' serviceName=&lt;myservice2&gt;"
+  ingress.bluemix.net/location-modifier: "modifier='&lt;location_modifier&gt;' serviceName=&lt;myservice1&gt;;modifier='&lt;location_modifier&gt;' serviceName=&lt;myservice2&gt;"
 spec:
   tls:
   - hosts:
@@ -422,7 +422,7 @@ Route incoming requests to your apps with a private ALB.
 <dl>
 <dt>Description</dt>
 <dd>
-Choose a private ALB to route incoming requests with instead of the public ALB.</dd>
+Choose a private ALB to route incoming requests instead of the public ALB.</dd>
 
 
 <dt>Sample Ingress resource YAML</dt>
@@ -456,7 +456,7 @@ rules:
 <tbody>
 <tr>
 <td><code>&lt;private_ALB_ID&gt;</code></td>
-<td>The ID for your private ALB. Run <code>bx cs albs --cluster <my_cluster></code> to find the private ALB ID.
+<td>The ID for your private ALB. To find the private ALB ID, run <code>bx cs albs --cluster &lt;my_cluster&gt;</code>.
 </td>
 </tr>
 </tbody></table>
@@ -585,11 +585,11 @@ spec:
 Your CLI output looks similar to the following:
 <pre class="screen">
 <code>NAME                     CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
-public-ingress-ctl-svc   10.10.10.149   169.60.16.246   80:30776/TCP,443:30412/TCP   8d</code></pre></li>
+public-ingress-ctl-svc   10.xxx.xx.xxx   169.xx.xxx.xxx   80:30776/TCP,443:30412/TCP   8d</code></pre></li>
 <li>Open the ALB config map.
 <pre class="pre">
 <code>kubectl edit configmap ibm-cloud-provider-ingress-cm -n kube-system</code></pre></li>
-<li>Add the TCP ports to the config map. Replace &lt;port&gt; with the TCP ports that you want to open.
+<li>Add the TCP ports to the config map. Replace <code>&lt;port&gt;</code> with the TCP ports that you want to open.
 <pre class="codeblock">
 <code>apiVersion: v1
 kind: ConfigMap
@@ -607,12 +607,12 @@ metadata:
 <code>kubectl get service -n kube-system</code></pre>
 Your CLI output looks similar to the following:
 <pre class="screen">
-<code>NAME                     CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
-public-ingress-ctl-svc   10.10.10.149   169.60.16.246   &lt;port1&gt;:30776/TCP,&lt;port2&gt;:30412/TCP   8d</code></pre></li>
+<code>NAME                     CLUSTER-IP     EXTERNAL-IP     PORT(S)                               AGE
+public-ingress-ctl-svc   10.xxx.xx.xxx   169.xx.xxx.xxx   &lt;port1&gt;:30776/TCP,&lt;port2&gt;:30412/TCP   8d</code></pre></li>
 <li>Configure your Ingress to access your app via a non-standard TCP port. Use the sample YAML file in this reference. </li>
 <li>Update your ALB configuration.
 <pre class="pre">
-<code>kubectl apply -f &lt;yaml_file&gt;</code></pre>
+<code>kubectl apply -f myingress.yaml</code></pre>
 </li>
 <li>Open your preferred web browser to access your app. Example: <code>https://&lt;ibmdomain&gt;:&lt;ingressPort&gt;/</code></li></ol></dd></dl>
 
@@ -933,7 +933,6 @@ spec:
           servicePort: 80</code></pre>
 
   <table>
-  <caption>Understanding the YAML file components</caption>
   <thead>
   <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
   </thead>
@@ -1163,7 +1162,7 @@ spec:
 Your CLI output looks similar to the following:
 <pre class="screen">
 <code>NAME                     CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
-public-ingress-ctl-svc   10.10.10.149   169.60.16.246   80:30776/TCP,443:30412/TCP   8d</code></pre></li>
+public-ingress-ctl-svc   10.xxx.xx.xxx   169.xx.xxx.xxx   80:30776/TCP,443:30412/TCP   8d</code></pre></li>
 <li>Open the ALB config map.
 <pre class="pre">
 <code>kubectl edit configmap ibm-cloud-provider-ingress-cm -n kube-system</code></pre></li>
@@ -1186,11 +1185,11 @@ metadata:
 Your CLI output looks similar to the following:
 <pre class="screen">
 <code>NAME                     CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
-public-ingress-ctl-svc   10.10.10.149   169.60.16.246   &lt;port1&gt;:30776/TCP,&lt;port2&gt;:30412/TCP   8d</code></pre></li>
+public-ingress-ctl-svc   10.xxx.xx.xxx   169.xx.xxx.xxx   &lt;port1&gt;:30776/TCP,&lt;port2&gt;:30412/TCP   8d</code></pre></li>
 <li>Configure your Ingress to use the non-default ports when routing incoming network traffic to your services. Use the sample YAML file in this reference. </li>
 <li>Update your ALB configuration.
 <pre class="pre">
-<code>kubectl apply -f &lt;yaml_file&gt;</code></pre>
+<code>kubectl apply -f myingress.yaml</code></pre>
 </li>
 <li>Open your preferred web browser to access your app. Example: <code>https://&lt;ibmdomain&gt;:&lt;port&gt;/&lt;service_path&gt;/</code></li></ol></dd></dl>
 
@@ -1257,7 +1256,7 @@ kind: Ingress
 metadata:
   name: myingress
   annotations:
-    ingress.bluemix.net/hsts: enabled=&lt;true&gt; maxAge=&lt;31536000&gt; includeSubdomains=&lt;true&gt;
+    ingress.bluemix.net/hsts: enabled=true maxAge=&lt;31536000&gt; includeSubdomains=true
 spec:
   tls:
   - hosts:
@@ -1359,12 +1358,12 @@ spec:
 <td>Replace <code>&lt;<em>mysecret</em>&gt;</code> with a name for the secret resource.</td>
 </tr>
 <tr>
-<td><code>&lt;port&gt;</code></td>
-<td>The ALB port number.</td>
+<td><code>port</code></td>
+<td>Replace <code>&lt;<em>port</em>&gt;</code> with the ALB port number.</td>
 </tr>
 <tr>
-<td><code>&lt;serviceName&gt;</code></td>
-<td>The name of one or more Ingress resources. This parameter is optional.</td>
+<td><code>serviceName/code></td>
+<td>Replace <code>&lt;<em>servicename</em>&gt;</code> with the name of one or more Ingress resources. This parameter is optional.</td>
 </tr>
 </tbody></table>
 
@@ -1677,7 +1676,7 @@ spec:
  <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name for a service to apply proxy-buffers.</td>
  </tr>
  <tr>
- <td><code>number_of_buffers</code></td>
+ <td><code>number</code></td>
  <td>Replace <code>&lt;<em>number_of_buffers</em>&gt;</code> with a number, such as <em>2</em>.</td>
  </tr>
  <tr>
@@ -1773,7 +1772,7 @@ kind: Ingress
 metadata:
  name: proxy-ingress
  annotations:
-   ingress.bluemix.net/proxy-busy-buffers-size: "serviceName=&lt;serviceName&gt; size=&lt;size&gt;"
+   ingress.bluemix.net/proxy-busy-buffers-size: "serviceName=&lt;myservice&gt; size=&lt;size&gt;"
 spec:
  tls:
  - hosts:
