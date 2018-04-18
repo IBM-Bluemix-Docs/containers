@@ -298,6 +298,13 @@ Review the following reasons why the application load balancer secret might fail
 {: tsSymptoms}
 When you run `bx cs cluster-get <cluster>`, your cluster is in a `normal` state but no **Ingress Subdomain** is available.
 
+You might see an error message similar to the following.
+
+```
+There are already the maximum number of subnets permitted in this VLAN.
+```
+{: screen}
+
 {: tsCauses}
 When you create a cluster, 8 public and 8 private portable subnets are requested on the VLAN that you specify. For {{site.data.keyword.containershort_notm}}, VLANs have a limit of 40 subnets. If the cluster's VLAN already reached that limit, the **Ingress Subdomain** fails to provision.
 

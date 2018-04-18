@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-10"
+lastupdated: "2018-04-17"
 
 ---
 
@@ -183,7 +183,7 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to you
 
 You can use the default port or set your own port to launch the Kubernetes dashboard for a cluster.
 
-1.  For clusters with a Kubernetes master version of 1.7.4 or earlier:
+1.  For clusters with a Kubernetes master version of 1.7.16 or earlier:
 
     1.  Set the proxy with the default port number.
 
@@ -262,7 +262,7 @@ Kubernetes secrets are a secure way to store confidential information, such as u
 {:shortdesc}
 
 <table>
-<caption>Table. Files needed to be stored in secrets by task</caption>
+<caption>Required files to store in secrets by task</caption>
 <thead>
 <th>Task</th>
 <th>Required files to store in secrets</th>
@@ -277,7 +277,7 @@ Kubernetes secrets are a secure way to store confidential information, such as u
 
 To view the default TLS secret:
 <pre>
-bx cs cluster-get &gt;CLUSTER-NAME&lt; | grep "Ingress secret"
+bx cs cluster-get &lt;cluster_name_or_ID&gt; | grep "Ingress secret"
 </pre>
 </p>
 To create your own instead, complete the steps in this topic.</td>
@@ -297,7 +297,7 @@ To create a secret with a certificate:
 
 1. Generate the certificate authority (CA) cert and key from your certificate provider. If you have your own domain, purchase an official TLS certificate for your domain. For test purposes, you can generate a self-signed certificate.
 
- Important: Make sure the [CN](https://support.dnsimple.com/articles/what-is-common-name/) is different for each certificate.
+ **Important**: Make sure the [CN](https://support.dnsimple.com/articles/what-is-common-name/) is different for each certificate.
 
  The client cert and client key must be verified up to the trusted root certificate, which in this case, is the CA cert. Example:
 
@@ -311,7 +311,7 @@ To create a secret with a certificate:
 2. Create the certificate as a Kubernetes secret.
 
    ```
-   kubectl create secret generic <secretName> --from-file=<cert_file>=<cert_file>
+   kubectl create secret generic <secret_name> --from-file=<cert_file>=<cert_file>
    ```
    {: pre}
 
@@ -319,14 +319,14 @@ To create a secret with a certificate:
    - TLS connection:
 
      ```
-     kubectl create secret tls <secretName> --from-file=tls.crt=server.crt --from-file=tls.key=server.key
+     kubectl create secret tls <secret_name> --from-file=tls.crt=server.crt --from-file=tls.key=server.key
      ```
      {: pre}
 
    - Mutual authentication annotation:
 
      ```
-     kubectl create secret generic <secretName> --from-file=ca.crt=ca.crt
+     kubectl create secret generic <secret_name> --from-file=ca.crt=ca.crt
      ```
      {: pre}
 
@@ -384,17 +384,20 @@ To deploy your app:
     -   [Service ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/services-networking/service/): Provides front-end access to pods by using a worker node or load balancer public IP address, or a public Ingress route.
 
     -   [Ingress ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/services-networking/ingress/): Specifies a type of load balancer that provides routes to access your app publicly.
+    
+    
 
 2.  Run the configuration file in a cluster's context.
 
     ```
-    kubectl apply -f deployment_script_location
+    kubectl apply -f config.yaml
     ```
     {: pre}
 
 3.  If you made your app publicly available by using a node port service, a load balancer service, or Ingress, verify that you can access the app.
 
 <br />
+
 
 
 
@@ -412,10 +415,11 @@ Before you begin:
 - Heapster monitoring must be deployed in the cluster that you want to autoscale.
 
 Steps:
+
 1.  Deploy your app to your cluster from the CLI. When you deploy your app, you must request CPU.
 
     ```
-    kubectl run <name> --image=<image> --requests=cpu=<cpu> --expose --port=<port_number>
+    kubectl run <app_name> --image=<image> --requests=cpu=<cpu> --expose --port=<port_number>
     ```
     {: pre}
 
