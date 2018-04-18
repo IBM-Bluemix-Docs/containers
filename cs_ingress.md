@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-11"
+lastupdated: "2018-04-17"
 
 ---
 
@@ -98,17 +98,17 @@ To expose an app by using the IBM-provided domain:
 1.  [Deploy your app to the cluster](cs_app.html#app_cli). Ensure that you add a label to your deployment in the metadata section of your configuration file, such as `app: code`. This label is needed to identify all pods where your app is running so that the pods can be included in the Ingress load balancing.
 
 2.   Create a Kubernetes service for the app that you want to expose. Your app must be exposed by a Kubernetes service to be included by the cluster ALB in the Ingress load balancing.
-      1.  Open your preferred editor and create a service configuration file that is named, for example, `myservice.yaml`.
+      1.  Open your preferred editor and create a service configuration file that is named, for example, `myalbservice.yaml`.
       2.  Define a service for the app that the ALB will expose to the public.
 
           ```
           apiVersion: v1
           kind: Service
           metadata:
-            name: <myservice>
+            name: myalbservice
           spec:
             selector:
-              <selectorkey>: <selectorvalue>
+              <selector_key>: <selector_value>
             ports:
              - protocol: TCP
                port: 8080
@@ -122,12 +122,8 @@ To expose an app by using the IBM-provided domain:
           </thead>
           <tbody>
           <tr>
-          <td><code>name</code></td>
-          <td>Replace <em>&lt;myservice&gt;</em> with a name for your ALB service.</td>
-          </tr>
-          <tr>
           <td><code>selector</code></td>
-          <td>Enter the label key (<em>&lt;selectorkey&gt;</em>) and value (<em>&lt;selectorvalue&gt;</em>) pair that you want to use to target the pods where your app runs. To target your pods and include them in the service load balancing, make sure that the <em>&lt;selectorkey&gt;</em> and <em>&lt;selectorvalue&gt;</em> are the same as the key/value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.</td>
+          <td>Enter the label key (<em>&lt;selector_key&gt;</em>) and value (<em>&lt;selector_value&gt;</em>) pair that you want to use to target the pods where your app runs. To target your pods and include them in the service load balancing, make sure that the <em>&lt;selector_key&gt;</em> and <em>&lt;selector_value&gt;</em> are the same as the key/value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.</td>
            </tr>
            <tr>
            <td><code>port</code></td>
@@ -138,58 +134,58 @@ To expose an app by using the IBM-provided domain:
       4.  Create the service in your cluster.
 
           ```
-          kubectl apply -f myservice.yaml
+          kubectl apply -f myalbservice.yaml
           ```
           {: pre}
       5.  Repeat these steps for every app that you want to expose to the public.
 
-3. Get the details for your cluster to view the IBM-provided domain. Replace _&lt;mycluster&gt;_ with the name of the cluster where the app is deployed that you want to expose to the public.
+3. Get the details for your cluster to view the IBM-provided domain. Replace _&lt;cluster_name_or_ID&gt;_ with the name of the cluster where the app is deployed that you want to expose to the public.
 
     ```
-    bx cs cluster-get <mycluster>
+    bx cs cluster-get <cluster_name_or_ID>
     ```
     {: pre}
 
-    Your CLI output looks similar to the following.
+    Example output:
 
     ```
-    Retrieving cluster <mycluster>...
-    OK
-    Name:    <mycluster>
-    ID:    b9c6b00dc0aa487f97123440b4895f2d
-    State:    normal
-    Created:  2017-04-26T19:47:08+0000
-    Location: dal10
-    Master URL:  https://169.57.40.165:1931
-    Ingress subdomain:  <ibmdomain>
-    Ingress secret:  <ibmtlssecret>
-    Workers:  3
-    Version: 1.8.8
+    Name:                   mycluster
+    ID:                     18a61a63c6a94b658596ca93d087aad9
+    State:                  normal
+    Created:                2018-01-12T18:33:35+0000
+    Location:               dal10
+    Master URL:             https://169.xx.xxx.xxx:26268
+    Ingress Subdomain:      mycluster-12345.us-south.containers.mybluemix.net
+    Ingress Secret:         <tls_secret>
+    Workers:                3
+    Version:                1.8.8
+    Owner Email:            owner@email.com
+    Monitoring Dashboard:   <dashboard_URL>
     ```
     {: screen}
 
     You can see the IBM-provided domain in the **Ingress subdomain** field.
 4.  Create an Ingress resource. Ingress resources define the routing rules for the Kubernetes service that you created for your app and are used by the ALB to route incoming network traffic to the service. You must use one Ingress resource to define routing rules for multiple apps if every app is exposed via a Kubernetes service inside the cluster.
-    1.  Open your preferred editor and create an Ingress configuration file that is named, for example, `myingress.yaml`.
+    1.  Open your preferred editor and create an Ingress configuration file that is named, for example, `myingressresource.yaml`.
     2.  Define an Ingress resource in your configuration file that uses the IBM-provided domain to route incoming network traffic to the services that you created earlier.
 
         ```
         apiVersion: extensions/v1beta1
         kind: Ingress
         metadata:
-          name: <myingressname>
+          name: myingressresource
         spec:
           rules:
-          - host: <ibmdomain>
+          - host: <ibm_domain>
             http:
               paths:
-              - path: /<myservicepath1>
+              - path: /<service1_path>
                 backend:
-                  serviceName: <myservice1>
+                  serviceName: <service1>
                   servicePort: 80
-              - path: /<myservicepath2>
+              - path: /<service2_path>
                 backend:
-                  serviceName: <myservice2>
+                  serviceName: <service2>
                   servicePort: 80
         ```
         {: codeblock}
@@ -201,33 +197,29 @@ To expose an app by using the IBM-provided domain:
         </thead>
         <tbody>
         <tr>
-        <td><code>name</code></td>
-        <td>Replace <em>&lt;myingressname&gt;</em> with a name for your Ingress resource.</td>
-        </tr>
-        <tr>
         <td><code>host</code></td>
-        <td>Replace <em>&lt;ibmdomain&gt;</em> with the IBM-provided <strong>Ingress subdomain</strong> name from the previous step.
+        <td>Replace <em>&lt;ibm_domain&gt;</em> with the IBM-provided <strong>Ingress subdomain</strong> name from the previous step.
 
         </br></br>
         <strong>Note:</strong> Do not use * for your host or leave the host property empty to avoid failures during Ingress creation.</td>
         </tr>
         <tr>
         <td><code>path</code></td>
-        <td>Replace <em>&lt;myservicepath1&gt;</em> with a slash or the unique path that your app is listening on so that network traffic can be forwarded to the app.
+        <td>Replace <em>&lt;service1_path&gt;</em> with a slash or the unique path that your app is listening on so that network traffic can be forwarded to the app.
 
         </br>
-        For every Kubernetes service, you can define an individual path that is appended to the IBM-provided domain to create a unique path to your app; for example <code>ingress_domain/myservicepath1</code>. When you enter this route into a web browser, network traffic is routed to the ALB. The ALB looks up the associated service sends network traffic to the service. The service then forwards the traffic to the pods where the app is running. The app must be set up to listen on this path to receive incoming network traffic.
+        For every Kubernetes service, you can define an individual path that is appended to the IBM-provided domain to create a unique path to your app; for example <code>ibm_domain/service1_path</code>. When you enter this route into a web browser, network traffic is routed to the ALB. The ALB looks up the associated service sends network traffic to the service. The service then forwards the traffic to the pods where the app is running. The app must be set up to listen on this path to receive incoming network traffic.
 
         </br></br>
         Many apps do not listen on a specific path, but use the root path and a specific port. In this case, define the root path as <code>/</code> and do not specify an individual path for your app.
         </br>
-        Examples: <ul><li>For <code>http://ingress_host_name/</code>, enter <code>/</code> as the path.</li><li>For <code>http://ingress_host_name/myservicepath</code>, enter <code>/myservicepath</code> as the path.</li></ul>
+        Examples: <ul><li>For <code>http://ibm_domain/</code>, enter <code>/</code> as the path.</li><li>For <code>http://ibm_domain/service1_path</code>, enter <code>/service1_path</code> as the path.</li></ul>
         </br>
         <strong>Tip:</strong> To configure Ingress to listen on a path that is different than the path that your app listens on, you can use the [rewrite annotation](cs_annotations.html#rewrite-path) to establish proper routing to your app.</td>
         </tr>
         <tr>
         <td><code>serviceName</code></td>
-        <td>Replace <em>&lt;myservice1&gt;</em> with the name of the service that you used when you created the Kubernetes service for your app.</td>
+        <td>Replace <em>&lt;service1&gt;</em> with the name of the service that you used when you created the Kubernetes service for your app.</td>
         </tr>
         <tr>
         <td><code>servicePort</code></td>
@@ -238,13 +230,13 @@ To expose an app by using the IBM-provided domain:
     3.  Create the Ingress resource for your cluster.
 
         ```
-        kubectl apply -f myingress.yaml
+        kubectl apply -f myingressresource.yaml
         ```
         {: pre}
-5.   Verify that the Ingress resource was created successfully. Replace _&lt;myingressname&gt;_ with the name of the Ingress resource that you created earlier.
+5.   Verify that the Ingress resource was created successfully.
 
       ```
-      kubectl describe ingress <myingressname>
+      kubectl describe ingress myingressresource
       ```
       {: pre}
 
@@ -253,7 +245,7 @@ To expose an app by using the IBM-provided domain:
 6.   In a web browser, enter the URL of the app service to access.
 
       ```
-      https://<ibmdomain>/<myservicepath1>
+      https://<ibm_domain>/<service1_path>
       ```
       {: codeblock}
 
@@ -277,17 +269,17 @@ To expose an app by using the IBM-provided domain with TLS:
 1.  [Deploy your app to the cluster](cs_app.html#app_cli). Ensure that you add a label to your deployment in the metadata section of your configuration file, such as `app: code`. This label is needed to identify all pods where your app is running so that the pods can be included in the Ingress load balancing.
 
 2.   Create a Kubernetes service for the app that you want to expose. Your app must be exposed by a Kubernetes service to be included by the cluster ALB in the Ingress load balancing.
-      1.  Open your preferred editor and create a service configuration file that is named, for example, `myservice.yaml`.
+      1.  Open your preferred editor and create a service configuration file that is named, for example, `myalbservice.yaml`.
       2.  Define a service for the app that the ALB will expose to the public.
 
           ```
           apiVersion: v1
           kind: Service
           metadata:
-            name: <myservice>
+            name: myalbservice
           spec:
             selector:
-              <selectorkey>: <selectorvalue>
+              <selector_key>: <selector_value>
             ports:
              - protocol: TCP
                port: 8080
@@ -301,12 +293,8 @@ To expose an app by using the IBM-provided domain with TLS:
           </thead>
           <tbody>
           <tr>
-          <td><code>name</code></td>
-          <td>Replace <em>&lt;myservice&gt;</em> with a name for your ALB service.</td>
-          </tr>
-          <tr>
           <td><code>selector</code></td>
-          <td>Enter the label key (<em>&lt;selectorkey&gt;</em>) and value (<em>&lt;selectorvalue&gt;</em>) pair that you want to use to target the pods where your app runs. To target your pods and include them in the service load balancing, make sure that the <em>&lt;selectorkey&gt;</em> and <em>&lt;selectorvalue&gt;</em> are the same as the key/value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.</td>
+          <td>Enter the label key (<em>&lt;selector_key&gt;</em>) and value (<em>&lt;selector_value&gt;</em>) pair that you want to use to target the pods where your app runs. To target your pods and include them in the service load balancing, make sure that the <em>&lt;selector_key&gt;</em> and <em>&lt;selector_value&gt;</em> are the same as the key/value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.</td>
            </tr>
            <tr>
            <td><code>port</code></td>
@@ -317,64 +305,63 @@ To expose an app by using the IBM-provided domain with TLS:
       4.  Create the service in your cluster.
 
           ```
-          kubectl apply -f myservice.yaml
+          kubectl apply -f myalbservice.yaml
           ```
           {: pre}
       5.  Repeat these steps for every app that you want to expose to the public.
 
-3.   View the IBM-provided domain and TLS certificate. Replace _&lt;mycluster&gt;_ with the name of the cluster where the app is deployed.
+3.   View the IBM-provided domain and TLS certificate. Replace _&lt;cluster_name_or_ID&gt;_ with the name of the cluster where the app is deployed.
 
       ```
-      bx cs cluster-get <mycluster>
+      bx cs cluster-get <cluster_name_or_ID>
       ```
       {: pre}
 
-      Your CLI output looks similar to the following.
+      Example output:
 
       ```
-      bx cs cluster-get <mycluster>
-      Retrieving cluster <mycluster>...
-      OK
-      Name:    <mycluster>
-      ID:    b9c6b00dc0aa487f97123440b4895f2d
-      State:    normal
-      Created:  2017-04-26T19:47:08+0000
-      Location: dal10
-      Master URL:  https://169.57.40.165:1931
-      Ingress subdomain:  <ibmdomain>
-      Ingress secret:  <ibmtlssecret>
-      Workers:  3
-      Version: 1.8.8
+      Name:                   mycluster
+      ID:                     18a61a63c6a94b658596ca93d087aad9
+      State:                  normal
+      Created:                2018-01-12T18:33:35+0000
+      Location:               dal10
+      Master URL:             https://169.xx.xxx.xxx:26268
+      Ingress Subdomain:      mycluster-12345.us-south.containers.mybluemix.net
+      Ingress Secret:         <ibm_tls_secret>
+      Workers:                3
+      Version:                1.8.8
+      Owner Email:            owner@email.com
+      Monitoring Dashboard:   <dashboard_URL>
       ```
       {: screen}
 
       You can see the IBM-provided domain in the **Ingress subdomain** and the IBM-provided certificate in the **Ingress secret** fields.
 
 4.  Create an Ingress resource. Ingress resources define the routing rules for the Kubernetes service that you created for your app and are used by the ALB to route incoming network traffic to the service. You must use one Ingress resource to define routing rules for multiple apps if every app is exposed via a Kubernetes service inside the cluster.
-    1.  Open your preferred editor and create an Ingress configuration file that is named, for example, `myingress.yaml`.
+    1.  Open your preferred editor and create an Ingress configuration file that is named, for example, `myingressresource.yaml`.
     2.  Define an Ingress resource in your configuration file that uses the IBM-provided domain to route incoming network traffic to the services that you created earlier, and your custom certificate to manage the TLS termination.
 
         ```
         apiVersion: extensions/v1beta1
         kind: Ingress
         metadata:
-          name: <myingressname>
+          name: myingressresource
         spec:
           tls:
           - hosts:
-            - <ibmdomain>
-            secretName: <ibmtlssecret>
+            - <ibm_domain>
+            secretName: <ibm_tls_secret>
           rules:
-          - host: <ibmdomain>
+          - host: <ibm_domain>
             http:
               paths:
-              - path: /<myservicepath1>
+              - path: /<service1_path>
                 backend:
-                  serviceName: <myservice1>
+                  serviceName: <service1>
                   servicePort: 80
-              - path: /<myservicepath2>
+              - path: /<service2_path>
                 backend:
-                  serviceName: <myservice2>
+                  serviceName: <service2>
                   servicePort: 80
         ```
         {: codeblock}
@@ -386,30 +373,26 @@ To expose an app by using the IBM-provided domain with TLS:
         </thead>
         <tbody>
         <tr>
-        <td><code>name</code></td>
-        <td>Replace <em>&lt;myingressname&gt;</em> with a name for your Ingress resource.</td>
-        </tr>
-        <tr>
         <td><code>tls/hosts</code></td>
-        <td>Replace <em>&lt;ibmdomain&gt;</em> with the IBM-provided <strong>Ingress subdomain</strong> name from the previous step. This domain is configured for TLS termination.
+        <td>Replace <em>&lt;ibm_domain&gt;</em> with the IBM-provided <strong>Ingress subdomain</strong> name from the previous step. This domain is configured for TLS termination.
 
         </br></br>
         <strong>Note:</strong> Do not use &ast; for your host or leave the host property empty to avoid failures during Ingress creation.</td>
         </tr>
         <tr>
         <td><code>tls/secretName</code></td>
-        <td>Replace <em>&lt;ibmtlssecret&gt;</em> with the IBM-provided <strong>Ingress secret</strong> name from the previous step. This certificate manages the TLS termination.
+        <td>Replace <em>&lt;<ibm_tls_secret>&gt;</em> with the IBM-provided <strong>Ingress secret</strong> name from the previous step. This certificate manages the TLS termination.
         </tr>
         <tr>
         <td><code>host</code></td>
-        <td>Replace <em>&lt;ibmdomain&gt;</em> with the IBM-provided <strong>Ingress subdomain</strong> name from the previous step. This domain is configured for TLS termination.
+        <td>Replace <em>&lt;ibm_domain&gt;</em> with the IBM-provided <strong>Ingress subdomain</strong> name from the previous step. This domain is configured for TLS termination.
 
         </br></br>
         <strong>Note:</strong> Do not use &ast; for your host or leave the host property empty to avoid failures during Ingress creation.</td>
         </tr>
         <tr>
         <td><code>path</code></td>
-        <td>Replace <em>&lt;myservicepath1&gt;</em> with a slash or the unique path that your app is listening on so that network traffic can be forwarded to the app.
+        <td>Replace <em>&lt;service1_path&gt;</em> with a slash or the unique path that your app is listening on so that network traffic can be forwarded to the app.
 
         </br>
         For every Kubernetes service, you can define an individual path that is appended to the IBM-provided domain to create a unique path to your app. When you enter this route into a web browser, network traffic is routed to the ALB. The ALB looks up the associated service and sends network traffic to the service. The service then forwards the traffic to the pods where the app is running. The app must be set up to listen on this path to receive incoming network traffic.
@@ -418,12 +401,12 @@ To expose an app by using the IBM-provided domain with TLS:
         Many apps do not listen on a specific path, but use the root path and a specific port. In this case, define the root path as <code>/</code> and do not specify an individual path for your app.
 
         </br>
-        Examples: <ul><li>For <code>http://ingress_host_name/</code>, enter <code>/</code> as the path.</li><li>For <code>http://ingress_host_name/myservicepath</code>, enter <code>/myservicepath</code> as the path.</li></ul>
+        Examples: <ul><li>For <code>http://ibm_domain/</code>, enter <code>/</code> as the path.</li><li>For <code>http://ibm_domain/service1_path</code>, enter <code>/service1_path</code> as the path.</li></ul>
         <strong>Tip:</strong> To configure Ingress to listen on a path that is different than the path that your app listens on, you can use the [rewrite annotation](cs_annotations.html#rewrite-path) to establish proper routing to your app.</td>
         </tr>
         <tr>
         <td><code>serviceName</code></td>
-        <td>Replace <em>&lt;myservice1&gt;</em> with the name of the service that you used when you created the Kubernetes service for your app.</td>
+        <td>Replace <em>&lt;service1&gt;</em> with the name of the service that you used when you created the Kubernetes service for your app.</td>
         </tr>
         <tr>
         <td><code>servicePort</code></td>
@@ -434,13 +417,13 @@ To expose an app by using the IBM-provided domain with TLS:
     3.  Create the Ingress resource for your cluster.
 
         ```
-        kubectl apply -f myingress.yaml
+        kubectl apply -f myingressresource.yaml
         ```
         {: pre}
-5.   Verify that the Ingress resource was created successfully. Replace _&lt;myingressname&gt;_ with the name of the Ingress resource that you created earlier.
+5.   Verify that the Ingress resource was created successfully.
 
       ```
-      kubectl describe ingress <myingressname>
+      kubectl describe ingress myingressresource
       ```
       {: pre}
 
@@ -449,7 +432,7 @@ To expose an app by using the IBM-provided domain with TLS:
 6.   In a web browser, enter the URL of the app service to access.
 
       ```
-      https://<ibmdomain>/<myservicepath1>
+      https://<ibm_domain>/<service1_path>
       ```
       {: codeblock}
 
@@ -472,7 +455,7 @@ To expose an app by using a custom domain with TLS:
 
 1.  Create a custom domain. To create a custom domain, work with your Domain Name Service (DNS) provider or [{{site.data.keyword.Bluemix_notm}} ](/docs/infrastructure/dns/getting-started.html#getting-started-with-dns) to register your custom domain.
 2.  Configure your domain to route incoming network traffic to the IBM-provided ALB. Choose between these options:
-    -   Define an alias for your custom domain by specifying the IBM-provided domain as a Canonical Name record (CNAME). To find the IBM-provided Ingress domain, run `bx cs cluster-get <mycluster>` and look for the **Ingress subdomain** field.
+    -   Define an alias for your custom domain by specifying the IBM-provided domain as a Canonical Name record (CNAME). To find the IBM-provided Ingress domain, run `bx cs cluster-get <cluster_name>` and look for the **Ingress subdomain** field.
     -   Map your custom domain to the portable public IP address of the IBM-provided ALB by adding the IP address as a record. To find the portable public IP address of the ALB, run `bx cs alb-get <public_alb_ID>`.
 3.  Either import or create a TLS certificate and key secret:
     * If a TLS certificate is stored in {{site.data.keyword.cloudcerts_long_notm}} that you want to use, you can import its associated secret into your cluster by running the following command:
@@ -484,26 +467,26 @@ To expose an app by using a custom domain with TLS:
 
     * If you do not have a TLS certificate ready, follow these steps:
         1. Create a TLS certificate and key for your domain that is encoded in PEM format.
-        2. Create a secret that uses your TLS certificate and key. Replace <em>&lt;mytlssecret&gt;</em> with a name for your Kubernetes secret, <em>&lt;tls_key_filepath&gt;</em> with the path to your custom TLS key file, and <em>&lt;tls_cert_filepath&gt;</em> with the path to your custom TLS certificate file.
+        2. Create a secret that uses your TLS certificate and key. Replace <em>&lt;tls_secret_name&gt;</em> with a name for your Kubernetes secret, <em>&lt;tls_key_filepath&gt;</em> with the path to your custom TLS key file, and <em>&lt;tls_cert_filepath&gt;</em> with the path to your custom TLS certificate file.
 
             ```
-            kubectl create secret tls <mytlssecret> --key <tls_key_filepath> --cert <tls_cert_filepath>
+            kubectl create secret tls <tls_secret_name> --key <tls_key_filepath> --cert <tls_cert_filepath>
             ```
             {: pre}
 4.  [Deploy your app to the cluster](cs_app.html#app_cli). Ensure that you add a label to your deployment in the metadata section of your configuration file, such as `app: code`. This label is needed to identify all pods where your app is running so that the pods can be included in the Ingress load balancing.
 
 5.   Create a Kubernetes service for the app that you want to expose. Your app must be exposed by a Kubernetes service to be included by the cluster ALB in the Ingress load balancing.
-      1.  Open your preferred editor and create a service configuration file that is named, for example, `myservice.yaml`.
+      1.  Open your preferred editor and create a service configuration file that is named, for example, `myalbservice.yaml`.
       2.  Define a service for the app that the ALB will expose to the public.
 
           ```
           apiVersion: v1
           kind: Service
           metadata:
-            name: <myservice>
+            name: myalbservice
           spec:
             selector:
-              <selectorkey>: <selectorvalue>
+              <selector_key>: <selector_value>
             ports:
              - protocol: TCP
                port: 8080
@@ -517,12 +500,8 @@ To expose an app by using a custom domain with TLS:
           </thead>
           <tbody>
           <tr>
-          <td><code>name</code></td>
-          <td>Replace <em>&lt;myservice&gt;</em> with a name for your ALB service.</td>
-          </tr>
-          <tr>
           <td><code>selector</code></td>
-          <td>Enter the label key (<em>&lt;selectorkey&gt;</em>) and value (<em>&lt;selectorvalue&gt;</em>) pair that you want to use to target the pods where your app runs. To target your pods and include them in the service load balancing, make sure that the <em>&lt;selectorkey&gt;</em> and <em>&lt;selectorvalue&gt;</em> are the same as the key/value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.</td>
+          <td>Enter the label key (<em>&lt;selector_key&gt;</em>) and value (<em>&lt;selector_value&gt;</em>) pair that you want to use to target the pods where your app runs. To target your pods and include them in the service load balancing, make sure that the <em>&lt;selector_key&gt;</em> and <em>&lt;selector_value&gt;</em> are the same as the key/value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.</td>
            </tr>
            <tr>
            <td><code>port</code></td>
@@ -533,36 +512,36 @@ To expose an app by using a custom domain with TLS:
       4.  Create the service in your cluster.
 
           ```
-          kubectl apply -f myservice.yaml
+          kubectl apply -f myalbservice.yaml
           ```
           {: pre}
       5.  Repeat these steps for every app that you want to expose to the public.
 
 6.  Create an Ingress resource. Ingress resources define the routing rules for the Kubernetes service that you created for your app and are used by the ALB to route incoming network traffic to the service. You must use one Ingress resource to define routing rules for multiple apps if every app is exposed via a Kubernetes service inside the cluster.
-    1.  Open your preferred editor and create an Ingress configuration file that is named, for example, `myingress.yaml`.
+    1.  Open your preferred editor and create an Ingress configuration file that is named, for example, `myingressresource.yaml`.
     2.  Define an Ingress resource in your configuration file that uses your custom domain to route incoming network traffic to your services, and your custom certificate to manage the TLS termination.
 
         ```
         apiVersion: extensions/v1beta1
         kind: Ingress
         metadata:
-          name: <myingressname>
+          name: myingressresource
         spec:
           tls:
           - hosts:
-            - <mycustomdomain>
-            secretName: <mytlssecret>
+            - <custom_domain>
+            secretName: <tls_secret_name>
           rules:
-          - host: <mycustomdomain>
+          - host: <custom_domain>
             http:
               paths:
-              - path: /<myservicepath1>
+              - path: /<service1_path>
                 backend:
-                  serviceName: <myservice1>
+                  serviceName: <service1>
                   servicePort: 80
-              - path: /<myservicepath2>
+              - path: /<service2_path>
                 backend:
-                  serviceName: <myservice2>
+                  serviceName: <service2>
                   servicePort: 80
         ```
         {: codeblock}
@@ -574,23 +553,19 @@ To expose an app by using a custom domain with TLS:
         </thead>
         <tbody>
         <tr>
-        <td><code>name</code></td>
-        <td>Replace <em>&lt;myingressname&gt;</em> with a name for your Ingress resource.</td>
-        </tr>
-        <tr>
         <td><code>tls/hosts</code></td>
-        <td>Replace <em>&lt;mycustomdomain&gt;</em> with our custom domain that you want to configure for TLS termination.
+        <td>Replace <em>&lt;custom_domain&gt;</em> with our custom domain that you want to configure for TLS termination.
 
         </br></br>
         <strong>Note:</strong> Do not use &ast; for your host or leave the host property empty to avoid failures during Ingress creation.</td>
         </tr>
         <tr>
         <td><code>tls/secretName</code></td>
-        <td>Replace <em>&lt;mytlssecret&gt;</em> with the name of the secret that you created earlier that holds your custom TLS certificate and key. If you imported a certificate from {{site.data.keyword.cloudcerts_short}}, you can run <code>bx cs alb-cert-get --cluster <cluster_name_or_ID> --cert-crn <certificate_crn></code> to see the secrets that are associated with a TLS certificate.
+        <td>Replace <em>&lt;tls_secret_name&gt;</em> with the name of the secret that you created earlier that holds your custom TLS certificate and key. If you imported a certificate from {{site.data.keyword.cloudcerts_short}}, you can run <code>bx cs alb-cert-get --cluster <cluster_name_or_ID> --cert-crn <certificate_crn></code> to see the secrets that are associated with a TLS certificate.
         </tr>
         <tr>
         <td><code>host</code></td>
-        <td>Replace <em>&lt;mycustomdomain&gt;</em> with our custom domain that you want to configure for TLS termination.
+        <td>Replace <em>&lt;custom_domain&gt;</em> with our custom domain that you want to configure for TLS termination.
 
         </br></br>
         <strong>Note:</strong> Do not use &ast; for your host or leave the host property empty to avoid failures during Ingress creation.
@@ -598,7 +573,7 @@ To expose an app by using a custom domain with TLS:
         </tr>
         <tr>
         <td><code>path</code></td>
-        <td>Replace <em>&lt;myservicepath1&gt;</em> with a slash or the unique path that your app is listening on so that network traffic can be forwarded to the app.
+        <td>Replace <em>&lt;service1_path&gt;</em> with a slash or the unique path that your app is listening on so that network traffic can be forwarded to the app.
 
         </br>
         For every service, you can define an individual path that is appended to your custom domain to create a unique path to your app. When you enter this route into a web browser, network traffic is routed to the ALB. The ALB looks up the associated service and sends network traffic to the service. The service then forwards the traffic to the pods where the app is running. The app must be set up to listen on this path to receive incoming network traffic.
@@ -607,13 +582,13 @@ To expose an app by using a custom domain with TLS:
         Many apps do not listen on a specific path, but use the root path and a specific port. In this case, define the root path as <code>/</code> and do not specify an individual path for your app.
 
         </br></br>
-        Examples: <ul><li>For <code>https://mycustomdomain/</code>, enter <code>/</code> as the path.</li><li>For <code>https://mycustomdomain/myservicepath</code>, enter <code>/myservicepath</code> as the path.</li></ul>
+        Examples: <ul><li>For <code>https://custom_domain/</code>, enter <code>/</code> as the path.</li><li>For <code>https://custom_domain/service1_path</code>, enter <code>/service1_path</code> as the path.</li></ul>
         <strong>Tip:</strong> To configure Ingress to listen on a path that is different than the path that your app listens on, you can use the [rewrite annotation](cs_annotations.html#rewrite-path) to establish proper routing to your app.
         </td>
         </tr>
         <tr>
         <td><code>serviceName</code></td>
-        <td>Replace <em>&lt;myservice1&gt;</em> with the name of the service that you used when you created the Kubernetes service for your app.</td>
+        <td>Replace <em>&lt;service1&gt;</em> with the name of the service that you used when you created the Kubernetes service for your app.</td>
         </tr>
         <tr>
         <td><code>servicePort</code></td>
@@ -625,13 +600,13 @@ To expose an app by using a custom domain with TLS:
     4.  Create the Ingress resource for your cluster.
 
         ```
-        kubectl apply -f myingress.yaml
+        kubectl apply -f myingressresource.yaml
         ```
         {: pre}
-7.   Verify that the Ingress resource was created successfully. Replace _&lt;myingressname&gt;_ with the name of the Ingress resource that you created earlier.
+7.   Verify that the Ingress resource was created successfully.
 
       ```
-      kubectl describe ingress <myingressname>
+      kubectl describe ingress myingressresource
       ```
       {: pre}
 
@@ -640,7 +615,7 @@ To expose an app by using a custom domain with TLS:
 8.   In a web browser, enter the URL of the app service to access.
 
       ```
-      https://<mycustomdomain>/<myservicepath1>
+      https://<custom_domain>/<service1_path>
       ```
       {: codeblock}
 
@@ -670,7 +645,7 @@ You can route incoming network traffic on the IBM-provided domain to apps that a
         apiVersion: v1
         kind: Service
         metadata:
-          name: <myservicename>
+          name: myexternalservice
         spec:
           ports:
            - protocol: TCP
@@ -686,7 +661,7 @@ You can route incoming network traffic on the IBM-provided domain to apps that a
         <tbody>
         <tr>
         <td><code>metadata/name</code></td>
-        <td>Replace <em>&lt;myservicename&gt;</em> with a name for your service.</td>
+        <td>Replace <em>&lt;myexternalservice&gt;</em> with a name for your service.</td>
         </tr>
         <tr>
         <td><code>port</code></td>
@@ -708,13 +683,13 @@ You can route incoming network traffic on the IBM-provided domain to apps that a
         kind: Endpoints
         apiVersion: v1
         metadata:
-          name: <myservicename>
+          name: myexternalendpoint
         subsets:
           - addresses:
-              - ip: <externalIP1>
-              - ip: <externalIP2>
+              - ip: <external_IP1>
+              - ip: <external_IP2>
             ports:
-              - port: <externalport>
+              - port: <external_port>
         ```
         {: codeblock}
 
@@ -725,14 +700,14 @@ You can route incoming network traffic on the IBM-provided domain to apps that a
         <tbody>
         <tr>
         <td><code>name</code></td>
-        <td>Replace <em>&lt;myendpointname&gt;</em> with the name of the Kubernetes service that you created earlier.</td>
+        <td>Replace <em>&lt;myexternalendpoint&gt;</em> with the name of the Kubernetes service that you created earlier.</td>
         </tr>
         <tr>
         <td><code>ip</code></td>
-        <td>Replace <em>&lt;externalIP&gt;</em> with the public IP addresses to connect to your external app.</td>
+        <td>Replace <em>&lt;external_IP&gt;</em> with the public IP addresses to connect to your external app.</td>
          </tr>
          <td><code>port</code></td>
-         <td>Replace <em>&lt;externalport&gt;</em> with the port that your external app listens to.</td>
+         <td>Replace <em>&lt;external_port&gt;</em> with the port that your external app listens to.</td>
          </tbody></table>
 
     3.  Save your changes.
@@ -742,29 +717,28 @@ You can route incoming network traffic on the IBM-provided domain to apps that a
         kubectl apply -f myexternalendpoint.yaml
         ```
         {: pre}
-3.   View the IBM-provided domain and TLS certificate. Replace _&lt;mycluster&gt;_ with the name of the cluster where the app is deployed.
+3.   View the IBM-provided domain and TLS certificate. Replace _&lt;cluster_name_or_ID&gt;_ with the name of the cluster where the app is deployed.
 
       ```
-      bx cs cluster-get <mycluster>
+      bx cs cluster-get <cluster_name_or_ID>
       ```
       {: pre}
 
-      Your CLI output looks similar to the following.
+      Example output:
 
       ```
-      bx cs cluster-get <mycluster>
-      Retrieving cluster <mycluster>...
-      OK
-      Name:    <mycluster>
-      ID:    b9c6b00dc0aa487f97123440b4895f2d
-      State:    normal
-      Created:  2017-04-26T19:47:08+0000
-      Location: dal10
-      Master URL:  https://169.57.40.165:1931
-      Ingress subdomain:  <ibmdomain>
-      Ingress secret:  <ibmtlssecret>
-      Workers:  3
-      Version: 1.8.8
+      Name:                   mycluster
+      ID:                     18a61a63c6a94b658596ca93d087aad9
+      State:                  normal
+      Created:                2018-01-12T18:33:35+0000
+      Location:               dal10
+      Master URL:             https://169.xx.xxx.xxx:26268
+      Ingress Subdomain:      mycluster-12345.us-south.containers.mybluemix.net
+      Ingress Secret:         <ibm_tls_secret>
+      Workers:                3
+      Version:                1.8.8
+      Owner Email:            owner@email.com
+      Monitoring Dashboard:   <dashboard_URL>
       ```
       {: screen}
 
@@ -778,23 +752,23 @@ You can route incoming network traffic on the IBM-provided domain to apps that a
         apiVersion: extensions/v1beta1
         kind: Ingress
         metadata:
-          name: <myingressname>
+          name: myexternalingress
         spec:
           tls:
           - hosts:
-            - <ibmdomain>
-            secretName: <ibmtlssecret>
+            - <ibm_domain>
+            secretName: <ibm_tls_secret>
           rules:
-          - host: <ibmdomain>
+          - host: <ibm_domain>
             http:
               paths:
-              - path: /<myexternalservicepath1>
+              - path: /<external_service1_path>
                 backend:
-                  serviceName: <myservice1>
+                  serviceName: <external_service1>
                   servicePort: 80
-              - path: /<myexternalservicepath2>
+              - path: /<external_service2_path>
                 backend:
-                  serviceName: <myexternalservice2>
+                  serviceName: <external_service2>
                   servicePort: 80
         ```
         {: codeblock}
@@ -806,33 +780,29 @@ You can route incoming network traffic on the IBM-provided domain to apps that a
         </thead>
         <tbody>
         <tr>
-        <td><code>name</code></td>
-        <td>Replace <em>&lt;myingressname&gt;</em> with the name for the Ingress resource.</td>
-        </tr>
-        <tr>
         <td><code>tls/hosts</code></td>
-        <td>Replace <em>&lt;ibmdomain&gt;</em> with the IBM-provided <strong>Ingress subdomain</strong> name from the previous step. This domain is configured for TLS termination.
+        <td>Replace <em>&lt;ibm_domain&gt;</em> with the IBM-provided <strong>Ingress subdomain</strong> name from the previous step. This domain is configured for TLS termination.
 
         </br></br>
         <strong>Note:</strong> Do not use &ast; for your host or leave the host property empty to avoid failures during Ingress creation.</td>
         </tr>
         <tr>
         <td><code>tls/secretName</code></td>
-        <td>Replace <em>&lt;ibmtlssecret&gt;</em> with the IBM-provided <strong>Ingress secret</strong> from the previous step. This certificate manages the TLS termination.</td>
+        <td>Replace <em>&lt;ibm_tls_secret&gt;</em> with the IBM-provided <strong>Ingress secret</strong> from the previous step. This certificate manages the TLS termination.</td>
         </tr>
         <tr>
         <td><code>rules/host</code></td>
-        <td>Replace <em>&lt;ibmdomain&gt;</em> with the IBM-provided <strong>Ingress subdomain</strong> name from the previous step. This domain is configured for TLS termination.
+        <td>Replace <em>&lt;ibm_domain&gt;</em> with the IBM-provided <strong>Ingress subdomain</strong> name from the previous step. This domain is configured for TLS termination.
 
         </br></br>
         <strong>Note:</strong> Do not use &ast; for your host or leave the host property empty to avoid failures during Ingress creation.</td>
         </tr>
         <tr>
         <td><code>path</code></td>
-        <td>Replace <em>&lt;myexternalservicepath&gt;</em> with a slash or the unique path that your external app is listening on, so that network traffic can be forwarded to the app.
+        <td>Replace <em>&lt;external_service_path&gt;</em> with a slash or the unique path that your external app is listening on, so that network traffic can be forwarded to the app.
 
         </br>
-        For every service, you can define an individual path that is appended to the IBM-provided or custom domain to create a unique path to your app, for example <code>http://ibmdomain/myservicepath1</code> or <code>http://customdomain/</code>. When you enter this route into a web browser, network traffic is routed to the ALB. The ALB looks up the associated service and sends network traffic to the service. The service the forwards traffic to the external app. The app must be set up to listen on this path to receive incoming network traffic.
+        For every service, you can define an individual path that is appended to the IBM-provided or custom domain to create a unique path to your app, for example <code>http://ibm_domain/external_service_path</code> or <code>http://custom_domain/</code>. When you enter this route into a web browser, network traffic is routed to the ALB. The ALB looks up the associated service and sends network traffic to the service. The service the forwards traffic to the external app. The app must be set up to listen on this path to receive incoming network traffic.
 
         </br></br>
         Many apps do not listen on a specific path, but use the root path and a specific port. In this case, define the root path as <code>/</code> and do not specify an individual path for your app.
@@ -842,7 +812,7 @@ You can route incoming network traffic on the IBM-provided domain to apps that a
         </tr>
         <tr>
         <td><code>serviceName</code></td>
-        <td>Replace <em>&lt;myexternalservice&gt;</em> with the name of the service that you used when you created the Kubernetes service for your external app.</td>
+        <td>Replace <em>&lt;external_service&gt;</em> with the name of the service that you used when you created the Kubernetes service for your external app.</td>
         </tr>
         <tr>
         <td><code>servicePort</code></td>
@@ -857,10 +827,10 @@ You can route incoming network traffic on the IBM-provided domain to apps that a
         kubectl apply -f myexternalingress.yaml
         ```
         {: pre}
-5.   Verify that the Ingress resource was created successfully. Replace _&lt;myingressname&gt;_ with the name of the Ingress resource that you created earlier.
+5.   Verify that the Ingress resource was created successfully.
 
       ```
-      kubectl describe ingress <myingressname>
+      kubectl describe ingress myingressresource
       ```
       {: pre}
 
@@ -869,7 +839,7 @@ You can route incoming network traffic on the IBM-provided domain to apps that a
 6.   In a web browser, enter the URL of the app service to access.
 
       ```
-      https://<ibmdomain>/<myservicepath1>
+      https://<ibm_domain>/<service1_path>
       ```
       {: codeblock}
 
@@ -908,7 +878,7 @@ To enable the private ALB by using the pre-assigned, IBM-provided portable priva
 1. List the available ALBs in your cluster to get the ID of the private ALB. Replace <em>&lt;cluser_name&gt;</em> with the name of the cluster where the app that you want to expose is deployed.
 
     ```
-    bx cs albs --cluster <my_cluster>
+    bx cs albs --cluster <cluser_name>
     ```
     {: pre}
 
@@ -916,7 +886,7 @@ To enable the private ALB by using the pre-assigned, IBM-provided portable priva
     ```
     ALB ID                                            Enabled   Status     Type      ALB IP
     private-cr6d779503319d419ea3b4ab171d12c3b8-alb1   false     disabled   private   -
-    public-cr6d779503319d419ea3b4ab171d12c3b8-alb1    true      enabled    public    169.46.63.150
+    public-cr6d779503319d419ea3b4ab171d12c3b8-alb1    true      enabled    public    169.xx.xxx.xxx
     ```
     {: screen}
 
@@ -930,17 +900,17 @@ To enable the private ALB by using the pre-assigned, IBM-provided portable priva
 
 To enable the private ALB using your own portable private IP address:
 
-1. Configure the user-managed subnet of your chosen IP address to route traffic on the private VLAN of your cluster. Replace <em>&lt;cluser_name&gt;</em> with the name or ID of the cluster where the app that you want to expose is deployed, <em>&lt;subnet_CIDR&gt;</em> with the CIDR of your user-managed subnet, and <em>&lt;private_VLAN&gt;</em> with an available private VLAN ID. You can find the ID of an available private VLAN by running `bx cs vlans`.
+1. Configure the user-managed subnet of your chosen IP address to route traffic on the private VLAN of your cluster. Replace <em>&lt;cluser_name&gt;</em> with the name or ID of the cluster where the app that you want to expose is deployed, <em>&lt;subnet_CIDR&gt;</em> with the CIDR of your user-managed subnet, and <em>&lt;private_VLAN_ID&gt;</em> with an available private VLAN ID. You can find the ID of an available private VLAN by running `bx cs vlans`.
 
    ```
-   bx cs cluster-user-subnet-add <cluster_name> <subnet_CIDR> <private_VLAN>
+   bx cs cluster-user-subnet-add <cluster_name> <subnet_CIDR> <private_VLAN_ID>
    ```
    {: pre}
 
 2. List the available ALBs in your cluster to get the ID of private ALB.
 
     ```
-    bx cs albs --cluster <my_cluster>
+    bx cs albs --cluster <cluster_name>
     ```
     {: pre}
 
@@ -948,14 +918,14 @@ To enable the private ALB using your own portable private IP address:
     ```
     ALB ID                                            Enabled   Status     Type      ALB IP
     private-cr6d779503319d419ea3b4ab171d12c3b8-alb1   false     disabled   private   -
-    public-cr6d779503319d419ea3b4ab171d12c3b8-alb1    true      enabled    public    169.46.63.150
+    public-cr6d779503319d419ea3b4ab171d12c3b8-alb1    true      enabled    public    169.xx.xxx.xxx
     ```
     {: screen}
 
-3. Enable the private ALB. Replace <em>&lt;private_ALB_ID&gt;</em> with the ID for private ALB from the output in the previous step and <em>&lt;user_ip&gt;</em> with the IP address from your user-managed subnet that you want to use.
+3. Enable the private ALB. Replace <em>&lt;private_ALB_ID&gt;</em> with the ID for private ALB from the output in the previous step and <em>&lt;user_IP&gt;</em> with the IP address from your user-managed subnet that you want to use.
 
    ```
-   bx cs alb-configure --albID <private_ALB_ID> --enable --user-ip <user_ip>
+   bx cs alb-configure --albID <private_ALB_ID> --enable --user-ip <user_IP>
    ```
    {: pre}
 
@@ -979,17 +949,17 @@ To privately expose an app by using a custom domain without TLS using an externa
 3.  [Deploy your app to the cluster](cs_app.html#app_cli). Ensure that you add a label to your deployment in the metadata section of your configuration file, such as `app: code`. This label is needed to identify all pods where your app is running so that the pods can be included in the Ingress load balancing.
 
 4.   Create a Kubernetes service for the app that you want to expose. Your app must be exposed by a Kubernetes service to be included by the cluster ALB in the Ingress load balancing.
-      1.  Open your preferred editor and create a service configuration file that is named, for example, `myservice.yaml`.
+      1.  Open your preferred editor and create a service configuration file that is named, for example, `myalbservice.yaml`.
       2.  Define a service for the app that the ALB will expose to the private network.
 
           ```
           apiVersion: v1
           kind: Service
           metadata:
-            name: <myservice>
+            name: myalbservice
           spec:
             selector:
-              <selectorkey>: <selectorvalue>
+              <selector_key>: <selector_value>
             ports:
              - protocol: TCP
                port: 8080
@@ -1003,12 +973,8 @@ To privately expose an app by using a custom domain without TLS using an externa
           </thead>
           <tbody>
           <tr>
-          <td><code>name</code></td>
-          <td>Replace <em>&lt;myservice&gt;</em> with a name for your ALB service.</td>
-          </tr>
-          <tr>
           <td><code>selector</code></td>
-          <td>Enter the label key (<em>&lt;selectorkey&gt;</em>) and value (<em>&lt;selectorvalue&gt;</em>) pair that you want to use to target the pods where your app runs. To target your pods and include them in the service load balancing, make sure that the <em>&lt;selectorkey&gt;</em> and <em>&lt;selectorvalue&gt;</em> are the same as the key/value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.</td>
+          <td>Enter the label key (<em>&lt;selector_key&gt;</em>) and value (<em>&lt;selector_value&gt;</em>) pair that you want to use to target the pods where your app runs. To target your pods and include them in the service load balancing, make sure that the <em>&lt;selector_key&gt;</em> and <em>&lt;selector_value&gt;</em> are the same as the key/value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.</td>
            </tr>
            <tr>
            <td><code>port</code></td>
@@ -1019,34 +985,34 @@ To privately expose an app by using a custom domain without TLS using an externa
       4.  Create the service in your cluster.
 
           ```
-          kubectl apply -f myservice.yaml
+          kubectl apply -f myalbservice.yaml
           ```
           {: pre}
       5.  Repeat these steps for every app that you want to expose to the private network.
 
 5.  Create an Ingress resource. Ingress resources define the routing rules for the Kubernetes service that you created for your app and are used by the ALB to route incoming network traffic to the service. You must use one Ingress resource to define routing rules for multiple apps if every app is exposed via a Kubernetes service inside the cluster.
-    1.  Open your preferred editor and create an Ingress configuration file that is named, for example, `myingress.yaml`.
+    1.  Open your preferred editor and create an Ingress configuration file that is named, for example, `myingressresource.yaml`.
     2.  Define an Ingress resource in your configuration file that uses your custom domain to route incoming network traffic to your services.
 
         ```
         apiVersion: extensions/v1beta1
         kind: Ingress
         metadata:
-          name: <myingressname>
+          name: myingressresource
           annotations:
             ingress.bluemix.net/ALB-ID: "<private_ALB_ID>"
         spec:
           rules:
-          - host: <mycustomdomain>
+          - host: <custom_domain>
             http:
               paths:
-              - path: /<myservicepath1>
+              - path: /<service1_path>
                 backend:
-                  serviceName: <myservice1>
+                  serviceName: <service1>
                   servicePort: 80
-              - path: /<myservicepath2>
+              - path: /<service2_path>
                 backend:
-                  serviceName: <myservice2>
+                  serviceName: <service2>
                   servicePort: 80
         ```
         {: codeblock}
@@ -1058,15 +1024,11 @@ To privately expose an app by using a custom domain without TLS using an externa
         </thead>
         <tbody>
         <tr>
-        <td><code>name</code></td>
-        <td>Replace <em>&lt;myingressname&gt;</em> with a name for your Ingress resource.</td>
-        </tr>
-        <tr>
         <td><code>ingress.bluemix.net/ALB-ID</code></td>
         <td>Replace <em>&lt;private_ALB_ID&gt;</em> with the ID for your private ALB. Run <code>bx cs albs --cluster <my_cluster></code> to find the ALB ID. For more information about this Ingress annotation, see [Private application load balancer routing](cs_annotations.html#alb-id).</td>
         </tr>
         <td><code>host</code></td>
-        <td>Replace <em>&lt;mycustomdomain&gt;</em> with your custom domain.
+        <td>Replace <em>&lt;custom_domain&gt;</em> with your custom domain.
 
         </br></br>
         <strong>Note:</strong> Do not use &ast; for your host or leave the host property empty to avoid failures during Ingress creation.
@@ -1074,7 +1036,7 @@ To privately expose an app by using a custom domain without TLS using an externa
         </tr>
         <tr>
         <td><code>path</code></td>
-        <td>Replace <em>&lt;myservicepath1&gt;</em> with a slash or the unique path that your app is listening on so that network traffic can be forwarded to the app.
+        <td>Replace <em>&lt;service1_path&gt;</em> with a slash or the unique path that your app is listening on so that network traffic can be forwarded to the app.
 
         </br>
 
@@ -1084,13 +1046,13 @@ To privately expose an app by using a custom domain without TLS using an externa
         Many apps do not listen on a specific path, but use the root path and a specific port. In this case, define the root path as <code>/</code> and do not specify an individual path for your app.
 
         </br></br>
-        Examples: <ul><li>For <code>https://mycustomdomain/</code>, enter <code>/</code> as the path.</li><li>For <code>https://mycustomdomain/myservicepath</code>, enter <code>/myservicepath</code> as the path.</li></ul>
+        Examples: <ul><li>For <code>https://custom_domain/</code>, enter <code>/</code> as the path.</li><li>For <code>https://custom_domain/service1_path</code>, enter <code>/service1_path</code> as the path.</li></ul>
         <strong>Tip:</strong> To configure Ingress to listen on a path that is different than the path that your app listens on, you can use the [rewrite annotation](cs_annotations.html#rewrite-path) to establish proper routing to your app.
         </td>
         </tr>
         <tr>
         <td><code>serviceName</code></td>
-        <td>Replace <em>&lt;myservice1&gt;</em> with the name of the service that you used when you created the Kubernetes service for your app.</td>
+        <td>Replace <em>&lt;service1&gt;</em> with the name of the service that you used when you created the Kubernetes service for your app.</td>
         </tr>
         <tr>
         <td><code>servicePort</code></td>
@@ -1102,13 +1064,13 @@ To privately expose an app by using a custom domain without TLS using an externa
     4.  Create the Ingress resource for your cluster.
 
         ```
-        kubectl apply -f myingress.yaml
+        kubectl apply -f myingressresource.yaml
         ```
         {: pre}
-6.   Verify that the Ingress resource was created successfully. Replace _&lt;myingressname&gt;_ with the name of the Ingress resource that you created earlier.
+6.   Verify that the Ingress resource was created successfully.
 
       ```
-      kubectl describe ingress <myingressname>
+      kubectl describe ingress myingressresource
       ```
       {: pre}
 
@@ -1117,7 +1079,7 @@ To privately expose an app by using a custom domain without TLS using an externa
 7.   In a web browser, enter the URL of the app service to access.
 
       ```
-      https://<mycustomdomain>/<myservicepath1>
+      https://<custom_domain>/<service1_path>
       ```
       {: codeblock}
 
@@ -1143,26 +1105,26 @@ To privately expose an app by using a custom domain with TLS using an external D
     * If a TLS certificate is stored in {{site.data.keyword.cloudcerts_long_notm}} that you want to use, you can import its associated secret into your cluster by running `bx cs alb-cert-deploy --secret-name <secret_name> --cluster <cluster_name_or_ID> --cert-crn <certificate_crn>`.
     * If you do not have a TLS certificate ready, follow these steps:
         1. Create a TLS certificate and key for your domain that is encoded in PEM format.
-        2. Create a secret that uses your TLS certificate and key. Replace <em>&lt;mytlssecret&gt;</em> with a name for your Kubernetes secret, <em>&lt;tls_key_filepath&gt;</em> with the path to your custom TLS key file, and <em>&lt;tls_cert_filepath&gt;</em> with the path to your custom TLS certificate file.
+        2. Create a secret that uses your TLS certificate and key. Replace <em>&lt;tls_secret_name&gt;</em> with a name for your Kubernetes secret, <em>&lt;tls_key_filepath&gt;</em> with the path to your custom TLS key file, and <em>&lt;tls_cert_filepath&gt;</em> with the path to your custom TLS certificate file.
 
             ```
-            kubectl create secret tls <mytlssecret> --key <tls_key_filepath> --cert <tls_cert_filepath>
+            kubectl create secret tls <tls_secret_name> --key <tls_key_filepath> --cert <tls_cert_filepath>
             ```
             {: pre}
 4.  [Deploy your app to the cluster](cs_app.html#app_cli). Ensure that you add a label to your deployment in the metadata section of your configuration file, such as `app: code`. This label is needed to identify all pods where your app is running so that the pods can be included in the Ingress load balancing.
 
 5.   Create a Kubernetes service for the app that you want to expose. Your app must be exposed by a Kubernetes service to be included by the cluster ALB in the Ingress load balancing.
-      1.  Open your preferred editor and create a service configuration file that is named, for example, `myservice.yaml`.
+      1.  Open your preferred editor and create a service configuration file that is named, for example, `myalbservice.yaml`.
       2.  Define a service for the app that the ALB will expose to the private network.
 
           ```
           apiVersion: v1
           kind: Service
           metadata:
-            name: <myservice>
+            name: myalbservice
           spec:
             selector:
-              <selectorkey>: <selectorvalue>
+              <selector_key>: <selector_value>
             ports:
              - protocol: TCP
                port: 8080
@@ -1176,12 +1138,8 @@ To privately expose an app by using a custom domain with TLS using an external D
           </thead>
           <tbody>
           <tr>
-          <td><code>name</code></td>
-          <td>Replace <em>&lt;myservice&gt;</em> with a name for your ALB service.</td>
-          </tr>
-          <tr>
           <td><code>selector</code></td>
-          <td>Enter the label key (<em>&lt;selectorkey&gt;</em>) and value (<em>&lt;selectorvalue&gt;</em>) pair that you want to use to target the pods where your app runs. To target your pods and include them in the service load balancing, make sure that the <em>&lt;selectorkey&gt;</em> and <em>&lt;selectorvalue&gt;</em> are the same as the key/value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.</td>
+          <td>Enter the label key (<em>&lt;selector_key&gt;</em>) and value (<em>&lt;selector_value&gt;</em>) pair that you want to use to target the pods where your app runs. To target your pods and include them in the service load balancing, make sure that the <em>&lt;selector_key&gt;</em> and <em>&lt;selector_value&gt;</em> are the same as the key/value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.</td>
            </tr>
            <tr>
            <td><code>port</code></td>
@@ -1192,38 +1150,38 @@ To privately expose an app by using a custom domain with TLS using an external D
       4.  Create the service in your cluster.
 
           ```
-          kubectl apply -f myservice.yaml
+          kubectl apply -f myalbservice.yaml
           ```
           {: pre}
       5.  Repeat these steps for every app that you want to expose to the private network.
 
 6.  Create an Ingress resource. Ingress resources define the routing rules for the Kubernetes service that you created for your app and are used by the ALB to route incoming network traffic to the service. You must use one Ingress resource to define routing rules for multiple apps if every app is exposed via a Kubernetes service inside the cluster.
-    1.  Open your preferred editor and create an Ingress configuration file that is named, for example, `myingress.yaml`.
+    1.  Open your preferred editor and create an Ingress configuration file that is named, for example, `myingressresource.yaml`.
     2.  Define an Ingress resource in your configuration file that uses your custom domain to route incoming network traffic to your services, and your custom certificate to manage the TLS termination.
 
           ```
           apiVersion: extensions/v1beta1
           kind: Ingress
           metadata:
-            name: <myingressname>
+            name: myingressresource
             annotations:
               ingress.bluemix.net/ALB-ID: "<private_ALB_ID>"
           spec:
             tls:
             - hosts:
-              - <mycustomdomain>
-              secretName: <mytlssecret>
+              - <custom_domain>
+              secretName: <tls_secret_name>
             rules:
-            - host: <mycustomdomain>
+            - host: <custom_domain>
               http:
                 paths:
-                - path: /<myservicepath1>
+                - path: /<service1_path>
                   backend:
-                    serviceName: <myservice1>
+                    serviceName: <service1>
                     servicePort: 80
-                - path: /<myservicepath2>
+                - path: /<service2_path>
                   backend:
-                    serviceName: <myservice2>
+                    serviceName: <service2>
                     servicePort: 80
            ```
            {: pre}
@@ -1235,27 +1193,23 @@ To privately expose an app by using a custom domain with TLS using an external D
           </thead>
           <tbody>
           <tr>
-          <td><code>name</code></td>
-          <td>Replace <em>&lt;myingressname&gt;</em> with a name for your Ingress resource.</td>
-          </tr>
-          <tr>
           <td><code>ingress.bluemix.net/ALB-ID</code></td>
-          <td>Replace <em>&lt;private_ALB_ID&gt;</em> with the ID for your private ALB. Run <code>bx cs albs --cluster <my_cluster></code> to find the ALB ID. For more information about this Ingress annotation, see [Private application load balancer routing (ALB-ID)](cs_annotations.html#alb-id).</td>
+          <td>Replace <em>&lt;private_ALB_ID&gt;</em> with the ID for your private ALB. Run <code>bx cs albs --cluster <cluster_name></code> to find the ALB ID. For more information about this Ingress annotation, see [Private application load balancer routing (ALB-ID)](cs_annotations.html#alb-id).</td>
           </tr>
           <tr>
           <td><code>tls/hosts</code></td>
-          <td>Replace <em>&lt;mycustomdomain&gt;</em> with our custom domain that you want to configure for TLS termination.
+          <td>Replace <em>&lt;custom_domain&gt;</em> with our custom domain that you want to configure for TLS termination.
 
           </br></br>
           <strong>Note:</strong> Do not use &ast; for your host or leave the host property empty to avoid failures during Ingress creation.</td>
           </tr>
           <tr>
           <td><code>tls/secretName</code></td>
-          <td>Replace <em>&lt;mytlssecret&gt;</em> with the name of the secret that you created earlier and that holds your custom TLS certificate and key. If you imported a certificate from {{site.data.keyword.cloudcerts_short}}, you can run <code>bx cs alb-cert-get --cluster <cluster_name_or_ID> --cert-crn <certificate_crn></code> to see the secrets that are associated with a TLS certificate.
+          <td>Replace <em>&lt;tls_secret_name&gt;</em> with the name of the secret that you created earlier and that holds your custom TLS certificate and key. If you imported a certificate from {{site.data.keyword.cloudcerts_short}}, you can run <code>bx cs alb-cert-get --cluster <cluster_name_or_ID> --cert-crn <certificate_crn></code> to see the secrets that are associated with a TLS certificate.
           </tr>
           <tr>
           <td><code>host</code></td>
-          <td>Replace <em>&lt;mycustomdomain&gt;</em> with your custom domain that you want to configure for TLS termination.
+          <td>Replace <em>&lt;custom_domain&gt;</em> with your custom domain that you want to configure for TLS termination.
 
           </br></br>
           <strong>Note:</strong> Do not use &ast; for your host or leave the host property empty to avoid failures during Ingress creation.
@@ -1263,7 +1217,7 @@ To privately expose an app by using a custom domain with TLS using an external D
           </tr>
           <tr>
           <td><code>path</code></td>
-          <td>Replace <em>&lt;myservicepath1&gt;</em> with a slash or the unique path that your app is listening on so that network traffic can be forwarded to the app.
+          <td>Replace <em>&lt;service1_path&gt;</em> with a slash or the unique path that your app is listening on so that network traffic can be forwarded to the app.
 
           </br>
           For every service, you can define an individual path that is appended to your custom domain to create a unique path to your app. When you enter this route into a web browser, network traffic is routed to the ALB. The ALB looks up the associated service, and sends network traffic to the service and to the pods where the app is running by using the same path. The app must be set up to listen on this path to receive incoming network traffic.
@@ -1272,13 +1226,13 @@ To privately expose an app by using a custom domain with TLS using an external D
           Many apps do not listen on a specific path, but use the root path and a specific port. In this case, define the root path as <code>/</code> and do not specify an individual path for your app.
 
           </br></br>
-          Examples: <ul><li>For <code>https://mycustomdomain/</code>, enter <code>/</code> as the path.</li><li>For <code>https://mycustomdomain/myservicepath</code>, enter <code>/myservicepath</code> as the path.</li></ul>
+          Examples: <ul><li>For <code>https://custom_domain/</code>, enter <code>/</code> as the path.</li><li>For <code>https://custom_domain/service1_path</code>, enter <code>/service1_path</code> as the path.</li></ul>
           <strong>Tip:</strong> To configure Ingress to listen on a path that is different than the path that your app listens on, you can use the [rewrite annotation](cs_annotations.html#rewrite-path) to establish proper routing to your app.
           </td>
           </tr>
           <tr>
           <td><code>serviceName</code></td>
-          <td>Replace <em>&lt;myservice1&gt;</em> with the name of the service that you used when you created the Kubernetes service for your app.</td>
+          <td>Replace <em>&lt;service1&gt;</em> with the name of the service that you used when you created the Kubernetes service for your app.</td>
           </tr>
           <tr>
           <td><code>servicePort</code></td>
@@ -1290,13 +1244,13 @@ To privately expose an app by using a custom domain with TLS using an external D
     4.  Create the Ingress resource for your cluster.
 
         ```
-        kubectl apply -f myingress.yaml
+        kubectl apply -f myingressresource.yaml
         ```
         {: pre}
-7.   Verify that the Ingress resource was created successfully. Replace _&lt;myingressname&gt;_ with the name of the Ingress resource that you created earlier.
+7.   Verify that the Ingress resource was created successfully.
 
       ```
-      kubectl describe ingress <myingressname>
+      kubectl describe ingress myingressresource
       ```
       {: pre}
 
@@ -1305,7 +1259,7 @@ To privately expose an app by using a custom domain with TLS using an external D
 8.   In a web browser, enter the URL of the app service to access.
 
       ```
-      https://<mycustomdomain>/<myservicepath1>
+      https://<custom_domain>/<service1_path>
       ```
       {: codeblock}
 
@@ -1329,17 +1283,17 @@ You can configure the private ALB to route incoming network traffic to the apps 
 6.  [Deploy your app to the cluster](cs_app.html#app_cli). Ensure that you add a label to your deployment in the metadata section of your configuration file, such as `app: code`. This label is needed to identify all pods where your app is running so that the pods can be included in the Ingress load balancing.
 
 7.   Create a Kubernetes service for the app that you want to expose. Your app must be exposed by a Kubernetes service to be included by the cluster ALB in the Ingress load balancing.
-      1.  Open your preferred editor and create a service configuration file that is named, for example, `myservice.yaml`.
+      1.  Open your preferred editor and create a service configuration file that is named, for example, `myalbservice.yaml`.
       2.  Define a service for the app that the ALB will expose to the private network.
 
           ```
           apiVersion: v1
           kind: Service
           metadata:
-            name: <myservice>
+            name: myalbservice
           spec:
             selector:
-              <selectorkey>: <selectorvalue>
+              <selector_key>: <selector_value>
             ports:
              - protocol: TCP
                port: 8080
@@ -1353,12 +1307,8 @@ You can configure the private ALB to route incoming network traffic to the apps 
           </thead>
           <tbody>
           <tr>
-          <td><code>name</code></td>
-          <td>Replace <em>&lt;myservice&gt;</em> with a name for your ALB service.</td>
-          </tr>
-          <tr>
           <td><code>selector</code></td>
-          <td>Enter the label key (<em>&lt;selectorkey&gt;</em>) and value (<em>&lt;selectorvalue&gt;</em>) pair that you want to use to target the pods where your app runs. To target your pods and include them in the service load balancing, make sure that the <em>&lt;selectorkey&gt;</em> and <em>&lt;selectorvalue&gt;</em> are the same as the key/value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.</td>
+          <td>Enter the label key (<em>&lt;selector_key&gt;</em>) and value (<em>&lt;selector_value&gt;</em>) pair that you want to use to target the pods where your app runs. To target your pods and include them in the service load balancing, make sure that the <em>&lt;selector_key&gt;</em> and <em>&lt;selector_value&gt;</em> are the same as the key/value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.</td>
            </tr>
            <tr>
            <td><code>port</code></td>
@@ -1369,13 +1319,13 @@ You can configure the private ALB to route incoming network traffic to the apps 
       4.  Create the service in your cluster.
 
           ```
-          kubectl apply -f myservice.yaml
+          kubectl apply -f myalbservice.yaml
           ```
           {: pre}
       5.  Repeat these steps for every app that you want to expose to the private network.
 
 8.  Create an Ingress resource. Ingress resources define the routing rules for the Kubernetes service that you created for your app and are used by the ALB to route incoming network traffic to the service. You must use one Ingress resource to define routing rules for multiple apps if every app is exposed via a Kubernetes service inside the cluster.
-  1.  Open your preferred editor and create an Ingress configuration file that is named, for example, `myingress.yaml`.
+  1.  Open your preferred editor and create an Ingress configuration file that is named, for example, `myingressresource.yaml`.
   2.  Define an Ingress resource in your configuration file that uses your custom domain to route incoming network traffic to your services.
 
     **Note**: If you do not want to use TLS, remove the `tls` section from the following example.
@@ -1384,25 +1334,25 @@ You can configure the private ALB to route incoming network traffic to the apps 
     apiVersion: extensions/v1beta1
     kind: Ingress
     metadata:
-      name: <myingressname>
+      name: myingressresource
       annotations:
         ingress.bluemix.net/ALB-ID: "<private_ALB_ID>"
     spec:
       tls:
       - hosts:
-        - <mycustomdomain>
-        secretName: <mytlssecret>
+        - <custom_domain>
+        secretName: <tls_secret_name>
       rules:
-      - host: <mycustomdomain>
+      - host: <custom_domain>
         http:
           paths:
-          - path: /<myservicepath1>
+          - path: /<service1_path>
             backend:
-              serviceName: <myservice1>
+              serviceName: <service1>
               servicePort: 80
-          - path: /<myservicepath2>
+          - path: /<service2_path>
             backend:
-              serviceName: <myservice2>
+              serviceName: <service2>
               servicePort: 80
      ```
      {: codeblock}
@@ -1414,45 +1364,41 @@ You can configure the private ALB to route incoming network traffic to the apps 
     </thead>
     <tbody>
     <tr>
-    <td><code>name</code></td>
-    <td>Replace <em>&lt;myingressname&gt;</em> with a name for your Ingress resource.</td>
-    </tr>
-    <tr>
     <td><code>ingress.bluemix.net/ALB-ID</code></td>
     <td>Replace <em>&lt;private_ALB_ID&gt;</em> with the ID for your private ALB. Run <code>bx cs albs --cluster <my_cluster></code> to find the ALB ID. For more information about this Ingress annotation, see [Private application load balancer routing (ALB-ID)](cs_annotations.html#alb-id).</td>
     </tr>
     <tr>
     <td><code>tls/hosts</code></td>
-    <td>If you are using the `tls` section, replace <em>&lt;mycustomdomain&gt;</em> with our custom domain that you want to configure for TLS termination.
+    <td>If you are using the `tls` section, replace <em>&lt;custom_domain&gt;</em> with our custom domain that you want to configure for TLS termination.
     </br></br>
     <strong>Note:</strong> Do not use &ast; for your host or leave the host property empty to avoid failures during Ingress creation. </td>
     </tr>
     <tr>
     <td><code>tls/secretName</code></td>
-    <td>If you are using the `tls` section, replace <em>&lt;mytlssecret&gt;</em> with the name of the secret that you created earlier and that holds your custom TLS certificate and key. If you imported a certificate from {{site.data.keyword.cloudcerts_short}}, you can run <code>bx cs alb-cert-get --cluster <cluster_name_or_ID> --cert-crn <certificate_crn></code> to see the secrets that are associated with a TLS certificate.
+    <td>If you are using the `tls` section, replace <em>&lt;tls_secret_name&gt;</em> with the name of the secret that you created earlier and that holds your custom TLS certificate and key. If you imported a certificate from {{site.data.keyword.cloudcerts_short}}, you can run <code>bx cs alb-cert-get --cluster <cluster_name_or_ID> --cert-crn <certificate_crn></code> to see the secrets that are associated with a TLS certificate.
     </tr>
     <tr>
     <td><code>host</code></td>
-    <td>Replace <em>&lt;mycustomdomain&gt;</em> with your custom domain that you want to configure for TLS termination.
+    <td>Replace <em>&lt;custom_domain&gt;</em> with your custom domain that you want to configure for TLS termination.
     </br></br>
     <strong>Note:</strong> Do not use &ast; for your host or leave the host property empty to avoid failures during Ingress creation.
     </td>
     </tr>
     <tr>
     <td><code>path</code></td>
-    <td>Replace <em>&lt;myservicepath1&gt;</em> with a slash or the unique path that your app is listening on so that network traffic can be forwarded to the app.
+    <td>Replace <em>&lt;service1_path&gt;</em> with a slash or the unique path that your app is listening on so that network traffic can be forwarded to the app.
     </br>
     For every service, you can define an individual path that is appended to your custom domain to create a unique path to your app. When you enter this route into a web browser, network traffic is routed to the ALB. The ALB looks up the associated service, and sends network traffic to the service and to the pods where the app is running by using the same path. The app must be set up to listen on this path to receive incoming network traffic.
     </br>
     Many apps do not listen on a specific path, but use the root path and a specific port. In this case, define the root path as <code>/</code> and do not specify an individual path for your app.
     </br></br>
-    Examples: <ul><li>For <code>https://mycustomdomain/</code>, enter <code>/</code> as the path.</li><li>For <code>https://mycustomdomain/myservicepath</code>, enter <code>/myservicepath</code> as the path.</li></ul>
+    Examples: <ul><li>For <code>https://custom_domain/</code>, enter <code>/</code> as the path.</li><li>For <code>https://custom_domain/service1_path</code>, enter <code>/service1_path</code> as the path.</li></ul>
     <strong>Tip:</strong> To configure Ingress to listen on a path that is different than the path that your app listens on, you can use the [rewrite annotation](cs_annotations.html#rewrite-path) to establish proper routing to your app.
     </td>
     </tr>
     <tr>
     <td><code>serviceName</code></td>
-    <td>Replace <em>&lt;myservice1&gt;</em> with the name of the service that you used when you created the Kubernetes service for your app.</td>
+    <td>Replace <em>&lt;service1&gt;</em> with the name of the service that you used when you created the Kubernetes service for your app.</td>
     </tr>
     <tr>
     <td><code>servicePort</code></td>
@@ -1464,13 +1410,13 @@ You can configure the private ALB to route incoming network traffic to the apps 
   4.  Create the Ingress resource for your cluster.
 
       ```
-      kubectl apply -f myingress.yaml
+      kubectl apply -f myingressresource.yaml
       ```
       {: pre}
-9.   Verify that the Ingress resource was created successfully. Replace _&lt;myingressname&gt;_ with the name of the Ingress resource that you created earlier.
+9.   Verify that the Ingress resource was created successfully.
 
       ```
-      kubectl describe ingress <myingressname>
+      kubectl describe ingress myingressresource
       ```
       {: pre}
 
@@ -1479,7 +1425,7 @@ You can configure the private ALB to route incoming network traffic to the apps 
 10.   In a web browser, enter the URL of the app service to access.
 
       ```
-      https://<mycustomdomain>/<myservicepath1>
+      https://<custom_domain>/<service1_path>
       ```
       {: codeblock}
 
@@ -1496,7 +1442,8 @@ You can configure the private ALB to route incoming network traffic to the apps 
 You can further configure an application load balancer with the following options.
 
 -   [Opening ports in the Ingress application load balancer](#opening_ingress_ports)
--   [Configuring SSL protocols and SSL ciphers at the HTTP level](#ssl_protocols_ciphers) 
+-   [Configuring SSL protocols and SSL ciphers at the HTTP level](#ssl_protocols_ciphers)
+-   [Customizing the Ingress log format](#ingress_log_format)
 -   [Customizing your application load balancer with annotations](cs_annotations.html)
 {: #ingress_annotation}
 
@@ -1527,7 +1474,7 @@ By default, only ports 80 and 443 are exposed in the Ingress ALB. To expose othe
       name: ibm-cloud-provider-ingress-cm
       namespace: kube-system
     ```
-    {: pre}
+    {: codeblock}
 
     Example:
     ```
@@ -1553,14 +1500,14 @@ By default, only ports 80 and 443 are exposed in the Ingress ALB. To expose othe
  Output:
  ```
  Name:        ibm-cloud-provider-ingress-cm
- Namespace:    kube-system
- Labels:        <none>
- Annotations:    <none>
+ Namespace:   kube-system
+ Labels:      <none>
+ Annotations: <none>
 
  Data
  ====
 
-  public-ports: "80;443;<port3>"
+  public-ports: "80;443;9443"
  ```
  {: screen}
 
@@ -1611,9 +1558,9 @@ To edit the configmap to enable SSL protocols and ciphers:
    Output:
    ```
    Name:        ibm-cloud-provider-ingress-cm
-   Namespace:    kube-system
-   Labels:        <none>
-   Annotations:    <none>
+   Namespace:   kube-system
+   Labels:      <none>
+   Annotations: <none>
 
    Data
    ====
@@ -1643,7 +1590,7 @@ By default, Ingress logs are formatted in JSON and display common log fields. Ho
     ```
     apiVersion: v1
     data:
-      log-format: '{<key1>: <logvariable1>, <key2>: <logvariable2>, <key3>: <logvariable3>}'
+      log-format: '{<key1>: <log_variable1>, <key2>: <log_variable2>, <key3>: <log_variable3>}'
       log-format-escape-json: "true"
     kind: ConfigMap
     metadata:
@@ -1659,7 +1606,7 @@ By default, Ingress logs are formatted in JSON and display common log fields. Ho
     <tbody>
     <tr>
     <td><code>log-format</code></td>
-    <td>Replace <code>&lt;key&gt;</code> with the name for the log component and <code>&lt;logvariable&gt;</code> with a variable for the log component that you want to collect in log entries. You can include text and punctuation that you want the log entry to contain, such as quotation marks around string values and commas to separate log components. For example, formatting a component like <code>request: "$request",</code> generates the following in a log entry: <code>request: "GET / HTTP/1.1",</code> . For a list of all the variables you can use, see the <a href="http://nginx.org/en/docs/varindex.html">Nginx variable index</a>.<br><br>To log an additional header such as <em>x-custom-ID</em>, add the following key-value pair to the custom log content: <br><pre class="screen"><code>customID: $http_x_custom_id</code></pre> <br>Note that hyphens (<code>-</code>) are converted to underscores (<code>&#95;</code>) and that <code>$http_</code> must be prepended to the custom header name.</td>
+    <td>Replace <code>&lt;key&gt;</code> with the name for the log component and <code>&lt;log_variable&gt;</code> with a variable for the log component that you want to collect in log entries. You can include text and punctuation that you want the log entry to contain, such as quotation marks around string values and commas to separate log components. For example, formatting a component like <code>request: "$request",</code> generates the following in a log entry: <code>request: "GET / HTTP/1.1",</code> . For a list of all the variables you can use, see the <a href="http://nginx.org/en/docs/varindex.html">Nginx variable index</a>.<br><br>To log an additional header such as <em>x-custom-ID</em>, add the following key-value pair to the custom log content: <br><pre class="pre"><code>customID: $http_x_custom_id</code></pre> <br>Note that hyphens (<code>-</code>) are converted to underscores (<code>&#95;</code>) and that <code>$http_</code> must be prepended to the custom header name.</td>
     </tr>
     <tr>
     <td><code>log-format-escape-json</code></td>
@@ -1710,7 +1657,7 @@ By default, Ingress logs are formatted in JSON and display common log fields. Ho
       name: ibm-cloud-provider-ingress-cm
       namespace: kube-system
     ```
-    {: pre}
+    {: codeblock}
 
 4. Save the configuration file.
 
@@ -1724,9 +1671,9 @@ By default, Ingress logs are formatted in JSON and display common log fields. Ho
  Example output:
  ```
  Name:        ibm-cloud-provider-ingress-cm
- Namespace:    kube-system
- Labels:        <none>
- Annotations:    <none>
+ Namespace:   kube-system
+ Labels:      <none>
+ Annotations: <none>
 
  Data
  ====
