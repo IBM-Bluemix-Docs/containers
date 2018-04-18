@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-17"
+lastupdated: "2018-04-12"
 
 ---
 
@@ -116,7 +116,7 @@ Before you begin, make sure that you have an existing NFS file share that you ca
 To create a PV and matching PVC, follow these steps.
 
 1.  In your IBM Cloud infrastructure (SoftLayer) account, look up the ID and path of the NFS file share where you want to create your PV object. In addition, authorize the file storage to the subnets in the cluster. This authorization gives your cluster access to the storage.
-    1.  Log in to the [IBM Cloud infrastructure (SoftLayer) portal ![External link icon](../icons/launch-glyph.svg "External link icon")](https://control.softlayer.com/).
+    1.  Log in to your IBM Cloud infrastructure (SoftLayer) account.
     2.  Click **Storage**.
     3.  Click **File Storage** and from the **Actions** menu, select **Authorize Host**.
     4.  Select **Subnets**.
@@ -247,6 +247,8 @@ To create a PV and matching PVC, follow these steps.
 You successfully created a PV object and bound it to a PVC. Cluster users can now [mount the PVC](#app_volume_mount) to their deployments and start reading from and writing to the PV object.
 
 <br />
+
+
 
 ## Using existing block storage in your cluster
 {: #existing_block}
@@ -405,6 +407,7 @@ To create a PV and matching PVC, follow these steps.
 You successfully created a PV and bound it to a PVC. Cluster users can now [mount the PVC](#app_volume_mount) to their deployments and start reading from and writing to the PV.
 
 <br />
+
 
 
 ## Adding NFS file storage or block storage to apps
@@ -772,10 +775,13 @@ To add persistent storage:
 
 {: #nonroot}
 {: #enabling_root_permission}
-<!--This section to be left in place until the link redirects are completed-->
+
 **NFS permissions**: Looking for documentation on enabling NFS non-root permissions? See [Adding non-root user access to NFS file storage](cs_troubleshoot_storage.html#nonroot).
 
 <br />
+
+
+
 
 ## Installing the {{site.data.keyword.Bluemix_notm}} Block Storage plug-in on your cluster
 {: #install_block}
@@ -786,7 +792,12 @@ Install the {{site.data.keyword.Bluemix_notm}} Block Storage plug-in with a Helm
 Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the cluster where you want to install the {{site.data.keyword.Bluemix_notm}} Block Storage plug-in.
 
 1. Install [Helm](cs_integrations.html#helm) on the cluster where you want to use the {{site.data.keyword.Bluemix_notm}} Block Storage plug-in.
-2. Install the {{site.data.keyword.Bluemix_notm}} Block Storage plug-in. When you install the plug-in, pre-defined block storage classes are added to your cluster.
+2. Update the helm repo to retrieve the latest version of all helm charts in this repo. 
+   ```
+   helm update ibm
+   ```
+   {: pre}
+3. Install the {{site.data.keyword.Bluemix_notm}} Block Storage plug-in. When you install the plug-in, pre-defined block storage classes are added to your cluster.
    ```
    helm install ibm/ibmcloud-block-storage-plugin
    ```
@@ -794,48 +805,61 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
       
    Example output: 
    ```
-   NAME:   imprecise-rottweiler
-   LAST DEPLOYED: Tue Oct 10 16:41:40 2017
+   NAME:   bald-olm
+   LAST DEPLOYED: Wed Apr 18 10:02:55 2018
    NAMESPACE: default
    STATUS: DEPLOYED
 
    RESOURCES:
    ==> v1beta1/DaemonSet
-   NAME                     DESIRED  CURRENT  READY  UP-TO-DATE  AVAILABLE  NODE-SELECTOR  AGE
-   ibm-block-plugin-driver  1        1        1      1           1          <none>         3s
+   NAME                           DESIRED  CURRENT  READY  UP-TO-DATE  AVAILABLE  NODE SELECTOR  AGE
+   ibmcloud-block-storage-driver  0        0        0      0           0          <none>         0s
 
    ==> v1beta1/Deployment
-   NAME              DESIRED  CURRENT  UP-TO-DATE  AVAILABLE  AGE
-   ibm-block-plugin  1        1        1           0          3s
+   NAME                           DESIRED  CURRENT  UP-TO-DATE  AVAILABLE  AGE
+   ibmcloud-block-storage-plugin  1        0        0           0          0s
 
    ==> v1/StorageClass
-   NAME                      TYPE
-   ibmc-block-retain-bronze  ibm.io/ibmc-block
-   ibmc-block-custom         ibm.io/ibmc-block
-   ibmc-block-bronze         ibm.io/ibmc-block
-   ibmc-block-silver         ibm.io/ibmc-block
-   ibmc-block-retain-silver  ibm.io/ibmc-block
-   ibmc-block-retain-gold    ibm.io/ibmc-block
-   ibmc-block-retain-custom  ibm.io/ibmc-block
-   ibmc-block-gold           ibm.io/ibmc-block
+   NAME                      PROVISIONER        AGE
+   ibmc-block-bronze         ibm.io/ibmc-block  0s
+   ibmc-block-custom         ibm.io/ibmc-block  0s
+   ibmc-block-gold           ibm.io/ibmc-block  0s
+   ibmc-block-retain-bronze  ibm.io/ibmc-block  0s
+   ibmc-block-retain-custom  ibm.io/ibmc-block  0s
+   ibmc-block-retain-gold    ibm.io/ibmc-block  0s
+   ibmc-block-retain-silver  ibm.io/ibmc-block  0s
+   ibmc-block-silver         ibm.io/ibmc-block  0s
+
+   ==> v1/ServiceAccount
+   NAME                           SECRETS  AGE
+   ibmcloud-block-storage-plugin  1        0s
+
+   ==> v1beta1/ClusterRole
+   NAME                           AGE
+   ibmcloud-block-storage-plugin  0s
+
+   ==> v1beta1/ClusterRoleBinding
+   NAME                           AGE
+   ibmcloud-block-storage-plugin  0s
+
+   NOTES:
+   Thank you for installing: ibmcloud-block-storage-plugin.   Your release is named: bald-olm
    ```
    {: screen}
 
-3. Verify that the installation was successful.
+4. Verify that the installation was successful.
    ```
-   kubectl get pod -n kube-system | grep ibm-block-plugin
+   kubectl get pod -n kube-system | grep ibmcloud-block-storage-plugin
    ```
    {: pre}
 
    Example output:
    ```
-   ibmcloud-block-storage-plugin-2864820594-8cgx7          1/1       Running            0          3m
-   ibmcloud-block-storage-plugin-driver-9fqn9              1/1       Running            0          3m
-   ibmcloud-block-storage-plugin-driver-h103v              1/1       Running            0          3m
+   ibmcloud-block-storage-plugin-58c5f9dc86-js6fd                    1/1       Running   0          4m
    ```
    {: screen}
 
-4. Verify that the storage classes for block storage were added to your cluster.
+5. Verify that the storage classes for block storage were added to your cluster.
    ```
    kubectl get storageclasses | grep block
    ```
@@ -854,11 +878,12 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
    ```
    {: screen}
 
-5. Repeat these steps for every cluster where you want to provision block storage.
+6. Repeat these steps for every cluster where you want to provision block storage.
 
 You can now continue to [create a PVC](#create) to provision block storage for your app.
 
 <br />
+
 
 ### Updating the {{site.data.keyword.Bluemix_notm}} Block Storage plug-in
 You can upgrade the existing {{site.data.keyword.Bluemix_notm}} Block Storage plug-in to the latest version. 
@@ -880,11 +905,12 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
    
 2. Upgrade the {{site.data.keyword.Bluemix_notm}} Block Storage plug-in to the latest version.
    ```
-   helm upgrade --force  <helm_chart_name>  ibmcloud-block-storage-plugin
+   helm upgrade --force --recreate-pods <helm_chart_name>  ibm/ibmcloud-block-storage-plugin
    ```
    {: pre}
    
 <br />
+
 
 ### Removing the {{site.data.keyword.Bluemix_notm}} Block Storage plug-in
 If you do not want to provision and use {{site.data.keyword.Bluemix_notm}} Block Storage for your cluster, you can uninstall the helm chart.
@@ -914,7 +940,7 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
    
 3. Verify that the block storage pods are removed. 
    ```
-   kubectl get pod -n kube-system | grep ibm-block-plugin
+   kubectl get pod -n kube-system | grep ibmcloud-block-storage-plugin
    ```
    {: pre}
    The removal of the pods is successful if no pods are displayed in your CLI output. 
@@ -927,6 +953,7 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
    The removal of the storage classes is successful if no storage classes are displayed in your CLI output. 
    
 <br />
+
 
 
 ## Setting up backup and restore solutions for NFS file shares and block storage
@@ -961,5 +988,3 @@ Review the following backup and restore options for your NFS file shares and blo
 </ul>
 </dd>
   </dl>
-  
-<br />
