@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2017-04-13"
+lastupdated: "2017-04-16"
 
 ---
 
@@ -59,20 +59,22 @@ Get your code ready to go. Don't have any code yet? You can download starter cod
   ```
   {: pre}
 
-2. Copy the app code and all related files into the directory. You can use your own app code or download boilerplate from the catalog. This tutorial uses the Python Flask boilerplate. However, you can use the same basic steps with a Node.js, Java, or [Kitura](https://github.com/IBM-Cloud/Kitura-Starter) app. 
+2. Copy the app code and all related files into the directory. You can use your own app code or download boilerplate from the catalog. This tutorial uses the Python Flask boilerplate. However, you can use the same basic steps with a Node.js, Java, or [Kitura](https://github.com/IBM-Cloud/Kitura-Starter) app.
 
     To download the Python Flask app code:
 
     a. In the catalog, in **Boilerplates**, click **Python Flask**. This boilerplate includes a runtime environment for both Python 2 and Python 3 apps.
 
-    b. Enter the app name `cf-py-<myinitials>` and click **CREATE**. To access the app code for the boilerplate, you must deploy the CF app to the cloud first. You can use any name for the app. If you use the name from the example, replace `<myinitials>` with your initials, such as `cf-py-ms`, to ensure that the name is unique.
+    b. Enter the app name `cf-py-<name>` and click **CREATE**. To access the app code for the boilerplate, you must deploy the CF app to the cloud first. You can use any name for the app. If you use the name from the example, replace `<name>` with a unique identifier, such as `cf-py-msx`.
+    
+    **Attention**: Do not use personal information in any app, container image, or Kubernetes resource names.
 
     As the app is deployed, instructions for "Download, modify, and redeploy your app with the command line interface" are displayed.
 
     c. From step 1 in the GUI instructions, click **DOWNLOAD STARTER CODE**.
 
     d. Extract the .zip file and save its contents to your `cf-py` directory.
-        
+
 Your app code is ready to be containerized!
 
 
@@ -126,7 +128,7 @@ Create a Dockerfile that includes your app code and the necessary configurations
   bx cr build -t registry.<region>.bluemix.net/namespace/cf-py .
   ```
   {: pre}
-  
+
   <table>
   <thead>
   <th colspan=2><img src="images/idea.png" alt="This icon indicates there is more information to learn about this command's components."/> Understanding this command's components</th>
@@ -154,7 +156,7 @@ Create a Dockerfile that includes your app code and the necessary configurations
 
   ```
   REPOSITORY                                     NAMESPACE   TAG      DIGEST         CREATED         SIZE     VULNERABILITY STATUS   
-  registry.ng.bluemix.net/namespace/cf-py        namespace   latest   cb03170b2cb2   3 minutes ago   271 MB   OK 
+  registry.ng.bluemix.net/namespace/cf-py        namespace   latest   cb03170b2cb2   3 minutes ago   271 MB   OK
   ```
   {: screen}
 
@@ -207,7 +209,7 @@ Deploy your app as a container in a Kubernetes cluster.
        nodePort: 30872
   ```
   {: codeblock}
-  
+
   <table>
   <thead>
   <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
@@ -226,12 +228,12 @@ Deploy your app as a container in a Kubernetes cluster.
 2. Apply the configuration file to create the deployment and the service in your cluster.
 
   ```
-  kubectl apply -f <path_to_file>/cf-py.yaml
+  kubectl apply -f filepath/cf-py.yaml
   ```
   {: pre}
-  
+
   Output:
-  
+
   ```
   deployment "cf-py" configured
   service "cf-py-nodeport" configured
@@ -251,12 +253,12 @@ Deploy your app as a container in a Kubernetes cluster.
 
     ```
     ID                                                 Public IP        Private IP     Machine Type        State    Status   Zone    Version   
-    kube-dal10-cr18e61e63c6e94b658596ca93d087eed9-w1   169.44.222.111   10.111.44.66   u2c.2x4.encrypted   normal   Ready    dal10   1.8.8
+    kube-dal10-cr18e61e63c6e94b658596ca93d087eed9-w1   169.xx.xxx.xxx   10.xxx.xx.xxx   u2c.2x4.encrypted   normal   Ready    dal10   1.8.8
     ```
     {: screen}
 
-    b. Open a browser and check out the app with the following URL: `http://<IP_address>:<NodePort>`. With the example values, the URL is `http://169.44.222.111:30872`. You can give this URL to a co-worker to try or enter it in your cell phone's browser, so that you can see that the app really is publicly available.
-    
+    b. Open a browser and check out the app with the following URL: `http://<public_IP_address>:<NodePort>`. With the example values, the URL is `http://169.xx.xxx.xxx:30872`. You can give this URL to a co-worker to try or enter it in your cell phone's browser, so that you can see that the app really is publicly available.
+
     <img src="images/python_flask.png" alt="A screenshot of the deployed boilerplate Python Flask app." />
 
 5. [Launch the Kubernetes dashboard](cs_app.html#cli_dashboard). Note that the steps differ depending on your version of Kubernetes.
