@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-10"
+lastupdated: "2018-04-17"
 
 
 ---
@@ -422,7 +422,7 @@ Before you begin, [target the Kubernetes CLI to the cluster](cs_cli_install.html
     2. Create the role binding resource in your cluster.
 
         ```
-        kubectl apply -f <path_to_yaml_file>
+        kubectl apply -f filepath/my_role_team1.yaml
         ```
         {: pre}
 

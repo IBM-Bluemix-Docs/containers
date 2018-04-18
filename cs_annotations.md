@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-10"
+lastupdated: "2018-04-18"
 
 ---
 
@@ -1421,11 +1421,11 @@ spec:
   <tbody>
   <tr>
   <td><code>ssl-service</code></td>
-  <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the service that represents your app. Traffic is encrypted from ALB to this app.</td>
+  <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the service that requires HTTPS. Traffic is encrypted from the ALB to this app's service.</td>
   </tr>
   <tr>
   <td><code>ssl-secret</code></td>
-  <td>Replace <code>&lt;<em>service-ssl-secret</em>&gt;</code> with the secret for the service. This parameter is optional. If the parameter is provided, the value must contain the key and the certificate that your app is expecting from the client.</td>
+  <td>Replace <code>&lt;<em>service-ssl-secret</em>&gt;</code> with the secret for the service. This parameter is optional. If the parameter is provided, the value must contain the key and the certificate that your app is expecting from the client. To create a TLS secret, see [Creating secrets](cs_app.html#secrets).</td>
   </tr>
   </tbody></table>
 
@@ -1486,11 +1486,11 @@ spec:
   <tbody>
   <tr>
   <td><code>ssl-service</code></td>
-  <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the service that represents your app. Traffic is encrypted from ALB to this app.</td>
+  <td>Replace <code>&lt;<em>myservice</em>&gt;</code> with the name of the service that requires HTTPS. Traffic is encrypted from the ALB to this app's service.</td>
   </tr>
   <tr>
   <td><code>ssl-secret</code></td>
-  <td>Replace <code>&lt;<em>service-ssl-secret</em>&gt;</code> with the secret for the service. This parameter is optional. If the parameter is provided, the value must contain the key and the certificate that your app is expecting from the client.</td>
+  <td>Replace <code>&lt;<em>service-ssl-secret</em>&gt;</code> with the secret for the service. This parameter is optional. If the parameter is provided, the value must contain the key and the certificate that your app is expecting from the client. To create a mutual authentication secret, see [Creating secrets](cs_app.html#secrets).</td>
   </tr>
   </tbody></table>
 
