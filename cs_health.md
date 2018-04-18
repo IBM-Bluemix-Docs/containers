@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-10"
+lastupdated: "2018-04-17"
 
 ---
 
@@ -109,7 +109,7 @@ You can create a configuration for cluster logging. You can differentiate betwee
 
 1. Create a log forwarding configuration.
   ```
-  bx cs logging-config-create <my_cluster> --logsource <my_log_source> --namespace <kubernetes_namespace> --hostname <log_server_hostname_or_IP> --port <log_server_port> --type <type> --app-containers <containers> --app-paths <paths_to_logs> --skip-validation
+  bx cs logging-config-create <cluster_name_or_ID> --logsource <log_source> --namespace <kubernetes_namespace> --hostname <log_server_hostname_or_IP> --port <log_server_port> --type <type> --app-containers <containers> --app-paths <paths_to_logs> --skip-validation
   ```
   {: pre}
 
@@ -119,7 +119,7 @@ You can create a configuration for cluster logging. You can differentiate betwee
       Creating logging configuration for container logs in cluster cluster1...
       OK
       Id                                     Source      Namespace   Host                                 Port    Org   Space   Protocol   Application Containers   Paths
-      af7d1ff4-33e6-4275-8167-b52eb3c5f0ee   container   default     ingest-au-syd.logging.bluemix.net✣   9091✣   -     -       ibm        -                        -
+      af7d1ff4-33e6-4275-8167-b52eb3c5f0ee   container   default     ingest-au-syd.logging.bluemix.net✣  9091✣   -     -       ibm        -                        -
 
       ✣ Indicates the default endpoint for the {{site.data.keyword.loganalysislong_notm}} service.
 
@@ -131,8 +131,8 @@ You can create a configuration for cluster logging. You can differentiate betwee
       bx cs logging-config-create cluster2 --logsource application --app-paths '/var/log/apps.log' --app-containers 'container1,container2,container3'
       Creating logging configuration for application logs in cluster cluster2...
       OK
-      Id                                     Source        Namespace   Host                                    Port    Org   Space   Protocol   Application Containers   Paths
-      aa2b415e-3158-48c9-94cf-f8b298a5ae39   application   -           ingest.logging.stage1.ng.bluemix.net✣   9091✣   -     -       ibm        container1,container2,container3           /var/log/apps.log
+      Id                                     Source        Namespace   Host                                    Port    Org   Space   Protocol   Application   Containers   Paths
+      aa2b415e-3158-48c9-94cf-f8b298a5ae39   application   -           ingest.logging.stage1.ng.bluemix.net✣  9091✣   -     -       ibm        container1,container2,container3   /var/log/apps.log
       ```
       {: screen}
 
@@ -147,11 +147,11 @@ You can create a configuration for cluster logging. You can differentiate betwee
   </thead>
   <tbody>
     <tr>
-      <td><code><em>&lt;my_cluster&gt;</em></code></td>
+      <td><code><em>&lt;cluster_name_or_ID&gt;</em></code></td>
       <td>The name or ID of the cluster.</td>
     </tr>
     <tr>
-      <td><code><em>&lt;my_log_source&gt;</em></code></td>
+      <td><code><em>&lt;log_source&gt;</em></code></td>
       <td>The source that you want to forward logs from. Accepted values are <code>container</code>, <code>application</code>, <code>worker</code>, <code>kubernetes</code>, and <code>ingress</code>.</td>
     </tr>
     <tr>
@@ -199,7 +199,7 @@ You can create a configuration for cluster logging. You can differentiate betwee
 
     * To list all of the logging configurations in a cluster:
       ```
-      bx cs logging-config-get <my_cluster>
+      bx cs logging-config-get <cluster_name_or_ID>
       ```
       {: pre}
 
@@ -207,7 +207,7 @@ You can create a configuration for cluster logging. You can differentiate betwee
 
       ```
       Id                                    Source       Namespace     Host                          Port   Org      Space      Protocol     Paths
-      f4bc77c0-ee7d-422d-aabf-a4e6b977264e  kubernetes   -             172.30.162.138                5514   -        -          syslog       /var/log/kubelet.log,/var/log/kube-proxy.log
+      f4bc77c0-ee7d-422d-aabf-a4e6b977264e  kubernetes   -             172.30.xxx.xxx                5514   -        -          syslog       /var/log/kubelet.log,/var/log/kube-proxy.log
       5bd9c609-13c8-4c48-9d6e-3a6664c825a9  application  -             ingest.logging.ng.bluemix.net 9091   my_org   my_space   ibm          /var/log/apps/**/*.log,/var/log/apps/**/*.err
       8a284f1a-451c-4c48-b1b4-a4e6b977264e  containers   my-namespace  myhostname.common             5514   -        -          syslog       -
       ```
@@ -215,7 +215,7 @@ You can create a configuration for cluster logging. You can differentiate betwee
 
     * To list the logging configurations for one type of log source:
       ```
-      bx cs logging-config-get <my_cluster> --logsource worker
+      bx cs logging-config-get <cluster_name_or_ID> --logsource worker
       ```
       {: pre}
 
@@ -224,7 +224,7 @@ You can create a configuration for cluster logging. You can differentiate betwee
       ```
       Id                                    Source    Namespace   Host                            Port   Org    Space     Protocol    Paths
       f4bc77c0-ee7d-422d-aabf-a4e6b977264e  worker    -           ingest.logging.ng.bluemix.net   9091   -      -         ibm         /var/log/syslog,/var/log/auth.log
-      5bd9c609-13c8-4c48-9d6e-3a6664c825a9  worker    -           172.30.162.138                  5514   -      -         syslog      /var/log/syslog,/var/log/auth.log
+      5bd9c609-13c8-4c48-9d6e-3a6664c825a9  worker    -           172.30.xxx.xxx                  5514   -      -         syslog      /var/log/syslog,/var/log/auth.log
       ```
       {: screen}
 
@@ -233,7 +233,7 @@ You can create a configuration for cluster logging. You can differentiate betwee
 
 1. Update a log forwarding configuration.
     ```
-    bx cs logging-config-update <my_cluster> <log_config_id> --namespace <namespace> --type <log_type> --logsource <source> --hostname <hostname_or_ingestion_URL> --port <port> --space <cluster_space> --org <cluster_org> --app-containers <containers> --app-paths <paths_to_logs>
+    bx cs logging-config-update <cluster_name_or_ID> <log_config_id> --namespace <namespace> --type <log_type> --logsource <source> --hostname <hostname_or_ingestion_URL> --port <port> --space <cluster_space> --org <cluster_org> --app-containers <containers> --app-paths <paths_to_logs>
     ```
     {: pre}
 
@@ -244,7 +244,7 @@ You can create a configuration for cluster logging. You can differentiate betwee
   </thead>
   <tbody>
     <tr>
-      <td><code><em>&lt;my_cluster&gt;</em></code></td>
+      <td><code><em>&lt;cluster_name_or_ID&gt;</em></code></td>
       <td>The name or ID of the cluster.</td>
     </tr>
     <tr>
@@ -299,7 +299,7 @@ You can choose which logs that you forward by filtering out specific logs for a 
 
 1. Create a logging filter.
   ```
-  bx cs logging-filter-create <cluster_name> --type LOG_TYPE --logging-configs <configs> --namespace <kubernetes_namespace> --container <container_name> --level <logging_level> --message <message>
+  bx cs logging-filter-create <cluster_name_or_ID> --type <log_type> --logging-configs <configs> --namespace <kubernetes_namespace> --container <container_name> --level <logging_level> --message <message>
   ```
   {: pre}
   <table>
@@ -309,7 +309,7 @@ You can choose which logs that you forward by filtering out specific logs for a 
     </thead>
     <tbody>
       <tr>
-        <td>&lt;cluster_name&gt;</td>
+        <td>&lt;cluster_name_or_ID&gt;</td>
         <td>Required: The name or ID of the cluster that you want to create a logging filter for.</td>
       </tr>
       <tr>
@@ -342,7 +342,7 @@ You can choose which logs that you forward by filtering out specific logs for a 
 2. View the log filter that you created.
 
   ```
-  bx cs logging-filter-get <cluster_name> --id <filter_id> --show-matching-configs
+  bx cs logging-filter-get <cluster_name_or_ID> --id <filter_ID> --show-matching-configs
   ```
   {: pre}
   <table>
@@ -352,11 +352,11 @@ You can choose which logs that you forward by filtering out specific logs for a 
     </thead>
     <tbody>
       <tr>
-        <td>&lt;cluster_name&gt;</td>
+        <td>&lt;cluster_name_or_ID&gt;</td>
         <td>Required: The name or ID of the cluster that you want to create a logging filter for.</td>
       </tr>
       <tr>
-        <td><code>&lt;filter_id&gt;</code></td>
+        <td><code>&lt;filter_ID&gt;</code></td>
         <td>Optional: The ID of the log filter that you want to view.</td>
       </tr>
       <tr>
@@ -368,7 +368,7 @@ You can choose which logs that you forward by filtering out specific logs for a 
 
 3. Update the log filter that you created.
   ```
-  bx cs logging-filter-update <cluster_name> --id <filter_id> --type <log_type> --logging-configs <configs> --namespace <kubernetes_namespace --container <container_name> --level <logging_level> --message <message>
+  bx cs logging-filter-update <cluster_name_or_ID> --id <filter_ID> --type <log_type> --logging-configs <configs> --namespace <kubernetes_namespace --container <container_name> --level <logging_level> --message <message>
   ```
   {: pre}
   <table>
@@ -378,11 +378,11 @@ You can choose which logs that you forward by filtering out specific logs for a 
     </thead>
     <tbody>
       <tr>
-        <td>&lt;cluster_name&gt;</td>
+        <td>&lt;cluster_name_or_ID&gt;</td>
         <td>Required: The name or ID of the cluster that you want to update a logging filter for.</td>
       </tr>
       <tr>
-        <td><code>&lt;filter_id&gt;</code></td>
+        <td><code>&lt;filter_ID&gt;</code></td>
         <td>The ID of the log filter that you want to update.</td>
       </tr>
       <tr>
@@ -415,7 +415,7 @@ You can choose which logs that you forward by filtering out specific logs for a 
 4. Delete a log filter that you created.
 
   ```
-  bx cs logging-filter-rm <cluster_name> --id <filter_id> [--all]
+  bx cs logging-filter-rm <cluster_name_or_ID> --id <filter_ID> [--all]
   ```
   {: pre}
   <table>
@@ -425,11 +425,11 @@ You can choose which logs that you forward by filtering out specific logs for a 
     </thead>
     <tbody>
       <tr>
-        <td><code>&lt;cluster_name&gt;</code></td>
+        <td><code>&lt;cluster_name_or_ID&gt;</code></td>
         <td>Required: The name or ID of the cluster that you want to delete a logging filter for.</td>
       </tr>
       <tr>
-        <td><code>&lt;filter_id&gt;</code></td>
+        <td><code>&lt;filter_ID&gt;</code></td>
         <td>Optional: The ID of the log filter that you want to remove.</td>
       </tr>
       <tr>
@@ -486,7 +486,7 @@ You can stop forwarding logs one or all of the logging configurations for a clus
 2. Delete the logging configuration.
 <ul>
 <li>To delete one logging configuration:</br>
-  <pre><code>bx cs logging-config-rm &lt;my_cluster&gt; --id &lt;log_config_id&gt;</pre></code>
+  <pre><code>bx cs logging-config-rm &lt;cluster_name_or_ID&gt; --id &lt;log_config_ID&gt;</pre></code>
   <table>
     <caption>Understanding this command's components</caption>
       <thead>
@@ -494,11 +494,11 @@ You can stop forwarding logs one or all of the logging configurations for a clus
       </thead>
         <tbody>
         <tr>
-          <td><code><em>&lt;my_cluster&gt;</em></code></td>
+          <td><code><em>&lt;cluster_name_or_ID&gt;</em></code></td>
           <td>The name of the cluster that the logging configuration is in.</td>
         </tr>
         <tr>
-          <td><code><em>&lt;log_config_id&gt;</em></code></td>
+          <td><code><em>&lt;log_config_ID&gt;</em></code></td>
           <td>The ID of the log source configuration.</td>
         </tr>
   </tbody>
@@ -537,7 +537,7 @@ To forward Kubernetes API audit logs:
 1. Configure the webhook. If you do not provide any information in the flags, a default configuration is used.
 
     ```
-    bx cs apiserver-config-set audit-webhook <my_cluster> --remoteServer <server_URL_or_IP> --caCert <CA_cert_path> --clientCert <client_cert_path> --clientKey <client_key_path>
+    bx cs apiserver-config-set audit-webhook <cluster_name_or_ID> --remoteServer <server_URL_or_IP> --caCert <CA_cert_path> --clientCert <client_cert_path> --clientKey <client_key_path>
     ```
     {: pre}
 
@@ -548,7 +548,7 @@ To forward Kubernetes API audit logs:
     </thead>
     <tbody>
     <tr>
-    <td><code><em>&lt;my_cluster&gt;</em></code></td>
+    <td><code><em>&lt;cluster_name_or_ID&gt;</em></code></td>
     <td>The name or ID of the cluster.</td>
     </tr>
     <tr>
@@ -572,7 +572,7 @@ To forward Kubernetes API audit logs:
 2. Verify that log forwarding was enabled by viewing the URL for the remote logging service.
 
     ```
-    bx cs apiserver-config-get audit-webhook <my_cluster>
+    bx cs apiserver-config-get audit-webhook <cluster_name_or_ID>
     ```
     {: pre}
 
@@ -586,7 +586,7 @@ To forward Kubernetes API audit logs:
 3. Apply the configuration update by restarting the Kubernetes master.
 
     ```
-    bx cs apiserver-refresh <my_cluster>
+    bx cs apiserver-refresh <cluster_name_or_ID>
     ```
     {: pre}
 
@@ -600,14 +600,14 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
 1. Disable the webhook backend configuration for the cluster's API server.
 
     ```
-    bx cs apiserver-config-unset audit-webhook <my_cluster>
+    bx cs apiserver-config-unset audit-webhook <cluster_name_or_ID>
     ```
     {: pre}
 
 2. Apply the configuration update by restarting the Kubernetes master.
 
     ```
-    bx cs apiserver-refresh <my_cluster>
+    bx cs apiserver-refresh <cluster_name_or_ID>
     ```
     {: pre}
 
@@ -802,7 +802,7 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
 2. Create the configuration map in your cluster.
 
     ```
-    kubectl apply -f <my_file.yaml>
+    kubectl apply -f ibm-worker-recovery-checks.yaml
     ```
     {: pre}
 

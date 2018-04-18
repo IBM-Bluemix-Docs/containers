@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-28"
+lastupdated: "2018-04-17"
 
 ---
 
@@ -82,7 +82,7 @@ Because strongSwan is integrated within your cluster, you don't need an external
 
 Before you begin:
 * [Install an IPsec VPN gateway in your on-premises data center](/docs/infrastructure/iaas-vpn/set-up-ipsec-vpn.html#setting-up-an-ipsec-connection).
-* Either [create a standard cluster](cs_clusters.html#clusters_cli) or [update an existing cluster to version 1.7.4 or later](cs_cluster_update.html#master).
+* Either [create a standard cluster](cs_clusters.html#clusters_cli) or [update an existing cluster to version 1.7.16 or later](cs_cluster_update.html#master).
 * The cluster must have at least one available public Load Balancer IP address. [You can check to see your available public IP addresses](cs_subnets.html#manage) or [free up a used IP address](cs_subnets.html#free).
 * [Target the Kubernetes CLI to the cluster](cs_cli_install.html#cs_cli_configure).
 
@@ -118,7 +118,11 @@ To configure the Helm chart:
     </tr>
     <tr>
     <td><code>loadBalancerIP</code></td>
-    <td>Add a portable public IP address from a subnet that is assigned to this cluster that you want to use for the strongSwan VPN service. If the VPN connection is initiated from the on-premises gateway (<code>ipsec.auto</code> is set to <code>add</code>), you can use this property to configure a persistent public IP address on the on-premises gateway for the cluster. This value is optional.</td>
+    <td>If you want to specify a portable public IP address for the strongSwan VPN service for inbound VPN connections, add that IP address. Specifying an IP address is useful when you need a stable IP address, such as when you must designate which IP addresses are permitted through an on-premises firewall.<br><br>To view available portable public IP addresses assigned to this cluster, see [managing IP addresses and subnets](cs_subnets.html#manage). If you leave this setting blank, a free portable public IP address is used. If the VPN connection is initiated from the on-premises gateway (<code>ipsec.auto</code> is set to <code>add</code>), you can use this property to configure a persistent public IP address on the on-premises gateway for the cluster.</td>
+    </tr>
+    <tr>
+    <td><code>connectUsingLoadBalancerIP</code></td>
+    <td>Use the load balancer IP address that you added in <code>loadBalancerIP</code> to also establish the outbound VPN connection. If this option is enabled, all of the cluster worker nodes must be on the same public VLAN. Otherwise, you must use the <code>nodeSelector</code> setting to ensure that the VPN pod deploys to a worker node on the same public VLAN as the <code>loadBalancerIP</code>. This option is ignored if <code>ipsec.auto</code> is set to <code>add</code>.<p>Accepted values:</p><ul><li><code>"false"</code>: Do not connect the VPN using the load balancer IP. The public IP address of the worker node that the VPN pod is running on is used instead.</li><li><code>"true"</code>: Establish the VPN using the load balancer IP as the local source IP. If <code>loadBalancerIP</code> is not set, the external IP address assigned to the load balancer service is used.</li><li><code>"auto"</code>: When <code>ipsec.auto</code> is set to <code>start</code> and <code>loadBalancerIP</code> is set, establish the VPN using the load balancer IP as the local source IP.</li></ul></td>
     </tr>
     <tr>
     <td><code>nodeSelector</code></td>
@@ -130,11 +134,11 @@ To configure the Helm chart:
     </tr>
     <tr>
     <td><code>ipsec.esp</code></td>
-    <td>Add the list of ESP encryption/authentication algorithms your on-premises VPN tunnel endpoint uses for the connection. This value is optional. If you leave this field blank, the default strongSwan algorithms <code>aes128-sha1,3des-sha1</code> are used for the connection.</td>
+    <td>Add the list of ESP encryption and authentication algorithms that your on-premises VPN tunnel endpoint uses for the connection.<ul><li>If <code>ipsec.keyexchange</code> is set to <code>ikev1</code>, this setting must be specified.</li><li>If <code>ipsec.keyexchange</code> is set to <code>ikev2</code>, this setting is optional. If you leave this setting blank, the default strongSwan algorithms <code>aes128-sha1,3des-sha1</code> are used for the connection.</li></ul></td>
     </tr>
     <tr>
     <td><code>ipsec.ike</code></td>
-    <td>Add the list of IKE/ISAKMP SA encryption/authentication algorithms your on-premises VPN tunnel endpoint uses for the connection. This value is optional. If you leave this field blank, the default strongSwan algorithms <code>aes128-sha1-modp2048,3des-sha1-modp1536</code> are used for the connection.</td>
+    <td>Add the list of IKE/ISAKMP SA encryption and authentication algorithms that your on-premises VPN tunnel endpoint uses for the connection.<ul><li>If <code>ipsec.keyexchange</code> is set to <code>ikev1</code>, this setting must be specified.</li><li>If <code>ipsec.keyexchange</code> is set to <code>ikev2</code>, this setting is optional. If you leave this setting blank, the default strongSwan algorithms <code>aes128-sha1-modp2048,3des-sha1-modp1536</code> are used for the connection.</li></ul></td>
     </tr>
     <tr>
     <td><code>ipsec.auto</code></td>
@@ -142,7 +146,7 @@ To configure the Helm chart:
     </tr>
     <tr>
     <td><code>local.subnet</code></td>
-    <td>Change this value to the list of cluster subnet CIDRs to expose over the VPN connection to the on-premises network. This list can include the following subnets: <ul><li>The Kubernetes pod subnet CIDR: <code>172.30.0.0/16</code></li><li>The Kubernetes service subnet CIDR: <code>172.21.0.0/16</code></li><li>If your apps are exposed by a NodePort service on the private network, the worker node's private subnet CIDR. To find this value, run <code>bx cs subnets | grep <xxx.yyy.zzz></code> where <code>&lt;xxx.yyy.zzz&gt;</code> is the first three octects of the worker node's private IP address.</li><li>If you have apps that are exposed by LoadBalancer services on the private network, the cluster's private or user-managed subnet CIDRs. To find these values, run <code>bx cs cluster-get <cluster name> --showResources</code>. In the <b>VLANS</b> section, look for CIDRs that have a <b>Public</b> value of <code>false</code>.</li></ul></td>
+    <td>Change this value to the list of cluster subnet CIDRs to expose over the VPN connection to the on-premises network. This list can include the following subnets: <ul><li>The Kubernetes pod subnet CIDR: <code>172.30.0.0/16</code></li><li>The Kubernetes service subnet CIDR: <code>172.21.0.0/16</code></li><li>If your apps are exposed by a NodePort service on the private network, the worker node's private subnet CIDR. Retrieve the first three octets of your worker's private IP address by running <code>bx cs worker-get &lt;worker&gt;</code>. For example, if it is <code>&lt;10.176.48.87&gt;</code> then note <code>&lt;10.176.48&gt;</code>. Next, get the worker private subnet CIDR by running the following command, replacing <code>&lt;xxx.yyy.zz&gt;</code> with the octet that you previously retrieved: <code>bx cs subnets | grep <xxx.yyy.zzz&gt;</code>.</li><li>If you have apps that are exposed by LoadBalancer services on the private network, the cluster's private or user-managed subnet CIDRs. To find these values, run <code>bx cs cluster-get <cluster_name> --showResources</code>. In the <b>VLANS</b> section, look for CIDRs that have a <b>Public</b> value of <code>false</code>.</li></ul>**Note**: If <code>ipsec.keyexchange</code> is set to <code>ikev1</code>, you can specify only one subnet.</td>
     </tr>
     <tr>
     <td><code>local.id</code></td>
@@ -153,7 +157,7 @@ To configure the Helm chart:
     <td>Change this value to the public IP address for the on-premises VPN gateway. When <code>ipsec.auto</code> is set to <code>start</code>, this value is required.</td>
     </tr>
     <td><code>remote.subnet</code></td>
-    <td>Change this value to the list of on-premises private subnet CIDRs that the Kubernetes clusters are allowed to access.</td>
+    <td>Change this value to the list of on-premises private subnet CIDRs that the Kubernetes clusters are allowed to access. **Note**: If <code>ipsec.keyexchange</code> is set to <code>ikev1</code>, you can specify only one subnet.</td>
     </tr>
     <tr>
     <td><code>remote.id</code></td>
