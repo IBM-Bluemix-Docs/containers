@@ -34,7 +34,7 @@ If you want to forward logs from one source to both collector servers, then you 
 
 Check out the following table for information about the different log sources.
 
-<table><caption>Log source characteristics</caption>
+<table>
   <thead>
     <tr>
       <th>Log source</th>
@@ -61,7 +61,7 @@ Check out the following table for information about the different log sources.
     <tr>
       <td><code>kubernetes</code></td>
       <td>Logs for the Kubernetes system component.</td>
-      <td><code>/var/log/kubelet.log, <code>/var/log/kube-proxy.log</code>, <code>/var/log/event-exporter/&ast;.log</code></td>
+      <td><code>/var/log/kubelet.log</code>, <code>/var/log/kube-proxy.log</code>, <code>/var/log/event-exporter/&ast;.log</code></td>
     </tr>
     <tr>
       <td><code>ingress</code></td>
@@ -141,7 +141,6 @@ You can create a configuration for cluster logging. You can differentiate betwee
 
 
   <table>
-    <caption>Understanding this command's components</caption>
   <thead>
     <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
   </thead>
@@ -238,7 +237,6 @@ You can create a configuration for cluster logging. You can differentiate betwee
     {: pre}
 
   <table>
-    <caption>Understanding this command's components</caption>
   <thead>
     <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
   </thead>
@@ -303,7 +301,6 @@ You can choose which logs that you forward by filtering out specific logs for a 
   ```
   {: pre}
   <table>
-    <caption>Understanding this command's components</caption>
     <thead>
       <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
     </thead>
@@ -346,7 +343,6 @@ You can choose which logs that you forward by filtering out specific logs for a 
   ```
   {: pre}
   <table>
-    <caption>Understanding this command's components</caption>
     <thead>
       <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
     </thead>
@@ -372,7 +368,6 @@ You can choose which logs that you forward by filtering out specific logs for a 
   ```
   {: pre}
   <table>
-    <caption>Understanding this command's components</caption>
     <thead>
       <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
     </thead>
@@ -419,7 +414,6 @@ You can choose which logs that you forward by filtering out specific logs for a 
   ```
   {: pre}
   <table>
-    <caption>Understanding this command's components</caption>
     <thead>
       <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
     </thead>
@@ -488,7 +482,6 @@ You can stop forwarding logs one or all of the logging configurations for a clus
 <li>To delete one logging configuration:</br>
   <pre><code>bx cs logging-config-rm &lt;cluster_name_or_ID&gt; --id &lt;log_config_ID&gt;</pre></code>
   <table>
-    <caption>Understanding this command's components</caption>
       <thead>
         <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
       </thead>
@@ -542,7 +535,6 @@ To forward Kubernetes API audit logs:
     {: pre}
 
     <table>
-    <caption>Understanding this command's components</caption>
     <thead>
     <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
     </thead>
