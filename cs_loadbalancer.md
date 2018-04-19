@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-17"
+lastupdated: "2018-04-19"
 
 ---
 
@@ -113,7 +113,6 @@ To create a load balancer service:
         {: codeblock}
 
         <table>
-        <caption>Understanding the LoadBalancer service file components</caption>
         <thead>
         <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
@@ -189,3 +188,166 @@ To create a load balancer service:
         http://169.xx.xxx.xxx:8080
         ```
         {: codeblock}
+
+5. If you choose to [preserve the source IP address of the incoming package![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tutorials/services/source-ip/#source-ip-for-services-with-typeloadbalancer) and have edge nodes, private-only worker nodes, or multiple VLANs, ensure that app pods are included in load balancing by [adding node affinity and tolerations to app pods](#node_affinity_tolerations).
+
+<br />
+
+
+## Adding node affinity and tolerations to app pods for source IP
+{: #node_affinity_tolerations}
+
+When source IP is enabled for a load balancer service, you can ensure that app pods and load balancer service pods deploy to the same worker nodes by adding node affinity and tolerations to app pods.
+{: shortdesc}
+
+Whenever you deploy app pods, load balancer service pods are also deployed to the worker nodes that the app pods are deployed to. However, some situations exist where the load balancer pods and app pods might not be scheduled onto the same worker node:
+
+* You have tainted edge nodes that only load balancer service pods can deploy to. App pods are not permitted to deploy to those nodes.
+* Your cluster is connected to multiple public or private VLANs, and your app pods might deploy to worker nodes that are connected only to one VLAN. Load balancer service pods might not deploy to those worker nodes because the load balancer IP address is connected to a different VLAN than the worker nodes.
+
+When a client request to your app is sent to your cluster, `kube-proxy` routes the request to the Kubernetes load balancer service pod for the app. If the app pod does not exist on the same worker node as the load balancer service pod, the load balancer forwards the request to a worker node where the app pod is deployed. The source IP address of the package is changed to the public IP address of the worker node where the app pod is running.
+
+If you want to preserve the original source IP address of the client request, you can [enable source IP ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tutorials/services/source-ip/#source-ip-for-services-with-typeloadbalancer) for load balancer services. Preserving the client’s IP is useful, for example, when app servers have to apply security and access-control policies. After you enable the source IP, load balancer service pods must forward requests to app pods that are deployed to the same worker node only. To force your apps to deploy to a specific worker node, you must add affinity rules and tolerations to your app deployment.
+
+### Adding edge node affinity rules and tolerations
+{: #edge_nodes}
+
+When you [label worker nodes as edge nodes](cs_edge.html#edge_nodes), load balancer service pods deploy only to those edge nodes. If you also [taint the edge nodes](cs_edge.html#edge_workloads), app pods cannot deploy to edge nodes.
+
+When you enable the source IP, incoming requests cannot be forwarded from the load balancer to your app pod. To force your app pods to deploy to edge nodes, add an edge node [affinity rule ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature) and [toleration ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/#concepts) to the app deployment.
+
+Example deployment yaml with edge node affinity and edge node toleration:
+
+```
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: with-node-affinity
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: dedicated
+                operator: In
+                values:
+                - edge
+      tolerations:
+        - key: dedicated
+          value: edge
+...
+```
+{: codeblock}
+
+Note that both the **affinity** and **tolerations** sections have `dedicated` as the `key` and `edge` as the `value`.
+
+### Adding affinity rules for multiple public or private VLANs
+{: #edge_nodes}
+
+When your cluster is connected to multiple public or private VLANs, your app pods might deploy to worker nodes that are connected only to one VLAN. If the load balancer IP address is connected to a different VLAN than these worker nodes, load balancer service pods won't deploy to those worker nodes.
+
+When source IP is enabled, schedule app pods on worker nodes that are the same VLAN as the load balancer's IP address by adding an affinity rule to the app deployment.
+
+Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to your cluster.
+
+1. Get the IP address of the load balancer service that you want to use. Look for the IP address in the **LoadBalancer Ingress** field.
+    ```
+    kubectl describe service <loadbalancer_service_name>
+    ```
+    {: pre}
+
+2. Retrieve the VLAN ID that your load balancer service is connected to.
+
+    1. List portable public VLANs for your cluster.
+        ```
+        bx cs cluster-get <cluster_name_or_ID> --showResources
+        ```
+        {: pre}
+
+        Example output:
+        ```
+        ...
+
+        Subnet VLANs
+        VLAN ID   Subnet CIDR       Public   User-managed
+        2234947   10.xxx.xx.xxx/29  false    false
+        2234945   169.36.5.xxx/29   true     false
+        ```
+        {: screen}
+
+    2. In the output under **Subnet VLANs**, look for the subnet CIDR that matches the load balancer IP address that you retrieved earlier and note the VLAN ID.
+
+        For example, if the load balancer service IP address is `169.36.5.xxx`, the matching subnet in the above example output is `169.36.5.xxx/29`. The VLAN ID that the subnet is connected to is `2234945`.
+
+3. [Add an affinity rule ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature) to the app deployment for the VLAN ID that you noted in the previous step.
+
+    For example, if you have multiple VLANs but want your app pods to deploy to worker nodes on the `2234945` public VLAN only:
+
+    ```
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    metadata:
+      name: with-node-affinity
+    spec:
+      template:
+        spec:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                - matchExpressions:
+                  - key: publicVLAN
+                    operator: In
+                    values:
+                    - "2234945"
+    ...
+    ```
+    {: codeblock}
+
+    In the above yaml, the **affinity** section has `publicVLAN` as the `key` and `"2234945"` as the `value`.
+
+4. Apply the updated deployment configuration file.
+    ```
+    kubectl apply -f with-node-affinity.yaml
+    ```
+    {: pre}
+
+5. Verify that the app pods deployed to worker nodes connected to the designated VLAN.
+
+    1. List the pods in your cluster. Replace `<selector>` with the label that you used for the app.
+        ```
+        kubectl get pods -o wide app=<selector>
+        ```
+        {: pre}
+
+    2. In the **Subnet VLANs** section of the output, note the IP address of any of the worker nodes that the pods are on.
+
+    3. List the details for the worker node.
+
+        ```
+        kubectl describe node <worker_IP_address>
+        ```
+        {: pre}
+
+        Example output:
+
+        ```
+        Name:                   10.xxx.xx.xxx
+        Role:
+        Labels:                 arch=amd64
+                                beta.kubernetes.io/arch=amd64
+                                beta.kubernetes.io/os=linux
+                                failure-domain.beta.kubernetes.io/region=us-south
+                                failure-domain.beta.kubernetes.io/zone=dal10
+                                ibm-cloud.kubernetes.io/encrypted-docker-data=true
+                                kubernetes.io/hostname=10.xxx.xx.xxx
+                                privateVLAN=2234945
+                                publicVLAN=2234967
+        ...
+        ```
+        {: screen}
+
+    4. In the **Labels** section of the output, verify that the public or private VLAN is the VLAN that you designated in previous steps.

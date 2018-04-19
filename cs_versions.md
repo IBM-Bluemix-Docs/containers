@@ -65,12 +65,13 @@ As updates become available, you are notified when you view information about th
    - If you use a `kubectl` CLI version that does match at least the `major.minor` version of your clusters, you might experience unexpected results. Make sure to keep your Kubernetes cluster and [CLI versions](cs_cli_install.html#kubectl) up-to-date.
 -  **Patch updates**: Check monthly to see if an update is available, and use the `bx cs worker-update` [command](cs_cli_reference.html#cs_worker_update) to apply these security and operating system patches.
 
-The following information summarizes updates that are likely to have impact on deployed apps when you update a cluster to a new version from the previous version. Review the [Kubernetes changelog ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG.md) for a complete list of changes in Kubernetes versions.
+The following information on this page summarizes updates that are likely to have impact on deployed apps when you update a cluster to a new version from the previous version.
 -  Version 1.9 [minor update](#cs_v19).
 -  Version 1.8 [minor update](#cs_v18).
 -  Version 1.7 [minor update](#cs_v17).
 -  [Archive](#k8s_version_archive) of deprecated or unsupported versions.
 
+For a more complete list of changes, review the [Kubernetes changelog ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG.md).
 
 ## Version 1.9
 {: #cs_v19}
