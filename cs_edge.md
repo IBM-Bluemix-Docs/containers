@@ -83,6 +83,7 @@ You labeled worker nodes with `dedicated=edge` and redeployed all existing load 
 
 
 ## Prevent workloads from running on edge worker nodes
+
 {: #edge_workloads}
 
 One benefit of edge worker nodes is that they can be specified to run networking services only.
