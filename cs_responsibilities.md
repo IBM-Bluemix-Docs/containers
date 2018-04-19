@@ -50,8 +50,6 @@ Review the responsibilities that you share with IBM to manage your clusters.
 - [Backing up and restoring data in persistent storage in IBM Cloud infrastructure (SoftLayer) ![External link icon](../icons/launch-glyph.svg "External link icon")](../services/RegistryImages/ibm-backup-restore/index.html)
 - [Configuring health monitoring for worker nodes with Autorecovery](cs_health.html#autorecovery)
 
-  
-
 <br />
 
 
