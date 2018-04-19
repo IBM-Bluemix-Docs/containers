@@ -48,7 +48,6 @@ Default policies are not applied to pods directly; they are applied to the publi
 
 
  <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
- <caption>Default policies for each cluster</caption>
   <thead>
   <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Default policies for each cluster</th>
   </thead>
