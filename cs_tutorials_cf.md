@@ -150,6 +150,7 @@ Create a Dockerfile that includes your app code and the necessary configurations
   <td><code>.</code></td>
   <td>The location of the Dockerfile. If you are running the build command from the directory that includes the Dockerfile, enter a period (.). Otherwise, use the relative path to the Dockerfile.</td>
   </tr>
+  </tbody>
   </table>
 
   The image is created in your private registry. You can run the `bx cr images` command to verify that the image was created.
