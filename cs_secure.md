@@ -21,6 +21,7 @@ lastupdated: "2018-04-18"
 You can use built-in security features in {{site.data.keyword.containerlong}} for risk analysis and security protection. These features help you to protect your Kubernetes cluster infrastructure and network communication, isolate your compute resources, and ensure security compliance across your infrastructure components and container deployments.
 {: shortdesc}
 
+
 ## Security by cluster component
 {: #cluster}
 
@@ -168,6 +169,8 @@ If an app in the cluster needs to access a pod that lies behind a cluster IP ser
 For more information about how to create a service of type cluster IP, see [Kubernetes services ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services---service-types).
 
 For information about securely connecting apps in a Kubernetes cluster to an on-premises network, see [Setting up VPN connectivity](cs_vpn.html#vpn). For information about exposing your apps for external network communication, see [Allowing public access to apps](cs_network_planning.html#public_access).
+
+
 
 
 
