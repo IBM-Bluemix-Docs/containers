@@ -106,7 +106,6 @@ To configure the Helm chart:
     <table>
     <col width="22%">
     <col width="78%">
-    <caption>Understanding the YAML file components</caption>
     <thead>
     <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
     </thead>
@@ -260,7 +259,6 @@ After you deploy your Helm chart, test the VPN connectivity.
 
     {: #vpn_tests_table}
     <table>
-    <caption>Understanding the Helm VPN connectivity tests</caption>
     <thead>
     <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the Helm VPN connectivity tests</th>
     </thead>
