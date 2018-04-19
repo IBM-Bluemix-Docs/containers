@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-17"
+lastupdated: "2018-04-19"
 
 ---
 
@@ -15,7 +15,7 @@ lastupdated: "2018-04-17"
 {:tip: .tip}
 {:download: .download}
 
-# Major and minor Kubernetes versions
+# Kubernetes versions
 {: #cs_versions}
 
 {{site.data.keyword.containerlong}} concurrently supports multiple versions of Kubernetes. When a latest version (n) is released, versions up to 2 behind (n-2) are supported. Versions more than 2 behind the latest (n-3) are first deprecated and then unsupported.
@@ -31,7 +31,7 @@ The current supported Kubernetes versions are:
 
 **Unsupported Versions**: If you are running clusters on a Kubernetes version that is not supported, [review potential impacts](#version_types) for updates and then immediately [update your cluster](cs_cluster_update.html#update) to continue receiving important security updates and support.
 
-To check the server version, run the following command.
+To check the server version of a cluster, run the following command.
 
 ```
 kubectl version  --short | grep -i server
@@ -41,7 +41,7 @@ kubectl version  --short | grep -i server
 Example output:
 
 ```
-Server Version: 1.8.8
+Server Version: v1.8.8+9d6e0610086578
 ```
 {: screen}
 
@@ -63,14 +63,21 @@ As updates become available, you are notified when you view information about th
 -  **Major and minor updates**: First [update your master node](cs_cluster_update.html#master) and then [update the worker nodes](cs_cluster_update.html#worker_node). 
    - By default, you cannot update a Kubernetes master more than two minor versions ahead. For example, if your current master is version 1.5 and you want to update to 1.8, you must update to 1.7 first. You can force the update to continue, but updating more than two minor versions might cause unexpected results.
    - If you use a `kubectl` CLI version that does match at least the `major.minor` version of your clusters, you might experience unexpected results. Make sure to keep your Kubernetes cluster and [CLI versions](cs_cli_install.html#kubectl) up-to-date.
--  **Patch updates**: Check monthly to see if an update is available, and use the `bx cs worker-update` [command](cs_cli_reference.html#cs_worker_update) to apply these security and operating system patches.
+-  **Patch updates**: Check monthly to see if an update is available, and use the `bx cs worker-update` [command](cs_cli_reference.html#cs_worker_update) to apply these security and operating system patches. For more details, see [Version changelog](cs_versions_changelog.html).
 
-The following information summarizes updates that are likely to have impact on deployed apps when you update a cluster to a new version from the previous version. Review the [Kubernetes changelog ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG.md) for a complete list of changes in Kubernetes versions.
--  Version 1.9 [minor update](#cs_v19).
--  Version 1.8 [minor update](#cs_v18).
--  Version 1.7 [minor update](#cs_v17).
+<br/>
+
+The information on this page summarizes updates that are likely to have impact on deployed apps when you update a cluster to a new version from the previous version.
+-  Version 1.9 [migration actions](#cs_v19).
+-  Version 1.8 [migration actions](#cs_v18).
+-  Version 1.7 [migration actions](#cs_v17).
 -  [Archive](#k8s_version_archive) of deprecated or unsupported versions.
 
+<br/>
+
+For a more complete list of changes, review the following:
+* [Kubernetes changelog ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG.md).
+* [IBM version changelog](cs_versions_changelog.html).
 
 ## Version 1.9
 {: #cs_v19}
@@ -202,6 +209,14 @@ Review changes that you might need to make when you are updating from the previo
 <tr>
 <td>`kubectl stop`</td>
 <td>The `kubectl stop` command is no longer available.</td>
+</tr>
+<tr>
+<td>Read-only API data volumes</td>
+<td>Now `secret`, `configMap`, `downwardAPI`, and projected volumes are mounted read-only.
+Previously, apps were allowed to write data to these volumes that might be
+reverted automatically by the system. This migration action is required to fix
+security vulnerability [CVE-2017-1002102](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2017-1002102).
+If your apps rely on the previous insecure behavior, modify them accordingly.</td>
 </tr>
 </tbody>
 </table>
@@ -352,6 +367,14 @@ roleRef:
 </code>
 </pre></p>
 </td>
+</tr>
+<tr>
+<td>Read-only API data volumes</td>
+<td>Now `secret`, `configMap`, `downwardAPI`, and projected volumes are mounted read-only.
+Previously, apps were allowed to write data to these volumes that might be
+reverted automatically by the system. This migration action is required to fix
+security vulnerability [CVE-2017-1002102](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2017-1002102).
+If your apps rely on the previous insecure behavior, modify them accordingly.</td>
 </tr>
 <tr>
 <td>StatefulSet pod DNS</td>

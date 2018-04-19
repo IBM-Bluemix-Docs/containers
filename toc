@@ -59,7 +59,12 @@ IBM Cloud Container Service
 
     {: .navgroup id="reference"}
     cs_cli_reference.md
-    cs_versions.md
+
+    {: .topicgroup}
+    Kubernetes versions for IBM Cloud Container Service
+        cs_versions.md
+        cs_versions_changelog.md
+
     cs_regions.md
     cs_annotations.md
 
