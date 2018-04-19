@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-17"
+lastupdated: "2018-04-18"
 
 ---
 
@@ -191,7 +191,6 @@ To expose an app by using the IBM-provided domain:
         {: codeblock}
 
         <table>
-        <caption>Understanding the Ingress resource file components</caption>
         <thead>
         <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
@@ -367,7 +366,6 @@ To expose an app by using the IBM-provided domain with TLS:
         {: codeblock}
 
         <table>
-        <caption>Understanding the Ingress resource file components</caption>
         <thead>
         <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
@@ -547,7 +545,6 @@ To expose an app by using a custom domain with TLS:
         {: codeblock}
 
         <table>
-        <caption>Understanding the Ingress resource file components</caption>
         <thead>
         <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
@@ -774,7 +771,6 @@ You can route incoming network traffic on the IBM-provided domain to apps that a
         {: codeblock}
 
         <table>
-        <caption>Understanding the Ingress resource file components</caption>
         <thead>
         <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
@@ -1018,7 +1014,6 @@ To privately expose an app by using a custom domain without TLS using an externa
         {: codeblock}
 
         <table>
-        <caption>Understanding the Ingress resource file components</caption>
         <thead>
         <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
@@ -1187,7 +1182,6 @@ To privately expose an app by using a custom domain with TLS using an external D
            {: pre}
 
            <table>
-          <caption>Understanding the Ingress resource file components</caption>
           <thead>
           <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
           </thead>
@@ -1358,7 +1352,6 @@ You can configure the private ALB to route incoming network traffic to the apps 
      {: codeblock}
 
     <table>
-    <caption>Understanding the Ingress resource file components</caption>
     <thead>
     <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
     </thead>
@@ -1606,7 +1599,7 @@ By default, Ingress logs are formatted in JSON and display common log fields. Ho
     <tbody>
     <tr>
     <td><code>log-format</code></td>
-    <td>Replace <code>&lt;key&gt;</code> with the name for the log component and <code>&lt;log_variable&gt;</code> with a variable for the log component that you want to collect in log entries. You can include text and punctuation that you want the log entry to contain, such as quotation marks around string values and commas to separate log components. For example, formatting a component like <code>request: "$request",</code> generates the following in a log entry: <code>request: "GET / HTTP/1.1",</code> . For a list of all the variables you can use, see the <a href="http://nginx.org/en/docs/varindex.html">Nginx variable index</a>.<br><br>To log an additional header such as <em>x-custom-ID</em>, add the following key-value pair to the custom log content: <br><pre class="pre"><code>customID: $http_x_custom_id</code></pre> <br>Note that hyphens (<code>-</code>) are converted to underscores (<code>&#95;</code>) and that <code>$http_</code> must be prepended to the custom header name.</td>
+    <td>Replace <code>&lt;key&gt;</code> with the name for the log component and <code>&lt;log_variable&gt;</code> with a variable for the log component that you want to collect in log entries. You can include text and punctuation that you want the log entry to contain, such as quotation marks around string values and commas to separate log components. For example, formatting a component like <code>request: "$request",</code> generates the following in a log entry: <code>request: "GET / HTTP/1.1",</code> . For a list of all the variables you can use, see the <a href="http://nginx.org/en/docs/varindex.html">Nginx variable index</a>.<br><br>To log an additional header such as <em>x-custom-ID</em>, add the following key-value pair to the custom log content: <br><pre class="pre"><code>customID: $http_x_custom_id</code></pre> <br>Note that hyphens (<code>-</code>) are converted to underscores (<code>_</code>) and that <code>$http_</code> must be prepended to the custom header name.</td>
     </tr>
     <tr>
     <td><code>log-format-escape-json</code></td>
