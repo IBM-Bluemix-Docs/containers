@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-17"
+lastupdated: "2018-04-18"
 
 ---
 
@@ -191,7 +191,6 @@ To expose an app by using the IBM-provided domain:
         {: codeblock}
 
         <table>
-        <caption>Understanding the Ingress resource file components</caption>
         <thead>
         <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
@@ -367,7 +366,6 @@ To expose an app by using the IBM-provided domain with TLS:
         {: codeblock}
 
         <table>
-        <caption>Understanding the Ingress resource file components</caption>
         <thead>
         <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
@@ -547,7 +545,6 @@ To expose an app by using a custom domain with TLS:
         {: codeblock}
 
         <table>
-        <caption>Understanding the Ingress resource file components</caption>
         <thead>
         <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
@@ -774,7 +771,6 @@ You can route incoming network traffic on the IBM-provided domain to apps that a
         {: codeblock}
 
         <table>
-        <caption>Understanding the Ingress resource file components</caption>
         <thead>
         <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
@@ -1018,7 +1014,6 @@ To privately expose an app by using a custom domain without TLS using an externa
         {: codeblock}
 
         <table>
-        <caption>Understanding the Ingress resource file components</caption>
         <thead>
         <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
         </thead>
@@ -1187,7 +1182,6 @@ To privately expose an app by using a custom domain with TLS using an external D
            {: pre}
 
            <table>
-          <caption>Understanding the Ingress resource file components</caption>
           <thead>
           <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
           </thead>
@@ -1358,7 +1352,6 @@ You can configure the private ALB to route incoming network traffic to the apps 
      {: codeblock}
 
     <table>
-    <caption>Understanding the Ingress resource file components</caption>
     <thead>
     <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the YAML file components</th>
     </thead>
