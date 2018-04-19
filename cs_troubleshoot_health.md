@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-10"
+lastupdated: "2018-04-18"
 
 ---
 
@@ -94,7 +94,7 @@ To test changes you made during troubleshooting, you can deploy *Noisy*, a sampl
   3. Run the configuration file in the cluster's context.
 
         ```
-        kubectl apply -f <filepath_to_noisy>
+        kubectl apply -f noisy.yaml
         ```
         {:pre}
 
