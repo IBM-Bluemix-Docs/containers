@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-17"
+lastupdated: "2018-04-18"
 
 ---
 
@@ -78,7 +78,6 @@ If you do not already have an app ready, you can use a Kubernetes example app ca
     {: codeblock}
 
     <table>
-    <caption>Understanding this YAML file's components</caption>
     <thead>
     <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding the NodePort service section components</th>
     </thead>

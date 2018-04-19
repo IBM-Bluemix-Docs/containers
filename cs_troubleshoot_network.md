@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-09"
+lastupdated: "2018-04-18"
 
 ---
 
@@ -47,7 +47,7 @@ To troubleshoot your load balancer service:
 1.  Check that you set up a standard cluster that is fully deployed and has at least two worker nodes to assure high availability for your load balancer service.
 
   ```
-  bx cs workers <cluster_name_or_id>
+  bx cs workers <cluster_name_or_ID>
   ```
   {: pre}
 
@@ -63,7 +63,7 @@ To troubleshoot your load balancer service:
     spec:
       type: LoadBalancer
       selector:
-        <selectorkey>:<selectorvalue>
+        <selector_key>:<selector_value>
       ports:
        - protocol: TCP
          port: 8080
@@ -71,7 +71,7 @@ To troubleshoot your load balancer service:
     {: pre}
 
     1.  Check that you defined **LoadBalancer** as the type for your service.
-    2.  Make sure that the `<selectorkey>` and `<selectorvalue>` that you use in the `spec.selector` section of the LoadBalancer service is the same as the key/ value pair that you used in the `spec.template.metadata.labels` section of your deployment yaml. If labels do not match, the **Endpoints** section in your LoadBalancer service displays **<none>** and your app is not accessible from the internet. 
+    2.  Make sure that the `<selector_key>` and `<selector_value>` that you use in the `spec.selector` section of the LoadBalancer service is the same as the key/ value pair that you used in the `spec.template.metadata.labels` section of your deployment yaml. If labels do not match, the **Endpoints** section in your LoadBalancer service displays **<none>** and your app is not accessible from the internet.
     3.  Check that you used the **port** that your app listens on.
 
 3.  Check your load balancer service and review the **Events** section to find potential errors.
@@ -88,8 +88,8 @@ To troubleshoot your load balancer service:
     <li><pre class="screen"><code>Requested cloud provider IP <cloud-provider-ip> is not available. The following cloud provider IPs are available: <available-cloud-provider-ips></code></pre></br>You defined a portable public IP address for your load balancer service by using the **loadBalancerIP** section, but this portable public IP address is not available in your portable public subnet. Change your load balancer service configuration script and either choose one of the available portable public IP addresses, or remove the **loadBalancerIP** section from your script so that an available portable public IP address can be allocated automatically.</li>
     <li><pre class="screen"><code>No available nodes for load balancer services</code></pre>You do not have enough worker nodes to deploy a load balancer service. One reason might be that you deployed a standard cluster with more than one worker node, but the provisioning of the worker nodes failed.</li>
     <ol><li>List available worker nodes.</br><pre class="codeblock"><code>kubectl get nodes</code></pre></li>
-    <li>If at least two available worker nodes are found, list the worker node details.</br><pre class="codeblock"><code>bx cs worker-get [&lt;cluster_name_or_id&gt;] &lt;worker_ID&gt;</code></pre></li>
-    <li>Make sure that the public and private VLAN IDs for the worker nodes that were returned by the <code>kubectl get nodes</code> and the <code>bx cs [&lt;cluster_name_or_id&gt;] worker-get</code> commands match.</li></ol></li></ul>
+    <li>If at least two available worker nodes are found, list the worker node details.</br><pre class="codeblock"><code>bx cs worker-get [&lt;cluster_name_or_ID&gt;] &lt;worker_ID&gt;</code></pre></li>
+    <li>Make sure that the public and private VLAN IDs for the worker nodes that were returned by the <code>kubectl get nodes</code> and the <code>bx cs [&lt;cluster_name_or_ID&gt;] worker-get</code> commands match.</li></ol></li></ul>
 
 4.  If you are using a custom domain to connect to your load balancer service, make sure that your custom domain is mapped to the public IP address of your load balancer service.
     1.  Find the public IP address of your load balancer service.
@@ -126,7 +126,7 @@ To troubleshoot your Ingress:
 1.  Check that you set up a standard cluster that is fully deployed and has at least two worker nodes to assure high availability for your Ingress application load balancer.
 
   ```
-  bx cs workers <cluster_name_or_id>
+  bx cs workers <cluster_name_or_ID>
   ```
   {: pre}
 
@@ -137,7 +137,7 @@ To troubleshoot your Ingress:
     1.  Retrieve the application load balancer subdomain.
 
       ```
-      bx cs cluster-get <cluster_name_or_id> | grep "Ingress subdomain"
+      bx cs cluster-get <cluster_name_or_ID> | grep "Ingress subdomain"
       ```
       {: pre}
 
@@ -158,7 +158,7 @@ To troubleshoot your Ingress:
     4.  Ping the Ingress application load balancer public IP address.
 
       ```
-      ping <ingress_controller_ip>
+      ping <ingress_controller_IP>
       ```
       {: pre}
 
@@ -178,7 +178,7 @@ To troubleshoot your Ingress:
       tls:
       - hosts:
         - <ingress_subdomain>
-        secretName: <ingress_tlssecret>
+        secretName: <ingress_tls_secret>
       rules:
       - host: <ingress_subdomain>
         http:
@@ -190,7 +190,7 @@ To troubleshoot your Ingress:
     ```
     {: codeblock}
 
-    1.  Check that the Ingress application load balancer subdomain and TLS certificate are correct. To find the IBM provided subdomain and TLS certificate, run `bx cs cluster-get <cluster_name_or_id>`.
+    1.  Check that the Ingress application load balancer subdomain and TLS certificate are correct. To find the IBM provided subdomain and TLS certificate, run `bx cs cluster-get <cluster_name_or_ID>`.
     2.  Make sure that your app listens on the same path that is configured in the **path** section of your Ingress. If your app is set up to listen on the root path, include **/** as your path.
 5.  Check your Ingress deployment and look for potential warning or error messages.
 
@@ -204,7 +204,7 @@ To troubleshoot your Ingress:
     ```
     Name:             myingress
     Namespace:        default
-    Address:          169.xx.xxx.xx,169.xx.xxx.xx
+    Address:          169.xx.xxx.xxx,169.xx.xxx.xxx
     Default backend:  default-http-backend:80 (<none>)
     Rules:
       Host                                             Path  Backends
@@ -239,7 +239,7 @@ To troubleshoot your Ingress:
     2.  Retrieve the logs for each Ingress pod.
 
       ```
-      kubectl logs <ingress_pod_id> nginx-ingress -n kube-system
+      kubectl logs <ingress_pod_ID> nginx-ingress -n kube-system
       ```
       {: pre}
 
@@ -277,11 +277,11 @@ Review the following reasons why the application load balancer secret might fail
  </tr>
  <tr>
  <td>The certificate CRN provided at time of create is incorrect.</td>
- <td><ol><li>Check the accuracy of the certificate CRN string you provide.</li><li>If the certificate CRN is found to be accurate, then try to update the secret: <code>bx cs alb-cert-deploy --update --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></li><li>If this command results in the <code>update_failed</code> status, then remove the secret: <code>bx cs alb-cert-rm --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt;</code></li><li>Deploy the secret again: <code>bx cs alb-cert-deploy --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></li></ol></td>
+ <td><ol><li>Check the accuracy of the certificate CRN string you provide.</li><li>If the certificate CRN is found to be accurate, then try to update the secret: <code>bx cs alb-cert-deploy --update --cluster &lt;cluster_name_or_ID&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></li><li>If this command results in the <code>update_failed</code> status, then remove the secret: <code>bx cs alb-cert-rm --cluster &lt;cluster_name_or_ID&gt; --secret-name &lt;secret_name&gt;</code></li><li>Deploy the secret again: <code>bx cs alb-cert-deploy --cluster &lt;cluster_name_or_ID&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></li></ol></td>
  </tr>
  <tr>
  <td>The certificate CRN provided at time of update is incorrect.</td>
- <td><ol><li>Check the accuracy of the certificate CRN string you provide.</li><li>If the certificate CRN is found to be accurate, then remove the secret: <code>bx cs alb-cert-rm --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt;</code></li><li>Deploy the secret again: <code>bx cs alb-cert-deploy --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></li><li>Try to update the secret: <code>bx cs alb-cert-deploy --update --cluster &lt;cluster_name_or_id&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></li></ol></td>
+ <td><ol><li>Check the accuracy of the certificate CRN string you provide.</li><li>If the certificate CRN is found to be accurate, then remove the secret: <code>bx cs alb-cert-rm --cluster &lt;cluster_name_or_ID&gt; --secret-name &lt;secret_name&gt;</code></li><li>Deploy the secret again: <code>bx cs alb-cert-deploy --cluster &lt;cluster_name_or_ID&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></li><li>Try to update the secret: <code>bx cs alb-cert-deploy --update --cluster &lt;cluster_name_or_ID&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></li></ol></td>
  </tr>
  <tr>
  <td>The {{site.data.keyword.cloudcerts_long_notm}} service is experiencing downtime.</td>
@@ -319,7 +319,7 @@ If you have another VLAN that is available, you can [set up VLAN spanning](/docs
 
 If you are not using all the subnets in the VLAN, you can reuse subnets in the cluster.
 1.  Check that the subnets that you want to use are available. **Note**: The infrastructure account that you are using might be shared across multiple {{site.data.keyword.Bluemix_notm}} accounts. If so, even if you run the `bx cs subnets` command to see subnets with **Bound Clusters**, you can see information only for your clusters. Check with the infrastructure account owner to make sure that the subnets are available and not in use by any other account or team.
-  
+
 2.  [Create a cluster](cs_cli_reference.html#cs_cluster_create) with the `--no-subnet` option so that the service does not try to create new subnets. Specify the location and VLAN that has the subnets that are available for reuse.
 
 3.  Use the `bx cs cluster-subnet-add` [command](cs_cli_reference.html#cs_cluster_subnet_add) to add existing subnets to your cluster. For more information, see [Adding or reusing custom and existing subnets in Kubernetes clusters](cs_subnets.html#custom).
@@ -545,7 +545,7 @@ To retrieve the `<ETCD_URL>`, run one of the following commands:
 - Windows:
     <ol>
     <li> Get a list of the pods in the kube-system namespace and locate the Calico controller pod. </br><pre class="codeblock"><code>kubectl get pod -n kube-system</code></pre></br>Example:</br><pre class="screen"><code>calico-policy-controller-1674857634-k2ckm</code></pre>
-    <li> View the details of the Calico controller pod.</br> <pre class="codeblock"><code>kubectl describe pod -n kube-system calico-policy-controller-&lt;ID&gt;</code></pre>
+    <li> View the details of the Calico controller pod.</br> <pre class="codeblock"><code>kubectl describe pod -n kube-system calico-policy-controller-&lt;calico_pod_ID&gt;</code></pre>
     <li> Locate the ETCD endpoints value. Example: <code>https://169.1.1.1:30001</code>
     </ol>
 
