@@ -1254,9 +1254,6 @@ View a list of ALB secrets in a cluster.
  ```
  {: pre}
 
-
-
-
 ### bx cs alb-configure --albID ALB_ID [--enable][--disable][--user-ip USERIP]
 {: #cs_alb_configure}
 
@@ -1306,8 +1303,6 @@ Enable or disable an ALB in your standard cluster. The public ALB is enabled by 
   bx cs alb-configure --albID private-cr18a61a63a6a94b658596aa93a087aaa9-alb1 --enable --user-ip user_ip
   ```
   {: pre}
-
-
 
 ### bx cs alb-get --albID ALB_ID
 {: #cs_alb_get}
