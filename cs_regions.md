@@ -15,6 +15,8 @@ lastupdated: "2018-4-20"
 {:tip: .tip}
 {:download: .download}
 
+
+
 # Regions and locations
 {{site.data.keyword.Bluemix}} is hosted worldwide. A region is a geographic area that is accessed by an endpoint. Locations are data centers within the region. Services within {{site.data.keyword.Bluemix_notm}} might be available globally, or within a specific region. When you create a Kubernetes cluster in {{site.data.keyword.containerlong}}, its resources remain in the region that you deploy the cluster to.
 {:shortdesc}
@@ -23,7 +25,7 @@ lastupdated: "2018-4-20"
 
 ![{{site.data.keyword.containershort_notm}} regions and data centers](/images/regions.png)
 
-{{site.data.keyword.containershort_notm}} regions and data centers
+_{{site.data.keyword.containershort_notm}} regions and data centers_
 
 Supported {{site.data.keyword.containershort_notm}} regions:
   * AP North
@@ -147,5 +149,7 @@ Your cluster's resources remain in the location (data center) in which the clust
 
 ![Understanding where your cluster resources reside](/images/region-cluster-resources.png)
 
-Understanding where your cluster resources reside.
+_Understanding where your cluster resources reside._
+
+
 
