@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-19"
+lastupdated: "2018-4-20"
 
 ---
 
@@ -55,8 +55,7 @@ In the following diagram, you can see security features that are grouped by Kube
   </tbody>
 </table>
 
-<br />
-
+{[white-space.md]}
 
 ## Kubernetes master
 {: #master}
@@ -66,7 +65,7 @@ Review the built-in Kubernetes master security features to protect the Kubernete
 
 <dl>
   <dt>Fully managed and dedicated Kubernetes master</dt>
-    <dd>Every Kubernetes cluster in {{site.data.keyword.containershort_notm}} is controlled by a dedicated Kubernetes master that is managed by IBM in an IBM-owned IBM Cloud infrastructure (SoftLayer) account. The Kubernetes master is set up with the following dedicated components that are not shared with other IBM customers.
+    <dd>Every Kubernetes cluster in {{site.data.keyword.containershort_notm}} is controlled by a dedicated Kubernetes master that is managed by IBM in an IBM-owned {[softlayer]} account. The Kubernetes master is set up with the following dedicated components that are not shared with other IBM customers.
       <ul><li>etcd data store: Stores all Kubernetes resources of a cluster, such as Services, Deployments, and Pods. Kubernetes ConfigMaps and Secrets are app data that are stored as key value pairs so that they can be used by an app that runs in a pod. Data in etcd is stored on an encrypted disk that is managed by IBM and backed up daily. When sent to a pod, data is encrypted via TLS to assure data protection and integrity. </li>
       <li>kube-apiserver: Serves as the main entry point for all requests from the worker node to the Kubernetes master. The kube-apiserver validates and processes requests and can read from and write to the etcd data store.</li>
       <li>kube-scheduler: Decides where to deploy pods, taking into account capacity and performance needs, hardware and software policy constraints, anti-affinity specifications, and workload requirements. If no worker node can be found that matches the requirements, the pod is not deployed in the cluster.</li>
@@ -82,8 +81,7 @@ Review the built-in Kubernetes master security features to protect the Kubernete
     <dd>{{site.data.keyword.containershort_notm}} automatically scans every node where the Kubernetes master is deployed for vulnerabilities found in Kubernetes and OS-specific security fixes that need to be applied to assure master node protection. If vulnerabilities are found, {{site.data.keyword.containershort_notm}} automatically applies fixes and resolves vulnerabilities on behalf of the user.</dd>
 </dl>
 
-<br />
-
+{[white-space.md]}
 
 ## Worker nodes
 {: #worker}
@@ -93,17 +91,17 @@ Review the built-in worker node security features to protect the worker node env
 
 <dl>
   <dt>Worker node ownership</dt>
-    <dd>The ownership of worker nodes depends on the type of cluster that you create. <p> Worker nodes in free clusters are provisioned in to the IBM Cloud infrastructure (SoftLayer) account that is owned by IBM. Users can deploy apps to the worker nodes but cannot change settings or install additional software on the worker node.</p>
-    <p>Worker nodes in standard clusters are provisioned in to the IBM Cloud infrastructure (SoftLayer) account that is associated with the customer's public or dedicated IBM Cloud account. The worker nodes are owned by the customer. Customers can choose to change security settings or install additional software on the worker nodes as provided by IBM Cloud Container Service.</p> </dd>
+    <dd>The ownership of worker nodes depends on the type of cluster that you create. <p> Worker nodes in free clusters are provisioned in to the {[softlayer]} account that is owned by IBM. Users can deploy apps to the worker nodes but cannot change settings or install additional software on the worker node.</p>
+    <p>Worker nodes in standard clusters are provisioned in to the {[softlayer]} account that is associated with the customer's public or dedicated IBM Cloud account. The worker nodes are owned by the customer. Customers can choose to change security settings or install additional software on the worker nodes as provided by IBM Cloud Container Service.</p> </dd>
   <dt>Compute, network and storage infrastructure isolation</dt>
-    <dd><p>When you create a cluster, worker nodes are provisioned as virtual machines by IBM using the IBM Cloud infrastructure (SoftLayer) portfolio. Worker nodes are dedicated to a cluster and do not host workloads of other clusters.</p>
-    <p> Every {{site.data.keyword.Bluemix_notm}} account is set up with IBM Cloud infrastructure (SoftLayer) VLANs to assure quality network performance and isolation on the worker nodes. You can also designate worker nodes as private by connecting them to a private VLAN only.</p> <p>To persist data in your cluster, you can provision dedicated NFS based file storage from IBM Cloud infrastructure (SoftLayer) and leverage the built-in data security features of that platform.</p></dd>
+    <dd><p>When you create a cluster, worker nodes are provisioned as virtual machines by IBM using the {[softlayer]} portfolio. Worker nodes are dedicated to a cluster and do not host workloads of other clusters.</p>
+    <p> Every {{site.data.keyword.Bluemix_notm}} account is set up with {[softlayer]} VLANs to assure quality network performance and isolation on the worker nodes. You can also designate worker nodes as private by connecting them to a private VLAN only.</p> <p>To persist data in your cluster, you can provision dedicated NFS based file storage from {[softlayer]} and leverage the built-in data security features of that platform.</p></dd>
   <dt>Secured worker node set up</dt>
     <dd><p>Every worker node is set up with an Ubuntu operating system that cannot be changed by the worker node owner. Because the operating system of the worker node is Ubuntu, all containers deployed to the worker node must use a Linux distribution that uses the Ubuntu kernel. Linux distributions that must talk to the kernel in a different way cannot be used. To protect the operating system of the worker nodes from potential attacks, every worker node is configured with expert firewall settings that are enforced by Linux iptable rules.</p>
     <p>All containers that run on Kubernetes are protected by predefined Calico network policy settings that are configured on every worker node during cluster creation. This set up ensures secure network communication between worker nodes and pods.</p>
     <p>SSH access is disabled on the worker node. If you have a standard cluster and you want to install additional features on your worker node, you can use [Kubernetes daemon sets ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset) for everything that you want to run on every worker node, or [Kubernetes jobs ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/) for any one-time action you must execute.</p></dd>
   <dt>Kubernetes worker node security compliance</dt>
-    <dd>IBM works with internal and external security advisory teams to address potential security compliance vulnerabilities. <b>Important</b>: Use the `bx cs worker-update` [command](cs_cli_reference.html#cs_worker_update) regularly (such as monthly) to deploy updates and security patches to the operating system and to update the Kubernetes version. When updates are available, you are notified when you view information about the worker nodes, such as with the `bx cs workers <cluster_name>` or `bx cs worker-get <cluster_name> <worker_ID>` commands.</dd>
+    <dd>IBM works with internal and external security advisory teams to address potential security compliance vulnerabilities. <b>Important</b>: Use the `{[bxcs]} worker-update` [command](cs_cli_reference.html#cs_worker_update) regularly (such as monthly) to deploy updates and security patches to the operating system and to update the Kubernetes version. When updates are available, you are notified when you view information about the worker nodes, such as with the `{[bxcs]} workers <cluster_name>` or `{[bxcs]} worker-get <cluster_name> <worker_ID>` commands.</dd>
   <dt>Option to deploy nodes on physical (bare metal) servers</dt>
     <dd>If you choose to provision your worker nodes on bare metal physical servers (instead of virtual server instances), you have additional control over the compute host, such as the memory or CPU. This setup eliminates the virtual machine hypervisor that allocates physical resources to virtual machines that run on the host. Instead, all of a bare metal machine's resources are dedicated exclusively to the worker, so you don't need to worry about "noisy neighbors" sharing resources or slowing down performance. Bare metal servers are dedicated to you, with all its resources available for cluster usage.</dd>
   <dt id="trusted_compute">{{site.data.keyword.containershort_notm}} with Trusted Compute</dt>
@@ -113,8 +111,8 @@ Review the built-in worker node security features to protect the worker node env
   <dt id="encrypted_disks">Encrypted disk</dt>
     <dd><p>By default, {{site.data.keyword.containershort_notm}} provides two local SSD encrypted data partitions for all worker nodes when the worker nodes are provisioned. The first partition is not encrypted, and the second partition mounted to _/var/lib/docker_ is unlocked by using LUKS encryption keys. Each worker in each Kubernetes cluster has its own unique LUKS encryption key, managed by {{site.data.keyword.containershort_notm}}. When you create a cluster or add a worker node to an existing cluster, the keys are pulled securely and then discarded after the encrypted disk is unlocked.</p>
     <p><b>Note</b>: Encryption can impact disk I/O performance. For workloads that require high-performance disk I/O, test a cluster with encryption both enabled and disabled to help you decide whether to turn off encryption.</p></dd>
-  <dt>Support for IBM Cloud infrastructure (SoftLayer) network firewalls</dt>
-    <dd>{{site.data.keyword.containershort_notm}} is compatible with all [IBM Cloud infrastructure (SoftLayer) firewall offerings ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/cloud-computing/bluemix/network-security). On {{site.data.keyword.Bluemix_notm}} Public, you can set up a firewall with custom network policies to provide dedicated network security for your standard cluster and to detect and remediate network intrusion. For example, you might choose to set up a [Vyatta ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/topic/vyatta-1) to act as your firewall and block unwanted traffic. When you set up a firewall, [you must also open up the required ports and IP addresses](cs_firewall.html#firewall) for each region so that the master and the worker nodes can communicate.</dd>
+  <dt>Support for {[softlayer]} network firewalls</dt>
+    <dd>{{site.data.keyword.containershort_notm}} is compatible with all [{[softlayer]} firewall offerings ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/cloud-computing/bluemix/network-security). On {{site.data.keyword.Bluemix_notm}} Public, you can set up a firewall with custom network policies to provide dedicated network security for your standard cluster and to detect and remediate network intrusion. For example, you might choose to set up a [Vyatta ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/topic/vyatta-1) to act as your firewall and block unwanted traffic. When you set up a firewall, [you must also open up the required ports and IP addresses](cs_firewall.html#firewall) for each region so that the master and the worker nodes can communicate.</dd>
   <dt>Keep services private or selectively expose services and apps to the public internet</dt>
     <dd>You can choose to keep your services and apps private and leverage the built-in security features described in this topic to assure secured communication between worker nodes and pods. To expose services and apps to the public internet, you can leverage the Ingress and load balancer support to securely make your services publicly available.</dd>
   <dt>Securely connect your worker nodes and apps to an on-premises data center</dt>
@@ -125,8 +123,7 @@ Review the built-in worker node security features to protect the worker node env
     <dd>For standard clusters, all cluster-related events, such as adding a worker node, rolling update progress, or capacity usage information can be logged and monitored by {{site.data.keyword.containershort_notm}} and sent to {{site.data.keyword.loganalysislong_notm}} and {{site.data.keyword.monitoringlong_notm}}. For information about setting up logging and monitoring, see [Configuring cluster logging](/docs/containers/cs_health.html#logging) and [Configuring cluster monitoring](/docs/containers/cs_health.html#monitoring).</dd>
 </dl>
 
-<br />
-
+{[white-space.md]}
 
 ## Images
 {: #images}
@@ -144,8 +141,7 @@ Manage the security and integrity of your images with built-in security features
 
 To view the vulnerability assessment for your images, [review the Vulnerability Advisor documentation](/docs/services/va/va_index.html#va_registry_cli).
 
-<br />
-
+{[white-space.md]}
 
 ## In-cluster networking
 {: #in_cluster_network}
@@ -158,7 +154,7 @@ When you create a cluster, every cluster is automatically connected to a private
 |Cluster type|Manager of the private VLAN for the cluster|
 |------------|-------------------------------------------|
 |Free clusters in {{site.data.keyword.Bluemix_notm}}|{{site.data.keyword.IBM_notm}}|
-|Standard clusters in {{site.data.keyword.Bluemix_notm}}|You in your IBM Cloud infrastructure (SoftLayer) account <p>**Tip:** To have access to all VLANs in your account, turn on [VLAN Spanning](/docs/infrastructure/vlans/vlan-spanning.html#enable-or-disable-vlan-spanning).</p>|
+|Standard clusters in {{site.data.keyword.Bluemix_notm}}|You in your {[softlayer]} account <p>**Tip:** To have access to all VLANs in your account, turn on [VLAN Spanning](/docs/infrastructure/vlans/vlan-spanning.html#enable-or-disable-vlan-spanning).</p>|
 
 All pods that are deployed to a worker node are also assigned a private IP address. Pods are assigned an IP in the 172.30.0.0/16 private address range and are routed between worker nodes only. To avoid conflicts, do not use this IP range on any nodes that will communicate with your worker nodes. Worker nodes and pods can securely communicate on the private network by using the private IP addresses. However, when a pod crashes or a worker node needs to be re-created, a new private IP address is assigned.
 

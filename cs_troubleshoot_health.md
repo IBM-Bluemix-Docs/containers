@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-18"
+lastupdated: "2018-4-20"
 
 ---
 
@@ -61,7 +61,7 @@ Review the following reasons why your cluster logs are not appearing and the cor
   </tr>
   <tr>
     <td>If you specified a space at cluster creation, the account owner does not have Manager, Developer, or Auditor permissions to that space.</td>
-      <td>To change access permissions for the account owner:<ol><li>To find out who the account owner for the cluster is, run <code>bx cs api-key-info &lt;cluster_name_or_ID&gt;</code>.</li><li>To grant that account owner Manager, Developer, or Auditor {{site.data.keyword.containershort_notm}} access permissions to the space, see <a href="cs_users.html#managing">Managing cluster access</a>.</li><li>To refresh the logging token after permissions have been changed, run <code>bx cs logging-config-refresh &lt;cluster_name_or_ID&gt;</code>.</li></ol></td>
+      <td>To change access permissions for the account owner:<ol><li>To find out who the account owner for the cluster is, run <code>{[bxcs]} api-key-info &lt;cluster_name_or_ID&gt;</code>.</li><li>To grant that account owner Manager, Developer, or Auditor {{site.data.keyword.containershort_notm}} access permissions to the space, see <a href="cs_users.html#managing">Managing cluster access</a>.</li><li>To refresh the logging token after permissions have been changed, run <code>{[bxcs]} logging-config-refresh &lt;cluster_name_or_ID&gt;</code>.</li></ol></td>
     </tr>
     <tr>
       <td>You have an application logging config with a symlink in your app path.</td>
@@ -104,8 +104,7 @@ To test changes you made during troubleshooting, you can deploy *Noisy*, a sampl
       - EU-Central: https://logging.eu-fra.bluemix.net
       - AP-South: https://logging.au-syd.bluemix.net
 
-<br />
-
+{[white-space.md]}
 
 ## Kubernetes dashboard does not display utilization graphs
 {: #cs_dashboard_graphs}
@@ -124,27 +123,9 @@ Delete the `kube-dashboard` pod to force a restart. The pod is re-created with R
   ```
   {: pre}
 
-<br />
-
+{[white-space.md]}
 
 ## Getting help and support
 {: #ts_getting_help}
 
-Still having issues with your cluster?
-{: shortdesc}
-
--   To see whether {{site.data.keyword.Bluemix_notm}} is available, [check the {{site.data.keyword.Bluemix_notm}} status page ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/bluemix/support/#status).
--   Post a question in the [{{site.data.keyword.containershort_notm}} Slack. ![External link icon](../icons/launch-glyph.svg "External link icon")](https://ibm-container-service.slack.com)
-    If you are not using an IBM ID for your {{site.data.keyword.Bluemix_notm}} account, [request an invitation](https://bxcs-slack-invite.mybluemix.net/) to this Slack.
-    {: tip}
--   Review the forums to see whether other users ran into the same issue. When you use the forums to ask a question, tag your question so that it is seen by the {{site.data.keyword.Bluemix_notm}} development teams.
-
-    -   If you have technical questions about developing or deploying clusters or apps with {{site.data.keyword.containershort_notm}}, post your question on [Stack Overflow ![External link icon](../icons/launch-glyph.svg "External link icon")](https://stackoverflow.com/questions/tagged/ibm-cloud+containers) and tag your question with `ibm-cloud`, `kubernetes`, and `containers`.
-    -   For questions about the service and getting started instructions, use the [IBM developerWorks dW Answers ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/answers/topics/containers/?smartspace=bluemix) forum. Include the `ibm-cloud` and `containers` tags.
-    See [Getting help](/docs/get-support/howtogetsupport.html#using-avatar) for more details about using the forums.
-
--   Contact IBM Support by opening a ticket. For information about opening an IBM support ticket, or about support levels and ticket severities, see [Contacting support](/docs/get-support/howtogetsupport.html#getting-customer-support).
-
-{:tip}
-When reporting an issue, include your cluster ID. To get your cluster ID, run `bx cs clusters`.
-
+{[get-help.md]}
