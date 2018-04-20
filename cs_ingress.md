@@ -658,7 +658,7 @@ You can route incoming network traffic on the IBM-provided domain to apps that a
         <tbody>
         <tr>
         <td><code>metadata/name</code></td>
-        <td>Replace <em>&lt;myexternalservice&gt;</em> with a name for your service.</td>
+        <td>Replace <em>&lt;myexternalservice&gt;</em> with a name for your service.<p>Learn more about [securing your personal information](cs_secure.html#pi) when you work with Kubernetes resources.</p></td>
         </tr>
         <tr>
         <td><code>port</code></td>
