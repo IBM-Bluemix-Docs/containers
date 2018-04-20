@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-18"
+lastupdated: "2018-4-20"
 
 ---
 
@@ -493,7 +493,7 @@ bx cs messages
 ### bx cs cluster-config CLUSTER [--admin] [--export]
 {: #cs_cluster_config}
 
-After logging in, download Kubernetes configuration data and certificates to connect to your cluster and to run `kubectl` commands. The files are downloaded to `user_home_directory/.bluemix/plugins/container-service/clusters/<cluster_name>`.
+After logging in, download Kubernetes configuration data and certificates to connect to your cluster and run `kubectl` commands. The files are downloaded to `user_home_directory/.bluemix/plugins/container-service/clusters/<cluster_name>`.
 
 **Command options**:
 
@@ -789,7 +789,7 @@ Remove a cluster from your organization.
 ### bx cs cluster-update [-f] CLUSTER [--kube-version MAJOR.MINOR.PATCH] [--force-update]
 {: #cs_cluster_update}
 
-Update the Kubernetes master to the default API version. During the update, you cannot access or change the cluster. Worker nodes, apps, and resources that have been deployed by the user are not modified and continue to run.
+Update the Kubernetes master to the default API version. During the update, you cannot access or change the cluster. Worker nodes, apps, and resources that were deployed by the user are not modified and continue to run.
 
 You might need to change your YAML files for future deployments. Review this [release note](cs_versions.html) for details.
 
@@ -1942,7 +1942,7 @@ Add worker nodes to your standard cluster.
 <dd>The name or ID of the cluster. This value is required.</dd>
 
 <dt><code>--file <em>FILE_LOCATION</em></code></dt>
-<dd>The path to the YAML file to add worker nodes to your cluster. Instead of defining your additional worker nodes by using the options provided in this command, you can use a YAML file. This value is optional.
+<dd>The path to the YAML file to add worker nodes to your cluster. Instead of defining additional worker nodes by using the options provided in this command, you can use a YAML file. This value is optional.
 
 <p><strong>Note:</strong> If you provide the same option in the command as parameter in the YAML file, the value in the command takes precedence over the value in the YAML. For example, you define a machine type in your YAML file and use the --machine-type option in the command, the value that you entered in the command option overrides the value in the YAML file.
 
@@ -1968,11 +1968,11 @@ diskEncryption: <em>false</em></code></pre>
 </tr>
 <tr>
 <td><code><em>location</em></code></td>
-<td>Replace <code><em>&lt;location&gt;</em></code> with the location where you want to deploy your worker nodes. The available locations are dependent on the region that you are logged in. To list available locations, run <code>bx cs locations</code>.</td>
+<td>Replace <code><em>&lt;location&gt;</em></code> with the location to deploy your worker nodes. The available locations are dependent on the region that you are logged in. To list available locations, run <code>bx cs locations</code>.</td>
 </tr>
 <tr>
 <td><code><em>machine-type</em></code></td>
-<td>Replace <code><em>&lt;machine_type&gt;</em></code> with the type of machine that you want to deploy your worker nodes to. You can deploy your worker nodes as virtual machines on shared or dedicated hardware, or as physical machines on bare metal. Available physical and virtual machines types vary by the location in which you deploy the cluster. For more information, see the documentation for the `bx cs machine-types` [command](cs_cli_reference.html#cs_machine_types).</td>
+<td>Replace <code><em>&lt;machine_type&gt;</em></code> with the type of machine that you want to deploy your worker nodes to. You can deploy your worker nodes as virtual machines on shared or dedicated hardware, or as physical machines on bare metal. Available physical and virtual machines types vary by the location in which you deploy the cluster. For more information, see the `bx cs machine-types` [command](cs_cli_reference.html#cs_machine_types).</td>
 </tr>
 <tr>
 <td><code><em>private-vlan</em></code></td>
@@ -2038,7 +2038,7 @@ diskEncryption: <em>false</em></code></pre>
 ### bx cs worker-get [CLUSTER_NAME_OR_ID] WORKER_NODE_ID
 {: #cs_worker_get}
 
-View details of a worker node.
+View the details of a worker node.
 
 <strong>Command options</strong>:
 
