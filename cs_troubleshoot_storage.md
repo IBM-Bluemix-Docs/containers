@@ -47,8 +47,7 @@ The file system on the worker node is read-only.
 
 For a long-term fix, [update the machine type by adding another worker node](cs_cluster_update.html#machine_type).
 
-<br />
-
+{[white-space.md]}
 
 ## App fails when a non-root user owns the NFS file storage mount path
 {: #nonroot}
@@ -247,8 +246,7 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to you
 
     This output shows that the GID and UID from your Dockerfile (in this example, `1000` and `1000`) own the mount path inside the container.
 
-<br />
-
+{[white-space.md]}
 
 ## Adding non-root user access to persistent storage fails
 {: #cs_storage_nonroot}
@@ -262,30 +260,12 @@ The deployment or Helm chart configuration specifies the [security context](http
 {: tsResolve}
 Remove the configuration's `securityContext` fields for `fsGroup` and `runAsUser` from the image, deployment or Helm chart configuration file and redeploy. If you need to change the ownership of the mount path from `nobody`, [add non-root user access](#nonroot). After adding the [non-root initContainer](#nonroot), set `runAsUser` at the container level, not the pod level.
 
-<br />
-
+{[white-space.md]}
 
 
 
 ## Getting help and support
 {: #ts_getting_help}
 
-Still having issues with your cluster?
-{: shortdesc}
-
--   To see whether {{site.data.keyword.Bluemix_notm}} is available, [check the {{site.data.keyword.Bluemix_notm}} status page ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/bluemix/support/#status).
--   Post a question in the [{{site.data.keyword.containershort_notm}} Slack. ![External link icon](../icons/launch-glyph.svg "External link icon")](https://ibm-container-service.slack.com)
-    If you are not using an IBM ID for your {{site.data.keyword.Bluemix_notm}} account, [request an invitation](https://bxcs-slack-invite.mybluemix.net/) to this Slack.
-    {: tip}
--   Review the forums to see whether other users ran into the same issue. When you use the forums to ask a question, tag your question so that it is seen by the {{site.data.keyword.Bluemix_notm}} development teams.
-
-    -   If you have technical questions about developing or deploying clusters or apps with {{site.data.keyword.containershort_notm}}, post your question on [Stack Overflow ![External link icon](../icons/launch-glyph.svg "External link icon")](https://stackoverflow.com/questions/tagged/ibm-cloud+containers) and tag your question with `ibm-cloud`, `kubernetes`, and `containers`.
-    -   For questions about the service and getting started instructions, use the [IBM developerWorks dW Answers ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/answers/topics/containers/?smartspace=bluemix) forum. Include the `ibm-cloud` and `containers` tags.
-    See [Getting help](/docs/get-support/howtogetsupport.html#using-avatar) for more details about using the forums.
-
--   Contact IBM Support by opening a ticket. For information about opening an IBM support ticket, or about support levels and ticket severities, see [Contacting support](/docs/get-support/howtogetsupport.html#getting-customer-support).
-
-{:tip}
-When reporting an issue, include your cluster ID. To get your cluster ID, run `bx cs clusters`.
-
+{[get-help.md]}
 
