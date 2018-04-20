@@ -97,7 +97,7 @@ Check out what container developers are interested in learning about in {{site.d
 <tr>
 <td>27 February</td>
 <td>Hardware virtual machine (HVM) images for worker nodes</td>
-<td>Increase the I/O performance of your workloads with HVM images. Activate on each existing worker node by using the `bx cs worker-reload` [command](cs_cli_reference.html#cs_worker_reload) or the `bx cs worker-update` [command](cs_cli_reference.html#cs_worker_update).</td>
+<td>Increase the I/O performance of your workloads with HVM images. Activate on each existing worker node by using the `{[bxcs]} worker-reload` [command](cs_cli_reference.html#cs_worker_reload) or the `{[bxcs]} worker-update` [command](cs_cli_reference.html#cs_worker_update).</td>
 </tr>
 <tr>
 <td>26 February</td>

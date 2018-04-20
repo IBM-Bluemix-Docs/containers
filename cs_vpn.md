@@ -33,7 +33,7 @@ To connect your worker nodes and apps to an on-premises data center, you can con
 The [Vyatta Gateway Appliance ![External link icon](../icons/launch-glyph.svg "External link icon")](http://knowledgelayer.softlayer.com/learning/network-gateway-devices-vyatta) is a bare metal server that runs a special distribution of Linux. You can use a Vyatta as VPN gateway to securely connect to an on-premises network.
 {:shortdesc}
 
-All public and private network traffic that enters or leaves the cluster VLANs is routed through the Vyatta. You can use the Vyatta as a VPN endpoint to create an encrypted IPSec tunnel between servers in IBM Cloud infrastructure (SoftLayer) and on-premise resources. For example, the following diagram shows how an app on a private-only worker node in {{site.data.keyword.containershort_notm}} can communicate with an on-premises server via a Vyatta VPN connection:
+All public and private network traffic that enters or leaves the cluster VLANs is routed through the Vyatta. You can use the Vyatta as a VPN endpoint to create an encrypted IPSec tunnel between servers in {[softlayer]} and on-premise resources. For example, the following diagram shows how an app on a private-only worker node in {{site.data.keyword.containershort_notm}} can communicate with an on-premises server via a Vyatta VPN connection:
 
 <img src="images/cs_vpn_vyatta.png" width="725" alt="Expose an app in {{site.data.keyword.containershort_notm}} by using a load balancer" style="width:725px; border-style: none"/>
 
@@ -125,7 +125,7 @@ To configure the Helm chart:
     </tr>
     <tr>
     <td><code>nodeSelector</code></td>
-    <td>To limit which nodes the strongSwan VPN pod deploys to, add the IP address of a specific worker node or a worker node label. For example, the value <code>kubernetes.io/hostname: 10.xxx.xx.xxx</code> restricts the VPN pod to running on that worker node only. The value <code>strongswan: vpn</code> restricts the VPN pod to running on any worker nodes with that label. You can use any worker node label, but it is recommended that you use: <code>strongswan: &lt;release_name&gt;</code> so that different worker nodes can be used with different deployments of this chart.<br><br>If the VPN connection is initiated by the cluster (<code>ipsec.auto</code> is set to <code>start</code>), you can use this property to limit the source IP addresses of the VPN connection that are exposed to the on-premises gateway. This value is optional.</td>
+    <td>To limit which nodes the strongSwan VPN pod deploys to, add the IP address of a specific worker node or a worker node label. For example, the value <code>kubernetes.io/hostname: {[internal_cluster_IP]}</code> restricts the VPN pod to running on that worker node only. The value <code>strongswan: vpn</code> restricts the VPN pod to running on any worker nodes with that label. You can use any worker node label, but it is recommended that you use: <code>strongswan: &lt;release_name&gt;</code> so that different worker nodes can be used with different deployments of this chart.<br><br>If the VPN connection is initiated by the cluster (<code>ipsec.auto</code> is set to <code>start</code>), you can use this property to limit the source IP addresses of the VPN connection that are exposed to the on-premises gateway. This value is optional.</td>
     </tr>
     <tr>
     <td><code>ipsec.keyexchange</code></td>
@@ -145,7 +145,7 @@ To configure the Helm chart:
     </tr>
     <tr>
     <td><code>local.subnet</code></td>
-    <td>Change this value to the list of cluster subnet CIDRs to expose over the VPN connection to the on-premises network. This list can include the following subnets: <ul><li>The Kubernetes pod subnet CIDR: <code>172.30.0.0/16</code></li><li>The Kubernetes service subnet CIDR: <code>172.21.0.0/16</code></li><li>If your apps are exposed by a NodePort service on the private network, the worker node's private subnet CIDR. Retrieve the first three octets of your worker's private IP address by running <code>bx cs worker &lt;cluster_name&gt;</code>. For example, if it is <code>&lt;10.176.48.xx&gt;</code> then note <code>&lt;10.176.48&gt;</code>. Next, get the worker private subnet CIDR by running the following command, replacing <code>&lt;xxx.yyy.zz&gt;</code> with the octet that you previously retrieved: <code>bx cs subnets | grep &lt;xxx.yyy.zzz&gt;</code>.</li><li>If you have apps that are exposed by LoadBalancer services on the private network, the cluster's private or user-managed subnet CIDRs. To find these values, run <code>bx cs cluster-get &lt;cluster_name&gt; --showResources</code>. In the **VLANS** section, look for CIDRs that have a **Public** value of <code>false</code>.</li></ul>**Note**: If <code>ipsec.keyexchange</code> is set to <code>ikev1</code>, you can specify only one subnet.</td>
+    <td>Change this value to the list of cluster subnet CIDRs to expose over the VPN connection to the on-premises network. This list can include the following subnets: <ul><li>The Kubernetes pod subnet CIDR: <code>172.30.0.0/16</code></li><li>The Kubernetes service subnet CIDR: <code>172.21.0.0/16</code></li><li>If your apps are exposed by a NodePort service on the private network, the worker node's private subnet CIDR. Retrieve the first three octets of your worker's private IP address by running <code>{[bxcs]} worker &lt;cluster_name&gt;</code>. For example, if it is <code>&lt;10.176.48.xx&gt;</code> then note <code>&lt;10.176.48&gt;</code>. Next, get the worker private subnet CIDR by running the following command, replacing <code>&lt;xxx.yyy.zz&gt;</code> with the octet that you previously retrieved: <code>{[bxcs]} subnets | grep &lt;xxx.yyy.zzz&gt;</code>.</li><li>If you have apps that are exposed by LoadBalancer services on the private network, the cluster's private or user-managed subnet CIDRs. To find these values, run <code>{[bxcs]} cluster-get &lt;cluster_name&gt; --showResources</code>. In the **VLANS** section, look for CIDRs that have a **Public** value of <code>false</code>.</li></ul>**Note**: If <code>ipsec.keyexchange</code> is set to <code>ikev1</code>, you can specify only one subnet.</td>
     </tr>
     <tr>
     <td><code>local.id</code></td>
@@ -224,7 +224,7 @@ After you deploy your Helm chart, test the VPN connectivity.
 
     ```
     Security Associations (1 up, 0 connecting):
-    k8s-conn[1]: ESTABLISHED 17 minutes ago, 172.30.xxx.xxx[ibm-cloud]...192.xxx.xxx.xxx[on-premises]
+    k8s-conn[1]: ESTABLISHED 17 minutes ago, {[pod_private_IP]}[ibm-cloud]...192.xxx.xxx.xxx[on-premises]
     k8s-conn{2}: INSTALLED, TUNNEL, reqid 12, ESP in UDP SPIs: c78cb6b1_i c5d0d1c3_o
     k8s-conn{2}: 172.21.0.0/16 172.30.0.0/16 === 10.91.152.xxx/26
     ```
@@ -336,8 +336,7 @@ After you deploy your Helm chart, test the VPN connectivity.
     ```
     {: pre}
 
-<br />
-
+{[white-space.md]}
 
 ## Upgrading the strongSwan Helm chart
 {: #vpn_upgrade}
