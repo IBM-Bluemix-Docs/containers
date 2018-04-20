@@ -25,7 +25,7 @@ Expose a port and use a portable IP address for the load balancer to access a co
 ## Managing network traffic by using LoadBalancers
 {: #planning}
 
-When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically requests five portable public and five portable private IP addresses and provisions them into your IBM Cloud infrastructure (SoftLayer) account during cluster creation. Two of the portable IP addresses, one public and one private, are used for [Ingress application load balancers](cs_ingress.html). Four portable public and four portable private IP addresses can be used to expose apps by creating a LoadBalancer service.
+When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically requests five portable public and five portable private IP addresses and provisions them into your {[softlayer]} account during cluster creation. Two of the portable IP addresses, one public and one private, are used for [Ingress application load balancers](cs_ingress.html). Four portable public and four portable private IP addresses can be used to expose apps by creating a LoadBalancer service.
 
 When you create a Kubernetes LoadBalancer service in a cluster on a public VLAN, an external load balancer is created. Your options for IP addresses when you create a LoadBalancer service are as follows:
 
@@ -50,8 +50,7 @@ The LoadBalancer service serves as the external entry point for incoming request
 
 
 
-<br />
-
+{[white-space.md]}
 
 
 
@@ -164,11 +163,11 @@ To create a load balancer service:
     Selector:               app=liberty
     Type:                   LoadBalancer
     Location:               dal10
-    IP:                     172.21.xxx.xxx
-    LoadBalancer Ingress:   169.xx.xxx.xxx
+    IP:                     {[service_private_IP]}
+    LoadBalancer Ingress:   {[public_IP]}
     Port:                   <unset> 8080/TCP
     NodePort:               <unset> 32040/TCP
-    Endpoints:              172.30.xxx.xxx:8080
+    Endpoints:              {[pod_private_IP]}:8080
     Session Affinity:       None
     Events:
       FirstSeen	LastSeen	Count	From			SubObjectPath	Type	 Reason			          Message
@@ -185,14 +184,13 @@ To create a load balancer service:
     2.  Enter the portable public IP address of the load balancer and port.
 
         ```
-        http://169.xx.xxx.xxx:8080
+        http://{[public_IP]}:8080
         ```
         {: codeblock}
 
 5. If you choose to [preserve the source IP address of the incoming package![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tutorials/services/source-ip/#source-ip-for-services-with-typeloadbalancer) and have edge nodes, private-only worker nodes, or multiple VLANs, ensure that app pods are included in load balancing by [adding node affinity and tolerations to app pods](#node_affinity_tolerations).
 
-<br />
-
+{[white-space.md]}
 
 ## Adding node affinity and tolerations to app pods for source IP
 {: #node_affinity_tolerations}
@@ -273,7 +271,7 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to you
 
         Subnet VLANs
         VLAN ID   Subnet CIDR       Public   User-managed
-        2234947   10.xxx.xx.xxx/29  false    false
+        2234947   {[internal_cluster_IP]}/29  false    false
         2234945   169.36.5.xxx/29   true     false
         ```
         {: screen}
@@ -335,7 +333,7 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to you
         Example output:
 
         ```
-        Name:                   10.xxx.xx.xxx
+        Name:                   {[internal_cluster_IP]}
         Role:
         Labels:                 arch=amd64
                                 beta.kubernetes.io/arch=amd64
@@ -343,7 +341,7 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to you
                                 failure-domain.beta.kubernetes.io/region=us-south
                                 failure-domain.beta.kubernetes.io/zone=dal10
                                 ibm-cloud.kubernetes.io/encrypted-docker-data=true
-                                kubernetes.io/hostname=10.xxx.xx.xxx
+                                kubernetes.io/hostname={[internal_cluster_IP]}
                                 privateVLAN=2234945
                                 publicVLAN=2234967
         ...

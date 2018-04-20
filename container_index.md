@@ -45,7 +45,7 @@ And what is a cluster? A cluster is a set of resources, worker nodes, networks, 
 
 Before you begin, you must have a Trial, Pay-As-You-Go, or Subscription [{{site.data.keyword.Bluemix_notm}} account](https://console.bluemix.net/registration/) to create a free cluster.
 
-**What {{site.data.keyword.Bluemix_notm}} account type should I get?** With Pay-As-You-Go and Subscription accounts, you can provision IBM Cloud infrastructure (SoftLayer) resources for your Kubernetes clusters and create one free cluster or standard clusters. With a Trial account, you can create one free cluster but no standard clusters. All free clusters are deleted after 21 days. To continue with Kubernetes clusters, create another free cluster until your Trial account ends, or upgrade your account to a Pay-As-You-Go or Subscription.
+**What {{site.data.keyword.Bluemix_notm}} account type should I get?** With Pay-As-You-Go and Subscription accounts, you can provision {[softlayer]} resources for your Kubernetes clusters and create one free cluster or standard clusters. With a Trial account, you can create one free cluster but no standard clusters. All free clusters are deleted after 21 days. To continue with Kubernetes clusters, create another free cluster until your Trial account ends, or upgrade your account to a Pay-As-You-Go or Subscription.
 {:tip}
 
 To create a free cluster:
@@ -60,7 +60,7 @@ Good work! You created your first Kubernetes cluster. Here are some details abou
 
 *   **Machine Type**: The free cluster has one virtual worker node with 2 CPU and 4 GB memory available for your apps to use. When you create a standard cluster, you can choose between physical (bare metal) or virtual machines, along with various machine sizes.
 *   **Managed Master**: The worker node is centrally monitored and managed by a dedicated and highly available {{site.data.keyword.IBM_notm}}-owned Kubernetes master that controls and monitors all of the Kubernetes resources in the cluster. You can focus on your worker node and the apps that are deployed in the worker node without worrying about managing this master too.
-*   **Infrastructure Resources**: The resources that are required to run the cluster, such as VLANS and IP addresses, are managed in an {{site.data.keyword.IBM_notm}}-owned IBM Cloud infrastructure (SoftLayer) account. When you create a standard cluster, you manage these resources in your own IBM Cloud infrastructure (SoftLayer) account. You can learn more about these resources and the [permissions needed](cs_users.html#infra_access) when you create a standard cluster.
+*   **Infrastructure Resources**: The resources that are required to run the cluster, such as VLANS and IP addresses, are managed in an {{site.data.keyword.IBM_notm}}-owned {[softlayer]} account. When you create a standard cluster, you manage these resources in your own {[softlayer]} account. You can learn more about these resources and the [permissions needed](cs_users.html#infra_access) when you create a standard cluster.
 *   **Location and Other Options**: Free clusters are deployed within the region that you select, but you cannot choose which location (data center). For more control over location, networking, and persistent storage, create a standard cluster. [Learn more about the benefits of free and standard clusters](cs_why.html#cluster_types).
 
 
