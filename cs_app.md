@@ -33,8 +33,7 @@ Learn the general steps for deploying apps by clicking an area of the following 
 </map>
 
 
-<br />
-
+{[white-space.md]}
 
 ## Planning highly available deployments
 {: #highly_available_apps}
@@ -124,8 +123,7 @@ spec:
 **Note:** To expose your service, make sure that the key/value pair that you use in the `spec.selector` section of the service is the same as the key/value pair that you use in the `spec.template.metadata.labels` section of your deployment yaml.
 To learn more about each component, review the [Kubernetes basics](cs_tech.html#kubernetes_basics).
 
-<br />
-
+{[white-space.md]}
 
 
 
@@ -206,8 +204,7 @@ When you are done with the Kubernetes dashboard, use `CTRL+C` to exit the `proxy
 
 
 
-<br />
-
+{[white-space.md]}
 
 
 
@@ -286,8 +283,7 @@ To create a secret with a certificate:
      ```
      {: pre}
 
-<br />
-
+{[white-space.md]}
 
 
 
@@ -310,15 +306,14 @@ To deploy your app:
   * Select **Specify app details below** and enter the details.
   * Select **Upload a YAML or JSON file** to upload your app [configuration file ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/).
 
-  Need help with your configuration file? Check out this [example YAML file ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/IBM-Cloud/kube-samples/blob/master/deploy-apps-clusters/deploy-ibmliberty.yaml). In this example, a container is deployed from the **ibmliberty** image in the US-South region. 
+  Need help with your configuration file? Check out this [example YAML file ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/IBM-Cloud/kube-samples/blob/master/deploy-apps-clusters/deploy-ibmliberty.yaml). In this example, a container is deployed from the **ibmliberty** image in the US-South region. {[gdpr_resources]}
   {: tip}
 
 3.  Verify that you successfully deployed your app in one of the following ways.
   * In the Kubernetes dashboard, click **Deployments**. A list of successful deployments is displayed.
   * If your app is [publicly available](cs_network_planning.html#public_access), navigate to the cluster overview page in your {{site.data.keyword.containerlong}} dashboard. Copy the subdomain, which is located in the cluster summary section and paste it into a browser to view your app.
 
-<br />
-
+{[white-space.md]}
 
 ## Deploying apps with the CLI
 {: #app_cli}
@@ -341,7 +336,7 @@ To deploy your app:
 
     -   [Ingress ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/services-networking/ingress/): Specifies a type of load balancer that provides routes to access your app publicly.
 
-    
+    {[gdpr_resources]}
 
 2.  Run the configuration file in a cluster's context.
 
@@ -352,8 +347,7 @@ To deploy your app:
 
 3.  If you made your app publicly available by using a node port service, a load balancer service, or Ingress, verify that you can access the app.
 
-<br />
-
+{[white-space.md]}
 
 
 
@@ -431,8 +425,7 @@ Steps:
     </tbody></table>
 
 
-<br />
-
+{[white-space.md]}
 
 ## Managing rolling deployments
 {: #app_rolling}
@@ -503,6 +496,5 @@ Before you begin, create a [deployment](#app_cli).
         ```
         {: pre}
 
-<br />
-
+{[white-space.md]}
 
