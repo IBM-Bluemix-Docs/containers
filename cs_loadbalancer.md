@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-19"
+lastupdated: "2018-4-20"
 
 ---
 
@@ -203,9 +203,9 @@ Whenever you deploy app pods, load balancer service pods are also deployed to th
 * You have tainted edge nodes that only load balancer service pods can deploy to. App pods are not permitted to deploy to those nodes.
 * Your cluster is connected to multiple public or private VLANs, and your app pods might deploy to worker nodes that are connected only to one VLAN. Load balancer service pods might not deploy to those worker nodes because the load balancer IP address is connected to a different VLAN than the worker nodes.
 
-When a client request to your app is sent to your cluster, `kube-proxy` routes the request to the Kubernetes load balancer service pod for the app. If the app pod does not exist on the same worker node as the load balancer service pod, the load balancer forwards the request to a worker node where the app pod is deployed. The source IP address of the package is changed to the public IP address of the worker node where the app pod is running.
+When a client request to your app is sent to your cluster, the request is routed to a pod for the Kubernetes load balancer service that exposes the app. If an app pod does not exist on the same worker node as the load balancer service pod, the load balancer forwards the request to a different worker node where an app pod is deployed. The source IP address of the package is changed to the public IP address of the worker node where the app pod is running.
 
-If you want to preserve the original source IP address of the client request, you can [enable source IP ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tutorials/services/source-ip/#source-ip-for-services-with-typeloadbalancer) for load balancer services. Preserving the client’s IP is useful, for example, when app servers have to apply security and access-control policies. After you enable the source IP, load balancer service pods must forward requests to app pods that are deployed to the same worker node only. To force your apps to deploy to a specific worker node, you must add affinity rules and tolerations to your app deployment.
+If you want to preserve the original source IP address of the client request, you can [enable source IP ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tutorials/services/source-ip/#source-ip-for-services-with-typeloadbalancer) for load balancer services. Preserving the client’s IP is useful, for example, when app servers have to apply security and access-control policies. After you enable the source IP, load balancer service pods must forward requests to app pods that are deployed to the same worker node only. To force your app to deploy to specific worker nodes that load balancer service pods can also deploy to, you must add affinity rules and tolerations to your app deployment.
 
 ### Adding edge node affinity rules and tolerations
 {: #edge_nodes}
@@ -323,12 +323,21 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to you
         ```
         {: pre}
 
-    2. In the **Subnet VLANs** section of the output, note the IP address of any of the worker nodes that the pods are on.
+        Example output:
+        ```
+        NAME                   READY     STATUS              RESTARTS   AGE       IP               NODE
+        cf-py-d7b7d94db-vp8pq  1/1       Running             0          15d       172.30.xxx.xxx   10.176.48.78
+        ```
+        {: screen}
+
+    2. In the output, identify a pod for your app. Note the **NODE** ID of the worker node that the pod is on.
+
+        In the above example output, the app pod `cf-py-d7b7d94db-vp8pq` is on worker node `10.176.48.78`.
 
     3. List the details for the worker node.
 
         ```
-        kubectl describe node <worker_IP_address>
+        kubectl describe node <worker_node_ID>
         ```
         {: pre}
 
@@ -351,3 +360,4 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to you
         {: screen}
 
     4. In the **Labels** section of the output, verify that the public or private VLAN is the VLAN that you designated in previous steps.
+

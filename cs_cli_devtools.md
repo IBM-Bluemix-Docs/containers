@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-23"
+lastupdated: "2018-4-20"
 
 ---
 
@@ -120,7 +120,7 @@ bx plugin list
 </tbody>
 </table>
 
-<br>
+</br>
 
 <table summary="Cluster commands: Subnets">
 <col width="25%">
@@ -145,7 +145,7 @@ bx plugin list
 </tbody>
 </table>
 
-<br>
+</br>
 
 <table summary="Infrastructure commands">
 <col width="25%">
@@ -164,56 +164,67 @@ bx plugin list
 </tbody>
 </table>
 
-<br>
+</br>
 
 <table summary="Ingress application load balancer (ALB) commands">
-<col width="25%">
-<col width="25%">
-<col width="25%">
- <thead>
-    <th colspan=4>Application load balancer (ALB) commands</th>
- </thead>
- <tbody>
-  <tr>
-    <td>[bx cs alb-cert-deploy](#cs_alb_cert_deploy)</td>
-    <td>[bx cs alb-cert-get](#cs_alb_cert_get)</td>
-    <td>[bx cs alb-cert-rm](#cs_alb_cert_rm)</td>
-    <td>[bx cs alb-certs](#cs_alb_certs)</td>
-  </tr>
-  <tr>
-    <td>[bx cs alb-configure](#cs_alb_configure)</td>
-    <td>[bx cs alb-get](#cs_alb_get)</td>
-    <td>[bx cs alb-types](#cs_alb_types)</td>
-    <td>[bx cs albs](#cs_albs)</td>
- </tr>
-</tbody>
+<col width = 25%>
+<col width = 25%>
+<col width = 25%>
+  <thead>
+    <tr>
+      <th colspan=4>Ingress application load balancer (ALB) commands</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>[bx cs alb-cert-deploy](#cs_alb_cert_deploy)</td>
+      <td>[bx cs alb-cert-get](#cs_alb_cert_get)</td>
+      <td>[bx cs alb-cert-rm](#cs_alb_cert_rm)</td>
+      <td>[bx cs alb-certs](#cs_alb_certs)</td>
+    </tr>
+    <tr>
+      <td>[bx cs alb-configure](#cs_alb_configure)</td>
+      <td>[bx cs alb-get](#cs_alb_get)</td>
+      <td>[bx cs alb-types](#cs_alb_types)</td>
+      <td>[bx cs albs](#cs_albs)</td>
+    </tr>
+  </tbody>
 </table>
 
-<br>
+</br>
 
 <table summary="Logging commands">
-<col width="25%">
-<col width="25%">
-<col width="25%">
- <thead>
-    <th colspan=4>Logging commands</th>
- </thead>
- <tbody>
-  <tr>
-    <td>[bx cs logging-config-create](#cs_logging_create)</td>
-    <td>[bx cs logging-config-get](#cs_logging_get)</td>
-    <td>[bx cs logging-config-refresh](#cs_logging_refresh)</td>
-    <td>[bx cs logging-config-rm](#cs_logging_rm)</td>
-  </tr>
-  <tr>
-    <td>[bx cs logging-config-update](#cs_logging_update)</td>
-    <td></td>
-    <td></td>
-    <td></td>
-</tbody>
+<col width = 25%>
+<col width = 25%>
+<col width = 25%>
+  <thead>
+    <tr>
+      <th colspan=4>Logging commands</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>[bx cs logging-config-create](#cs_logging_create)</td>
+      <td>[bx cs logging-config-get](#cs_logging_get)</td>
+      <td>[bx cs logging-config-refresh](#cs_logging_refresh)</td>
+      <td>[bx cs logging-config-rm](#cs_logging_rm)</td>
+    </tr>
+    <tr>
+      <td>[bx cs logging-config-update](#cs_logging_update)</td>
+      <td>[bx cs logging-filter-create](#cs_log_filter_create)</td>
+      <td>[bx cs logging-filter-update](#cs_log_filter_update)</td>
+      <td>[bx cs logging-filter-get](#cs_log_filter_view)</td>
+    </tr>
+    <tr>
+      <td>[bx cs logging-filter-rm](#cs_log_filter_delete)</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
 </table>
 
-<br>
+</br>
 
 <table summary="Region commands">
 <col width="25%">
@@ -232,7 +243,7 @@ bx plugin list
 </tbody>
 </table>
 
-<br>
+</br>
 
 <table summary="Worker node commands">
 <col width="25%">
@@ -242,19 +253,19 @@ bx plugin list
     <th colspan=4>Worker node commands</th>
  </thead>
  <tbody>
-  <tr>
-    <td>[bx cs worker-add](#cs_worker_add)</td>
-    <td>[bx cs worker-get](#cs_worker_get)</td>
-    <td>[bx cs worker-reboot](#cs_worker_reboot)</td>
-    <td>[bx cs worker-reload](#cs_worker_reload)</td></staging>
-  </tr>
-  <tr>
-    <td>[bx cs worker-rm](#cs_worker_rm)</td>
-    <td>[bx cs worker-update](#cs_worker_update)</td>
-    <td>[bx cs workers](#cs_workers)</td>
-    <td></td>
-  </tr>
-</tbody>
+    <tr>
+      <td>[bx cs worker-add](#cs_worker_add)</td>
+      <td>[bx cs worker-get](#cs_worker_get)</td>
+      <td>[bx cs worker-reboot](#cs_worker_reboot)</td>
+      <td>[bx cs worker-reload](#cs_worker_reload)</td></staging>
+    </tr>
+    <tr>
+      <td>[bx cs worker-rm](#cs_worker_rm)</td>
+      <td>[bx cs worker-update](#cs_worker_update)</td>
+      <td>[bx cs workers](#cs_workers)</td>
+      <td></td>
+    </tr>
+  </tbody>
 </table>
 
 ## API commands
@@ -477,7 +488,7 @@ bx cs messages
 ### bx cs cluster-config CLUSTER [--admin] [--export]
 {: #cs_cluster_config}
 
-After logging in, download Kubernetes configuration data and certificates to connect to your cluster and to run `kubectl` commands. The files are downloaded to `user_home_directory/.bluemix/plugins/container-service/clusters/<cluster_name>`.
+After logging in, download Kubernetes configuration data and certificates to connect to your cluster and run `kubectl` commands. The files are downloaded to `user_home_directory/.bluemix/plugins/container-service/clusters/<cluster_name>`.
 
 **Command options**:
 
@@ -503,7 +514,7 @@ bx cs cluster-config my_cluster
 ### bx cs cluster-create [--file FILE_LOCATION] [--hardware HARDWARE] --location LOCATION --machine-type MACHINE_TYPE --name NAME [--kube-version MAJOR.MINOR.PATCH] [--no-subnet] [--private-vlan PRIVATE_VLAN] [--public-vlan PUBLIC_VLAN] [--workers WORKER] [--disable-disk-encrypt] [--trusted]
 {: #cs_cluster_create}
 
-Create a cluster in your organization. For free clusters, you specify the cluster name; everything else is set to a default value. You can have one free cluster at a time. To take advantage of the full capabilities of Kubernetes, create a standard cluster.
+Create a cluster in your organization. For free clusters, you specify the cluster name; everything else is set to a default value. A free cluster is automatically deleted after 21 days. You can have one free cluster at a time. To take advantage of the full capabilities of Kubernetes, create a standard cluster.
 
 <strong>Command options</strong>
 
@@ -519,8 +530,8 @@ Create a cluster in your organization. For free clusters, you specify the cluste
 location: <em>&lt;location&gt;</em>
 no-subnet: <em>&lt;no-subnet&gt;</em>
 machine-type: <em>&lt;machine_type&gt;</em>
-private-vlan: <em>&lt;private_vlan&gt;</em>
-public-vlan: <em>&lt;public_vlan&gt;</em>
+private-vlan: <em>&lt;private_VLAN&gt;</em>
+public-vlan: <em>&lt;public_VLAN&gt;</em>
 hardware: <em>&lt;shared_or_dedicated&gt;</em>
 workerNum: <em>&lt;number_workers&gt;</em>
 kube-version: <em>&lt;kube-version&gt;</em>
@@ -537,7 +548,8 @@ trusted: <em>true</em>
     <tbody>
     <tr>
     <td><code><em>name</em></code></td>
-    <td>Replace <code><em>&lt;cluster_name&gt;</em></code> with a name for your cluster.</td>
+    <td>Replace <code><em>&lt;cluster_name&gt;</em></code> with a name for your cluster. The name must start with a letter, can contain letters, numbers, and hyphen (-), and must be 35 characters or fewer. Note that the cluster name and the region in which the cluster is deployed form the fully qualified domain name for the Ingress subdomain. To ensure that the Ingress subdomain is unique within a region, the cluster name might be truncated and appended with a random value within the Ingress domain name.
+</td>
     </tr>
     <tr>
     <td><code><em>location</em></code></td>
@@ -553,11 +565,11 @@ trusted: <em>true</em>
      </tr>
      <tr>
      <td><code><em>private-vlan</em></code></td>
-     <td>Replace <code><em>&lt;private_vlan&gt;</em></code> with the ID of the private VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans <em>&lt;location&gt;</em></code> and look for VLAN routers that start with <code>bcr</code> (back-end router).</td>
+     <td>Replace <code><em>&lt;private_VLAN&gt;</em></code> with the ID of the private VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans <em>&lt;location&gt;</em></code> and look for VLAN routers that start with <code>bcr</code> (back-end router).</td>
      </tr>
      <tr>
      <td><code><em>public-vlan</em></code></td>
-     <td>Replace <code><em>&lt;public_vlan&gt;</em></code> with the ID of the public VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans <em>&lt;location&gt;</em></code> and look for VLAN routers that start with <code>fcr</code> (front-end router).</td>
+     <td>Replace <code><em>&lt;public_VLAN&gt;</em></code> with the ID of the public VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans <em>&lt;location&gt;</em></code> and look for VLAN routers that start with <code>fcr</code> (front-end router).</td>
      </tr>
      <tr>
      <td><code><em>hardware</em></code></td>
@@ -569,7 +581,8 @@ trusted: <em>true</em>
      </tr>
      <tr>
       <td><code><em>kube-version</em></code></td>
-      <td>The Kubernetes version for the cluster master node. This value is optional. Unless specified, the cluster is created with the default of supported Kubernetes versions. To see available versions, run <code>bx cs kube-versions</code>.</td></tr>
+      <td>The Kubernetes version for the cluster master node. This value is optional. When the version is not specified, the cluster is created with the default of supported Kubernetes versions. To see available versions, run <code>bx cs kube-versions</code>.
+</td></tr>
       <tr>
       <td><code>diskEncryption: <em>false</em></code></td>
       <td>Worker nodes feature disk encryption by default; [learn more](cs_secure.html#worker). To disable encryption, include this option and set the value to <code>false</code>.</td></tr>
@@ -592,13 +605,15 @@ trusted: <em>true</em>
 </dd>
 
 <dt><code>--machine-type <em>MACHINE_TYPE</em></code></dt>
-<dd>Choose a machine type. You can deploy your worker nodes as virtual machines on shared or dedicated hardware, or as physical machines on bare metal. Available physical and virtual machines types vary by the location in which you deploy the cluster. For more information, see the documentation for the `bx cs machine-type` [command](cs_cli_reference.html#cs_machine_types). This value is required for standard clusters and is not available for free clusters.</dd>
+<dd>Choose a machine type. You can deploy your worker nodes as virtual machines on shared or dedicated hardware, or as physical machines on bare metal. Available physical and virtual machines types vary by the location in which you deploy the cluster. For more information, see the documentation for the `bx cs machine-types` [command](cs_cli_reference.html#cs_machine_types). This value is required for standard clusters and is not available for free clusters.</dd>
 
 <dt><code>--name <em>NAME</em></code></dt>
-<dd>The name for the cluster.  This value is required.</dd>
+<dd>The name for the cluster.  This value is required. The name must start with a letter, can contain letters, numbers, and hyphen (-), and must be 35 characters or fewer. Note that the cluster name and the region in which the cluster is deployed form the fully qualified domain name for the Ingress subdomain. To ensure that the Ingress subdomain is unique within a region, the cluster name might be truncated and appended with a random value within the Ingress domain name.
+</dd>
 
 <dt><code>--kube-version <em>MAJOR.MINOR.PATCH</em></code></dt>
-<dd>The Kubernetes version for the cluster master node. This value is optional. Unless specified, the cluster is created with the default of supported Kubernetes versions. To see available versions, run <code>bx cs kube-versions</code>.</dd>
+<dd>The Kubernetes version for the cluster master node. This value is optional. When the version is not specified, the cluster is created with the default of supported Kubernetes versions. To see available versions, run <code>bx cs kube-versions</code>.
+</dd>
 
 <dt><code>--no-subnet</code></dt>
 <dd>By default, a public and a private portable subnet are created on the VLAN associated with the cluster. Include the <code>--no-subnet</code> flag to avoid creating subnets with the cluster. You can [create](#cs_cluster_subnet_create) or [add](#cs_cluster_subnet_add) subnets to a cluster later.</dd>
@@ -611,7 +626,7 @@ trusted: <em>true</em>
 <li>If this standard cluster is the first standard cluster that you create in this location, do not include this flag. A private VLAN is created for you when the clusters is created.</li>
 <li>If you created a standard cluster before in this location or created a private VLAN in IBM Cloud infrastructure (SoftLayer) before, you must specify that private VLAN.
 
-<p><strong>Note:</strong> The public and private VLANs that you specify with the create command must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></li>
+<p><strong>Note:</strong> {[matching_VLANs]}</p></li>
 </ul>
 
 <p>To find out if you already have a private VLAN for a specific location or to find the name of an existing private VLAN, run <code>bx cs vlans <em>&lt;location&gt;</em></code>.</p></dd>
@@ -623,7 +638,7 @@ trusted: <em>true</em>
 <li>If this standard cluster is the first standard cluster that you create in this location, do not use this flag. A public VLAN is created for you when the cluster is created.</li>
 <li>If you created a standard cluster before in this location or created a public VLAN in IBM Cloud infrastructure (SoftLayer) before, you must specify that public VLAN.
 
-<p><strong>Note:</strong> The public and private VLANs that you specify with the create command must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></li>
+<p><strong>Note:</strong> {[matching_VLANs]}</p></li>
 </ul>
 
 <p>To find out if you already have a public VLAN for a specific location or to find the name of an existing public VLAN, run <code>bx cs vlans <em>&lt;location&gt;</em></code>.</p></dd>
@@ -637,7 +652,7 @@ trusted: <em>true</em>
 <dd>Worker nodes feature disk encryption by default; [learn more](cs_secure.html#worker). To disable encryption, include this option.</dd>
 
 <dt><code>--trusted</code></dt>
-<dd><p>**Bare metal only**: Enable [Trusted Compute](cs_secure.html#trusted_compute) to verify your bare metal worker nodes against tampering. If you don't enable trust during cluster creation but want to later, you can use the `bx cs feature-enable` [command](cs_cli_reference.html#cs_cluster_feature_enable). After you enable trust, you cannot disable it later. For more information about how trust works, see [{{site.data.keyword.containershort_notm}} with Trusted Compute](cs_secure.html#trusted_compute).</p>
+<dd><p>**Bare metal only**: Enable [Trusted Compute](cs_secure.html#trusted_compute) to verify your bare metal worker nodes against tampering. If you don't enable trust during cluster creation but want to later, you can use the `bx cs feature-enable` [command](cs_cli_reference.html#cs_cluster_feature_enable). After you enable trust, you cannot disable it later.</p>
 <p>To check whether the bare metal machine type supports trust, check the `Trustable` field in the output of the `bx cs machine-types <location>` [command](#cs_machine_types). To verify that a cluster is trust-enabled, view the **Trust ready** field in the output of the `bx cs cluster-get` [command](#cs_cluster_get). To verify a bare metal worker node is trust-enabled, view the **Trust** field in the output of the `bx cs worker-get` [command](#cs_worker_get).</p></dd>
 </dl>
 
@@ -649,7 +664,7 @@ trusted: <em>true</em>
   {: #example_cluster_create}
 
   ```
-  bx cs cluster-create --location dal10 --public-vlan my_public_vlan_id --private-vlan my_private_vlan_id --machine-type u2c.2x4 --name my_cluster --hardware shared --workers 2
+  bx cs cluster-create --location dal10 --public-vlan my_public_VLAN_ID --private-vlan my_private_VLAN_ID --machine-type u2c.2x4 --name my_cluster --hardware shared --workers 2
   ```
   {: pre}
 
@@ -679,7 +694,7 @@ Enable a feature on an existing cluster.
    <dd>The name or ID of the cluster. This value is required.</dd>
 
    <dt><code><em>--trusted</em></code></dt>
-   <dd><p>Include the flag to enable Trusted Compute for all supported bare metal worker nodes that are in the cluster. After you enable trust, you cannot later disable it for the cluster. For more information about how trust works, see [{{site.data.keyword.containershort_notm}} with Trusted Compute](cs_secure.html#trusted_compute).</p>
+   <dd><p>Include the flag to enable [Trusted Compute](cs_secure.html#trusted_compute) for all supported bare metal worker nodes that are in the cluster. After you enable trust, you cannot later disable it for the cluster.</p>
    <p>To check whether the bare metal machine type supports trust, check the **Trustable** field in the output of the `bx cs machine-types <location>` [command](#cs_machine_types). To verify that a cluster is trust-enabled, view the **Trust ready** field in the output of the `bx cs cluster-get` [command](#cs_cluster_get). To verify a bare metal worker node is trust-enabled, view the **Trust** field in the output of the `bx cs worker-get` [command](#cs_worker_get).</p></dd>
    </dl>
 
@@ -715,19 +730,19 @@ View information about a cluster in your organization.
 **Example output**:
 
   ```
-  Name:			   mycluster
-  ID:			     abc1234567
-  State:			 normal
+  Name:        my_cluster
+  ID:          abc1234567
+  State:       normal
   Trust ready: false
-  Created:		 2018-01-01T17:19:28+0000
-  Location:		 dal10
-  Master URL:	 https://169.xx.x.xxx:xxxxx
-  Ingress subdomain: mycluster.us-south.containers.mybluemix.net
-  Ingress secret:		 mycluster
-  Workers:		3
-  Version:		1.7.4_1509* (1.8.8_1507 latest)
-  Owner Email:		name@example.com
-  Monitoring dashboard:	https://metrics.ng.bluemix.net/app/#/grafana4/dashboard/db/link
+  Created:     2018-01-01T17:19:28+0000
+  Location:    dal10
+  Master URL:  https://169.xx.xxx.xxx:xxxxx
+  Ingress subdomain: my_cluster.us-south.containers.mybluemix.net
+  Ingress secret:    my_cluster
+  Workers:     3
+  Version:     1.7.16_1511* (1.8.11_1509 latest)
+  Owner Email: name@example.com
+  Monitoring dashboard: https://metrics.ng.bluemix.net/app/#/grafana4/dashboard/db/link
 
   Addons
   Name                   Enabled
@@ -737,8 +752,8 @@ View information about a cluster in your organization.
 
   Subnet VLANs
   VLAN ID   Subnet CIDR         Public   User-managed
-  2234947   10.xxx.xxx.x/29     false    false
-  2234945   169.xx.xxx.xxx/29   true     false
+  2234947   10.xxx.xx.xxx/29    false    false
+  2234945   169.xx.xxx.xxx/29  true    false
 
   ```
   {: screen}
@@ -769,7 +784,7 @@ Remove a cluster from your organization.
 ### bx cs cluster-update [-f] CLUSTER [--kube-version MAJOR.MINOR.PATCH] [--force-update]
 {: #cs_cluster_update}
 
-Update the Kubernetes master to the default API version. During the update, you cannot access or change the cluster. Worker nodes, apps, and resources that have been deployed by the user are not modified and will continue to run.
+Update the Kubernetes master to the default API version. During the update, you cannot access or change the cluster. Worker nodes, apps, and resources that were deployed by the user are not modified and continue to run.
 
 You might need to change your YAML files for future deployments. Review this [release note](cs_versions.html) for details.
 
@@ -817,7 +832,7 @@ View a list of clusters in your organization.
 ### bx cs kube-versions
 {: #cs_kube_versions}
 
-View a list of Kubernetes versions supported in {{site.data.keyword.containershort_notm}}. Update your [cluster master](#cs_cluster_update) and [worker nodes](#cs_worker_update) to the default version for the latest, stable capabilities.
+View a list of Kubernetes versions supported in {{site.data.keyword.containershort_notm}}. Update your [cluster master](#cs_cluster_update) and [worker nodes](cs_cli_reference.html#cs_worker_update) to the default version for the latest, stable capabilities.
 
 **Command options**:
 
@@ -831,7 +846,9 @@ View a list of Kubernetes versions supported in {{site.data.keyword.containersho
   {: pre}
 
 
+
 <br />
+
 
 
 ## Cluster commands: Services and integrations
@@ -887,7 +904,7 @@ Remove an {{site.data.keyword.Bluemix_notm}} service from a cluster.
 **Example**:
 
   ```
-  bx cs cluster-service-unbind my_cluster my_namespace my_service_instance_GUID
+  bx cs cluster-service-unbind my_cluster my_namespace 8567221
   ```
   {: pre}
 
@@ -918,7 +935,8 @@ List the services that are bound to one or all of the Kubernetes namespace in a 
   {: pre}
 
 
-### bx cs webhook-create --cluster CLUSTER --level LEVEL --type slack --URL URL
+
+### bx cs webhook-create --cluster CLUSTER --level LEVEL --type slack --url URL
 {: #cs_webhook_create}
 
 Register a webhook.
@@ -935,14 +953,14 @@ Register a webhook.
    <dt><code>--type <em>slack</em></code></dt>
    <dd>The webhook type. Currently slack is supported. This value is required.</dd>
 
-   <dt><code>--URL <em>URL</em></code></dt>
+   <dt><code>--url <em>URL</em></code></dt>
    <dd>The URL for the webhook. This value is required.</dd>
    </dl>
 
 **Example**:
 
   ```
-  bx cs webhook-create --cluster my_cluster --level Normal --type slack --URL http://github.com/<mywebhook>
+  bx cs webhook-create --cluster my_cluster --level Normal --type slack --url http://github.com/mywebhook
   ```
   {: pre}
 
@@ -975,7 +993,7 @@ Make a subnet in an IBM Cloud infrastructure (SoftLayer) account available to a 
 **Example**:
 
   ```
-  bx cs cluster-subnet-add my_cluster subnet
+  bx cs cluster-subnet-add my_cluster 1643389
   ```
   {: pre}
 
@@ -1039,7 +1057,7 @@ This private subnet is not one provided by IBM Cloud infrastructure (SoftLayer).
 **Example**:
 
   ```
-  bx cs cluster-user-subnet-add my_cluster 192.168.10.0/29 1502175
+  bx cs cluster-user-subnet-add my_cluster 169.xx.xxx.xxx/29 1502175
   ```
   {: pre}
 
@@ -1067,7 +1085,7 @@ Remove your own private subnet from a specified cluster.
 **Example**:
 
   ```
-  bx cs cluster-user-subnet-rm my_cluster 192.168.10.0/29 1502175
+  bx cs cluster-user-subnet-rm my_cluster 169.xx.xxx.xxx/29 1502175
   ```
   {: pre}
 
@@ -1124,14 +1142,14 @@ Deploy or update a certificate from your {{site.data.keyword.cloudcerts_long_not
 Example for deploying an ALB secret:
 
    ```
-   bx cs alb-cert-deploy --secret-name my_alb_secret_name --cluster my_cluster --cert-crn crn:v1:staging:public:cloudcerts:us-south:a/06580c923e40314421d3b6cb40c01c68:0db4351b-0ee1-479d-af37-56a4da9ef30f:certificate:4bc35b7e0badb304e60aef00947ae7ff
+   bx cs alb-cert-deploy --secret-name my_alb_secret --cluster my_cluster --cert-crn crn:v1:staging:public:cloudcerts:us-south:a/06580c923e40314421d3b6cb40c01c68:0db4351b-0ee1-479d-af37-56a4da9ef30f:certificate:4bc35b7e0badb304e60aef00947ae7ff
    ```
    {: pre}
 
 Example for updating an existing ALB secret:
 
  ```
- bx cs alb-cert-deploy --update --secret-name my_alb_secret_name --cluster my_cluster --cert-crn crn:v1:staging:public:cloudcerts:us-south:a/06580c923e40314421d3b6cb40c01c68:0db4351b-0ee1-479d-af37-56a4da9ef30f:certificate:7e21fde8ee84a96d29240327daee3eb2
+ bx cs alb-cert-deploy --update --secret-name my_alb_secret --cluster my_cluster --cert-crn crn:v1:staging:public:cloudcerts:us-south:a/06580c923e40314421d3b6cb40c01c68:0db4351b-0ee1-479d-af37-56a4da9ef30f:certificate:7e21fde8ee84a96d29240327daee3eb2
  ```
  {: pre}
 
@@ -1161,7 +1179,7 @@ View information about an ALB secret in a cluster.
  Example for fetching information on an ALB secret:
 
  ```
- bx cs alb-cert-get --cluster my_cluster --secret-name my_alb_secret_name
+ bx cs alb-cert-get --cluster my_cluster --secret-name my_alb_secret
  ```
  {: pre}
 
@@ -1198,7 +1216,7 @@ Remove an ALB secret in a cluster.
  Example for removing an ALB secret:
 
  ```
- bx cs alb-cert-rm --cluster my_cluster --secret-name my_alb_secret_name
+ bx cs alb-cert-rm --cluster my_cluster --secret-name my_alb_secret
  ```
  {: pre}
 
@@ -1215,7 +1233,7 @@ Remove an ALB secret in a cluster.
 
 View a list of ALB secrets in a cluster.
 
-**Note:** Only a user with the Administrator access role can execute this command.
+**Note:** Only users with the Administrator access role can execute this command.
 
 <strong>Command options</strong>
 
@@ -1266,21 +1284,21 @@ Enable or disable an ALB in your standard cluster. The public ALB is enabled by 
   Example for enabling an ALB:
 
   ```
-  bx cs alb-configure --albID my_alb_id --enable
+  bx cs alb-configure --albID private-cr18a61a63a6a94b658596aa93a087aaa9-alb1 --enable
   ```
   {: pre}
 
   Example for disabling an ALB:
 
   ```
-  bx cs alb-configure --albID my_alb_id --disable
+  bx cs alb-configure --albID public-cr18a61a63a6a94b658596aa93a087aaa9-alb1 --disable
   ```
   {: pre}
 
   Example for enabling an ALB with a user-provided IP address:
 
   ```
-  bx cs alb-configure --albID my_private_alb_id --enable --user-ip user_ip
+  bx cs alb-configure --albID private-cr18a61a63a6a94b658596aa93a087aaa9-alb1 --enable --user-ip user_ip
   ```
   {: pre}
 
@@ -1301,7 +1319,7 @@ View the details of an ALB.
 **Example**:
 
   ```
-  bx cs alb-get --albID ALB_ID
+  bx cs alb-get --albID public-cr18a61a63a6a94b658596aa93a087aaa9-alb1
   ```
   {: pre}
 
@@ -1337,7 +1355,7 @@ View the status of all ALBs in a cluster. If no ALB IDs are returned, then the c
 **Example**:
 
   ```
-  bx cs albs --cluster mycluster
+  bx cs albs --cluster my_cluster
   ```
   {: pre}
 
@@ -1394,7 +1412,7 @@ You cannot set multiple credentials for one {{site.data.keyword.containershort_n
 **Example**:
 
   ```
-  bx cs credentials-set --infrastructure-api-key API_KEY --infrastructure-username USERNAME
+  bx cs credentials-set --infrastructure-api-key <api_key> --infrastructure-username dbmanager
   ```
   {: pre}
 
@@ -1428,19 +1446,22 @@ You can provision your worker node as a virtual machine on shared or dedicated h
 
 <dl>
 <dt>Physical machines (bare metal)</dt>
-<dd>Bare metal is a single-tenant physical server with resources dedicated exclusively to the worker node. Bare metal servers are more expensive than virtual, and are best suited for high-performance applications that need more resources and host control.
-<p><strong>Monthly billing</strong>: Bare metal servers are billed monthly. If you cancel a bare metal server before the end of the month, you are charged through the end of that month. When you provision bare metal servers, you interact directly with IBM Cloud infrastructure (SoftLayer), and as such, this manual process can take more than one business day to complete.</p>
-<p><strong>Bare metal machine type groups</strong>: Bare metal machine types come in groups that have different compute resources that you can choose from to meet your application's needs.
-<ul><li>`mb1c.4x32`: Choose this type for a balanced configuration of physical machine resources for your worker nodes. Balanced with 4 cores, 32GB Memory, 1TB SATA Primary Disk, 2TB SATA Secondary Disk, 10Gbps Bonded Network.</li>
-<li>`mb1c.16x64`: Choose this type for a balanced configuration of physical machine resources for your worker nodes. Balanced with 16 cores, 64GB Memory, 1TB SATA Primary Disk, 1.7TB SSD Secondary Disk, 10Gbps Bonded Network.</li>
+<dd>You can provision your worker node as a single-tenant physical server, also referred to as bare metal. Bare metal gives you direct access to the physical resources on the machine, such as the memory or CPU. This setup eliminates the virtual machine hypervisor that allocates physical resources to virtual machines that run on the host. Instead, all of a bare metal machine's resources are dedicated exclusively to the worker, so you don't need to worry about "noisy neighbors" sharing resources or slowing down performance.
+<p><strong>Monthly billing</strong>: Bare metal servers are more expensive than virtual servers, and are best suited for high-performance apps that need more resources and host control. Bare metal servers are billed monthly. If you cancel a bare metal server before the end of the month, you are charged through the end of that month. Ordering and canceling bare metal servers is a manual process through your IBM Cloud infrastructure (SoftLayer) account. It can take more than one business day to complete.</p>
+<p><strong>Option to enable Trusted Compute</strong>: Enable Trusted Compute to verify your worker nodes against tampering. If you don't enable trust during cluster creation but want to later, you can use the `bx cs feature-enable` [command](cs_cli_reference.html#cs_cluster_feature_enable). After you enable trust, you cannot disable it later. You can make a new cluster without trust. For more information about how trust works during the node startup process, see [{{site.data.keyword.containershort_notm}} with Trusted Compute](cs_secure.html#trusted_compute). Trusted Compute is available on clusters that run Kubernetes version 1.9 or later and have certain bare metal machine types. When you run the `bx cs machine-types <location>` [command](cs_cli_reference.html#cs_machine_types), you can see which machines support trust by reviewing the `Trustable` field.</p>
+<p><strong>Bare metal machine type groups</strong>: Bare metal machine types come in groups that have different compute resources that you can choose from to meet your app's needs. Physical machine types have more local storage than virtual, and some have RAID to back up local data. To learn about the different types of bare metal offerings, see the `bx cs machine-type` [command](cs_cli_reference.html#cs_machine_types).
+<ul><li>`mb1c.4x32`: If you don't need RAM- or data-intensive resources, choose this type for a balanced configuration of physical machine resources for your worker nodes. Balanced with 4 cores, 32GB Memory, 1TB SATA Primary Disk, 2TB SATA Secondary Disk, 10Gbps Bonded Network.</li>
+<li>`mb1c.16x64`: If you don't need RAM- or data-intensive resources, choose this type for a balanced configuration of physical machine resources for your worker nodes. Balanced with 16 cores, 64GB Memory, 1TB SATA Primary Disk, 1.7TB SSD Secondary Disk, 10Gbps Bonded Network.</li>
 <li>`mr1c.28x512`: Choose this type to maximize the RAM available to your worker nodes. RAM intensive with 28 cores, 512GB Memory, 1TB SATA Primary Disk, 1.7TB SSD Secondary Disk, 10Gbps Bonded Network.</li>
 <li>`md1c.16x64.4x4tb`: Choose this type if your worker nodes require a significant amount of local disk storage, including RAID to back up the data stored locally on the machine. The 1TB primary storage disks are configured for RAID1, and the 4TB secondary storage disks are configured for RAID10. Data intensive with 28 cores, 512GB Memory, 2x1TB RAID1 Primary Disk, 4x4TB SATA RAID10 Secondary Disk, 10Gbps Bonded Network.</li>
 <li>`md1c.28x512.4x4tb`: Choose this type if your worker nodes require a significant amount of local disk storage, including RAID to back up the data stored locally on the machine. The 1TB primary storage disks are configured for RAID1, and the 4TB secondary storage disks are configured for RAID10. Data intensive with 16 cores, 64GB Memory, 2x1TB RAID1 Primary Disk, 4x4TB SATA RAID10 Secondary Disk, 10Gbps Bonded Network.</li>
 
-</ul></p>
-<p><strong>Trusted Compute</strong>: You can choose to enable trust for all supported bare metal worker nodes that run Kubernetes version 1.9 or later and are in the cluster. Trusted Compute verifies your bare metal worker nodes against tampering and ensures that only authorized users have access to your cluster. If you don't enable trust during cluster creation but want to later, you can use the `bx cs feature-enable` [command](cs_cli_reference.html#cs_cluster_feature_enable). After you enable trust, you cannot later disable it for the cluster. For more information about how trust works, see [{{site.data.keyword.containershort_notm}} with Trusted Compute](cs_secure.html#trusted_compute). When you run the `bx cs machine-types` command, you can see which machines support trust by reviewing the `Trustable` field.</p></dd>
+</ul></p></dd>
 <dt>Virtual machines</dt>
-<dd>Virtual machine types are provisioned as virtual instances on physical hardware that can be shared or dedicated. They are billed hourly, and are provisioned to your account generally in a few minutes.
+<dd>When you create a standard virtual cluster, you must choose whether you want the underlying hardware to be shared by multiple {{site.data.keyword.IBM_notm}} customers (multi tenancy) or to be dedicated to you only (single tenancy).
+<p>In a multi-tenant set up, physical resources, such as CPU and memory, are shared across all virtual machines that are deployed to the same physical hardware. To ensure that every virtual machine can run independently, a virtual machine monitor, also referred to as the hypervisor, segments the physical resources into isolated entities and allocates them as dedicated resources to a virtual machine (hypervisor isolation).</p>
+<p>In a single-tenant set up, all physical resources are dedicated to you only. You can deploy multiple worker nodes as virtual machines on the same physical host. Similar to the multi-tenant set up, the hypervisor assures that every worker node gets its share of the available physical resources.</p>
+<p>Shared nodes are usually less costly than dedicated nodes because the costs for the underlying hardware are shared among multiple customers. However, when you decide between shared and dedicated nodes, you might want to check with your legal department to discuss the level of infrastructure isolation and compliance that your app environment requires.</p>
 <p><strong>Virtual `u2c` or `b2c` machine types</strong>: These machines use local disk instead of storage area networking (SAN) for reliability. Reliability benefits include higher throughput when serializing bytes to the local disk and reduced file system degradation due to network failures. These machine types contain 25GB primary local disk storage for the OS file system, and 100GB secondary local disk storage for `/var/lib/docker`, the directory that all the container data is written to.</p>
 <p><strong>Deprecated `u1c` or `b1c` machine types</strong>: To start using `u2c` and `b2c` machine types, [update the machine types by adding worker nodes](cs_cluster_update.html#machine_type).</p></dd>
 </dl>
@@ -1492,7 +1513,7 @@ List the public and private VLANs that are available for a location in your IBM 
    <dt><code><em>LOCATION</em></code></dt>
    <dd>Enter the location where you want to list your private and public VLANs. This value is required. Review [available locations](cs_regions.html#locations).</dd>
    <dt><code>--all</code></dt>
-   <dd>Lists all available VLANs. By default VLANs are filtered to show only those that are valid. To be valid, a VLAN must be associated with infrastructure that can host a worker with local disk storage.</dd>
+   <dd>Lists all available VLANs. By default VLANs are filtered to show only those VLANS that are valid. To be valid, a VLAN must be associated with infrastructure that can host a worker with local disk storage.</dd>
    </dl>
 
 **Example**:
@@ -1532,15 +1553,15 @@ Create a logging configuration. You can use this command to forward logs for con
   <dt><code>--org <em>CLUSTER_ORG</em></code></dt>
     <dd>The name of the Cloud Foundry org that the space is in. This value is valid only for log type <code>ibm</code> and is required if you specified a space.</dd>
   <dt><code>--app-paths</code></dt>
-    <dd>Optionally skips validation of the org and space names when they are specified. Skipping validation decreases processing time, but an invalid logging configuration will not correctly forward logs.</dd>
-  <dt><code>--app-containers</code></dt>
-    <dd>The path on their containers that the apps are logging to. To forward logs with source type <code>application</code>, you must provide a path. To specify more than one path, use a comma separated list. Example: <code>/var/log/myApp1/&ast;,/var/log/myApp2/&ast;</code></dd>
+    <dd>The path on the container that the apps are logging to. To forward logs with source type <code>application</code>, you must provide a path. To specify more than one path, use a comma-separated list. This value is required for log source <code>application</code>. Example: <code>/var/log/myApp1/&ast;,/var/log/myApp2/&ast;</code></dd>
   <dt><code>--type <em>LOG_TYPE</em></code></dt>
-    <dd>The log forwarding protocol that you want to use. Currently, <code>syslog</code> and <code>ibm</code> are supported. This value is required.</dd>
+    <dd>Where you want to forward your logs. Options are <code>ibm</code>, which forwards your logs to {{site.data.keyword.loganalysisshort_notm}} and <code>syslog</code>, which forwards your logs to an external server.</dd>
+  <dt><code>--app-containers</code></dt>
+    <dd>Optional: To forward logs from apps, you can specify the name of the container that contains your app. You can specify more than one container by using a comma-separated list. If no containers are specified, logs are forwarded from all of the containers that contain the paths that you provided. This option is only valid for log source <code>application</code></dt>
   <dt><code>--json</code></dt>
-    <dd>Optionally prints the command output in JSON format.</dd>
+    <dd>Print the command output in JSON format. This value is optional.</dd>
   <dt><code>--skip-validation</code></dt>
-    <dd>Optionally skips validation of the org and space names when they are specified. Skipping validation decreases processing time, but an invalid logging configuration will not correctly forward logs.</dd>
+    <dd>Skip validation of the org and space names when they are specified. Skipping validation decreases processing time, but an invalid logging configuration does not correctly forward logs. This value is optional.</dd>
 </dl>
 
 **Examples**:
@@ -1555,14 +1576,14 @@ Example for log type `ibm` that forwards from a `container` log source on defaul
 Example for log type `syslog` that forwards from a `container` log source on default port 514:
 
   ```
-  bx cs logging-config-create my_cluster --logsource container --namespace my_namespace  --hostname my_hostname-or-IP --type syslog
+  bx cs logging-config-create my_cluster --logsource container --namespace my_namespace  --hostname 169.xx.xxx.xxx --type syslog
   ```
   {: pre}
 
 Example for log type `syslog` that forwards logs from an `ingress` source on a port different than the default:
 
   ```
-  bx cs logging-config-create my_cluster --logsource container --hostname my_hostname-or-IP --port 5514 --type syslog
+  bx cs logging-config-create my_cluster --logsource container --hostname 169.xx.xxx.xxx --port 5514 --type syslog
   ```
   {: pre}
 
@@ -1657,7 +1678,7 @@ Update the details of a log forwarding configuration.
    <dt><code>--org <em>CLUSTER_ORG</em></code></dt>
    <dd>The name of the org that the space is in. This value is valid only for log type <code>ibm</code> and is required if you specified a space.</dd>
    <dt><code>--app-paths</code></dt>
-     <dd>Optionally skips validation of the org and space names when they are specified. Skipping validation decreases processing time, but an invalid logging configuration will not correctly forward logs.</dd>
+     <dd>Skip validation of the org and space names when they are specified. Skipping validation decreases processing time, but an invalid logging configuration does not correctly forward logs. This value is optional.</dd>
    <dt><code>--app-containers</code></dt>
      <dd>The path on their containers that the apps are logging to. To forward logs with source type <code>application</code>, you must provide a path. To specify more than one path, use a comma separated list. Example: <code>/var/log/myApp1/&ast;,/var/log/myApp2/&ast;</code></dd>
    <dt><code>--type <em>LOG_TYPE</em></code></dt>
@@ -1665,7 +1686,7 @@ Update the details of a log forwarding configuration.
    <dt><code>--json</code></dt>
    <dd>Optionally prints the command output in JSON format.</dd>
    <dt><code>--skipValidation</code></dt>
-   <dd>Optionally skips validation of the org and space names when they are specified. Skipping validation decreases processing time, but an invalid logging configuration will not correctly forward logs.</dd>
+   <dd>Skip validation of the org and space names when they are specified. Skipping validation decreases processing time, but an invalid logging configuration does not correctly forward logs. This value is optional.</dd>
    </dl>
 
 **Example for log type `ibm`**:
@@ -1683,6 +1704,111 @@ Update the details of a log forwarding configuration.
   {: pre}
 
 
+### bx cs logging-filter-create CLUSTER --type LOG_TYPE [--logging-configs CONFIGS] [--namespace KUBERNETES_NAMESPACE] [--container CONTAINER_NAME] [--level LOGGING_LEVEL] [--message MESSAGE] [--s] [--json]
+{: #cs_log_filter_create}
+
+Create a logging filter. You can use this command to filter out logs that are forwarded by your logging configuration.
+
+<strong>Command options</strong>:
+
+<dl>
+  <dt><code><em>CLUSTER</em></code></dt>
+    <dd>Required: The name or ID of the cluster that you want to create a logging filter for.</dd>
+  <dt><code>--type <em>LOG_TYPE</em></code></dt>
+    <dd>The type of logs that you want to apply the filter to. Currently <code>all</code>, <code>container</code>, and <code>host</code> are supported.</dd>
+  <dt><code>--logging-configs <em>CONFIGS</em></code></dt>
+    <dd>Optional: A comma separated list of your logging configuration IDs. If not provided, the filter is applied to all of the cluster logging configurations that are passed to the filter. You can view log configurations that match the filter by using the <code>--show-matching-configs</code> flag with the command.</dd>
+  <dt><code>--namespace <em>KUBERNETES_NAMESPACE</em></code></dt>
+    <dd>Optional: The Kubernetes namespace from which you want to filter logs.</dd>
+  <dt><code>--container <em>CONTAINER_NAME</em></code></dt>
+    <dd>Optional: The name of the container from which you want to filter out logs. This flag applies only when you are using log type <code>container</code>.</dd>
+  <dt><code>--level <em>LOGGING_LEVEL</em></code></dt>
+    <dd>Optional: Filters out logs that are at the specified level and less. Acceptable values in their canonical order are <code>fatal</code>, <code>error</code>, <code>warn/warning</code>, <code>info</code>, <code>debug</code>, and <code>trace</code>. As an example, if you filtered logs at the <code>info</code> level, <code>debug</code>, and <code>trace</code> are also filtered. **Note**: You can use this flag only when log messages are in JSON format and contain a level field. Example output: <code>{"log": "hello", "level": "info"}</code></dd>
+  <dt><code>--message <em>MESSAGE</em></code></dt>
+    <dd>Optional: Filters out any logs that contain a specified message anywhere in the log. The message is matched literally and not as an expression. Example: The messages “Hello”, “!”, and “Hello, World!”, would apply to the log “Hello, World!”.</dd>
+  <dt><code>--json</code></dt>
+    <dd>Optional: Prints the command output in JSON format.</dd>
+</dl>
+
+**Examples**:
+
+This example filters out all logs that are forwarded from containers with the name `test-container` in the default namespace that are at the debug level or less, and have a log message that contains "GET request".
+
+  ```
+  bx cs logging-filter-create example-cluster --type container --namespace default --container test-container --level debug --message "GET request"
+  ```
+  {: pre}
+
+This example filters out all of the logs that are forwarded, at an info level or less, from a specific cluster. The output is returned as JSON.
+
+  ```
+  bx cs logging-filter-create example-cluster --type all --level info --json
+  ```
+  {: pre}
+
+### bx cs logging-filter-update CLUSTER --type LOG_TYPE [--logging-configs CONFIGS] [--namespace KUBERNETES_NAMESPACE] [--container CONTAINER_NAME] [--level LOGGING_LEVEL] [--message MESSAGE] [--s] [--json]
+{: #cs_log_filter_update}
+
+Update a logging filter. You can use this command to update a logging filter that you created.
+
+<strong>Command options</strong>:
+
+<dl>
+  <dt><code><em>CLUSTER</em></code></dt>
+    <dd>Required: The name or ID of the cluster that you want to update a logging filter for.</dd>
+  <dt><code>--type <em>LOG_TYPE</em></code></dt>
+    <dd>The type of logs that you want to apply the filter to. Currently <code>all</code>, <code>container</code>, and <code>host</code> are supported.</dd>
+  <dt><code>--logging-configs <em>CONFIGS</em></code></dt>
+    <dd>Optional: A comma separated list of your logging configuration IDs. If not provided, the filter is applied to all of the cluster logging configurations that are passed to the filter. You can view log configurations that match the filter by using the <code>--show-matching-configs</code> flag with the command.</dd>
+  <dt><code>--namespace <em>KUBERNETES_NAMESPACE</em></code></dt>
+    <dd>Optional: The Kubernetes namespace from which you want to filter logs.</dd>
+  <dt><code>--container <em>CONTAINER_NAME</em></code></dt>
+    <dd>Optional: The name of the container from which you want to filter out logs. This flag applies only when you are using log type <code>container</code>.</dd>
+  <dt><code>--level <em>LOGGING_LEVEL</em></code></dt>
+    <dd>Optional: Filters out logs that are at the specified level and less. Acceptable values in their canonical order are <code>fatal</code>, <code>error</code>, <code>warn/warning</code>, <code>info</code>, <code>debug</code>, and <code>trace</code>. As an example, if you filtered logs at the <code>info</code> level, <code>debug</code>, and <code>trace</code> are also filtered. **Note**: You can use this flag only when log messages are in JSON format and contain a level field. Example output: <code>{"log": "hello", "level": "info"}</code></dd>
+  <dt><code>--message <em>MESSAGE</em></code></dt>
+    <dd>Optional: Filters out any logs that contain a specified message anywhere in the log. The message is matched literally and not as an expression. Example: The messages “Hello”, “!”, and “Hello, World!”, would apply to the log “Hello, World!”.</dd>
+  <dt><code>--json</code></dt>
+    <dd>Optional: Prints the command output in JSON format.</dd>
+</dl>
+
+
+### bx cs logging-filter-get CLUSTER [--id FILTER_ID] [--show-matching-configs] [--json]
+{: #cs_log_filter_view}
+
+View a logging filter configuration. You can use this command to view the logging filters that you created.
+
+<strong>Command options</strong>:
+
+<dl>
+  <dt><code><em>CLUSTER</em></code></dt>
+    <dd>Required: The name or ID of the cluster that you want to view filters from.</dd>
+  <dt><code>--id <em>FILTER_ID</em></code></dt>
+    <dd>The ID of the log filter that you want to view.</dd>
+  <dt><code>--show-matching-configs</code></dt>
+    <dd>Optional: Show the logging configurations that match the configuration that you're viewing.</dd>
+  <dt><code>--json</code></dt>
+    <dd>Optional: Prints the command output in JSON format.</dd>
+</dl>
+
+
+### bx cs logging-filter-rm CLUSTER [--id FILTER_ID] [--json] [--all]
+{: #cs_log_filter_delete}
+
+Delete a logging filter. You can use this command to remove a logging filter that you created.
+
+<strong>Command options</strong>:
+
+<dl>
+  <dt><code><em>CLUSTER</em></code></dt>
+    <dd>The name or ID of the cluster that you want to delete a filter from.</dd>
+  <dt><code>--id <em>FILTER_ID</em></code></dt>
+    <dd>The ID of the log filter that you want to delete.</dd>
+  <dt><code>--all</code></dt>
+    <dd>Optional: Delete all of your log forwarding filters.</dd>
+  <dt><code>--json</code></dt>
+    <dd>Optional: Prints the command output in JSON format.</dd>
+</dl>
 
 <br />
 
@@ -1797,6 +1923,8 @@ us-south      us-south
 ## Worker node commands
 {: worker_node_commands}
 
+
+
 ### bx cs worker-add --cluster CLUSTER [--file FILE_LOCATION] [--hardware HARDWARE] --machine-type MACHINE_TYPE --number NUMBER --private-vlan PRIVATE_VLAN --public-vlan PUBLIC_VLAN [--disable-disk-encrypt]
 {: #cs_worker_add}
 
@@ -1809,16 +1937,16 @@ Add worker nodes to your standard cluster.
 <dd>The name or ID of the cluster. This value is required.</dd>
 
 <dt><code>--file <em>FILE_LOCATION</em></code></dt>
-<dd>The path to the YAML file to add worker nodes to your cluster. Instead of defining your additional worker nodes by using the options provided in this command, you can use a YAML file. This value is optional.
+<dd>The path to the YAML file to add worker nodes to your cluster. Instead of defining additional worker nodes by using the options provided in this command, you can use a YAML file. This value is optional.
 
-<p><strong>Note:</strong> If you provide the same option in the command as parameter in the YAML file, the value in the command takes precedence over the value in the YAML. For example, you define a machine type in your YAML file and use the --machine-type option in the command, the value that you entered in the command option overrides the value in the YAML file.
+<p><strong>Note:</strong> If you provide the same option in the command as the parameter in the YAML file, the value in the command takes precedence over the value in the YAML. For example, you define a machine type in your YAML file and use the --machine-type option in the command, the value that you entered in the command option overrides the value in the YAML file.
 
 <pre class="codeblock">
-<code>name: <em>&lt;cluster_name_or_id&gt;</em>
+<code>name: <em>&lt;cluster_name_or_ID&gt;</em>
 location: <em>&lt;location&gt;</em>
 machine-type: <em>&lt;machine_type&gt;</em>
-private-vlan: <em>&lt;private_vlan&gt;</em>
-public-vlan: <em>&lt;public_vlan&gt;</em>
+private-vlan: <em>&lt;private_VLAN&gt;</em>
+public-vlan: <em>&lt;public_VLAN&gt;</em>
 hardware: <em>&lt;shared_or_dedicated&gt;</em>
 workerNum: <em>&lt;number_workers&gt;</em>
 diskEncryption: <em>false</em></code></pre>
@@ -1831,23 +1959,23 @@ diskEncryption: <em>false</em></code></pre>
 <tbody>
 <tr>
 <td><code><em>name</em></code></td>
-<td>Replace <code><em>&lt;cluster_name_or_id&gt;</em></code> with the name or ID of the cluster where you want to add worker nodes.</td>
+<td>Replace <code><em>&lt;cluster_name_or_ID&gt;</em></code> with the name or ID of the cluster where you want to add worker nodes.</td>
 </tr>
 <tr>
 <td><code><em>location</em></code></td>
-<td>Replace <code><em>&lt;location&gt;</em></code> with the location where you want to deploy your worker nodes. The available locations are dependent on the region that you are logged in. To list available locations, run <code>bx cs locations</code>.</td>
+<td>Replace <code><em>&lt;location&gt;</em></code> with the location to deploy your worker nodes. The available locations are dependent on the region that you are logged in. To list available locations, run <code>bx cs locations</code>.</td>
 </tr>
 <tr>
 <td><code><em>machine-type</em></code></td>
-<td>Replace <code><em>&lt;machine_type&gt;</em></code> with the type of machine that you want to deploy your worker nodes to. You can deploy your worker nodes as virtual machines on shared or dedicated hardware, or as physical machines on bare metal. Available physical and virtual machines types vary by the location in which you deploy the cluster. For more information, see the documentation for the `bx cs machine-type` [command](cs_cli_reference.html#cs_machine_types).</td>
+<td>Replace <code><em>&lt;machine_type&gt;</em></code> with the type of machine that you want to deploy your worker nodes to. You can deploy your worker nodes as virtual machines on shared or dedicated hardware, or as physical machines on bare metal. Available physical and virtual machines types vary by the location in which you deploy the cluster. For more information, see the `bx cs machine-types` [command](cs_cli_reference.html#cs_machine_types).</td>
 </tr>
 <tr>
 <td><code><em>private-vlan</em></code></td>
-<td>Replace <code><em>&lt;private_vlan&gt;</em></code> with the ID of the private VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans <em>&lt;location&gt;</em></code> and look for VLAN routers that start with <code>bcr</code> (back-end router).</td>
+<td>Replace <code><em>&lt;private_VLAN&gt;</em></code> with the ID of the private VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans <em>&lt;location&gt;</em></code> and look for VLAN routers that start with <code>bcr</code> (back-end router).</td>
 </tr>
 <tr>
 <td><code>public-vlan</code></td>
-<td>Replace <code>&lt;public_vlan&gt;</code> with the ID of the public VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans &lt;location&gt;</code> and look for VLAN routers that start with <code>fcr</code> (front-end router). <br><strong>Note</strong>: If you choose not to select a public VLAN because you want worker nodes to connect to a private VLAN only, you must configure an alternative solution. See [VLAN connection for worker nodes](cs_clusters.html#worker_vlan_connection) for more information. </td>
+<td>Replace <code>&lt;public_VLAN&gt;</code> with the ID of the public VLAN that you want to use for your worker nodes. To list available VLANs, run <code>bx cs vlans &lt;location&gt;</code> and look for VLAN routers that start with <code>fcr</code> (front-end router). <br><strong>Note</strong>: {[private_VLAN_vyatta]}</td>
 </tr>
 <tr>
 <td><code>hardware</code></td>
@@ -1866,7 +1994,7 @@ diskEncryption: <em>false</em></code></pre>
 <dd>The level of hardware isolation for your worker node. Use dedicated if you want to have available physical resources dedicated to you only, or shared to allow physical resources to be shared with other IBM customers. The default is shared. This value is optional.</dd>
 
 <dt><code>--machine-type <em>MACHINE_TYPE</em></code></dt>
-<dd>Choose a machine type. You can deploy your worker nodes as virtual machines on shared or dedicated hardware, or as physical machines on bare metal. Available physical and virtual machines types vary by the location in which you deploy the cluster. For more information, see the documentation for the `bx cs machine-type` [command](cs_cli_reference.html#cs_machine_types). This value is required for standard clusters and is not available for free clusters.</dd>
+<dd>Choose a machine type. You can deploy your worker nodes as virtual machines on shared or dedicated hardware, or as physical machines on bare metal. Available physical and virtual machines types vary by the location in which you deploy the cluster. For more information, see the documentation for the `bx cs machine-types` [command](cs_cli_reference.html#cs_machine_types). This value is required for standard clusters and is not available for free clusters.</dd>
 
 <dt><code>--number <em>NUMBER</em></code></dt>
 <dd>An integer that represents the number of worker nodes to create in the cluster. The default value is 1. This value is optional.</dd>
@@ -1874,12 +2002,12 @@ diskEncryption: <em>false</em></code></pre>
 <dt><code>--private-vlan <em>PRIVATE_VLAN</em></code></dt>
 <dd>The private VLAN that was specified when the cluster was created. This value is required.
 
-<p><strong>Note:</strong> The public and private VLANs that you specify must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></dd>
+<p><strong>Note:</strong> {[matching_VLANs]}</p></dd>
 
 <dt><code>--public-vlan <em>PUBLIC_VLAN</em></code></dt>
-<dd>The public VLAN that was specified when the cluster was created. This value is optional. If you want your worker nodes to exist on a private VLAN only, do not provide a public VLAN ID. <strong>Note</strong>: If you choose not to select a public VLAN, you must configure an alternative solution. See [VLAN connection for worker nodes](cs_clusters.html#worker_vlan_connection) for more information.
+<dd>The public VLAN that was specified when the cluster was created. This value is optional. If you want your worker nodes to exist on a private VLAN only, do not provide a public VLAN ID. <strong>Note</strong>: {[private_VLAN_vyatta]}
 
-<p><strong>Note:</strong> The public and private VLANs that you specify must match. Private VLAN routers always begin with <code>bcr</code> (back-end router) and public VLAN routers always begin with <code>fcr</code> (front-end router). The number and letter combination after those prefixes must match to use those VLANs when creating a cluster. Do not use public and private VLANs that do not match to create a cluster.</p></dd>
+<p><strong>Note:</strong> {[matching_VLANs]}</p></dd>
 
 <dt><code>--disable-disk-encrypt</code></dt>
 <dd>Worker nodes feature disk encryption by default; [learn more](cs_secure.html#worker). To disable encryption, include this option.</dd>
@@ -1888,7 +2016,7 @@ diskEncryption: <em>false</em></code></pre>
 **Examples**:
 
   ```
-  bx cs worker-add --cluster my_cluster --number 3 --public-vlan my_public_vlan_id --private-vlan my_private_vlan_id --machine-type u2c.2x4 --hardware shared
+  bx cs worker-add --cluster my_cluster --number 3 --public-vlan my_public_VLAN_ID --private-vlan my_private_VLAN_ID --machine-type u2c.2x4 --hardware shared
   ```
   {: pre}
 
@@ -1900,10 +2028,12 @@ diskEncryption: <em>false</em></code></pre>
   {: pre}
 
 
+
+
 ### bx cs worker-get [CLUSTER_NAME_OR_ID] WORKER_NODE_ID
 {: #cs_worker_get}
 
-View details of a worker node.
+View the details of a worker node.
 
 <strong>Command options</strong>:
 
@@ -1911,30 +2041,30 @@ View details of a worker node.
    <dt><code><em>CLUSTER_NAME_OR_ID</em></code></dt>
    <dd>The name or ID of the worker node's cluster. This value is optional.</dd>
    <dt><code><em>WORKER_NODE_ID</em></code></dt>
-   <dd>The ID for a worker node. Run <code>bx cs workers <em>CLUSTER</em></code> to view the IDs for the worker nodes in a cluster. This value is required.</dd>
+   <dd>The name of your worker node. Run <code>bx cs workers <em>CLUSTER</em></code> to view the IDs for the worker nodes in a cluster. This value is required.</dd>
    </dl>
 
 **Example command**:
 
   ```
-  bx cs worker-get [CLUSTER_NAME_OR_ID] WORKER_NODE_ID
+  bx cs worker-get my_cluster kube-dal10-cr18a61a63a6a94b658596aa93d087aaa9-w1
   ```
   {: pre}
 
 **Example output**:
 
   ```
-  ID:				    kube-dal10-123456789-w1
-  State:				normal
-  Status:				Ready
+  ID:           kube-dal10-123456789-w1
+  State:        normal
+  Status:       Ready
   Trust:        disabled
-  Private VLAN:			223xxxx
-  Public VLAN:			223xxxx
-  Private IP:			10.xxx.xx.xx
-  Public IP:			169.xx.xxx.xxx
-  Hardware:			shared
-  Zone:				dal10
-  Version:			1.8.8_1507
+  Private VLAN: 223xxxx
+  Public VLAN:  223xxxx
+  Private IP:   10.xxx.xx.xxx
+  Public IP:    169.xx.xxx.xxx
+  Hardware:     shared
+  Zone:         dal10
+  Version:      1.8.11_1509
   ```
   {: screen}
 
@@ -1951,7 +2081,7 @@ Before you reboot your worker node, make sure that pods are rescheduled on other
    ```
    kubectl get nodes
    ```
-   The**name** that is returned in this command is the private IP address that is assigned to your worker node. You can find more information about your worker node when you run the `bx cs workers <cluster_name_or_id>` command and look for the worker node with the same **Private IP** address.
+   The**name** that is returned in this command is the private IP address that is assigned to your worker node. You can find more information about your worker node when you run the `bx cs workers <cluster_name_or_ID>` command and look for the worker node with the same **Private IP** address.
 2. Mark the worker node as unschedulable in a process that is known as cordoning. When you cordon a worker node, you make it unavailable for future pod scheduling. Use the **name** of the worker node that you retrieved in the previous step.
    ```
    kubectl cordon <worker_name>
@@ -1970,9 +2100,9 @@ Before you reboot your worker node, make sure that pods are rescheduled on other
     ```
     {: pre}
     This process can take a few minutes.
- 5. Reboot the worker node. Use the worker ID that is returned from the `bx cs workers <cluster_name_or_id>` command.
+ 5. Reboot the worker node. Use the worker ID that is returned from the `bx cs workers <cluster_name_or_ID>` command.
     ```
-    bx cs worker-reboot <cluster_name_or_id> <worker_name_or_id>
+    bx cs worker-reboot <cluster_name_or_ID> <worker_name_or_ID>
     ```
     {: pre}
  6. Wait about 5 minutes before you make your worker node available for pod scheduling to ensure that the reboot is finished. During the reboot, the state of your worker node does not change. The reboot of a worker node is usually completed in a few seconds.
@@ -2002,7 +2132,7 @@ Before you reboot your worker node, make sure that pods are rescheduled on other
 **Example**:
 
   ```
-  bx cs worker-reboot my_cluster my_node1 my_node2
+  bx cs worker-reboot my_cluster kube-dal10-cr18a61a63a6a94b658596aa93d087aaa9-w1 kube-dal10-cr18a61a63a6a94b658596aa93d087aaa9-w2
   ```
   {: pre}
 
@@ -2012,7 +2142,8 @@ Before you reboot your worker node, make sure that pods are rescheduled on other
 
 Reload all the necessary configurations for a worker node. A reload can be useful if your worker node experiences problems, such as slow performance or if your worker node is stuck in an unhealthy state.
 
-**Attention:** Reloading your worker node automatically applies the latest patch version to your worker node. The current major and minor version is not changed. For more information about Kubernetes versions, see [worker node update types](cs_versions.html#version_types).
+Reloading a worker node does not apply the latest updates, security patches, or [Kubernetes version](cs_versions.html#version_types). When patch and version updates are available, you are prompted in the CLI and console as you use worker-related features. To keep your workers up-to-date, regularly use the `bx cs worker-update` [command](cs_cli_reference.html#cs_worker_update).
+{: tip}
 
 Before you reload your worker node, make sure that pods are rescheduled on other worker nodes to help avoid a downtime for your app or data corruption on your worker node.
 
@@ -2020,7 +2151,7 @@ Before you reload your worker node, make sure that pods are rescheduled on other
    ```
    kubectl get nodes
    ```
-   The **name** that is returned in this command is the private IP address that is assigned to your worker node. You can find more information about your worker node when you run the `bx cs workers <cluster_name_or_id>` command and look for the worker node with the same **Private IP** address.
+   The **name** that is returned in this command is the private IP address that is assigned to your worker node. You can find more information about your worker node when you run the `bx cs workers <cluster_name_or_ID>` command and look for the worker node with the same **Private IP** address.
 2. Mark the worker node as unschedulable in a process that is known as cordoning. When you cordon a worker node, you make it unavailable for future pod scheduling. Use the **name** of the worker node that you retrieved in the previous step.
    ```
    kubectl cordon <worker_name>
@@ -2039,9 +2170,9 @@ Before you reload your worker node, make sure that pods are rescheduled on other
     ```
     {: pre}
     This process can take a few minutes.
- 5. Reload the worker node. Use the worker ID that is returned from the `bx cs workers <cluster_name_or_id>` command.
+ 5. Reload the worker node. Use the worker ID that is returned from the `bx cs workers <cluster_name_or_ID>` command.
     ```
-    bx cs worker-reload <cluster_name_or_id> <worker_name_or_id>
+    bx cs worker-reload <cluster_name_or_ID> <worker_name_or_ID>
     ```
     {: pre}
  6. Wait for the reload to complete.
@@ -2066,22 +2197,24 @@ Before you reload your worker node, make sure that pods are rescheduled on other
 **Example**:
 
   ```
-  bx cs worker-reload my_cluster my_node1 my_node2
+  bx cs worker-reload my_cluster kube-dal10-cr18a61a63a6a94b658596aa93d087aaa9-w1 kube-dal10-cr18a61a63a6a94b658596aa93d087aaa9-w2
   ```
   {: pre}
+
 
 ### bx cs worker-rm [-f] CLUSTER WORKER [WORKER]
 {: #cs_worker_rm}
 
-Remove one or more worker nodes from a cluster.
+Remove one or more worker nodes from a cluster. If you remove a worker node, your cluster becomes unbalanced. 
 
 Before you remove your worker node, make sure that pods are rescheduled on other worker nodes to help avoid a downtime for your app or data corruption on your worker node.
+{: tip}
 
 1. List all worker nodes in your cluster and note the **name** of the worker node that you want to remove.
    ```
    kubectl get nodes
    ```
-   The **name** that is returned in this command is the private IP address that is assigned to your worker node. You can find more information about your worker node when you run the `bx cs workers <cluster_name_or_id>` command and look for the worker node with the same **Private IP** address.
+   The **name** that is returned in this command is the private IP address that is assigned to your worker node. You can find more information about your worker node when you run the `bx cs workers <cluster_name_or_ID>` command and look for the worker node with the same **Private IP** address.
 2. Mark the worker node as unschedulable in a process that is known as cordoning. When you cordon a worker node, you make it unavailable for future pod scheduling. Use the **name** of the worker node that you retrieved in the previous step.
    ```
    kubectl cordon <worker_name>
@@ -2100,15 +2233,15 @@ Before you remove your worker node, make sure that pods are rescheduled on other
    ```
    {: pre}
    This process can take a few minutes.
-5. Remove the worker node. Use the worker ID that is returned from the `bx cs workers <cluster_name_or_id>` command.
+5. Remove the worker node. Use the worker ID that is returned from the `bx cs workers <cluster_name_or_ID>` command.
    ```
-   bx cs worker-rm <cluster_name_or_id> <worker_name_or_id>
+   bx cs worker-rm <cluster_name_or_ID> <worker_name_or_ID>
    ```
    {: pre}
 
 6. Verify that the worker node is removed.
    ```
-   bx cs workers <cluster_name_or_id>
+   bx cs workers <cluster_name_or_ID>
    ```
 </br>
 <strong>Command options</strong>:
@@ -2127,14 +2260,19 @@ Before you remove your worker node, make sure that pods are rescheduled on other
 **Example**:
 
   ```
-  bx cs worker-rm my_cluster my_node1 my_node2
+  bx cs worker-rm my_cluster kube-dal10-cr18a61a63a6a94b658596aa93d087aaa9-w1 kube-dal10-cr18a61a63a6a94b658596aa93d087aaa9-w2
   ```
   {: pre}
 
-### bx cs worker-update [-f] CLUSTER WORKER [WORKER] [--force-update]
+
+
+
+### bx cs worker-update [-f] CLUSTER WORKER [WORKER] [--kube-version MAJOR.MINOR.PATCH] [--force-update]
 {: #cs_worker_update}
 
-Update worker nodes to the same version of Kubernetes that the master runs. Running `bx cs worker-update` can cause downtime for your apps and services. During the update, all pods are rescheduled onto other worker nodes and data is deleted if not stored outside the pod. To avoid downtime, [ensure that you have enough worker nodes to handle your workload while the selected worker nodes are updating](cs_cluster_update.html#worker_node).
+Update worker nodes to apply the latest security updates and patches to the operating system, and to update the Kubernetes version to match the version of the master node. You can update the master node Kubernetes version with the `bx cs cluster-update` [command](cs_cli_reference.html#cs_cluster_update).
+
+**Important**: Running `bx cs worker-update` can cause downtime for your apps and services. During the update, all pods are rescheduled onto other worker nodes and data is deleted if not stored outside the pod. To avoid downtime, [ensure that you have enough worker nodes to handle your workload while the selected worker nodes are updating](cs_cluster_update.html#worker_node).
 
 You might need to change your YAML files for deployments before updating. Review this [release note](cs_versions.html) for details.
 
@@ -2158,11 +2296,13 @@ You might need to change your YAML files for deployments before updating. Review
 **Example**:
 
   ```
-  bx cs worker-update my_cluster my_node1 my_node2
+  bx cs worker-update my_cluster kube-dal10-cr18a61a63a6a94b658596aa93d087aaa9-w1 kube-dal10-cr18a61a63a6a94b658596aa93d087aaa9-w2
   ```
   {: pre}
 
-### bx cs workers CLUSTER
+
+
+### bx cs workers CLUSTER [--show-deleted]
 {: #cs_workers}
 
 View a list of worker nodes and the status for each in a cluster.
@@ -2172,11 +2312,14 @@ View a list of worker nodes and the status for each in a cluster.
    <dl>
    <dt><em>CLUSTER</em></dt>
    <dd>The name or ID of the cluster where you list available worker nodes. This value is required.</dd>
+   <dt><em>--show-deleted</em></dt>
+   <dd>View worker nodes that were deleted from the cluster, including the reason for deletion. This value is optional.</dd>
    </dl>
 
 **Example**:
 
   ```
-  bx cs workers mycluster
+  bx cs workers my_cluster
   ```
   {: pre}
+

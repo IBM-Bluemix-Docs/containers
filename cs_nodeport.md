@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-18"
+lastupdated: "2018-4-20"
 
 ---
 
@@ -156,3 +156,4 @@ When the app is deployed, you can use the public IP address of any worker node a
     **Note:** If the **Endpoints** section displays `<none>`, make sure that the `<selectorkey>` and `<selectorvalue>` that you use in the `spec.selector` section of the NodePort service is the same as the key/ value pair that you used in the `spec.template.metadata.labels` section of your deployment yaml.
 
 3.  Form the URL with one of the worker node public IP addresses and the NodePort. Example: `http://192.0.2.23:30872`
+
