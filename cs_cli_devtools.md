@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-23"
+lastupdated: "2018-4-20"
 
 ---
 
@@ -2180,3 +2180,4 @@ View a list of worker nodes and the status for each in a cluster.
   bx cs workers mycluster
   ```
   {: pre}
+

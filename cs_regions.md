@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-18"
+lastupdated: "2018-4-20"
 
 ---
 
@@ -148,3 +148,4 @@ Your cluster's resources remain in the location (data center) in which the clust
 ![Understanding where your cluster resources reside](/images/region-cluster-resources.png)
 
 Understanding where your cluster resources reside.
+
