@@ -32,8 +32,8 @@ With {{site.data.keyword.Bluemix_dedicated_notm}}, you can create clusters from 
 
 The most significant differences between {{site.data.keyword.Bluemix_notm}} public and Dedicated are as follows.
 
-*   In {{site.data.keyword.Bluemix_dedicated_notm}}, {{site.data.keyword.IBM_notm}} owns and manages the IBM Cloud infrastructure (SoftLayer) account that the worker nodes, VLANs, and subnets are deployed into. In {{site.data.keyword.Bluemix_notm}} public, you own the IBM Cloud infrastructure (SoftLayer) account.
-*   In {{site.data.keyword.Bluemix_dedicated_notm}}, specifications for the VLANs and subnets in the {{site.data.keyword.IBM_notm}}-managed IBM Cloud infrastructure (SoftLayer) account are determined when the Dedicated environment is enabled. In {{site.data.keyword.Bluemix_notm}} public, specifications for VLANs and subnets are determined when the cluster is created.
+*   In {{site.data.keyword.Bluemix_dedicated_notm}}, {{site.data.keyword.IBM_notm}} owns and manages the {[softlayer]} account that the worker nodes, VLANs, and subnets are deployed into. In {{site.data.keyword.Bluemix_notm}} public, you own the {[softlayer]} account.
+*   In {{site.data.keyword.Bluemix_dedicated_notm}}, specifications for the VLANs and subnets in the {{site.data.keyword.IBM_notm}}-managed {[softlayer]} account are determined when the Dedicated environment is enabled. In {{site.data.keyword.Bluemix_notm}} public, specifications for VLANs and subnets are determined when the cluster is created.
 
 ### Differences in cluster management between the cloud environments
 {: #dedicated_env_differences}
@@ -55,12 +55,12 @@ The most significant differences between {{site.data.keyword.Bluemix_notm}} publ
  </tr>
  <tr>
  <td>Cluster hardware and ownership</td>
- <td>In standard clusters, the hardware can be shared by other {{site.data.keyword.IBM_notm}} customers or dedicated to you only. The public and private VLANs are owned and managed by you in your IBM Cloud infrastructure (SoftLayer) account.</td>
+ <td>In standard clusters, the hardware can be shared by other {{site.data.keyword.IBM_notm}} customers or dedicated to you only. The public and private VLANs are owned and managed by you in your {[softlayer]} account.</td>
  <td>In clusters on {{site.data.keyword.Bluemix_dedicated_notm}}, the hardware is always dedicated. The public and private VLANs that are available for cluster creation are pre-defined when the {{site.data.keyword.Bluemix_dedicated_notm}} environment is set up, and are owned and managed by IBM for you. The location that is available during cluster creation is also pre-defined for the {{site.data.keyword.Bluemix_notm}} environment.</td>
  </tr>
  <tr>
  <td>Load balancer and Ingress networking</td>
- <td>During the provisioning of standard clusters, the following actions occur automatically.<ul><li>One portable public and one portable private subnet are bound to your cluster and assigned to your IBM Cloud infrastructure (SoftLayer) account. Additional subnets can be requested through your IBM Cloud infrastructure (SoftLayer) account.</li></li><li>One portable public IP address is used for a highly available Ingress application load balancer (ALB) and a unique public route is assigned in the format <code>&lt;cluster_name&gt;. containers.mybluemix.net</code>. You can use this route to expose multiple apps to the public. One portable private IP address is used for a private ALB.</li><li>Four portable public and four portable private IP addresses are assigned to the cluster that can be used to expose apps via load balancer services.</ul></td>
+ <td>During the provisioning of standard clusters, the following actions occur automatically.<ul><li>One portable public and one portable private subnet are bound to your cluster and assigned to your {[softlayer]} account. Additional subnets can be requested through your {[softlayer]} account.</li></li><li>One portable public IP address is used for a highly available Ingress application load balancer (ALB) and a unique public route is assigned in the format <code>&lt;cluster_name&gt;. containers.mybluemix.net</code>. You can use this route to expose multiple apps to the public. One portable private IP address is used for a private ALB.</li><li>Four portable public and four portable private IP addresses are assigned to the cluster that can be used to expose apps via load balancer services.</ul></td>
  <td>When you create your Dedicated account, you make a connectivity decision on how you want to expose and access your cluster services. If you want to use your own enterprise IP ranges (user-manged IPs), you must provide them when you [set up an {{site.data.keyword.Bluemix_dedicated_notm}} environment](/docs/dedicated/index.html#setupdedicated). <ul><li>By default, no portable public subnets are bound to clusters that you create in your Dedicated account. Instead, you have the flexibility to choose the connectivity model which best suits your enterprise.</li><li>After you create the cluster, you choose the type of subnets you want bind to and use with your cluster for either load balancer or Ingress connectivity.<ul><li>For public or private portable subnets, you can [add subnets to clusters](cs_subnets.html#subnets)</li><li>For user-managed IP addresses that you provided to IBM at Dedicated onboarding, you can [add user-managed subnets to clusters](#dedicated_byoip_subnets).</li></ul></li><li>After you bind a subnet to your cluster, the Ingress ALB is created. A public Ingress route is created only if you use a portable public subnet.</li></ul></td>
  </tr>
  <tr>
@@ -86,8 +86,7 @@ The most significant differences between {{site.data.keyword.Bluemix_notm}} publ
 </tbody></table>
 {: caption="Feature differences between {{site.data.keyword.Bluemix_notm}} public and {{site.data.keyword.Bluemix_dedicated_notm}}" caption-side="top"}
 
-<br />
-
+{[white-space.md]}
 
 ### Service architecture
 {: #dedicated_ov_architecture}
@@ -102,8 +101,7 @@ Built-in security features provide isolation, resource management capabilities, 
 
 ![{{site.data.keyword.containershort_notm}} Kubernetes architecture on {{site.data.keyword.Bluemix_dedicated_notm}}](images/cs_dedicated_arch.png)
 
-<br />
-
+{[white-space.md]}
 
 ## Setting up {{site.data.keyword.containershort_notm}} on Dedicated
 {: #dedicated_setup}
@@ -122,23 +120,23 @@ To allow {{site.data.keyword.Bluemix_dedicated_notm}} users to access clusters:
     1.  Log in to the endpoint for your {{site.data.keyword.Bluemix_dedicated_notm}} instance. Enter the {{site.data.keyword.Bluemix_notm}} credentials for the public account owner and select your account when prompted.
 
         ```
-        bx login -a api.<my-dedicated-cloud-instance>.<region>.bluemix.net
+        {[bx]} login -a api.<my-dedicated-cloud-instance>.<region>.bluemix.net
         ```
         {: pre}
 
-        **Note:** If you have a federated ID, use `bx login -a api.<my-dedicated-cloud-instance>.<region>.bluemix.net --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know that you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
+        **Note:** If you have a federated ID, use `{[bx]} login -a api.<my-dedicated-cloud-instance>.<region>.bluemix.net --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know that you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
 
     2.  Generate an API key for inviting users to the public account. Note the API key value, which the Dedicated account administrator will use in the next step.
 
         ```
-        bx iam api-key-create <key_name> -d "Key to invite users to <dedicated_account_name>"
+        {[bx]} iam api-key-create <key_name> -d "Key to invite users to <dedicated_account_name>"
         ```
         {: pre}
 
     3.  Note the GUID of the public account organization that you want to invite users to, which the Dedicated account administrator will use in the next step.
 
         ```
-        bx account orgs
+        {[bx]} account orgs
         ```
         {: pre}
 
@@ -146,17 +144,17 @@ To allow {{site.data.keyword.Bluemix_dedicated_notm}} users to access clusters:
     1.  Log in to the endpoint for your {{site.data.keyword.Bluemix_dedicated_notm}} instance. Enter the {{site.data.keyword.Bluemix_notm}} credentials for the Dedicated account owner and select your account when prompted.
 
         ```
-        bx login -a api.<my-dedicated-cloud-instance>.<region>.bluemix.net
+        {[bx]} login -a api.<my-dedicated-cloud-instance>.<region>.bluemix.net
         ```
         {: pre}
 
-        **Note:** If you have a federated ID, use `bx login -a api.<my-dedicated-cloud-instance>.<region>.bluemix.net --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know that you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
+        **Note:** If you have a federated ID, use `{[bx]} login -a api.<my-dedicated-cloud-instance>.<region>.bluemix.net --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know that you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
 
     2.  Invite the users to the public account.
         * To invite a single user:
 
             ```
-            bx cf bluemix-admin invite-users-to-public -userid=<user_email> -apikey=<public_API_key> -public_org_id=<public_org_ID>
+            {[bx]} cf bluemix-admin invite-users-to-public -userid=<user_email> -apikey=<public_API_key> -public_org_id=<public_org_ID>
             ```
             {: pre}
 
@@ -165,7 +163,7 @@ To allow {{site.data.keyword.Bluemix_dedicated_notm}} users to access clusters:
         * To invite all users currently in a Dedicated account organization:
 
             ```
-            bx cf bluemix-admin invite-users-to-public -organization=<dedicated_org_ID> -apikey=<public_API_key> -public_org_id=<public_org_ID>
+            {[bx]} cf bluemix-admin invite-users-to-public -organization=<dedicated_org_ID> -apikey=<public_API_key> -public_org_id=<public_org_ID>
             ```
 
             Replace <em>&lt;dedicated_org_ID&gt;</em> with the Dedicated account organization ID, <em>&lt;public_API_key&gt;</em> with the API key generated in the previous step, and <em>&lt;public_org_ID&gt;</em> with the public account organization GUID. See [Inviting a user from IBM Cloud Dedicated](/docs/cli/plugins/bluemix_admin/index.html#admin_dedicated_invite_public) for more information on this command.
@@ -175,7 +173,7 @@ To allow {{site.data.keyword.Bluemix_dedicated_notm}} users to access clusters:
     4.  Verify that the users were added to the account.
 
         ```
-        bx cf bluemix-admin invite-users-status -apikey=<public_API_key>
+        {[bx]} cf bluemix-admin invite-users-status -apikey=<public_API_key>
         ```
         {: pre}
 
@@ -202,11 +200,11 @@ To allow {{site.data.keyword.Bluemix_dedicated_notm}} users to access clusters:
     1.  Log in to the endpoint for your {{site.data.keyword.Bluemix_dedicated_notm}} instance. Enter your IBMid when prompted.
 
         ```
-        bx login -a api.<my-dedicated-cloud-instance>.<region>.bluemix.net
+        {[bx]} login -a api.<my-dedicated-cloud-instance>.<region>.bluemix.net
         ```
         {: pre}
 
-        **Note:** If you have a federated ID, use `bx login -a api.<my-dedicated-cloud-instance>.<region>.bluemix.net --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know that you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
+        **Note:** If you have a federated ID, use `{[bx]} login -a api.<my-dedicated-cloud-instance>.<region>.bluemix.net --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know that you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
 
     2.  If you are logging in for the first time, provide your Dedicated user ID and password when prompted. This authenticates the Dedicated account and links the Dedicated and public accounts together. Every time you log in after this first time, you only use your IBMid to log in. For more information, see [Connecting a dedicated ID to your public IBMid](/docs/cli/connect_dedicated_id.html#connect_dedicated_id).
 
@@ -215,19 +213,18 @@ To allow {{site.data.keyword.Bluemix_dedicated_notm}} users to access clusters:
     3.  To create or access clusters in the dedicated environment, you must set the region associated with that environment.
 
         ```
-        bx cs region-set
+        {[bxcs]} region-set
         ```
         {: pre}
 
 5.  If you want to unlink your accounts, you can disconnect your IBMid from your Dedicated user ID. For more information, see [Disconnect your dedicated ID from the public IBMid](/docs/cli/connect_dedicated_id.html#disconnect-your-dedicated-id-from-the-public-ibmid).
 
     ```
-    bx iam dedicated-id-disconnect
+    {[bx]} iam dedicated-id-disconnect
     ```
     {: pre}
 
-<br />
-
+{[white-space.md]}
 
 ## Creating clusters
 {: #dedicated_administering}
@@ -248,8 +245,7 @@ Design your {{site.data.keyword.Bluemix_dedicated_notm}} cluster setup for maxim
 
 5. Configure your cluster details.
 
-    1. Enter a **Cluster Name**. The name must start with a letter, can contain letters, numbers, and hyphen (-), and must be 35 characters or fewer. Note that the cluster name and the region in which the cluster is deployed form the fully qualified domain name for the Ingress subdomain. To ensure that the Ingress subdomain is unique within a region, the cluster name might be truncated and appended with a random value within the Ingress domain name.
-
+    1. Enter a **Cluster Name**. {[cluster-name.md]}
     2. Select the **Location** in which to deploy your cluster. The available location was pre-defined when the {{site.data.keyword.Bluemix_dedicated_notm}} environment was set up.
 
     3. Choose the Kubernetes API server version for the cluster master node.
@@ -258,17 +254,17 @@ Design your {{site.data.keyword.Bluemix_dedicated_notm}} cluster setup for maxim
 
         - **Virtual - Dedicated**: Your worker nodes are hosted on infrastructure that is devoted to your account. Your physical resources are completely isolated.
 
-        - **Bare Metal**: Billed monthly, bare metal servers are provisioned by manual interaction with IBM Cloud infrastructure (SoftLayer), and can take more than one business day to complete. Bare metal is best suited for high-performance applications that need more resources and host control. 
+        - **Bare Metal**: Billed monthly, bare metal servers are provisioned by manual interaction with {[softlayer]}, and can take more than one business day to complete. Bare metal is best suited for high-performance applications that need more resources and host control. 
 
         Be sure that you want to provision a bare metal machine. Because it is billed monthly, if you cancel it immediately after an order by mistake, you are still charged the full month.
         {:tip}
 
-    5. Select a **Machine type**. The machine type defines the amount of virtual CPU, memory, and disk space that is set up in each worker node and made available to the containers. Available bare metal and virtual machines types vary by the location in which you deploy the cluster. For more information, see the documentation for the `bx cs machine-type` [command](cs_cli_reference.html#cs_machine_types). After you create your cluster, you can add different machine types by adding a new worker node to the cluster.
+    5. Select a **Machine type**. The machine type defines the amount of virtual CPU, memory, and disk space that is set up in each worker node and made available to the containers. Available bare metal and virtual machines types vary by the location in which you deploy the cluster. For more information, see the documentation for the `{[bxcs]} machine-type` [command](cs_cli_reference.html#cs_machine_types). After you create your cluster, you can add different machine types by adding a new worker node to the cluster.
 
     6. Choose the **Number of worker nodes** that you need. Select `3` to ensure high availability of your cluster.
 
     7. Select a **Public VLAN** (optional) and **Private VLAN** (required). The available public and private VLANs are pre-defined when the {{site.data.keyword.Bluemix_dedicated_notm}} environment is set up. Both VLANs communicate between worker nodes but the public VLAN also communicates with the IBM-managed Kubernetes master. You can use the same VLAN for multiple clusters.
-        **Note**: If worker nodes are set up with a private VLAN only, you must configure an alternative solution for network connectivity. For more information, see [VLAN connection for worker nodes](cs_clusters.html#worker_vlan_connection).
+        **Note**: {[private_vlan_vyatta]}
 
     8. By default, **Encrypt local disk** is selected. If you choose to clear the check box, then the host's Docker data is not encrypted. [Learn more about the encryption](cs_secure.html#encrypted_disks).
 
@@ -278,24 +274,24 @@ Design your {{site.data.keyword.Bluemix_dedicated_notm}} cluster setup for maxim
 ### Creating clusters with the CLI
 {: #dedicated_creating_cli}
 
-1.  Install the {{site.data.keyword.Bluemix_notm}} CLI and the [{{site.data.keyword.containershort_notm}} plug-in](cs_cli_install.html#cs_cli_install).
+1.  Install the {{site.data.keyword.Bluemix_notm}} CLI and the [{[pluginname]}](cs_cli_install.html#cs_cli_install).
 2.  Log in to the endpoint for your {{site.data.keyword.Bluemix_dedicated_notm}} instance. Enter your {{site.data.keyword.Bluemix_notm}} credentials and select your account when prompted.
 
     ```
-    bx login -a api.<my-dedicated-cloud-instance>.<region>.bluemix.net
+    {[bx]} login -a api.<my-dedicated-cloud-instance>.<region>.bluemix.net
     ```
     {: pre}
 
-    **Note:** If you have a federated ID, use `bx login -a api.<my-dedicated-cloud-instance>.<region>.bluemix.net --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know that you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
+    **Note:** If you have a federated ID, use `{[bx]} login -a api.<my-dedicated-cloud-instance>.<region>.bluemix.net --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know that you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
 
-3.  To target a region, run `bx cs region-set`.
+3.  To target a region, run `{[bxcs]} region-set`.
 
 4.  Create a cluster with the `cluster-create` command. When you create a standard cluster, the hardware of the worker node is billed by hours of usage.
 
     Example:
 
     ```
-    bx cs cluster-create --location <location> --machine-type <machine_type> --name <cluster_name> --workers <number>
+    {[bxcs]} cluster-create --location <location> --machine-type <machine_type> --name <cluster_name> --workers <number>
     ```
     {: pre}
 
@@ -314,11 +310,11 @@ Design your {{site.data.keyword.Bluemix_dedicated_notm}} cluster setup for maxim
     </tr>
     <tr>
     <td><code>--machine-type <em>&lt;machine_type&gt;</em></code></td>
-    <td>Enter a machine type. You can deploy your worker nodes as virtual machines on dedicated hardware, or as physical machines on bare metal. Available physical and virtual machines types vary by the location in which you deploy the cluster. For more information, see the documentation for the `bx cs machine-type` [command](cs_cli_reference.html#cs_machine_types).</td>
+    <td>Enter a machine type. You can deploy your worker nodes as virtual machines on dedicated hardware, or as physical machines on bare metal. Available physical and virtual machines types vary by the location in which you deploy the cluster. For more information, see the documentation for the `{[bxcs]} machine-type` [command](cs_cli_reference.html#cs_machine_types).</td>
     </tr>
     <tr>
     <td><code>--public-vlan <em>&lt;machine_type&gt;</em></code></td>
-    <td>Enter the ID of the public VLAN that your Dedicated environment is configured to use. If you want to connect your worker nodes to a private VLAN only, do not specify this option. **Note**: If worker nodes are set up with a private VLAN only, you must configure an alternative solution for network connectivity. For more information, see [VLAN connection for worker nodes](cs_clusters.html#worker_vlan_connection).</td>
+    <td>Enter the ID of the public VLAN that your Dedicated environment is configured to use. If you want to connect your worker nodes to a private VLAN only, do not specify this option. **Note**: {[private_vlan_vyatta]}</td>
     </tr>
     <tr>
     <td><code>--private-vlan <em>&lt;machine_type&gt;</em></code></td>
@@ -326,8 +322,7 @@ Design your {{site.data.keyword.Bluemix_dedicated_notm}} cluster setup for maxim
     </tr>  
     <tr>
     <td><code>--name <em>&lt;name&gt;</em></code></td>
-    <td>Enter a name for your cluster. The name must start with a letter, can contain letters, numbers, and hyphen (-), and must be 35 characters or fewer. Note that the cluster name and the region in which the cluster is deployed form the fully qualified domain name for the Ingress subdomain. To ensure that the Ingress subdomain is unique within a region, the cluster name might be truncated and appended with a random value within the Ingress domain name.
-</td>
+    <td>Enter a name for your cluster. {[cluster-name.md]}</td>
     </tr>
     <tr>
     <td><code>--workers <em>&lt;number&gt;</em></code></td>
@@ -335,8 +330,7 @@ Design your {{site.data.keyword.Bluemix_dedicated_notm}} cluster setup for maxim
     </tr>
     <tr>
     <td><code>--kube-version <em>&lt;major.minor.patch&gt;</em></code></td>
-    <td>The Kubernetes version for the cluster master node. This value is optional. When the version is not specified, the cluster is created with the default of supported Kubernetes versions. To see available versions, run <code>bx cs kube-versions</code>.
-</td>
+    <td>{[kube-version-flag.md]}</td>
     </tr>
     <tr>
     <td><code>--disable-disk-encrypt</code></td>
@@ -344,31 +338,31 @@ Design your {{site.data.keyword.Bluemix_dedicated_notm}} cluster setup for maxim
     </tr>
     <tr>
     <td><code>--trusted</code></td>
-    <td>Enable [Trusted Compute](cs_secure.html#trusted_compute) to verify your bare metal worker nodes against tampering. If you don't enable trust during cluster creation but want to later, you can use the `bx cs feature-enable` [command](cs_cli_reference.html#cs_cluster_feature_enable). After you enable trust, you cannot disable it later.</td>
+    <td>Enable [Trusted Compute](cs_secure.html#trusted_compute) to verify your bare metal worker nodes against tampering. If you don't enable trust during cluster creation but want to later, you can use the `{[bxcs]} feature-enable` [command](cs_cli_reference.html#cs_cluster_feature_enable). After you enable trust, you cannot disable it later.</td>
     </tr>
     </tbody></table>
 
 5.  Verify that the creation of the cluster was requested.
 
     ```
-    bx cs clusters
+    {[bxcs]} clusters
     ```
     {: pre}
 
-    **Note:** For virtual machines, it can take a few minutes for the worker node machines to be ordered, and for the cluster to be set up and provisioned in your account. Bare metal physical machines are provisioned by manual interaction with IBM Cloud infrastructure (SoftLayer), and can take more than one business day to complete.
+    **Note:** For virtual machines, it can take a few minutes for the worker node machines to be ordered, and for the cluster to be set up and provisioned in your account. Bare metal physical machines are provisioned by manual interaction with {[softlayer]}, and can take more than one business day to complete.
 
     When the provisioning of your cluster is completed, the status of your cluster changes to **deployed**.
 
     ```
     Name         ID                                   State      Created          Workers   Location   Version
-    my_cluster   paf97e8843e29941b49c598f516de72101   deployed   20170201162433   1         mil01      1.8.11
+    my_cluster   paf97e8843e29941b49c598f516de72101   deployed   20170201162433   1         mil01      {[kubeversions]}
     ```
     {: screen}
 
 6.  Check the status of the worker nodes.
 
     ```
-    bx cs workers <cluster_name_or_ID>
+    {[bxcs]} workers <cluster_name_or_ID>
     ```
     {: pre}
 
@@ -378,7 +372,7 @@ Design your {{site.data.keyword.Bluemix_dedicated_notm}} cluster setup for maxim
 
     ```
     ID                                                 Public IP       Private IP       Machine Type   State    Status   Location   Version
-    kube-mil01-paf97e8843e29941b49c598f516de72101-w1   169.xx.xxx.xxx  10.xxx.xx.xxx    free           normal   Ready    mil01      1.8.11
+    kube-mil01-paf97e8843e29941b49c598f516de72101-w1   {[public_IP]}  {[internal_cluster_IP]}    free           normal   Ready    mil01      {[kubeversions]}
     ```
     {: screen}
 
@@ -387,7 +381,7 @@ Design your {{site.data.keyword.Bluemix_dedicated_notm}} cluster setup for maxim
     1.  Get the command to set the environment variable and download the Kubernetes configuration files.
 
         ```
-        bx cs cluster-config <cluster_name_or_ID>
+        {[bxcs]} cluster-config <cluster_name_or_ID>
         ```
         {: pre}
 
@@ -396,7 +390,7 @@ Design your {{site.data.keyword.Bluemix_dedicated_notm}} cluster setup for maxim
         Example for OS X:
 
         ```
-        export KUBECONFIG=/Users/<user_name>/.bluemix/plugins/container-service/clusters/<cluster_name>/kube-config-prod-dal10-<cluster_name>.yml
+        export KUBECONFIG=/Users/<user_name>/.bluemix/plugins/{[pluginname_short]}/clusters/<cluster_name>/kube-config-prod-dal10-<cluster_name>.yml
         ```
         {: screen}
 
@@ -413,7 +407,7 @@ Design your {{site.data.keyword.Bluemix_dedicated_notm}} cluster setup for maxim
         Output:
 
         ```
-        /Users/<user_name>/.bluemix/plugins/container-service/clusters/<cluster_name>/kube-config-prod-dal10-<cluster_name>.yml
+        /Users/<user_name>/.bluemix/plugins/{[pluginname_short]}/clusters/<cluster_name>/kube-config-prod-dal10-<cluster_name>.yml
 
         ```
         {: screen}
@@ -441,6 +435,7 @@ Design your {{site.data.keyword.Bluemix_dedicated_notm}} cluster setup for maxim
 ### Using private and public image registries
 {: #dedicated_images}
 
+{[gdpr_images]}
 
 For new namespaces, see the options in [Using private and public image registries with {{site.data.keyword.containershort_notm}}](cs_images.html). For namespaces that were set up for single and scalable groups, [use a token and create a Kubernetes secret](cs_dedicated_tokens.html#cs_dedicated_tokens) for authentication.
 
@@ -467,24 +462,24 @@ Before you begin: Configure the routing of network traffic into and out of your 
 2. After {{site.data.keyword.IBM_notm}} provisions the user-managed subnets, make the subnet available to your Kubernetes cluster.
 
     ```
-    bx cs cluster-user-subnet-add <cluster_name> <subnet_CIDR> <private_VLAN>
+    {[bxcs]} cluster-user-subnet-add <cluster_name> <subnet_CIDR> <private_VLAN>
     ```
     {: pre}
-    Replace <em>&lt;cluster_name&gt;</em> with the name or ID of your cluster, <em>&lt;subnet_CIDR&gt;</em> with one of the subnet CIDRs that you provided in the support ticket, and <em>&lt;private_VLAN&gt;</em> with an available private VLAN ID. You can find the ID of an available private VLAN by running `bx cs vlans`.
+    Replace <em>&lt;cluster_name&gt;</em> with the name or ID of your cluster, <em>&lt;subnet_CIDR&gt;</em> with one of the subnet CIDRs that you provided in the support ticket, and <em>&lt;private_VLAN&gt;</em> with an available private VLAN ID. You can find the ID of an available private VLAN by running `{[bxcs]} vlans`.
 
 3. Verify that the subnets were added to your cluster. The field **User-managed** for user-provided subnets is _`true`_.
 
     ```
-    bx cs cluster-get --showResources <cluster_name>
+    {[bxcs]} cluster-get --showResources <cluster_name>
     ```
     {: pre}
 
     ```
     VLANs
     VLAN ID   Subnet CIDR         Public       User-managed
-    1555503   169.xx.xxx.xxx/24   true         false
-    1555505   10.xxx.xx.xxx/24    false        false
-    1555505   10.xxx.xx.xxx/24    false        true
+    1555503   {[public_IP]}/24   true         false
+    1555505   {[internal_cluster_IP]}/24    false        false
+    1555505   {[internal_cluster_IP]}/24    false        true
     ```
     {: screen}
 
@@ -492,7 +487,7 @@ Before you begin: Configure the routing of network traffic into and out of your 
 
 5. To configure on-premises and internal account connectivity, choose between these options:
   - If you used a 10.x.x.x private IP address range for the subnet, use valid IPs from that range to configure on-premises and internal account connectivity with Ingress and a load balancer. For more information, see [Planning networking with NodePort, LoadBalancer, or Ingress services](cs_network_planning.html#planning).
-  - If you did not use a 10.x.x.x private IP address range for the subnet, use valid IPs from that range to configure on-premises connectivity with Ingress and a load balancer. For more information, see [Planning networking with NodePort, LoadBalancer, or Ingress services](cs_network_planning.html#planning). However, you must use an IBM Cloud infrastructure (SoftLayer) portable private subnet to configure internal account connectivity between your cluster and other Cloud Foundry-based services. You can create a portable private subnet with the [`bx cs cluster-subnet-add`](cs_cli_reference.html#cs_cluster_subnet_add) command. For this scenario, your cluster has both a user-managed subnet for on-premises connectivity and an IBM Cloud infrastructure (SoftLayer) portable private subnet for internal account connectivity.
+  - If you did not use a 10.x.x.x private IP address range for the subnet, use valid IPs from that range to configure on-premises connectivity with Ingress and a load balancer. For more information, see [Planning networking with NodePort, LoadBalancer, or Ingress services](cs_network_planning.html#planning). However, you must use an {[softlayer]} portable private subnet to configure internal account connectivity between your cluster and other Cloud Foundry-based services. You can create a portable private subnet with the [`{[bxcs]} cluster-subnet-add`](cs_cli_reference.html#cs_cluster_subnet_add) command. For this scenario, your cluster has both a user-managed subnet for on-premises connectivity and an {[softlayer]} portable private subnet for internal account connectivity.
 
 ### Other cluster configurations
 {: #dedicated_other}
@@ -508,8 +503,7 @@ Review the following options for other cluster configurations:
   * [Visualizing Kubernetes cluster resources](cs_integrations.html#weavescope)
   * [Removing clusters](cs_clusters.html#remove)
 
-<br />
-
+{[white-space.md]}
 
 ## Deploying apps in clusters
 {: #dedicated_apps}
@@ -519,7 +513,7 @@ You can use Kubernetes techniques to deploy apps in {{site.data.keyword.Bluemix_
 
 To deploy apps in clusters, you can follow the instructions for [deploying apps in {{site.data.keyword.Bluemix_notm}} public clusters](cs_app.html#app). Review the following differences for {{site.data.keyword.Bluemix_dedicated_notm}} clusters.
 
-
+{[gdpr_resources]}
 
 ### Allowing public access to apps
 {: #dedicated_apps_public}
