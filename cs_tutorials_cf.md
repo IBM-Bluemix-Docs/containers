@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2017-04-16"
+lastupdated: "2018-4-20"
 
 ---
 
@@ -19,7 +19,7 @@ lastupdated: "2017-04-16"
 # Tutorial: Migrating an app from Cloud Foundry to a cluster
 {: #cf_tutorial}
 
-You can take an app that you deployed previously by using Cloud Foundry and deploy the same code in a container to a Kubernetes cluster in  {{site.data.keyword.containershort_notm}}.
+You can take an app that you deployed previously by using Cloud Foundry and deploy the same code in a container to a Kubernetes cluster in {{site.data.keyword.containershort_notm}}.
 {: shortdesc}
 
 
@@ -131,7 +131,7 @@ Create a Dockerfile that includes your app code and the necessary configurations
 
   <table>
   <thead>
-  <th colspan=2><img src="images/idea.png" alt="This icon indicates there is more information to learn about this command's components."/> Understanding this command's components</th>
+  <th colspan=2><img src="images/idea.png" alt="This icon indicates that there is more information to learn about this command's components."/> Understanding this command's components</th>
   </thead>
   <tbody>
   <tr>
@@ -254,16 +254,17 @@ Deploy your app as a container in a Kubernetes cluster.
 
     ```
     ID                                                 Public IP        Private IP     Machine Type        State    Status   Zone    Version   
-    kube-dal10-cr18e61e63c6e94b658596ca93d087eed9-w1   169.xx.xxx.xxx   10.xxx.xx.xxx   u2c.2x4.encrypted   normal   Ready    dal10   1.8.8
+    kube-dal10-cr18e61e63c6e94b658596ca93d087eed9-w1   169.xx.xxx.xxx   10.xxx.xx.xxx   u2c.2x4.encrypted   normal   Ready    dal10   1.8.11
     ```
     {: screen}
 
-    b. Open a browser and check out the app with the following URL: `http://<public_IP_address>:<NodePort>`. With the example values, the URL is `http://169.xx.xxx.xxx:30872`. You can give this URL to a co-worker to try or enter it in your cell phone's browser, so that you can see that the app really is publicly available.
+    b. Open a browser and check out the app with the following URL: `http://<public_IP_address>:<NodePort>`. With the example values, the URL is `http://169.xx.xxx.xxx:30872`. You can give this URL to a co-worker to try or enter it in your cell phone's browser so that you can see that the app really is publicly available.
 
-    <img src="images/python_flask.png" alt="A screenshot of the deployed boilerplate Python Flask app." />
+    <img src="images/python_flask.png" alt="A screen capture of the deployed boilerplate Python Flask app." />
 
-5. [Launch the Kubernetes dashboard](cs_app.html#cli_dashboard). Note that the steps differ depending on your version of Kubernetes.
+5. [Launch the Kubernetes dashboard](cs_app.html#cli_dashboard). The steps differ depending on your version of Kubernetes.
 
 6. In the **Workloads** tab, you can see the resources that you created. When you are done exploring the Kubernetes dashboard, use `ctrl + c` to exit the `proxy` command.
 
 Congratulations! Your app is deployed in a container!
+
