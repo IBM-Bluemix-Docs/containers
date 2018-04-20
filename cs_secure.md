@@ -137,7 +137,7 @@ Manage the security and integrity of your images with built-in security features
 <dl>
 <dt>Secured Docker private image repository in {{site.data.keyword.registryshort_notm}}</dt>
   <dd>You can set up your own Docker image repository in a multi-tenant, highly available, and scalable private image registry that is hosted and managed by IBM to build, securely store, and share Docker images across cluster users.
-  </dd>
+  <p>Learn more about [securing your personal information](cs_secure.html#pi) when you work with container images.</p></dd>
 <dt>Image security compliance</dt>
   <dd>When you use {{site.data.keyword.registryshort_notm}}, you can leverage the built-in security scanning that is provided by Vulnerability Advisor. Every image that is pushed to your namespace is automatically scanned for vulnerabilities against a database of known CentOS, Debian, Red Hat, and Ubuntu issues. If vulnerabilities are found, Vulnerability Advisor provides instructions for how to resolve them to assure image integrity and security.</dd>
 </dl>
@@ -170,6 +170,10 @@ For more information about how to create a service of type cluster IP, see [Kube
 
 For information about securely connecting apps in a Kubernetes cluster to an on-premises network, see [Setting up VPN connectivity](cs_vpn.html#vpn). For information about exposing your apps for external network communication, see [Allowing public access to apps](cs_network_planning.html#public_access).
 
+
+<br />
+
+
 ## Cluster trust
 {: cs_trust}
 
@@ -190,7 +194,135 @@ By default, {{site.data.keyword.containerlong_notm}} provides many [features for
 
 6.  **{{site.data.keyword.cloudcerts_long_notm}} (beta)**: If you have a cluster in US South and want to [expose your app by using a custom domain with TLS](https://console.bluemix.net/docs/containers/cs_ingress.html#custom_domain_cert), you can store your TLS certificate in {{site.data.keyword.cloudcerts_short}}. Expired or about-to-expire certificates can also reported in your Security Advisor dashboard. For more information, see [Getting started with {{site.data.keyword.cloudcerts_short}}](/docs/services/certificate-manager/index.html#gettingstarted).
 
+<br />
 
 
+## Storing personal information
+{: #pi}
 
+You are responsible for ensuring the security of your personal information in Kubernetes resources and container images. Personal information includes your name, address, phone number, email address, or other information that might identify, contact, or locate you, your customers, or anyone else.
+{: shortdesc}
+
+<dl>
+  <dt>Use a Kubernetes secret to store personal information</dt>
+  <dd>Only store personal information in Kubernetes resources that are designed to hold personal information. For example, do not use your name in the name of a Kubernetes namespace, deployment, service, or config map. For proper protection and encryption, store personal information in <a href="cs_app.html#secrets">Kubernetes secrets</a> instead.</dd>
+
+  <dt>Use a Kubernetes `imagePullSecret` to store image registry credentials</dt>
+  <dd>Do not store personal information in container images or registry namespaces. For proper protection and encryption, store registry credentials in <a href="cs_images.html#other">Kubernetes imagePullSecrets</a> and other personal information in <a href="cs_app.html#secrets">Kubernetes secrets</a> instead. Remember that if personal information is stored in a previous layer of an image, deleting an image might not be sufficient to delete this personal information.</dd>
+  </dl>
+  
+
+
+<p>For example, if an unauthorized user gains access to your system and modifies the OS kernel with additional logic to collect data, the trust agent detects this and changes the node's trusted status so that you know that the worker is no longer trusted. With trusted compute, you can verify your worker nodes against tampering.</p>
+    </td>
+  </tr>
+    <tr>
+      <td>Performance network</td>
+      <td>Kubernetes master and worker nodes are connected to IBM Cloud infrastructure (SoftLayer) VLANs to assure quality network performance and network segmentation for your worker nodes. VLANs are dedicated to your {{site.data.keyword.Bluemixshort_notm}} account and not shared across IBM customers. All containers that run in your cluster are protected by predefined Calico network policy settings that are configured on every worker node during cluster creation. This set up ensures secure network communication between worker nodes and pods. See [network security](#network) for more information.</td>
+    </tr>
+    <tr>
+  <td>Encrypted disks</td>
+    <td>By default, every worker node is provisioned with two local SSD encrypted data partitions. The first partition is not encrypted, and the second partition mounted to /var/lib/docker is unlocked by using LUKS encryption keys. Each worker in each Kubernetes cluster has its own unique LUKS encryption key, managed by {{site.data.keyword.containershort_notm}}. When you create a cluster or add a worker node to an existing cluster, the keys are pulled securely and then discarded after the encrypted disk is unlocked.</br></br><strong>Note: </strong>Encryption can impact disk I/O performance. For workloads that require high-performance disk I/O, test a cluster with encryption both enabled and disabled to help you decide whether to turn off encryption.</td>
+      </tr>
+    <tr>
+      <td>Expert AppArmor policies</td>
+      <td>Every worker node is set up with security and access policies that are enforced by [AppArmor [![External link icon](../icons/launch-glyph.svg "External link icon")](https://wiki.ubuntu.com/AppArmor) profiles that are loaded into the worker node during bootstrapping. AppArmor profiles cannot be changed by the user or owner. </td>
+    </tr>
+    <tr>
+      <td>SSH disabled</td>
+      <td>By default, SSH access is disabled on the worker node to protect your cluster from malicious attacks. When SSH access is disabled, access to the cluster is forced via the Kubernetes API server. The Kubernetes API server requires every request to be checked against the policies that are set in the authentication, authorization, and admission control module before the request is executed in the cluster. </br></br>  If you have a standard cluster and you want to install additional features on your worker node, you can choose between the add-ons that are provided by {{site.data.keyword.containershort_notm}} or use Kubernetes [daemon sets [![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) for everything that you want to run on every worker node, or [Kubernetes jobs [![External link icon](../icons/launch-glyph.svg "External link icon")]](https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/) for any one-time action you must execute.</td>
+    </tr>
+  </tbody>
+  </table> 
+
+## Network
+{: #network}
+
+### Default security settings in {{site.data.keyword.containershort_notm}}
+
+<table>
+  <thead>   
+    <th>Security feature</th>
+    <th>Description</th>
+  </thead>
+    <tbody>
+    <tr>
+      <td>Network isolation</td>
+      <td>Every {{site.data.keyword.Bluemixshort_notm}} account is set up with {{softlayer}} VLANs to assure quality network performance and isolation on the worker nodes. You can also designate worker nodes as private by connecting them to a private VLAN only.</td>
+    </tr>
+    <tr>
+      <td>TLS secured communication</td>
+      <td>To secure the network communication to the Kubernetes master, {{site.data.keyword.containershort_notm}} generates TLS certificates that encrypt the communication to and from the kube-apiserver and etcd data store components for every cluster. These certificates are never shared across clusters or across Kubernetes master components.</td>
+    </tr>
+    <tr>
+      <td>OpenVPN secured communication between Kubernetes master to worker nodes</td>
+      <td>Although Kubernetes secures the communication between the Kubernetes master and worker nodes by using the https protocol, no authentication is provided on the worker node by default. To secure this communication, {{site.data.keyword.containershort_notm}} automatically sets up an OpenVPN connection between the Kubernetes master and the worker node when the cluster is created.</td>
+    </tr>
+    <tr>
+      <td>Predefined Calico network policies</td>
+      <td>All containers that run on Kubernetes are protected by predefined Calico network policy settings that are configured on every worker node during cluster creation. This set up ensures secure network communication between worker nodes and pods.</td>
+    </tr>
+  </tbody>
+</table>
+
+### Additional options
+
+## Persistent storage
+{: #storage}
+
+### Default security settings in {{site.data.keyword.containershort_notm}}
+
+### Additional options
+
+## Monitoring and logging
+{: #monitoring_logging}
+
+The key to detect malicious attacks in your cluster is the proper monitoring and logging of all the events that happen in the cluster. Monitoring and logging can also help you understand the cluster capacity and availability of resources for your app so that you can plan accordingly to protect your apps from a downtime. 
+{: shortdesc}
+
+**Does IBM monitor my cluster?**</br>
+Every Kubernetes master is continuously monitored by IBM to control and remediate process level Denial-Of-Service (DOS) attacks. {{site.data.keyword.containershort_notm}} automatically scans every node where the Kubernetes master is deployed for vulnerabilities found in Kubernetes and OS-specific security fixes that need to be applied to assure master node protection. If vulnerabilities are found, {{site.data.keyword.containershort_notm}} automatically applies fixes and resolves vulnerabilities on behalf of the user. 
+
+**What information is logged and how can I set up proper monitoring for it?**</br>
+For standard clusters, all cluster-related events, such as adding a worker node, rolling update progress, or capacity usage information can be logged and monitored by {{site.data.keyword.containershort_notm}} and sent to {{site.data.keyword.loganalysislong_notm}} and {{site.data.keyword.monitoringlong_notm}}. For information about setting up logging and monitoring, see [Configuring cluster logging](/docs/containers/cs_health.html#logging) and [Configuring cluster monitoring](/docs/containers/cs_health.html#monitoring).
+
+----services we integrate with, such as Prometheus, etc.----
+----image that shows what gets logged and maybe show how it is forwarded----
+
+**What are my options to enable trust in my cluster?** </br>
+By default, {{site.data.keyword.containershort_notm}} provides many features for your cluster components so that you can deploy your containerized apps in a security-rich environment. Extend your level of trust in your cluster to better ensure that what happens within your cluster is what you intended to happen. You can implement trust in your cluster in various ways, as shown in the following diagram.
+
+![Deploying containers with trusted content](images/trusted_story.png)
+
+1.  **{{site.data.keyword.containerlong_notm}} with Trusted Compute**: On bare metal clusters, you can enable trust. The trust agent monitors the hardware startup process and reports any changes so that you can verify your bare metal worker nodes against tampering. With Trusted Compute, you can deploy your containers on verified bare metal hosts so that your workloads run on trusted hardware. [Learn more about how Trusted Compute works](#trusted_compute).
+
+2.  **Content Trust for your images**: Ensure the integrity of your images by enabling content trust in your {{site.data.keyword.registryshort_notm}}. With trusted content, you can control who can sign images as trusted. After trusted signers push an image to your registry, users can pull the signed content so that they can verify the source of the image. For more information, see [Signing images for trusted content](/docs/services/Registry/registry_trusted_content.html#registry_trustedcontent).
+
+3.  **Container Image Security Enforcement (beta)**: Create an admission controller with custom policies so that you can verify container images before you deploy them. With Container Image Security Enforcement, you control where the images are deployed from and ensure that they meet [Vulnerability Advisor](/docs/services/va/va_index.html) policies or [content trust](/docs/services/Registry/registry_trusted_content.html#registry_trustedcontent) requirements. If a deployment does not meet the policies that you set, security enforcement prevents modifications to your cluster. For more information, see [Enforcing container image security (beta)](/docs/services/Registry/registry_security_enforce.html#security_enforce).
+
+4.  **Container Vulnerability Scanner**: By default, Vulnerability Advisor scans images that are stored in {{site.data.keyword.registryshort_notm}}. To check the status of live containers that are running in your cluster, you can install the container scanner. For more information, see [Installing the container scanner](/docs/services/va/va_index.html#va_install_livescan).
+
+5.  **Network analytics with Security Advisor (preview)**: With {{site.data.keyword.Bluemix_notm}} Security Advisor, you can centralize security insights from {{site.data.keyword.Bluemix_notm}} services such as Vulnerability Advisor and {{site.data.keyword.cloudcerts_short}}. When you enable Security Advisor in your cluster, you can view reports about suspicious incoming and outgoing network traffic. For more information, see [Network Analytics](/docs/services/security-advisor/network-analytics.html#network-analytics). To install, see [Setting up monitoring of suspicious clients and server IPs for a Kubernetes cluster](/docs/services/security-advisor/setup_cluster.html).
+
+6.  **{{site.data.keyword.cloudcerts_long_notm}} (beta)**: If you have a cluster in US South and want to [expose your app by using a custom domain with TLS](https://console.bluemix.net/docs/containers/cs_ingress.html#custom_domain_cert), you can store your TLS certificate in {{site.data.keyword.cloudcerts_short}}. Expired or about-to-expire certificates can also reported in your Security Advisor dashboard. For more information, see [Getting started with {{site.data.keyword.cloudcerts_short}}](/docs/services/certificate-manager/index.html#gettingstarted).
+
+
+## Image and registry
+{: #images_registry}
+
+Learn more about [securing your personal information](cs_secure.html#pi) when you work with container images.
+
+### Default security settings in {{site.data.keyword.containershort_notm}}
+
+### Additional options
+
+## Deployment
+{: #deployments}
+
+### Default security settings in {{site.data.keyword.containershort_notm}}
+
+### Additional options
+
+
+</staging>
 
