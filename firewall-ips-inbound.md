@@ -1,0 +1,40 @@
+
+  <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
+      <thead>
+      <th colspan=2><img src="images/idea.png"/> Inbound IP addresses</th>
+      </thead>
+    <tbody>
+      <tr>
+        <td>ams03</td>
+        <td><code>169.50.144.128/28</code></br><code>169.50.169.104/29</code></br><code>169.50.185.32/27</code></td>
+      </tr>
+      <tr>
+        <td>dal10</td>
+        <td><code>169.46.7.232/29</code></br><code>169.48.138.64/26</code></br><code>169.48.180.128/25</code></td>
+       </tr>
+       <tr>
+        <td>dal12</td>
+        <td><code>169.47.70.8/29</code></br><code>169.47.79.192/26</code></br><code>169.47.126.192/27</code></td>
+       </tr>
+       <tr>
+        <td>fra02</td>
+        <td><code>169.50.48.160/28</code></br><code>169.50.56.168/29</code></br><code>169.50.58.160/27</code></td>
+       </tr>
+      <tr>
+       <td>lon02</td>
+       <td><code>159.122.242.78</code></td>
+      </tr>
+      <tr>
+       <td>lon04</td>
+       <td><code>158.175.68.192/26</code></td>
+      </tr>
+      <tr>
+       <td>syd01</td>
+       <td><code>168.1.209.192/26</code></td>
+      </tr>
+      <tr>
+       <td>syd04</td>
+       <td><code>130.198.67.0/26</code></td>
+      </tr>
+      </tbody>
+    </table>

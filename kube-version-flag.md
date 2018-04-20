@@ -1,0 +1,1 @@
+The Kubernetes version for the cluster master node. This value is optional. When the version is not specified, the cluster is created with the default of supported Kubernetes versions. To see available versions, run <code>{[bxcs]} kube-versions</code>.
