@@ -262,6 +262,7 @@ To create a cluster:
 6.  Create a cluster.
 
     1.  **Standard clusters**: Review the locations that are available. The locations that are shown depend on the {{site.data.keyword.containershort_notm}} region that you are logged in.
+        **Note**: To create a multizone cluster, the cluster must be created in a [multizone-capable zone](cs_regions.html#zones).
 
         ```
         bx cs locations
