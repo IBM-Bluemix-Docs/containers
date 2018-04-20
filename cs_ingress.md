@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-18"
+lastupdated: "2018-4-20"
 
 ---
 
@@ -158,7 +158,7 @@ To expose an app by using the IBM-provided domain:
     Ingress Subdomain:      mycluster-12345.us-south.containers.mybluemix.net
     Ingress Secret:         <tls_secret>
     Workers:                3
-    Version:                1.8.8
+    Version:                1.8.11
     Owner Email:            owner@email.com
     Monitoring Dashboard:   <dashboard_URL>
     ```
@@ -328,7 +328,7 @@ To expose an app by using the IBM-provided domain with TLS:
       Ingress Subdomain:      mycluster-12345.us-south.containers.mybluemix.net
       Ingress Secret:         <ibm_tls_secret>
       Workers:                3
-      Version:                1.8.8
+      Version:                1.8.11
       Owner Email:            owner@email.com
       Monitoring Dashboard:   <dashboard_URL>
       ```
@@ -733,7 +733,7 @@ You can route incoming network traffic on the IBM-provided domain to apps that a
       Ingress Subdomain:      mycluster-12345.us-south.containers.mybluemix.net
       Ingress Secret:         <ibm_tls_secret>
       Workers:                3
-      Version:                1.8.8
+      Version:                1.8.11
       Owner Email:            owner@email.com
       Monitoring Dashboard:   <dashboard_URL>
       ```
