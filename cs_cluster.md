@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-03-08"
+lastupdated: "2018-4-20"
 
 ---
 
@@ -55,3 +55,4 @@ Check out the latest information in its new location:
     - [Configuring health monitoring for worker nodes with Autorecovery](cs_health.html#autorecovery)
 - [Visualizing Kubernetes cluster resources](cs_integrations.html#weavescope)
 - [Removing clusters](cs_clusters.html#remove)
+

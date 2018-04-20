@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-03"
+lastupdated: "2018-4-20"
 
 ---
 
@@ -296,4 +296,5 @@ Still having issues with your cluster?
 
 {:tip}
 When reporting an issue, include your cluster ID. To get your cluster ID, run `bx cs clusters`.
+
 

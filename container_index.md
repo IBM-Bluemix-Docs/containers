@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-12"
+lastupdated: "2018-4-20"
 
 ---
 
@@ -71,3 +71,4 @@ Over the next 21 days, try out some things with your free cluster.
 * [Deploy an app in your cluster.](cs_app.html#app_cli)
 * [Create a standard cluster with multiple nodes for higher availability.](cs_clusters.html#clusters_ui)
 * [Set up your own private registry in {{site.data.keyword.Bluemix_notm}} to store and share Docker images with other users.](/docs/services/Registry/index.html)
+

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-11"
+lastupdated: "2018-4-20"
 
 ---
 
@@ -118,3 +118,4 @@ You can create one free cluster or any number of standard clusters. Try out free
 
 {: #terms}
 See [{{site.data.keyword.containershort_notm}} responsibilities](cs_responsibilities.html).
+
