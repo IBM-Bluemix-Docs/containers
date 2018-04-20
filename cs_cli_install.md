@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-10"
+lastupdated: "2018-4-20"
 
 ---
 
@@ -22,8 +22,7 @@ lastupdated: "2018-04-10"
 You can use the {{site.data.keyword.containerlong}} CLI or API to create and manage your Kubernetes clusters.
 {:shortdesc}
 
-<br />
-
+{[white-space.md]}
 
 ## Installing the CLI
 {: #cs_cli_install_steps}
@@ -34,7 +33,7 @@ Install the required CLIs to create and manage your Kubernetes clusters in {{sit
 This task includes the information for installing these CLIs and plug-ins:
 
 -   {{site.data.keyword.Bluemix_notm}} CLI version 0.5.0 or later
--   {{site.data.keyword.containershort_notm}} plug-in
+-   {[pluginname]}
 -   Kubernetes CLI version that matches the `major.minor` version of your cluster
 -   Optional: {{site.data.keyword.registryshort_notm}} plug-in
 -   Optional: Docker version 1.9 or later
@@ -42,40 +41,40 @@ This task includes the information for installing these CLIs and plug-ins:
 <br>
 To install the CLIs:
 
-1.  As a prerequisite for the {{site.data.keyword.containershort_notm}} plug-in, install the [{{site.data.keyword.Bluemix_notm}} CLI ![External link icon](../icons/launch-glyph.svg "External link icon")](https://clis.ng.bluemix.net/ui/home.html). The prefix for running commands by using the {{site.data.keyword.Bluemix_notm}} CLI is `bx`.
+1.  As a prerequisite for the {[pluginname]}, install the [{{site.data.keyword.Bluemix_notm}} CLI ![External link icon](../icons/launch-glyph.svg "External link icon")](https://clis.ng.bluemix.net/ui/home.html). The prefix for running commands by using the {{site.data.keyword.Bluemix_notm}} CLI is `{[bx]}`.
 
 2.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your {{site.data.keyword.Bluemix_notm}} credentials when prompted.
 
     ```
-    bx login
+    {[bx]} login
     ```
     {: pre}
 
-    **Note:** If you have a federated ID, use `bx login --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
+    **Note:** If you have a federated ID, use `{[bx]} login --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
 
-3.  To create Kubernetes clusters and manage worker nodes, install the {{site.data.keyword.containershort_notm}} plug-in. The prefix for running commands by using the {{site.data.keyword.containershort_notm}} plug-in is `bx cs`.
+3.  To create Kubernetes clusters and manage worker nodes, install the {[pluginname]}. The prefix for running commands by using the {[pluginname]} is `{[bxcs]}`.
 
     ```
-    bx plugin install container-service -r Bluemix
+    {[bx]} plugin install {[pluginname_short]} -r Bluemix
     ```
     {: pre}
 
     To verify that the plug-in is installed properly, run the following command:
 
     ```
-    bx plugin list
+    {[bx]} plugin list
     ```
     {: pre}
 
-    The {{site.data.keyword.containershort_notm}} plug-in is displayed in the results as container-service.
+    The {[pluginname]} is displayed in the results as {[pluginname_short]}.
 
 4.  {: #kubectl}To view a local version of the Kubernetes dashboard and to deploy apps into your clusters, [install the Kubernetes CLI ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/tools/install-kubectl/). The prefix for running commands by using the Kubernetes CLI is `kubectl`.
 
-    1.  Download the Kubernetes CLI `major.minor` version that matches the Kubernetes cluster `major.minor` version that you plan to use. The current {{site.data.keyword.containershort_notm}} default Kubernetes version is 1.8.8. **Note**: If you use a `kubectl` CLI version that does not match at least the `major.minor` version of your clusters, you might experience unexpected results. Make sure to keep your Kubernetes cluster and CLI versions up-to-date.
+    1.  Download the Kubernetes CLI `major.minor` version that matches the Kubernetes cluster `major.minor` version that you plan to use. The current {{site.data.keyword.containershort_notm}} default Kubernetes version is {[kubeversions]}. **Note**: If you use a `kubectl` CLI version that does not match at least the `major.minor` version of your clusters, you might experience unexpected results. Make sure to keep your Kubernetes cluster and CLI versions up-to-date.
 
-        - **OS X**:   [https://storage.googleapis.com/kubernetes-release/release/v1.8.8/bin/darwin/amd64/kubectl ![External link icon](../icons/launch-glyph.svg "External link icon")](https://storage.googleapis.com/kubernetes-release/release/v1.8.8/bin/darwin/amd64/kubectl)
-        - **Linux**:   [https://storage.googleapis.com/kubernetes-release/release/v1.8.8/bin/linux/amd64/kubectl ![External link icon](../icons/launch-glyph.svg "External link icon")](https://storage.googleapis.com/kubernetes-release/release/v1.8.8/bin/linux/amd64/kubectl)
-        - **Windows**:    [https://storage.googleapis.com/kubernetes-release/release/v1.8.8/bin/windows/amd64/kubectl.exe ![External link icon](../icons/launch-glyph.svg "External link icon")](https://storage.googleapis.com/kubernetes-release/release/v1.8.8/bin/windows/amd64/kubectl.exe)
+        - **OS X**:   [https://storage.googleapis.com/kubernetes-release/release/v{[kubeversions]}/bin/darwin/amd64/kubectl ![External link icon](../icons/launch-glyph.svg "External link icon")](https://storage.googleapis.com/kubernetes-release/release/v{[kubeversions]}/bin/darwin/amd64/kubectl)
+        - **Linux**:   [https://storage.googleapis.com/kubernetes-release/release/v{[kubeversions]}/bin/linux/amd64/kubectl ![External link icon](../icons/launch-glyph.svg "External link icon")](https://storage.googleapis.com/kubernetes-release/release/v{[kubeversions]}/bin/linux/amd64/kubectl)
+        - **Windows**:    [https://storage.googleapis.com/kubernetes-release/release/v{[kubeversions]}/bin/windows/amd64/kubectl.exe ![External link icon](../icons/launch-glyph.svg "External link icon")](https://storage.googleapis.com/kubernetes-release/release/v{[kubeversions]}/bin/windows/amd64/kubectl.exe)
 
     2.  **For OSX and Linux**: Complete the following steps.
         1.  Move the executable file to the `/usr/local/bin` directory.
@@ -108,17 +107,17 @@ To install the CLIs:
 
     3.  **For Windows**: Install the Kubernetes CLI in the same directory as the {{site.data.keyword.Bluemix_notm}} CLI. This setup saves you some filepath changes when you run commands later.
 
-5.  To manage a private image repository, install the {{site.data.keyword.registryshort_notm}} plug-in. Use this plug-in to set up your own namespace in a multi-tenant, highly available, and scalable private image registry that is hosted by IBM, and to store and share Docker images with other users. Docker images are required to deploy containers into a cluster. The prefix for running registry commands is `bx cr`.
+5.  To manage a private image repository, install the {{site.data.keyword.registryshort_notm}} plug-in. Use this plug-in to set up your own namespace in a multi-tenant, highly available, and scalable private image registry that is hosted by IBM, and to store and share Docker images with other users. Docker images are required to deploy containers into a cluster. The prefix for running registry commands is `{[bxcr]}`.
 
     ```
-    bx plugin install container-registry -r Bluemix
+    {[bx]} plugin install container-registry -r Bluemix
     ```
     {: pre}
 
     To verify that the plug-in is installed properly, run the following command:
 
     ```
-    bx plugin list
+    {[bx]} plugin list
     ```
     {: pre}
 
@@ -130,13 +129,12 @@ Next, start [Creating Kubernetes clusters from the CLI with {{site.data.keyword.
 
 For reference information about these CLIs, see the documentation for those tools.
 
--   [`bx` commands](/docs/cli/reference/bluemix_cli/bx_cli.html)
--   [`bx cs` commands](cs_cli_reference.html#cs_cli_reference)
+-   [`{[bx]}` commands](/docs/cli/reference/bluemix_cli/bx_cli.html)
+-   [`{[bxcs]}` commands](cs_cli_reference.html#cs_cli_reference)
 -   [`kubectl` commands ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands)
--   [`bx cr` commands](/docs/cli/plugins/registry/index.html)
+-   [`{[bxcr]}` commands](/docs/cli/plugins/registry/index.html)
 
-<br />
-
+{[white-space.md]}
 
 ## Configuring the CLI to run `kubectl`
 {: #cs_cli_configure}
@@ -144,27 +142,27 @@ For reference information about these CLIs, see the documentation for those tool
 You can use the commands that are provided with the Kubernetes CLI to manage clusters in {{site.data.keyword.Bluemix_notm}}.
 {:shortdesc}
 
-All `kubectl` commands that are available in Kubernetes 1.8.8 are supported for use with clusters in {{site.data.keyword.Bluemix_notm}}. After you create a cluster, set the context for your local CLI to that cluster with an environment variable. Then, you can run the Kubernetes `kubectl` commands to work with your cluster in {{site.data.keyword.Bluemix_notm}}.
+All `kubectl` commands that are available in Kubernetes {[kubeversions]} are supported for use with clusters in {{site.data.keyword.Bluemix_notm}}. After you create a cluster, set the context for your local CLI to that cluster with an environment variable. Then, you can run the Kubernetes `kubectl` commands to work with your cluster in {{site.data.keyword.Bluemix_notm}}.
 
 Before you can run `kubectl` commands, [install the required CLIs](#cs_cli_install) and [create a cluster](cs_clusters.html#clusters_cli).
 
 1.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your {{site.data.keyword.Bluemix_notm}} credentials when prompted. To specify an {{site.data.keyword.Bluemix_notm}} region, [include the API endpoint](cs_regions.html#bluemix_regions).
 
     ```
-    bx login
+    {[bx]} login
     ```
     {: pre}
 
-    **Note:** If you have a federated ID, use `bx login --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
+    **Note:** If you have a federated ID, use `{[bx]} login --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
 
 2.  Select an {{site.data.keyword.Bluemix_notm}} account. If you are assigned to multiple {{site.data.keyword.Bluemix_notm}} organizations, select the organization where the cluster was created. Clusters are specific to an organization, but are independent from an {{site.data.keyword.Bluemix_notm}} space. Therefore, you are not required to select a space.
 
-3.  If you want to create or access Kubernetes clusters in a region other than the {{site.data.keyword.Bluemix_notm}} region that you selected earlier, run `bx cs region-set`.
+3.  If you want to create or access Kubernetes clusters in a region other than the {{site.data.keyword.Bluemix_notm}} region that you selected earlier, run `{[bxcs]} region-set`.
 
 4.  List all of the clusters in the account to get the name of the cluster.
 
     ```
-    bx cs clusters
+    {[bxcs]} clusters
     ```
     {: pre}
 
@@ -172,7 +170,7 @@ Before you can run `kubectl` commands, [install the required CLIs](#cs_cli_insta
     1.  Get the command to set the environment variable and download the Kubernetes configuration files.
 
     ```
-    bx cs cluster-config <cluster_name_or_ID>
+    {[bxcs]} cluster-config <cluster_name_or_ID>
     ```
     {: pre}
 
@@ -181,7 +179,7 @@ Before you can run `kubectl` commands, [install the required CLIs](#cs_cli_insta
     Example:
 
     ```
-    export KUBECONFIG=/Users/<user_name>/.bluemix/plugins/container-service/clusters/mycluster/kube-config-prod-dal10-mycluster.yml
+    export KUBECONFIG=/Users/<user_name>/.bluemix/plugins/{[pluginname_short]}/clusters/mycluster/kube-config-prod-dal10-mycluster.yml
     ```
     {: screen}
 
@@ -198,7 +196,7 @@ Before you can run `kubectl` commands, [install the required CLIs](#cs_cli_insta
 
         Output:
         ```
-        /Users/<user_name>/.bluemix/plugins/container-service/clusters/mycluster/kube-config-prod-dal10-mycluster.yml
+        /Users/<user_name>/.bluemix/plugins/{[pluginname_short]}/clusters/mycluster/kube-config-prod-dal10-mycluster.yml
         ```
         {: screen}
 
@@ -212,8 +210,8 @@ Before you can run `kubectl` commands, [install the required CLIs](#cs_cli_insta
     Example output:
 
     ```
-    Client Version: v1.8.8
-    Server Version: v1.8.8
+    Client Version: v{[kubeversions]}
+    Server Version: v{[kubeversions]}
     ```
     {: screen}
 
@@ -222,8 +220,7 @@ Now, you can run `kubectl` commands to manage your clusters in {{site.data.keywo
 **Tip:** If you are using Windows and the Kubernetes CLI is not installed in the same directory as the {{site.data.keyword.Bluemix_notm}} CLI, you must change directories to the path where the Kubernetes CLI is installed to run `kubectl` commands successfully.
 
 
-<br />
-
+{[white-space.md]}
 
 ## Updating the CLI
 {: #cs_cli_upgrade}
@@ -234,8 +231,8 @@ You might want to update the CLIs periodically to use new features.
 This task includes the information for updating these CLIs.
 
 -   {{site.data.keyword.Bluemix_notm}} CLI version 0.5.0 or later
--   {{site.data.keyword.containershort_notm}} plug-in
--   Kubernetes CLI version 1.8.8 or later
+-   {[pluginname]}
+-   Kubernetes CLI version {[kubeversions]} or later
 -   {{site.data.keyword.registryshort_notm}} plug-in
 -   Docker version 1.9. or later
 
@@ -247,33 +244,33 @@ To update the CLIs:
 2. Log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your {{site.data.keyword.Bluemix_notm}} credentials when prompted. To specify an {{site.data.keyword.Bluemix_notm}} region, [include the API endpoint](cs_regions.html#bluemix_regions).
 
     ```
-    bx login
+    {[bx]} login
     ```
     {: pre}
 
-     **Note:** If you have a federated ID, use `bx login --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
+     **Note:** If you have a federated ID, use `{[bx]} login --sso` to log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your user name and use the provided URL in your CLI output to retrieve your one-time passcode. You know you have a federated ID when the login fails without the `--sso` and succeeds with the `--sso` option.
 
-3.  Update the {{site.data.keyword.containershort_notm}} plug-in.
+3.  Update the {[pluginname]}.
     1.  Install the update from the {{site.data.keyword.Bluemix_notm}} plug-in repository.
 
         ```
-        bx plugin update container-service -r Bluemix
+        {[bx]} plugin update {[pluginname_short]} -r Bluemix
         ```
         {: pre}
 
     2.  Verify the plug-in installation by running the following command and checking the list of the plug-ins that are installed.
 
         ```
-        bx plugin list
+        {[bx]} plugin list
         ```
         {: pre}
 
-        The {{site.data.keyword.containershort_notm}} plug-in is displayed in the results as container-service.
+        The {[pluginname]} is displayed in the results as {[pluginname_short]}.
 
     3.  Initialize the CLI.
 
         ```
-        bx cs init
+        {[bxcs]} init
         ```
         {: pre}
 
@@ -283,14 +280,14 @@ To update the CLIs:
     1.  Install the update from the {{site.data.keyword.Bluemix_notm}} plug-in repository.
 
         ```
-        bx plugin update container-registry -r Bluemix
+        {[bx]} plugin update container-registry -r Bluemix
         ```
         {: pre}
 
     2.  Verify the plug-in installation by running the following command and checking the list of the plug-ins that are installed.
 
         ```
-        bx plugin list
+        {[bx]} plugin list
         ```
         {: pre}
 
@@ -300,8 +297,7 @@ To update the CLIs:
     -   If you are using Docker Community Edition, start Docker, click the **Docker** icon, and click **Check for updates**.
     -   If you are using Docker Toolbox, download the [latest version ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.docker.com/toolbox/toolbox_install_windows/) and run the installer.
 
-<br />
-
+{[white-space.md]}
 
 ## Uninstalling the CLI
 {: #cs_cli_uninstall}
@@ -312,7 +308,7 @@ If you no longer need the CLI, you can uninstall it.
 This task includes the information for removing these CLIs:
 
 
--   {{site.data.keyword.containershort_notm}} plug-in
+-   {[pluginname]}
 -   Kubernetes CLI
 -   {{site.data.keyword.registryshort_notm}} plug-in
 -   Docker version 1.9. or later
@@ -320,28 +316,28 @@ This task includes the information for removing these CLIs:
 <br>
 To uninstall the CLIs:
 
-1.  Uninstall the {{site.data.keyword.containershort_notm}} plug-in.
+1.  Uninstall the {[pluginname]}.
 
     ```
-    bx plugin uninstall container-service
+    {[bx]} plugin uninstall {[pluginname_short]}
     ```
     {: pre}
 
 2.  Uninstall the {{site.data.keyword.registryshort_notm}} plug-in.
 
     ```
-    bx plugin uninstall container-registry
+    {[bx]} plugin uninstall container-registry
     ```
     {: pre}
 
 3.  Verify the plug-ins were uninstalled by running the following command and checking the list of the plug-ins that are installed.
 
     ```
-    bx plugin list
+    {[bx]} plugin list
     ```
     {: pre}
 
-    The container-service and the container-registry plug-in are not displayed in the results.
+    The {[pluginname_short]} and the container-registry plug-in are not displayed in the results.
 
 6.  Uninstall Docker. Instructions to uninstall Docker vary based on the operating system that you use.
 
@@ -349,8 +345,7 @@ To uninstall the CLIs:
     - [Linux ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#uninstall-docker-ce)
     - [Windows ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.docker.com/toolbox/toolbox_install_windows/#how-to-uninstall-toolbox)
 
-<br />
-
+{[white-space.md]}
 
 ## Automating cluster deployments with the API
 {: #cs_api}
@@ -604,8 +599,7 @@ The {{site.data.keyword.containershort_notm}} API requires header information th
 
 5.  Review the [{{site.data.keyword.containershort_notm}} API documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://containers.bluemix.net/swagger-api) to find a list of supported APIs.
 
-<br />
-
+{[white-space.md]}
 
 ## Refreshing IAM access tokens and obtaining new refresh tokens
 {: #cs_api_refresh}

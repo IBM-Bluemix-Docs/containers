@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-18"
+lastupdated: "2018-4-20"
 
 ---
 
@@ -41,7 +41,7 @@ Supported {{site.data.keyword.containershort_notm}} regions:
 You can organize your resources across {{site.data.keyword.Bluemix_notm}} services by using {{site.data.keyword.Bluemix_notm}} regions. For example, you can create a Kubernetes cluster by using a private Docker image that is stored in your {{site.data.keyword.registryshort_notm}} of the same region.
 {:shortdesc}
 
-To check which {{site.data.keyword.Bluemix_notm}} region you are currently in, run `bx info` and review the **Region** field.
+To check which {{site.data.keyword.Bluemix_notm}} region you are currently in, run `{[bx]} info` and review the **Region** field.
 
 {{site.data.keyword.Bluemix_notm}} regions can be accessed by specifying the API endpoint when you log in. If you do not specify a region, you are automatically logged in to the region that is closest to you.
 
@@ -49,32 +49,31 @@ To check which {{site.data.keyword.Bluemix_notm}} region you are currently in, r
 
   * US South and US East
       ```
-      bx login -a api.ng.bluemix.net
+      {[bx]} login -a api.ng.bluemix.net
       ```
       {: pre}
 
   * Sydney and AP North
       ```
-      bx login -a api.au-syd.bluemix.net
+      {[bx]} login -a api.au-syd.bluemix.net
       ```
       {: pre}
 
   * Germany
       ```
-      bx login -a api.eu-de.bluemix.net
+      {[bx]} login -a api.eu-de.bluemix.net
       ```
       {: pre}
 
   * United Kingdom
       ```
-      bx login -a api.eu-gb.bluemix.net
+      {[bx]} login -a api.eu-gb.bluemix.net
       ```
       {: pre}
 
 
 
-<br />
-
+{[white-space.md]}
 
 ## {{site.data.keyword.containershort_notm}} region API endpoints and locations
 {: #container_regions}
@@ -83,8 +82,8 @@ By using {{site.data.keyword.containershort_notm}} regions, you can create or ac
 {:shortdesc}
 
 You can access the {{site.data.keyword.containershort_notm}} through one global endpoint: `https://containers.bluemix.net/`.
-* To check which {{site.data.keyword.containershort_notm}} region you are currently in, run `bx cs region`.
-* To retrieve a list of available regions and their endpoints, run `bx cs regions`.
+* To check which {{site.data.keyword.containershort_notm}} region you are currently in, run `{[bxcs]} region`.
+* To retrieve a list of available regions and their endpoints, run `{[bxcs]} regions`.
 
 To use the API with the global endpoint, in all your requests, pass the region name in an `X-Region` header.
 {: tip}
@@ -101,7 +100,7 @@ You might want to log in to another {{site.data.keyword.containershort_notm}} re
 
 </br>
 
-To quickly switch regions, run `bx cs region-set`.
+To quickly switch regions, run `{[bxcs]} region-set`.
 
 ### Using container service API commands
 {: #containers_api}
@@ -117,7 +116,7 @@ Example of `GET /clusters` API:
 
 </br>
 
-To use the API with the global endpoint, in all your requests, pass the region name in an `X-Region` header. To list available regions, run `bx cs regions`.
+To use the API with the global endpoint, in all your requests, pass the region name in an `X-Region` header. To list available regions, run `{[bxcs]} regions`.
 {: tip}
 
 To view documentation on the API commands, view [https://containers.bluemix.net/swagger-api/](https://containers.bluemix.net/swagger-api/).
@@ -143,7 +142,7 @@ Your cluster's resources remain in the location (data center) in which the clust
 
 2.  If you set up other cluster resources, such as storage, networking, compute, or apps running in pods, the resources and their data remain in the location that you deployed your cluster to.
 
-3.  When you initiate cluster management actions, such as using `bx cs` commands, basic information about the cluster (such as name, ID, user, the command) is routed to a regional endpoint.
+3.  When you initiate cluster management actions, such as using `{[bxcs]}` commands, basic information about the cluster (such as name, ID, user, the command) is routed to a regional endpoint.
 
 ![Understanding where your cluster resources reside](/images/region-cluster-resources.png)
 

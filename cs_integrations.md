@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-18"
+lastupdated: "2018-4-20"
 
 ---
 
@@ -40,8 +40,7 @@ IBM Blockchain Platform <img src="../icons/launch-glyph.svg" alt="External link 
 </tbody>
 </table>
 
-<br />
-
+{[white-space.md]}
 
 
 ## DevOps services
@@ -72,8 +71,7 @@ IBM Blockchain Platform <img src="../icons/launch-glyph.svg" alt="External link 
 </tbody>
 </table>
 
-<br />
-
+{[white-space.md]}
 
 
 ## Logging and monitoring services
@@ -128,8 +126,7 @@ IBM Blockchain Platform <img src="../icons/launch-glyph.svg" alt="External link 
 </tbody>
 </table>
 
-<br />
-
+{[white-space.md]}
 
 
 ## Security services
@@ -168,8 +165,7 @@ IBM Blockchain Platform <img src="../icons/launch-glyph.svg" alt="External link 
 </tbody>
 </table>
 
-<br />
-
+{[white-space.md]}
 
 
 ## Storage services
@@ -197,8 +193,7 @@ IBM Blockchain Platform <img src="../icons/launch-glyph.svg" alt="External link 
 </table>
 
 
-<br />
-
+{[white-space.md]}
 
 
 ## Adding Cloud Foundry services to clusters
@@ -225,7 +220,7 @@ To add a service:
 2.  List available {{site.data.keyword.Bluemix_notm}} services.
 
     ```
-    bx service list
+    {[bx]} service list
     ```
     {: pre}
 
@@ -256,14 +251,14 @@ To add a service:
 5.  Add the service to your cluster.
 
     ```
-    bx cs cluster-service-bind <cluster_name_or_ID> <namespace> <service_instance_name>
+    {[bxcs]} cluster-service-bind <cluster_name_or_ID> <namespace> <service_instance_name>
     ```
     {: pre}
 
     When the service is successfully added to your cluster, a cluster secret is created that holds the credentials of your service instance. Example CLI output:
 
     ```
-    bx cs cluster-service-bind mycluster mynamespace cleardb
+    {[bxcs]} cluster-service-bind mycluster mynamespace cleardb
     Binding service instance to namespace...
     OK
     Namespace:	mynamespace
@@ -284,8 +279,7 @@ To use the service in a pod that is deployed in the cluster, cluster users can a
 
 
 
-<br />
-
+{[white-space.md]}
 
 ## Creating Cloud Foundry aliases for other {{site.data.keyword.Bluemix_notm}} service resources
 {: #adding_resource_cluster}
@@ -327,8 +321,7 @@ To create a Cloud Foundry alias for the service instance:
 
 
 
-<br />
-
+{[white-space.md]}
 
 ## Adding services to apps
 {: #adding_app}
@@ -466,8 +459,7 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to you
 
 You can now access the {{site.data.keyword.Bluemix_notm}} service details and credentials. To work with your {{site.data.keyword.Bluemix_notm}} service, make sure your app is configured to find the service secret file in the mount directory, parse the JSON content and determine the service details.
 
-<br />
-
+{[white-space.md]}
 
 ## Setting up Helm in {{site.data.keyword.containershort_notm}}
 {: #helm}
@@ -648,5 +640,4 @@ To use Weave Scope with a cluster:
 
 [Learn more about the Weave Scope features ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.weave.works/docs/scope/latest/features/).
 
-<br />
-
+{[white-space.md]}

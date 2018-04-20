@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-13"
+lastupdated: "2018-4-20"
 
 ---
 
@@ -22,11 +22,39 @@ lastupdated: "2018-04-13"
 Check out what container developers are interested in learning about in {{site.data.keyword.containerlong}}.
 {:shortdesc}
 
+## Popular topics in April 2018
+{: #apr18}
+
+<table summary="The table shows popular topics. Rows are to be read from the left to right, with the date in column one, the title of the feature in column two and a description in column three.">
+<caption>Popular topics for containers and Kubernetes clusters in April 2018</caption>
+<thead>
+<th>Date</th>
+<th>Title</th>
+<th>Description</th>
+</thead>
+<tbody>
+<tr>
+<td>17 April</td>
+<td>{{site.data.keyword.Bluemix_notm}} Block Storage</td>
+<td>Install the {{site.data.keyword.Bluemix_notm}} Block Storage [plug-in](cs_storage.html#install_block) to save persistent data in block storage. Then you can [create new](cs_storage.html#create) or [use existing](cs_storage.html#existing_block) block storage for your cluster.</td>
+</tr>
+<tr>
+<td>13 April</td>
+<td>[New tutorial to migrate Cloud Foundry apps to clusters](cs_tutorials_cf.html#cf_tutorial)</td>
+<td>Do you have a Cloud Foundry app? Learn how to deploy the same code from that app to a container that runs in a Kubernetes cluster.</td>
+</tr>
+<tr>
+<td>5 April</td>
+<td>[Filtering logs](cs_health.html#filter-logs)</td>
+<td>Filter out specfic logs from being forwarded. Logs can be filtered out for a specific namespace, container name, log level, and message string.</td>
+</tr>
+</tbody></table>
+
 ## Popular topics in March 2018
 {: #mar18}
 
 <table summary="The table shows popular topics. Rows are to be read from the left to right, with the date in column one, the title of the feature in column two and a description in column three.">
-<caption>Popular topics for containers and Kubernetes clusters in February 2018</caption>
+<caption>Popular topics for containers and Kubernetes clusters in March 2018</caption>
 <thead>
 <th>Date</th>
 <th>Title</th>
@@ -69,7 +97,7 @@ Check out what container developers are interested in learning about in {{site.d
 <tr>
 <td>27 February</td>
 <td>Hardware virtual machine (HVM) images for worker nodes</td>
-<td>Increase the I/O performance of your workloads with HVM images. Activate on each existing worker node by using the `bx cs worker-reload` [command](cs_cli_reference.html#cs_worker_reload) or the `bx cs worker-update` [command](cs_cli_reference.html#cs_worker_update).</td>
+<td>Increase the I/O performance of your workloads with HVM images. Activate on each existing worker node by using the `{[bxcs]} worker-reload` [command](cs_cli_reference.html#cs_worker_reload) or the `{[bxcs]} worker-update` [command](cs_cli_reference.html#cs_worker_update).</td>
 </tr>
 <tr>
 <td>26 February</td>
