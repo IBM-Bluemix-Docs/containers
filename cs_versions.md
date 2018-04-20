@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-19"
+lastupdated: "2018-4-20"
 
 ---
 
@@ -24,8 +24,8 @@ lastupdated: "2018-04-19"
 The current supported Kubernetes versions are:
 
 - Latest: 1.9.3
-- Default: 1.8.8
-- Supported: 1.7.4
+- Default: 1.8.11
+- Supported: 1.7.16
 
 **Deprecated Versions**: When clusters are running on a deprecated Kubernetes, you have 30 days to review and update to a supported Kubernetes version before the version becomes unsupported. During the deprecation period, you can run limited commands in your clusters to add workers, reload workers, and update the cluster. You cannot create new clusters in the deprecated version.
 
@@ -41,7 +41,7 @@ kubectl version  --short | grep -i server
 Example output:
 
 ```
-Server Version: v1.8.8+9d6e0610086578
+Server Version: v1.8.11+9d6e0610086578
 ```
 {: screen}
 
