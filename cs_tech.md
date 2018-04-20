@@ -57,14 +57,13 @@ Learn about some basic Docker concepts:
   </ul>
   </dd>
 
-
+<p>{[gdpr_images]}</p>
   
 <p>Ready to gain deeper knowledge of Docker? <a href="https://developer.ibm.com/courses/all/docker-essentials-extend-your-apps-with-containers/" target="_blank">Learn how Docker and {{site.data.keyword.containershort_notm}} work together by completing this course.</a></p>
 
 </dl>
 
-<br />
-
+{[white-space.md]}
 
 ## Kubernetes clusters
 {: #kubernetes_basics}
@@ -98,7 +97,7 @@ Define update strategies for your app, including the number of pods that you wan
 <dt>App</dt>
 <dd>An app might refer to a complete app or a component of an app. You might deploy components of an app in separate pods or separate worker nodes.</dd>
 
-
+<p>{[gdpr_resources]}</p>
   
 <p>Ready to gain deeper knowledge of Kubernetes?</p>
 <ul><li><a href="cs_tutorials.html#cs_cluster_tutorial" target="_blank">Expand your terminology knowledge with the Creating clusters tutorial</a>.</li>
@@ -107,8 +106,7 @@ Define update strategies for your app, including the number of pods that you wan
 
 </dl>
 
-<br />
-
+{[white-space.md]}
 
 ## Service architecture
 {: #architecture}
@@ -131,6 +129,5 @@ Figure. {{site.data.keyword.containershort_notm}} architecture
 Want to see how {{site.data.keyword.containerlong_notm}} can be used with other products and services? Check out some of the [integrations](cs_integrations.html#integrations).
 
 
-<br />
-
+{[white-space.md]}
 
