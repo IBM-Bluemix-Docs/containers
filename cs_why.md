@@ -29,7 +29,7 @@ Clusters are deployed on compute hosts that provide native Kubernetes and {{site
 
 |Benefit|Description|
 |-------|-----------|
-|Single-tenant Kubernetes clusters with compute, network, and storage infrastructure isolation|<ul><li>Create your own customized infrastructure that meets the requirements of your organization.</li><li>Provision a dedicated and secured Kubernetes master, worker nodes, virtual networks, and storage by using the resources provided by IBM Cloud infrastructure (SoftLayer).</li><li>Fully managed Kubernetes master that is continuously monitored and updated by {{site.data.keyword.IBM_notm}} to keep your cluster available.</li><li>Option to provision worker nodes as bare metal servers with Trusted Compute.</li><li>Store persistent data, share data between Kubernetes pods, and restore data when needed with the integrated and secure volume service.</li><li>Benefit from full support for all native Kubernetes APIs.</li></ul>|
+|Single-tenant Kubernetes clusters with compute, network, and storage infrastructure isolation|<ul><li>Create your own customized infrastructure that meets the requirements of your organization.</li><li>Provision a dedicated and secured Kubernetes master, worker nodes, virtual networks, and storage by using the resources provided by {[softlayer]}.</li><li>Fully managed Kubernetes master that is continuously monitored and updated by {{site.data.keyword.IBM_notm}} to keep your cluster available.</li><li>Option to provision worker nodes as bare metal servers with Trusted Compute.</li><li>Store persistent data, share data between Kubernetes pods, and restore data when needed with the integrated and secure volume service.</li><li>Benefit from full support for all native Kubernetes APIs.</li></ul>|
 |Image security compliance with Vulnerability Advisor|<ul><li>Set up your own secured Docker private image registry where images are stored and shared by all users in the organization.</li><li>Benefit from automatic scanning of images in your private {{site.data.keyword.Bluemix_notm}} registry.</li><li>Review recommendations specific to the operating system used in the image to fix potential vulnerabilities.</li></ul>|
 |Continuous monitoring of the cluster health|<ul><li>Use the cluster dashboard to quickly see and manage the health of your cluster, worker nodes, and container deployments.</li><li>Find detailed consumption metrics by using {{site.data.keyword.monitoringlong}} and quickly expand your cluster to meet work loads.</li><li>Review logging information by using {{site.data.keyword.loganalysislong}} to see detailed cluster activities.</li></ul>|
 |Secure exposure of apps to the public|<ul><li>Choose between a public IP address, an {{site.data.keyword.IBM_notm}} provided route, or your own custom domain to access services in your cluster from the internet.</li></ul>|
@@ -37,8 +37,7 @@ Clusters are deployed on compute hosts that provide native Kubernetes and {{site
 
 
 
-<br />
-
+{[white-space.md]}
 
 ## Comparison of offerings and their combinations
 {: #differentiation}
@@ -83,8 +82,7 @@ Review the following information for the differences between these {{site.data.k
  </tbody>
 </table>
 
-<br />
-
+{[white-space.md]}
 
 ## Comparison of free and standard clusters
 {: #cluster_types}
@@ -94,22 +92,21 @@ You can create one free cluster or any number of standard clusters. Try out free
 
 |Characteristics|Free clusters|Standard clusters|
 |---------------|-------------|-----------------|
-|[In-cluster networking](cs_secure.html#in_cluster_network)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
-|[Public network app access by a NodePort service to a non-stable IP address](cs_nodeport.html)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
-|[User access management](cs_users.html#managing)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
-|[{{site.data.keyword.Bluemix_notm}} service access from the cluster and apps](cs_integrations.html#adding_cluster)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
-|[Disk space on worker node for non-persistent storage](cs_storage.html#planning)|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
-|[Persistent NFS file-based storage with volumes](cs_storage.html#planning)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
-|[Public or private network app access by a load balancer service to a stable IP address](cs_loadbalancer.html#planning)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
-|[Public network app access by an Ingress service to a stable IP address and customizable URL](cs_ingress.html#planning)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
-|[Portable public IP addresses](cs_subnets.html#manage)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
-|[Logging and monitoring](cs_health.html#logging)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
-|[Option to provision your worker nodes on physical (bare metal) servers](cs_clusters.html#shared_dedicated_node) | |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
-|[Option to provision bare metal workers with Trusted Compute](cs_clusters.html#shared_dedicated_node) | |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
-|[Available in {{site.data.keyword.Bluemix_dedicated_notm}}](cs_dedicated.html#dedicated_environment)| |<img src="images/confirm.svg" width="32" alt="Feature available" style="width:32px;" />|
+|[In-cluster networking](cs_secure.html#in_cluster_network)|{[confirm-icon]}|{[confirm-icon]}|
+|[Public network app access by a NodePort service to a non-stable IP address](cs_nodeport.html)|{[confirm-icon]}|{[confirm-icon]}|
+|[User access management](cs_users.html#managing)|{[confirm-icon]}|{[confirm-icon]}|
+|[{{site.data.keyword.Bluemix_notm}} service access from the cluster and apps](cs_integrations.html#adding_cluster)|{[confirm-icon]}|{[confirm-icon]}|
+|[Disk space on worker node for non-persistent storage](cs_storage.html#planning)|{[confirm-icon]}|{[confirm-icon]}|
+|[Persistent NFS file-based storage with volumes](cs_storage.html#planning)| |{[confirm-icon]}|
+|[Public or private network app access by a load balancer service to a stable IP address](cs_loadbalancer.html#planning)| |{[confirm-icon]}|
+|[Public network app access by an Ingress service to a stable IP address and customizable URL](cs_ingress.html#planning)| |{[confirm-icon]}|
+|[Portable public IP addresses](cs_subnets.html#manage)| |{[confirm-icon]}|
+|[Logging and monitoring](cs_health.html#logging)| |{[confirm-icon]}|
+|[Option to provision your worker nodes on physical (bare metal) servers](cs_clusters.html#shared_dedicated_node) | |{[confirm-icon]}|
+|[Option to provision bare metal workers with Trusted Compute](cs_clusters.html#shared_dedicated_node) | |{[confirm-icon]}|
+|[Available in {{site.data.keyword.Bluemix_dedicated_notm}}](cs_dedicated.html#dedicated_environment)| |{[confirm-icon]}|
 
-<br />
-
+{[white-space.md]}
 
 
 
