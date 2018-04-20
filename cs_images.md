@@ -44,7 +44,7 @@ You can use multiple registries with {{site.data.keyword.containershort_notm}} t
 
 After you set up an image registry, cluster users can use the images for their app deployments to the cluster.
 
-
+Learn more about [securing your personal information](cs_secure.html#pi) when you work with container images.
 
 <br />
 
