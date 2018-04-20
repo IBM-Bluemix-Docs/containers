@@ -46,8 +46,7 @@ After you set up an image registry, cluster users can use the images for their a
 
 
 
-<br />
-
+{[white-space.md]}
 
 ## Setting up trusted content for container images
 {: #trusted_images}
@@ -61,8 +60,7 @@ You can build containers from trusted images that are signed and stored in {{sit
     1. [Deploy to the `default` Kubernetes namespace](#namespace).
     2. [Deploy to a different Kubernetes namespace, or from a different {{site.data.keyword.Bluemix_notm}} region or account](#other).
 
-<br />
-
+{[white-space.md]}
 
 ## Deploying containers from an {{site.data.keyword.registryshort_notm}} image to the `default` Kubernetes namespace
 {: #namespace}
@@ -106,7 +104,7 @@ To deploy a container into the **default** namespace of your cluster, create a c
     ```
     {: codeblock}
 
-    **Tip:** To retrieve your namespace information, run `bx cr namespace-list`.
+    **Tip:** To retrieve your namespace information, run `{[bxcr]} namespace-list`.
 
 3.  Create the deployment in your cluster.
 
@@ -123,8 +121,7 @@ To deploy a container into the **default** namespace of your cluster, create a c
     {: pre}
 
 
-<br />
-
+{[white-space.md]}
 
 
 ## Creating an `imagePullSecret` to access {{site.data.keyword.Bluemix_notm}} or external private registries in other Kubernetes namespaces, {{site.data.keyword.Bluemix_notm}} regions, and accounts
@@ -205,7 +202,7 @@ To access images in other {{site.data.keyword.Bluemix_notm}} regions or accounts
 2.  List tokens in your {{site.data.keyword.Bluemix_notm}} account.
 
     ```
-    bx cr token-list
+    {[bxcr]} token-list
     ```
     {: pre}
 
@@ -213,7 +210,7 @@ To access images in other {{site.data.keyword.Bluemix_notm}} regions or accounts
 4.  Retrieve the value for your token. Replace <em>&lt;token_ID&gt;</em> with the ID of the token that you retrieved in the previous step.
 
     ```
-    bx cr token-get <token_id>
+    {[bxcr]} token-get <token_id>
     ```
     {: pre}
 
@@ -390,11 +387,11 @@ When you refer to the imagePullSecret in a pod deployment, it is valid for this 
     </tr>
     <tr>
     <td><code><em>&lt;namespace_name&gt;</em></code></td>
-    <td>The namespace where your image is stored. To list available namespaces, run `bx cr namespace-list`.</td>
+    <td>The namespace where your image is stored. To list available namespaces, run `{[bxcr]} namespace-list`.</td>
     </tr>
     <tr>
     <td><code><em>&lt;image_name&gt;</em></code></td>
-    <td>The name of the image that you want to use. To list available images in an {{site.data.keyword.Bluemix_notm}} account, run `bx cr image-list`.</td>
+    <td>The name of the image that you want to use. To list available images in an {{site.data.keyword.Bluemix_notm}} account, run `{[bxcr]} image-list`.</td>
     </tr>
     <tr>
     <td><code><em>&lt;tag&gt;</em></code></td>
@@ -474,5 +471,4 @@ Every namespace has a Kubernetes service account that is named `default`. You ca
    ```
    {: pre}
 
-<br />
-
+{[white-space.md]}

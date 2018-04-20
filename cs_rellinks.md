@@ -33,32 +33,28 @@ lastupdated: "2018-03-27"
 - [Istio ![External link icon](../icons/launch-glyph.svg "External link icon")](https://istio.io/) service mesh
 - [Weave Scope ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.weave.works/oss/scope/) visualization
 
-<br />
-
+{[white-space.md]}
 
 **Glossaries**
 - [{{site.data.keyword.Bluemix_notm}} glossary](/docs/overview/glossary/index.html)
 - [Kubernetes glossary ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/reference/glossary/?fundamental=true)
 - [Docker glossary ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.docker.com/glossary/)
 
-<br />
-
+{[white-space.md]}
 
 **Links related to the container registry**
 
 - [{{site.data.keyword.registryshort_notm}} documentation](/docs/services/Registry/index.html)
 
 
-<br />
-
+{[white-space.md]}
 
 
 **Links related to single and scalable containers**
 
 - [REST API for single and scalable containers ![External link icon](../icons/launch-glyph.svg "External link icon")](http://ccsapi-doc.mybluemix.net/)
 
-<br />
-
+{[white-space.md]}
 
 **General**
 
@@ -66,5 +62,4 @@ lastupdated: "2018-03-27"
 - [Developers Community articles ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/blogs/bluemix/tag/containers/)
 - [Microservices.TV ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/tv/microservices/)
 
-<br />
-
+{[white-space.md]}
