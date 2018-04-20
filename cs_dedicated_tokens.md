@@ -25,21 +25,21 @@ Create a non-expiring token for an image registry that you used for single and s
 1.  Log in to the {{site.data.keyword.Bluemix_dedicated_notm}} environment.
 
     ```
-    bx login -a api.<dedicated_domain>
+    {[bx]} login -a api.<dedicated_domain>
     ```
     {: pre}
 
 2.  Request an `oauth-token` for the current session and save it as a variable.
 
     ```
-    OAUTH_TOKEN=`bx iam oauth-tokens | awk 'FNR == 2 {print $3 " " $4}'`
+    OAUTH_TOKEN=`{[bx]} iam oauth-tokens | awk 'FNR == 2 {print $3 " " $4}'`
     ```
     {: pre}
 
 3.  Request the ID of the org for the current session and save it as a variable.
 
     ```
-    ORG_GUID=`bx iam org <org_name> --guid`
+    ORG_GUID=`{[bx]} iam org <org_name> --guid`
     ```
     {: pre}
 
@@ -142,10 +142,10 @@ Create a non-expiring token for an image registry that you used for single and s
         </tr>
         <tr>
         <td><code>&lt;my_namespace&gt;</code></td>
-        <td>The namespace where your image is stored. To list available namespaces, run `bx cr namespace-list`.</td>
+        <td>The namespace where your image is stored. To list available namespaces, run `{[bxcr]} namespace-list`.</td>
         </tr>
         <td><code>&lt;my_image&gt;</code></td>
-        <td>The name of the image that you want to use. To list available images in an {{site.data.keyword.Bluemix_notm}} account, run <code>bx cr image-list</code>.</td>
+        <td>The name of the image that you want to use. To list available images in an {{site.data.keyword.Bluemix_notm}} account, run <code>{[bxcr]} image-list</code>.</td>
         </tr>
         <tr>
         <td><code>&lt;tag&gt;</code></td>

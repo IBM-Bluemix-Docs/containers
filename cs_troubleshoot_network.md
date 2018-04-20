@@ -47,7 +47,7 @@ To troubleshoot your load balancer service:
 1.  Check that you set up a standard cluster that is fully deployed and has at least two worker nodes to assure high availability for your load balancer service.
 
   ```
-  bx cs workers <cluster_name_or_ID>
+  {[bxcs]} workers <cluster_name_or_ID>
   ```
   {: pre}
 
@@ -88,8 +88,8 @@ To troubleshoot your load balancer service:
     <li><pre class="screen"><code>Requested cloud provider IP <cloud-provider-ip> is not available. The following cloud provider IPs are available: <available-cloud-provider-ips></code></pre></br>You defined a portable public IP address for your load balancer service by using the **loadBalancerIP** section, but this portable public IP address is not available in your portable public subnet. Change your load balancer service configuration script and either choose one of the available portable public IP addresses, or remove the **loadBalancerIP** section from your script so that an available portable public IP address can be allocated automatically.</li>
     <li><pre class="screen"><code>No available nodes for load balancer services</code></pre>You do not have enough worker nodes to deploy a load balancer service. One reason might be that you deployed a standard cluster with more than one worker node, but the provisioning of the worker nodes failed.</li>
     <ol><li>List available worker nodes.</br><pre class="codeblock"><code>kubectl get nodes</code></pre></li>
-    <li>If at least two available worker nodes are found, list the worker node details.</br><pre class="codeblock"><code>bx cs worker-get [&lt;cluster_name_or_ID&gt;] &lt;worker_ID&gt;</code></pre></li>
-    <li>Make sure that the public and private VLAN IDs for the worker nodes that were returned by the <code>kubectl get nodes</code> and the <code>bx cs [&lt;cluster_name_or_ID&gt;] worker-get</code> commands match.</li></ol></li></ul>
+    <li>If at least two available worker nodes are found, list the worker node details.</br><pre class="codeblock"><code>{[bxcs]} worker-get [&lt;cluster_name_or_ID&gt;] &lt;worker_ID&gt;</code></pre></li>
+    <li>Make sure that the public and private VLAN IDs for the worker nodes that were returned by the <code>kubectl get nodes</code> and the <code>{[bxcs]} [&lt;cluster_name_or_ID&gt;] worker-get</code> commands match.</li></ol></li></ul>
 
 4.  If you are using a custom domain to connect to your load balancer service, make sure that your custom domain is mapped to the public IP address of your load balancer service.
     1.  Find the public IP address of your load balancer service.
@@ -101,8 +101,7 @@ To troubleshoot your load balancer service:
 
     2.  Check that your custom domain is mapped to the portable public IP address of your load balancer service in the Pointer record (PTR).
 
-<br />
-
+{[white-space.md]}
 
 
 
@@ -126,7 +125,7 @@ To troubleshoot your Ingress:
 1.  Check that you set up a standard cluster that is fully deployed and has at least two worker nodes to assure high availability for your Ingress application load balancer.
 
   ```
-  bx cs workers <cluster_name_or_ID>
+  {[bxcs]} workers <cluster_name_or_ID>
   ```
   {: pre}
 
@@ -137,7 +136,7 @@ To troubleshoot your Ingress:
     1.  Retrieve the application load balancer subdomain.
 
       ```
-      bx cs cluster-get <cluster_name_or_ID> | grep "Ingress subdomain"
+      {[bxcs]} cluster-get <cluster_name_or_ID> | grep "Ingress subdomain"
       ```
       {: pre}
 
@@ -190,7 +189,7 @@ To troubleshoot your Ingress:
     ```
     {: codeblock}
 
-    1.  Check that the Ingress application load balancer subdomain and TLS certificate are correct. To find the IBM provided subdomain and TLS certificate, run `bx cs cluster-get <cluster_name_or_ID>`.
+    1.  Check that the Ingress application load balancer subdomain and TLS certificate are correct. To find the IBM provided subdomain and TLS certificate, run `{[bxcs]} cluster-get <cluster_name_or_ID>`.
     2.  Make sure that your app listens on the same path that is configured in the **path** section of your Ingress. If your app is set up to listen on the root path, include **/** as your path.
 5.  Check your Ingress deployment and look for potential warning or error messages.
 
@@ -204,7 +203,7 @@ To troubleshoot your Ingress:
     ```
     Name:             myingress
     Namespace:        default
-    Address:          169.xx.xxx.xxx,169.xx.xxx.xxx
+    Address:          {[public_IP]},{[public_IP]}
     Default backend:  default-http-backend:80 (<none>)
     Rules:
       Host                                             Path  Backends
@@ -245,8 +244,7 @@ To troubleshoot your Ingress:
 
     3.  Look for error messages in the application load balancer logs.
 
-<br />
-
+{[white-space.md]}
 
 
 
@@ -277,11 +275,11 @@ Review the following reasons why the application load balancer secret might fail
  </tr>
  <tr>
  <td>The certificate CRN provided at time of create is incorrect.</td>
- <td><ol><li>Check the accuracy of the certificate CRN string you provide.</li><li>If the certificate CRN is found to be accurate, then try to update the secret: <code>bx cs alb-cert-deploy --update --cluster &lt;cluster_name_or_ID&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></li><li>If this command results in the <code>update_failed</code> status, then remove the secret: <code>bx cs alb-cert-rm --cluster &lt;cluster_name_or_ID&gt; --secret-name &lt;secret_name&gt;</code></li><li>Deploy the secret again: <code>bx cs alb-cert-deploy --cluster &lt;cluster_name_or_ID&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></li></ol></td>
+ <td><ol><li>Check the accuracy of the certificate CRN string you provide.</li><li>If the certificate CRN is found to be accurate, then try to update the secret: <code>{[bxcs]} alb-cert-deploy --update --cluster &lt;cluster_name_or_ID&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></li><li>If this command results in the <code>update_failed</code> status, then remove the secret: <code>{[bxcs]} alb-cert-rm --cluster &lt;cluster_name_or_ID&gt; --secret-name &lt;secret_name&gt;</code></li><li>Deploy the secret again: <code>{[bxcs]} alb-cert-deploy --cluster &lt;cluster_name_or_ID&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></li></ol></td>
  </tr>
  <tr>
  <td>The certificate CRN provided at time of update is incorrect.</td>
- <td><ol><li>Check the accuracy of the certificate CRN string you provide.</li><li>If the certificate CRN is found to be accurate, then remove the secret: <code>bx cs alb-cert-rm --cluster &lt;cluster_name_or_ID&gt; --secret-name &lt;secret_name&gt;</code></li><li>Deploy the secret again: <code>bx cs alb-cert-deploy --cluster &lt;cluster_name_or_ID&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></li><li>Try to update the secret: <code>bx cs alb-cert-deploy --update --cluster &lt;cluster_name_or_ID&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></li></ol></td>
+ <td><ol><li>Check the accuracy of the certificate CRN string you provide.</li><li>If the certificate CRN is found to be accurate, then remove the secret: <code>{[bxcs]} alb-cert-rm --cluster &lt;cluster_name_or_ID&gt; --secret-name &lt;secret_name&gt;</code></li><li>Deploy the secret again: <code>{[bxcs]} alb-cert-deploy --cluster &lt;cluster_name_or_ID&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></li><li>Try to update the secret: <code>{[bxcs]} alb-cert-deploy --update --cluster &lt;cluster_name_or_ID&gt; --secret-name &lt;secret_name&gt; --cert-crn &lt;certificate_CRN&gt;</code></li></ol></td>
  </tr>
  <tr>
  <td>The {{site.data.keyword.cloudcerts_long_notm}} service is experiencing downtime.</td>
@@ -289,14 +287,13 @@ Review the following reasons why the application load balancer secret might fail
  </tr>
  </tbody></table>
 
-<br />
-
+{[white-space.md]}
 
 ## Cannot get a subdomain for Ingress ALB
 {: #cs_subnet_limit}
 
 {: tsSymptoms}
-When you run `bx cs cluster-get <cluster>`, your cluster is in a `normal` state but no **Ingress Subdomain** is available.
+When you run `{[bxcs]} cluster-get <cluster>`, your cluster is in a `normal` state but no **Ingress Subdomain** is available.
 
 You might see an error message similar to the following.
 
@@ -309,7 +306,7 @@ There are already the maximum number of subnets permitted in this VLAN.
 When you create a cluster, 8 public and 8 private portable subnets are requested on the VLAN that you specify. For {{site.data.keyword.containershort_notm}}, VLANs have a limit of 40 subnets. If the cluster's VLAN already reached that limit, the **Ingress Subdomain** fails to provision.
 
 To view how many subnets a VLAN has:
-1.  From the [IBM Cloud infrastructure (SoftLayer) console](https://control.bluemix.net/), select **Network** > **IP Management** > **VLANs**.
+1.  From the [{[softlayer]} console](https://control.bluemix.net/), select **Network** > **IP Management** > **VLANs**.
 2.  Click the **VLAN Number** of the VLAN that you used to create your cluster. Review the **Subnets** section to see if there are 40 or more subnets.
 
 {: tsResolve}
@@ -318,14 +315,13 @@ If you need a new VLAN, order one by [contacting {{site.data.keyword.Bluemix_not
 If you have another VLAN that is available, you can [set up VLAN spanning](/docs/infrastructure/vlans/vlan-spanning.html#enable-or-disable-vlan-spanning) in your existing cluster. After, you can add new worker nodes to the cluster that use the other VLAN with available subnets.
 
 If you are not using all the subnets in the VLAN, you can reuse subnets in the cluster.
-1.  Check that the subnets that you want to use are available. **Note**: The infrastructure account that you are using might be shared across multiple {{site.data.keyword.Bluemix_notm}} accounts. If so, even if you run the `bx cs subnets` command to see subnets with **Bound Clusters**, you can see information only for your clusters. Check with the infrastructure account owner to make sure that the subnets are available and not in use by any other account or team.
+1.  Check that the subnets that you want to use are available. **Note**: The infrastructure account that you are using might be shared across multiple {{site.data.keyword.Bluemix_notm}} accounts. If so, even if you run the `{[bxcs]} subnets` command to see subnets with **Bound Clusters**, you can see information only for your clusters. Check with the infrastructure account owner to make sure that the subnets are available and not in use by any other account or team.
 
 2.  [Create a cluster](cs_cli_reference.html#cs_cluster_create) with the `--no-subnet` option so that the service does not try to create new subnets. Specify the location and VLAN that has the subnets that are available for reuse.
 
-3.  Use the `bx cs cluster-subnet-add` [command](cs_cli_reference.html#cs_cluster_subnet_add) to add existing subnets to your cluster. For more information, see [Adding or reusing custom and existing subnets in Kubernetes clusters](cs_subnets.html#custom).
+3.  Use the `{[bxcs]} cluster-subnet-add` [command](cs_cli_reference.html#cs_cluster_subnet_add) to add existing subnets to your cluster. For more information, see [Adding or reusing custom and existing subnets in Kubernetes clusters](cs_subnets.html#custom).
 
-<br />
-
+{[white-space.md]}
 
 ## Cannot establish VPN connectivity with the strongSwan Helm chart
 {: #cs_vpn_fails}
@@ -386,8 +382,7 @@ When you try to establish VPN connectivity with the strongSwan Helm chart, it is
 
         The tool outputs several pages of information as it runs various tests for common networking issues. Output lines that begin with `ERROR`, `WARNING`, `VERIFY`, or `CHECK` indicate possible errors with the VPN connectivity.
 
-    <br />
-
+    {[white-space.md]}
 
 ## strongSwan VPN connectivity fails after worker node addition or deletion
 {: #cs_vpn_fails_worker_add}
@@ -516,8 +511,7 @@ Update the Helm chart values to reflect the worker node changes:
 
     * If you are still having connection issues, see [Cannot establish VPN connectivity with the strongSwan Helm chart](#cs_vpn_fails) to further troubleshoot your VPN connection.
 
-<br />
-
+{[white-space.md]}
 
 
 
@@ -551,29 +545,11 @@ To retrieve the `<ETCD_URL>`, run one of the following commands:
 
 When you retrieve the `<ETCD_URL>`, continue with the steps as listed in (Adding network policies)[cs_network_policy.html#adding_network_policies].
 
-<br />
-
+{[white-space.md]}
 
 
 
 ## Getting help and support
 {: #ts_getting_help}
 
-Still having issues with your cluster?
-{: shortdesc}
-
--   To see whether {{site.data.keyword.Bluemix_notm}} is available, [check the {{site.data.keyword.Bluemix_notm}} status page ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/bluemix/support/#status).
--   Post a question in the [{{site.data.keyword.containershort_notm}} Slack. ![External link icon](../icons/launch-glyph.svg "External link icon")](https://ibm-container-service.slack.com)
-    If you are not using an IBM ID for your {{site.data.keyword.Bluemix_notm}} account, [request an invitation](https://bxcs-slack-invite.mybluemix.net/) to this Slack.
-    {: tip}
--   Review the forums to see whether other users ran into the same issue. When you use the forums to ask a question, tag your question so that it is seen by the {{site.data.keyword.Bluemix_notm}} development teams.
-
-    -   If you have technical questions about developing or deploying clusters or apps with {{site.data.keyword.containershort_notm}}, post your question on [Stack Overflow ![External link icon](../icons/launch-glyph.svg "External link icon")](https://stackoverflow.com/questions/tagged/ibm-cloud+containers) and tag your question with `ibm-cloud`, `kubernetes`, and `containers`.
-    -   For questions about the service and getting started instructions, use the [IBM developerWorks dW Answers ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/answers/topics/containers/?smartspace=bluemix) forum. Include the `ibm-cloud` and `containers` tags.
-    See [Getting help](/docs/get-support/howtogetsupport.html#using-avatar) for more details about using the forums.
-
--   Contact IBM Support by opening a ticket. For information about opening an IBM support ticket, or about support levels and ticket severities, see [Contacting support](/docs/get-support/howtogetsupport.html#getting-customer-support).
-
-{:tip}
-When reporting an issue, include your cluster ID. To get your cluster ID, run `bx cs clusters`.
-
+{[get-help.md]}

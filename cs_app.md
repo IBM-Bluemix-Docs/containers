@@ -33,8 +33,7 @@ Learn the general steps for deploying apps by clicking an area of the following 
 </map>
 
 
-<br />
-
+{[white-space.md]}
 
 ## Planning highly available deployments
 {: #highly_available_apps}
@@ -124,8 +123,7 @@ spec:
 **Note:** To expose your service, make sure that the key/value pair that you use in the `spec.selector` section of the service is the same as the key/value pair that you use in the `spec.template.metadata.labels` section of your deployment yaml.
 To learn more about each component, review the [Kubernetes basics](cs_tech.html#kubernetes_basics).
 
-<br />
-
+{[white-space.md]}
 
 
 
@@ -206,8 +204,7 @@ When you are done with the Kubernetes dashboard, use `CTRL+C` to exit the `proxy
 
 
 
-<br />
-
+{[white-space.md]}
 
 
 
@@ -286,8 +283,7 @@ To create a secret with a certificate:
      ```
      {: pre}
 
-<br />
-
+{[white-space.md]}
 
 
 
@@ -317,8 +313,7 @@ To deploy your app:
   * In the Kubernetes dashboard, click **Deployments**. A list of successful deployments is displayed.
   * If your app is [publicly available](cs_network_planning.html#public_access), navigate to the cluster overview page in your {{site.data.keyword.containerlong}} dashboard. Copy the subdomain, which is located in the cluster summary section and paste it into a browser to view your app.
 
-<br />
-
+{[white-space.md]}
 
 ## Deploying apps with the CLI
 {: #app_cli}
@@ -352,8 +347,7 @@ To deploy your app:
 
 3.  If you made your app publicly available by using a node port service, a load balancer service, or Ingress, verify that you can access the app.
 
-<br />
-
+{[white-space.md]}
 
 
 
@@ -431,8 +425,7 @@ Steps:
     </tbody></table>
 
 
-<br />
-
+{[white-space.md]}
 
 ## Managing rolling deployments
 {: #app_rolling}
@@ -503,5 +496,4 @@ Before you begin, create a [deployment](#app_cli).
         ```
         {: pre}
 
-<br />
-
+{[white-space.md]}
