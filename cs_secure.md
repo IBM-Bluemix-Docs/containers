@@ -137,7 +137,7 @@ Manage the security and integrity of your images with built-in security features
 <dl>
 <dt>Secured Docker private image repository in {{site.data.keyword.registryshort_notm}}</dt>
   <dd>You can set up your own Docker image repository in a multi-tenant, highly available, and scalable private image registry that is hosted and managed by IBM to build, securely store, and share Docker images across cluster users.
-  </dd>
+  <p>Learn more about [securing your personal information](cs_secure.html#pi) when you work with container images.</p></dd>
 <dt>Image security compliance</dt>
   <dd>When you use {{site.data.keyword.registryshort_notm}}, you can leverage the built-in security scanning that is provided by Vulnerability Advisor. Every image that is pushed to your namespace is automatically scanned for vulnerabilities against a database of known CentOS, Debian, Red Hat, and Ubuntu issues. If vulnerabilities are found, Vulnerability Advisor provides instructions for how to resolve them to assure image integrity and security.</dd>
 </dl>
@@ -170,6 +170,10 @@ For more information about how to create a service of type cluster IP, see [Kube
 
 For information about securely connecting apps in a Kubernetes cluster to an on-premises network, see [Setting up VPN connectivity](cs_vpn.html#vpn). For information about exposing your apps for external network communication, see [Allowing public access to apps](cs_network_planning.html#public_access).
 
+
+<br />
+
+
 ## Cluster trust
 {: cs_trust}
 
@@ -190,6 +194,23 @@ By default, {{site.data.keyword.containerlong_notm}} provides many [features for
 
 6.  **{{site.data.keyword.cloudcerts_long_notm}} (beta)**: If you have a cluster in US South and want to [expose your app by using a custom domain with TLS](https://console.bluemix.net/docs/containers/cs_ingress.html#custom_domain_cert), you can store your TLS certificate in {{site.data.keyword.cloudcerts_short}}. Expired or about-to-expire certificates can also reported in your Security Advisor dashboard. For more information, see [Getting started with {{site.data.keyword.cloudcerts_short}}](/docs/services/certificate-manager/index.html#gettingstarted).
 
+<br />
+
+
+## Storing personal information
+{: #pi}
+
+You are responsible for ensuring the security of your personal information in Kubernetes resources and container images. Personal information includes your name, address, phone number, email address, or other information that might identify, contact, or locate you, your customers, or any one else.
+{: shortdesc}
+
+<dl>
+  <dt>Use a Kubernetes secret to store personal information</dt>
+  <dd>Only store personal information in Kubernetes resources that are designed to hold personal information. For example, do not use your name in the name of a Kubernetes namespace, deployment, service, or config map. For proper protection and encryption, store personal information in <a href="cs_app.html#secrets">Kubernetes secrets</a> instead.</dd>
+
+  <dt>Use a Kubernetes `imagePullSecret` to store image registry credentials</dt>
+  <dd>Do not store personal information in container images or registry namespaces. For proper protection and encryption, store registry credentials in <a href="cs_images.html#other">Kubernetes imagePullSecrets</a> and other personal information in <a href="cs_app.html#secrets">Kubernetes secrets</a> instead. Remember that if personal information is stored in a previous layer of an image, deleting an image might not be sufficient to delete this personal information.</dd>
+  </dl>
+  
 
 
 
