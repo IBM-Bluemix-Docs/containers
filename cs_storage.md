@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-18"
+lastupdated: "2018-4-20"
 
 ---
 
@@ -93,14 +93,13 @@ The following image shows the options that you have in {{site.data.keyword.conta
 
 {: caption="Table. Persistent data storage options for deployments in Kubernetes clusters" caption-side="top"}
 
-<br />
-
+{[white-space.md]}
 
 
 ## Using existing NFS file shares in clusters
 {: #existing}
 
-If you already have existing NFS file shares in your IBM Cloud infrastructure (SoftLayer) account that you want to use with Kubernetes, you can do so by creating a persistent volume (PV) for your existing storage.
+If you already have existing NFS file shares in your {[softlayer]} account that you want to use with Kubernetes, you can do so by creating a persistent volume (PV) for your existing storage.
 {:shortdesc}
 
 A persistent volume (PV) is a Kubernetes resource that represents an actual storage device that is provisioned in a data center. Persistent volumes abstract the details of how a specific storage type is provisioned by {{site.data.keyword.Bluemix_notm}} Storage. To mount a PV to your cluster, you must request persistent storage for your pod by creating a persistent volume claim (PVC). The following diagram illustrates the relationship between PVs and PVCs.
@@ -115,12 +114,12 @@ Before you begin, make sure that you have an existing NFS file share that you ca
 
 To create a PV and matching PVC, follow these steps.
 
-1.  In your IBM Cloud infrastructure (SoftLayer) account, look up the ID and path of the NFS file share where you want to create your PV object. In addition, authorize the file storage to the subnets in the cluster. This authorization gives your cluster access to the storage.
-    1.  Log in to your IBM Cloud infrastructure (SoftLayer) account.
+1.  In your {[softlayer]} account, look up the ID and path of the NFS file share where you want to create your PV object. In addition, authorize the file storage to the subnets in the cluster. This authorization gives your cluster access to the storage.
+    1.  Log in to your {[softlayer]} account.
     2.  Click **Storage**.
     3.  Click **File Storage** and from the **Actions** menu, select **Authorize Host**.
     4.  Select **Subnets**.
-    5.  From the drop down list, select the private VLAN subnet that your worker node is connected to. To find the subnet of your worker node, run `bx cs workers <cluster_name>` and compare the `Private IP` of your worker node with the subnet that you found in the drop down list.
+    5.  From the drop down list, select the private VLAN subnet that your worker node is connected to. To find the subnet of your worker node, run `{[bxcs]} workers <cluster_name>` and compare the `Private IP` of your worker node with the subnet that you found in the drop down list.
     6.  Click **Submit**.
     6.  Click the name of the file storage.
     7.  Make note the **Mount Point** field. The field is displayed as `<server>:/<path>`.
@@ -238,8 +237,7 @@ To create a PV and matching PVC, follow these steps.
 
 You successfully created a PV object and bound it to a PVC. Cluster users can now [mount the PVC](#app_volume_mount) to their deployments and start reading from and writing to the PV object.
 
-<br />
-
+{[white-space.md]}
 
 
 ## Using existing block storage in your cluster
@@ -249,12 +247,12 @@ Before you begin, make sure that you have an existing block storage instance tha
 
 To create a PV and matching PVC, follow these steps.
 
-1.  Retrieve or generate an API key for your IBM Cloud infrastructure (SoftLayer) account.
+1.  Retrieve or generate an API key for your {[softlayer]} account.
     1. Log in to the [IBM Cloud infrastructure (SoftLayer) portal ![External link icon](../icons/launch-glyph.svg "External link icon")](https://control.softlayer.com/).
     2. Select **Account**, then **Users**, and then **User List**.
     3. Find your user ID.
     4. In the **API KEY** column, click **Generate** to generate an API key or **View** to view your existing API key.
-2.  Retrieve the API user name for your IBM Cloud infrastructure (SoftLayer) account.
+2.  Retrieve the API user name for your {[softlayer]} account.
     1. From the **User List** menu, select your user ID.
     2. In the **API Access Information** section, find your **API Username**.
 3.  Log in to the IBM Cloud infrastructure CLI plug-in.
@@ -263,7 +261,7 @@ To create a PV and matching PVC, follow these steps.
     ```
     {: pre}
 
-4.  Choose to authenticate by using the user name and API key for your IBM Cloud infrastructure (SoftLayer) account.
+4.  Choose to authenticate by using the user name and API key for your {[softlayer]} account.
 5.  Enter the user name and API key that you retrieved in the previous steps.
 6.  List available block storage devices.
     ```
@@ -274,7 +272,7 @@ To create a PV and matching PVC, follow these steps.
     Your output looks similar to the following:
     ```
     id         username            datacenter   storage_type              capacity_gb   bytes_used   ip_addr         lunId   active_transactions
-    38642141   IBM02SEL1543159-1   dal10        endurance_block_storage   20            -            169.xx.xxx.xxx   170     0
+    38642141   IBM02SEL1543159-1   dal10        endurance_block_storage   20            -            {[public_IP]}   170     0
     ```
     {: screen}
 
@@ -397,8 +395,7 @@ To create a PV and matching PVC, follow these steps.
 
 You successfully created a PV and bound it to a PVC. Cluster users can now [mount the PVC](#app_volume_mount) to their deployments and start reading from and writing to the PV.
 
-<br />
-
+{[white-space.md]}
 
 
 ## Adding NFS file storage or block storage to apps
@@ -410,7 +407,7 @@ Create a persistent volume claim (PVC) to provision NFS file storage or block st
 The NFS file storage and block storage that backs the PV is clustered by IBM in order to provide high availability for your data. The storage classes describe the types of storage offerings available and define aspects such as the data retention policy, size in gigabytes, and IOPS when you create your PV.
 
 Before you begin:
-- If you have a firewall, [allow egress access](cs_firewall.html#pvc) for the IBM Cloud infrastructure (SoftLayer) IP ranges of the locations that your clusters are in, so that you can create PVCs.
+- If you have a firewall, [allow egress access](cs_firewall.html#pvc) for the {[softlayer]} IP ranges of the locations that your clusters are in, so that you can create PVCs.
 - If you want to mount block storage to your apps, you must install the [{{site.data.keyword.Bluemix_notm}} Storage plug-in for block storage](#install_block) first.
 
 To add persistent storage:
@@ -448,7 +445,7 @@ To add persistent storage:
     **Tip:** If you want to change the default storage class, run `kubectl patch storageclass <storageclass> -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'` and replace `<storageclass>` with the name of the storage class.
 
 2.  Decide if you want to keep your data and the NFS file share or block storage after you delete the PVC.
-    - If you want to keep your data, then choose a `retain` storage class. When you delete the PVC, the PV is removed, but the NFS file or block storage and your data still exist in your IBM Cloud infrastructure (SoftLayer) account. Later, to access this data in your cluster, create a PVC and a matching PV that refers to your existing [NFS file](#existing) or [block](#existing_block) storage.
+    - If you want to keep your data, then choose a `retain` storage class. When you delete the PVC, the PV is removed, but the NFS file or block storage and your data still exist in your {[softlayer]} account. Later, to access this data in your cluster, create a PVC and a matching PV that refers to your existing [NFS file](#existing) or [block](#existing_block) storage.
     - If you want the data and your NFS file share or block storage to be deleted when you delete the PVC, choose a storage class without `retain`.
 
 3.  **If you choose a bronze, silver, or gold storage class**: You get [Endurance storage ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/topic/endurance-storage) that defines the IOPS per GB for each class. However, you can determine the total IOPS by choosing a size within the available range. You can select any whole number of gigabyte sizes within the allowed size range (such as 20 Gi, 256 Gi, 11854 Gi). For example, if you select a 1000Gi file share or block storage size in the silver storage class of 4 IOPS per GB, your volume has a total of 4000 IOPS. The more IOPS your PV has, the faster it processes input and output operations. The following table describes the IOPS per gigabyte and size range for each storage class.
@@ -710,7 +707,7 @@ To add persistent storage:
       </tr>
     <tr>
     <td><code>spec/containers/image</code></td>
-    <td>The name of the image that you want to use. To list available images in your {{site.data.keyword.registryshort_notm}} account, run `bx cr image-list`.</td>
+    <td>The name of the image that you want to use. To list available images in your {{site.data.keyword.registryshort_notm}} account, run `{[bxcr]} image-list`.</td>
     </tr>
     <tr>
     <td><code>spec/containers/name</code></td>
@@ -767,8 +764,7 @@ To add persistent storage:
 
 **NFS permissions**: Looking for documentation on enabling NFS non-root permissions? See [Adding non-root user access to NFS file storage](cs_troubleshoot_storage.html#nonroot).
 
-<br />
-
+{[white-space.md]}
 
 
 
@@ -872,8 +868,7 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
 
 You can now continue to [create a PVC](#create) to provision block storage for your app.
 
-<br />
-
+{[white-space.md]}
 
 ### Updating the {{site.data.keyword.Bluemix_notm}} Block Storage plug-in
 You can upgrade the existing {{site.data.keyword.Bluemix_notm}} Block Storage plug-in to the latest version.
@@ -899,8 +894,7 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
    ```
    {: pre}
 
-<br />
-
+{[white-space.md]}
 
 ### Removing the {{site.data.keyword.Bluemix_notm}} Block Storage plug-in
 If you do not want to provision and use {{site.data.keyword.Bluemix_notm}} Block Storage for your cluster, you can uninstall the helm chart.
@@ -942,8 +936,7 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
    {: pre}
    The removal of the storage classes is successful if no storage classes are displayed in your CLI output.
 
-<br />
-
+{[white-space.md]}
 
 
 ## Setting up backup and restore solutions for NFS file shares and block storage

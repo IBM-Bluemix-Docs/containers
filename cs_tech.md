@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-04-18"
+lastupdated: "2018-4-20"
 
 ---
 
@@ -63,8 +63,7 @@ Learn about some basic Docker concepts:
 
 </dl>
 
-<br />
-
+{[white-space.md]}
 
 ## Kubernetes clusters
 {: #kubernetes_basics}
@@ -107,8 +106,7 @@ Define update strategies for your app, including the number of pods that you wan
 
 </dl>
 
-<br />
-
+{[white-space.md]}
 
 ## Service architecture
 {: #architecture}
@@ -131,5 +129,4 @@ Figure. {{site.data.keyword.containershort_notm}} architecture
 Want to see how {{site.data.keyword.containerlong_notm}} can be used with other products and services? Check out some of the [integrations](cs_integrations.html#integrations).
 
 
-<br />
-
+{[white-space.md]}
