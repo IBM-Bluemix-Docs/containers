@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -680,4 +680,5 @@ Use the following steps if you want to create an IAM token or if you want to obt
     You can find your new IAM token in the **access_token**, and the IAM refresh token in the **refresh_token** field of your API output.
 
 2.  Continue working with the [{{site.data.keyword.containershort_notm}} API documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://us-south.containers.bluemix.net/swagger-api) by using the token from the previous step.
+
 

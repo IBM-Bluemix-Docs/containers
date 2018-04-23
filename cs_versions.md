@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -422,4 +422,5 @@ If your apps rely on the previous insecure behavior, modify them accordingly.</t
 As of 4 April 2018, {{site.data.keyword.containershort_notm}} clusters that run [Kubernetes version 1.5](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.5.md) are unsupported. Version 1.5 clusters cannot receive security updates or support unless they are updated to the next most recent version ([Kubernetes 1.7](#cs_v17)).
 
 [Review potential impact](cs_versions.html#cs_versions) of each Kubernetes version update, and then [update your clusters](cs_cluster_update.html#update) immediately. Note that you update from one version to the next most recent, such as 1.5 to 1.7 or 1.8 to 1.9.
+
 

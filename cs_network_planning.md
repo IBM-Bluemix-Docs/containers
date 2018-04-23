@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -83,4 +83,5 @@ To choose the best networking option for your application, you can follow this d
 <area href="/docs/containers/cs_loadbalancer.html" alt="LoadBalancer service" shape="circle" coords="247, 419, 44"/>
 <area href="/docs/containers/cs_ingress.html" alt="Ingress service" shape="circle" coords="445, 420, 45"/>
 </map>
+
 

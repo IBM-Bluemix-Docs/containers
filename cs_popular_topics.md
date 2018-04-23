@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -163,6 +163,7 @@ Check out what container developers are interested in learning about in {{site.d
 
 You can see what others are talking about and ask your own questions in the [{{site.data.keyword.containershort_notm}} Slack. ![External link icon](../icons/launch-glyph.svg "External link icon")](https://ibm-container-service.slack.com)
 {:shortdesc}
+
 
 
 

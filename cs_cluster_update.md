@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -218,6 +218,7 @@ You can update the machine types that are used in worker nodes by adding new wor
     {: pre}
 
 6. Repeat these steps to upgrade other worker nodes to different machine types.
+
 
 
 

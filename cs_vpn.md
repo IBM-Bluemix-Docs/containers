@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -426,4 +426,5 @@ You can disable the VPN connection by deleting the Helm chart.
   helm delete --purge <release_name>
   ```
   {: pre}
+
 

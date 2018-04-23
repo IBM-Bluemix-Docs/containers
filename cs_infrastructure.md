@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -72,4 +72,5 @@ Before you begin, create an {{site.data.keyword.Bluemix_notm}} Pay-As-You-Go acc
 7.  Start [creating standard clusters](cs_clusters.html#clusters_cli).
 
 **Note:** To review your API key after you generated it, follow step 1 and 2, and then in the **API key** section, click on **View** to see the API key for your user ID.
+
 

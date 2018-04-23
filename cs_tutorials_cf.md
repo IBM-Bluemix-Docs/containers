@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -267,4 +267,5 @@ Deploy your app as a container in a Kubernetes cluster.
 6. In the **Workloads** tab, you can see the resources that you created. When you are done exploring the Kubernetes dashboard, use `ctrl + c` to exit the `proxy` command.
 
 Congratulations! Your app is deployed in a container!
+
 

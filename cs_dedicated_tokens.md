@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -165,4 +165,5 @@ Create a non-expiring token for an image registry that you used for single and s
           kubectl apply -f mypod.yaml
           ```
           {: pre}
+
 

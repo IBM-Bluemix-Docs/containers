@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -658,7 +658,7 @@ You can route incoming network traffic on the IBM-provided domain to apps that a
         <tbody>
         <tr>
         <td><code>metadata/name</code></td>
-        <td>Replace <em>&lt;myexternalservice&gt;</em> with a name for your service.</td>
+        <td>Replace <em>&lt;myexternalservice&gt;</em> with a name for your service.<p>Learn more about [securing your personal information](cs_secure.html#pi) when you work with Kubernetes resources.</p></td>
         </tr>
         <tr>
         <td><code>port</code></td>
@@ -1679,6 +1679,7 @@ By default, Ingress logs are formatted in JSON and display common log fields. Ho
 4. To view the Ingress ALB logs, [create a logging configuration for the Ingress service](cs_health.html#logging) in your cluster.
 
 <br />
+
 
 
 

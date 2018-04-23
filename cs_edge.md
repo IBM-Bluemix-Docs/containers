@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -106,4 +106,5 @@ Using the `dedicated=edge` toleration means that all load balancer and Ingress s
   Now, only pods with the `dedicated=edge` toleration are deployed to your edge worker nodes.
 
 3. If you choose to [enable source IP preservation for a load balancer service ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tutorials/services/source-ip/#source-ip-for-services-with-typeloadbalancer), ensure that app pods are scheduled onto the edge worker nodes by [adding edge node affinity to app pods](cs_loadbalancer.html#edge_nodes) so that incoming requests can be forwarded to your app pods.
+
 

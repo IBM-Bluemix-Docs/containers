@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -818,4 +818,5 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
     kubectl -n kube-system describe deployment ibm-worker-recovery
     ```
     {: pre}
+
 

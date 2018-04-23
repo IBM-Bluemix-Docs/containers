@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -132,7 +132,7 @@ To deploy the app:
 
 7.  Build a Docker image that includes the app files of the `Lab 1` directory. If you need to make a change to the app in the future, repeat these steps to create another version of the image.
 
-    
+    Learn more about [securing your personal information](cs_secure.html#pi) when you work with container images.
 
     1.  Build the image locally. Specify the name and tag that you want to use. Be sure to use the namespace that you created in {{site.data.keyword.registryshort_notm}} in the previous tutorial. Tagging the image with the namespace information tells Docker where to push the image in a later step. Use lowercase alphanumeric characters or underscores (`_`) only in the image name. Don't forget the period (`.`) at the end of the command. The period tells Docker to look inside the current directory for the Dockerfile and build artifacts to build the image.
 
@@ -188,7 +188,7 @@ To deploy the app:
     ```
     {: screen}
 
-    
+    Learn more about [securing your personal information](cs_secure.html#pi) when you work with Kubernetes resources.
 
 9.  Make the app accessible to the world by exposing the deployment as a NodePort service. Just as you might expose a port for a Cloud Foundry app, the NodePort you expose is the port on which the worker node listens for traffic.
 
@@ -749,4 +749,5 @@ Now that you conquered the basics, you can move to more advanced activities. Con
 - Complete a more complicated lab in the repository
 - [Automatically scale your apps](cs_app.html#app_scaling) with {{site.data.keyword.containershort_notm}}
 - Explore the container orchestration journeys on [developerWorks ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/code/journey/category/container-orchestration/)
+
 

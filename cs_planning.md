@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -30,4 +30,5 @@ Check out the latest information in its new location:
  - [Persistent data storage](cs_storage.html#planning)
  - [Integrations](cs_integrations.html#integrations)
  - [Access the IBM Cloud infrastructure (SoftLayer) portfolio](cs_infrastructure.html#unify_accounts)
+
 
