@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -310,7 +310,7 @@ To deploy your app:
   * Select **Specify app details below** and enter the details.
   * Select **Upload a YAML or JSON file** to upload your app [configuration file ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/).
 
-  Need help with your configuration file? Check out this [example YAML file ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/IBM-Cloud/kube-samples/blob/master/deploy-apps-clusters/deploy-ibmliberty.yaml). In this example, a container is deployed from the **ibmliberty** image in the US-South region. 
+  Need help with your configuration file? Check out this [example YAML file ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/IBM-Cloud/kube-samples/blob/master/deploy-apps-clusters/deploy-ibmliberty.yaml). In this example, a container is deployed from the **ibmliberty** image in the US-South region. Learn more about [securing your personal information](cs_secure.html#pi) when you work with Kubernetes resources.
   {: tip}
 
 3.  Verify that you successfully deployed your app in one of the following ways.
@@ -341,7 +341,7 @@ To deploy your app:
 
     -   [Ingress ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/services-networking/ingress/): Specifies a type of load balancer that provides routes to access your app publicly.
 
-    
+    Learn more about [securing your personal information](cs_secure.html#pi) when you work with Kubernetes resources.
 
 2.  Run the configuration file in a cluster's context.
 
@@ -504,5 +504,4 @@ Before you begin, create a [deployment](#app_cli).
         {: pre}
 
 <br />
-
 
