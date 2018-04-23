@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -66,7 +66,7 @@ To create your cluster:
 
 The following CLIs and their prerequisites are used to manage clusters through the CLI:
 -   {{site.data.keyword.Bluemix_notm}} CLI
--   {{site.data.keyword.containershort_notm}} plug-in
+-   {[pluginname]}
 -   Kubernetes CLI
 -   {{site.data.keyword.registryshort_notm}} plug-in
 -   Docker CLI
@@ -74,24 +74,24 @@ The following CLIs and their prerequisites are used to manage clusters through t
 </br>
 To install the CLIs and their prerequisites:
 
-1.  As a prerequisite for the {{site.data.keyword.containershort_notm}} plug-in, install the [{{site.data.keyword.Bluemix_notm}} CLI ![External link icon](../icons/launch-glyph.svg "External link icon")](https://clis.ng.bluemix.net/ui/home.html). To run {{site.data.keyword.Bluemix_notm}} CLI commands, use the prefix `bx`.
+1.  As a prerequisite for the {[pluginname]}, install the [{{site.data.keyword.Bluemix_notm}} CLI ![External link icon](../icons/launch-glyph.svg "External link icon")](https://clis.ng.bluemix.net/ui/home.html). To run {{site.data.keyword.Bluemix_notm}} CLI commands, use the prefix `{[bx]}`.
 2.  Follow the prompts to select an account and an {{site.data.keyword.Bluemix_notm}} organization. Clusters are specific to an account, but are independent from an {{site.data.keyword.Bluemix_notm}} organization or space.
 
-4.  Install the {{site.data.keyword.containershort_notm}} plug-in to create Kubernetes clusters and manage worker nodes. To run {{site.data.keyword.containershort_notm}} plug-in commands, use the prefix `bx cs`.
+4.  Install the {[pluginname]} to create Kubernetes clusters and manage worker nodes. To run {[pluginname]} commands, use the prefix `{[bxcs]}`.
 
     ```
-    bx plugin install container-service -r Bluemix
+    {[bx]} plugin install {[pluginname_short]} -r Bluemix
     ```
     {: pre}
 
 5.  To view a local version of the Kubernetes dashboard and deploy apps into your clusters, [install the Kubernetes CLI ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/tools/install-kubectl/). To run commands by using the Kubernetes CLI, use the prefix `kubectl`.
-    1.  For complete functional compatibility, download the Kubernetes CLI version that matches the Kubernetes cluster version you plan to use. The current {{site.data.keyword.containershort_notm}} default Kubernetes version is 1.8.11.
+    1.  For complete functional compatibility, download the Kubernetes CLI version that matches the Kubernetes cluster version you plan to use. The current {{site.data.keyword.containershort_notm}} default Kubernetes version is {[kubeversions]}.
 
-        OS X:   [https://storage.googleapis.com/kubernetes-release/release/v1.8.11/bin/darwin/amd64/kubectl ![External link icon](../icons/launch-glyph.svg "External link icon")](https://storage.googleapis.com/kubernetes-release/release/v1.8.11/bin/darwin/amd64/kubectl)
+        OS X:   [https://storage.googleapis.com/kubernetes-release/release/v{[kubeversions]}/bin/darwin/amd64/kubectl ![External link icon](../icons/launch-glyph.svg "External link icon")](https://storage.googleapis.com/kubernetes-release/release/v{[kubeversions]}/bin/darwin/amd64/kubectl)
 
-        Linux:   [https://storage.googleapis.com/kubernetes-release/release/v1.8.11/bin/linux/amd64/kubectl ![External link icon](../icons/launch-glyph.svg "External link icon")](https://storage.googleapis.com/kubernetes-release/release/v1.8.11/bin/linux/amd64/kubectl)
+        Linux:   [https://storage.googleapis.com/kubernetes-release/release/v{[kubeversions]}/bin/linux/amd64/kubectl ![External link icon](../icons/launch-glyph.svg "External link icon")](https://storage.googleapis.com/kubernetes-release/release/v{[kubeversions]}/bin/linux/amd64/kubectl)
 
-        Windows:   [https://storage.googleapis.com/kubernetes-release/release/v1.8.11/bin/windows/amd64/kubectl.exe ![External link icon](../icons/launch-glyph.svg "External link icon")](https://storage.googleapis.com/kubernetes-release/release/v1.8.11/bin/windows/amd64/kubectl.exe)
+        Windows:   [https://storage.googleapis.com/kubernetes-release/release/v{[kubeversions]}/bin/windows/amd64/kubectl.exe ![External link icon](../icons/launch-glyph.svg "External link icon")](https://storage.googleapis.com/kubernetes-release/release/v{[kubeversions]}/bin/windows/amd64/kubectl.exe)
 
           **Tip:** If you are using Windows, install the Kubernetes CLI in the same directory as the {{site.data.keyword.Bluemix_notm}} CLI. This setup saves you some filepath changes when you run commands later.
 
@@ -124,17 +124,17 @@ To install the CLIs and their prerequisites:
             ```
             {: pre}
 
-6. To set up and manage a private image repository in {{site.data.keyword.registryshort_notm}}, install the {{site.data.keyword.registryshort_notm}} plug-in. To run registry commands, use the prefix `bx cr`.
+6. To set up and manage a private image repository in {{site.data.keyword.registryshort_notm}}, install the {{site.data.keyword.registryshort_notm}} plug-in. To run registry commands, use the prefix `{[bxcr]}`.
 
     ```
-    bx plugin install container-registry -r Bluemix
+    {[bx]} plugin install container-registry -r Bluemix
     ```
     {: pre}
 
-    To verify that the container-service and container-registry plug-ins are properly installed, run the following command:
+    To verify that the {[pluginname_short]} and container-registry plug-ins are properly installed, run the following command:
 
     ```
-    bx plugin list
+    {[bx]} plugin list
     ```
     {: pre}
 
@@ -151,7 +151,7 @@ Set up a private image repository in {{site.data.keyword.registryshort_notm}} an
 1.  Log in to the {{site.data.keyword.Bluemix_notm}} CLI by using your {{site.data.keyword.Bluemix_notm}} credentials, when prompted.
 
     ```
-    bx login [--sso]
+    {[bx]} login [--sso]
     ```
     {: pre}
 
@@ -159,19 +159,19 @@ Set up a private image repository in {{site.data.keyword.registryshort_notm}} an
 
 2.  Set up your own private image repository in {{site.data.keyword.registryshort_notm}} to securely store and share Docker images with all cluster users. A private image repository in {{site.data.keyword.Bluemix_notm}} is identified by a namespace. The namespace is used to create a unique URL to your image repository that developers can use to access private Docker images.
 
-   
+   {[gdpr_images]}
     
     In this example, the PR firm wants to create only one image repository in {{site.data.keyword.registryshort_notm}}, so they choose _pr_firm_ as their namespace to group all images in their account. Replace _&lt;namespace&gt;_ with a namespace of your choice that is unrelated to the tutorial.
 
     ```
-    bx cr namespace-add <namespace>
+    {[bxcr]} namespace-add <namespace>
     ```
     {: pre}
 
 3.  Before you continue to the next step, verify that the deployment of your worker node is complete.
 
     ```
-    bx cs workers <cluster_name_or_ID>
+    {[bxcs]} workers <cluster_name_or_ID>
     ```
      {: pre}
 
@@ -179,7 +179,7 @@ Set up a private image repository in {{site.data.keyword.registryshort_notm}} an
 
     ```
     ID                                                 Public IP       Private IP       Machine Type   State    Status   Location   Version
-    kube-mil01-pafe24f557f070463caf9e31ecf2d96625-w1   169.xx.xxx.xxx   10.xxx.xx.xxx   free           normal   Ready    mil01      1.8.11
+    kube-mil01-pafe24f557f070463caf9e31ecf2d96625-w1   {[public_IP]}   {[internal_cluster_IP]}   free           normal   Ready    mil01      {[kubeversions]}
     ```
     {: screen}
 
@@ -194,7 +194,7 @@ Every time you log in to the container CLI to work with clusters, you must run t
 1.  Get the command to set the environment variable and download the Kubernetes configuration files.
 
     ```
-    bx cs cluster-config <cluster_name_or_ID>
+    {[bxcs]} cluster-config <cluster_name_or_ID>
     ```
     {: pre}
 
@@ -203,7 +203,7 @@ Every time you log in to the container CLI to work with clusters, you must run t
     Example for OS X:
 
     ```
-    export KUBECONFIG=/Users/<user_name>/.bluemix/plugins/container-service/clusters/pr_firm_cluster/kube-config-prod-par02-pr_firm_cluster.yml
+    export KUBECONFIG=/Users/<user_name>/.bluemix/plugins/{[pluginname_short]}/clusters/pr_firm_cluster/kube-config-prod-par02-pr_firm_cluster.yml
     ```
     {: screen}
 
@@ -221,7 +221,7 @@ Every time you log in to the container CLI to work with clusters, you must run t
     Output:
 
     ```
-    /Users/<user_name>/.bluemix/plugins/container-service/clusters/pr_firm_cluster/kube-config-prod-par02-pr_firm_cluster.yml
+    /Users/<user_name>/.bluemix/plugins/{[pluginname_short]}/clusters/pr_firm_cluster/kube-config-prod-par02-pr_firm_cluster.yml
     ```
     {: screen}
 
@@ -235,8 +235,8 @@ Every time you log in to the container CLI to work with clusters, you must run t
     Example output:
 
     ```
-    Client Version: v1.8.11
-    Server Version: v1.8.11
+    Client Version: v{[kubeversions]}
+    Server Version: v{[kubeversions]}
     ```
     {: screen}
 
@@ -250,21 +250,21 @@ With {{site.data.keyword.Bluemix_notm}} services, you can take advantage of alre
     **Note:** When you add the {{site.data.keyword.toneanalyzershort}} service to your account, a message is displayed that the service is not free. If you limit your API call, this tutorial does not incur charges from the {{site.data.keyword.watson}} service. [Review the pricing information for the {{site.data.keyword.watson}} {{site.data.keyword.toneanalyzershort}} service ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/watson/developercloud/tone-analyzer.html#pricing-block).
 
     ```
-    bx service create tone_analyzer standard <service_name>
+    {[bx]} service create tone_analyzer standard <service_name>
     ```
     {: pre}
 
 2.  Bind the {{site.data.keyword.toneanalyzershort}} instance to the `default` Kubernetes namespace for the cluster. Later, you can create your own namespaces to manage user access to Kubernetes resources, but for now, use the `default` namespace. Kubernetes namespaces are different from the registry namespace you created earlier.
 
     ```
-    bx cs cluster-service-bind <cluster_name> default <service_name>
+    {[bxcs]} cluster-service-bind <cluster_name> default <service_name>
     ```
     {: pre}
 
     Output:
 
     ```
-    bx cs cluster-service-bind pr_firm_cluster default mytoneanalyzer
+    {[bxcs]} cluster-service-bind pr_firm_cluster default mytoneanalyzer
     Binding service instance to namespace...
     OK
     Namespace:	default

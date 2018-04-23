@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -44,8 +44,7 @@ The following diagram shows how communication is directed from the internet to a
 
 **Note:** The public IP address of the worker node is not permanent. When a worker node is removed or re-created, a new public IP address is assigned to the worker node. You can use the NodePort service for testing the public access for your app or when public access is needed for a short amount of time only. When you require a stable public IP address and more availability for your service, expose your app by using a [LoadBalancer service](cs_loadbalancer.html) or [Ingress](cs_ingress.html).
 
-<br />
-
+{[white-space.md]}
 
 ## Enabling public access to an app by using a NodePort service
 {: #config}
@@ -84,7 +83,7 @@ If you do not already have an app ready, you can use a Kubernetes example app ca
     <tbody>
     <tr>
     <td><code>metadata.name</code></td>
-    <td>Replace <code><em>&lt;my-nodeport-service&gt;</em></code> with a name for your NodePort service.</td>
+    <td>Replace <code><em>&lt;my-nodeport-service&gt;</em></code> with a name for your NodePort service.<p>{[gdpr_resources]}</p></td>
     </tr>
     <tr>
     <td><code>metadata.labels</code></td>
@@ -115,7 +114,7 @@ When the app is deployed, you can use the public IP address of any worker node a
 1.  Get the public IP address for a worker node in the cluster.
 
     ```
-    bx cs workers <cluster_name>
+    {[bxcs]} workers <cluster_name>
     ```
     {: pre}
 

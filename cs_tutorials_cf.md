@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -43,8 +43,7 @@ This tutorial is intended for Cloud Foundry app developers.
 - [Learn about Docker and Kubernetes terminology](cs_tech.html).
 
 
-<br />
-
+{[white-space.md]}
 
 
 ## Lesson 1: Download app code
@@ -78,8 +77,7 @@ Get your code ready to go. Don't have any code yet? You can download starter cod
 Your app code is ready to be containerized!
 
 
-<br />
-
+{[white-space.md]}
 
 ## Lesson 2: Creating a Docker image with your app code
 
@@ -162,8 +160,7 @@ Create a Dockerfile that includes your app code and the necessary configurations
   {: screen}
 
 
-<br />
-
+{[white-space.md]}
 
 
 ## Lesson 3: Deploying a container from your image
@@ -246,7 +243,7 @@ Deploy your app as a container in a Kubernetes cluster.
     a.  Get the public IP address for the worker node in the cluster.
 
     ```
-    bx cs workers <cluster_name>
+    {[bxcs]} workers <cluster_name>
     ```
     {: pre}
 
@@ -254,11 +251,11 @@ Deploy your app as a container in a Kubernetes cluster.
 
     ```
     ID                                                 Public IP        Private IP     Machine Type        State    Status   Zone    Version   
-    kube-dal10-cr18e61e63c6e94b658596ca93d087eed9-w1   169.xx.xxx.xxx   10.xxx.xx.xxx   u2c.2x4.encrypted   normal   Ready    dal10   1.8.11
+    kube-dal10-cr18e61e63c6e94b658596ca93d087eed9-w1   {[public_IP]}   {[internal_cluster_IP]}   u2c.2x4.encrypted   normal   Ready    dal10   {[kubeversions]}
     ```
     {: screen}
 
-    b. Open a browser and check out the app with the following URL: `http://<public_IP_address>:<NodePort>`. With the example values, the URL is `http://169.xx.xxx.xxx:30872`. You can give this URL to a co-worker to try or enter it in your cell phone's browser so that you can see that the app really is publicly available.
+    b. Open a browser and check out the app with the following URL: `http://<public_IP_address>:<NodePort>`. With the example values, the URL is `http://{[public_IP]}:30872`. You can give this URL to a co-worker to try or enter it in your cell phone's browser so that you can see that the app really is publicly available.
 
     <img src="images/python_flask.png" alt="A screen capture of the deployed boilerplate Python Flask app." />
 
