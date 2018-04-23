@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -1362,7 +1362,7 @@ spec:
 <td>Replace <code>&lt;<em>port</em>&gt;</code> with the ALB port number.</td>
 </tr>
 <tr>
-<td><code>serviceName/code></td>
+<td><code>serviceName</code></td>
 <td>Replace <code>&lt;<em>servicename</em>&gt;</code> with the name of one or more Ingress resources. This parameter is optional.</td>
 </tr>
 </tbody></table>
@@ -1383,7 +1383,7 @@ Allow HTTPS requests and encrypt traffic to your upstream apps.
 <dl>
 <dt>Description</dt>
 <dd>
-Encrypt traffic to your upstream apps that require HTTPS.
+Encrypt traffic to upstream apps that require HTTPS.
 
 **Optional**: You can add [one-way authentication or mutual authentication](#ssl-services-auth) to this annotation.
 </dd>
@@ -1930,7 +1930,7 @@ Remove header information that is included in the client response from the back-
  <dl>
  <dt>Description</dt>
  <dd>The Ingress ALB acts as a proxy between your back-end app and the client web browser. Client responses from the back-end app that are sent to the ALB are processed (proxied), and put into a new response that is then sent from the ALB to the client web browser. Although proxying a response removes http header information that was initially sent from the back-end app, this process might not remove all back-end app specific headers. Remove header information from a client reponse before the response is forwarded from the ALB to the client web browser.</dd>
- <dt>Sample Infress resource YAML</dt>
+ <dt>Sample Ingress resource YAML</dt>
  <dd>
  <pre class="codeblock">
  <code>apiVersion: extensions/v1beta1
