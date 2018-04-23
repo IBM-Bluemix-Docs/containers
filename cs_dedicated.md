@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -441,6 +441,7 @@ Design your {{site.data.keyword.Bluemix_dedicated_notm}} cluster setup for maxim
 ### Using private and public image registries
 {: #dedicated_images}
 
+Learn more about [securing your personal information](cs_secure.html#pi) when you work with container images.
 
 For new namespaces, see the options in [Using private and public image registries with {{site.data.keyword.containershort_notm}}](cs_images.html). For namespaces that were set up for single and scalable groups, [use a token and create a Kubernetes secret](cs_dedicated_tokens.html#cs_dedicated_tokens) for authentication.
 
@@ -519,7 +520,7 @@ You can use Kubernetes techniques to deploy apps in {{site.data.keyword.Bluemix_
 
 To deploy apps in clusters, you can follow the instructions for [deploying apps in {{site.data.keyword.Bluemix_notm}} public clusters](cs_app.html#app). Review the following differences for {{site.data.keyword.Bluemix_dedicated_notm}} clusters.
 
-
+Learn more about [securing your personal information](cs_secure.html#pi) when you work with Kubernetes resources.
 
 ### Allowing public access to apps
 {: #dedicated_apps_public}
