@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -84,7 +84,7 @@ If you do not already have an app ready, you can use a Kubernetes example app ca
     <tbody>
     <tr>
     <td><code>metadata.name</code></td>
-    <td>Replace <code><em>&lt;my-nodeport-service&gt;</em></code> with a name for your NodePort service.</td>
+    <td>Replace <code><em>&lt;my-nodeport-service&gt;</em></code> with a name for your NodePort service.<p>Learn more about [securing your personal information](cs_secure.html#pi) when you work with Kubernetes resources.</p></td>
     </tr>
     <tr>
     <td><code>metadata.labels</code></td>
