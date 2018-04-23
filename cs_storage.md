@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -16,6 +16,9 @@ lastupdated: "2018-4-20"
 {:download: .download}
 
 
+
+
+
 # Saving data in your cluster
 {: #storage}
 You can persist data in {{site.data.keyword.containerlong}} to share data between app instances and to protect your data from being lost if a component in your Kubernetes cluster fails.
@@ -23,13 +26,13 @@ You can persist data in {{site.data.keyword.containerlong}} to share data betwee
 ## Planning highly available storage
 {: #planning}
 
-In {{site.data.keyword.containerlong_notm}} you can choose from several options to store your app data and share data across pods in your cluster. However, not all storage options offer the same level of persistence and availability in situations where a component in your cluster or a whole site fails.
+In {{site.data.keyword.containerlong_notm}}, you can choose from several options to store your app data and share data across pods in your cluster. However, not all storage options offer the same level of persistence and availability in situations where a component in your cluster or a whole site fails.
 {: shortdesc}
 
 ### Non-persistent data storage options
 {: #non_persistent}
 
-You can use non-persistent storage options if your data is not required to be persistently stored, so that you can recover it after a component in your cluster fails, or if data does not need to be shared across app instances. Non-persistent storage options can also be used to unit-test your app components or try out new features.
+You can use non-persistent storage options if your data is not required to be persistently stored or if data does not need to be shared across app instances. Non-persistent storage options can also be used to unit-test your app components or try out new features.
 {: shortdesc}
 
 The following image shows available non-persistent data storage options in {{site.data.keyword.containerlong_notm}}. These options are available for free and standard clusters.
@@ -49,7 +52,7 @@ The following image shows available non-persistent data storage options in {{sit
     </tr>
   <tr>
     <td>2. On the worker node</td>
-    <td>Every worker node is set up with primary and secondary storage that is determined by the machine type that you select for your worker node. The primary storage is used to store data from the operating system and can be accessed by using a [Kubernetes <code>hostPath</code> volume ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/storage/volumes/#hostpath). The secondary storage is used to store data in <code>/var/lib/docker</code>, the directory that all the container data is written to. You can access the secondary storage by using a [Kubernetes <code>emptyDir</code> volume ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/storage/volumes/#emptydir)<br/><br/>While <code>hostPath</code> volumes are used to mount files from the worker node file system to your pod, <code>emptyDir</code> creates an empty directory that is assigned to a pod in your cluster. All containers in that pod can read from and write to that volume. Because the volume is assigned to one specific pod, data cannot be shared with other pods in a replica set.<br/><br/><p>A <code>hostPath</code> or <code>emptyDir</code> volume and its data are removed when: <ul><li>The worker node is deleted.</li><li>The worker node is reloaded or updated.</li><li>The cluster is deleted.</li><li>The {{site.data.keyword.Bluemix_notm}} account reaches a suspended state. </li></ul></p><p>In addtion, data in an <code>emptyDir</code> volume is removed when: <ul><li>The assigned pod is permanently deleted from the worker node.</li><li>The assigned pod is scheduled on another worker node.</li></ul></p><p><strong>Note:</strong> If the container inside the pod crashes, the data in the volume is still available on the worker node.</p></td>
+    <td>Every worker node is set up with primary and secondary storage that is determined by the machine type that you select for your worker node. The primary storage is used to store data from the operating system and can be accessed by using a [Kubernetes <code>hostPath</code> volume ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/storage/volumes/#hostpath). The secondary storage is used to store data in <code>/var/lib/docker</code>, the directory that all the container data is written to. You can access the secondary storage by using a [Kubernetes <code>emptyDir</code> volume ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/storage/volumes/#emptydir)<br/><br/>While <code>hostPath</code> volumes are used to mount files from the worker node file system to your pod, <code>emptyDir</code> creates an empty directory that is assigned to a pod in your cluster. All containers in that pod can read from and write to that volume. Because the volume is assigned to one specific pod, data cannot be shared with other pods in a replica set.<br/><br/><p>A <code>hostPath</code> or <code>emptyDir</code> volume and its data are removed when: <ul><li>The worker node is deleted.</li><li>The worker node is reloaded or updated.</li><li>The cluster is deleted.</li><li>The {{site.data.keyword.Bluemix_notm}} account reaches a suspended state. </li></ul></p><p>In addition, data in an <code>emptyDir</code> volume is removed when: <ul><li>The assigned pod is permanently deleted from the worker node.</li><li>The assigned pod is scheduled on another worker node.</li></ul></p><p><strong>Note:</strong> If the container inside the pod crashes, the data in the volume is still available on the worker node.</p></td>
     </tr>
     </tbody>
     </table>
@@ -57,14 +60,14 @@ The following image shows available non-persistent data storage options in {{sit
 ### Persistent data storage options for high availability
 {: persistent}
 
-The main challenge when you create highly available stateful apps is to persist data across multiple app instances in multiple locations, and to keep data in sync at all times. For high available data, you want to make sure that you have a master database with multiple instances that are spread across multiple data centers or even multiple regions, and that data in this master is continuously replicated. All instances in your cluster must read from and write to this master database. In case one instance of the master is down, other instances can take over the workload, so that you do not experience downtime for your apps.
+The main challenge when you create highly available stateful apps is to persist data across multiple app instances in multiple locations, and to keep data in sync always. For high available data, you want to make sure that you have a master database with multiple instances that are spread across multiple data centers or even multiple regions. This master database must continuously be replicated to keep a single source of truth. All instances in your cluster must read from and write to this master database. In case one instance of the master is down, other instances take over the workload so that you do not experience downtime for your apps.
 {: shortdesc}
 
 The following image shows the options that you have in {{site.data.keyword.containerlong_notm}} to make your data highly available in a standard cluster. The option that is right for you depends on the following factors:
   * **The type of app that you have:** For example, you might have an app that must store data on a file basis rather than inside a database.
   * **Legal requirements for where to store and route the data:** For example, you might be obligated to store and route data in the United States only and you cannot use a service that is located in Europe.
-  * **Backup and restore options:** Every storage options comes with capabilities to backup and restore data. Check that available backup and restore options meet the requirements of your disaster recovery plan, such as the frequency of backups or the capabilities of storing data outside your primary data center.
-  * **Global replication:** For high availability, you might want to set up multiple instances of storage that are distributed and replicated across data centers worldwide.
+  * **Backup and restore options:** Every storage option comes with capabilities to back up and restore data. Check that available backup and restore options meet the requirements of your disaster recovery plan, such as the frequency of backups or the capabilities of storing data outside your primary data center.
+  * **Global replication:** For high availability, you might want to set up multiple storage instances that are distributed and replicated across data centers worldwide.
 
 <br/>
 <img src="images/cs_storage_ha.png" alt="High availability options for persistent storage"/>
@@ -78,7 +81,7 @@ The following image shows the options that you have in {{site.data.keyword.conta
   <tbody>
   <tr>
   <td>1. NFS file storage or block storage</td>
-  <td>With this option, you can persist app and container data by using Kubernetes persistent volumes. Volumes are hosted on Endurance and Performance [NFS-based file storage ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/cloud/file-storage/details) or [block storage ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/cloud/block-storage) which can be used for apps that store data on a file basis or as a block rather than in a database. File storage and block storage are encrypted at REST.<p>{{site.data.keyword.containershort_notm}} provides predefined storage classes that define the range of sizes of the storage, IOPS, the delete policy, and the read and write permissions for the volume. To initiate a request for file storage or block storage, you must create a [persistent volume claim (PVC)](cs_storage.html#create). After you submit a PVC, {{site.data.keyword.containershort_notm}} dynamically provisions a persistent volume that is hosted on NFS-based file storage or block storage. [You can mount the PVC](cs_storage.html#app_volume_mount) as a volume to your deployment to allow the containers to read from and write to the volume. </p><p>Persistent volumes are provisioned in the data center where the worker node is located. You can share data across the same replica set or with other deployments in the same cluster. You cannot share data across clusters when they are located in different data centers or regions. </p><p>By default, NFS storage and block storage are not backed up automatically. You can set up a periodic backup for your cluster by using the provided [backup and restore mechanisms](cs_storage.html#backup_restore). When a container crashes or a pod is removed from a worker node, the data is not removed and can still be accessed by other deployments that mount the volume. </p><p><strong>Note:</strong> Persistent NFS file share storage and block storage are charged on a monthly basis. If you provision persistent storage for your cluster and remove it immediately, you still pay the monthly charge for the persistent storage, even if you used it only for a short amount of time.</p></td>
+  <td>With this option, you can persist app and container data by using Kubernetes persistent volumes. Volumes are hosted on Endurance and Performance [NFS-based file storage ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/cloud/file-storage/details) or [block storage ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/cloud/block-storage) that can be used for apps that store data on a file basis or as a block rather than in a database. File storage and block storage are encrypted at REST.<p>{{site.data.keyword.containershort_notm}} provides predefined storage classes that define the range of sizes of the storage, IOPS, the delete policy, and the read and write permissions for the volume. To initiate a request for file storage or block storage, you must create a [persistent volume claim (PVC)](cs_storage.html#create). After you submit a PVC, {{site.data.keyword.containershort_notm}} dynamically provisions a persistent volume that is hosted on NFS-based file storage or block storage. [You can mount the PVC](cs_storage.html#app_volume_mount) as a volume to your deployment to allow the containers to read from and write to the volume. </p><p>Persistent volumes are provisioned in the data center where the worker node is located. You can share data across the same replica set or with other deployments in the same cluster. You cannot share data across clusters when they are located in different data centers or regions. </p><p>By default, NFS storage and block storage are not backed up automatically. You can set up a periodic backup for your cluster by using the provided [backup and restore mechanisms](cs_storage.html#backup_restore). When a container crashes or a pod is removed from a worker node, the data is not removed and can still be accessed by other deployments that mount the volume. </p><p><strong>Note:</strong> Persistent NFS file share storage and block storage are charged monthly. If you provision persistent storage and remove it immediately, you still pay the monthly charge for the persistent storage, even if you used it only for a short amount of time.</p></td>
   </tr>
   <tr id="cloud-db-service">
     <td>2. Cloud database service</td>
@@ -86,7 +89,7 @@ The following image shows the options that you have in {{site.data.keyword.conta
   </tr>
   <tr>
     <td>3. On-prem database</td>
-    <td>If your data must be stored on-site for legal reasons, you can [set up a VPN connection](cs_vpn.html#vpn) to your on-premise database and use existing storage, backup and replication mechanisms in your data center.</td>
+    <td>If your data must be stored onsite for legal reasons, you can [set up a VPN connection](cs_vpn.html#vpn) to your on-prem database and use existing storage, backup, and replication mechanisms in your data center.</td>
   </tr>
   </tbody>
   </table>
@@ -100,18 +103,18 @@ The following image shows the options that you have in {{site.data.keyword.conta
 ## Using existing NFS file shares in clusters
 {: #existing}
 
-If you already have existing NFS file shares in your IBM Cloud infrastructure (SoftLayer) account that you want to use with Kubernetes, you can do so by creating a persistent volume (PV) for your existing storage.
+If you have existing NFS file shares in your IBM Cloud infrastructure (SoftLayer) account that you want to use, you can do so by creating a persistent volume (PV) for your existing storage.
 {:shortdesc}
 
 A persistent volume (PV) is a Kubernetes resource that represents an actual storage device that is provisioned in a data center. Persistent volumes abstract the details of how a specific storage type is provisioned by {{site.data.keyword.Bluemix_notm}} Storage. To mount a PV to your cluster, you must request persistent storage for your pod by creating a persistent volume claim (PVC). The following diagram illustrates the relationship between PVs and PVCs.
 
 ![Create persistent volumes and persistent volume claims](images/cs_cluster_pv_pvc.png)
 
- As depicted in the diagram, to enable existing NFS file shares to be used with Kubernetes, you must create PVs with a certain size and access mode and create a PVC that matches the PV specification. If the PV and PVC match, they are bound to each other. Only bound PVCs can be used by the cluster user to mount the volume to a deployment. This process is referred to as static provisioning of persistent storage.
+As depicted in the diagram, to enable existing NFS storage, you must create PVs with a certain size and access mode and create a PVC that matches the PV specification. If the PV and PVC match, they are bound to each other. Only bound PVCs can be used by the cluster user to mount the volume to a deployment. This process is referred to as static provisioning of persistent storage.
 
 Before you begin, make sure that you have an existing NFS file share that you can use to create your PV. For example, if you previously [created a PVC with a `retain` storage class policy](#create), you can use that retained data in the existing NFS file share for this new PVC.
 
-**Note:** Static provisioning of persistent storage only applies to existing NFS file shares. If you do not have existing NFS file shares, cluster users can use the [dynamic provisioning](cs_storage.html#create) process to add PVs.
+**Note:** Static provisioning of persistent storage applies to existing NFS file shares only. If you do not have existing NFS file shares, cluster users can use the [dynamic provisioning](cs_storage.html#create) process to add PVs.
 
 To create a PV and matching PVC, follow these steps.
 
@@ -120,10 +123,10 @@ To create a PV and matching PVC, follow these steps.
     2.  Click **Storage**.
     3.  Click **File Storage** and from the **Actions** menu, select **Authorize Host**.
     4.  Select **Subnets**.
-    5.  From the drop down list, select the private VLAN subnet that your worker node is connected to. To find the subnet of your worker node, run `bx cs workers <cluster_name>` and compare the `Private IP` of your worker node with the subnet that you found in the drop down list.
+    5.  From the drop-down list, select the private VLAN subnet that your worker node is connected to. To find the subnet of your worker node, run `bx cs workers <cluster_name>` and compare the `Private IP` of your worker node with the subnet that you found in the drop-down list.
     6.  Click **Submit**.
     6.  Click the name of the file storage.
-    7.  Make note the **Mount Point** field. The field is displayed as `<server>:/<path>`.
+    7.  Note the **Mount Point** field. The field is displayed as `<server>:/<path>`.
 2.  Create a storage configuration file for your PV. Include the server and path from the file storage **Mount Point** field.
 
     ```
@@ -157,7 +160,7 @@ To create a PV and matching PVC, follow these steps.
     </tr>
     <tr>
     <td><code>accessMode</code></td>
-    <td>Access modes define the way that the PVC can be mounted to a worker node.<ul><li>ReadWriteOnce (RWO): The PV can be mounted to deployments in a single worker node only. Containers in deployments that are mounted to this PV can read from and write to the volume.</li><li>ReadOnlyMany (ROX): The PV can be mounted to deployments that are hosted on multiple worker nodes. Deployments that are mounted to this PV can only read from the volume.</li><li>ReadWriteMany (RWX): This PV can be mounted to deployments that are hosted on multiple worker nodes. Deployments that are mounted to this PV can read from and write to the volume.</li></ul></td>
+    <td>Access modes define the way that the PVC can be mounted to a worker node.<ul><li>ReadWriteOnce (RWO): The PV can be mounted to deployments in a single worker node only. Containers in deployments that are mounted to this PV can read from and write to the volume.</li><li>ReadOnlyMany (ROX): The PV can be mounted to deployments that are hosted on multiple worker nodes. Deployments that are mounted to this PV can read from the volume only.</li><li>ReadWriteMany (RWX): This PV can be mounted to deployments that are hosted on multiple worker nodes. Deployments that are mounted to this PV can read from and write to the volume.</li></ul></td>
     </tr>
     <tr>
     <td><code>spec/nfs/server</code></td>
@@ -215,7 +218,7 @@ To create a PV and matching PVC, follow these steps.
     ```
     {: pre}
 
-    Your output looks similar to the following.
+    Example output:
 
     ```
     Name: mypvc
@@ -271,15 +274,15 @@ To create a PV and matching PVC, follow these steps.
     ```
     {: pre}
 
-    Your output looks similar to the following:
+    Example output:
     ```
     id         username            datacenter   storage_type              capacity_gb   bytes_used   ip_addr         lunId   active_transactions
     38642141   IBM02SEL1543159-1   dal10        endurance_block_storage   20            -            169.xx.xxx.xxx   170     0
     ```
     {: screen}
 
-7.  Note the `id`, `ip_addr`, `capacity_gb` and `lunId` of the block storage device that you want to mount to your cluster.
-8.  Create a configuration file for your PV. Include the block storage ID, IP address, the size and lun ID that you retrieved in the previous step.
+7.  Note the `id`, `ip_addr`, `capacity_gb`, and `lunId` of the block storage device that you want to mount to your cluster.
+8.  Create a configuration file for your PV. Include the block storage ID, IP address, the size, and lun ID that you retrieved in the previous step.
 
     ```
     apiVersion: v1
@@ -375,7 +378,7 @@ To create a PV and matching PVC, follow these steps.
      ```
      {: pre}
 
-     Your output looks similar to the following.
+     Example output:
 
      ```
      Name: mypvc
@@ -410,7 +413,7 @@ Create a persistent volume claim (PVC) to provision NFS file storage or block st
 The NFS file storage and block storage that backs the PV is clustered by IBM in order to provide high availability for your data. The storage classes describe the types of storage offerings available and define aspects such as the data retention policy, size in gigabytes, and IOPS when you create your PV.
 
 Before you begin:
-- If you have a firewall, [allow egress access](cs_firewall.html#pvc) for the IBM Cloud infrastructure (SoftLayer) IP ranges of the locations that your clusters are in, so that you can create PVCs.
+- If you have a firewall, [allow egress access](cs_firewall.html#pvc) for the IBM Cloud infrastructure (SoftLayer) IP ranges of the locations that your clusters are in so that you can create PVCs.
 - If you want to mount block storage to your apps, you must install the [{{site.data.keyword.Bluemix_notm}} Storage plug-in for block storage](#install_block) first.
 
 To add persistent storage:
@@ -541,7 +544,7 @@ To add persistent storage:
 
     <pre class="pre"><code>kubectl describe storageclasses ibmc-file-retain-custom</code></pre>
 
-5.  Decide whether you want to be billed on an hourly or monthly basis. By default, you are billed monthly.
+5.  Decide if you want to be billed on an hourly or monthly basis. By default, you are billed monthly.
 
 6.  Create a configuration file to define your PVC and save the configuration as a `.yaml` file.
 
@@ -960,11 +963,11 @@ Review the following backup and restore options for your NFS file shares and blo
   <p>For more information, see:<ul><li>[NFS periodic snapshots](/docs/infrastructure/FileStorage/snapshots.html)</li><li>[Block periodic snapshots](/docs/infrastructure/BlockStorage/snapshots.html#snapshots)</li></ul></p></dd>
   <dt>Replicate snapshots to another location</dt>
  <dd><p>To protect your data from a location failure, you can [replicate snapshots](/docs/infrastructure/FileStorage/replication.html#working-with-replication) to an NFS file share or block storage instance that is set up in another location. Data can be replicated from the primary storage to the backup storage only. You cannot mount a replicated NFS file share or block storage instance to a cluster. When your primary storage fails, you can manually set your replicated backup storage to be the primary one. Then, you can mount it to your cluster. After your primary storage is restored, you can restore the data from the backup storage.</p>
- <p>For more information, see:<ul><li>[NFS replicate snapshots](/docs/infrastructure/FileStorage/replication.html#working-with-replication)</li><li>[Block replicate snapshots](/docs/infrastructure/BlockStorage/replication.html#working-with-replication)</li></ul></p></dd>
+ <p>For more information, see:<ul><li>[Replicate snapshots for NFS](/docs/infrastructure/FileStorage/replication.html#working-with-replication)</li><li>[Replicate snapshots for Block](/docs/infrastructure/BlockStorage/replication.html#working-with-replication)</li></ul></p></dd>
  <dt>Duplicate storage</dt>
- <dd><p>You can duplicate your NFS file share or block storage instance in the same location as the original storage instance. A duplicate has the same data as the original storage instance at the point in time that you create the duplicate. Unlike replicas, use the duplicate as a completely independent storage instance from the original. To duplicate, first set up snapshots for the volume.</p>
+ <dd><p>You can duplicate your NFS file share or block storage instance in the same location as the original storage instance. A duplicate has the same data as the original storage instance at the point in time that you create the duplicate. Unlike replicas, use the duplicate as an independent storage instance from the original. To duplicate, first set up snapshots for the volume.</p>
  <p>For more information, see:<ul><li>[NFS duplicate snapshots](/docs/infrastructure/FileStorage/how-to-create-duplicate-volume.html#creating-a-duplicate-file-storage)</li><li>[Block duplicate snapshots](/docs/infrastructure/BlockStorage/how-to-create-duplicate-volume.html#creating-a-duplicate-block-volume)</li></ul></p></dd>
-  <dt>Backup data to Object Storage</dt>
+  <dt>Back up data to Object Storage</dt>
   <dd><p>You can use the [**ibm-backup-restore image**](/docs/services/RegistryImages/ibm-backup-restore/index.html#ibmbackup_restore_starter) to spin up a backup and restore pod in your cluster. This pod contains a script to run a one-time or periodic backup for any persistent volume claim (PVC) in your cluster. Data is stored in your {{site.data.keyword.objectstoragefull}} instance that you set up in a location.</p>
   <p>To make your data even more highly available and protect your app from a location failure, set up a second {{site.data.keyword.objectstoragefull}} instance and replicate data across locations. If you need to restore data from your {{site.data.keyword.objectstoragefull}} instance, use the restore script that is provided with the image.</p></dd>
 <dt>Copy data to and from pods and containers</dt>
