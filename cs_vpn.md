@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -14,6 +14,8 @@ lastupdated: "2018-4-20"
 {:codeblock: .codeblock}
 {:tip: .tip}
 {:download: .download}
+
+
 
 # Setting up VPN connectivity
 {: #vpn}
@@ -33,13 +35,13 @@ To connect your worker nodes and apps to an on-premises data center, you can con
 The [Vyatta Gateway Appliance ![External link icon](../icons/launch-glyph.svg "External link icon")](http://knowledgelayer.softlayer.com/learning/network-gateway-devices-vyatta) is a bare metal server that runs a special distribution of Linux. You can use a Vyatta as VPN gateway to securely connect to an on-premises network.
 {:shortdesc}
 
-All public and private network traffic that enters or leaves the cluster VLANs is routed through the Vyatta. You can use the Vyatta as a VPN endpoint to create an encrypted IPSec tunnel between servers in IBM Cloud infrastructure (SoftLayer) and on-premise resources. For example, the following diagram shows how an app on a private-only worker node in {{site.data.keyword.containershort_notm}} can communicate with an on-premises server via a Vyatta VPN connection:
+All public and private network traffic that enters or leaves the cluster VLANs is routed through the Vyatta. You can use the Vyatta as a VPN endpoint to create an encrypted IPSec tunnel between servers in IBM Cloud infrastructure (SoftLayer) and on-premises resources. For example, the following diagram shows how an app on a private-only worker node in {{site.data.keyword.containershort_notm}} can communicate with an on-premises server via a Vyatta VPN connection:
 
 <img src="images/cs_vpn_vyatta.png" width="725" alt="Expose an app in {{site.data.keyword.containershort_notm}} by using a load balancer" style="width:725px; border-style: none"/>
 
 1. An app in your cluster, `myapp2`, receives a request from an Ingress or LoadBalancer service and needs to securely connect to data in your on-premises network.
 
-2. Because `myapp2` is on a worker node that is on a private VLAN only, the Vyatta acts as a secure connection between the worker nodes and the on-premises network. The Vyatta uses the destination IP address to determine which network packets should be sent to the on-premises network.
+2. Because `myapp2` is on a worker node that is on a private VLAN only, the Vyatta acts as a secure connection between the worker nodes and the on-premises network. The Vyatta uses the destination IP address to determine which network packets to send to the on-premises network.
 
 3. The request is encrypted and sent over the VPN tunnel to the on-premises data center.
 
