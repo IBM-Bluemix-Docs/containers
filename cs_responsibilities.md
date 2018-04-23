@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -15,7 +15,7 @@ lastupdated: "2018-4-20"
 {:tip: .tip}
 {:download: .download}
 
-# Your responsibilities using {{site.data.keyword.containerlong_notm}}
+# Your responsibilities by using {{site.data.keyword.containerlong_notm}}
 Learn about cluster management responsibilities and terms and conditions that you have when you use {{site.data.keyword.containerlong}}.
 {:shortdesc}
 
