@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -88,7 +88,7 @@ To deploy the app:
 
 3. Log in to the {{site.data.keyword.Bluemix_notm}} CLI. Enter your {{site.data.keyword.Bluemix_notm}} credentials when prompted. To specify an {{site.data.keyword.Bluemix_notm}} region, [include the API endpoint](cs_regions.html#bluemix_regions).
   ```
-  bx login [--sso]
+  {[bx]} login [--sso]
   ```
   {: pre}
 
@@ -98,7 +98,7 @@ To deploy the app:
     1. Get the command to set the environment variable and download the Kubernetes configuration files.
 
         ```
-        bx cs cluster-config <cluster_name_or_ID>
+        {[bxcs]} cluster-config <cluster_name_or_ID>
         ```
         {: pre}
 
@@ -108,20 +108,20 @@ To deploy the app:
         Example for OS X:
 
         ```
-        export KUBECONFIG=/Users/<user_name>/.bluemix/plugins/container-service/clusters/<pr_firm_cluster>/kube-config-prod-dal10-pr_firm_cluster.yml
+        export KUBECONFIG=/Users/<user_name>/.bluemix/plugins/{[pluginname_short]}/clusters/<pr_firm_cluster>/kube-config-prod-dal10-pr_firm_cluster.yml
         ```
         {: screen}
 
 5.  Log in to the {{site.data.keyword.registryshort_notm}} CLI. **Note**: Ensure that you have the container-registry plugin [installed](/docs/services/Registry/index.html#registry_cli_install).
 
     ```
-    bx cr login
+    {[bxcr]} login
     ```
     {: pre}
     -   If you forgot your namespace in {{site.data.keyword.registryshort_notm}}, run the following command.
 
         ```
-        bx cr namespace-list
+        {[bxcr]} namespace-list
         ```
         {: pre}
 
@@ -132,7 +132,7 @@ To deploy the app:
 
 7.  Build a Docker image that includes the app files of the `Lab 1` directory. If you need to make a change to the app in the future, repeat these steps to create another version of the image.
 
-    
+    {[gdpr_images]}
 
     1.  Build the image locally. Specify the name and tag that you want to use. Be sure to use the namespace that you created in {{site.data.keyword.registryshort_notm}} in the previous tutorial. Tagging the image with the namespace information tells Docker where to push the image in a later step. Use lowercase alphanumeric characters or underscores (`_`) only in the image name. Don't forget the period (`.`) at the end of the command. The period tells Docker to look inside the current directory for the Dockerfile and build artifacts to build the image.
 
@@ -188,7 +188,7 @@ To deploy the app:
     ```
     {: screen}
 
-    
+    {[gdpr_resources]}
 
 9.  Make the app accessible to the world by exposing the deployment as a NodePort service. Just as you might expose a port for a Cloud Foundry app, the NodePort you expose is the port on which the worker node listens for traffic.
 
@@ -252,10 +252,10 @@ To deploy the app:
         Labels:                 run=hello-world-deployment
         Selector:               run=hello-world-deployment
         Type:                   NodePort
-        IP:                     10.xxx.xx.xxx
+        IP:                     {[internal_cluster_IP]}
         Port:                   <unset> 8080/TCP
         NodePort:               <unset> 30872/TCP
-        Endpoints:              172.30.xxx.xxx:8080
+        Endpoints:              {[pod_private_IP]}:8080
         Session Affinity:       None
         No events.
         ```
@@ -266,22 +266,22 @@ To deploy the app:
     2.  Get the public IP address for the worker node in the cluster.
 
         ```
-        bx cs workers <cluster_name_or_ID>
+        {[bxcs]} workers <cluster_name_or_ID>
         ```
         {: pre}
 
         Example output:
 
         ```
-        bx cs workers pr_firm_cluster
+        {[bxcs]} workers pr_firm_cluster
         Listing cluster workers...
         OK
         ID                                                 Public IP       Private IP       Machine Type   State    Status   Location   Version
-        kube-mil01-pa10c8f571c84d4ac3b52acbf50fd11788-w1   169.xx.xxx.xxx  10.xxx.xx.xxx    free           normal   Ready    mil01      1.8.11
+        kube-mil01-pa10c8f571c84d4ac3b52acbf50fd11788-w1   {[public_IP]}  {[internal_cluster_IP]}    free           normal   Ready    mil01      {[kubeversions]}
         ```
         {: screen}
 
-11. Open a browser and check out the app with the following URL: `http://<IP_address>:<NodePort>`. With the example values, the URL is `http://169.xx.xxx.xxx:30872`. When you enter that URL in a browser, you can see the following text.
+11. Open a browser and check out the app with the following URL: `http://<IP_address>:<NodePort>`. With the example values, the URL is `http://{[public_IP]}:30872`. When you enter that URL in a browser, you can see the following text.
 
     ```
     Hello world! Your app is up and running in a cluster!
@@ -298,8 +298,7 @@ Congratulations! You deployed your first version of the app.
 
 Too many commands in this lesson? Agreed. How about using a configuration script to do some of the work for you? To use a configuration script for the second version of the app, and to create higher availability by deploying multiple instances of that app, continue to the next lesson.
 
-<br />
-
+{[white-space.md]}
 
 ## Lesson 2: Deploying and updating apps with higher availability
 {: #cs_apps_tutorial_lesson2}
@@ -411,18 +410,18 @@ As defined in the configuration script, Kubernetes can use an availability check
 7.  Now that the deployment work is done you can open a browser and check out the app. To form the URL, take the same public IP address that you used in the previous lesson for your worker node and combine it with the NodePort that was specified in the configuration script. To get the public IP address for the worker node:
 
   ```
-  bx cs workers <cluster_name_or_ID>
+  {[bxcs]} workers <cluster_name_or_ID>
   ```
   {: pre}
 
-  With the example values, the URL is `http://169.xx.xxx.xxx:30072`. In a browser, you might see the following text. If you do not see this text, don't worry. This app is designed to go up and down.
+  With the example values, the URL is `http://{[public_IP]}:30072`. In a browser, you might see the following text. If you do not see this text, don't worry. This app is designed to go up and down.
 
   ```
   Hello world! Great job getting the second stage up and running!
   ```
   {: screen}
 
-  You can also check `http://169.xx.xxx.xxx:30072/healthz` for status.
+  You can also check `http://{[public_IP]}:30072/healthz` for status.
 
   For the first 10 - 15 seconds, a 200 message is returned, so you know that the app is running successfully. After those 15 seconds, a timeout message is displayed. This is an expected behavior.
 
@@ -464,8 +463,7 @@ Ready to delete what you created before you continue? This time, you can use the
   ```
   {: screen}
 
-<br />
-
+{[white-space.md]}
 
 ## Lesson 3: Deploying and updating the Watson Tone Analyzer app
 {: #cs_apps_tutorial_lesson3}
@@ -555,7 +553,7 @@ From the previous tutorial, you have your account and a cluster with one worker 
 5.  Verify that the images were successfully added to your registry namespace. If you used the Docker Quickstart terminal to run Docker commands, be sure that you switch back to the CLI that you used to set the `KUBECONFIG` session variable.
 
     ```
-    bx cr images
+    {[bxcr]} images
     ```
     {: pre}
 
@@ -660,7 +658,7 @@ From the previous tutorial, you have your account and a cluster with one worker 
     Example:
 
     ```
-    http://169.xx.xxx.xxx:30080/analyze/"Today is a beautiful day"
+    http://{[public_IP]}:30080/analyze/"Today is a beautiful day"
     ```
     {: screen}
 
@@ -737,7 +735,7 @@ Ready to delete what you created? You can use the configuration script to delete
   If you do not want to keep the cluster, you can delete that too.
 
   ```
-  bx cs cluster-rm <cluster_name_or_ID>
+  {[bxcs]} cluster-rm <cluster_name_or_ID>
   ```
   {: pre}
 

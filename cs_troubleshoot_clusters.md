@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -35,45 +35,44 @@ If you have a more general issue, try out [cluster debugging](cs_troubleshoot.ht
 When you create a new Kubernetes cluster, you receive the following message.
 
 ```
-We were unable to connect to your IBM Cloud infrastructure (SoftLayer) account.
+We were unable to connect to your {[softlayer]} account.
 Creating a standard cluster requires that you have either a Pay-As-You-Go account
-that is linked to an IBM Cloud infrastructure (SoftLayer) account term or that you have used the {{site.data.keyword.Bluemix_notm}}
+that is linked to an {[softlayer]} account term or that you have used the {{site.data.keyword.Bluemix_notm}}
 Container Service CLI to set your {{site.data.keyword.Bluemix_notm}} Infrastructure API keys.
 ```
 {: screen}
 
 {: tsCauses}
-Users with an unlinked {{site.data.keyword.Bluemix_notm}} account must create a new Pay-As-You-Go account or manually add IBM Cloud infrastructure (SoftLayer) API keys using the {{site.data.keyword.Bluemix_notm}} CLI.
+Users with an unlinked {{site.data.keyword.Bluemix_notm}} account must create a new Pay-As-You-Go account or manually add {[softlayer]} API keys using the {{site.data.keyword.Bluemix_notm}} CLI.
 
 {: tsResolve}
 To add credentials your {{site.data.keyword.Bluemix_notm}} account:
 
-1.  Contact your IBM Cloud infrastructure (SoftLayer) administrator to get your IBM Cloud infrastructure (SoftLayer) user name and API key.
+1.  Contact your {[softlayer]} administrator to get your {[softlayer]} user name and API key.
 
-    **Note:** The IBM Cloud infrastructure (SoftLayer) account that you use must be set up with SuperUser permissions to successfully create standard clusters.
+    **Note:** The {[softlayer]} account that you use must be set up with SuperUser permissions to successfully create standard clusters.
 
 2.  Add the credentials.
 
   ```
-  bx cs credentials-set --infrastructure-username <username> --infrastructure-api-key <api_key>
+  {[bxcs]} credentials-set --infrastructure-username <username> --infrastructure-api-key <api_key>
   ```
   {: pre}
 
 3.  Create a standard cluster.
 
   ```
-  bx cs cluster-create --location dal10 --public-vlan my_public_vlan_id --private-vlan my_private_vlan_id --machine-type u2c.2x4 --name my_cluster --hardware shared --workers 2
+  {[bxcs]} cluster-create --location dal10 --public-vlan my_public_vlan_id --private-vlan my_private_vlan_id --machine-type u2c.2x4 --name my_cluster --hardware shared --workers 2
   ```
   {: pre}
 
-<br />
-
+{[white-space.md]}
 
 ## Firewall prevents running CLI commands
 {: #ts_firewall_clis}
 
 {: tsSymptoms}
-When you run `bx`, `kubectl`, or `calicoctl` commands from the CLI, they fail.
+When you run `{[bx]}`, `kubectl`, or `calicoctl` commands from the CLI, they fail.
 
 {: tsCauses}
 You might have corporate network policies that prevent access from your local system to public endpoints via proxies or firewalls.
@@ -120,13 +119,12 @@ If kubectl proxy succeeds, but the dashboard is not available, you might see the
 
 
 {: tsCauses}
-You might have an additional firewall set up or customized your existing firewall settings in your IBM Cloud infrastructure (SoftLayer) account. {{site.data.keyword.containershort_notm}} requires certain IP addresses and ports to be opened to allow communication from the worker node to the Kubernetes master and vice versa. Another reason might be that the worker nodes are stuck in a reloading loop.
+You might have an additional firewall set up or customized your existing firewall settings in your {[softlayer]} account. {{site.data.keyword.containershort_notm}} requires certain IP addresses and ports to be opened to allow communication from the worker node to the Kubernetes master and vice versa. Another reason might be that the worker nodes are stuck in a reloading loop.
 
 {: tsResolve}
 [Allow the cluster to access infrastructure resources and other services](cs_firewall.html#firewall_outbound). This task requires an [Administrator access policy](cs_users.html#access_policies). Verify your current [access policy](cs_users.html#infra_access).
 
-<br />
-
+{[white-space.md]}
 
 
 ## Accessing your worker node with SSH fails
@@ -141,15 +139,14 @@ SSH via password is disabled on the worker nodes.
 {: tsResolve}
 Use [DaemonSets ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) for anything you must run on every node or jobs for any one-time actions you must execute.
 
-<br />
-
+{[white-space.md]}
 
 
 ## Binding a service to a cluster results in same name error
 {: #cs_duplicate_services}
 
 {: tsSymptoms}
-When you run `bx cs cluster-service-bind <cluster_name> <namespace> <service_instance_name>` you see the following message.
+When you run `{[bxcs]} cluster-service-bind <cluster_name> <namespace> <service_instance_name>` you see the following message.
 
 ```
 Multiple services with the same name were found.
@@ -161,7 +158,7 @@ Run 'bx service list' to view available Bluemix service instances...
 Multiple service instances might have the same name in different regions.
 
 {: tsResolve}
-Use the service GUID instead of the service instance name in the `bx cs cluster-service-bind` command.
+Use the service GUID instead of the service instance name in the `{[bxcs]} cluster-service-bind` command.
 
 1. [Log in to the region that includes the service instance to bind.](cs_regions.html#bluemix_regions)
 
@@ -179,12 +176,11 @@ Use the service GUID instead of the service instance name in the `bx cs cluster-
   {: screen}
 3. Bind the service to the cluster again.
   ```
-  bx cs cluster-service-bind <cluster_name> <namespace> <service_instance_GUID>
+  {[bxcs]} cluster-service-bind <cluster_name> <namespace> <service_instance_GUID>
   ```
   {: pre}
 
-<br />
-
+{[white-space.md]}
 
 
 ## After updating or reloading a worker node, duplicate nodes and pods appear
@@ -204,8 +200,7 @@ There are no service disruptions due to these duplicates, but you should remove 
   ```
   {: pre}
 
-<br />
-
+{[white-space.md]}
 
 ## After updating or reloading a worker node, applications receive RBAC DENY errors
 {: #cs_rbac_deny}
@@ -264,8 +259,7 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to you
 
 3.  If you created a temporary cluster role binding, remove it.
 
-<br />
-
+{[white-space.md]}
 
 ## Accessing a pod on a new worker node fails with a timeout
 {: #cs_nodes_duplicate_ip}
@@ -282,14 +276,14 @@ Manually update the reference of the private IP address to point to the correct 
 1.  Confirm that you have two worker nodes with the same **Private IP** address. Note the **Private IP** and **ID** of the deleted worker.
 
   ```
-  bx cs workers <CLUSTER_NAME>
+  {[bxcs]} workers <CLUSTER_NAME>
   ```
   {: pre}
 
   ```
   ID                                                 Public IP       Private IP       Machine Type   State     Status   Location   Version
-  kube-dal10-cr9b7371a7fcbe46d08e04f046d5e6d8b4-w1   169.xx.xxx.xxx  10.xxx.xx.xxx    b2c.4x16       normal    Ready    dal10      1.8.11
-  kube-dal10-cr9b7371a7fcbe46d08e04f046d5e6d8b4-w2   169.xx.xxx.xxx  10.xxx.xx.xxx    b2c.4x16       deleted    -       dal10      1.8.11
+  kube-dal10-cr9b7371a7fcbe46d08e04f046d5e6d8b4-w1   {[public_IP]}  {[internal_cluster_IP]}    b2c.4x16       normal    Ready    dal10      {[kubeversions]}
+  kube-dal10-cr9b7371a7fcbe46d08e04f046d5e6d8b4-w2   {[public_IP]}  {[internal_cluster_IP]}    b2c.4x16       deleted    -       dal10      {[kubeversions]}
   ```
   {: screen}
 
@@ -318,15 +312,14 @@ Manually update the reference of the private IP address to point to the correct 
 5.  Reboot the worker node that was not deleted.
 
   ```
-  bx cs worker-reboot CLUSTER_ID NODE_ID
+  {[bxcs]} worker-reboot CLUSTER_ID NODE_ID
   ```
   {: pre}
 
 
 The deleted node is no longer listed in Calico.
 
-<br />
-
+{[white-space.md]}
 
 ## Cluster remains in a pending State
 {: #cs_cluster_pending}
@@ -340,11 +333,10 @@ If you just created the cluster, the worker nodes might still be configuring. If
 {: tsResolve}
 
 You can try one of the following solutions:
-  - Check the status of your cluster by running `bx cs clusters`. Then check to be sure that your worker nodes are deployed by running `bx cs workers <cluster_name>`.
-  - Check to see if your VLAN is valid. To be valid, a VLAN must be associated with infrastructure that can host a worker with local disk storage. You can [list your VLANs](/docs/containers/cs_cli_reference.html#cs_vlans) by running `bx cs vlans LOCATION` if the VLAN does not show in the list, then it is not valid. Choose a different VLAN.
+  - Check the status of your cluster by running `{[bxcs]} clusters`. Then check to be sure that your worker nodes are deployed by running `{[bxcs]} workers <cluster_name>`.
+  - Check to see if your VLAN is valid. To be valid, a VLAN must be associated with infrastructure that can host a worker with local disk storage. You can [list your VLANs](/docs/containers/cs_cli_reference.html#cs_vlans) by running `{[bxcs]} vlans LOCATION` if the VLAN does not show in the list, then it is not valid. Choose a different VLAN.
 
-<br />
-
+{[white-space.md]}
 
 ## Pods remain in pending state
 {: #cs_pods_pending}
@@ -386,14 +378,13 @@ If this cluster is an existing one, check your cluster capacity.
 4.  If you don't have enough capacity in your cluster, add another worker node to your cluster.
 
   ```
-  bx cs worker-add <cluster_name_or_ID> 1
+  {[bxcs]} worker-add <cluster_name_or_ID> 1
   ```
   {: pre}
 
 5.  If your pods still stay in a **pending** state after the worker node is fully deployed, review the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-pod-replication-controller/#my-pod-stays-pending) to further troubleshoot the pending state of your pod.
 
-<br />
-
+{[white-space.md]}
 
 
 
@@ -409,8 +400,7 @@ Containers might not start when the registry quota is reached.
 {: tsResolve}
 [Free up storage in {{site.data.keyword.registryshort_notm}}.](../services/Registry/registry_quota.html#registry_quota_freeup)
 
-<br />
-
+{[white-space.md]}
 
 
 ## Cannot install a Helm chart with updated configuration values
@@ -473,28 +463,10 @@ To troubleshoot your Helm chart:
     {: pre}
 
 
-<br />
-
+{[white-space.md]}
 
 ## Getting help and support
 {: #ts_getting_help}
 
-Still having issues with your cluster?
-{: shortdesc}
-
--   To see whether {{site.data.keyword.Bluemix_notm}} is available, [check the {{site.data.keyword.Bluemix_notm}} status page ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/bluemix/support/#status).
--   Post a question in the [{{site.data.keyword.containershort_notm}} Slack. ![External link icon](../icons/launch-glyph.svg "External link icon")](https://ibm-container-service.slack.com)
-    If you are not using an IBM ID for your {{site.data.keyword.Bluemix_notm}} account, [request an invitation](https://bxcs-slack-invite.mybluemix.net/) to this Slack.
-    {: tip}
--   Review the forums to see whether other users ran into the same issue. When you use the forums to ask a question, tag your question so that it is seen by the {{site.data.keyword.Bluemix_notm}} development teams.
-
-    -   If you have technical questions about developing or deploying clusters or apps with {{site.data.keyword.containershort_notm}}, post your question on [Stack Overflow ![External link icon](../icons/launch-glyph.svg "External link icon")](https://stackoverflow.com/questions/tagged/ibm-cloud+containers) and tag your question with `ibm-cloud`, `kubernetes`, and `containers`.
-    -   For questions about the service and getting started instructions, use the [IBM developerWorks dW Answers ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/answers/topics/containers/?smartspace=bluemix) forum. Include the `ibm-cloud` and `containers` tags.
-    See [Getting help](/docs/get-support/howtogetsupport.html#using-avatar) for more details about using the forums.
-
--   Contact IBM Support by opening a ticket. For information about opening an IBM support ticket, or about support levels and ticket severities, see [Contacting support](/docs/get-support/howtogetsupport.html#getting-customer-support).
-
-{:tip}
-When reporting an issue, include your cluster ID. To get your cluster ID, run `bx cs clusters`.
-
+{[get-help.md]}
 

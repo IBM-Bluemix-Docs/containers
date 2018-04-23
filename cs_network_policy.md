@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -33,8 +33,7 @@ You can use Calico and native Kubernetes capabilities to configure more network 
 
 These policies are applied by using `calicoctl` commands. Calico enforces these policies, including any Kubernetes network policies that are converted to Calico policies, by setting up Linux iptables rules on the Kubernetes worker nodes. Iptables rules serve as a firewall for the worker node to define the characteristics that the network traffic must meet to be forwarded to the targeted resource.</ul>
 
-<br />
-
+{[white-space.md]}
 
 ## Default policy configuration
 {: #default_policy}
@@ -70,7 +69,7 @@ Default policies are not applied to pods directly; they are applied to the publi
    </tr>
    <tr>
       <td><code>allow-sys-mgmt</code></td>
-      <td>Allows incoming connections for specific IBM Cloud infrastructure (SoftLayer) systems that are used to manage the worker nodes.</td>
+      <td>Allows incoming connections for specific {[softlayer]} systems that are used to manage the worker nodes.</td>
    </tr>
    <tr>
     <td><code>allow-vrrp</code></td>
@@ -79,8 +78,7 @@ Default policies are not applied to pods directly; they are applied to the publi
   </tbody>
 </table>
 
-<br />
-
+{[white-space.md]}
 
 ## Adding network policies
 {: #adding_network_policies}
@@ -92,10 +90,10 @@ Before you begin:
 
 1.  [Install the {{site.data.keyword.containershort_notm}} and Kubernetes CLIs.](cs_cli_install.html#cs_cli_install)
 2.  [Create a free or standard cluster.](cs_clusters.html#clusters_ui)
-3.  [Target the Kubernetes CLI to the cluster](cs_cli_install.html#cs_cli_configure). Include the `--admin` option with the `bx cs cluster-config` command, which is used to download the certificates and permission files. This download also includes the keys for the Super User role, which you need to run Calico commands.
+3.  [Target the Kubernetes CLI to the cluster](cs_cli_install.html#cs_cli_configure). Include the `--admin` option with the `{[bxcs]} cluster-config` command, which is used to download the certificates and permission files. This download also includes the keys for the Super User role, which you need to run Calico commands.
 
   ```
-  bx cs cluster-config <cluster_name> --admin
+  {[bxcs]} cluster-config <cluster_name> --admin
   ```
   {: pre}
 
@@ -184,14 +182,14 @@ To add network policies:
           -   Output example:
 
               ```
-              https://169.xx.xxx.xxx:30001
+              https://{[public_IP]}:30001
               ```
               {: screen}
 
           -   Windows:
             <ol>
             <li>Get the calico configuration values from the config map. </br><pre class="codeblock"><code>kubectl get cm -n kube-system calico-config -o yaml</code></pre></br>
-            <li>In the `data` section, locate the etcd_endpoints value. Example: <code>https://169.xx.xxx.xxx:30001</code>
+            <li>In the `data` section, locate the etcd_endpoints value. Example: <code>https://{[public_IP]}:30001</code>
             </ol>
 
         2.  Retrieve the `<CERTS_DIR>`, the directory that the Kubernetes certificates are downloaded in.
@@ -206,7 +204,7 @@ To add network policies:
                 Output example:
 
               ```
-              /home/sysadmin/.bluemix/plugins/container-service/clusters/<cluster_name>-admin/
+              /home/sysadmin/.bluemix/plugins/{[pluginname_short]}/clusters/<cluster_name>-admin/
               ```
               {: screen}
 
@@ -220,7 +218,7 @@ To add network policies:
                 Output example:
 
               ```
-              C:/Users/<user>/.bluemix/plugins/container-service/mycluster-admin/kube-config-prod-dal10-mycluster.yml
+              C:/Users/<user>/.bluemix/plugins/{[pluginname_short]}/mycluster-admin/kube-config-prod-dal10-mycluster.yml
               ```
               {: screen}
 
@@ -236,7 +234,7 @@ To add network policies:
               {: pre}
 
             -   Windows:
-              <ol><li>Open the directory you retrieved in the last step.</br><pre class="codeblock"><code>C:\Users\<user>\.bluemix\plugins\container-service\&lt;cluster_name&gt;-admin\</code></pre>
+              <ol><li>Open the directory you retrieved in the last step.</br><pre class="codeblock"><code>C:\Users\<user>\.bluemix\plugins\{[pluginname_short]}\&lt;cluster_name&gt;-admin\</code></pre>
               <li> Locate the <code>ca-*pem_file</code> file.</ol>
 
         4.  Verify that the Calico configuration is working correctly.
@@ -314,8 +312,7 @@ To add network policies:
           ```
           {: pre}
 
-<br />
-
+{[white-space.md]}
 
 ## Block incoming traffic to LoadBalancer or NodePort services.
 {: #block_ingress}
