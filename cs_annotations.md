@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -324,8 +324,7 @@ spec:
 
  </dd></dl>
 
-<br />
-
+{[white-space.md]}
 
 ### Location modifier (location-modifier)
 {: #location-modifier}
@@ -410,8 +409,7 @@ spec:
   </dd>
   </dl>
 
-<br />
-
+{[white-space.md]}
 
 ### Private ALB routing (ALB-ID)
 {: #alb-id}
@@ -456,15 +454,14 @@ rules:
 <tbody>
 <tr>
 <td><code>&lt;private_ALB_ID&gt;</code></td>
-<td>The ID for your private ALB. To find the private ALB ID, run <code>bx cs albs --cluster &lt;my_cluster&gt;</code>.
+<td>The ID for your private ALB. To find the private ALB ID, run <code>{[bxcs]} albs --cluster &lt;my_cluster&gt;</code>.
 </td>
 </tr>
 </tbody></table>
 </dd>
 </dl>
 
-<br />
-
+{[white-space.md]}
 
 ### Rewrite paths (rewrite-path)
 {: #rewrite-path}
@@ -516,8 +513,7 @@ spec:
 
 </dd></dl>
 
-<br />
-
+{[white-space.md]}
 
 ### TCP ports for application load balancers (tcp-ports)
 {: #tcp-ports}
@@ -585,7 +581,7 @@ spec:
 Your CLI output looks similar to the following:
 <pre class="screen">
 <code>NAME                     CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
-public-ingress-ctl-svc   10.xxx.xx.xxx  169.xx.xxx.xxx  80:30776/TCP,443:30412/TCP   8d</code></pre></li>
+public-ingress-ctl-svc   {[internal_cluster_IP]}  {[public_IP]}  80:30776/TCP,443:30412/TCP   8d</code></pre></li>
 <li>Open the ALB config map.
 <pre class="pre">
 <code>kubectl edit configmap ibm-cloud-provider-ingress-cm -n kube-system</code></pre></li>
@@ -608,7 +604,7 @@ metadata:
 Your CLI output looks similar to the following:
 <pre class="screen">
 <code>NAME                     CLUSTER-IP     EXTERNAL-IP     PORT(S)                               AGE
-public-ingress-ctl-svc   10.xxx.xx.xxx  169.xx.xxx.xxx  &lt;port1&gt;:30776/TCP,&lt;port2&gt;:30412/TCP   8d</code></pre></li>
+public-ingress-ctl-svc   {[internal_cluster_IP]}  {[public_IP]}  &lt;port1&gt;:30776/TCP,&lt;port2&gt;:30412/TCP   8d</code></pre></li>
 <li>Configure your Ingress to access your app via a non-standard TCP port. Use the sample YAML file in this reference. </li>
 <li>Update your ALB configuration.
 <pre class="pre">
@@ -616,8 +612,7 @@ public-ingress-ctl-svc   10.xxx.xx.xxx  169.xx.xxx.xxx  &lt;port1&gt;:30776/TCP,
 </li>
 <li>Open your preferred web browser to access your app. Example: <code>https://&lt;ibmdomain&gt;:&lt;ingressPort&gt;/</code></li></ol></dd></dl>
 
-<br />
-
+{[white-space.md]}
 
 ## Connection annotations
 {: #connection}
@@ -682,8 +677,7 @@ spec:
 
  </dd></dl>
 
-<br />
-
+{[white-space.md]}
 
 
 ### Keepalive requests (keepalive-requests)
@@ -741,8 +735,7 @@ rules:
 </dd>
 </dl>
 
-<br />
-
+{[white-space.md]}
 
 
 ### Keepalive timeout (keepalive-timeout)
@@ -800,8 +793,7 @@ spec:
  </dd>
  </dl>
 
-<br />
-
+{[white-space.md]}
 
 ### Proxy next upstream (proxy-next-upstream-config)
 {: #proxy-next-upstream-config}
@@ -886,8 +878,7 @@ spec:
 </dd>
 </dl>
 
-<br />
-
+{[white-space.md]}
 
 ### Session-affinity with cookies (sticky-cookie-services)
 {: #sticky-cookie-services}
@@ -961,8 +952,7 @@ spec:
 
  </dd></dl>
 
-<br />
-
+{[white-space.md]}
 
 ### Upstream keepalive (upstream-keepalive)
 {: #upstream-keepalive}
@@ -1018,8 +1008,7 @@ Set the maximum number of idle keepalive connections to the upstream server of a
   </dd>
   </dl>
 
-<br />
-
+{[white-space.md]}
 
 ## HTTPS and TLS/SSL authentication annotations
 {: #https-auth}
@@ -1094,13 +1083,12 @@ Set the maximum number of idle keepalive connections to the upstream server of a
     <li>Provision an [{{site.data.keyword.appid_short_notm}} instance](https://console.bluemix.net/catalog/services/app-id).</li>
     <li>In the {{site.data.keyword.appid_short_notm}} management console, add redirectURIs for your app.</li>
     <li>Create a bind secret.
-    <pre class="pre"><code>bx cs cluster-service-bind &lt;my_cluster&gt; &lt;my_namespace&gt; &lt;my_service_instance_GUID&gt;</code></pre> </li>
+    <pre class="pre"><code>{[bxcs]} cluster-service-bind &lt;my_cluster&gt; &lt;my_namespace&gt; &lt;my_service_instance_GUID&gt;</code></pre> </li>
     <li>Configure the <code>appid-auth</code> annotation.</li>
     </ol></dd>
     </dl>
 
-<br />
-
+{[white-space.md]}
 
 
 ### Custom HTTP and HTTPS ports (custom-port)
@@ -1162,7 +1150,7 @@ spec:
 Your CLI output looks similar to the following:
 <pre class="screen">
 <code>NAME                     CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
-public-ingress-ctl-svc   10.xxx.xx.xxx  169.xx.xxx.xxx  80:30776/TCP,443:30412/TCP   8d</code></pre></li>
+public-ingress-ctl-svc   {[internal_cluster_IP]}  {[public_IP]}  80:30776/TCP,443:30412/TCP   8d</code></pre></li>
 <li>Open the ALB config map.
 <pre class="pre">
 <code>kubectl edit configmap ibm-cloud-provider-ingress-cm -n kube-system</code></pre></li>
@@ -1185,7 +1173,7 @@ metadata:
 Your CLI output looks similar to the following:
 <pre class="screen">
 <code>NAME                     CLUSTER-IP     EXTERNAL-IP     PORT(S)                      AGE
-public-ingress-ctl-svc   10.xxx.xx.xxx  169.xx.xxx.xxx  &lt;port1&gt;:30776/TCP,&lt;port2&gt;:30412/TCP   8d</code></pre></li>
+public-ingress-ctl-svc   {[internal_cluster_IP]}  {[public_IP]}  &lt;port1&gt;:30776/TCP,&lt;port2&gt;:30412/TCP   8d</code></pre></li>
 <li>Configure your Ingress to use the non-default ports when routing incoming network traffic to your services. Use the sample YAML file in this reference. </li>
 <li>Update your ALB configuration.
 <pre class="pre">
@@ -1193,8 +1181,7 @@ public-ingress-ctl-svc   10.xxx.xx.xxx  169.xx.xxx.xxx  &lt;port1&gt;:30776/TCP,
 </li>
 <li>Open your preferred web browser to access your app. Example: <code>https://&lt;ibmdomain&gt;:&lt;port&gt;/&lt;service_path&gt;/</code></li></ol></dd></dl>
 
-<br />
-
+{[white-space.md]}
 
 
 ### HTTP redirects to HTTPS (redirect-to-https)
@@ -1234,8 +1221,7 @@ spec:
          servicePort: 8080</code></pre>
 </dd></dl>
 
-<br />
-
+{[white-space.md]}
 
 ### HTTP Strict Transport Security (hsts)
 {: #hsts}
@@ -1299,8 +1285,7 @@ spec:
   </dl>
 
 
-<br />
-
+{[white-space.md]}
 
 ### Mutual authentication (mutual-auth)
 {: #mutual-auth}
@@ -1370,8 +1355,7 @@ spec:
 </dd>
 </dl>
 
-<br />
-
+{[white-space.md]}
 
 
 ### SSL services support (ssl-services)
@@ -1431,8 +1415,7 @@ spec:
   </dd>
 </dl>
 
-<br />
-
+{[white-space.md]}
 
 #### SSL Services support with authentication
 {: #ssl-services-auth}
@@ -1496,8 +1479,7 @@ spec:
   </dd>
   </dl>
 
-<br />
-
+{[white-space.md]}
 
 ## Istio annotations
 {: #istio-annotations}
@@ -1629,8 +1611,7 @@ spec:
          servicePort: 8080</code></pre>
 </dd></dl>
 
-<br />
-
+{[white-space.md]}
 
 
 ### Proxy buffers (proxy-buffers)
@@ -1688,8 +1669,7 @@ spec:
  </table>
  </dd></dl>
 
-<br />
-
+{[white-space.md]}
 
 ### Proxy buffer size (proxy-buffer-size)
 {: #proxy-buffer-size}
@@ -1747,8 +1727,7 @@ spec:
  </dd>
  </dl>
 
-<br />
-
+{[white-space.md]}
 
 
 ### Proxy busy buffers size (proxy-busy-buffers-size)
@@ -1807,8 +1786,7 @@ spec:
  </dd>
  </dl>
 
-<br />
-
+{[white-space.md]}
 
 
 ## Request and response annotations
@@ -1917,8 +1895,7 @@ spec:
   </tbody></table>
  </dd></dl>
 
-<br />
-
+{[white-space.md]}
 
 
 ### Client response header removal (response-remove-headers)
@@ -1930,7 +1907,7 @@ Remove header information that is included in the client response from the back-
  <dl>
  <dt>Description</dt>
  <dd>The Ingress ALB acts as a proxy between your back-end app and the client web browser. Client responses from the back-end app that are sent to the ALB are processed (proxied), and put into a new response that is then sent from the ALB to the client web browser. Although proxying a response removes http header information that was initially sent from the back-end app, this process might not remove all back-end app specific headers. Remove header information from a client reponse before the response is forwarded from the ALB to the client web browser.</dd>
- <dt>Sample Infress resource YAML</dt>
+ <dt>Sample Ingress resource YAML</dt>
  <dd>
  <pre class="codeblock">
  <code>apiVersion: extensions/v1beta1
@@ -1980,8 +1957,7 @@ Remove header information that is included in the client response from the back-
    </tbody></table>
    </dd></dl>
 
-<br />
-
+{[white-space.md]}
 
 ### Client request body size (client-max-body-size)
 {: #client-max-body-size}
@@ -2034,8 +2010,7 @@ spec:
 
  </dd></dl>
 
-<br />
-
+{[white-space.md]}
 
 ### Large client header buffers (large-client-header-buffers)
 {: #large-client-header-buffers}
@@ -2089,8 +2064,7 @@ spec:
 </dd>
 </dl>
 
-<br />
-
+{[white-space.md]}
 
 ## Service limit annotations
 {: #service-limit}
@@ -2155,8 +2129,7 @@ For all services, limit the request processing rate and the number of connection
   </dd>
   </dl>
 
-<br />
-
+{[white-space.md]}
 
 
 ### Service rate limits (service-rate-limit)
@@ -2220,8 +2193,7 @@ Limit the request processing rate and the number of connections for specific ser
   </dd>
   </dl>
 
-  <br />
-
+  {[white-space.md]}
 
 
 

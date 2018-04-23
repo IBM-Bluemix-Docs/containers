@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -23,9 +23,9 @@ lastupdated: "2018-4-20"
 
 The current supported Kubernetes versions are:
 
-- Latest: 1.9.3
-- Default: 1.8.11
-- Supported: 1.7.16
+- Latest: {[kubeversions_latest]}
+- Default: {[kubeversions]}
+- Supported: {[kubeversions_old]}
 
 **Deprecated Versions**: When clusters are running on a deprecated Kubernetes, you have 30 days to review and update to a supported Kubernetes version before the version becomes unsupported. During the deprecation period, you can run limited commands in your clusters to add workers, reload workers, and update the cluster. You cannot create new clusters in the deprecated version.
 
@@ -41,7 +41,7 @@ kubectl version  --short | grep -i server
 Example output:
 
 ```
-Server Version: v1.8.11+9d6e0610086578
+Server Version: v{[kubeversions]}+9d6e0610086578
 ```
 {: screen}
 
@@ -59,11 +59,11 @@ Your Kubernetes cluster has three types of updates: major, minor, and patch.
 |Patch|x.x.4_1510|IBM and you|Kubernetes patches, as well as other {{site.data.keyword.Bluemix_notm}} Provider component updates such as security and operating system patches. IBM updates masters automatically, but you apply patches to worker nodes.|
 {: caption="Impacts of Kubernetes updates" caption-side="top"}
 
-As updates become available, you are notified when you view information about the worker nodes, such as with the `bx cs workers <cluster>` or `bx cs worker-get <cluster> <worker>` commands.
+As updates become available, you are notified when you view information about the worker nodes, such as with the `{[bxcs]} workers <cluster>` or `{[bxcs]} worker-get <cluster> <worker>` commands.
 -  **Major and minor updates**: First [update your master node](cs_cluster_update.html#master) and then [update the worker nodes](cs_cluster_update.html#worker_node). 
    - By default, you cannot update a Kubernetes master more than two minor versions ahead. For example, if your current master is version 1.5 and you want to update to 1.8, you must update to 1.7 first. You can force the update to continue, but updating more than two minor versions might cause unexpected results.
    - If you use a `kubectl` CLI version that does match at least the `major.minor` version of your clusters, you might experience unexpected results. Make sure to keep your Kubernetes cluster and [CLI versions](cs_cli_install.html#kubectl) up-to-date.
--  **Patch updates**: Check monthly to see if an update is available, and use the `bx cs worker-update` [command](cs_cli_reference.html#cs_worker_update) to apply these security and operating system patches. For more details, see [Version changelog](cs_versions_changelog.html).
+-  **Patch updates**: Check monthly to see if an update is available, and use the `{[bxcs]} worker-update` [command](cs_cli_reference.html#cs_worker_update) to apply these security and operating system patches. For more details, see [Version changelog](cs_versions_changelog.html).
 
 <br/>
 
@@ -147,8 +147,7 @@ If `Action required` is returned, modify the pod tolerations accordingly.</td>
 </tbody>
 </table>
 
-<br />
-
+{[white-space.md]}
 
 ## Version 1.8
 {: #cs_v18}
@@ -221,8 +220,7 @@ If your apps rely on the previous insecure behavior, modify them accordingly.</t
 </tbody>
 </table>
 
-<br />
-
+{[white-space.md]}
 
 ## Version 1.7
 {: #cs_v17}
@@ -410,8 +408,7 @@ If your apps rely on the previous insecure behavior, modify them accordingly.</t
 </tbody>
 </table>
 
-<br />
-
+{[white-space.md]}
 
 ## Archive
 {: #k8s_version_archive}

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-23"
 
 ---
 
@@ -81,12 +81,12 @@ To configure logging through the UI, you must specify an org and space. To enabl
 1. Verify permissions. If you specified a space when you created the cluster or the logging configuration then both the account owner and {{site.data.keyword.containershort_notm}} key owner need Manager, Developer, or Auditor permissions in that space.
   * If you don't know who the {{site.data.keyword.containershort_notm}} key owner is, run the following command.
       ```
-      bx cs api-key-info <cluster_name>
+      {[bxcs]} api-key-info <cluster_name>
       ```
       {: pre}
   * To immediately apply any changes that you made to your permissions, run the following command.
       ```
-      bx cs logging-config-refresh <cluster_name>
+      {[bxcs]} logging-config-refresh <cluster_name>
       ```
       {: pre}
 
@@ -109,13 +109,13 @@ You can create a configuration for cluster logging. You can differentiate betwee
 
 1. Create a log forwarding configuration.
   ```
-  bx cs logging-config-create <cluster_name_or_ID> --logsource <log_source> --namespace <kubernetes_namespace> --hostname <log_server_hostname_or_IP> --port <log_server_port> --type <type> --app-containers <containers> --app-paths <paths_to_logs> --skip-validation
+  {[bxcs]} logging-config-create <cluster_name_or_ID> --logsource <log_source> --namespace <kubernetes_namespace> --hostname <log_server_hostname_or_IP> --port <log_server_port> --type <type> --app-containers <containers> --app-paths <paths_to_logs> --skip-validation
   ```
   {: pre}
 
     * Example container logging configuration for the default namespace and output:
       ```
-      bx cs logging-config-create cluster1 --namespace default
+      {[bxcs]} logging-config-create cluster1 --namespace default
       Creating logging configuration for container logs in cluster cluster1...
       OK
       Id                                     Source      Namespace   Host                                 Port    Org   Space   Protocol   Application Containers   Paths
@@ -128,7 +128,7 @@ You can create a configuration for cluster logging. You can differentiate betwee
 
     * Example application logging configuration and output:
       ```
-      bx cs logging-config-create cluster2 --logsource application --app-paths '/var/log/apps.log' --app-containers 'container1,container2,container3'
+      {[bxcs]} logging-config-create cluster2 --logsource application --app-paths '/var/log/apps.log' --app-containers 'container1,container2,container3'
       Creating logging configuration for application logs in cluster cluster2...
       OK
       Id                                     Source        Namespace   Host                                    Port    Org   Space   Protocol   Application   Containers   Paths
@@ -198,7 +198,7 @@ You can create a configuration for cluster logging. You can differentiate betwee
 
     * To list all of the logging configurations in a cluster:
       ```
-      bx cs logging-config-get <cluster_name_or_ID>
+      {[bxcs]} logging-config-get <cluster_name_or_ID>
       ```
       {: pre}
 
@@ -206,7 +206,7 @@ You can create a configuration for cluster logging. You can differentiate betwee
 
       ```
       Id                                    Source       Namespace     Host                          Port   Org      Space      Protocol     Paths
-      f4bc77c0-ee7d-422d-aabf-a4e6b977264e  kubernetes   -             172.30.xxx.xxx                5514   -        -          syslog       /var/log/kubelet.log,/var/log/kube-proxy.log
+      f4bc77c0-ee7d-422d-aabf-a4e6b977264e  kubernetes   -             {[pod_private_IP]}                5514   -        -          syslog       /var/log/kubelet.log,/var/log/kube-proxy.log
       5bd9c609-13c8-4c48-9d6e-3a6664c825a9  application  -             ingest.logging.ng.bluemix.net 9091   my_org   my_space   ibm          /var/log/apps/**/*.log,/var/log/apps/**/*.err
       8a284f1a-451c-4c48-b1b4-a4e6b977264e  containers   my-namespace  myhostname.common             5514   -        -          syslog       -
       ```
@@ -214,7 +214,7 @@ You can create a configuration for cluster logging. You can differentiate betwee
 
     * To list the logging configurations for one type of log source:
       ```
-      bx cs logging-config-get <cluster_name_or_ID> --logsource worker
+      {[bxcs]} logging-config-get <cluster_name_or_ID> --logsource worker
       ```
       {: pre}
 
@@ -223,7 +223,7 @@ You can create a configuration for cluster logging. You can differentiate betwee
       ```
       Id                                    Source    Namespace   Host                            Port   Org    Space     Protocol    Paths
       f4bc77c0-ee7d-422d-aabf-a4e6b977264e  worker    -           ingest.logging.ng.bluemix.net   9091   -      -         ibm         /var/log/syslog,/var/log/auth.log
-      5bd9c609-13c8-4c48-9d6e-3a6664c825a9  worker    -           172.30.xxx.xxx                  5514   -      -         syslog      /var/log/syslog,/var/log/auth.log
+      5bd9c609-13c8-4c48-9d6e-3a6664c825a9  worker    -           {[pod_private_IP]}                  5514   -      -         syslog      /var/log/syslog,/var/log/auth.log
       ```
       {: screen}
 
@@ -232,7 +232,7 @@ You can create a configuration for cluster logging. You can differentiate betwee
 
 1. Update a log forwarding configuration.
     ```
-    bx cs logging-config-update <cluster_name_or_ID> <log_config_id> --namespace <namespace> --type <log_type> --logsource <source> --hostname <hostname_or_ingestion_URL> --port <port> --space <cluster_space> --org <cluster_org> --app-containers <containers> --app-paths <paths_to_logs>
+    {[bxcs]} logging-config-update <cluster_name_or_ID> <log_config_id> --namespace <namespace> --type <log_type> --logsource <source> --hostname <hostname_or_ingestion_URL> --port <port> --space <cluster_space> --org <cluster_org> --app-containers <containers> --app-paths <paths_to_logs>
     ```
     {: pre}
 
@@ -286,8 +286,7 @@ You can create a configuration for cluster logging. You can differentiate betwee
   </tbody>
   </table>
 
-<br />
-
+{[white-space.md]}
 
 
 ## Filtering logs
@@ -297,7 +296,7 @@ You can choose which logs that you forward by filtering out specific logs for a 
 
 1. Create a logging filter.
   ```
-  bx cs logging-filter-create <cluster_name_or_ID> --type <log_type> --logging-configs <configs> --namespace <kubernetes_namespace> --container <container_name> --level <logging_level> --message <message>
+  {[bxcs]} logging-filter-create <cluster_name_or_ID> --type <log_type> --logging-configs <configs> --namespace <kubernetes_namespace> --container <container_name> --level <logging_level> --message <message>
   ```
   {: pre}
   <table>
@@ -339,7 +338,7 @@ You can choose which logs that you forward by filtering out specific logs for a 
 2. View the log filter that you created.
 
   ```
-  bx cs logging-filter-get <cluster_name_or_ID> --id <filter_ID> --show-matching-configs
+  {[bxcs]} logging-filter-get <cluster_name_or_ID> --id <filter_ID> --show-matching-configs
   ```
   {: pre}
   <table>
@@ -364,7 +363,7 @@ You can choose which logs that you forward by filtering out specific logs for a 
 
 3. Update the log filter that you created.
   ```
-  bx cs logging-filter-update <cluster_name_or_ID> --id <filter_ID> --type <log_type> --logging-configs <configs> --namespace <kubernetes_namespace --container <container_name> --level <logging_level> --message <message>
+  {[bxcs]} logging-filter-update <cluster_name_or_ID> --id <filter_ID> --type <log_type> --logging-configs <configs> --namespace <kubernetes_namespace --container <container_name> --level <logging_level> --message <message>
   ```
   {: pre}
   <table>
@@ -386,7 +385,7 @@ You can choose which logs that you forward by filtering out specific logs for a 
       </tr>
       <tr>
         <td><code>&lt;configs&gt;</code></td>
-        <td>Optional: A comma separated list of all of the logging configuration IDs that you want to apply the filter to. If not provided, the filter is applied to all of the cluster logging configurations that are passed to the filter. You can view log configurations that match the filter by using the <code>--show-matching-configs</code> flag with the <code>bx cs logging-filter-get</code> command.</td>
+        <td>Optional: A comma separated list of all of the logging configuration IDs that you want to apply the filter to. If not provided, the filter is applied to all of the cluster logging configurations that are passed to the filter. You can view log configurations that match the filter by using the <code>--show-matching-configs</code> flag with the <code>{[bxcs]} logging-filter-get</code> command.</td>
       </tr>
       <tr>
         <td><code>&lt;kubernetes_namespace&gt;</code></td>
@@ -410,7 +409,7 @@ You can choose which logs that you forward by filtering out specific logs for a 
 4. Delete a log filter that you created.
 
   ```
-  bx cs logging-filter-rm <cluster_name_or_ID> --id <filter_ID> [--all]
+  {[bxcs]} logging-filter-rm <cluster_name_or_ID> --id <filter_ID> [--all]
   ```
   {: pre}
   <table>
@@ -433,8 +432,7 @@ You can choose which logs that you forward by filtering out specific logs for a 
     </tbody>
   </table>
 
-<br />
-
+{[white-space.md]}
 
 
 
@@ -465,8 +463,7 @@ For more information about viewing logs, see [Navigating to Kibana from a web br
 
 You can leverage the built-in Docker logging capabilities to review activities on the standard STDOUT and STDERR output streams. For more information, see [Viewing container logs for a container that runs in a Kubernetes cluster](/docs/services/CloudLogAnalysis/containers/containers_kubernetes.html#containers_kubernetes).
 
-<br />
-
+{[white-space.md]}
 
 
 ## Stopping log forwarding
@@ -480,7 +477,7 @@ You can stop forwarding logs one or all of the logging configurations for a clus
 2. Delete the logging configuration.
 <ul>
 <li>To delete one logging configuration:</br>
-  <pre><code>bx cs logging-config-rm &lt;cluster_name_or_ID&gt; --id &lt;log_config_ID&gt;</pre></code>
+  <pre><code>{[bxcs]} logging-config-rm &lt;cluster_name_or_ID&gt; --id &lt;log_config_ID&gt;</pre></code>
   <table>
       <thead>
         <th colspan=2><img src="images/idea.png" alt="Idea icon"/> Understanding this command's components</th>
@@ -497,11 +494,10 @@ You can stop forwarding logs one or all of the logging configurations for a clus
   </tbody>
   </table></li>
 <li>To delete all of the logging configurations:</br>
-  <pre><code>bx cs logging-config-rm <my_cluster> --all</pre></code></li>
+  <pre><code>{[bxcs]} logging-config-rm <my_cluster> --all</pre></code></li>
 </ul>
 
-<br />
-
+{[white-space.md]}
 
 ## Configuring log forwarding for Kubernetes API audit logs
 {: #app_forward}
@@ -530,7 +526,7 @@ To forward Kubernetes API audit logs:
 1. Configure the webhook. If you do not provide any information in the flags, a default configuration is used.
 
     ```
-    bx cs apiserver-config-set audit-webhook <cluster_name_or_ID> --remoteServer <server_URL_or_IP> --caCert <CA_cert_path> --clientCert <client_cert_path> --clientKey <client_key_path>
+    {[bxcs]} apiserver-config-set audit-webhook <cluster_name_or_ID> --remoteServer <server_URL_or_IP> --caCert <CA_cert_path> --clientCert <client_cert_path> --clientKey <client_key_path>
     ```
     {: pre}
 
@@ -564,7 +560,7 @@ To forward Kubernetes API audit logs:
 2. Verify that log forwarding was enabled by viewing the URL for the remote logging service.
 
     ```
-    bx cs apiserver-config-get audit-webhook <cluster_name_or_ID>
+    {[bxcs]} apiserver-config-get audit-webhook <cluster_name_or_ID>
     ```
     {: pre}
 
@@ -578,7 +574,7 @@ To forward Kubernetes API audit logs:
 3. Apply the configuration update by restarting the Kubernetes master.
 
     ```
-    bx cs apiserver-refresh <cluster_name_or_ID>
+    {[bxcs]} apiserver-refresh <cluster_name_or_ID>
     ```
     {: pre}
 
@@ -592,19 +588,18 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
 1. Disable the webhook backend configuration for the cluster's API server.
 
     ```
-    bx cs apiserver-config-unset audit-webhook <cluster_name_or_ID>
+    {[bxcs]} apiserver-config-unset audit-webhook <cluster_name_or_ID>
     ```
     {: pre}
 
 2. Apply the configuration update by restarting the Kubernetes master.
 
     ```
-    bx cs apiserver-refresh <cluster_name_or_ID>
+    {[bxcs]} apiserver-refresh <cluster_name_or_ID>
     ```
     {: pre}
 
-<br />
-
+{[white-space.md]}
 
 ## Configuring cluster monitoring
 {: #monitoring}
@@ -636,8 +631,7 @@ You can configure other tools for more monitoring capabilities.
     <dd>Prometheus is an open source monitoring, logging, and alerting tool that was designed for Kubernetes. The tool retrieves detailed information about the cluster, worker nodes, and deployment health based on the Kubernetes logging information. For setup information, see [Integrating services with {{site.data.keyword.containershort_notm}}](cs_integrations.html#integrations).</dd>
 </dl>
 
-<br />
-
+{[white-space.md]}
 
 ## Configuring health monitoring for worker nodes with Autorecovery
 {: #autorecovery}
@@ -715,17 +709,17 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to the
    </tr>
    <tr>
    <td><code>checknode.json</code></td>
-   <td>Defines a Kubernetes API node check that checks whether each worker node is in the <code>Ready</code> state. The check for a specific worker node counts as a failure if the worker node is not in the <code>Ready</code> state. The check in the example YAML runs every 3 minutes. If it fails three consecutive times, the worker node is reloaded. This action is equivalent to running <code>bx cs worker-reload</code>. The node check is enabled until you set the <b>Enabled</b> field to <code>false</code> or remove the check.</td>
+   <td>Defines a Kubernetes API node check that checks whether each worker node is in the <code>Ready</code> state. The check for a specific worker node counts as a failure if the worker node is not in the <code>Ready</code> state. The check in the example YAML runs every 3 minutes. If it fails three consecutive times, the worker node is reloaded. This action is equivalent to running <code>{[bxcs]} worker-reload</code>. The node check is enabled until you set the <b>Enabled</b> field to <code>false</code> or remove the check.</td>
    </tr>
    <tr>
    <td><code>checkpod.json</code></td>
-   <td>Defines a Kubernetes API pod check that checks the total percentage of <code>NotReady</code> pods on a worker node based on the total pods that are assigned to that worker node. The check for a specific worker node counts as a failure if the total percentage of <code>NotReady</code> pods is greater than the defined <code>PodFailureThresholdPercent</code>. By default, pods in all namespaces are checked. To restrict the check to only pods in a specified namespace, add the <code>Namespace</code> field to the check. The check in the example YAML runs every 3 minutes. If it fails three consecutive times, the worker node is reloaded. This action is equivalent to running <code>bx cs worker-reload</code>. The pod check is enabled until you set the <b>Enabled</b> field to <code>false</code> or remove the check.</td>
+   <td>Defines a Kubernetes API pod check that checks the total percentage of <code>NotReady</code> pods on a worker node based on the total pods that are assigned to that worker node. The check for a specific worker node counts as a failure if the total percentage of <code>NotReady</code> pods is greater than the defined <code>PodFailureThresholdPercent</code>. By default, pods in all namespaces are checked. To restrict the check to only pods in a specified namespace, add the <code>Namespace</code> field to the check. The check in the example YAML runs every 3 minutes. If it fails three consecutive times, the worker node is reloaded. This action is equivalent to running <code>{[bxcs]} worker-reload</code>. The pod check is enabled until you set the <b>Enabled</b> field to <code>false</code> or remove the check.</td>
    </tr>
    <tr>
    <td><code>checkhttp.json</code></td>
    <td>Defines an HTTP check that checks if an HTTP server that runs on your worker node is healthy. To use this check you must deploy an HTTP server on every worker node in your cluster by using a [DaemonSet ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/). You must implement a health check that is available at the <code>/myhealth</code> path and that can verify if your HTTP server is healthy. You can define other paths by changing the <strong>Route</strong> parameter. If the HTTP server is healthy, you must return the HTTP response code that is defined in <strong>ExpectedStatus</strong>. The HTTP server must be configured to listen on the private IP address of the worker node. You can find the private IP address by running <code>kubectl get nodes</code>.</br>
    For example, consider two nodes in a cluster that have the private IP addresses 10.10.10.1 and 10.10.10.2. In this example, two routes are checked for a 200 HTTP response: <code>http://10.10.10.1:80/myhealth</code> and <code>http://10.10.10.2:80/myhealth</code>.
-   The check in the example YAML runs every 3 minutes. If it fails three consecutive times, the worker node is rebooted. This action is equivalent to running <code>bx cs worker-reboot</code>. The HTTP check is disabled until you set the <b>Enabled</b> field to <code>true</code>.</td>
+   The check in the example YAML runs every 3 minutes. If it fails three consecutive times, the worker node is rebooted. This action is equivalent to running <code>{[bxcs]} worker-reboot</code>. The HTTP check is disabled until you set the <b>Enabled</b> field to <code>true</code>.</td>
    </tr>
    </tbody>
    </table>
