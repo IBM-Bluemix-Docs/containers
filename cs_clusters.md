@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-24"
 
 ---
 
@@ -14,6 +14,9 @@ lastupdated: "2018-4-20"
 {:codeblock: .codeblock}
 {:tip: .tip}
 {:download: .download}
+
+
+
 
 
 # Setting up clusters
@@ -106,11 +109,11 @@ When you create a standard cluster in {{site.data.keyword.Bluemix_notm}}, you ch
 <p><strong>Monthly billing</strong>: Bare metal servers are more expensive than virtual servers, and are best suited for high-performance apps that need more resources and host control. Bare metal servers are billed monthly. If you cancel a bare metal server before the end of the month, you are charged through the end of that month. Ordering and canceling bare metal servers is a manual process through your IBM Cloud infrastructure (SoftLayer) account. It can take more than one business day to complete.</p>
 <p><strong>Option to enable Trusted Compute</strong>: Enable Trusted Compute to verify your worker nodes against tampering. If you don't enable trust during cluster creation but want to later, you can use the `bx cs feature-enable` [command](cs_cli_reference.html#cs_cluster_feature_enable). After you enable trust, you cannot disable it later. You can make a new cluster without trust. For more information about how trust works during the node startup process, see [{{site.data.keyword.containershort_notm}} with Trusted Compute](cs_secure.html#trusted_compute). Trusted Compute is available on clusters that run Kubernetes version 1.9 or later and have certain bare metal machine types. When you run the `bx cs machine-types <location>` [command](cs_cli_reference.html#cs_machine_types), you can see which machines support trust by reviewing the `Trustable` field.</p>
 <p><strong>Bare metal machine type groups</strong>: Bare metal machine types come in groups that have different compute resources that you can choose from to meet your app's needs. Physical machine types have more local storage than virtual, and some have RAID to back up local data. To learn about the different types of bare metal offerings, see the `bx cs machine-type` [command](cs_cli_reference.html#cs_machine_types).
-<ul><li>`mb1c.4x32`: If you don't need RAM- or data-intensive resources, choose this type for a balanced configuration of physical machine resources for your worker nodes. Balanced with 4 cores, 32GB Memory, 1TB SATA Primary Disk, 2TB SATA Secondary Disk, 10Gbps Bonded Network.</li>
-<li>`mb1c.16x64`: If you don't need RAM- or data-intensive resources, choose this type for a balanced configuration of physical machine resources for your worker nodes. Balanced with 16 cores, 64GB Memory, 1TB SATA Primary Disk, 1.7TB SSD Secondary Disk, 10Gbps Bonded Network.</li>
-<li>`mr1c.28x512`: Choose this type to maximize the RAM available to your worker nodes. RAM intensive with 28 cores, 512GB Memory, 1TB SATA Primary Disk, 1.7TB SSD Secondary Disk, 10Gbps Bonded Network.</li>
-<li>`md1c.16x64.4x4tb`: Choose this type if your worker nodes require a significant amount of local disk storage, including RAID to back up the data stored locally on the machine. The 1TB primary storage disks are configured for RAID1, and the 4TB secondary storage disks are configured for RAID10. Data intensive with 28 cores, 512GB Memory, 2x1TB RAID1 Primary Disk, 4x4TB SATA RAID10 Secondary Disk, 10Gbps Bonded Network.</li>
-<li>`md1c.28x512.4x4tb`: Choose this type if your worker nodes require a significant amount of local disk storage, including RAID to back up the data stored locally on the machine. The 1TB primary storage disks are configured for RAID1, and the 4TB secondary storage disks are configured for RAID10. Data intensive with 16 cores, 64GB Memory, 2x1TB RAID1 Primary Disk, 4x4TB SATA RAID10 Secondary Disk, 10Gbps Bonded Network.</li>
+<ul><li>`mb1c.4x32`: If you don't need RAM- or data-intensive resources, choose this type for a balanced configuration of physical machine resources for your worker nodes. Balanced with 4 cores, 32GB Memory, 2TB SATA Primary Disk, 2TB SATA Secondary Disk, 10Gbps Bonded Network.</li>
+<li>`mb1c.16x64`: If you don't need RAM- or data-intensive resources, choose this type for a balanced configuration of physical machine resources for your worker nodes. Balanced with 16 cores, 64GB Memory, 2TB SATA Primary Disk, 960GB SSD Secondary Disk, 10Gbps Bonded Network.</li>
+<li>`mr1c.28x512`: Choose this type to maximize the RAM available to your worker nodes. RAM intensive with 28 cores, 512GB Memory, 2TB SATA Primary Disk, 960GB SSD Secondary Disk, 10Gbps Bonded Network.</li>
+<li>`md1c.16x64.4x4tb`: Choose this type if your worker nodes require a significant amount of local disk storage, including RAID to back up the data stored locally on the machine. The 2x2TB primary storage disks are configured for RAID1, and the 4x4TB secondary storage disks are configured for RAID10. Data intensive with 16 cores, 64GB Memory, 2x2TB RAID1 Primary Disk, 4x4TB SATA RAID10 Secondary Disk, 10Gbps Bonded Network.</li>
+<li>`md1c.28x512.4x4tb`: Choose this type if your worker nodes require a significant amount of local disk storage, including RAID to back up the data stored locally on the machine. The 2x2TB primary storage disks are configured for RAID1, and the 4x4TB secondary storage disks are configured for RAID10. Data intensive with 28 cores, 512GB Memory, 2x2TB RAID1 Primary Disk, 4x4TB SATA RAID10 Secondary Disk, 10Gbps Bonded Network.</li>
 
 </ul></p></dd>
 <dt>Virtual machines</dt>
@@ -121,6 +124,11 @@ When you create a standard cluster in {{site.data.keyword.Bluemix_notm}}, you ch
 <p><strong>Virtual `u2c` or `b2c` machine types</strong>: These machines use local disk instead of storage area networking (SAN) for reliability. Reliability benefits include higher throughput when serializing bytes to the local disk and reduced file system degradation due to network failures. These machine types contain 25GB primary local disk storage for the OS file system, and 100GB secondary local disk storage for `/var/lib/docker`, the directory that all the container data is written to.</p>
 <p><strong>Deprecated `u1c` or `b1c` machine types</strong>: To start using `u2c` and `b2c` machine types, [update the machine types by adding worker nodes](cs_cluster_update.html#machine_type).</p></dd>
 </dl>
+
+
+
+
+
 
 
 Available physical and virtual machines types vary by the location in which you deploy the cluster. For more information, see the `bx cs machine-type` [command](cs_cli_reference.html#cs_machine_types). You can deploy clusters by using the [console UI](#clusters_ui) or the [CLI](#clusters_cli).
