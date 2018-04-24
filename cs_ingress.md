@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-24"
 
 ---
 
@@ -22,6 +22,8 @@ lastupdated: "2018-4-20"
 Expose multiple apps in your Kubernetes cluster by creating Ingress resources that are managed by the IBM-provided application load balancer in {{site.data.keyword.containerlong}}.
 {:shortdesc}
 
+
+
 ## Managing network traffic by using Ingress
 {: #planning}
 
@@ -38,19 +40,15 @@ Ingress consists of two components:
 
 The following diagram shows how Ingress directs communication from the internet to an app:
 
-<img src="images/cs_ingress_planning.png" width="550" alt="Expose an app in {{site.data.keyword.containershort_notm}} by using Ingress" style="width:550px; border-style: none"/>
+<img src="images/cs_ingress.png" width="550" alt="Expose an app in {{site.data.keyword.containershort_notm}} by using Ingress" style="width:550px; border-style: none"/>
 
 1. A user sends a request to your app by accessing your app's URL. This URL is the public URL for your exposed app with the Ingress resource path appended to it, such as `mycluster.us-south.containers.mybluemix.net/myapp`.
 
-2. A DNS system service that acts as the global load balancer resolves the URL to the portable public IP address of the default public ALB in the cluster.
+2. A DNS system service that acts as the global load balancer resolves the URL to the portable public IP address of the default public ALB in the cluster, and the request is routed to the Kubernetes ALB service for the app.
 
-3. `kube-proxy` routes the request to the Kubernetes ALB service for the app.
+3. The Kubernetes service routes the request to the ALB.
 
-4. The Kubernetes service routes the request to the ALB.
-
-5. The ALB checks if a routing rule for the `myapp` path in the cluster exists. If a matching rule is found, the request is forwarded according to the rules that you defined in the Ingress resource to the pod where the app is deployed. If multiple app instances are deployed in the cluster, the ALB load balances the requests between the app pods.
-
-
+4. The ALB checks if a routing rule for the `myapp` path in the cluster exists. If a matching rule is found, the request is forwarded according to the rules that you defined in the Ingress resource to the pod where the app is deployed. If multiple app instances are deployed in the cluster, the ALB load balances the requests between the app pods.
 
 **Note:** Ingress is available for standard clusters only and requires at least two worker nodes in the cluster to ensure high availability and that periodic updates are applied. Setting up Ingress requires an [Administrator access policy](cs_users.html#access_policies). Verify your current [access policy](cs_users.html#infra_access).
 
@@ -65,6 +63,10 @@ To choose the best configuration for Ingress, you can follow this decision tree:
 <area href="/docs/containers/cs_ingress.html#ibm_domain" alt="Publicly exposing apps using the IBM-provided domain without TLS" shape="rect" coords="414, 629, 569, 679"/>
 <area href="/docs/containers/cs_ingress.html#ibm_domain_cert" alt="Publicly exposing apps using the IBM-provided domain with TLS" shape="rect" coords="563, 711, 716, 764"/>
 </map>
+
+
+
+
 
 <br />
 
@@ -1424,9 +1426,6 @@ You can configure the private ALB to route incoming network traffic to the apps 
 
 
 <br />
-
-
-
 
 
 ## Optional application load balancer configurations
