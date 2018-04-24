@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-24"
 
 ---
 
@@ -14,6 +14,9 @@ lastupdated: "2018-4-20"
 {:codeblock: .codeblock}
 {:tip: .tip}
 {:download: .download}
+
+
+
 
 
 # {{site.data.keyword.containerlong_notm}} CLI reference
@@ -1133,7 +1136,7 @@ Deploy or update a certificate from your {{site.data.keyword.cloudcerts_long_not
    <dd>The name or ID of the cluster. This value is required.</dd>
 
    <dt><code>--update</code></dt>
-   <dd>Include this flag to update the certificate for an ALB secret in a cluster. This value is optional.</dd>
+   <dd>Update the certificate for an ALB secret in a cluster. This value is optional.</dd>
 
    <dt><code>--secret-name <em>SECRET_NAME</em></code></dt>
    <dd>The name of the ALB secret. This value is required.</dd>
@@ -1254,9 +1257,6 @@ View a list of ALB secrets in a cluster.
  ```
  {: pre}
 
-
-
-
 ### bx cs alb-configure --albID ALB_ID [--enable][--disable][--user-ip USERIP]
 {: #cs_alb_configure}
 
@@ -1306,8 +1306,6 @@ Enable or disable an ALB in your standard cluster. The public ALB is enabled by 
   bx cs alb-configure --albID private-cr18a61a63a6a94b658596aa93a087aaa9-alb1 --enable --user-ip user_ip
   ```
   {: pre}
-
-
 
 ### bx cs alb-get --albID ALB_ID
 {: #cs_alb_get}
@@ -1455,11 +1453,11 @@ You can provision your worker node as a virtual machine on shared or dedicated h
 <p><strong>Monthly billing</strong>: Bare metal servers are more expensive than virtual servers, and are best suited for high-performance apps that need more resources and host control. Bare metal servers are billed monthly. If you cancel a bare metal server before the end of the month, you are charged through the end of that month. Ordering and canceling bare metal servers is a manual process through your IBM Cloud infrastructure (SoftLayer) account. It can take more than one business day to complete.</p>
 <p><strong>Option to enable Trusted Compute</strong>: Enable Trusted Compute to verify your worker nodes against tampering. If you don't enable trust during cluster creation but want to later, you can use the `bx cs feature-enable` [command](cs_cli_reference.html#cs_cluster_feature_enable). After you enable trust, you cannot disable it later. You can make a new cluster without trust. For more information about how trust works during the node startup process, see [{{site.data.keyword.containershort_notm}} with Trusted Compute](cs_secure.html#trusted_compute). Trusted Compute is available on clusters that run Kubernetes version 1.9 or later and have certain bare metal machine types. When you run the `bx cs machine-types <location>` [command](cs_cli_reference.html#cs_machine_types), you can see which machines support trust by reviewing the `Trustable` field.</p>
 <p><strong>Bare metal machine type groups</strong>: Bare metal machine types come in groups that have different compute resources that you can choose from to meet your app's needs. Physical machine types have more local storage than virtual, and some have RAID to back up local data. To learn about the different types of bare metal offerings, see the `bx cs machine-type` [command](cs_cli_reference.html#cs_machine_types).
-<ul><li>`mb1c.4x32`: If you don't need RAM- or data-intensive resources, choose this type for a balanced configuration of physical machine resources for your worker nodes. Balanced with 4 cores, 32GB Memory, 1TB SATA Primary Disk, 2TB SATA Secondary Disk, 10Gbps Bonded Network.</li>
-<li>`mb1c.16x64`: If you don't need RAM- or data-intensive resources, choose this type for a balanced configuration of physical machine resources for your worker nodes. Balanced with 16 cores, 64GB Memory, 1TB SATA Primary Disk, 1.7TB SSD Secondary Disk, 10Gbps Bonded Network.</li>
-<li>`mr1c.28x512`: Choose this type to maximize the RAM available to your worker nodes. RAM intensive with 28 cores, 512GB Memory, 1TB SATA Primary Disk, 1.7TB SSD Secondary Disk, 10Gbps Bonded Network.</li>
-<li>`md1c.16x64.4x4tb`: Choose this type if your worker nodes require a significant amount of local disk storage, including RAID to back up the data stored locally on the machine. The 1TB primary storage disks are configured for RAID1, and the 4TB secondary storage disks are configured for RAID10. Data intensive with 28 cores, 512GB Memory, 2x1TB RAID1 Primary Disk, 4x4TB SATA RAID10 Secondary Disk, 10Gbps Bonded Network.</li>
-<li>`md1c.28x512.4x4tb`: Choose this type if your worker nodes require a significant amount of local disk storage, including RAID to back up the data stored locally on the machine. The 1TB primary storage disks are configured for RAID1, and the 4TB secondary storage disks are configured for RAID10. Data intensive with 16 cores, 64GB Memory, 2x1TB RAID1 Primary Disk, 4x4TB SATA RAID10 Secondary Disk, 10Gbps Bonded Network.</li>
+<ul><li>`mb1c.4x32`: If you don't need RAM- or data-intensive resources, choose this type for a balanced configuration of physical machine resources for your worker nodes. Balanced with 4 cores, 32GB Memory, 2TB SATA Primary Disk, 2TB SATA Secondary Disk, 10Gbps Bonded Network.</li>
+<li>`mb1c.16x64`: If you don't need RAM- or data-intensive resources, choose this type for a balanced configuration of physical machine resources for your worker nodes. Balanced with 16 cores, 64GB Memory, 2TB SATA Primary Disk, 960GB SSD Secondary Disk, 10Gbps Bonded Network.</li>
+<li>`mr1c.28x512`: Choose this type to maximize the RAM available to your worker nodes. RAM intensive with 28 cores, 512GB Memory, 2TB SATA Primary Disk, 960GB SSD Secondary Disk, 10Gbps Bonded Network.</li>
+<li>`md1c.16x64.4x4tb`: Choose this type if your worker nodes require a significant amount of local disk storage, including RAID to back up the data stored locally on the machine. The 2x2TB primary storage disks are configured for RAID1, and the 4x4TB secondary storage disks are configured for RAID10. Data intensive with 16 cores, 64GB Memory, 2x2TB RAID1 Primary Disk, 4x4TB SATA RAID10 Secondary Disk, 10Gbps Bonded Network.</li>
+<li>`md1c.28x512.4x4tb`: Choose this type if your worker nodes require a significant amount of local disk storage, including RAID to back up the data stored locally on the machine. The 2x2TB primary storage disks are configured for RAID1, and the 4x4TB secondary storage disks are configured for RAID10. Data intensive with 28 cores, 512GB Memory, 2x2TB RAID1 Primary Disk, 4x4TB SATA RAID10 Secondary Disk, 10Gbps Bonded Network.</li>
 
 </ul></p></dd>
 <dt>Virtual machines</dt>
@@ -1546,7 +1544,7 @@ Create a logging configuration. You can use this command to forward logs for con
   <dt><code><em>CLUSTER</em></code></dt>
     <dd>The name or ID of the cluster.</dd>
   <dt><code>--logsource <em>LOG_SOURCE</em></code></dt>
-    <dd>The log source that you want to enable log forwarding for. This argument supports a comma-separated list of log sources to apply the configuration for. Accepted values are <code>container</code>, <code>application</code>, <code>worker</code>, <code>kubernetes</code>, and <code>ingress</code>. If you do not provide a log source, logging configurations are created for <code>container</code> and <code>ingress</code> log sources.</dd>
+    <dd>The log source to enable log forwarding for. This argument supports a comma-separated list of log sources to apply the configuration for. Accepted values are <code>container</code>, <code>application</code>, <code>worker</code>, <code>kubernetes</code>, and <code>ingress</code>. If you do not provide a log source, logging configurations are created for <code>container</code> and <code>ingress</code> log sources.</dd>
   <dt><code>--namespace <em>KUBERNETES_NAMESPACE</em></code></dt>
     <dd>The Kubernetes namespace that you want to forward logs from. Log forwarding is not supported for the <code>ibm-system</code> and <code>kube-system</code> Kubernetes namespaces. This value is valid only for the container log source and is optional. If you do not specify a namespace, then all namespaces in the cluster use this configuration.</dd>
   <dt><code>--hostname <em>LOG_SERVER_HOSTNAME</em></code></dt>
@@ -1685,7 +1683,7 @@ Update the details of a log forwarding configuration.
    <dt><code>--app-paths</code></dt>
      <dd>Skip validation of the org and space names when they are specified. Skipping validation decreases processing time, but an invalid logging configuration does not correctly forward logs. This value is optional.</dd>
    <dt><code>--app-containers</code></dt>
-     <dd>The path on their containers that the apps are logging to. To forward logs with source type <code>application</code>, you must provide a path. To specify more than one path, use a comma separated list. Example: <code>/var/log/myApp1/&ast;,/var/log/myApp2/&ast;</code></dd>
+     <dd>The path on the containers that the apps are logging to. To forward logs with source type <code>application</code>, you must provide a path. To specify more than one path, use a comma separated list. Example: <code>/var/log/myApp1/&ast;,/var/log/myApp2/&ast;</code></dd>
    <dt><code>--type <em>LOG_TYPE</em></code></dt>
    <dd>The log forwarding protocol that you want to use. Currently, <code>syslog</code> and <code>ibm</code> are supported. This value is required.</dd>
    <dt><code>--json</code></dt>
@@ -1808,7 +1806,7 @@ Delete a logging filter. You can use this command to remove a logging filter tha
   <dt><code><em>CLUSTER</em></code></dt>
     <dd>The name or ID of the cluster that you want to delete a filter from.</dd>
   <dt><code>--id <em>FILTER_ID</em></code></dt>
-    <dd>The ID of the log filter that you want to delete.</dd>
+    <dd>The ID of the log filter to delete.</dd>
   <dt><code>--all</code></dt>
     <dd>Optional: Delete all of your log forwarding filters.</dd>
   <dt><code>--json</code></dt>
@@ -1942,7 +1940,7 @@ Add worker nodes to your standard cluster.
 <dd>The name or ID of the cluster. This value is required.</dd>
 
 <dt><code>--file <em>FILE_LOCATION</em></code></dt>
-<dd>The path to the YAML file to add worker nodes to your cluster. Instead of defining additional worker nodes by using the options provided in this command, you can use a YAML file. This value is optional.
+<dd>The path to the YAML file to add worker nodes to the cluster. Instead of defining additional worker nodes by using the options provided in this command, you can use a YAML file. This value is optional.
 
 <p><strong>Note:</strong> If you provide the same option in the command as the parameter in the YAML file, the value in the command takes precedence over the value in the YAML. For example, you define a machine type in your YAML file and use the --machine-type option in the command, the value that you entered in the command option overrides the value in the YAML file.
 
