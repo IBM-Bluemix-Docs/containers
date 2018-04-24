@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-24"
 
 ---
 
@@ -14,6 +14,8 @@ lastupdated: "2018-4-20"
 {:codeblock: .codeblock}
 {:tip: .tip}
 {:download: .download}
+
+
 
 
 # Popular topics for {{site.data.keyword.containershort_notm}}
@@ -74,12 +76,12 @@ Check out what container developers are interested in learning about in {{site.d
 <tr>
 <td>13 March</td>
 <td>[Location available in São Paulo](cs_regions.html)</td>
-<td>Welcome São Paulo, Brazil as a new location in the US South region. If you have a firewall, be sure to [open the required firewall ports](cs_firewall.html#firewall) for this location as well as the others within the region that your cluster is in.</td>
+<td>Welcome São Paulo, Brazil as a new location in the US South region. If you have a firewall, be sure to [open the firewall ports](cs_firewall.html#firewall) for this location and the others within the region that your cluster is in.</td>
 </tr>
 <tr>
 <td>12 March</td>
 <td>[Just joined the {{site.data.keyword.Bluemix_notm}} with a Trial account? Try out a free Kubernetes cluster!](container_index.html#clusters)</td>
-<td>With a Trial [{{site.data.keyword.Bluemix_notm}} account](https://console.bluemix.net/registration/), you can deploy 1 free cluster for 21 days to test out Kubernetes capabilities.</td>
+<td>With a Trial [{{site.data.keyword.Bluemix_notm}} account](https://console.bluemix.net/registration/), you can deploy one free cluster for 21 days to test out Kubernetes capabilities.</td>
 </tr>
 </tbody></table>
 
@@ -112,7 +114,7 @@ Check out what container developers are interested in learning about in {{site.d
 <tr>
 <td>20 February</td>
 <td>Encrypted images and [signed, trusted content](../services/Registry/registry_trusted_content.html#registry_trustedcontent)</td>
-<td>In {{site.data.keyword.registryshort_notm}}, you can sign and encrypt images to ensure their integrity when storing in your registry namespace. Build containers using only trusted content.</td>
+<td>In {{site.data.keyword.registryshort_notm}}, you can sign and encrypt images to ensure their integrity when you store the images in your registry namespace. Run your container instances by using only trusted content.</td>
 </tr>
 <tr>
 <td>19 February</td>
@@ -122,7 +124,7 @@ Check out what container developers are interested in learning about in {{site.d
 <tr>
 <td>14 February</td>
 <td>[Location available in Seoul](cs_regions.html)</td>
-<td>Just in time for the Olympics, deploy a Kubernetes cluster to Seoul in the AP North region. If you have a firewall, be sure to [open the required firewall ports](cs_firewall.html#firewall) for this location as well as the others within the region that your cluster is in.</td>
+<td>Just in time for the Olympics, deploy a Kubernetes cluster to Seoul in the AP North region. If you have a firewall, be sure to [open the firewall ports](cs_firewall.html#firewall) for this location and the others within the region that your cluster is in.</td>
 </tr>
 <tr>
 <td>8 February</td>
@@ -149,12 +151,12 @@ Check out what container developers are interested in learning about in {{site.d
 <tr>
 <td>23 January</td>
 <td>[Locations available in Singapore and Montreal, CA](cs_regions.html)</td>
-<td>Singapore and Montreal are locations available in the {{site.data.keyword.containershort_notm}} AP North and US East regions. If you have a firewall, be sure to [open the required firewall ports](cs_firewall.html#firewall) for these locations as well as the others within the region that your cluster is in.</td>
+<td>Singapore and Montreal are locations available in the {{site.data.keyword.containershort_notm}} AP North and US East regions. If you have a firewall, be sure to [open the firewall ports](cs_firewall.html#firewall) for these locations and the others within the region that your cluster is in.</td>
 </tr>
 <tr>
 <td>8 January</td>
-<td>[Enhanced machine types available](cs_cli_reference.html#cs_machine_types)</td>
-<td>Series 2 machine types include local SSD storage and disk encryption. [Migrate your workloads](cs_cluster_update.html#machine_type) to these machine types for improved performance and stability.</td>
+<td>[Enhanced flavors available](cs_cli_reference.html#cs_machine_types)</td>
+<td>Series 2 virtual machine types include local SSD storage and disk encryption. [Move your workloads](cs_cluster_update.html#machine_type) to these flavors for improved performance and stability.</td>
 </tr>
 </tbody></table>
 
@@ -163,6 +165,5 @@ Check out what container developers are interested in learning about in {{site.d
 
 You can see what others are talking about and ask your own questions in the [{{site.data.keyword.containershort_notm}} Slack. ![External link icon](../icons/launch-glyph.svg "External link icon")](https://ibm-container-service.slack.com)
 {:shortdesc}
-
 
 

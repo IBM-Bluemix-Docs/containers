@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-24"
 
 ---
 
@@ -16,6 +16,7 @@ lastupdated: "2018-4-20"
 {:download: .download}
 
 
+
 # Exposing apps with LoadBalancers
 {: #loadbalancer}
 
@@ -25,7 +26,7 @@ Expose a port and use a portable IP address for the load balancer to access a co
 ## Managing network traffic by using LoadBalancers
 {: #planning}
 
-When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically requests five portable public and five portable private IP addresses and provisions them into your IBM Cloud infrastructure (SoftLayer) account during cluster creation. Two of the portable IP addresses, one public and one private, are used for [Ingress application load balancers](cs_ingress.html). Four portable public and four portable private IP addresses can be used to expose apps by creating a LoadBalancer service.
+When you create a standard cluster, {{site.data.keyword.containershort_notm}} automatically requests five portable public and five portable private IP addresses. These private IPs are provisioned into your IBM Cloud infrastructure (SoftLayer) account during cluster creation. Two of the portable IP addresses, one public and one private, are used for [Ingress application load balancers](cs_ingress.html). Four portable public and four portable private IP addresses can be used to expose apps by creating a LoadBalancer service.
 
 When you create a Kubernetes LoadBalancer service in a cluster on a public VLAN, an external load balancer is created. Your options for IP addresses when you create a LoadBalancer service are as follows:
 
@@ -119,7 +120,7 @@ To create a load balancer service:
         <tbody>
         <tr>
           <td><code>selector</code></td>
-          <td>Enter the label key (<em>&lt;selector_key&gt;</em>) and value (<em>&lt;selector_value&gt;</em>) pair that you want to use to target the pods where your app runs. To target your pods and include them in the service load balancing, make sure that the <em>&lt;selector_key&gt;</em> and <em>&lt;selector_value&gt;</em> are the same as the key/value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.</td>
+          <td>Enter the label key (<em>&lt;selector_key&gt;</em>) and value (<em>&lt;selector_value&gt;</em>) pair that you want to use to target the pods where your app runs. To target your pods and include them in the service load balancing, check the <em>&lt;selector_key&gt;</em> and <em>&lt;selector_value&gt;</em> values. Make sure that they are the same as the <em>key/value</em> pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.</td>
         </tr>
         <tr>
           <td><code>port</code></td>
@@ -210,10 +211,10 @@ If you want to preserve the original source IP address of the client request, yo
 ### Adding edge node affinity rules and tolerations
 {: #edge_nodes}
 
-When you [label worker nodes as edge nodes](cs_edge.html#edge_nodes), load balancer service pods deploy only to those edge nodes. If you also [taint the edge nodes](cs_edge.html#edge_workloads), app pods cannot deploy to edge nodes.
+When you [label worker nodes as edge nodes](cs_edge.html#edge_nodes) and also [taint the edge nodes](cs_edge.html#edge_workloads), load balancer service pods deploy only to those edge nodes, and app pods cannot deploy to edge nodes. When source IP is enabled for the load balancer service, the load balancer pods on the edge nodes cannot forward incoming requests to your app pods on other worker nodes.
 {:shortdesc}
 
-When you enable the source IP, incoming requests cannot be forwarded from the load balancer to your app pod. To force your app pods to deploy to edge nodes, add an edge node [affinity rule ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature) and [toleration ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/#concepts) to the app deployment.
+To force your app pods to deploy to edge nodes, add an edge node [affinity rule ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature) and [toleration ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/#concepts) to the app deployment.
 
 Example deployment yaml with edge node affinity and edge node toleration:
 
@@ -360,4 +361,3 @@ Before you begin, [target your CLI](cs_cli_install.html#cs_cli_configure) to you
         {: screen}
 
     4. In the **Labels** section of the output, verify that the public or private VLAN is the VLAN that you designated in previous steps.
-

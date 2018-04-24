@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-24"
 
 ---
 
@@ -14,6 +14,8 @@ lastupdated: "2018-4-20"
 {:codeblock: .codeblock}
 {:tip: .tip}
 {:download: .download}
+
+
 
 # Controlling traffic with network policies
 {: #network_policies}
@@ -44,7 +46,7 @@ When a cluster is created, default network policies are set for the public netwo
 
 Default policies are not applied to pods directly; they are applied to the public network interface of a worker node by using a Calico host endpoint. When a host endpoint is created in Calico, all traffic to and from that worker node's network interface is blocked, unless that traffic is allowed by a policy.
 
-**Important:** Do not remove policies that are applied to a host endpoint unless you fully understand the policy and know that you do not need the traffic that is being allowed by the policy.
+**Important:** Do not remove policies that are applied to a host endpoint unless you fully understand the policy. Be sure that you do not need the traffic that is being allowed by the policy.
 
 
  <table summary="The first row in the table spans both columns. The rest of the rows should be read left to right, with the server location in column one and IP addresses to match in column two.">
@@ -58,15 +60,15 @@ Default policies are not applied to pods directly; they are applied to the publi
     </tr>
     <tr>
       <td><code>allow-bixfix-port</code></td>
-      <td>Allows incoming traffic on port 52311 to the bigfix app to allow necessary worker node updates.</td>
+      <td>Allows incoming traffic on port 52311 to the BigFix app to allow necessary worker node updates.</td>
     </tr>
     <tr>
       <td><code>allow-icmp</code></td>
-      <td>Allows incoming icmp packets (pings).</td>
+      <td>Allows incoming ICMP packets (pings).</td>
      </tr>
     <tr>
       <td><code>allow-node-port-dnat</code></td>
-      <td>Allows incoming nodeport, load balancer, and ingress service traffic to the pods that those services are exposing. Note the port that those services expose on the public interface does not have to be specified because Kubernetes uses destination network address translation (DNAT) to forward those service requests to the correct pods. That forwarding takes place before the host endpoint policies are applied in iptables.</td>
+      <td>Allows incoming nodeport, load balancer, and ingress service traffic to the pods that those services are exposing. <strong>Note</strong>: You don't have to specify the exposed ports because Kubernetes uses destination network address translation (DNAT) to forward the service requests to the correct pods. That forwarding takes place before the host endpoint policies are applied in iptables.</td>
    </tr>
    <tr>
       <td><code>allow-sys-mgmt</code></td>
@@ -74,7 +76,7 @@ Default policies are not applied to pods directly; they are applied to the publi
    </tr>
    <tr>
     <td><code>allow-vrrp</code></td>
-    <td>Allow vrrp packets, which are used to monitor and move virtual IP addresses between worker nodes.</td>
+    <td>Allow VRRP packets, which are used to monitor and move virtual IP addresses between worker nodes.</td>
    </tr>
   </tbody>
 </table>
@@ -108,7 +110,7 @@ To add network policies:
         **Tip:** If you are using Windows, install the Calico CLI in the same directory as the {{site.data.keyword.Bluemix_notm}} CLI. This setup saves you some filepath changes when you run commands later.
 
     2.  For OSX and Linux users, complete the following steps.
-        1.  Move the executable file to the /usr/local/bin directory.
+        1.  Move the executable file to the _/usr/local/bin_ directory.
             -   Linux:
 
               ```
@@ -123,7 +125,7 @@ To add network policies:
               ```
               {: pre}
 
-        2.  Make the file executable.
+        2.  Make the file an executable file.
 
             ```
             chmod +x /usr/local/bin/calicoctl
@@ -137,7 +139,7 @@ To add network policies:
         ```
         {: pre}
 
-    4.  If corporate network policies prevent access from your local system to public endpoints via proxies or firewalls, see [Running `calicoctl` commands from behind a firewall](cs_firewall.html#firewall) for instructions on how to allow TCP access for Calico commands.
+    4.  **If corporate network policies prevent access from your local system to public endpoints via proxies or firewalls**: See [Running `calicoctl` commands from behind a firewall](cs_firewall.html#firewall) for instructions on how to allow TCP access for Calico commands.
 
 2.  Configure the Calico CLI.
 
@@ -190,7 +192,7 @@ To add network policies:
 
           -   Windows:
             <ol>
-            <li>Get the calico configuration values from the config map. </br><pre class="codeblock"><code>kubectl get cm -n kube-system calico-config -o yaml</code></pre></br>
+            <li>Get the calico configuration values from the configmap. </br><pre class="codeblock"><code>kubectl get cm -n kube-system calico-config -o yaml</code></pre></br>
             <li>In the `data` section, locate the etcd_endpoints value. Example: <code>https://169.xx.xxx.xxx:30001</code>
             </ol>
 
@@ -236,7 +238,7 @@ To add network policies:
               {: pre}
 
             -   Windows:
-              <ol><li>Open the directory you retrieved in the last step.</br><pre class="codeblock"><code>C:\Users\<user>\.bluemix\plugins\container-service\&lt;cluster_name&gt;-admin\</code></pre>
+              <ol><li>Open the directory that you retrieved in the last step.</br><pre class="codeblock"><code>C:\Users\<user>\.bluemix\plugins\container-service\&lt;cluster_name&gt;-admin\</code></pre>
               <li> Locate the <code>ca-*pem_file</code> file.</ol>
 
         4.  Verify that the Calico configuration is working correctly.
@@ -297,7 +299,7 @@ To add network policies:
 
 4.  Create the Calico network policies to allow or block traffic.
 
-    1.  Define your [Calico network policy ![External link icon](../icons/launch-glyph.svg "External link icon")](http://docs.projectcalico.org/v2.6/reference/calicoctl/resources/policy) by creating a configuration script (.yaml). These configuration files include the selectors that describe what pods, namespaces, or hosts that these policies apply to. Refer to these [sample Calico policies ![External link icon](../icons/launch-glyph.svg "External link icon")](http://docs.projectcalico.org/v2.6/getting-started/kubernetes/tutorials/advanced-policy) to help you create your own.
+    1.  Define your [Calico network policy ![External link icon](../icons/launch-glyph.svg "External link icon")](http://docs.projectcalico.org/v2.6/reference/calicoctl/resources/policy) by creating a configuration script (`.yaml`). These configuration files include the selectors that describe what pods, namespaces, or hosts that these policies apply to. Refer to these [sample Calico policies ![External link icon](../icons/launch-glyph.svg "External link icon")](http://docs.projectcalico.org/v2.6/getting-started/kubernetes/tutorials/advanced-policy) to help you create your own.
 
     2.  Apply the policies to the cluster.
         -   Linux and OS X:
@@ -323,7 +325,7 @@ To add network policies:
 By default, Kubernetes `NodePort` and `LoadBalancer` services are designed to make your app available on all public and private cluster interfaces. However, you can block incoming traffic to your services based on traffic source or destination.
 {:shortdesc}
 
-A Kubernetes LoadBalancer service is also a NodePort service. A LoadBalancer service makes your app available over the load balancer IP address and port and makes your app available over the service's node port(s). Node ports are accessible on every IP address (public and private) for every node within the cluster.
+A Kubernetes LoadBalancer service is also a NodePort service. A LoadBalancer service makes your app available over the load balancer IP address and port and makes your app available over the service's node ports. Node ports are accessible on every IP address (public and private) for every node within the cluster.
 
 The cluster administrator can use Calico `preDNAT` network policies to block:
 
@@ -335,9 +337,9 @@ Some common uses for Calico `preDNAT` network policies:
   - Block traffic to public node ports of a private LoadBalancer service.
   - Block traffic to public node ports on clusters that are running [edge worker nodes](cs_edge.html#edge). Blocking node ports ensures that the edge worker nodes are the only worker nodes that handle incoming traffic.
 
-The `preDNAT` network policies are useful because default Kubernetes and Calico policies are difficult to apply to protecting Kubernetes NodePort and LoadBalancer services due to the DNAT iptables rules generated for these services.
+Default Kubernetes and Calico policies are difficult to apply to protecting Kubernetes NodePort and LoadBalancer services due to the DNAT iptables rules generated for these services.
 
-Calico `preDNAT` network policies generate iptables rules based on a [Calico
+Calico `preDNAT` network policies can help you because they generate iptables rules based on a [Calico
 network policy resource ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.projectcalico.org/v2.6/reference/calicoctl/resources/policy).
 
 1. Define a Calico `preDNAT` network policy for ingress access to Kubernetes services.
@@ -373,4 +375,3 @@ policy changes to be applied throughout the cluster.
   calicoctl apply -f deny-kube-node-port-services.yaml
   ```
   {: pre}
-
