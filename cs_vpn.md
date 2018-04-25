@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-25"
 
 ---
 
@@ -14,6 +14,7 @@ lastupdated: "2018-4-20"
 {:codeblock: .codeblock}
 {:tip: .tip}
 {:download: .download}
+
 
 # Setting up VPN connectivity
 {: #vpn}
@@ -33,19 +34,19 @@ To connect your worker nodes and apps to an on-premises data center, you can con
 The [Vyatta Gateway Appliance ![External link icon](../icons/launch-glyph.svg "External link icon")](http://knowledgelayer.softlayer.com/learning/network-gateway-devices-vyatta) is a bare metal server that runs a special distribution of Linux. You can use a Vyatta as VPN gateway to securely connect to an on-premises network.
 {:shortdesc}
 
-All public and private network traffic that enters or leaves the cluster VLANs is routed through the Vyatta. You can use the Vyatta as a VPN endpoint to create an encrypted IPSec tunnel between servers in IBM Cloud infrastructure (SoftLayer) and on-premise resources. For example, the following diagram shows how an app on a private-only worker node in {{site.data.keyword.containershort_notm}} can communicate with an on-premises server via a Vyatta VPN connection:
+All public and private network traffic that enters or leaves the cluster VLANs is routed through a Vyatta. You can use the Vyatta as a VPN endpoint to create an encrypted IPSec tunnel between servers in IBM Cloud infrastructure (SoftLayer) and on-premises resources. For example, the following diagram shows how an app on a private-only worker node in {{site.data.keyword.containershort_notm}} can communicate with an on-premises server via a Vyatta VPN connection:
 
 <img src="images/cs_vpn_vyatta.png" width="725" alt="Expose an app in {{site.data.keyword.containershort_notm}} by using a load balancer" style="width:725px; border-style: none"/>
 
 1. An app in your cluster, `myapp2`, receives a request from an Ingress or LoadBalancer service and needs to securely connect to data in your on-premises network.
 
-2. Because `myapp2` is on a worker node that is on a private VLAN only, the Vyatta acts as a secure connection between the worker nodes and the on-premises network. The Vyatta uses the destination IP address to determine which network packets should be sent to the on-premises network.
+2. Because `myapp2` is on a worker node that is on a private VLAN only, the Vyatta acts as a secure connection between the worker nodes and the on-premises network. The Vyatta uses the destination IP address to determine which network packets to send to the on-premises network.
 
 3. The request is encrypted and sent over the VPN tunnel to the on-premises data center.
 
 4. The incoming request passes through the on-premises firewall and is delivered to the VPN tunnel endpoint (router) where it is decrypted.
 
-5. The VPN tunnel endpoint (router) forwards the request to the on-premises server or mainframe depending on the destination IP address specified in step 2. The necessary data is sent back over the VPN connection to `myapp2` through the same process.
+5. The VPN tunnel endpoint (router) forwards the request to the on-premises server or mainframe depending on the destination IP address that was specified in step 2. The necessary data is sent back over the VPN connection to `myapp2` through the same process.
 
 To set up a Vyatta Gateway Appliance:
 
@@ -53,7 +54,7 @@ To set up a Vyatta Gateway Appliance:
 
 2. [Configure the private VLAN on the Vyatta ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/procedure/basic-configuration-vyatta).
 
-3. To enable a VPN connection using the Vyatta, [configure IPSec on the Vyatta ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/procedure/how-configure-ipsec-vyatta).
+3. To enable a VPN connection by using the Vyatta, [configure IPSec on the Vyatta ![External link icon](../icons/launch-glyph.svg "External link icon")](https://knowledgelayer.softlayer.com/procedure/how-configure-ipsec-vyatta).
 
 For more information, see this blog post on [connecting a cluster to an on-premises data center ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.ibm.com/blogs/bluemix/2017/07/kubernetes-and-bluemix-container-based-workloads-part4/).
 
@@ -244,9 +245,9 @@ After you deploy your Helm chart, test the VPN connectivity.
     ```
     {: pre}
 
-    * If all tests pass, your strongSwan VPN connection is successfully set up.
+    * If all of the tests pass, your strongSwan VPN connection is successfully set up.
 
-    * If any test fails, continue to the next step.
+    * If any part of the test fails, continue to the next step.
 
 5. View the output of a failed test by looking at the logs of the test pod.
 
