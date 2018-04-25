@@ -30,7 +30,7 @@ The public network interface for the worker nodes in both free and standard clus
 |Free clusters in {{site.data.keyword.Bluemix_notm}}|{{site.data.keyword.IBM_notm}}|
 |Standard clusters in {{site.data.keyword.Bluemix_notm}}|You in your IBM Cloud infrastructure (SoftLayer) account|
 
-For more information about in-cluster network communication between worker nodes and pods, ee [In-cluster networking](cs_secure.html#in_cluster_network). For more information about securely connecting apps that run in a Kubernetes cluster to an on-premises network or to apps that are external to your cluster, see [Setting up VPN connectivity](cs_vpn.html).
+For more information about in-cluster network communication between worker nodes and pods, see [In-cluster networking](cs_secure.html#in_cluster_network). For more information about securely connecting apps that run in a Kubernetes cluster to an on-premises network or to apps that are external to your cluster, see [Setting up VPN connectivity](cs_vpn.html).
 
 ## Allowing public access to apps
 {: #public_access}
