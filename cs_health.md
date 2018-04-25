@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-25"
 
 ---
 
@@ -14,6 +14,8 @@ lastupdated: "2018-4-20"
 {:codeblock: .codeblock}
 {:tip: .tip}
 {:download: .download}
+
+
 
 
 # Logging and monitoring
@@ -78,7 +80,7 @@ To configure logging through the UI, you must specify an org and space. To enabl
 ### Before you begin
 {: #before-forwarding}
 
-1. Verify permissions. If you specified a space when you created the cluster or the logging configuration then both the account owner and {{site.data.keyword.containershort_notm}} key owner need Manager, Developer, or Auditor permissions in that space.
+1. Verify permissions. If you specified a space when you created the cluster or the logging configuration, then both the account owner and {{site.data.keyword.containershort_notm}} key owner need Manager, Developer, or Auditor permissions in that space.
   * If you don't know who the {{site.data.keyword.containershort_notm}} key owner is, run the following command.
       ```
       bx cs api-key-info <cluster_name>
@@ -105,7 +107,7 @@ To configure logging through the UI, you must specify an org and space. To enabl
 ### Enabling log forwarding
 {: #enable-forwarding}
 
-You can create a configuration for cluster logging. You can differentiate between different log sources by using the relevant flags. You can review a full list of the configuration options in the [CLI reference](cs_cli_reference.html#logging_commands). If you encounter any issues, try running through this [troubleshooting guide](cs_troubleshoot_health.html).
+You can create a configuration for cluster logging. You can differentiate between different log sources by using flags. You can review a full list of the configuration options in the [CLI reference](cs_cli_reference.html#logging_commands). If you encounter any issues, try running through this [troubleshooting guide](cs_troubleshoot_health.html).
 
 1. Create a log forwarding configuration.
   ```
@@ -136,7 +138,7 @@ You can create a configuration for cluster logging. You can differentiate betwee
       ```
       {: screen}
 
-      If you have applications that run in your containers that can't be configured to write logs to STDOUT or STDERR, you can create a logging configuration to forward logs from application log files.
+      If you have apps that run in your containers that can't be configured to write logs to STDOUT or STDERR, you can create a logging configuration to forward logs from app log files.
       {: tip}
 
 
@@ -251,7 +253,7 @@ You can create a configuration for cluster logging. You can differentiate betwee
     </tr>
     <tr>
       <td><code><em>&lt;namespace&gt;</em></code></td>
-      <td>Optional: The Kubernetes namespace that you want to forward logs from. Log forwarding is not supported for the <code>ibm-system</code> and <code>kube-system</code> Kubernetes namespaces. This value is valid only for the <code>container</code> log source. If you do not specify a namespace, then all namespaces in the cluster use the configuration.</td>
+      <td>Optional: The Kubernetes namespace to forward logs from. Log forwarding is not supported for the <code>ibm-system</code> and <code>kube-system</code> Kubernetes namespaces. This value is valid only for the <code>container</code> log source. If you do not specify a namespace, then all namespaces in the cluster use the configuration.</td>
     </tr>
     <tr>
       <td><code><em>&lt;log_type&gt;</em></code></td>
