@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-25"
 
 ---
 
@@ -14,6 +14,8 @@ lastupdated: "2018-4-20"
 {:codeblock: .codeblock}
 {:tip: .tip}
 {:download: .download}
+
+
 
 
 # Exposing apps with NodePorts
@@ -55,7 +57,7 @@ You can expose your app as a Kubernetes NodePort service for free or standard cl
 
 If you do not already have an app ready, you can use a Kubernetes example app called [Guestbook ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/kubernetes/kubernetes/blob/master/examples/guestbook/all-in-one/guestbook-all-in-one.yaml).
 
-1.  In the configuration file for your app, define a [service ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/services-networking/service/) section. **Note**: For the Guestbook example, a front-end service section already exists in the configuration file. To make the Guestbook app available externally, add the NodePort type and a NodePort in the range 30000 - 32767 to the front-end service section.
+1.  In the configuration file for your app, define a [service ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/services-networking/service/) section. **Note**: For the Guestbook example, a front-end service section exists in the configuration file. To make the Guestbook app available externally, add the NodePort type and a NodePort in the range 30000 - 32767 to the front-end service section.
 
     Example:
 
@@ -84,7 +86,7 @@ If you do not already have an app ready, you can use a Kubernetes example app ca
     <tbody>
     <tr>
     <td><code>metadata.name</code></td>
-    <td>Replace <code><em>&lt;my-nodeport-service&gt;</em></code> with a name for your NodePort service.</td>
+    <td>Replace <code><em>&lt;my-nodeport-service&gt;</em></code> with a name for your NodePort service.<p>Learn more about [securing your personal information](cs_secure.html#pi) when you work with Kubernetes resources.</p></td>
     </tr>
     <tr>
     <td><code>metadata.labels</code></td>
@@ -100,7 +102,7 @@ If you do not already have an app ready, you can use a Kubernetes example app ca
      </tr>
      <tr>
      <td><code>ports.nodePort</code></td>
-     <td>Optional: Replace <code><em>&lt;31514&gt;</em></code> with a NodePort in the 30000 - 32767 range. Do not specify a NodePort that is already in use by another service. If no NodePort is assigned, a random one is assigned for you.<br><br>If you want to specify a NodePort and want to see which NodePorts are already in use, you can run the following command: <pre class="pre"><code>kubectl get svc</code></pre>Any NodePorts in use appear under the **Ports** field.</td>
+     <td>Optional: Replace <code><em>&lt;31514&gt;</em></code> with a NodePort in the 30000 - 32767 range. Do not specify a NodePort that is already in use by another service. If no NodePort is assigned, a random one is assigned for you.<br><br>If you want to specify a NodePort and want to see which NodePorts are already in use, you can run the following command: <pre class="pre"><code>kubectl get svc</code></pre><p>Any NodePorts in use appear under the **Ports** field.</p></td>
      </tr>
      </tbody></table>
 
@@ -153,7 +155,6 @@ When the app is deployed, you can use the public IP address of any worker node a
     {: screen}
 
     In this example, the NodePort is `30872`.</br>
-    **Note:** If the **Endpoints** section displays `<none>`, make sure that the `<selectorkey>` and `<selectorvalue>` that you use in the `spec.selector` section of the NodePort service is the same as the key/ value pair that you used in the `spec.template.metadata.labels` section of your deployment yaml.
+    **Note:** If the **Endpoints** section displays `<none>`, check the `<selectorkey>` and `<selectorvalue>` that you use in the `spec.selector` section of the NodePort service. Ensure that it is the same as the _key/ value_ pair that you used in the `spec.template.metadata.labels` section of your deployment yaml.
 
 3.  Form the URL with one of the worker node public IP addresses and the NodePort. Example: `http://192.0.2.23:30872`
-
