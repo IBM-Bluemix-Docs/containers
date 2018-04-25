@@ -26,7 +26,7 @@ lastupdated: "2018-4-25"
 As you use {{site.data.keyword.containerlong}}, consider these techniques for general troubleshooting and debugging your clusters. You can also check the [status of the {{site.data.keyword.Bluemix_notm}} system ![External link icon](../icons/launch-glyph.svg "External link icon")](https://developer.ibm.com/bluemix/support/#status).
 {: shortdesc}
 
-You can take these general steps to ensure that your clusters are up-to-date:
+You can take some general steps to ensure that your clusters are up-to-date:
 - Check on a monthly basis for available security and operating system patches to [update your worker nodes](cs_cli_reference.html#cs_worker_update).
 - [Update your cluster](cs_cli_reference.html#cs_cluster_update) to the latest default [version of Kubernetes](cs_versions.html) for {{site.data.keyword.containershort_notm}}
 

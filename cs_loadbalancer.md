@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2018
-lastupdated: "2018-4-20"
+lastupdated: "2018-4-25"
 
 ---
 
@@ -14,6 +14,7 @@ lastupdated: "2018-4-20"
 {:codeblock: .codeblock}
 {:tip: .tip}
 {:download: .download}
+
 
 
 # Exposing apps with LoadBalancers
@@ -210,10 +211,10 @@ If you want to preserve the original source IP address of the client request, yo
 ### Adding edge node affinity rules and tolerations
 {: #edge_nodes}
 
-When you [label worker nodes as edge nodes](cs_edge.html#edge_nodes), load balancer service pods deploy only to those edge nodes. If you also [taint the edge nodes](cs_edge.html#edge_workloads), app pods cannot deploy to edge nodes.
+When you [label worker nodes as edge nodes](cs_edge.html#edge_nodes) and also [taint the edge nodes](cs_edge.html#edge_workloads), load balancer service pods deploy only to those edge nodes, and app pods cannot deploy to edge nodes. When source IP is enabled for the load balancer service, the load balancer pods on the edge nodes cannot forward incoming requests to your app pods on other worker nodes.
 {:shortdesc}
 
-When you enable the source IP, incoming requests cannot be forwarded from the load balancer to your app pod. To force your app pods to deploy to edge nodes, add an edge node [affinity rule ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature) and [toleration ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/#concepts) to the app deployment.
+To force your app pods to deploy to edge nodes, add an edge node [affinity rule ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature) and [toleration ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/#concepts) to the app deployment.
 
 Example deployment yaml with edge node affinity and edge node toleration:
 
