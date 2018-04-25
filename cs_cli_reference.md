@@ -1278,7 +1278,7 @@ Enable or disable an ALB in your standard cluster. The public ALB is enabled by 
    <dd>
 
    <ul>
-    <li>This parameter is available for a private ALB only</li>
+    <li>This parameter is available for enabling a private ALB only.</li>
     <li>The private ALB is deployed with an IP address from a user-provided private subnet. If no IP address is provided, the ALB is deployed with a private IP address from the portable private subnet that was provisioned automatically when you created the cluster.</li>
    </ul>
    </dd>
@@ -1293,17 +1293,17 @@ Enable or disable an ALB in your standard cluster. The public ALB is enabled by 
   ```
   {: pre}
 
-  Example for disabling an ALB:
-
-  ```
-  bx cs alb-configure --albID public-cr18a61a63a6a94b658596aa93a087aaa9-alb1 --disable
-  ```
-  {: pre}
-
   Example for enabling an ALB with a user-provided IP address:
 
   ```
   bx cs alb-configure --albID private-cr18a61a63a6a94b658596aa93a087aaa9-alb1 --enable --user-ip user_ip
+  ```
+  {: pre}
+
+  Example for disabling an ALB:
+
+  ```
+  bx cs alb-configure --albID public-cr18a61a63a6a94b658596aa93a087aaa9-alb1 --disable
   ```
   {: pre}
 
@@ -2325,4 +2325,3 @@ View a list of worker nodes and the status for each in a cluster.
   bx cs workers my_cluster
   ```
   {: pre}
-
