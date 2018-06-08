@@ -95,7 +95,7 @@ If you do not already have an app ready, you can use a Kubernetes example app ca
     </tr>
     <tr>
       <td><code>spec.selector</code></td>
-      <td>Replace <code><em>&lt;my-selector-key&gt;</em></code> and <code><em>&lt;my-selector-value&gt;</em></code> with the key/value pair that you used in the <code>spec.template.metadata.labels</code> section of your deployment yaml.
+      <td>Replace <code><em>&lt;my-selector-key&gt;</em></code> and <code><em>&lt;my-selector-value&gt;</em></code> with the key/value pair that you used in the <code>spec.template.metadata.labels</code> section of your <b>deployment</b> yaml. The service will get associated with the deployment only when the selector matches the deployment labels.
       </tr>
     <tr>
     <td><code>ports.port</code></td>
