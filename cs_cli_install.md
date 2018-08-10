@@ -62,7 +62,7 @@ To install the CLIs:
 3.  To create Kubernetes clusters and manage worker nodes, install the {{site.data.keyword.containershort_notm}} plug-in. The prefix for running commands by using the {{site.data.keyword.containershort_notm}} plug-in is `ibmcloud ks`.
 
     ```
-    ibmcloud plugin install container-service -r Bluemix
+    ibmcloud plugin install container-service
     ```
     {: pre}
 
@@ -117,7 +117,7 @@ To install the CLIs:
 5.  To manage a private image repository, install the {{site.data.keyword.registryshort_notm}} plug-in. Use this plug-in to set up your own namespace in a multi-tenant, highly available, and scalable private image registry that is hosted by IBM, and to store and share Docker images with other users. Docker images are required to deploy containers into a cluster. The prefix for running registry commands is `ibmcloud cr`.
 
     ```
-    ibmcloud plugin install container-registry -r Bluemix
+    ibmcloud plugin install container-registry
     ```
     {: pre}
 
@@ -294,7 +294,7 @@ To update the CLIs:
     1.  Install the update from the {{site.data.keyword.Bluemix_notm}} plug-in repository.
 
         ```
-        ibmcloud plugin update container-service -r Bluemix
+        ibmcloud plugin update container-service
         ```
         {: pre}
 
@@ -320,7 +320,7 @@ To update the CLIs:
     1.  Install the update from the {{site.data.keyword.Bluemix_notm}} plug-in repository.
 
         ```
-        ibmcloud plugin update container-registry -r Bluemix
+        ibmcloud plugin update container-registry
         ```
         {: pre}
 
