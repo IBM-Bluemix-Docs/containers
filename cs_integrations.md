@@ -472,7 +472,7 @@ When you mount the secret as a volume to your pod, a file that is named `binding
 5.  Access the service credentials. 
     1. Log in to your pod. 
        ```
-       kubectl exec <pod_name> -it bash
+       kubectl exec <pod_name> -it -- /bin/sh
        ```
        {: pre}
        
