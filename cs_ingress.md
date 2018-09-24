@@ -292,7 +292,11 @@ If you do not have a TLS certificate ready, follow these steps:
           openssl req -new -x509 -key tls.key -out tls.crt
           ```
           {: pre}
-2. [Convert the cert and key into base-64 ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.base64encode.org/).
+2. Convert the cert and key into base-64
+    ```
+    openssl base64 -in <file> -out <file.base64>
+    ```
+
 3. Create a secret YAML file using the cert and key.
      ```
      apiVersion: v1
@@ -766,7 +770,11 @@ If you do not have a TLS certificate ready, follow these steps:
           openssl req -new -x509 -key tls.key -out tls.crt
           ```
           {: pre}
-2. [Convert the cert and key into base-64 ![External link icon](../icons/launch-glyph.svg "External link icon")](https://www.base64encode.org/).
+2. Convert the cert and key into base-64
+    ```
+    openssl base64 -in <file> -out <file.base64>
+    ```
+
 3. Create a secret YAML file using the cert and key.
      ```
      apiVersion: v1
