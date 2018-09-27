@@ -175,7 +175,7 @@ To add file storage:
 
     - **Example for bronze, silver, gold storage classes**:
        The following `.yaml` file creates a claim that is named `mypvc` of the `"ibmc-file-silver"` storage class, billed `"monthly"`, with a gigabyte size of `24Gi`.
-       
+
        ```
        apiVersion: v1
        kind: PersistentVolumeClaim
@@ -196,7 +196,7 @@ To add file storage:
 
     -  **Example for using the custom storage class**:
        The following `.yaml` file creates a claim that is named `mypvc` of the storage class `ibmc-file-retain-custom`, billed `"hourly"`, with a gigabyte size of `45Gi` and IOPS of `"300"`.
-      
+
        ```
        apiVersion: v1
        kind: PersistentVolumeClaim
@@ -910,6 +910,26 @@ parameters:
   iopsPerGB: "4"
   sizeRange: "[20-12000]Gi"
 reclaimPolicy: "Delete"
+```
+{: codeblock}
+
+Note that to create a persistentVolumeClaim with the above storage class, a `zone` label must be added to make the customization effective.
+
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mypvc
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "ibmc-file-silver-mycustom-storageclass"
+  labels:
+    zone: "dal12"
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 24Gi
 ```
 {: codeblock}
 
