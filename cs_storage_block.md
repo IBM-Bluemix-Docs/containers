@@ -1040,6 +1040,26 @@ reclaimPolicy: "Delete"
 ```
 {: codeblock}
 
+Note that to create a persistentVolumeClaim with the above storage class, a `zone` label must be added to make the customization effective.
+
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mypvc
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "ibmc-block-silver-mycustom-storageclass"
+  labels:
+    zone: "dal12"
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 24Gi
+```
+{: codeblock}
+
 ### Mounting block storage with an `XFS` file system
 {: #xfs}
 
@@ -1074,4 +1094,3 @@ parameters:
 {: codeblock}
 
 <br />
-
