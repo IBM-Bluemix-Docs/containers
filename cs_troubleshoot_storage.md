@@ -147,7 +147,7 @@ Before you begin: [Log in to your account. Target the appropriate region and, if
 
     ```
     initContainers:
-    - name: initContainer # Or you can replace with any name
+    - name: initcontainer # Or you can replace with any name
       image: alpine:latest
       command: ["/bin/sh", "-c"]
       args:
