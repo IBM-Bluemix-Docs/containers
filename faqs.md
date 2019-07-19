@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2019
-lastupdated: "2019-07-17"
+lastupdated: "2019-07-15"
 
 keywords: kubernetes, iks, compliance, security standards
 
@@ -57,8 +57,6 @@ For a detailed overview of capabilities and benefits, see [Why {{site.data.keywo
 {: faq}
 
 With {{site.data.keyword.containerlong_notm}}, you can select from two container management platforms: the IBM version of community Kubernetes and Red Hat OpenShift on IBM Cloud (beta). The container platform that you select is installed on your cluster master and worker nodes. Later, you can [update the version](/docs/containers?topic=containers-update#update) but cannot roll back to a previous version or switch to a different container platform. If you want to use multiple container platforms, create a separate cluster for each. 
-
-For more information, see [Comparison between OpenShift and native Kubernetes clusters](/docs/openshift?topic=openshift-why_openshift#openshift_kubernetes).
 
 <dl>
   <dt>Kubernetes</dt>

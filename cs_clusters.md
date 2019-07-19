@@ -2,7 +2,6 @@
 
 copyright:
   years: 2014, 2019
-lastupdated: "2019-07-17"
 
 keywords: kubernetes, iks, clusters, worker nodes, worker pools, delete
 
@@ -67,7 +66,6 @@ Have you created a cluster before and are just looking for quick example command
     {: pre}
 
 <br />
-
 
 
 ## Prepare to create clusters at the account level

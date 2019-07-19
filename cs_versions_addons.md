@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2019
-lastupdated: "2019-07-17"
+lastupdated: "2019-07-15"
 
 keywords: kubernetes, iks, nginx, ingress controller
 
@@ -59,15 +59,7 @@ Refer to the following table for a summary of changes for each build of the Ingr
 </thead>
 <tbody>
 <tr>
-<td>512 / 334</td>
-<td>17 July 2019</td>
-<td><ul>
-<li>Fixes `rbash` vulnerabilities for [CVE-2016-3189 ![External link icon](../icons/launch-glyph.svg "External link icon")](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-9924).</li>
-<li>Removes the following apt packages from the `nginx-ingress` image: `curl`, `bash`, `vim`, `tcpdump`, and `ca-certificates`.</li></ul></td>
-<td>-</td>
-</tr>
-<tr>
-<td>497 / 334</td>
+<td>497 / 331</td>
 <td>14 July 2019</td>
 <td><ul>
 <li>Adds the [`upstream-keepalive-timeout`](/docs/containers?topic=containers-ingress_annotation#upstream-keepalive-timeout) to set the maximum time that a keepalive connection stays open between the ALB proxy server and the upstream server for your back-end app.</li>
