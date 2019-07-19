@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2019
-lastupdated: "2019-07-17"
+lastupdated: "2019-07-15"
 
 keywords: kubernetes, iks
 
@@ -40,11 +40,6 @@ Use the release notes to learn about the latest changes to the {{site.data.keywo
 <th>Description</th>
 </thead>
 <tbody>
-  <tr>
-  <td>17 July 2019</td>
-  <td><strong>Ingress ALB changelog</strong>: [Fixes `rbash` vulnerabilities](/docs/containers?topic=containers-cluster-add-ons-changelog#alb_changelog).
-  </td>
-</tr>
 <tr>
   <td>15 July 2019</td>
   <td><ul>
