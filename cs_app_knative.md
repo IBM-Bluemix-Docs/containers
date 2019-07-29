@@ -29,14 +29,15 @@ Learn how to install and use Knative in a Kubernetes cluster in {{site.data.keyw
 **What is Knative and why I want use it?**</br>
 [Knative](https://github.com/knative/docs) is an open source platform that was developed by IBM, Google, Pivotal, Red Hat, Cisco, and others. The goal is to extend the capabilities of Kubernetes to help you create modern, source-centric containerized, and serverless apps on top of your Kubernetes cluster. The platform is designed to address the needs of developers who today must decide what type of app they want to run in the cloud: 12-factor apps, containers, or functions. Each type of app requires an open source or proprietary solution that is tailored to these apps: Cloud Foundry for 12-factor apps, Kubernetes for containers, and OpenWhisk and others for functions. In the past, developers had to decide what approach they wanted to follow, which led to inflexibility and complexity when different types of apps had to be combined.  
 
-Knative uses a consistent approach across programming languages and frameworks to abstract the operational burden of building, deploying, and managing workloads in Kubernetes so that developers can focus on what matters most to them: the source code. You can use proven build packs that you are already familiar with, such as Cloud Foundry, Kaniko, Dockerfile, Bazel, and others. By integrating with Istio, Knative ensures that your serverless and containerized workloads can be easily exposed on the internet, monitored, and controlled, and that your data is encrypted during transit.
+Knative uses a consistent approach across programming languages and frameworks to abstract the operational burden of building, deploying, and managing workloads in Kubernetes so that developers can focus on what matters most to them: the source code. You can use proven build processes that you are already familiar with, such as Kaniko, Dockerfile, Bazel, and others. By integrating with Istio, Knative ensures that your serverless and containerized workloads can be easily exposed on the internet, monitored, and controlled, and that your data is encrypted during transit.
 
 **How does Knative work?**</br>
-Knative comes with three key components, or _primitives_, that help you to build, deploy, and manage your serverless apps in your Kubernetes cluster:
+Knative comes with two key components, or _primitives_, that help you to deploy, and manage your serverless apps in your Kubernetes cluster:
 
-- **Build:** The `Build` primitive supports creating a set of steps to build your app from source code to a container image. Imagine you use a simple build template where you specify the source repo to find your app code and the container registry where you want to host the image. With just a single command, you can instruct Knative to take this build template, pull the source code, create the image, and push the image to your container registry so that you can use the image in your container.
 - **Serving:** The `Serving` primitive helps to deploy serverless apps as Knative services and to automatically scale them, even down to zero instances. To expose your serverless and containerized workloads, Knative uses Istio. When you install the managed Knative add-on, the managed Istio add-on is automatically installed as well. By using the traffic management and intelligent routing capabilities of Istio, you can control what traffic is routed to a specific version of your service, which makes it easy for a developer to test and roll out a new app version or do A-B testing.
 - **Eventing:** With the `Eventing` primitive, you can create triggers or event streams that other services can subscribe to. For example, you might want to kick off a new build of your app every time code is pushed to your GitHub master repo. Or you want to run a serverless app only if the temperature drops below freezing point. For example, the `Eventing` primitive can be integrated into your CI/CD pipeline to automate the build and deployment of apps in case a specific event occurs.
+
+Note: Knative used to have a component called **Build** which supported creating a set of steps to build your app from source code to a container image. This code base has been spun off from Knative into a new project called [Tekton](https:/tekton.dev).
 
 **What is the Managed Knative on {{site.data.keyword.containerlong_notm}} (experimental) add-on?** </br>
 Managed Knative on {{site.data.keyword.containerlong_notm}} is a [managed add-on](/docs/containers?topic=containers-managed-addons#managed-addons) that integrates Knative and Istio directly with your Kubernetes cluster. The Knative and Istio versions in the add-on are tested by IBM and supported for the use in {{site.data.keyword.containerlong_notm}}. For more information about managed add-ons, see [Adding services by using managed add-ons](/docs/containers?topic=containers-managed-addons#managed-addons).
@@ -47,7 +48,7 @@ If you installed the [container image security enforcer admission controller](/d
 ## Setting up Knative in your cluster
 {: #knative-setup}
 
-Knative builds on top of Istio to ensure that your serverless and containerized workloads can be exposed within the cluster and on the internet. With Istio, you can also monitor and control network traffic between your services and ensure that your data is encrypted during transit. When you install the managed Knative add-on, the managed Istio add-on is automatically installed as well.
+Knative builds on top of Istio to ensure that your serverless and containerized workloads can be exposed within the cluster and on the internet. With Istio, you can also monitor and control network traffic between your services and ensure that your data is encrypted during transit. When you install the managed Knative add-on, the managed Istio add-on is automatically installed as well. However, for Knative's use of Istio, this is all hidden from the developer.
 {: shortdesc}
 
 Before you begin:
@@ -74,29 +75,25 @@ To install Knative in your cluster:
 
    The installation of all Knative components might take a few minutes to complete.
 
-2. Verify that Istio is successfully installed. All pods for the nine Istio services and the pod for Prometheus must be in a `Running` status.
+2. Verify that Knagive is successfully installed. All pods for the Knative services must be in a `Running` status.
    ```
-   kubectl get pods --namespace istio-system
+   kubectl get pods --namespace knative-serving
    ```
    {: pre}
 
    Example output:
    ```
-   NAME                                       READY     STATUS      RESTARTS   AGE
-   istio-citadel-748d656b-pj9bw               1/1       Running     0          2m
-   istio-egressgateway-6c65d7c98d-l54kg       1/1       Running     0          2m
-   istio-galley-65cfbc6fd7-bpnqx              1/1       Running     0          2m
-   istio-ingressgateway-f8dd85989-6w6nj       1/1       Running     0          2m
-   istio-pilot-5fd885964b-l4df6               2/2       Running     0          2m
-   istio-policy-56f4f4cbbd-2z2bk              2/2       Running     0          2m
-   istio-sidecar-injector-646655c8cd-rwvsx    1/1       Running     0          2m
-   istio-statsd-prom-bridge-7fdbbf769-8k42l   1/1       Running     0          2m
-   istio-telemetry-8687d9d745-mwjbf           2/2       Running     0          2m
-   prometheus-55c7c698d6-f4drj                1/1       Running     0          2m
+   NAME                                      READY   STATUS    RESTARTS   AGE
+   activator-7674448cb7-hjpn8                2/2     Running   0          13d
+   autoscaler-79b474fddd-tnnwh               2/2     Running   0          13d
+   controller-946f66cf9-6tq78                1/1     Running   0          13d
+   networking-certmanager-6f48595847-xvmln   1/1     Running   0          13d
+   networking-istio-5f8d474b6d-prvmz         1/1     Running   0          13d
+   webhook-8896fd46b-wl2bf                   1/1     Running   0          9d
    ```
    {: screen}
 
-3. Optional: If you want to use Istio for all apps in the `default` namespace, add the `istio-injection=enabled` label to the namespace. Each serverless app pod must run an Envoy proxy sidecar so that the app can be included in the Istio service mesh. This label allows Istio to automatically modify the pod template specification in new app deployments so that pods are created with Envoy proxy sidecar containers.
+3. Optional: If you want to use Istio for all apps in the `default` namespace, add the `istio-injection=enabled` label to the namespace. Each serverless app pod must run an Envoy proxy sidecar so that the app can be included in the Istio service mesh. This label allows Istio to automatically modify the pod template specification in new app deployments so that pods are created with Envoy proxy sidecar containers. Knative will continue to work even without Istio enabled in your namespaces though.
    ```
    kubectl label namespace default istio-injection=enabled
    ```
@@ -125,7 +122,7 @@ After you set up Knative in your cluster, you can deploy your serverless app as 
 {: shortdesc}
 
 **What is a Knative service?** </br>
-To deploy an app with Knative, you must specify a Knative `Service` resource. A Knative service is managed by the Knative `Serving` primitive and is responsible to manage the entire lifecycle of the workload. When you create the service, the Knative `Serving` primitive automatically creates a version for your serverless app and adds this version to the revision history of the service. Your serverless app is assigned a public URL from your Ingress subdomain in the format `<knative_service_name>.<namespace>.<ingress_subdomain>` that you can use to access the app from the internet. In addition, a private host name is assigned to your app in the format `<knative_service_name>.<namespace>.cluster.local` that you can use to access your app from within the cluster.
+To deploy an app with Knative, you must specify a Knative `Service` resource. A Knative service is managed by the Knative `Serving` primitive and is responsible to manage the entire lifecycle of the workload. When you create the service, the Knative `Serving` primitive automatically creates a version for your serverless app and adds this version to the revision history of the service. Your serverless app is assigned a public URL from your Ingress subdomain in the format `<knative_service_name>-<namespace>.<ingress_subdomain>` that you can use to access the app from the internet. In addition, a private host name is assigned to your app in the format `<knative_service_name>.<namespace>.cluster.local` that you can use to access your app from within the cluster.
 
 **What happens behind the scenes when I create the Knative service?**</br>
 When you create a Knative service, your app is automatically deployed as a Kubernetes pod in your cluster and exposed by using a Kubernetes service. To assign the public host name, Knative uses the IBM-provided Ingress subdomain and TLS certificate. Incoming network traffic is routed based on the default IBM-provided Ingress routing rules.
@@ -146,15 +143,13 @@ To deploy your serverless app as a Knative service:
      name: kn-helloworld
      namespace: default
    spec:
-     runLatest:
-       configuration:
-         revisionTemplate:
-           spec:
-             container:
-               image: docker.io/ibmcom/kn-helloworld
-               env:
-               - name: TARGET
-                 value: "Go Sample v1"
+     template:
+       spec:
+         containers:
+         - image: docker.io/ibmcom/kn-helloworld
+           env:
+           - name: TARGET
+             value: "Go Sample v1"
     ```
     {: codeblock}
 
@@ -173,11 +168,11 @@ To deploy your serverless app as a Knative service:
     <td>Optional: The Kubernetes namespace where you want to deploy your app as a Knative service. By default, all services are deployed to the <code>default</code> Kubernetes namespace. </td>
     </tr>
     <tr>
-    <td><code>spec.container.image</code></td>
+    <td><code>spec.template.spec.containers.image</code></td>
     <td>The URL to the container registry where your image is stored. In this example, you deploy a Knative Hello World app that is stored in the <code>ibmcom</code> namespace in Docker Hub. </td>
     </tr>
     <tr>
-    <td><code>spec.container.env</code></td>
+    <td><code>spec.template.spec.containers.env</code></td>
     <td>Optional: A list of environment variables that you want your Knative service to have. In this example, the value of the environment variable <code>TARGET</code> is read by the sample app and returned when you send a request to your app in the format <code>"Hello ${TARGET}!"</code>. If no value is provided, the sample app returns <code>"Hello World!"</code>.  </td>
     </tr>
     </tbody>
@@ -204,7 +199,7 @@ To deploy your serverless app as a Knative service:
    Example output:
    ```
    NAME            DOMAIN                                                                LATESTCREATED         LATESTREADY           READY   REASON
-   kn-helloworld   kn-helloworld.default.mycluster.us-south.containers.appdomain.cloud   kn-helloworld-rjmwt   kn-helloworld-rjmwt   True
+   kn-helloworld   kn-helloworld-default.mycluster.us-south.containers.appdomain.cloud   kn-helloworld-rjmwt   kn-helloworld-rjmwt   True
    ```
    {: screen}
 
@@ -216,12 +211,12 @@ To deploy your serverless app as a Knative service:
 
    Example output:
    ```
-   * Rebuilt URL to: kn-helloworld.default.mycluster.us-south.containers.appdomain.cloud/
+   * Rebuilt URL to: kn-helloworld-default.mycluster.us-south.containers.appdomain.cloud/
    *   Trying 169.46.XX.XX...
    * TCP_NODELAY set
-   * Connected to kn-helloworld.default.mycluster.us-south.containers.appdomain.cloud (169.46.XX.XX) port 80 (#0)
+   * Connected to kn-helloworld-default.mycluster.us-south.containers.appdomain.cloud (169.46.XX.XX) port 80 (#0)
    > GET / HTTP/1.1
-   > Host: kn-helloworld.default.mycluster.us-south.containers.appdomain.cloud
+   > Host: kn-helloworld-default.mycluster.us-south.containers.appdomain.cloud
    > User-Agent: curl/7.54.0
    > Accept: */*
    >
@@ -233,7 +228,7 @@ To deploy your serverless app as a Knative service:
    < x-envoy-upstream-service-time: 17
    <
    Hello Go Sample v1!
-   * Connection #0 to host kn-helloworld.default.mycluster.us-south.containers.appdomain.cloud left intact
+   * Connection #0 to host kn-helloworld-default.mycluster.us-south.containers.appdomain.cloud left intact
    ```
    {: screen}
 
@@ -271,15 +266,13 @@ To deploy your serverless app as a Knative service:
      name: kn-helloworld
      namespace: default
    spec:
-     runLatest:
-       configuration:
-         revisionTemplate:
-           spec:
-             container:
-               image: docker.io/ibmcom/kn-helloworld
-               env:
-               - name: TARGET
-                 value: "Mr. Smith"
+     template:
+       spec:
+         containers:
+         - image: docker.io/ibmcom/kn-helloworld
+           env:
+           - name: TARGET
+             value: "Mr. Smith"
    ```
    {: codeblock}
 
@@ -298,7 +291,7 @@ To deploy your serverless app as a Knative service:
    Example output:
    ```
    NAME            DOMAIN                                                                LATESTCREATED         LATESTREADY           READY   REASON
-   kn-helloworld   kn-helloworld.default.mycluster.us-south.containers.appdomain.cloud   kn-helloworld-ghyei   kn-helloworld-ghyei   True
+   kn-helloworld   kn-helloworld-default.mycluster.us-south.containers.appdomain.cloud   kn-helloworld-ghyei   kn-helloworld-ghyei   True
    ```
    {: screen}
 
@@ -339,7 +332,7 @@ To deploy your serverless app as a Knative service:
 You can configure Knative to assign host names from your own custom domain that you configured with TLS.
 {: shortdesc}
 
-By default, every app is assigned a public subdomain from your Ingress subdomain in the format `<knative_service_name>.<namespace>.<ingress_subdomain>` that you can use to access the app from the Internet. In addition, a private host name is assigned to your app in the format `<knative_service_name>.<namespace>.cluster.local` that you can use to access your app from within the cluster. If you want to assign host names from a custom domain that you own, you can change the Knative configmap to use the custom domain instead.
+By default, every app is assigned a public subdomain from your Ingress subdomain in the format `<knative_service_name>-<namespace>.<ingress_subdomain>` that you can use to access the app from the Internet. In addition, a private host name is assigned to your app in the format `<knative_service_name>.<namespace>.cluster.local` that you can use to access your app from within the cluster. If you want to assign host names from a custom domain that you own, you can change the Knative configmap to use the custom domain instead.
 
 1. Create a custom domain. To register your custom domain, work with your Domain Name Service (DNS) provider or [IBM Cloud DNS](/docs/infrastructure/dns?topic=dns-getting-started).
 2. Configure your domain to route incoming network traffic to the IBM-provided Ingress gateway. Choose between these options:
@@ -477,11 +470,11 @@ You can access your Knative service from another Knative service by using a REST
    Example output:
    ```
    NAME        DOMAIN                                                            LATESTCREATED     LATESTREADY       READY   REASON
-   myservice   myservice.default.mycluster.us-south.containers.appdomain.cloud   myservice-rjmwt   myservice-rjmwt   True
+   myservice   myservice-default.mycluster.us-south.containers.appdomain.cloud   myservice-rjmwt   myservice-rjmwt   True
    ```
    {: screen}
 
-3. Use the domain name to implement a REST API call to access your Knative service. This REST API call must be part of the app for which you create a Knative service. If the Knative service that you want to access is assigned a local URL in the format `<service_name>.<namespace>.svc.cluster.local`, Knative keeps the REST API request within the cluster-internal network.
+3. Use the domain name to implement a REST API call to access your Knative service. This REST API call must be part of the app for which you create a Knative service. If the Knative service that you want to access is assigned a local URL in the format `<service_name>-<namespace>.svc.cluster.local`, Knative keeps the REST API request within the cluster-internal network.
 
    Example code snippet in Go:
    ```go
@@ -518,16 +511,14 @@ kind: Service
 metadata:
   name: ...
 spec:
-  runLatest:
-    configuration:
-      revisionTemplate:
-        metadata:
-          annotations:
-            autoscaling.knative.dev/minScale: "1"
-            autoscaling.knative.dev/maxScale: "100"
-        spec:
-          container:
-            image:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/minScale: "1"
+        autoscaling.knative.dev/maxScale: "100"
+    spec:
+      containers:
+      - image:
 ...
 ```
 {: codeblock}
@@ -560,13 +551,11 @@ kind: Service
 metadata:
   name: myservice
 spec:
-  runLatest:
-    configuration:
-      revisionTemplate:
-        spec:
-          container:
-            image: myimage
-          containerConcurrency: 1
+  template:
+    spec:
+      containers:
+      - image: myimage
+      containerConcurrency: 1
 ....
 ```
 {: codeblock}
@@ -598,12 +587,10 @@ metadata:
   labels:
     serving.knative.dev/visibility: cluster-local
 spec:
-  runLatest:
-    configuration:
-      revisionTemplate:
-        spec:
-          container:
-            image:
+  template:
+    spec:
+      containers:
+      - image:
 ...
 ```
 {: codeblock}
@@ -626,23 +613,21 @@ spec:
 
 The current implementation of Knative does not provide a standard way to force your Knative `Serving` component to repull a container image. To repull an image from your registry, choose between the following options:
 
-- **Modify the Knative service `revisionTemplate`**: The `revisionTemplate` of a Knative service is used to create a revision of your Knative service. If you modify this revision template and for example, add the `repullFlag` annotation, Knative must create a new revision for your app. As part of creating the revision, Knative must check for container image updates. When you set `imagePullPolicy: Always`, Knative cannot use the image cache in the cluster, but instead must pull the image from your container registry.
+- **Modify the Knative service `template`**: The `template` of a Knative service is used to create a revision of your Knative service. If you modify this template and for example, add the `repullFlag` annotation, Knative must create a new revision for your app. As part of creating the revision, Knative must check for container image updates. When you set `imagePullPolicy: Always`, Knative cannot use the image cache in the cluster, but instead must pull the image from your container registry.
    ```
    apiVersion: serving.knative.dev/v1alpha1
    kind: Service
    metadata:
      name: <service_name>
    spec:
-     runLatest:
-       configuration:
-         revisionTemplate:
-           metadata:
-             annotations:
-               repullFlag: 123
-           spec:
-             container:
-               image: <image_name>
-               imagePullPolicy: Always
+     template:
+       metadata:
+         annotations:
+           repullFlag: 123
+       spec:
+         containers:
+         - image: <image_name>
+           imagePullPolicy: Always
     ```
     {: codeblock}
 
@@ -656,12 +641,11 @@ The current implementation of Knative does not provide a standard way to force y
   metadata:
     name: <service_name>
   spec:
-    runLatest:
-      configuration:
-          spec:
-            container:
-              image: myapp:v1
-              imagePullPolicy: Always
+    template:
+      spec:
+        containers:
+        - image: myapp:v1
+          imagePullPolicy: Always
     ```
     {: codeblock}
 
