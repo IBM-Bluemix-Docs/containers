@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2019
-lastupdated: "2019-08-02"
+lastupdated: "2019-07-31"
 
 keywords: kubernetes, iks, containers
 
@@ -46,7 +46,7 @@ Before you begin, get the [{{site.data.keyword.cloud_notm}} account](https://clo
 
 To create a free cluster:
 
-1.  In the [{{site.data.keyword.cloud_notm}} **Catalog** ![External link icon](../icons/launch-glyph.svg "External link icon")](https://cloud.ibm.com/catalog?category=containers), select **Kubernetes Cluster** and click **Create**. A cluster configuration page opens. By default, **Free cluster** is selected.
+1.  In the [{{site.data.keyword.cloud_notm}} **Catalog** ![External link icon](../icons/launch-glyph.svg "External link icon")](https://cloud.ibm.com/catalog?category=containers), select **{{site.data.keyword.containershort_notm}}** and click **Create**. A cluster configuration page opens. By default, **Free cluster** is selected.
 
 2.  Give your cluster a unique name.
 

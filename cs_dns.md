@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2019
-lastupdated: "2019-08-02"
+lastupdated: "2019-07-31"
 
 ---
 
@@ -292,4 +292,3 @@ Set up KubeDNS instead of CoreDNS as the cluster DNS provider.
     kubectl -n kube-system patch svc kube-dns --patch '{"spec": {"ports": [{"name":"dns","port":53,"protocol":"UDP"},{"name":"dns-tcp","port":53,"protocol":"TCP"}]}}' --type merge
     ```
     {: pre}
-

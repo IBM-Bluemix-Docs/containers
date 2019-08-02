@@ -140,7 +140,6 @@ IBM Cloud Kubernetes Service
         [IBM Cloud Kubernetes Service API JSON](https://containers.cloud.ibm.com/global/swagger-global-api/swagger.json)
         [IBM Cloud Container Registry API](https://cloud.ibm.com/apidocs/container-registry)
         [IBM Cloud Vulnerability Advisor API](https://cloud.ibm.com/apidocs/container-registry/va)
-        [Community Kubernetes API](https://kubernetes.io/docs/reference/)
 
     cs_locations.md
     cs_integrations_overview.md

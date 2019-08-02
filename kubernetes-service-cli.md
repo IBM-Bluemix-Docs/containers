@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2019
-lastupdated: "2019-08-02"
+lastupdated: "2019-07-31"
 
 keywords: kubernetes, iks, ibmcloud, ic, ks, ibmcloud ks
 
@@ -36,7 +36,6 @@ In the terminal, you are notified when updates to the `ibmcloud` CLI and plug-in
 
 Looking for `ibmcloud cr` commands? See the [{{site.data.keyword.registryshort_notm}} CLI reference](/docs/services/Registry?topic=container-registry-cli-plugin-containerregcli). Looking for `kubectl` commands? See the [Kubernetes documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://kubectl.docs.kubernetes.io/).
 {:tip}
-
 
 ## Using the beta {{site.data.keyword.containerlong_notm}} plug-in
 {: #cs_beta}
@@ -741,6 +740,8 @@ diskEncryption: <em>false</em>
 <dt><code>--disable-disk-encrypt</code></dt>
 <dd>Worker nodes feature AES 256-bit disk encryption by default; [learn more](/docs/containers?topic=containers-security#encrypted_disk). To disable encryption, include this option.</dd>
 </dl>
+
+
 
 **<code>-s</code>**</br>
 Do not show the message of the day or update reminders. This value is optional.
@@ -1528,7 +1529,7 @@ ibmcloud ks cluster-subnet-detach --cluster CLUSTER --subent-id SUBNET_ID [-s]
 <dd>The name or ID of the cluster. This value is required. To list your clusters, use the `ibmcloud ks clusters` [command](#cs_clusters).</dd>
 
 <dt><code>--vlan <em>VLAN_ID</em></code></dt>
-<dd>The ID of the public or private subnet that you want to detach. To find the subnet ID, first run <code>ibmcloud ks cluster-get --cluster &lt;cluster&gt; --showResources</code> and look for the subnet CIDR in the <strong>Subnet VLANs</strong> section of the output. Then, using the subnet CIDR, run <code>ibmcloud ks subnets</code> and look for the subnet's <strong>ID</strong>.</dd>
+<dd>The ID of the public or private subnet that you want to detach. To find the subnet ID, first run <code>ibmcloud ks cluster-get --cluster &lt;cluster&gt; --showResources</code> and look for the subnet CIDR in the <strong>Subnet VLANs</strong> section of the output. Then, using the subnet CIDR, run <code>ibmcloud ks subnets</code> and look for the subnet's <strong>ID</staong>.</dd>
 </dl>
 
 **Example**:
@@ -4188,7 +4189,7 @@ Before you remove your worker node, make sure that pods are rescheduled on other
    This process can take a few minutes.
 5. Remove the worker node. Use the worker ID that is returned from the `ibmcloud ks workers --cluster <cluster_name_or_ID>` command.
    ```
-   ibmcloud ks worker-rm --cluster <cluster_name_or_ID> --workers <worker_name_or_ID>
+   ibmcloud ks worker-rm --cluster <cluster_name_or_ID> --worker <worker_name_or_ID>
    ```
    {: pre}
 6. Verify that the worker node is removed.

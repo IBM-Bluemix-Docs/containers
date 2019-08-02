@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2019
-lastupdated: "2019-08-01"
+lastupdated: "2019-07-31"
 
 keywords: kubernetes, iks, vlan
 
@@ -239,7 +239,7 @@ To change the VLANs that a worker pool uses to provision worker nodes:
 
     * Example to add only a private VLAN, such as if you change from public and private VLANs to private-only when you have a [VRF-enabled account that uses service endpoints](/docs/resources?topic=resources-private-network-endpoints#getting-started):
       ```
-      ibmcloud ks zone-network-set --zone <zone> --cluster <cluster_name_or_ID> --worker-pools <pool_name> --private-vlan <private_vlan_id> --private-only
+      ibmcloud ks zone-network-set --zone <zone> --cluster <cluster_name_or_ID> --worker-pools <pool_name> --private-vlan <private_vlan_id> --public-vlan <public_vlan_id>
       ```
       {: pre}
 
@@ -279,7 +279,7 @@ To change the VLANs that a worker pool uses to provision worker nodes:
      This process can take a few minutes.
   5. Remove the worker node. Use the worker ID that you previously retrieved.
      ```
-     ibmcloud ks worker-rm --cluster <cluster_name_or_ID> --workers <worker_name_or_ID>
+     ibmcloud ks worker-rm --cluster <cluster_name_or_ID> --worker <worker_name_or_ID>
      ```
      {: pre}
   6. Verify that the worker node is removed.

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2019
-lastupdated: "2019-08-02"
+lastupdated: "2019-07-31"
 
 keywords: kubernetes, iks
 
@@ -80,7 +80,6 @@ The following table shows the changes that are included in the worker node fix p
 <td>N/A</td>
 <td>Updated worker node images with package updates for [CVE-2019-13012 ![External link icon](../icons/launch-glyph.svg "External link icon")](https://people.canonical.com/~ubuntu-security/cve/2019/CVE-2019-13012) and [CVE-2019-7307 ![External link icon](../icons/launch-glyph.svg "External link icon")](https://people.canonical.com/~ubuntu-security/cve/2019/CVE-2019-7307.html).</td>
 </tr>
-  </tbody>  
 </table>
 
 
@@ -131,7 +130,6 @@ The following table shows the changes that are included in the master fix pack 1
 <td>v1.14.4-139</td>
 <td>Updated to support the Kubernetes 1.14.4 release. Additionally, `calicoctl` version is updated to 3.6.4.</td>
 </tr>
-  </tbody>
 </table>
 
 ### Changelog for worker node fix pack 1.14.3_1525, released 8 July 2019
@@ -551,7 +549,6 @@ The following table shows the changes that are included in the worker node fix p
 <td>N/A</td>
 <td>Updated worker node images with package updates for [CVE-2019-13012 ![External link icon](../icons/launch-glyph.svg "External link icon")](https://people.canonical.com/~ubuntu-security/cve/2019/CVE-2019-13012) and [CVE-2019-7307 ![External link icon](../icons/launch-glyph.svg "External link icon")](https://people.canonical.com/~ubuntu-security/cve/2019/CVE-2019-7307.html).</td>
 </tr>
-  </tbody>
 </table>
 
 
@@ -1456,7 +1453,6 @@ The following table shows the changes that are included in the worker node fix p
 <td>N/A</td>
 <td>Updated worker node images with package updates for [CVE-2019-13012 ![External link icon](../icons/launch-glyph.svg "External link icon")](https://people.canonical.com/~ubuntu-security/cve/2019/CVE-2019-13012) and [CVE-2019-7307 ![External link icon](../icons/launch-glyph.svg "External link icon")](https://people.canonical.com/~ubuntu-security/cve/2019/CVE-2019-7307.html).</td>
 </tr>
-  </tbody>
 </table>
 
 

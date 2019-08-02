@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2019
-lastupdated: "2019-08-01"
+lastupdated: "2019-07-31"
 
 keywords: kubernetes, iks, disaster recovery, dr, ha, hadr
 
@@ -34,7 +34,6 @@ Use the built-in Kubernetes and {{site.data.keyword.containerlong}} features to 
 High availability is a core discipline in an IT infrastructure to keep your apps up and running, even after a partial or full site failure. The main purpose of high availability is to eliminate potential points of failures in an IT infrastructure. For example, you can prepare for the failure of one system by adding redundancy and setting up failover mechanisms.
 
 You can achieve high availability on different levels in your IT infrastructure and within different components of your cluster. The level of availability that is right for you depends on several factors, such as your business requirements, the Service Level Agreements that you have with your customers, and the money that you want to spend.
-
 
 ## Overview of potential points of failure in {{site.data.keyword.containerlong_notm}}
 {: #fault_domains}

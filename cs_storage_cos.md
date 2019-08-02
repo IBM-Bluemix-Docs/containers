@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2019
-lastupdated: "2019-08-01"
+lastupdated: "2019-07-31"
 
 keywords: kubernetes, iks
 
@@ -210,14 +210,11 @@ Before you begin: [Log in to your account. If applicable, target the appropriate
       If you see the error `Error: plugin already exists`, remove the `ibmc` Helm plug-in by running `rm -rf ~/.helm/plugins/helm-ibmc`.
       {: tip}
 
-   2. Verify that the `ibmc` plug-in is installed successfully. 
+   2. Verify that the `ibmc` plug-in is installed successfully.
       ```
       helm ibmc --help
       ```
       {: pre}
-      
-      If the output shows the error `Error: fork/exec /home/iksadmin/.helm/plugins/helm-ibmc/ibmc.sh: permission denied`, run `chmod 755 ~/.helm/plugins/helm-ibmc/ibmc.sh`. Then, rerun `helm ibmc --help`.
-      {: tip}
 
       Example output:
       ```
@@ -245,6 +242,9 @@ Before you begin: [Log in to your account. If applicable, target the appropriate
          2. It is always recommended to have 'kubectl' client up-to-date.
       ```
       {: screen}
+
+      If the output shows the error `Error: fork/exec /home/iksadmin/.helm/plugins/helm-ibmc/ibmc.sh: permission denied`, run `chmod 755 ~/.helm/plugins/helm-ibmc/ibmc.sh`. Then, rerun `helm ibmc --help`.
+      {: tip}
 
 8. Optional: Limit the {{site.data.keyword.cos_full_notm}} plug-in to access only the Kubernetes secrets that hold your {{site.data.keyword.cos_full_notm}} service credentials. By default, the plug-in is authorized to access all Kubernetes secrets in your cluster.
    1. [Create your {{site.data.keyword.cos_full_notm}} service instance](#create_cos_service).

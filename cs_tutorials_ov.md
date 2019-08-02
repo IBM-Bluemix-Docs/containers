@@ -23,7 +23,6 @@ subcollection: containers
 {:download: .download}
 {:preview: .preview}
 
-
 # Tutorial overview
 {: #tutorials-ov}
 
@@ -123,13 +122,13 @@ subcollection: containers
                   </br><p>Create a Kubernetes cluster on managed {{site.data.keyword.containerlong_notm}} with Classic infrastructure worker nodes that run an Ubuntu operating system. </p></br>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src="images/tutorial_ov.png" alt="Architecture diagram for the solution Create a Kubernetes cluster" />
+                    <img class="architectureDiagram" src = "images/tutorial_ov.png" alt="Architecture diagram for the solution Create a Kubernetes cluster" />
                 </div>
             </div>
         </div>
     </div>
     </a>
-  <a href = "/docs/openshift?topic=openshift-openshift_tutorial">
+  <a href = "/docs/containers?topic=containers-openshift_tutorial">
     <div class = "solutionBox">
         <div class = "solutionBoxContent">
           Red Hat OpenShift cluster
@@ -138,7 +137,7 @@ subcollection: containers
                   </br><p>Create an {{site.data.keyword.containerlong_notm}} cluster with worker nodes that come installed with the OpenShift container orchestration platform software. </p></br>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src="images/roks_tutorial2.png" alt="OpenShift tutorial diagram flow" /></br>
+                    <img class="architectureDiagram" src = "images/cs_org_ov_both_ses_rhos.png" alt="Architecture RHOS" /></br>
                 </div>
             </div>
         </div>
@@ -160,7 +159,7 @@ subcollection: containers
                   </br> <p>Scaffold a web app, deploy it to a cluster, and learn how to scale your app and monitor its health. </p></br>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src="https://raw.githubusercontent.com/IBM-Bluemix-Docs/tutorials/master/images/solution2/Architecture.png" alt="Architecture diagram for deploying web apps with {{site.data.keyword.containerlong_notm}}" />
+                    <img class="architectureDiagram" src = "https://raw.githubusercontent.com/IBM-Bluemix-Docs/tutorials/master/images/solution2/Architecture.png" alt="Architecture diagram for deploying web apps with {{site.data.keyword.containerlong_notm}}" />
                 </div>
             </div>
         </div>
@@ -175,7 +174,7 @@ subcollection: containers
                   </br> <p>Create a Logistics Wizard deployment where the ERP and Controller services are deployed in Kubernetes, and the web user interface stays deployed as a Cloud Foundry app. </p></br>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src="https://raw.githubusercontent.com/IBM-Cloud/logistics-wizard-kubernetes/master/lw_kube_architecture.png" alt="Logistics Wizard architecture overview" />
+                    <img class="architectureDiagram" src = "https://raw.githubusercontent.com/IBM-Cloud/logistics-wizard-kubernetes/master/lw_kube_architecture.png" alt="Logistics Wizard architecture overview" />
                 </div>
             </div>
         </div>
@@ -190,7 +189,7 @@ subcollection: containers
                   </br> <p>Use an Apache Kafka-based messaging service to orchestrate long running workloads to apps that run in a Kubernetes cluster. </p></br>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src="https://raw.githubusercontent.com/IBM-Bluemix-Docs/tutorials/master/images/solution25/Architecture.png" alt="Asynchronous data processing architecture" />
+                    <img class="architectureDiagram" src = "https://raw.githubusercontent.com/IBM-Bluemix-Docs/tutorials/master/images/solution25/Architecture.png" alt="Asynchronous data processing architecture" />
                 </div>
             </div>
         </div>
@@ -212,7 +211,7 @@ subcollection: containers
                   </br> <p>Integrate Cloud Internet Services with Kubernetes clusters to deliver a resilient and secure solution across multiple {{site.data.keyword.cloud_notm}} regions. </p></br>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src="https://raw.githubusercontent.com/IBM-Bluemix-Docs/tutorials/master/images/solution32-multi-region-k8s-cis/Architecture.png" alt="Architecture diagram for using Cloud Internet Service with {{site.data.keyword.containerlong_notm}}" />
+                    <img class="architectureDiagram" src = "https://raw.githubusercontent.com/IBM-Bluemix-Docs/tutorials/master/images/solution32-multi-region-k8s-cis/Architecture.png" alt="Architecture diagram for using Cloud Internet Service with {{site.data.keyword.containerlong_notm}}" />
                 </div>
             </div>
         </div>
@@ -227,7 +226,7 @@ subcollection: containers
                   </br> <p>Learn what to consider when creating resilient apps in the cloud and what {{site.data.keyword.cloud_notm}} services you can use. </p></br>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src="https://raw.githubusercontent.com/IBM-Bluemix-Docs/tutorials/master/images/solution39/Architecture.png" alt="Architecture diagram for creating resilient applications" />
+                    <img class="architectureDiagram" src = "https://raw.githubusercontent.com/IBM-Bluemix-Docs/tutorials/master/images/solution39/Architecture.png" alt="Architecture diagram for creating resilient applications" />
                 </div>
             </div>
         </div>
@@ -242,7 +241,7 @@ subcollection: containers
                   </br> <p>Learn how to use Calico policies to whitelist or blacklist network traffic from and to certain IP addresses. </p></br>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src="images/cs_tutorial_policies_L4.png" alt="Block incoming network traffic with Calico network policies" />
+                    <img class="architectureDiagram" src = "images/cs_tutorial_policies_L4.png" alt="Block incoming network traffic with Calico network policies" />
                 </div>
             </div>
         </div>
@@ -257,7 +256,7 @@ subcollection: containers
                   </br> <p>Explore the intelligent routing and monitoring capability of Istio to control and secure your microservices in the cloud. </p></br>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src="images/istio_ov.png" alt="Overview of Istio components and dependencies" /></br>
+                    <img class="architectureDiagram" src = "images/istio_ov.png" alt="Overview of Istio components and dependencies" /></br>
                 </div>
             </div>
         </div>
@@ -272,7 +271,7 @@ subcollection: containers
                   </br> <p>Learn how to use authentication and encryption to protect your app, and how to monitor and audit cluster activities. </p></br>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src="https://github.com/IBM-Bluemix-Docs/tutorials/blob/master/images/solution34-cloud-e2e-security/Architecture.png?raw=true" alt="Architecture diagram for applying end-to-end security to a cloud app" /></br>
+                    <img class="architectureDiagram" src = "https://github.com/IBM-Bluemix-Docs/tutorials/blob/master/images/solution34-cloud-e2e-security/Architecture.png?raw=true" alt="Architecture diagram for applying end-to-end security to a cloud app" /></br>
                 </div>
             </div>
         </div>
@@ -287,7 +286,7 @@ subcollection: containers
                   </br> <p>Set up cluster access for users and teams and learn how to replicate this setup across environments. </p></br>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src="https://raw.githubusercontent.com/IBM-Bluemix-Docs/tutorials/master/images/solution20-users-teams-applications/architecture.png" alt="Architecture diagram for organizing users and teams" /></br>
+                    <img class="architectureDiagram" src = "https://raw.githubusercontent.com/IBM-Bluemix-Docs/tutorials/master/images/solution20-users-teams-applications/architecture.png" alt="Architecture diagram for organizing users and teams" /></br>
                 </div>
             </div>
         </div>
@@ -310,7 +309,7 @@ subcollection: containers
                   </br><p>Create modern, source-centric, containerized, and serverless apps on top of your Kubernetes cluster. </p></br>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src="images/knative_ov.png" alt="Overview of Knative components and dependencies" />
+                    <img class="architectureDiagram" src = "images/knative_ov.png" alt="Overview of Knative components and dependencies" />
                 </div>
             </div>
         </div>
@@ -325,7 +324,7 @@ subcollection: containers
                   </br>  <p>Set up a DevOps pipeline for containerized apps that run in Kubernetes and add integrations such as security scanner, Slack notifications, and analytics.  </p></br>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src="https://raw.githubusercontent.com/IBM-Bluemix-Docs/tutorials/master/images/solution21/Architecture.png" alt="Architecture diagram for setting up a continuous delivery and continuous integration pipeline" />
+                    <img class="architectureDiagram" src = "https://raw.githubusercontent.com/IBM-Bluemix-Docs/tutorials/master/images/solution21/Architecture.png" alt="Architecture diagram for setting up a continuous delivery and continuous integration pipeline" />
                 </div>
             </div>
         </div>
@@ -340,7 +339,7 @@ subcollection: containers
                   </br>  <p>Automate, manage, and visualize the deployment of Kubernetes resources across clusters, environments, and cloud providers with Razee.</p></br>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src="images/razee_ov_no_txt.png" alt="Razee deployment automation architecture" />
+                    <img class="architectureDiagram" src = "images/razee_ov_no_txt.png" alt="Razee deployment automation architecture" />
                 </div>
             </div>
         </div>
@@ -362,7 +361,7 @@ subcollection: containers
                   </br> <p>Configure a logging agent in your cluster and monitor different log sources with  {{site.data.keyword.la_full_notm}}. </p></br>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src="https://raw.githubusercontent.com/IBM-Bluemix-Docs/Log-Analysis-with-LogDNA/master/images/kube.png" alt="LogDNA architecture overview" />
+                    <img class="architectureDiagram" src = "https://raw.githubusercontent.com/IBM-Bluemix-Docs/Log-Analysis-with-LogDNA/master/images/kube.png" alt="LogDNA architecture overview" />
                 </div>
             </div>
         </div>
@@ -377,7 +376,7 @@ subcollection: containers
                   </br><p>Set up a Sysdig metrics agent in your cluster and explore how you can monitor your cluster's health.  </p></br>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src="https://raw.githubusercontent.com/IBM-Bluemix-Docs/Monitoring-with-Sysdig/master/images/kube.png" alt="Sysdig architecture overview" />
+                    <img class="architectureDiagram" src = "https://raw.githubusercontent.com/IBM-Bluemix-Docs/Monitoring-with-Sysdig/master/images/kube.png" alt="Sysdig architecture overview" />
                 </div>
             </div>
         </div>
@@ -399,7 +398,7 @@ subcollection: containers
                   </br> <p>Learn how to create a Docker image from a Python Cloud Foundry app, push this image to {{site.data.keyword.registryshort_notm}}, and deploy your app to a Kubernetes cluster.  </p></br>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src="images/python_flask.png" alt="Python hello world welcome screen" />
+                    <img class="architectureDiagram" src = "images/python_flask.png" alt="Python hello world welcome screen" />
                 </div>
             </div>
         </div>
@@ -414,7 +413,7 @@ subcollection: containers
                   </br><p>Prepare your app code, containerize your VM-based app, and deploy this app to a Kubernetes cluster.  </p></br>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src="https://raw.githubusercontent.com/IBM-Bluemix-Docs/tutorials/master/images/solution30/modern_architecture.png" alt="VM-based app migration to Kubernetes" />
+                    <img class="architectureDiagram" src = "https://raw.githubusercontent.com/IBM-Bluemix-Docs/tutorials/master/images/solution30/modern_architecture.png" alt="VM-based app migration to Kubernetes" />
                 </div>
             </div>
         </div>
@@ -429,7 +428,7 @@ subcollection: containers
                   </br><p>Containerize the JPetStore app and extend it with Watson Visual Recognition and Twilio text messaging.</p></br>
                 </div>
                 <div class="architectureDiagramContainer">
-                    <img class="architectureDiagram" src="https://raw.githubusercontent.com/IBM-Cloud/jpetstore-kubernetes/master/readme_images/architecture.png" alt="Modernize and extend a Java web app" />
+                    <img class="architectureDiagram" src = "https://raw.githubusercontent.com/IBM-Cloud/jpetstore-kubernetes/master/readme_images/architecture.png" alt="Modernize and extend a Java web app" />
                 </div>
             </div>
         </div>

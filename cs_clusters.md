@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2019
-lastupdated: "2019-08-02"
+lastupdated: "2019-07-31"
 
 keywords: kubernetes, iks, clusters, worker nodes, worker pools, delete
 
@@ -81,7 +81,7 @@ Prepare your {{site.data.keyword.cloud_notm}} account for {{site.data.keyword.co
 
 2. [Set up an {{site.data.keyword.containerlong_notm}} API key](/docs/containers?topic=containers-users#api_key) in the regions that you want to create clusters. Assign the API key with the appropriate permissions to create clusters:
   * **Super User** role or the [minimum required permissions](/docs/containers?topic=containers-access_reference#infra) for classic infrastructure.
-  * **Administrator** platform management role for {{site.data.keyword.containerlong_notm}} at the account level.
+  * **Administrator** platform management role for {{site.data.keyword.containershort_notm}} at the account level.
   * **Administrator** platform management role for Container Registry at the account level. If your account predates 4 October 2018, you need to [enable {{site.data.keyword.cloud_notm}} IAM policies for {{site.data.keyword.registryshort_notm}}](/docs/services/Registry?topic=registry-user#existing_users). With IAM policies, you can control access to resources such as registry namespaces.
 
   Are you the account owner? You already have the necessary permissions! When you create a cluster, the API key for that region and resource group is set with your credentials.
@@ -90,7 +90,7 @@ Prepare your {{site.data.keyword.cloud_notm}} account for {{site.data.keyword.co
 3. Verify that you have the **Administrator** platform role for {{site.data.keyword.containerlong_notm}}. To allow your cluster to pull images from the private registry, you also need the **Administrator** platform role for {{site.data.keyword.registrylong_notm}}.
   1. From the [{{site.data.keyword.cloud_notm}} console ![External link icon](../icons/launch-glyph.svg "External link icon")](https://cloud.ibm.com/) menu bar, click **Manage > Access (IAM)**.
   2. Click the **Users** page, and then from the table, select yourself.
-  3. From the **Access policies** tab, confirm that your **Role** is **Administrator**. You can be the **Administrator** for all the resources in the account, or at least for {{site.data.keyword.containerlong_notm}}. **Note**: If you have the **Administrator** role for {{site.data.keyword.containerlong_notm}} in only one resource group or region instead of the entire account, you must have at least the **Viewer** role at the account level to see the account's VLANs.
+  3. From the **Access policies** tab, confirm that your **Role** is **Administrator**. You can be the **Administrator** for all the resources in the account, or at least for {{site.data.keyword.containershort_notm}}. **Note**: If you have the **Administrator** role for {{site.data.keyword.containershort_notm}} in only one resource group or region instead of the entire account, you must have at least the **Viewer** role at the account level to see the account's VLANs.
   <p class="tip">Make sure that your account administrator does not assign you the **Administrator** platform role at the same time as a service role. You must assign platform and service roles separately.</p>
 
 4. If your account uses multiple resource groups, figure out your account's strategy for [managing resource groups](/docs/containers?topic=containers-users#resource_groups).
@@ -147,7 +147,7 @@ Free clusters include one worker node set up with two vCPU and four GB memory an
 ### Creating a free cluster in the console
 {: #clusters_ui_free}
 
-1. In the [catalog ![External link icon](../icons/launch-glyph.svg "External link icon")](https://cloud.ibm.com/catalog?category=containers), select **Kubernetes Cluster** to create a cluster.
+1. In the [catalog ![External link icon](../icons/launch-glyph.svg "External link icon")](https://cloud.ibm.com/catalog?category=containers), select **{{site.data.keyword.containershort_notm}}** to create a cluster.
 2. Select the **Free** cluster plan.
 3. Select a geography in which to deploy your cluster.
 4. Select a metro location in the geography. Your cluster is created in a zone within this metro.
@@ -236,7 +236,7 @@ Use the {{site.data.keyword.cloud_notm}} CLI or the {{site.data.keyword.cloud_no
 ### Creating a standard cluster in the console
 {: #clusters_ui}
 
-1. In the [catalog ![External link icon](../icons/launch-glyph.svg "External link icon")](https://cloud.ibm.com/catalog?category=containers), select **Kubernetes Cluster** to create a cluster.
+1. In the [catalog ![External link icon](../icons/launch-glyph.svg "External link icon")](https://cloud.ibm.com/catalog?category=containers), select **{{site.data.keyword.containershort_notm}}** to create a cluster.
 
 2. Select a resource group in which to create your cluster.
     * A cluster can be created in only one resource group, and after the cluster is created, you can't change its resource group.

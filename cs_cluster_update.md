@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2019
-lastupdated: "2019-08-01"
+lastupdated: "2019-07-31"
 
 keywords: kubernetes, iks
 
@@ -408,7 +408,7 @@ To update flavors:
 
    - **Deprecated: For stand-alone worker nodes**:
       ```
-      ibmcloud ks worker-rm --cluster <cluster_name> --workers <worker_node>
+      ibmcloud ks worker-rm --cluster <cluster_name> --worker <worker_node>
       ```
       {: pre}
 
@@ -672,7 +672,7 @@ To update stand-alone worker nodes to worker pools:
 
    5. Remove your stand-alone worker node. Use the ID of the worker node that you retrieved with the `ibmcloud ks workers --cluster <cluster_name_or_ID>` command.
       ```
-      ibmcloud ks worker-rm --cluster <cluster_name_or_ID> --workers <worker_ID>
+      ibmcloud ks worker-rm --cluster <cluster_name_or_ID> --worker <worker_ID>
       ```
       {: pre}
    6. Repeat these steps until all your stand-alone worker nodes are removed.

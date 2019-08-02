@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2019
-lastupdated: "2019-08-02"
+lastupdated: "2019-07-31"
 
 keywords: kubernetes, iks
 
@@ -50,16 +50,15 @@ Refer to the following table for a summary of changes for each {{site.data.keywo
 <tr>
 <td>0.3.95</td>
 <td>30 Jul 2019</td>
-<td>
 <ul>
 <li>Adds the `ibmcloud oc` alias to the {{site.data.keyword.containershort_notm}} plug-in for management of Red Hat OpenShift on IBM Cloud clusters.</li>
-<li>Adds the [`ibmcloud ks cluster-subnet-detach`](/docs/containers?topic=containers-cli-plugin-kubernetes-service-cli#cs_cluster_subnet_detach) command to detach a public or private portable subnet in an IBM Cloud infrastructure account from a cluster.</li>
+<td>Adds the [`ibmcloud ks cluster-subnet-detach`](/docs/containers?topic=containers-cli-plugin-kubernetes-service-cli#cs_cluster_subnet_detach) command to detach a public or private portable subnet in an IBM Cloud infrastructure account from a cluster.<ul>
 <li>Renames the `ibmcloud ks machine-types` command to `ibmcloud ks flavors`. You can still use the `machine-types` alias.</li>
 <li>In the output of `ibmcloud ks flavors (machine-types)`, indicates flavors that are supported only for {{site.data.keyword.containerlong_notm}} or only for Red Hat OpenShift on IBM Cloud.</li>
 <li>In the output of `ibmcloud ks cluster-get`, changes the term `Owner` to `Creator` to reflect that the field returns information about the user that created the cluster.</li>
 <li>Improves error handling for `ibmcloud ks zone-add`.</li>
 <li>Updates translations of help text.</li>
-  </ul></td>
+</ul>
 </tr>
 <tr>
 <td>0.3.58</td>

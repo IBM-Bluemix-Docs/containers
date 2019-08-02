@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2019
-lastupdated: "2019-08-02"
+lastupdated: "2019-07-31"
 
 keywords: kubernetes, iks
 
@@ -373,6 +373,7 @@ Depending on your cluster setup, you access the services by using the public, pr
                   <td><code>metrics.ng.bluemix.net</code></td>
                   <td><code>169.47.204.128/29</code></td>
                  </tr>
+                 
                 </tbody>
               </table></p>
     *   **{{site.data.keyword.mon_full_notm}}**:

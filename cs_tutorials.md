@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2019
-lastupdated: "2019-08-02"
+lastupdated: "2019-07-31"
 
 keywords: kubernetes, iks
 
@@ -308,7 +308,7 @@ To deploy the app:
     ```
     {: screen}
 
-    <table summary="Information about the expose command parameters.">
+    <table summary=“Information about the expose command parameters.”>
     <caption>More about the expose parameters</caption>
     <thead>
     <th colspan=2><img src="images/idea.png" alt="Idea icon"/> More about the expose parameters</th>
