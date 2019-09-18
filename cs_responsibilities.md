@@ -27,7 +27,7 @@ subcollection: containers
 # Your responsibilities by using {{site.data.keyword.containerlong_notm}}
 {: #responsibilities_iks}
 
-Learn about cluster management responsibilities and terms and conditions that you have when you use {{site.data.keyword.containerlong}}.
+Learn about cluster management responsibilities and terms and conditions that you have when you use {{site.data.keyword.containerlong}}. See [Cloud Services terms](/docs/overview/terms-of-use?topic=overview-terms#terms) for overall terms of use.
 {:shortdesc}
 
 ## Cluster management responsibilities
@@ -131,22 +131,5 @@ IBM provides you with an enterprise cloud platform for you to deploy apps alongs
 <br />
 
 
-## Abuse of {{site.data.keyword.containerlong_notm}}
-{: #terms}
-
-Clients cannot misuse {{site.data.keyword.containerlong_notm}}.
-{:shortdesc}
-
-Misuse includes:
-
-*   Any illegal activity
-*   Distribution or execution of malware
-*   Harming {{site.data.keyword.containerlong_notm}} or interfering with anyone's use of {{site.data.keyword.containerlong_notm}}
-*   Harming or interfering with anyone's use of any other service or system
-*   Unauthorized access to any service or system
-*   Unauthorized modification of any service or system
-*   Violation of the rights of others
-
-See [Cloud Services terms](/docs/overview/terms-of-use?topic=overview-terms#terms) for overall terms of use.
 
 
