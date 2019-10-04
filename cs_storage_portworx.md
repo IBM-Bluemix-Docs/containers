@@ -117,7 +117,11 @@ Databases for etcd is a managed etcd service that securely stores and replicates
    2. Enter a name for your service instance, such as `px-etcd`.
    3. Select the region where you want to deploy your service instance. For optimal performance, choose the region that your cluster is in.
    4. Select the same resource group that your cluster is in.
-   5. Use the default settings for the initial memory and disk allocation.
+   5. Use the following settings for the initial memory and disk allocation:
+   	* **Initial memory allocation:** 8GB/member (24GB total)
+	* **Initial disk allocation:** 128GB/member (384GB total)
+	* **Initial CPU allocation:** 3 dedicated cores/member (9 cores total)
+	* **Database version:** 3.3
    6. Choose if you want to use the default {{site.data.keyword.keymanagementserviceshort}} service instance or your own.
    5. Review the pricing plan.
    6. Click **Create** to start setting up your service instance. The setup might take a few minutes to complete.
@@ -446,7 +450,7 @@ Check out how to [encrypt the secrets in your Kubernetes cluster](/docs/containe
 ## Installing Portworx in your cluster
 {: #install_portworx}
 
-Install Portworx with a Helm chart. The Helm chart deploys a trial version of the Portworx enterprise edition `px-enterprise` that you can use for 30 days. In addition, [Stork ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.portworx.com/portworx-install-with-kubernetes/storage-operations/stork/) is also installed on your Kubernetes cluster. Stork is the Portworx storage scheduler. With Stork, you can co-locate pods with their data and create and restore snapshots of Portworx volumes.
+Install Portworx with by deploying it from the catalog. The deployment includes a trial version of the Portworx enterprise edition `px-enterprise` that you can use for 30 days. In addition, [Stork ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.portworx.com/portworx-install-with-kubernetes/storage-operations/stork/) is also installed on your Kubernetes cluster. Stork is the Portworx storage scheduler. With Stork, you can co-locate pods with their data and create and restore snapshots of Portworx volumes.
 {: shortdesc}
 
 Looking for instructions about how to update or remove Portworx? See [Updating Portworx](#update_portworx) and [Removing Portworx](#remove_portworx).
@@ -463,192 +467,17 @@ Before you begin:
 
 To install Portworx:
 
-1.  [Follow the instructions](/docs/containers?topic=containers-helm#public_helm_install) to install the Helm client on your local machine, and install the Helm server (tiller) with a service account in your cluster.
+1. [Retrieve the etcd endpoint, user name, and password of the Databases for etcd service instance that you set up earlier](#databases_credentials).
 
-2.  Verify that tiller is installed with a service account.
+2.  Deploy Portworx from the [IBM Cloud catalog](https://cloud.ibm.com/catalog?category=storage). Enter the following:
+	* Your api key
+	* Cluster name: Enter a unique cluster name
+	* ETCD endpoints: Enter the endpoint you got from your etcd when you created it
+	* ETCD secret name: Enter the Kuberenetes secret which holds your etcd information: username, password, CA cert
+	* Clusters: select the cluster from the list
+	* Secret store type: If you're using IBM Key Protect, specify the key protect secret you created.
 
-    ```
-    kubectl get serviceaccount -n kube-system tiller
-    ```
-    {: pre}
-
-    Example output:
-
-    ```
-    NAME                                 SECRETS   AGE
-    tiller                               1         2m
-    ```
-    {: screen}
-
-3. [Retrieve the etcd endpoint, user name, and password of the Databases for etcd service instance that you set up earlier](#databases_credentials).
-
-4. Download the Portworx Helm chart.
-   ```
-   git clone https://github.com/IBM/charts.git
-   ```
-   {: pre}
-
-5. Open the `values.yaml` file with your preferred editor. This example uses the `nano` editor.
-   ```
-   nano charts/community/portworx/values.yaml
-   ```
-   {: pre}
-
-6. Update the following values and save your changes.
-   - **`kvdb`**: Add the etcd endpoint of your Databases for etcd service instance that you retrieved earlier in the format `"etcd:<etcd_endpoint1>;etcd:<etcd_endpoint2>"`. If you have more than one endpoint, include all endpoints and separate them with a semicolon (`;`).
-   - **`etcd.secret`**: Enter the name of your Kubernetes secret where you stored the credentials to access your Databases for etcd instance. 
-    - **`imageVersion`**: Enter the latest version of the Portworx Helm chart. To find the latest version, refer to the Portworx [release notes ![External link icon](../icons/launch-glyph.svg "External link icon")](https://docs.portworx.com/reference/release-notes/).
-   - **`clusterName`**: Enter the name of the cluster where you want to install Portworx.
-   - **`usedrivesAndPartitions`**: Enter `true` to let Portworx find unmounted hard drives and partitions.
-   - **`usefileSystemDrive`**: Enter `true` to let Portworx find unmounted hard drives, even if they are formatted.
-   - **`drives`**: Enter `none` to let Portworx find unmounted and unformatted hard drives.
-
-   For a full list of supported parameters, see the [Portworx Helm chart documentation ![External link icon](../icons/launch-glyph.svg "External link icon")](https://github.com/portworx/helm/blob/master/charts/portworx/README.md#configuration).
-
-   Example `values.yaml` file:
-   ```
-   # Please uncomment and specify values for these options as per your requirements.
-
-   kvdb: <etcd_endpoint>                                # The KVDB endpoint. Should be in the format etcd:http://<your-kvdb-endpoint>:2379. 
-                                      # If there are multiple endpoints they need to be ";" seperated.
-                                      # the default value is empty since it requires to be explicity set using either the --set option of -f values.yaml.
-   clusterName: <cluster_name>                # This is the default. please change it to your cluster name.
-
-   storage:
-     usefileSystemDrive: false             # true/false Instructs PX to use an unmounted Drive even if it has a filesystem.
-     usedrivesAndPartitions: false         # Defaults to false. Change to true and PX will use unmounted drives and partitions.
-     drives: none                          # NOTE: This is a ";" seperated list of drives. For eg: "/dev/sda;/dev/sdb;/dev/sdc" Defaults to use -A switch.
-     journalDevice: none
-     metadataSize: 0
-
-   network:
-     dataInterface: none                   # Name of the interface <ethX>
-     managementInterface: none             # Name of the interface <ethX>
-
-   secretType: none                      # Defaults to None, but can be aws-kms/vault/k8s/kvdb/ibm-kp
-   envVars: none                         # NOTE: This is a ";" seperated list of environment variables. For eg: MYENV1=myvalue1;MYENV2=myvalue2
-
-   storkVersion: 2.2.5
-
-   customRegistryURL: 
-   registrySecret: 
-   imagePullSecrets:
-
-   lighthouse: true
-   lighthouseVersion: 2.0.4
-   lighthouseSyncVersion: 0.4
-   lighthouseStorkConnectorVersion: 0.2
-
-   csi: false                            # Enable CSI
-
-   internalKVDB: false                   # internal KVDB
-
-   etcd:
-     secret: <secret_name>                       # Secret name where the username, password and CA cert for ETCD authentication is stored
-   imageVersion: 2.1.4                   # Version of the PX Image.
-
-   serviceAccount:
-     hook:
-       create: true
-       name:
-   ```
-   {: codeblock}
-
-7. Install the Portworx Helm chart.
-   ```
-   helm install ./charts/community/portworx/ --debug --name portworx
-   ```
-   {: pre}
-
-   Example output:
-   ```
-   LAST DEPLOYED: Mon Sep 17 16:33:01 2018
-   NAMESPACE: default
-   STATUS: DEPLOYED
-
-   RESOURCES:
-   ==> v1/Pod(related)
-   NAME                             READY  STATUS             RESTARTS  AGE
-   portworx-594rw                   0/1    ContainerCreating  0         1s
-   portworx-rn6wk                   0/1    ContainerCreating  0         1s
-   portworx-rx9vf                   0/1    ContainerCreating  0         1s
-   stork-6b99cf5579-5q6x4           0/1    ContainerCreating  0         1s
-   stork-6b99cf5579-slqlr           0/1    ContainerCreating  0         1s
-   stork-6b99cf5579-vz9j4           0/1    ContainerCreating  0         1s
-   stork-scheduler-7dd8799cc-bl75b  0/1    ContainerCreating  0         1s
-   stork-scheduler-7dd8799cc-j4rc9  0/1    ContainerCreating  0         1s
-   stork-scheduler-7dd8799cc-knjwt  0/1    ContainerCreating  0         1s
-
-   ==> v1/ConfigMap
-   NAME          DATA  AGE
-   stork-config  1     1s
-
-   ==> v1/ClusterRoleBinding
-   NAME                          AGE
-   node-role-binding             1s
-   stork-scheduler-role-binding  1s
-   stork-role-binding            1s
-
-   ==> v1/ServiceAccount
-   NAME                     SECRETS  AGE
-   px-account               1        1s
-   stork-account            1        1s
-   stork-scheduler-account  1        1s
-
-   ==> v1/ClusterRole
-   NAME                    AGE
-   node-get-put-list-role  1s
-   stork-scheduler-role    1s
-   stork-role              1s
-
-   ==> v1/Service
-   NAME              TYPE       CLUSTER-IP     EXTERNAL-IP  PORT(S)   AGE
-   portworx-service  ClusterIP  172.21.50.26   <none>       9001/TCP  1s
-   stork-service     ClusterIP  172.21.132.84  <none>       8099/TCP  1s
-
-   ==> v1beta1/DaemonSet
-   NAME      DESIRED  CURRENT  READY  UP-TO-DATE  AVAILABLE  NODE SELECTOR  AGE
-   portworx  3        3        0      3           0          <none>         1s
-
-   ==> v1beta1/Deployment
-   NAME             DESIRED  CURRENT  UP-TO-DATE  AVAILABLE  AGE
-   stork            3        3        3           0          1s
-   stork-scheduler  3        3        3           0          1s
-
-   ==> v1/StorageClass
-   NAME                                    PROVISIONER                    AGE
-   px-sc-repl3-iodb-512blk-snap60-15snaps  kubernetes.io/portworx-volume  1s
-   px-sc-repl3-iodb-snap60-15snaps         kubernetes.io/portworx-volume  1s
-
-   ==> v1/StorageClass
-   stork-snapshot-sc  stork-snapshot  1s
-
-   NOTES:
-
-   Your Release is named "portworx"
-   Portworx Pods should be running on each node in your cluster.
-
-   Portworx would create a unified pool of the disks attached to your Kubernetes nodes.
-   No further action should be required and you are ready to consume Portworx Volumes as part of your application data requirements.
-
-   For further information on usage of the Portworx in creating Volumes please refer
-       https://docs.portworx.com/scheduler/kubernetes/preprovisioned-volumes.html
-
-   For dynamically provisioning volumes for your Stateful applications as they run on Kubernetes please refer
-       https://docs.portworx.com/scheduler/kubernetes/dynamic-provisioning.html
-
-   Want to use Storage Orchestration for hyperconvergence, Please look at STork here. (NOTE: This isnt currently deployed as part of the Helm chart)
-       https://docs.portworx.com/portworx-install-with-kubernetes/storage-operations/stork/
-
-   Refer application solutions such as Cassandra, Kafka etcetera.
-       https://docs.portworx.com/portworx-install-with-kubernetes/application-install-with-kubernetes/cassandra/
-       https://docs.portworx.com/portworx-install-with-kubernetes/application-install-with-kubernetes/kafka-with-zookeeper/
-
-   For options that you could provide while installing Portworx on your cluster head over to the README.md
-   ```
-   {: screen}
-
-8. Verify that your Portworx installation completed successfully and that all your local disks were recognized and added to the Portworx storage layer. 
+3. Verify that your Portworx installation completed successfully and that all your local disks were recognized and added to the Portworx storage layer. 
    1. List the Portworx pods in the `kube-system` namespace. The installation is successful when you see one or more `portworx`, `stork`, and `stork-scheduler` pods. The number of pods equals the number of worker nodes that are included in your Portworx cluster. All pods must be in a `Running` state.
       ```
       kubectl get pods -n kube-system | grep 'portworx\|stork'
