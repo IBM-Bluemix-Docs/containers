@@ -470,7 +470,7 @@ To install Portworx:
 1. [Retrieve the etcd endpoint, user name, and password of the Databases for etcd service instance that you set up earlier](#databases_credentials).
 
 2.  Deploy Portworx from the [IBM Cloud catalog](https://cloud.ibm.com/catalog?category=storage). Enter the following:
-	* Your api key
+	* Your API key
 	* Cluster name: Enter a unique cluster name
 	* ETCD endpoints: Enter the endpoint you got from your etcd when you created it
 	* ETCD secret name: Enter the Kuberenetes secret which holds your etcd information: username, password, CA cert
