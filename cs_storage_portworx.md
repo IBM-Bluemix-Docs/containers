@@ -316,7 +316,6 @@ Follow these steps to set up encryption for your Portworx volumes with {{site.da
         IBM_SERVICE_API_KEY: <base64_apikey>
         IBM_INSTANCE_ID: <base64_guid>
         IBM_CUSTOMER_ROOT_KEY: <base64_rootkey>
-	    IBM_BASE_URL: <base64_kp_api_endpoint>
       ```
       {: codeblock}
 
@@ -341,10 +340,6 @@ Follow these steps to set up encryption for your Portworx volumes with {{site.da
       <tr>
       <td><code>data.IBM_CUSTOMER_ROOT_KEY</code></td>
       <td>Enter the base64 encoded {{site.data.keyword.keymanagementservicelong_notm}} root key that you retrieved earlier. </td>
-      </tr>
-      <tr>
-      <td><code>data.IBM_BASE_URL</code></td>
-      <td>Enter the base64 encoded API endpoint of your {{site.data.keyword.keymanagementservicelong_notm}} service instance. </td>
       </tr>
       </tbody>
       </table>
