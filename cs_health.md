@@ -458,7 +458,7 @@ The following table shows the different options that you have when you configure
       <td>The name or ID of the cluster.</td>
     </tr>
     <tr>
-      <td><code><em>--log_source</em></code></td>
+      <td><code><em>--logsource</em></code></td>
       <td>The source that you want to forward logs from. Accepted values are <code>container</code>, <code>application</code>, <code>worker</code>, <code>kubernetes</code>, <code>ingress</code>, and <code>storage</code>. This argument supports a comma-separated list of log sources to apply to the configuration. If you do not provide a log source, logging configurations are created for <code>container</code> and <code>ingress</code> log sources.</td>
     </tr>
     <tr>
