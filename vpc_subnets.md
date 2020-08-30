@@ -66,6 +66,8 @@ Do not delete the subnets that you attach to your cluster during cluster creatio
 **How many IP addresses do I need for my VPC subnet?**<br>
 When you [create your VPC subnet](https://cloud.ibm.com/vpc/provision/network){: external}, make sure to create a subnet with enough IP addresses for your cluster, such as 256. You cannot change the number of IP addresses that a VPC subnet has later.
 
+There are many tools available to help you calculate and create subnets; for example, see [subnet calculator](https://network00.com/NetworkTools/IPv4VisualSubnetCalculatorCreator/){: external}. Also, your network engineering group can help you determine the subnets you need to specify for your specific requirement.
+
 Keep in mind the following IP address reservations.
 * 5 IP addresses are [reserved by VPC](/docs/vpc?topic=vpc-about-networking-for-vpc#reserved-ip-addresses) from each subnet by default.
 * 1 IP address is required per worker node in your cluster.
