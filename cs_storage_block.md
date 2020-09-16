@@ -811,7 +811,7 @@ The following steps explain how to create a custom, encrypted storage class that
 
   3. Create the storage class in your cluster.
     ```
-    kubectl storageclass.yaml
+    kubectl apply -f storageclass.yaml
     ```
     {: pre}
 
