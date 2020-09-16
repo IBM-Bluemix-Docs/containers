@@ -966,7 +966,7 @@ To add block storage:
          name: mypvc
          labels:
            billingType: "hourly"
-         region: us-south
+           region: us-south
            zone: dal13
        spec:
          accessModes:
@@ -988,7 +988,7 @@ To add block storage:
          name: mypvc
          labels:
            billingType: "hourly"
-         region: us-south
+           region: us-south
            zone: dal13
        spec:
          accessModes:
