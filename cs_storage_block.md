@@ -679,8 +679,14 @@ You can enable encryption by creating a Kubernetes secret that uses your persona
     helm install --set env.IBMC_FEATURE_GATES=KeyManagementBYOK=true iks-charts/ibmcloud-block-storage-plugin
     ```
     {: pre}
+  
+  13. Create the `rolebinding ibmcloud-block-storage-plugin-byok` RoleBinding.
+    ```
+    kubectl create rolebinding ibmcloud-block-storage-plugin-byok --clusterrole=ibmcloud-block-storage-plugin-byok --serviceaccount=kube-system:ibmcloud-block-storage-plugin --group system:nodes --namespace=ibm-block-secrets
+    ```
+    {: pre}
     
-  13. Create a Kubernetes secret that is named `secret.yaml` and that includes the credentials to access your root key in your {{site.data.keyword.keymanagementserviceshort}} service instance.
+  14. Create a Kubernetes secret that is named `secret.yaml` and that includes the credentials to access your root key in your {{site.data.keyword.keymanagementserviceshort}} service instance.
     ```yaml
     apiVersion: v1
     kind: Secret
