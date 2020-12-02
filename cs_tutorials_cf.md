@@ -183,7 +183,7 @@ Create a Dockerfile that includes your app code and the necessary configurations
   ```
   {: pre}
 
-2. Copy the following script into the Dockerfile. This Dockerfile applies specifically to a Python app. If you are using another type of code, your Dockerfile must include a different base image and might require other fields to be defined.
+2. Copy the following script into the Dockerfile. This Dockerfile applies specifically to a Python app. If you are using another type of code, your Dockerfile must include a different base image and might require other fields to be defined. You can use [Konveyor Move2Kube](https://konveyor.io/move2kube/) to autogenerate Dockerfiles for your application.
 
   ```
   #Use the Python image from DockerHub as a base image
@@ -265,7 +265,7 @@ Create a Dockerfile that includes your app code and the necessary configurations
 Deploy your app as a container in a Kubernetes cluster.
 {: shortdesc}
 
-1. Create a configuration YAML file that is named `cf-py.yaml` and update `<registry_namespace>` with the name of your private image registry. This configuration file defines a container deployment from the image that you created in the previous lesson and a service to expose the app to the public.
+1. Create a configuration YAML file that is named `cf-py.yaml` and update `<registry_namespace>` with the name of your private image registry. This configuration file defines a container deployment from the image that you created in the previous lesson and a service to expose the app to the public. You can use [Konveyor Move2Kube](https://konveyor.io/move2kube/) to autogenerate configuration files for your application.
 
   ```
   apiVersion: apps/v1
