@@ -399,7 +399,7 @@ Also, if you used the same cluster name repeatedly, you might have a rate limiti
 {: tsResolve}
 1. Check the ID of the user or functional user who sets the API key for this cluster.
   ```
-  ibmcloud ks api-key-info -c <cluster_name_or_ID>
+  ibmcloud ks api-key info -c <cluster_name_or_ID>
   ```
   {: pre}
 2. [Assign the following IAM permissions](/docs/containers?topic=containers-users#add_users) to the user or functional user who sets the API key.
