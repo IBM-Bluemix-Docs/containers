@@ -308,62 +308,62 @@ After you deploy the {{site.data.keyword.block_storage_is_short}} driver, you ca
 {: shortdesc}
 
 1. Save the following YAML configuration as a file on your local machine called `statefulset.yaml`.
-    ```yaml
-    apiVersion: v1
-    kind: Service
-    metadata:
-    name: nginx
-    labels:
-        app: nginx
-    spec:
-    ports:
-    - port: 80
-        name: web
-    clusterIP: None
-    selector:
-        app: nginx
-    ---
-    apiVersion: apps/v1
-    kind: StatefulSet
-    metadata:
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  ports:
+  - port: 80
     name: web
-    spec:
-    serviceName: "nginx"
-    replicas: 2
-    podManagementPolicy: "Parallel"
-    selector:
-        matchLabels:
+  clusterIP: None
+  selector:
+    app: nginx
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: web
+spec:
+  serviceName: "nginx"
+  replicas: 2
+  podManagementPolicy: "Parallel"
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
         app: nginx
-    template:
-        metadata:
-        labels:
-            app: nginx
-        spec:
-        containers:
-        - name: nginx
-            securityContext:
-            privileged: true
-            image: k8s.gcr.io/nginx-slim:0.8
-            ports:
-            - containerPort: 80
-            name: web
-            volumeMounts:
-            - name: www
-            mountPath: /usr/share/nginx/html
-        tolerations:
-        - operator: Exists 
-    volumeClaimTemplates:
-    - metadata:
-        annotations:
-            volume.beta.kubernetes.io/storage-class: ibmc-vpc-block-5iops-tier
-        name: www
-        spec:
-        accessModes:
-        - ReadWriteOnce # access mode
-        resources:
-            requests:
-            storage: 25Gi #
-    ```
+    spec:
+      containers:
+      - name: nginx
+        securityContext:
+          privileged: false
+        image: k8s.gcr.io/nginx-slim:0.8
+        ports:
+        - containerPort: 80
+        name: web
+        volumeMounts:
+        - name: www
+          mountPath: /usr/share/nginx/html
+      tolerations:
+      - operator: Exists 
+  volumeClaimTemplates:
+  - metadata:
+      annotations:
+        volume.beta.kubernetes.io/storage-class: ibmc-vpc-block-5iops-tier
+      name: www
+    spec:
+      accessModes:
+      - ReadWriteOnce # access mode
+      resources:
+        requests:
+          storage: 25Gi #
+```
     {: pre}
 
 2. Create the stateful set in your cluster.
