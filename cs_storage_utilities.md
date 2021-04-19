@@ -2,7 +2,7 @@
 
 copyright:
   years: 2014, 2021
-lastupdated: "2021-04-01"
+lastupdated: "2021-04-14"
 
 keywords: kubernetes, iks
 
@@ -481,7 +481,7 @@ To attach the block storage device to a non-SDS worker node, you must create a p
 
    - **If you manually added block storage:**
      ```
-     kubectl apply -f  block-volume-attacher/pv.yaml
+     kubectl apply -f pv.yaml
      ```
      {: pre}
 
