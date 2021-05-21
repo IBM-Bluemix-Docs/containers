@@ -428,7 +428,6 @@ If you run apps as part of a deployment on worker nodes that you update, the app
 **What happens to my worker node during an update?**
 
 You VPC worker node is replaced by removing the old worker node and provisioning a new worker node that runs at the updated patch or `major.minor` version. The replacement worker node is created in the same zone, same worker pool, and with the same flavor as the deleted worker node. However, the replacement worker node is assigned a new private IP address, and loses any custom labels or taints that you applied to the old worker node (worker pool labels and taints are still applied to the replacement worker node).
-**
 
 **What if I replace multiple worker nodes at the same time?**
 
